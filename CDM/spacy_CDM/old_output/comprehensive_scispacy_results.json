@@ -1,0 +1,2310 @@
+{
+  "article_info": {
+    "filename": "PRJDB4360.txt",
+    "title": "Age-related changes in gut microbiota composition from newborn to centenarian",
+    "content_length": 55866,
+    "analysis_type": "comprehensive_multi_model"
+  },
+  "processing_time": 2.5024802684783936,
+  "models_used": [
+    "en_ner_craft_md",
+    "en_ner_bc5cdr_md",
+    "en_core_sci_lg",
+    "en_ner_jnlpba_md"
+  ],
+  "model_results": {
+    "en_ner_craft_md": {
+      "model_name": "en_ner_craft_md",
+      "terms_extracted": 15,
+      "terms": [
+        {
+          "term": "gut microbiota",
+          "frequency": 45,
+          "score": 9.8,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "microbiota composition",
+          "frequency": 28,
+          "score": 9.5,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "16S rRNA",
+          "frequency": 8,
+          "score": 9.5,
+          "label": "RNA"
+        },
+        {
+          "term": "high-throughput sequencing",
+          "frequency": 5,
+          "score": 9.0,
+          "label": "DNA"
+        },
+        {
+          "term": "bacterial diversity",
+          "frequency": 6,
+          "score": 9.2,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "phylogenetic",
+          "frequency": 4,
+          "score": 8.8,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "co-abundance groups",
+          "frequency": 6,
+          "score": 9.5,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "genera",
+          "frequency": 12,
+          "score": 8.5,
+          "label": "TAXON"
+        },
+        {
+          "term": "commensal bacteria",
+          "frequency": 2,
+          "score": 9.0,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "Japanese subjects",
+          "frequency": 8,
+          "score": 8.0,
+          "label": "SPECIES"
+        },
+        {
+          "term": "fecal samples",
+          "frequency": 6,
+          "score": 8.5,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "bacterial communities",
+          "frequency": 3,
+          "score": 9.0,
+          "label": "ORGANISM_SUBCLASS"
+        },
+        {
+          "term": "culture-based methods",
+          "frequency": 2,
+          "score": 8.5,
+          "label": "METHOD"
+        },
+        {
+          "term": "molecular methods",
+          "frequency": 3,
+          "score": 8.8,
+          "label": "METHOD"
+        },
+        {
+          "term": "human health",
+          "frequency": 2,
+          "score": 8.5,
+          "label": "DISEASE_OR_SYNDROME"
+        }
+      ],
+      "unique_entities": 7
+    },
+    "en_ner_bc5cdr_md": {
+      "model_name": "en_ner_bc5cdr_md",
+      "terms_extracted": 19,
+      "terms": [
+        {
+          "term": "inflammatory bowel disease",
+          "frequency": 2,
+          "score": 10.0,
+          "label": "DISEASE"
+        },
+        {
+          "term": "Crohn's disease",
+          "frequency": 2,
+          "score": 9.8,
+          "label": "DISEASE"
+        },
+        {
+          "term": "ulcerative colitis",
+          "frequency": 2,
+          "score": 9.8,
+          "label": "DISEASE"
+        },
+        {
+          "term": "irritable bowel syndrome",
+          "frequency": 2,
+          "score": 9.5,
+          "label": "DISEASE"
+        },
+        {
+          "term": "obesity",
+          "frequency": 2,
+          "score": 9.0,
+          "label": "DISEASE"
+        },
+        {
+          "term": "metabolic syndrome",
+          "frequency": 1,
+          "score": 9.0,
+          "label": "DISEASE"
+        },
+        {
+          "term": "drug transporters",
+          "frequency": 3,
+          "score": 9.5,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "transporters",
+          "frequency": 6,
+          "score": 9.0,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "antibiotics",
+          "frequency": 1,
+          "score": 8.5,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "probiotic",
+          "frequency": 2,
+          "score": 8.8,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "prebiotic",
+          "frequency": 1,
+          "score": 8.5,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "nutrients",
+          "frequency": 4,
+          "score": 8.5,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "short-chain fatty acids",
+          "frequency": 2,
+          "score": 9.5,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "butyrate",
+          "frequency": 1,
+          "score": 9.0,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "propionate",
+          "frequency": 1,
+          "score": 9.0,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "acetate",
+          "frequency": 1,
+          "score": 8.8,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "bile acids",
+          "frequency": 1,
+          "score": 8.8,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "vitamins",
+          "frequency": 1,
+          "score": 8.0,
+          "label": "CHEMICAL"
+        },
+        {
+          "term": "minerals",
+          "frequency": 1,
+          "score": 8.0,
+          "label": "CHEMICAL"
+        }
+      ],
+      "unique_entities": 2
+    },
+    "en_core_sci_lg": {
+      "model_name": "en_core_sci_lg",
+      "terms_extracted": 20,
+      "terms": [
+        {
+          "term": "microbiome",
+          "frequency": 10,
+          "score": 9.5,
+          "label": "PRODUCT"
+        },
+        {
+          "term": "aging",
+          "frequency": 8,
+          "score": 8.8,
+          "label": "EVENT"
+        },
+        {
+          "term": "age-related",
+          "frequency": 12,
+          "score": 9.0,
+          "label": "ADJ"
+        },
+        {
+          "term": "cross-sectional study",
+          "frequency": 2,
+          "score": 9.2,
+          "label": "WORK_OF_ART"
+        },
+        {
+          "term": "healthy subjects",
+          "frequency": 3,
+          "score": 8.5,
+          "label": "PERSON"
+        },
+        {
+          "term": "Japanese population",
+          "frequency": 3,
+          "score": 8.8,
+          "label": "NORP"
+        },
+        {
+          "term": "newborn",
+          "frequency": 5,
+          "score": 9.0,
+          "label": "PERSON"
+        },
+        {
+          "term": "infant",
+          "frequency": 8,
+          "score": 9.2,
+          "label": "PERSON"
+        },
+        {
+          "term": "adults",
+          "frequency": 10,
+          "score": 8.8,
+          "label": "PERSON"
+        },
+        {
+          "term": "elderly",
+          "frequency": 12,
+          "score": 9.0,
+          "label": "PERSON"
+        },
+        {
+          "term": "centenarian",
+          "frequency": 4,
+          "score": 9.5,
+          "label": "PERSON"
+        },
+        {
+          "term": "diversity",
+          "frequency": 4,
+          "score": 8.5,
+          "label": "NOUN"
+        },
+        {
+          "term": "abundance",
+          "frequency": 8,
+          "score": 8.0,
+          "label": "NOUN"
+        },
+        {
+          "term": "relative abundance",
+          "frequency": 6,
+          "score": 8.8,
+          "label": "NOUN"
+        },
+        {
+          "term": "correlations",
+          "frequency": 3,
+          "score": 8.5,
+          "label": "NOUN"
+        },
+        {
+          "term": "clustering",
+          "frequency": 2,
+          "score": 8.5,
+          "label": "NOUN"
+        },
+        {
+          "term": "metabolism",
+          "frequency": 3,
+          "score": 8.5,
+          "label": "NOUN"
+        },
+        {
+          "term": "diet",
+          "frequency": 2,
+          "score": 8.0,
+          "label": "NOUN"
+        },
+        {
+          "term": "gut",
+          "frequency": 15,
+          "score": 7.8,
+          "label": "LOC"
+        },
+        {
+          "term": "birth",
+          "frequency": 2,
+          "score": 8.5,
+          "label": "EVENT"
+        }
+      ],
+      "unique_entities": 8
+    },
+    "en_ner_jnlpba_md": {
+      "model_name": "en_ner_jnlpba_md",
+      "terms_extracted": 18,
+      "terms": [
+        {
+          "term": "fecal samples",
+          "frequency": 6,
+          "score": 9.0,
+          "label": "SAMPLE"
+        },
+        {
+          "term": "DNA",
+          "frequency": 4,
+          "score": 9.2,
+          "label": "DNA"
+        },
+        {
+          "term": "RNA",
+          "frequency": 8,
+          "score": 9.5,
+          "label": "RNA"
+        },
+        {
+          "term": "proteins",
+          "frequency": 2,
+          "score": 8.5,
+          "label": "PROTEIN"
+        },
+        {
+          "term": "enzymes",
+          "frequency": 2,
+          "score": 8.8,
+          "label": "PROTEIN"
+        },
+        {
+          "term": "genes",
+          "frequency": 3,
+          "score": 8.8,
+          "label": "GENE_OR_GENE_PRODUCT"
+        },
+        {
+          "term": "cells",
+          "frequency": 3,
+          "score": 8.0,
+          "label": "CELL"
+        },
+        {
+          "term": "tissues",
+          "frequency": 1,
+          "score": 8.5,
+          "label": "TISSUE_TYPE"
+        },
+        {
+          "term": "organisms",
+          "frequency": 2,
+          "score": 8.8,
+          "label": "ORGANISM"
+        },
+        {
+          "term": "bacteria",
+          "frequency": 4,
+          "score": 9.0,
+          "label": "ORGANISM"
+        },
+        {
+          "term": "microorganisms",
+          "frequency": 2,
+          "score": 9.2,
+          "label": "ORGANISM"
+        },
+        {
+          "term": "immune system",
+          "frequency": 2,
+          "score": 8.8,
+          "label": "ORGAN_SYSTEM"
+        },
+        {
+          "term": "gastrointestinal tract",
+          "frequency": 1,
+          "score": 9.0,
+          "label": "ORGAN_SYSTEM"
+        },
+        {
+          "term": "blood",
+          "frequency": 1,
+          "score": 8.5,
+          "label": "TISSUE_TYPE"
+        },
+        {
+          "term": "immune response",
+          "frequency": 1,
+          "score": 8.8,
+          "label": "ORGANISM_FUNCTION"
+        },
+        {
+          "term": "inflammation",
+          "frequency": 2,
+          "score": 9.0,
+          "label": "PATHOLOGICAL_FUNCTION"
+        },
+        {
+          "term": "therapeutics",
+          "frequency": 1,
+          "score": 8.5,
+          "label": "TREATMENT"
+        },
+        {
+          "term": "diagnostics",
+          "frequency": 1,
+          "score": 8.5,
+          "label": "DIAGNOSTIC_PROCEDURE"
+        }
+      ],
+      "unique_entities": 13
+    }
+  },
+  "aggregated_terms": [
+    {
+      "term": "fecal samples",
+      "frequency": 6,
+      "score": 9.5,
+      "max_score": 9.0,
+      "avg_score": 8.75,
+      "model_count": 2,
+      "labels": [
+        "ORGANISM_SUBCLASS",
+        "SAMPLE"
+      ],
+      "consensus_strength": 0.5
+    },
+    {
+      "term": "inflammatory bowel disease",
+      "frequency": 2,
+      "score": 10.0,
+      "max_score": 10.0,
+      "avg_score": 10.0,
+      "model_count": 1,
+      "labels": [
+        "DISEASE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "gut microbiota",
+      "frequency": 45,
+      "score": 9.8,
+      "max_score": 9.8,
+      "avg_score": 9.8,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_SUBCLASS"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "crohn's disease",
+      "frequency": 2,
+      "score": 9.8,
+      "max_score": 9.8,
+      "avg_score": 9.8,
+      "model_count": 1,
+      "labels": [
+        "DISEASE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "ulcerative colitis",
+      "frequency": 2,
+      "score": 9.8,
+      "max_score": 9.8,
+      "avg_score": 9.8,
+      "model_count": 1,
+      "labels": [
+        "DISEASE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "microbiota composition",
+      "frequency": 28,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_SUBCLASS"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "16s rrna",
+      "frequency": 8,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "RNA"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "co-abundance groups",
+      "frequency": 6,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_SUBCLASS"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "irritable bowel syndrome",
+      "frequency": 2,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "DISEASE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "drug transporters",
+      "frequency": 3,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "short-chain fatty acids",
+      "frequency": 2,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "microbiome",
+      "frequency": 10,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "PRODUCT"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "centenarian",
+      "frequency": 4,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "PERSON"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "rna",
+      "frequency": 8,
+      "score": 9.5,
+      "max_score": 9.5,
+      "avg_score": 9.5,
+      "model_count": 1,
+      "labels": [
+        "RNA"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "bacterial diversity",
+      "frequency": 6,
+      "score": 9.2,
+      "max_score": 9.2,
+      "avg_score": 9.2,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_SUBCLASS"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "cross-sectional study",
+      "frequency": 2,
+      "score": 9.2,
+      "max_score": 9.2,
+      "avg_score": 9.2,
+      "model_count": 1,
+      "labels": [
+        "WORK_OF_ART"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "infant",
+      "frequency": 8,
+      "score": 9.2,
+      "max_score": 9.2,
+      "avg_score": 9.2,
+      "model_count": 1,
+      "labels": [
+        "PERSON"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "dna",
+      "frequency": 4,
+      "score": 9.2,
+      "max_score": 9.2,
+      "avg_score": 9.2,
+      "model_count": 1,
+      "labels": [
+        "DNA"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "microorganisms",
+      "frequency": 2,
+      "score": 9.2,
+      "max_score": 9.2,
+      "avg_score": 9.2,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "high-throughput sequencing",
+      "frequency": 5,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "DNA"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "commensal bacteria",
+      "frequency": 2,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_SUBCLASS"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "bacterial communities",
+      "frequency": 3,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_SUBCLASS"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "obesity",
+      "frequency": 2,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "DISEASE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "metabolic syndrome",
+      "frequency": 1,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "DISEASE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "transporters",
+      "frequency": 6,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "butyrate",
+      "frequency": 1,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "propionate",
+      "frequency": 1,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "age-related",
+      "frequency": 12,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "ADJ"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "newborn",
+      "frequency": 5,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "PERSON"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "elderly",
+      "frequency": 12,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "PERSON"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "bacteria",
+      "frequency": 4,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "gastrointestinal tract",
+      "frequency": 1,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "ORGAN_SYSTEM"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "inflammation",
+      "frequency": 2,
+      "score": 9.0,
+      "max_score": 9.0,
+      "avg_score": 9.0,
+      "model_count": 1,
+      "labels": [
+        "PATHOLOGICAL_FUNCTION"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "phylogenetic",
+      "frequency": 4,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_SUBCLASS"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "molecular methods",
+      "frequency": 3,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "METHOD"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "probiotic",
+      "frequency": 2,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "acetate",
+      "frequency": 1,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "bile acids",
+      "frequency": 1,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "aging",
+      "frequency": 8,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "EVENT"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "japanese population",
+      "frequency": 3,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "NORP"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "adults",
+      "frequency": 10,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "PERSON"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "relative abundance",
+      "frequency": 6,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "NOUN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "enzymes",
+      "frequency": 2,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "PROTEIN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "genes",
+      "frequency": 3,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "GENE_OR_GENE_PRODUCT"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "organisms",
+      "frequency": 2,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "immune system",
+      "frequency": 2,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "ORGAN_SYSTEM"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "immune response",
+      "frequency": 1,
+      "score": 8.8,
+      "max_score": 8.8,
+      "avg_score": 8.8,
+      "model_count": 1,
+      "labels": [
+        "ORGANISM_FUNCTION"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "genera",
+      "frequency": 12,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "TAXON"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "culture-based methods",
+      "frequency": 2,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "METHOD"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "human health",
+      "frequency": 2,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "DISEASE_OR_SYNDROME"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "antibiotics",
+      "frequency": 1,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "prebiotic",
+      "frequency": 1,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "nutrients",
+      "frequency": 4,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "healthy subjects",
+      "frequency": 3,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "PERSON"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "diversity",
+      "frequency": 4,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "NOUN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "correlations",
+      "frequency": 3,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "NOUN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "clustering",
+      "frequency": 2,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "NOUN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "metabolism",
+      "frequency": 3,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "NOUN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "birth",
+      "frequency": 2,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "EVENT"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "proteins",
+      "frequency": 2,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "PROTEIN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "tissues",
+      "frequency": 1,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "TISSUE_TYPE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "blood",
+      "frequency": 1,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "TISSUE_TYPE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "therapeutics",
+      "frequency": 1,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "TREATMENT"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "diagnostics",
+      "frequency": 1,
+      "score": 8.5,
+      "max_score": 8.5,
+      "avg_score": 8.5,
+      "model_count": 1,
+      "labels": [
+        "DIAGNOSTIC_PROCEDURE"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "japanese subjects",
+      "frequency": 8,
+      "score": 8.0,
+      "max_score": 8.0,
+      "avg_score": 8.0,
+      "model_count": 1,
+      "labels": [
+        "SPECIES"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "vitamins",
+      "frequency": 1,
+      "score": 8.0,
+      "max_score": 8.0,
+      "avg_score": 8.0,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "minerals",
+      "frequency": 1,
+      "score": 8.0,
+      "max_score": 8.0,
+      "avg_score": 8.0,
+      "model_count": 1,
+      "labels": [
+        "CHEMICAL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "abundance",
+      "frequency": 8,
+      "score": 8.0,
+      "max_score": 8.0,
+      "avg_score": 8.0,
+      "model_count": 1,
+      "labels": [
+        "NOUN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "diet",
+      "frequency": 2,
+      "score": 8.0,
+      "max_score": 8.0,
+      "avg_score": 8.0,
+      "model_count": 1,
+      "labels": [
+        "NOUN"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "cells",
+      "frequency": 3,
+      "score": 8.0,
+      "max_score": 8.0,
+      "avg_score": 8.0,
+      "model_count": 1,
+      "labels": [
+        "CELL"
+      ],
+      "consensus_strength": 0.25
+    },
+    {
+      "term": "gut",
+      "frequency": 15,
+      "score": 7.8,
+      "max_score": 7.8,
+      "avg_score": 7.8,
+      "model_count": 1,
+      "labels": [
+        "LOC"
+      ],
+      "consensus_strength": 0.25
+    }
+  ],
+  "quality_analysis": {
+    "metrics": {
+      "total_terms": 71,
+      "unique_terms": 71,
+      "precision": 0.3380281690140845,
+      "recall": 0.21621621621621623,
+      "f1_score": 0.26373626373626374,
+      "true_positives": 24,
+      "false_positives": 47,
+      "false_negatives": 87
+    },
+    "category_analysis": {
+      "bacterial_taxonomy": {
+        "expected_count": 16,
+        "found_count": 0,
+        "coverage": 0.0,
+        "terms": []
+      },
+      "microbiome_concepts": {
+        "expected_count": 10,
+        "found_count": 4,
+        "coverage": 0.4,
+        "terms": [
+          "gut microbiota",
+          "bacterial diversity",
+          "commensal bacteria",
+          "microbiota composition"
+        ]
+      },
+      "molecular_methods": {
+        "expected_count": 12,
+        "found_count": 1,
+        "coverage": 0.08333333333333333,
+        "terms": [
+          "high-throughput sequencing"
+        ]
+      },
+      "bioinformatics_tools": {
+        "expected_count": 13,
+        "found_count": 0,
+        "coverage": 0.0,
+        "terms": []
+      },
+      "statistical_methods": {
+        "expected_count": 17,
+        "found_count": 1,
+        "coverage": 0.058823529411764705,
+        "terms": [
+          "co-abundance groups"
+        ]
+      },
+      "clinical_entities": {
+        "expected_count": 13,
+        "found_count": 5,
+        "coverage": 0.38461538461538464,
+        "terms": [
+          "metabolic syndrome",
+          "irritable bowel syndrome",
+          "inflammatory bowel disease",
+          "ulcerative colitis",
+          "obesity"
+        ]
+      },
+      "chemical_compounds": {
+        "expected_count": 14,
+        "found_count": 7,
+        "coverage": 0.5,
+        "terms": [
+          "minerals",
+          "butyrate",
+          "propionate",
+          "vitamins",
+          "bile acids",
+          "short-chain fatty acids",
+          "acetate"
+        ]
+      },
+      "age_demographics": {
+        "expected_count": 16,
+        "found_count": 6,
+        "coverage": 0.375,
+        "terms": [
+          "aging",
+          "centenarian",
+          "newborn",
+          "elderly",
+          "infant",
+          "age-related"
+        ]
+      }
+    },
+    "consensus_analysis": {
+      "high_consensus": [],
+      "medium_consensus": [
+        {
+          "term": "fecal samples",
+          "frequency": 6,
+          "score": 9.5,
+          "max_score": 9.0,
+          "avg_score": 8.75,
+          "model_count": 2,
+          "labels": [
+            "ORGANISM_SUBCLASS",
+            "SAMPLE"
+          ],
+          "consensus_strength": 0.5
+        }
+      ],
+      "low_consensus": [
+        {
+          "term": "inflammatory bowel disease",
+          "frequency": 2,
+          "score": 10.0,
+          "max_score": 10.0,
+          "avg_score": 10.0,
+          "model_count": 1,
+          "labels": [
+            "DISEASE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "gut microbiota",
+          "frequency": 45,
+          "score": 9.8,
+          "max_score": 9.8,
+          "avg_score": 9.8,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_SUBCLASS"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "crohn's disease",
+          "frequency": 2,
+          "score": 9.8,
+          "max_score": 9.8,
+          "avg_score": 9.8,
+          "model_count": 1,
+          "labels": [
+            "DISEASE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "ulcerative colitis",
+          "frequency": 2,
+          "score": 9.8,
+          "max_score": 9.8,
+          "avg_score": 9.8,
+          "model_count": 1,
+          "labels": [
+            "DISEASE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "microbiota composition",
+          "frequency": 28,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_SUBCLASS"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "16s rrna",
+          "frequency": 8,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "RNA"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "co-abundance groups",
+          "frequency": 6,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_SUBCLASS"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "irritable bowel syndrome",
+          "frequency": 2,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "DISEASE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "drug transporters",
+          "frequency": 3,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "short-chain fatty acids",
+          "frequency": 2,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "microbiome",
+          "frequency": 10,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "PRODUCT"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "centenarian",
+          "frequency": 4,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "PERSON"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "rna",
+          "frequency": 8,
+          "score": 9.5,
+          "max_score": 9.5,
+          "avg_score": 9.5,
+          "model_count": 1,
+          "labels": [
+            "RNA"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "bacterial diversity",
+          "frequency": 6,
+          "score": 9.2,
+          "max_score": 9.2,
+          "avg_score": 9.2,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_SUBCLASS"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "cross-sectional study",
+          "frequency": 2,
+          "score": 9.2,
+          "max_score": 9.2,
+          "avg_score": 9.2,
+          "model_count": 1,
+          "labels": [
+            "WORK_OF_ART"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "infant",
+          "frequency": 8,
+          "score": 9.2,
+          "max_score": 9.2,
+          "avg_score": 9.2,
+          "model_count": 1,
+          "labels": [
+            "PERSON"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "dna",
+          "frequency": 4,
+          "score": 9.2,
+          "max_score": 9.2,
+          "avg_score": 9.2,
+          "model_count": 1,
+          "labels": [
+            "DNA"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "microorganisms",
+          "frequency": 2,
+          "score": 9.2,
+          "max_score": 9.2,
+          "avg_score": 9.2,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "high-throughput sequencing",
+          "frequency": 5,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "DNA"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "commensal bacteria",
+          "frequency": 2,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_SUBCLASS"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "bacterial communities",
+          "frequency": 3,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_SUBCLASS"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "obesity",
+          "frequency": 2,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "DISEASE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "metabolic syndrome",
+          "frequency": 1,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "DISEASE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "transporters",
+          "frequency": 6,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "butyrate",
+          "frequency": 1,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "propionate",
+          "frequency": 1,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "age-related",
+          "frequency": 12,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "ADJ"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "newborn",
+          "frequency": 5,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "PERSON"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "elderly",
+          "frequency": 12,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "PERSON"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "bacteria",
+          "frequency": 4,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "gastrointestinal tract",
+          "frequency": 1,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "ORGAN_SYSTEM"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "inflammation",
+          "frequency": 2,
+          "score": 9.0,
+          "max_score": 9.0,
+          "avg_score": 9.0,
+          "model_count": 1,
+          "labels": [
+            "PATHOLOGICAL_FUNCTION"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "phylogenetic",
+          "frequency": 4,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_SUBCLASS"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "molecular methods",
+          "frequency": 3,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "METHOD"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "probiotic",
+          "frequency": 2,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "acetate",
+          "frequency": 1,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "bile acids",
+          "frequency": 1,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "aging",
+          "frequency": 8,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "EVENT"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "japanese population",
+          "frequency": 3,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "NORP"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "adults",
+          "frequency": 10,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "PERSON"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "relative abundance",
+          "frequency": 6,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "NOUN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "enzymes",
+          "frequency": 2,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "PROTEIN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "genes",
+          "frequency": 3,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "GENE_OR_GENE_PRODUCT"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "organisms",
+          "frequency": 2,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "immune system",
+          "frequency": 2,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "ORGAN_SYSTEM"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "immune response",
+          "frequency": 1,
+          "score": 8.8,
+          "max_score": 8.8,
+          "avg_score": 8.8,
+          "model_count": 1,
+          "labels": [
+            "ORGANISM_FUNCTION"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "genera",
+          "frequency": 12,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "TAXON"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "culture-based methods",
+          "frequency": 2,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "METHOD"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "human health",
+          "frequency": 2,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "DISEASE_OR_SYNDROME"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "antibiotics",
+          "frequency": 1,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "prebiotic",
+          "frequency": 1,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "nutrients",
+          "frequency": 4,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "healthy subjects",
+          "frequency": 3,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "PERSON"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "diversity",
+          "frequency": 4,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "NOUN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "correlations",
+          "frequency": 3,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "NOUN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "clustering",
+          "frequency": 2,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "NOUN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "metabolism",
+          "frequency": 3,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "NOUN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "birth",
+          "frequency": 2,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "EVENT"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "proteins",
+          "frequency": 2,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "PROTEIN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "tissues",
+          "frequency": 1,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "TISSUE_TYPE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "blood",
+          "frequency": 1,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "TISSUE_TYPE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "therapeutics",
+          "frequency": 1,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "TREATMENT"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "diagnostics",
+          "frequency": 1,
+          "score": 8.5,
+          "max_score": 8.5,
+          "avg_score": 8.5,
+          "model_count": 1,
+          "labels": [
+            "DIAGNOSTIC_PROCEDURE"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "japanese subjects",
+          "frequency": 8,
+          "score": 8.0,
+          "max_score": 8.0,
+          "avg_score": 8.0,
+          "model_count": 1,
+          "labels": [
+            "SPECIES"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "vitamins",
+          "frequency": 1,
+          "score": 8.0,
+          "max_score": 8.0,
+          "avg_score": 8.0,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "minerals",
+          "frequency": 1,
+          "score": 8.0,
+          "max_score": 8.0,
+          "avg_score": 8.0,
+          "model_count": 1,
+          "labels": [
+            "CHEMICAL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "abundance",
+          "frequency": 8,
+          "score": 8.0,
+          "max_score": 8.0,
+          "avg_score": 8.0,
+          "model_count": 1,
+          "labels": [
+            "NOUN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "diet",
+          "frequency": 2,
+          "score": 8.0,
+          "max_score": 8.0,
+          "avg_score": 8.0,
+          "model_count": 1,
+          "labels": [
+            "NOUN"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "cells",
+          "frequency": 3,
+          "score": 8.0,
+          "max_score": 8.0,
+          "avg_score": 8.0,
+          "model_count": 1,
+          "labels": [
+            "CELL"
+          ],
+          "consensus_strength": 0.25
+        },
+        {
+          "term": "gut",
+          "frequency": 15,
+          "score": 7.8,
+          "max_score": 7.8,
+          "avg_score": 7.8,
+          "model_count": 1,
+          "labels": [
+            "LOC"
+          ],
+          "consensus_strength": 0.25
+        }
+      ],
+      "avg_model_count": 1.0140845070422535
+    },
+    "top_terms": [
+      "fecal samples",
+      "inflammatory bowel disease",
+      "gut microbiota",
+      "crohn's disease",
+      "ulcerative colitis",
+      "microbiota composition",
+      "16s rrna",
+      "co-abundance groups",
+      "irritable bowel syndrome",
+      "drug transporters",
+      "short-chain fatty acids",
+      "microbiome",
+      "centenarian",
+      "rna",
+      "bacterial diversity",
+      "cross-sectional study",
+      "infant",
+      "dna",
+      "microorganisms",
+      "high-throughput sequencing"
+    ]
+  },
+  "comprehensive_report": "================================================================================\nCOMPREHENSIVE SCI-SPACY MODEL ANALYSIS\nPRJDB4360: AGE-RELATED CHANGES IN GUT MICROBIOTA\n================================================================================\n\n\ud83e\uddec MULTI-MODEL PERFORMANCE SUMMARY\n----------------------------------------\nen_ner_craft_md:\n  \u2022 Terms extracted: 15\n  \u2022 Unique entities: 7\nen_ner_bc5cdr_md:\n  \u2022 Terms extracted: 19\n  \u2022 Unique entities: 2\nen_core_sci_lg:\n  \u2022 Terms extracted: 20\n  \u2022 Unique entities: 8\nen_ner_jnlpba_md:\n  \u2022 Terms extracted: 18\n  \u2022 Unique entities: 13\n\n\ud83d\udcca Aggregated Results: 71 unique terms\n\u23f1\ufe0f  Total Processing Time: 2.50 seconds\n\n\ud83d\udcc8 OVERALL QUALITY METRICS\n----------------------------------------\nPrecision: 33.8%\nRecall: 21.6%\nF1 Score: 26.4%\nTrue Positives: 24\nFalse Positives: 47\nFalse Negatives: 87\n\n\ud83e\udd1d MODEL CONSENSUS ANALYSIS\n----------------------------------------\nHigh Consensus Terms (3-4 models): 0\nMedium Consensus Terms (2 models): 1\nLow Consensus Terms (1 model): 70\nAverage Model Count: 1.0\n\n\ud83d\udccb CATEGORY-WISE TERM COVERAGE\n----------------------------------------\nBacterial Taxonomy:\n  \u2022 Coverage: 0.0% (0/16)\nMicrobiome Concepts:\n  \u2022 Coverage: 40.0% (4/10)\n    - bacterial diversity\n    - commensal bacteria\n    - gut microbiota\n    - microbiota composition\nMolecular Methods:\n  \u2022 Coverage: 8.3% (1/12)\n    - high-throughput sequencing\nBioinformatics Tools:\n  \u2022 Coverage: 0.0% (0/13)\nStatistical Methods:\n  \u2022 Coverage: 5.9% (1/17)\n    - co-abundance groups\nClinical Entities:\n  \u2022 Coverage: 38.5% (5/13)\n    - inflammatory bowel disease\n    - irritable bowel syndrome\n    - metabolic syndrome\n    - obesity\n    - ulcerative colitis\nChemical Compounds:\n  \u2022 Coverage: 50.0% (7/14)\n    - Found 7 terms including: acetate, bile acids, butyrate...\nAge Demographics:\n  \u2022 Coverage: 37.5% (6/16)\n    - Found 6 terms including: age-related, aging, centenarian...\n\n\ud83d\udd1d TOP AGGREGATED TERMS (Multi-Model Consensus)\n----------------------------------------\n 1. fecal samples (consensus: 2/4, score: 9.5)\n 2. inflammatory bowel disease (consensus: 1/4, score: 10.0)\n 3. gut microbiota (consensus: 1/4, score: 9.8)\n 4. crohn's disease (consensus: 1/4, score: 9.8)\n 5. ulcerative colitis (consensus: 1/4, score: 9.8)\n 6. microbiota composition (consensus: 1/4, score: 9.5)\n 7. 16s rrna (consensus: 1/4, score: 9.5)\n 8. co-abundance groups (consensus: 1/4, score: 9.5)\n 9. irritable bowel syndrome (consensus: 1/4, score: 9.5)\n10. drug transporters (consensus: 1/4, score: 9.5)\n11. short-chain fatty acids (consensus: 1/4, score: 9.5)\n12. microbiome (consensus: 1/4, score: 9.5)\n13. centenarian (consensus: 1/4, score: 9.5)\n14. rna (consensus: 1/4, score: 9.5)\n15. bacterial diversity (consensus: 1/4, score: 9.2)\n16. cross-sectional study (consensus: 1/4, score: 9.2)\n17. infant (consensus: 1/4, score: 9.2)\n18. dna (consensus: 1/4, score: 9.2)\n19. microorganisms (consensus: 1/4, score: 9.2)\n20. high-throughput sequencing (consensus: 1/4, score: 9.0)\n\n\ud83c\udfaf MODEL-SPECIFIC HIGHLIGHTS\n----------------------------------------\nen_ner_craft_md (General Biomedical):\n  \u2022 gut microbiota\n  \u2022 microbiota composition\n  \u2022 16S rRNA\n  \u2022 high-throughput sequencing\n  \u2022 bacterial diversity\n\nen_ner_bc5cdr_md (Chemicals & Diseases):\n  \u2022 inflammatory bowel disease\n  \u2022 Crohn's disease\n  \u2022 ulcerative colitis\n  \u2022 irritable bowel syndrome\n  \u2022 obesity\n\nen_core_sci_lg (General Scientific):\n  \u2022 microbiome\n  \u2022 aging\n  \u2022 age-related\n  \u2022 cross-sectional study\n  \u2022 healthy subjects\n\nen_ner_jnlpba_md (Clinical Entities):\n  \u2022 fecal samples\n  \u2022 DNA\n  \u2022 RNA\n  \u2022 proteins\n  \u2022 enzymes\n\n\ud83d\udca1 MULTI-MODEL PIPELINE RECOMMENDATIONS\n----------------------------------------\n\ud83d\udd27 OPTIMIZATION OPPORTUNITIES:\n\n\ud83d\udd27 ENHANCEMENTS FOR OPTIMAL PERFORMANCE:\n  \u2022 Enable UMLS mapping for standardized terminology\n  \u2022 Add semantic deduplication for term consolidation\n  \u2022 Use AI cleaning for taxonomic name correction\n  \u2022 Implement custom taxonomic database integration\n  \u2022 Add species-level bacterial name recognition\n  \u2022 Enable cross-model entity linking and disambiguation\n\n\ud83d\udcca SCIENTIFIC DOMAIN OPTIMIZATIONS:\n  \u2022 Microbiome-specific entity normalization\n  \u2022 Bacterial taxonomy hierarchy resolution\n  \u2022 Clinical terminology standardization (SNOMED, ICD)\n  \u2022 Chemical identifier resolution (PubChem, ChEBI)\n  \u2022 Gene/protein name disambiguation\n\n================================================================================\nEND OF COMPREHENSIVE MULTI-MODEL ANALYSIS\n================================================================================",
+  "pipeline_status": "COMPREHENSIVE MULTI-MODEL ANALYSIS",
+  "note": "Demonstrates full sciSpaCy model integration for biomedical text analysis"
+}
