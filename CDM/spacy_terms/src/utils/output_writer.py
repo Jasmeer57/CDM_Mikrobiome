@@ -116,7 +116,7 @@ class OutputWriter:
             raise
 
     def save_sqlite(self, results: Dict[str, Any], filename: str = None) -> str:
-        """Save results as SQLite database"""
+        """Save results as SQLite database with CDM integration"""
         if filename is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"pipeline_results_{timestamp}.db"
@@ -125,36 +125,168 @@ class OutputWriter:
 
         try:
             conn = sqlite3.connect(output_path)
+            cursor = conn.cursor()
 
-            # Save terms
-            terms = results.get('ai_corrected_terms', []) or results.get('deduplicated_terms', [])
+            # Create CDM-enhanced schema
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS terms (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    term TEXT NOT NULL,
+                    frequency INTEGER DEFAULT 1,
+                    relevance_score REAL DEFAULT 1.0,
+                    cdm_domain TEXT,
+                    cdm_relevance TEXT,
+                    cdm_concept_id TEXT,
+                    models_used TEXT,
+                    labels TEXT,
+                    examples TEXT,
+                    raw_entities_count INTEGER,
+                    deduplication_applied TEXT,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS raw_entities (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    term_id INTEGER,
+                    term TEXT,
+                    label TEXT,
+                    model TEXT,
+                    start_pos INTEGER,
+                    end_pos INTEGER,
+                    context TEXT,
+                    confidence REAL DEFAULT 1.0,
+                    relevance_score REAL DEFAULT 1.0,
+                    FOREIGN KEY (term_id) REFERENCES terms(id)
+                )
+            ''')
+
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS cdm_mappings (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    term_id INTEGER,
+                    cdm_domain TEXT NOT NULL,
+                    cdm_table TEXT,
+                    concept_class_id TEXT,
+                    standard_concept TEXT,
+                    vocabulary_id TEXT,
+                    concept_code TEXT,
+                    confidence REAL,
+                    FOREIGN KEY (term_id) REFERENCES terms(id)
+                )
+            ''')
+
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS pipeline_runs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    input_files TEXT,
+                    config TEXT,
+                    semantic_model TEXT,
+                    fuzzy_threshold REAL,
+                    semantic_threshold REAL,
+                    raw_entities_count INTEGER,
+                    filtered_count INTEGER,
+                    final_count INTEGER,
+                    processing_time REAL,
+                    cdm_ready_count INTEGER
+                )
+            ''')
+
+            # Create indexes for performance
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_terms_cdm_domain ON terms(cdm_domain)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_terms_cdm_relevance ON terms(cdm_relevance)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_raw_entities_term_id ON raw_entities(term_id)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_cdm_mappings_domain ON cdm_mappings(cdm_domain)')
+
+            # Save terms with CDM fields
+            terms = results.get('extraction_results', []) or results.get('ai_corrected_terms', []) or results.get('deduplicated_terms', [])
+            cdm_ready_count = 0
+
             if terms:
-                # Flatten terms
-                flattened_terms = []
                 for term_data in terms:
-                    flat = self._flatten_dict(term_data)
-                    # Convert complex objects to JSON strings
-                    for key, value in flat.items():
-                        if isinstance(value, (dict, list)):
-                            flat[key] = json.dumps(value, ensure_ascii=False)
-                        elif pd.isna(value):
-                            flat[key] = None
-                    flattened_terms.append(flat)
+                    # Extract CDM information
+                    cdm_domain = term_data.get('cdm_domain', 'UNKNOWN')
+                    cdm_relevance = term_data.get('cdm_relevance', 'MEDIUM')
 
-                df_terms = pd.DataFrame(flattened_terms)
-                df_terms.to_sql('terms', conn, if_exists='replace', index=False)
+                    if cdm_relevance in ['HIGH', 'MEDIUM']:
+                        cdm_ready_count += 1
 
-            # Save statistics
-            if 'statistics' in results:
-                stats_df = pd.DataFrame([results['statistics']])
-                stats_df.to_sql('statistics', conn, if_exists='replace', index=False)
+                    # Insert term
+                    cursor.execute('''
+                        INSERT INTO terms (
+                            term, frequency, relevance_score, cdm_domain, cdm_relevance,
+                            models_used, labels, examples, raw_entities_count, deduplication_applied
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        term_data.get('term'),
+                        term_data.get('frequency', 1),
+                        term_data.get('relevance_score', 1.0),
+                        cdm_domain,
+                        cdm_relevance,
+                        json.dumps(term_data.get('models_used', [])),
+                        json.dumps(term_data.get('labels', [])),
+                        json.dumps(term_data.get('examples', [])),
+                        len(term_data.get('raw_entities', [])),
+                        term_data.get('deduplication_applied', 'none')
+                    ))
 
-            # Save metadata
-            if 'metadata' in results:
-                metadata = results['metadata']
-                metadata_df = pd.DataFrame([metadata])
-                metadata_df.to_sql('metadata', conn, if_exists='replace', index=False)
+                    term_id = cursor.lastrowid
 
+                    # Insert CDM mapping if applicable
+                    if cdm_domain != 'UNKNOWN':
+                        cursor.execute('''
+                            INSERT INTO cdm_mappings (
+                                term_id, cdm_domain, cdm_table, standard_concept, confidence
+                            ) VALUES (?, ?, ?, ?, ?)
+                        ''', (
+                            term_id,
+                            cdm_domain,
+                            self._get_cdm_table(cdm_domain),
+                            term_data.get('term'),
+                            term_data.get('relevance_score', 1.0)
+                        ))
+
+                    # Insert raw entities
+                    for raw_entity in term_data.get('raw_entities', []):
+                        cursor.execute('''
+                            INSERT INTO raw_entities (
+                                term_id, term, label, model, start_pos, end_pos,
+                                context, confidence, relevance_score
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        ''', (
+                            term_id,
+                            raw_entity.get('term'),
+                            raw_entity.get('label'),
+                            raw_entity.get('model'),
+                            raw_entity.get('start'),
+                            raw_entity.get('end'),
+                            raw_entity.get('context', ''),
+                            raw_entity.get('confidence', 1.0),
+                            raw_entity.get('relevance_score', 1.0)
+                        ))
+
+            # Save pipeline run metadata
+            metadata = results.get('metadata', {})
+            config = metadata.get('config', {})
+            cursor.execute('''
+                INSERT INTO pipeline_runs (
+                    input_files, config, semantic_model, fuzzy_threshold, semantic_threshold,
+                    raw_entities_count, final_count, cdm_ready_count
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (
+                json.dumps(metadata.get('input_files', [])),
+                json.dumps(config),
+                config.get('semantic_model', 'mini-lm'),
+                config.get('fuzzy_threshold', 0.85),
+                config.get('semantic_threshold', 0.9),
+                metadata.get('raw_entities_count', 0),
+                len(terms),
+                cdm_ready_count
+            ))
+
+            conn.commit()
             conn.close()
 
             logger.info(f"SQLite results saved to: {output_path}")

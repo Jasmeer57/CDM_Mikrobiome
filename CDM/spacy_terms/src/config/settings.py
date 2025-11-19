@@ -31,7 +31,7 @@ class DeduplicationConfig:
     semantic_enabled: bool = True
     semantic_models: Dict[str, str] = field(default_factory=lambda: {
         "mini-lm": "sentence-transformers/all-MiniLM-L12-v2",
-        "nomic": "nomic-ai/nomic-embed-text-v1",
+        "nomic": "nomic-ai/nomic-embed-text-v1.5",
         "mpnet": "sentence-transformers/all-mpnet-base-v2"
     })
     default_semantic_model: str = "mini-lm"
