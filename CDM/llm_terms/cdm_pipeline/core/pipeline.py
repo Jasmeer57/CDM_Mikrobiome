@@ -11,6 +11,7 @@ from core.llm_client import LLMClient
 from extractors.entity_extractor import CDMEntityExtractor
 from core.semantic_deduplicator import SemanticDeduplicator
 from core.entity_filter import EntityFilter
+from core.biomedical_deduplicator import BioMistralDeduplicator
 from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
 from mappers.omop_mapper import OMOPMapper
 from mappers.umls import UMLSMapper
@@ -25,6 +26,7 @@ class CDMEntityPipeline:
     def __init__(self, model: str = None, base_url: str = None, config: PipelineConfig = None,
                  semantic_model: str = "all-MiniLM-L6-v2", semantic_threshold: float = 0.8,
                  enable_biomistral: bool = False, biomistral_model: str = "biomistral-7B",
+                 enable_biomistral_deduplication: bool = False, biomistral_dedup_model: str = "biomistral:7b",
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
                  mapping_confidence_threshold: float = 0.7):
@@ -37,6 +39,7 @@ class CDMEntityPipeline:
 
         # Initialize biomedical and mapping components
         self.enable_biomistral = enable_biomistral
+        self.enable_biomistral_deduplication = enable_biomistral_deduplication
         self.enable_omop_mapping = enable_omop_mapping
         self.enable_umls_mapping = enable_umls_mapping
         self.enable_comprehensive_mapping = enable_comprehensive_mapping
@@ -46,6 +49,14 @@ class CDMEntityPipeline:
             from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
             biomistral_config = BioMistralConfig(model_name=biomistral_model)
             self.biomistral_validator = BioMistralValidator(biomistral_config)
+
+        if enable_biomistral_deduplication:
+            self.biomistral_deduplicator = BioMistralDeduplicator(
+                llm_client=self.llm_client,
+                biomistral_model=biomistral_dedup_model,
+                semantic_model=semantic_model
+            )
+            logger.info(f"✅ BioMistral deduplication enabled with model: {biomistral_dedup_model}")
 
         if enable_comprehensive_mapping:
             from mappers.mapping import ComprehensiveMapper
@@ -162,6 +173,23 @@ class CDMEntityPipeline:
                 if key not in seen_entities:
                     seen_entities.add(key)
                     unique_entities.append(entity_data)
+
+        # Apply BioMistral biomedical deduplication if enabled
+        if self.enable_biomistral_deduplication:
+            logger.info("🔬 Applying BioMistral biomedical deduplication...")
+            biomistral_deduplicated, duplicate_groups = self.biomistral_deduplicator.deduplicate_entities(
+                entities=unique_entities,
+                biomistral_threshold=0.7,
+                semantic_threshold=0.85,
+                use_biomistral=True
+            )
+            logger.info(f"✅ BioMistral deduplication: {len(unique_entities)} → {len(biomistral_deduplicated)} entities")
+            logger.info(f"🔗 Found {len(duplicate_groups)} biomedical duplicate groups")
+
+            # Export duplicate analysis for parsing
+            self.biomistral_deduplicator.export_duplicate_analysis("biomistral_duplicate_analysis.json")
+
+            unique_entities = biomistral_deduplicated
 
         # Apply comprehensive entity filtering and quality control
         logger.info("🔍 Applying comprehensive entity filtering and quality control...")

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2025-11-19T01:29:47.861873",
+    "timestamp": "2025-11-19T11:44:36.958865",
     "input_files": [
       "data/PRJDB4360.txt"
     ],
@@ -11,7 +11,7 @@
         "en_ner_bc5cdr_md",
         "en_ner_jnlpba_md"
       ],
-      "semantic_model": "mini-lm",
+      "semantic_model": "nomic",
       "fuzzy_threshold": 0.85,
       "semantic_threshold": 0.9,
       "ai_correction_enabled": false,
@@ -29,9 +29,9 @@
         "ENTITY"
       ],
       "examples": [
-        "\nHowever, children younger than 20 years fell into both\nthe infant and adult clusters, regardless of their age,\nwhen clustered based on the abundance of genus-like\ngroups, thus illustrating the individual differences in the\ngut microbiota maturation process.",
-        "\nWang F, Yu T, Huang G, Cai D, Liang X, et al. Gut microbiota community\nand its assembly associated with age and diet in Chinese centenarians.",
-        "In addition, a low\ngut microbiota diversity has been associated with an\nincreasing number of conditions, such as autism [38],\nautoimmune disease [39] and obesity [40]."
+        "In this study, we\nobserved an increase in gut microbiota diversity with\naging until the centenarian stage.",
+        "The authors therefore sug-\ngested that a healthy gut microbiota community might\nbe affected by aging-related physiological and behavioral\nchanges that occur after 70 years of age, which was con-\nsidered the threshold age for defining an individual as\nelderly.",
+        "It has been recently\nshown that the gut microbiota is not yet established\nat 5 years of age [11]."
       ],
       "relevance_score": 1.0,
       "frequency": 60,
@@ -671,13 +671,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
         "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
-        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces."
+        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces.",
+        "These patterns might be characteristic of\nthe gut microbiota composition of the Japanese popu-\nlation,\nalthough\nthey\nmay\nalso\nreflect\nthe\nDNA\nextraction method [16, 17] and the amplified region\nof the 16S rRNA gene [24]."
       ],
       "relevance_score": 1.0,
       "frequency": 9,
@@ -785,9 +785,9 @@
         "ENTITY"
       ],
       "examples": [
-        "In\naddition, it is uncertain that all bacterial interactions are\nconsistent with the relationships in the Wiggum plot,\nbecause\ngenera\nwith\npositive\nrelationships\nin\nthe\nWiggum plot might grow well under the same environ-\nmental conditions without a mutualistic relationship.",
-        "\nBacterial co-abundance groups (CAGs)\nAll genus-like-level groups, except for an unidentified\ngroup, were entered into this analysis.",
-        "\nNakayama J, Watanabe K, Jiang J, Matsuda K, Chao S-H, Haryono P, et al.\nDiversity in gut bacterial community of school-age children in Asia."
+        "\nNakayama J, Watanabe K, Jiang J, Matsuda K, Chao S-H, Haryono P, et al.\nDiversity in gut bacterial community of school-age children in Asia.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
+        "\nBacterial strains and culture conditions\nCultivable strains were selected based on the Wiggum plot\nresults and were obtained from public culture collections\n(Additional file 16)."
       ],
       "relevance_score": 1.0,
       "frequency": 21,
@@ -1011,14 +1011,14 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
+        "TAXON",
         "ENTITY",
-        "TAXON"
+        "SO"
       ],
       "examples": [
-        "In\naddition, it is uncertain that all bacterial interactions are\nconsistent with the relationships in the Wiggum plot,\nbecause\ngenera\nwith\npositive\nrelationships\nin\nthe\nWiggum plot might grow well under the same environ-\nmental conditions without a mutualistic relationship.",
+        "We then performed in vitro assays to\ninvestigate some relevant relationships among genera.",
         "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup).",
-        "\nBox-plots show the interquartile range (IQR) of the sum of z-scores converted from the relative abundance of genera belonging to the same\nCAG."
+        "Furthermore, our\nresults showed that Japanese adults (21–69 years old)\nhave a greater abundance of the genera Blautia and\nBifidobacterium (interquartile ranges (IQR) of 18 (12–24)\n% and 7 (2–14) %, respectively) and a relatively lower\nabundance of genera related to Bacteroidetes (IQR 4\n(1–10) %), compared with those reported in previous\nstudies in other nations."
       ],
       "relevance_score": 0.9,
       "frequency": 26,
@@ -1292,14 +1292,14 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "TAXON",
         "CHEBI",
-        "ENTITY"
+        "ENTITY",
+        "TAXON"
       ],
       "examples": [
-        "\nHowever, children younger than 20 years fell into both\nthe infant and adult clusters, regardless of their age,\nwhen clustered based on the abundance of genus-like\ngroups, thus illustrating the individual differences in the\ngut microbiota maturation process.",
-        "\nMariat D, Firmesse O, Levenez F, Guimarăes V, Sokol H, Doré J, et al. The\nFirmicutes/Bacteroidetes ratio of the human microbiota changes with age.",
-        "\nWang F, Yu T, Huang G, Cai D, Liang X, et al. Gut microbiota community\nand its assembly associated with age and diet in Chinese centenarians."
+        "In this study, we\nobserved an increase in gut microbiota diversity with\naging until the centenarian stage.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
+        "It is unclear when\nand how the microbiota composition shifts from the\nadult stage to the elderly stage."
       ],
       "relevance_score": 1.0,
       "frequency": 78,
@@ -2095,7 +2095,7 @@
         "ENTITY"
       ],
       "examples": [
-        "Other reports have indicated that the phylogenetic\n* Correspondence: t-odamak@morinagamilk.co.jp\n1Next Generation Science Institute, Morinaga Milk Industry Co., Ltd., Zama,\nKanagawa, Japan\nFull list of author information is available at the end of the article\n© 2016 Odamaki et al. Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0\nInternational License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and\nreproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to\nthe Creative Commons license, and indicate if changes were made.",
+        "\nDiversity analysis\nThe\nmicrobial\ndiversity\nwithin\neach\nage-segmented\ngroup [alpha diversity including Chao1, number of\nobserved species (the number of OTUs), phylogenetic\ndistance (PD) whole tree, and Shannon diversity index]\nand the distances between subjects (UniFrac distance as\nbeta diversity) were estimated using QIIME version 1.8.0\nsoftware.",
         "Their report provided important insights, such as\nthe\nperiod\nrequired\nto\nform\nan\nadult-like\ngut\nmicrobiota, greater between-subject variation among\nchildren than adults, differences in the phylogenetic\ncomposition\nof\ngut\nmicrobiota\namong\nindividuals\nfrom different countries and an increase in bacterial\ndiversity with age.",
         "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61]."
       ],
@@ -2353,8 +2353,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\n(PDF 401 kb)\nAdditional file 6: Bacterial groups at genus-like level in each CAG.",
-        "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup)."
+        "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup).",
+        "\n(PDF 401 kb)\nAdditional file 6: Bacterial groups at genus-like level in each CAG."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -2390,9 +2390,9 @@
         "ENTITY"
       ],
       "examples": [
-        "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community.",
-        "\nWe\nfirst\ncalculated\nUniFrac\ndistances to determine the extent of similarity between\nmicrobial communities.",
-        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid."
+        "\nDiversity analysis\nThe\nmicrobial\ndiversity\nwithin\neach\nage-segmented\ngroup [alpha diversity including Chao1, number of\nobserved species (the number of OTUs), phylogenetic\ndistance (PD) whole tree, and Shannon diversity index]\nand the distances between subjects (UniFrac distance as\nbeta diversity) were estimated using QIIME version 1.8.0\nsoftware.",
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
+        "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -2462,16 +2462,16 @@
     {
       "term": "Actinobacteria",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
         "ENTITY"
       ],
       "examples": [
-        "The relative abundance of Actinobacteria substan-\ntially decreased after weaning and continued to decrease\nwith age.",
         "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
+        "The relative abundance of Actinobacteria substan-\ntially decreased after weaning and continued to decrease\nwith age.",
         "\nAlthough there are differences among individuals, our\nanalysis of the phylum composition of gut microbiota in\neach age group showed a significant shift in the relative\nabundance of Actinobacteria in infants from before to\nafter weaning."
       ],
       "relevance_score": 1.0,
@@ -2548,8 +2548,8 @@
         "ENTITY"
       ],
       "examples": [
-        "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
         "The change in the relative abun-\ndance of Proteobacteria was opposite that of Firmicutes.",
+        "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
         "\nIncreases in the relative abundance of Bacteroidetes and\nProteobacteria were observed in subjects over 70 years\nold."
       ],
       "relevance_score": 1.0,
@@ -2642,8 +2642,8 @@
     {
       "term": "Eubacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -2707,9 +2707,9 @@
         "ENTITY"
       ],
       "examples": [
-        "A similar negative relation-\nship was observed between Escherichia coli JCM 1649, be-\nlong to family Enterobacteriaceae and Blautia producta\nJCM 1471.",
-        "Almost all of the correlations were\npositive; the only four negative correlations were observed\nbetween Enterobacteriaceae and Lachnospiraceae, Entero-\nbacteriaceae and Blautia, Bifidobacterium and Parabacter-\noides and Veillonella and [Mogibacteriaceae].",
-        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3)."
+        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3).",
+        "It has\nalso been reported that Bifidobacterium populations can\nbe stimulated efficiently with a concomitant decrease in\nEnterobacteriaceae [32, 33].",
+        "\nIn the present study, the Wiggum plot showed nega-\ntive relationships between the relative abundance of\nEnterobacteriaceae, which creates an greater endotoxin\nchallenge for the weakened intestinal barrier and thus\nresults in increased stimulation of the inflammatory\nresponse [26], and the abundance of Blautia and\nLachnospiraceae;g (Fig. 4), which belonged to the adult-\nassociated CAG (Lachnospiraceae;g CAG)."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -2779,17 +2779,17 @@
     {
       "term": "Bifidobacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
         "ENTITY"
       ],
       "examples": [
-        "\nGiven the age-related reduction in the abundance of\nthe\ngenus\nBifidobacterium,\nwhich\ndown-regulates\npro-inflammatory responses in the gut epithelium\n[28–30], our results suggested that the aging-related\ndysbiosis in elderly subjects may be a contributing\nfactor to inflammatory responses that occur with\nadvancing age.",
-        "\nSequential changes occurred in the relative abundance of\nBacteroides, Lachnospiraceae and Bifidobacterium CAGs in\nthe gut microbiota during childhood and adolescence.",
-        "Almost all of the correlations were\npositive; the only four negative correlations were observed\nbetween Enterobacteriaceae and Lachnospiraceae, Entero-\nbacteriaceae and Blautia, Bifidobacterium and Parabacter-\noides and Veillonella and [Mogibacteriaceae]."
+        "Acetate, one of the main fer-\nmentation products of Bifidobacterium, was reported to\npromote the growth of butyrate-producing bacteria and\nthe in vitro production of butyrate [34, 35].",
+        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3).",
+        "Each\nnumber below the figure indicates a group as shown in Table 1\nOdamaki et al. BMC Microbiology  (2016) 16:90 \nPage 5 of 12\nLachnospiraceae and Bifidobacterium CAGs and the\nalpha diversity of gut microbiota continued to change\nsequentially with age in subjects younger than twenty,\nreflecting the human gut microbiota maturation process."
       ],
       "relevance_score": 1.0,
       "frequency": 19,
@@ -3047,8 +3047,8 @@
         "ENTITY"
       ],
       "examples": [
-        "In\naccordance with the Wiggum plot results, both of Parabac-\nteroides distasonis JCM 5825 and Bifidobacterium longum\nJCM 1217 growth were suppressed when co-cultivate with\neach other (Additional file 7).",
         "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community.",
+        "\nOdamaki T, Xiao J-Z, Iwabuchi N, Sakamoto M, Takahashi N, Kondo S, et al.\nInfluence of Bifidobacterium longum BB536 intake on faecal microbiota in\nindividuals with Japanese cedar pollinosis during the pollen season.",
         "Further-\nmore, Bifidobacterium longum has been reported to alter\ngut luminal metabolism via interactions with Bacteroides\ncaccae and Eubacterium rectale [36]."
       ],
       "relevance_score": 1.0,
@@ -3099,8 +3099,8 @@
     {
       "term": "Betaproteobacteria",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "DISEASE",
@@ -3217,17 +3217,17 @@
     {
       "term": "transporter genes",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
         "ENTITY"
       ],
       "examples": [
-        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota.",
-        "To begin\nto address this question, we performed PICRUSt analysis\nto predict the relative abundance of transporter genes\nbecause we hypothesized that bacterial transporters that\nincorporate nutrients from the gut environment would\ndiffer if dietary habit was a predominant contributor to\ngut microbiota composition.",
-        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt."
+        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt.",
+        "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61].",
+        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota."
       ],
       "relevance_score": 1.0,
       "frequency": 8,
@@ -3362,9 +3362,9 @@
         "ENTITY"
       ],
       "examples": [
-        "Other butyrate-\nproducing bacteria, such as Coprococcus, Roseburia and\nFaecalibacterium, were also clustered in the same CAG.",
         "The\npresent study using LEfSe method indicated that Actino-\nbacteria, Clostridia and Bacteroidetes, Betaproteobac-\nteria and Deltaproteobacteria were representative taxa in\ninfant, adults and the elderly cluster.",
-        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces."
+        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces.",
+        "\n(XLSX 863 kb)\nAdditional file 7: Cell number of bacteria in vitro assay. ("
       ],
       "relevance_score": 1.0,
       "frequency": 15,
@@ -3550,8 +3550,8 @@
     {
       "term": "Faecalibacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -3730,8 +3730,8 @@
     {
       "term": "autoimmune disease",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "DISEASE",
@@ -3872,8 +3872,8 @@
     {
       "term": "Fusobacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -3998,16 +3998,16 @@
     {
       "term": "primer sets",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
         "ENTITY"
       ],
       "examples": [
-        "The primer sets are shown in\nAdditional file 17 [57–60].",
-        "\nSequencing and data processing\nThe V3-V4 region of the bacterial 16S rRNA gene was\nthen amplified by PCR with the TaKaRa Ex Taq HS Kit\n(TaKaRa Bio, Shiga, Japan) and the primer sets Tru357F\n(5′-CGCTCTTCCGATCTCTGTACGGRAGGCAGCA\nG-3′) and Tru806R (5′-CGCTCTTCCGATCTGACG-\nGACTACHVGGGTWTCTAAT-3′)."
+        "\nSequencing and data processing\nThe V3-V4 region of the bacterial 16S rRNA gene was\nthen amplified by PCR with the TaKaRa Ex Taq HS Kit\n(TaKaRa Bio, Shiga, Japan) and the primer sets Tru357F\n(5′-CGCTCTTCCGATCTCTGTACGGRAGGCAGCA\nG-3′) and Tru806R (5′-CGCTCTTCCGATCTGACG-\nGACTACHVGGGTWTCTAAT-3′).",
+        "The primer sets are shown in\nAdditional file 17 [57–60]."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -4051,8 +4051,8 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "After verifying the\namplified DNA based on PCR product size using the\nQIAxcel system (Qiagen, Valencia, CA, USA), the\ntriplicate samples were combined."
@@ -4111,14 +4111,14 @@
     {
       "term": "DNA product",
       "models_used": [
-        "en_ner_jnlpba_md",
         "en_ner_craft_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
         "PROTEIN",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "After validating the 2nd\namplified DNA product using the QIAxcel system,\nthe PCR products were purified using a QIAquick 96\nPCR Purification Kit (Qiagen, Valencia, CA, USA) ac-\ncording to the manufacturer’s protocol."
@@ -4161,14 +4161,14 @@
     {
       "term": "PCR products",
       "models_used": [
-        "en_ner_jnlpba_md",
         "en_ner_craft_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
         "PROTEIN",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "A 1-μl sample of\nthe combined PCR products was amplified using the\nfollowing\nbarcoded\nprimers\nadapted\nfor\nIllumina\nMiSeq: Fwd 5′-AATGATACGGCGACCACCGAGAT\nCTACACXXXXXXXXACACTCTTTCCCTACACGAC\nGCTCTTCCGATCTCTG-3′ and Rev 5′-CAAGCAGAA\nGACGGCATACGAGATXXXXXXXXGTGACTGGAGT\nTCAGACGTGTGCTCTTCCGATCTGAC-3′, where X\nrepresents a barcode base.",
@@ -4280,8 +4280,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nTaxonomic analysis\nThe sequences were analyzed using the QIIME software\npackage version 1.8.0 [51, 52] (http://qiime.org/).",
-        "Independent of the\ntaxonomic analysis, 97 % of the OTUs were picked using a\nclosed-reference OTU picking protocol (QIIME 1.8.0 [51,\n52]) and the Greengenes database (database/13_8) [54] pre-\nclustered at 97 % identity."
+        "Independent of the\ntaxonomic analysis, 97 % of the OTUs were picked using a\nclosed-reference OTU picking protocol (QIIME 1.8.0 [51,\n52]) and the Greengenes database (database/13_8) [54] pre-\nclustered at 97 % identity.",
+        "\nTaxonomic analysis\nThe sequences were analyzed using the QIIME software\npackage version 1.8.0 [51, 52] (http://qiime.org/)."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -4315,8 +4315,8 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "\nPotential chimeric sequences were removed using\nUCHIME,\nassigned\nto\noperational\ntaxonomic\nunits\n(OTUs) using Open-reference OTU picking [53] with a\n97 % threshold of pairwise identity, and then classified\ntaxonomically using the Greengenes reference database\n(http://greengenes.secondgenome.com/downloads/database/\n13_5) [54]."
@@ -4608,13 +4608,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota.",
         "Notably, all the drug transporters\nbased on Kyoto Encyclopedia of Genes and Genomes (KEGG) Orthology groups were found in the\ninfant/elderly-enriched cluster.",
-        "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61]."
+        "To begin\nto address this question, we performed PICRUSt analysis\nto predict the relative abundance of transporter genes\nbecause we hypothesized that bacterial transporters that\nincorporate nutrients from the gut environment would\ndiffer if dietary habit was a predominant contributor to\ngut microbiota composition.",
+        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt."
       ],
       "relevance_score": 0.7999999999999999,
       "frequency": 8,
@@ -4708,12 +4708,12 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
-        "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160."
+        "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
+        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160."
       ],
       "relevance_score": 1.0,
       "frequency": 4,
@@ -4789,8 +4789,8 @@
     {
       "term": "PCR primers",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
@@ -4831,13 +4831,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
         "CHEBI",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid.",
-        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences."
+        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences.",
+        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid."
       ],
       "relevance_score": 0.6000000000000001,
       "frequency": 3,
@@ -4935,9 +4935,9 @@
         "ENTITY"
       ],
       "examples": [
-        "Development of the\nhuman infant intestinal microbiota.",
         "\nTsuji H, Oozeer R, Matsuda K, Matsuki T, Ohta T, Nomoto K, et al. Molecular\nmonitoring of the development of intestinal microbiota in Japanese infants.",
-        "\nCampbell JH, Foster CM, Vishnivetskaya T, Campbell AG, Yang ZK, Wymore A,\net al. Host genetic and environmental effects on mouse intestinal microbiota."
+        "\nGrönlund M, Grześkowiak Ł, Isolauri E, Salminen S. Influence of mother’s\nintestinal microbiota on gut colonization in the infant.",
+        "\nClaesson MJ, Cusack S, O’Sullivan O, Greene-Diniz R, de Weerd H, Flannery E, et\nal. Composition, variability, and temporal stability of the intestinal microbiota\nof the elderly."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -5015,8 +5015,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
-        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children."
+        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -5062,8 +5062,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nMueller S, Saunier K, Hanisch C, Norin E, Alm L, Midtvedt T, et al. Differences\nin fecal microbiota in different European study populations in relation to\nage, gender, and country: a cross-sectional study.",
-        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children."
+        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children.",
+        "\nMueller S, Saunier K, Hanisch C, Norin E, Alm L, Midtvedt T, et al. Differences\nin fecal microbiota in different European study populations in relation to\nage, gender, and country: a cross-sectional study."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -5127,9 +5127,9 @@
         "ENTITY"
       ],
       "examples": [
-        "\nMicrobiome.",
         "\nLe Chatelier E, Nielsen T, Qin J, Prifti E, Hildebrand F, Falony G, et al.\nRichness of human gut microbiome correlates with metabolic markers.",
-        "\nCantarel BL, Lombard V, Henrissat B. Complex carbohydrate utilization by\nthe healthy human microbiome."
+        "\nMicrobiome.",
+        "\nBrown CT, Davis-Richardson AG, Giongo A, Gano KA, Crabb DB, Mukherjee\nN, et al. Gut microbiome metagenomics analysis suggests a functional\nmodel for the development of autoimmunity for type 1 diabetes."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -5392,8 +5392,8 @@
     {
       "term": "Bifidobacterium breve",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -5441,8 +5441,8 @@
     {
       "term": "airway inflammation",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "DISEASE",
@@ -5639,12 +5639,12 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
-        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences."
+        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences.",
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -5944,17 +5944,17 @@
     {
       "term": "16S rRNA gene",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
-        "DNA"
+        "DNA",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
         "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
-        "These patterns might be characteristic of\nthe gut microbiota composition of the Japanese popu-\nlation,\nalthough\nthey\nmay\nalso\nreflect\nthe\nDNA\nextraction method [16, 17] and the amplified region\nof the 16S rRNA gene [24]."
+        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
+        "\nResults: Fecal samples from 367 healthy Japanese subjects between the ages of 0 and 104 years were analyzed by\nhigh-throughput sequencing of amplicons derived from the V3-V4 region of the 16S rRNA gene."
       ],
       "relevance_score": 1.0,
       "frequency": 8,
@@ -6044,8 +6044,8 @@
     {
       "term": "Bifidobacterium CAGs",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "TAXON",
@@ -6166,8 +6166,8 @@
     {
       "term": "bacterial 16S rRNA gene",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "TAXON",
@@ -6345,12 +6345,12 @@
     {
       "term": "16S rRNA gene sequences",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
-        "DNA"
+        "DNA",
+        "SO"
       ],
       "examples": [
         "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities."
@@ -6677,9 +6677,9 @@
         "ENTITY"
       ],
       "examples": [
-        "\nHowever, children younger than 20 years fell into both\nthe infant and adult clusters, regardless of their age,\nwhen clustered based on the abundance of genus-like\ngroups, thus illustrating the individual differences in the\ngut microbiota maturation process.",
-        "\nWang F, Yu T, Huang G, Cai D, Liang X, et al. Gut microbiota community\nand its assembly associated with age and diet in Chinese centenarians.",
-        "In addition, a low\ngut microbiota diversity has been associated with an\nincreasing number of conditions, such as autism [38],\nautoimmune disease [39] and obesity [40]."
+        "In this study, we\nobserved an increase in gut microbiota diversity with\naging until the centenarian stage.",
+        "The authors therefore sug-\ngested that a healthy gut microbiota community might\nbe affected by aging-related physiological and behavioral\nchanges that occur after 70 years of age, which was con-\nsidered the threshold age for defining an individual as\nelderly.",
+        "It has been recently\nshown that the gut microbiota is not yet established\nat 5 years of age [11]."
       ],
       "relevance_score": 1.0,
       "frequency": 60,
@@ -7319,13 +7319,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
         "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
-        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces."
+        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces.",
+        "These patterns might be characteristic of\nthe gut microbiota composition of the Japanese popu-\nlation,\nalthough\nthey\nmay\nalso\nreflect\nthe\nDNA\nextraction method [16, 17] and the amplified region\nof the 16S rRNA gene [24]."
       ],
       "relevance_score": 1.0,
       "frequency": 9,
@@ -7433,9 +7433,9 @@
         "ENTITY"
       ],
       "examples": [
-        "In\naddition, it is uncertain that all bacterial interactions are\nconsistent with the relationships in the Wiggum plot,\nbecause\ngenera\nwith\npositive\nrelationships\nin\nthe\nWiggum plot might grow well under the same environ-\nmental conditions without a mutualistic relationship.",
-        "\nBacterial co-abundance groups (CAGs)\nAll genus-like-level groups, except for an unidentified\ngroup, were entered into this analysis.",
-        "\nNakayama J, Watanabe K, Jiang J, Matsuda K, Chao S-H, Haryono P, et al.\nDiversity in gut bacterial community of school-age children in Asia."
+        "\nNakayama J, Watanabe K, Jiang J, Matsuda K, Chao S-H, Haryono P, et al.\nDiversity in gut bacterial community of school-age children in Asia.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
+        "\nBacterial strains and culture conditions\nCultivable strains were selected based on the Wiggum plot\nresults and were obtained from public culture collections\n(Additional file 16)."
       ],
       "relevance_score": 1.0,
       "frequency": 21,
@@ -7659,14 +7659,14 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
+        "TAXON",
         "ENTITY",
-        "TAXON"
+        "SO"
       ],
       "examples": [
-        "In\naddition, it is uncertain that all bacterial interactions are\nconsistent with the relationships in the Wiggum plot,\nbecause\ngenera\nwith\npositive\nrelationships\nin\nthe\nWiggum plot might grow well under the same environ-\nmental conditions without a mutualistic relationship.",
+        "We then performed in vitro assays to\ninvestigate some relevant relationships among genera.",
         "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup).",
-        "\nBox-plots show the interquartile range (IQR) of the sum of z-scores converted from the relative abundance of genera belonging to the same\nCAG."
+        "Furthermore, our\nresults showed that Japanese adults (21–69 years old)\nhave a greater abundance of the genera Blautia and\nBifidobacterium (interquartile ranges (IQR) of 18 (12–24)\n% and 7 (2–14) %, respectively) and a relatively lower\nabundance of genera related to Bacteroidetes (IQR 4\n(1–10) %), compared with those reported in previous\nstudies in other nations."
       ],
       "relevance_score": 0.9,
       "frequency": 26,
@@ -7940,14 +7940,14 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "TAXON",
         "CHEBI",
-        "ENTITY"
+        "ENTITY",
+        "TAXON"
       ],
       "examples": [
-        "\nHowever, children younger than 20 years fell into both\nthe infant and adult clusters, regardless of their age,\nwhen clustered based on the abundance of genus-like\ngroups, thus illustrating the individual differences in the\ngut microbiota maturation process.",
-        "\nMariat D, Firmesse O, Levenez F, Guimarăes V, Sokol H, Doré J, et al. The\nFirmicutes/Bacteroidetes ratio of the human microbiota changes with age.",
-        "\nWang F, Yu T, Huang G, Cai D, Liang X, et al. Gut microbiota community\nand its assembly associated with age and diet in Chinese centenarians."
+        "In this study, we\nobserved an increase in gut microbiota diversity with\naging until the centenarian stage.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
+        "It is unclear when\nand how the microbiota composition shifts from the\nadult stage to the elderly stage."
       ],
       "relevance_score": 1.0,
       "frequency": 78,
@@ -8743,7 +8743,7 @@
         "ENTITY"
       ],
       "examples": [
-        "Other reports have indicated that the phylogenetic\n* Correspondence: t-odamak@morinagamilk.co.jp\n1Next Generation Science Institute, Morinaga Milk Industry Co., Ltd., Zama,\nKanagawa, Japan\nFull list of author information is available at the end of the article\n© 2016 Odamaki et al. Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0\nInternational License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and\nreproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to\nthe Creative Commons license, and indicate if changes were made.",
+        "\nDiversity analysis\nThe\nmicrobial\ndiversity\nwithin\neach\nage-segmented\ngroup [alpha diversity including Chao1, number of\nobserved species (the number of OTUs), phylogenetic\ndistance (PD) whole tree, and Shannon diversity index]\nand the distances between subjects (UniFrac distance as\nbeta diversity) were estimated using QIIME version 1.8.0\nsoftware.",
         "Their report provided important insights, such as\nthe\nperiod\nrequired\nto\nform\nan\nadult-like\ngut\nmicrobiota, greater between-subject variation among\nchildren than adults, differences in the phylogenetic\ncomposition\nof\ngut\nmicrobiota\namong\nindividuals\nfrom different countries and an increase in bacterial\ndiversity with age.",
         "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61]."
       ],
@@ -9001,8 +9001,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\n(PDF 401 kb)\nAdditional file 6: Bacterial groups at genus-like level in each CAG.",
-        "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup)."
+        "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup).",
+        "\n(PDF 401 kb)\nAdditional file 6: Bacterial groups at genus-like level in each CAG."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -9038,9 +9038,9 @@
         "ENTITY"
       ],
       "examples": [
-        "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community.",
-        "\nWe\nfirst\ncalculated\nUniFrac\ndistances to determine the extent of similarity between\nmicrobial communities.",
-        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid."
+        "\nDiversity analysis\nThe\nmicrobial\ndiversity\nwithin\neach\nage-segmented\ngroup [alpha diversity including Chao1, number of\nobserved species (the number of OTUs), phylogenetic\ndistance (PD) whole tree, and Shannon diversity index]\nand the distances between subjects (UniFrac distance as\nbeta diversity) were estimated using QIIME version 1.8.0\nsoftware.",
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
+        "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -9110,16 +9110,16 @@
     {
       "term": "Actinobacteria",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
         "ENTITY"
       ],
       "examples": [
-        "The relative abundance of Actinobacteria substan-\ntially decreased after weaning and continued to decrease\nwith age.",
         "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
+        "The relative abundance of Actinobacteria substan-\ntially decreased after weaning and continued to decrease\nwith age.",
         "\nAlthough there are differences among individuals, our\nanalysis of the phylum composition of gut microbiota in\neach age group showed a significant shift in the relative\nabundance of Actinobacteria in infants from before to\nafter weaning."
       ],
       "relevance_score": 1.0,
@@ -9196,8 +9196,8 @@
         "ENTITY"
       ],
       "examples": [
-        "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
         "The change in the relative abun-\ndance of Proteobacteria was opposite that of Firmicutes.",
+        "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
         "\nIncreases in the relative abundance of Bacteroidetes and\nProteobacteria were observed in subjects over 70 years\nold."
       ],
       "relevance_score": 1.0,
@@ -9290,8 +9290,8 @@
     {
       "term": "Eubacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -9355,9 +9355,9 @@
         "ENTITY"
       ],
       "examples": [
-        "A similar negative relation-\nship was observed between Escherichia coli JCM 1649, be-\nlong to family Enterobacteriaceae and Blautia producta\nJCM 1471.",
-        "Almost all of the correlations were\npositive; the only four negative correlations were observed\nbetween Enterobacteriaceae and Lachnospiraceae, Entero-\nbacteriaceae and Blautia, Bifidobacterium and Parabacter-\noides and Veillonella and [Mogibacteriaceae].",
-        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3)."
+        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3).",
+        "It has\nalso been reported that Bifidobacterium populations can\nbe stimulated efficiently with a concomitant decrease in\nEnterobacteriaceae [32, 33].",
+        "\nIn the present study, the Wiggum plot showed nega-\ntive relationships between the relative abundance of\nEnterobacteriaceae, which creates an greater endotoxin\nchallenge for the weakened intestinal barrier and thus\nresults in increased stimulation of the inflammatory\nresponse [26], and the abundance of Blautia and\nLachnospiraceae;g (Fig. 4), which belonged to the adult-\nassociated CAG (Lachnospiraceae;g CAG)."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -9427,17 +9427,17 @@
     {
       "term": "Bifidobacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
         "ENTITY"
       ],
       "examples": [
-        "\nGiven the age-related reduction in the abundance of\nthe\ngenus\nBifidobacterium,\nwhich\ndown-regulates\npro-inflammatory responses in the gut epithelium\n[28–30], our results suggested that the aging-related\ndysbiosis in elderly subjects may be a contributing\nfactor to inflammatory responses that occur with\nadvancing age.",
-        "\nSequential changes occurred in the relative abundance of\nBacteroides, Lachnospiraceae and Bifidobacterium CAGs in\nthe gut microbiota during childhood and adolescence.",
-        "Almost all of the correlations were\npositive; the only four negative correlations were observed\nbetween Enterobacteriaceae and Lachnospiraceae, Entero-\nbacteriaceae and Blautia, Bifidobacterium and Parabacter-\noides and Veillonella and [Mogibacteriaceae]."
+        "Acetate, one of the main fer-\nmentation products of Bifidobacterium, was reported to\npromote the growth of butyrate-producing bacteria and\nthe in vitro production of butyrate [34, 35].",
+        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3).",
+        "Each\nnumber below the figure indicates a group as shown in Table 1\nOdamaki et al. BMC Microbiology  (2016) 16:90 \nPage 5 of 12\nLachnospiraceae and Bifidobacterium CAGs and the\nalpha diversity of gut microbiota continued to change\nsequentially with age in subjects younger than twenty,\nreflecting the human gut microbiota maturation process."
       ],
       "relevance_score": 1.0,
       "frequency": 19,
@@ -9669,8 +9669,8 @@
         "ENTITY"
       ],
       "examples": [
-        "In\naccordance with the Wiggum plot results, both of Parabac-\nteroides distasonis JCM 5825 and Bifidobacterium longum\nJCM 1217 growth were suppressed when co-cultivate with\neach other (Additional file 7).",
         "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community.",
+        "\nOdamaki T, Xiao J-Z, Iwabuchi N, Sakamoto M, Takahashi N, Kondo S, et al.\nInfluence of Bifidobacterium longum BB536 intake on faecal microbiota in\nindividuals with Japanese cedar pollinosis during the pollen season.",
         "Further-\nmore, Bifidobacterium longum has been reported to alter\ngut luminal metabolism via interactions with Bacteroides\ncaccae and Eubacterium rectale [36]."
       ],
       "relevance_score": 1.0,
@@ -9801,17 +9801,17 @@
     {
       "term": "transporter genes",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
         "ENTITY"
       ],
       "examples": [
-        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota.",
-        "To begin\nto address this question, we performed PICRUSt analysis\nto predict the relative abundance of transporter genes\nbecause we hypothesized that bacterial transporters that\nincorporate nutrients from the gut environment would\ndiffer if dietary habit was a predominant contributor to\ngut microbiota composition.",
-        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt."
+        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt.",
+        "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61].",
+        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota."
       ],
       "relevance_score": 1.0,
       "frequency": 8,
@@ -9964,8 +9964,8 @@
     {
       "term": "Faecalibacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -10144,8 +10144,8 @@
     {
       "term": "autoimmune disease",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "DISEASE",
@@ -10286,8 +10286,8 @@
     {
       "term": "Fusobacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -10412,16 +10412,16 @@
     {
       "term": "primer sets",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
         "ENTITY"
       ],
       "examples": [
-        "The primer sets are shown in\nAdditional file 17 [57–60].",
-        "\nSequencing and data processing\nThe V3-V4 region of the bacterial 16S rRNA gene was\nthen amplified by PCR with the TaKaRa Ex Taq HS Kit\n(TaKaRa Bio, Shiga, Japan) and the primer sets Tru357F\n(5′-CGCTCTTCCGATCTCTGTACGGRAGGCAGCA\nG-3′) and Tru806R (5′-CGCTCTTCCGATCTGACG-\nGACTACHVGGGTWTCTAAT-3′)."
+        "\nSequencing and data processing\nThe V3-V4 region of the bacterial 16S rRNA gene was\nthen amplified by PCR with the TaKaRa Ex Taq HS Kit\n(TaKaRa Bio, Shiga, Japan) and the primer sets Tru357F\n(5′-CGCTCTTCCGATCTCTGTACGGRAGGCAGCA\nG-3′) and Tru806R (5′-CGCTCTTCCGATCTGACG-\nGACTACHVGGGTWTCTAAT-3′).",
+        "The primer sets are shown in\nAdditional file 17 [57–60]."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -10465,8 +10465,8 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "After verifying the\namplified DNA based on PCR product size using the\nQIAxcel system (Qiagen, Valencia, CA, USA), the\ntriplicate samples were combined."
@@ -10525,14 +10525,14 @@
     {
       "term": "DNA product",
       "models_used": [
-        "en_ner_jnlpba_md",
         "en_ner_craft_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
         "PROTEIN",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "After validating the 2nd\namplified DNA product using the QIAxcel system,\nthe PCR products were purified using a QIAquick 96\nPCR Purification Kit (Qiagen, Valencia, CA, USA) ac-\ncording to the manufacturer’s protocol."
@@ -10633,8 +10633,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nTaxonomic analysis\nThe sequences were analyzed using the QIIME software\npackage version 1.8.0 [51, 52] (http://qiime.org/).",
-        "Independent of the\ntaxonomic analysis, 97 % of the OTUs were picked using a\nclosed-reference OTU picking protocol (QIIME 1.8.0 [51,\n52]) and the Greengenes database (database/13_8) [54] pre-\nclustered at 97 % identity."
+        "Independent of the\ntaxonomic analysis, 97 % of the OTUs were picked using a\nclosed-reference OTU picking protocol (QIIME 1.8.0 [51,\n52]) and the Greengenes database (database/13_8) [54] pre-\nclustered at 97 % identity.",
+        "\nTaxonomic analysis\nThe sequences were analyzed using the QIIME software\npackage version 1.8.0 [51, 52] (http://qiime.org/)."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -10668,8 +10668,8 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "\nPotential chimeric sequences were removed using\nUCHIME,\nassigned\nto\noperational\ntaxonomic\nunits\n(OTUs) using Open-reference OTU picking [53] with a\n97 % threshold of pairwise identity, and then classified\ntaxonomically using the Greengenes reference database\n(http://greengenes.secondgenome.com/downloads/database/\n13_5) [54]."
@@ -10961,13 +10961,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota.",
         "Notably, all the drug transporters\nbased on Kyoto Encyclopedia of Genes and Genomes (KEGG) Orthology groups were found in the\ninfant/elderly-enriched cluster.",
-        "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61]."
+        "To begin\nto address this question, we performed PICRUSt analysis\nto predict the relative abundance of transporter genes\nbecause we hypothesized that bacterial transporters that\nincorporate nutrients from the gut environment would\ndiffer if dietary habit was a predominant contributor to\ngut microbiota composition.",
+        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt."
       ],
       "relevance_score": 0.7999999999999999,
       "frequency": 8,
@@ -11061,12 +11061,12 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
-        "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160."
+        "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
+        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160."
       ],
       "relevance_score": 1.0,
       "frequency": 4,
@@ -11142,8 +11142,8 @@
     {
       "term": "PCR primers",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
@@ -11184,13 +11184,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
         "CHEBI",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid.",
-        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences."
+        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences.",
+        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid."
       ],
       "relevance_score": 0.6000000000000001,
       "frequency": 3,
@@ -11280,6 +11280,84 @@
       ]
     },
     {
+      "term": "intestinal microbiota",
+      "models_used": [
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "ENTITY"
+      ],
+      "examples": [
+        "\nTsuji H, Oozeer R, Matsuda K, Matsuki T, Ohta T, Nomoto K, et al. Molecular\nmonitoring of the development of intestinal microbiota in Japanese infants.",
+        "\nGrönlund M, Grześkowiak Ł, Isolauri E, Salminen S. Influence of mother’s\nintestinal microbiota on gut colonization in the infant.",
+        "\nClaesson MJ, Cusack S, O’Sullivan O, Greene-Diniz R, de Weerd H, Flannery E, et\nal. Composition, variability, and temporal stability of the intestinal microbiota\nof the elderly."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 6,
+      "raw_entities": [
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 43439,
+          "end": 43460,
+          "context": "Development of the\nhuman infant intestinal microbiota.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 43849,
+          "end": 43870,
+          "context": "\nTsuji H, Oozeer R, Matsuda K, Matsuki T, Ohta T, Nomoto K, et al. Molecular\nmonitoring of the development of intestinal microbiota in Japanese infants.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 43999,
+          "end": 44020,
+          "context": "\nGrönlund M, Grześkowiak Ł, Isolauri E, Salminen S. Influence of mother’s\nintestinal microbiota on gut colonization in the infant.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 44794,
+          "end": 44815,
+          "context": "\nBergström A, Skov TH, Bahl MI, Roager HM, Christensen LB, Ejlerskov KT, et\nal. Establishment of intestinal microbiota during early life: a longitudinal,\nexplorative study of a large cohort of Danish infants.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 45578,
+          "end": 45599,
+          "context": "\nClaesson MJ, Cusack S, O’Sullivan O, Greene-Diniz R, de Weerd H, Flannery E, et\nal. Composition, variability, and temporal stability of the intestinal microbiota\nof the elderly.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 47714,
+          "end": 47735,
+          "context": "\nCampbell JH, Foster CM, Vishnivetskaya T, Campbell AG, Yang ZK, Wymore A,\net al. Host genetic and environmental effects on mouse intestinal microbiota.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
       "term": "bacterial phyla",
       "models_used": [
         "en_ner_craft_md",
@@ -11290,8 +11368,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
-        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children."
+        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -11337,8 +11415,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nMueller S, Saunier K, Hanisch C, Norin E, Alm L, Midtvedt T, et al. Differences\nin fecal microbiota in different European study populations in relation to\nage, gender, and country: a cross-sectional study.",
-        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children."
+        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children.",
+        "\nMueller S, Saunier K, Hanisch C, Norin E, Alm L, Midtvedt T, et al. Differences\nin fecal microbiota in different European study populations in relation to\nage, gender, and country: a cross-sectional study."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -11386,6 +11464,86 @@
           "start": 46306,
           "end": 46326,
           "context": "\nWesolowska-Andersen A, Bahl MI, Carvalho V, Kristiansen K, Sicheritz-Pontén T,\nGupta R, et al. Choice of bacterial DNA extraction method from fecal material\ninfluences community structure as evaluated by metagenomic analysis.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "term": "microbiome",
+      "models_used": [
+        "en_ner_craft_md",
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "TAXON",
+        "ENTITY"
+      ],
+      "examples": [
+        "\nLe Chatelier E, Nielsen T, Qin J, Prifti E, Hildebrand F, Falony G, et al.\nRichness of human gut microbiome correlates with metabolic markers.",
+        "\nMicrobiome.",
+        "\nBrown CT, Davis-Richardson AG, Giongo A, Gano KA, Crabb DB, Mukherjee\nN, et al. Gut microbiome metagenomics analysis suggests a functional\nmodel for the development of autoimmunity for type 1 diabetes."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 6,
+      "raw_entities": [
+        {
+          "term": "Microbiome",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 46328,
+          "end": 46338,
+          "context": "\nMicrobiome.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 50340,
+          "end": 50350,
+          "context": "\nCantarel BL, Lombard V, Henrissat B. Complex carbohydrate utilization by\nthe healthy human microbiome.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 44620,
+          "end": 44630,
+          "context": "\nYatsunenko T, Rey FE, Manary MJ, Trehan I, Dominguez-Bello MG, Contreras\nM, et al. Human gut microbiome viewed across age and geography.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 47112,
+          "end": 47122,
+          "context": "\nSchnorr SL, Candela M, Rampelli S, Centanni M, Consolandi C, Basaglia G, et al.\nGut microbiome of the Hadza hunter-gatherers.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 50665,
+          "end": 50675,
+          "context": "\nBrown CT, Davis-Richardson AG, Giongo A, Gano KA, Crabb DB, Mukherjee\nN, et al. Gut microbiome metagenomics analysis suggests a functional\nmodel for the development of autoimmunity for type 1 diabetes.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 50909,
+          "end": 50919,
+          "context": "\nLe Chatelier E, Nielsen T, Qin J, Prifti E, Hildebrand F, Falony G, et al.\nRichness of human gut microbiome correlates with metabolic markers.",
           "relevance_score": 1.0,
           "confidence": 1.0
         }
@@ -11470,6 +11628,32 @@
       ]
     },
     {
+      "term": "Bifidobacterium breve CNCM I-",
+      "models_used": [
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "ENTITY"
+      ],
+      "examples": [
+        "\nBermudez BM, Muñoz QS, Gomez LC, Matencio E, Bernal MJ, Romero F,\net al. Cell-free culture supernatant of Bifidobacterium breve CNCM I-\n4035 decreases pro-inflammatory cytokines in human dendritic cells\nchallenged with Salmonella typhi through TLR activation."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 1,
+      "raw_entities": [
+        {
+          "term": "Bifidobacterium breve CNCM I-",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 48417,
+          "end": 48447,
+          "context": "\nBermudez BM, Muñoz QS, Gomez LC, Matencio E, Bernal MJ, Romero F,\net al. Cell-free culture supernatant of Bifidobacterium breve CNCM I-\n4035 decreases pro-inflammatory cytokines in human dendritic cells\nchallenged with Salmonella typhi through TLR activation.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
       "term": "Bifidobacterium infantis",
       "models_used": [
         "en_core_sci_lg"
@@ -11498,8 +11682,8 @@
     {
       "term": "Bifidobacterium breve",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -11547,8 +11731,8 @@
     {
       "term": "airway inflammation",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "DISEASE",
@@ -11719,12 +11903,12 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
-        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences."
+        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences.",
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -11918,6 +12102,32 @@
       ]
     },
     {
+      "term": "real-time PCR analysis",
+      "models_used": [
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "ENTITY"
+      ],
+      "examples": [
+        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 1,
+      "raw_entities": [
+        {
+          "term": "real-time PCR analysis",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 54389,
+          "end": 54411,
+          "context": "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
       "term": "rRNA-targeted reverse transcription-\nPCR",
       "models_used": [
         "en_core_sci_lg"
@@ -11972,17 +12182,17 @@
     {
       "term": "16S rRNA gene",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
-        "DNA"
+        "DNA",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
         "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
-        "These patterns might be characteristic of\nthe gut microbiota composition of the Japanese popu-\nlation,\nalthough\nthey\nmay\nalso\nreflect\nthe\nDNA\nextraction method [16, 17] and the amplified region\nof the 16S rRNA gene [24]."
+        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
+        "\nResults: Fecal samples from 367 healthy Japanese subjects between the ages of 0 and 104 years were analyzed by\nhigh-throughput sequencing of amplicons derived from the V3-V4 region of the 16S rRNA gene."
       ],
       "relevance_score": 1.0,
       "frequency": 8,
@@ -12135,8 +12345,8 @@
     {
       "term": "bacterial 16S rRNA gene",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "TAXON",
@@ -12281,6 +12491,44 @@
           "end": 47678,
           "context": "\nCampbell JH, Foster CM, Vishnivetskaya T, Campbell AG, Yang ZK, Wymore A,\net al. Host genetic and environmental effects on mouse intestinal microbiota.",
           "relevance_score": 0.8999999999999999,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "term": "16S rRNA gene sequences",
+      "models_used": [
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
+      ],
+      "labels": [
+        "DNA",
+        "SO"
+      ],
+      "examples": [
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 2,
+      "raw_entities": [
+        {
+          "term": "16S rRNA gene sequences",
+          "label": "SO",
+          "model": "en_ner_craft_md",
+          "start": 52967,
+          "end": 52990,
+          "context": "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "16S rRNA gene sequences",
+          "label": "DNA",
+          "model": "en_ner_jnlpba_md",
+          "start": 52967,
+          "end": 52990,
+          "context": "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
+          "relevance_score": 1.0,
           "confidence": 1.0
         }
       ]
@@ -12452,9 +12700,9 @@
         "ENTITY"
       ],
       "examples": [
-        "\nHowever, children younger than 20 years fell into both\nthe infant and adult clusters, regardless of their age,\nwhen clustered based on the abundance of genus-like\ngroups, thus illustrating the individual differences in the\ngut microbiota maturation process.",
-        "\nWang F, Yu T, Huang G, Cai D, Liang X, et al. Gut microbiota community\nand its assembly associated with age and diet in Chinese centenarians.",
-        "In addition, a low\ngut microbiota diversity has been associated with an\nincreasing number of conditions, such as autism [38],\nautoimmune disease [39] and obesity [40]."
+        "In this study, we\nobserved an increase in gut microbiota diversity with\naging until the centenarian stage.",
+        "The authors therefore sug-\ngested that a healthy gut microbiota community might\nbe affected by aging-related physiological and behavioral\nchanges that occur after 70 years of age, which was con-\nsidered the threshold age for defining an individual as\nelderly.",
+        "It has been recently\nshown that the gut microbiota is not yet established\nat 5 years of age [11]."
       ],
       "relevance_score": 1.0,
       "frequency": 60,
@@ -13094,13 +13342,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
         "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
-        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces."
+        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces.",
+        "These patterns might be characteristic of\nthe gut microbiota composition of the Japanese popu-\nlation,\nalthough\nthey\nmay\nalso\nreflect\nthe\nDNA\nextraction method [16, 17] and the amplified region\nof the 16S rRNA gene [24]."
       ],
       "relevance_score": 1.0,
       "frequency": 9,
@@ -13208,9 +13456,9 @@
         "ENTITY"
       ],
       "examples": [
-        "In\naddition, it is uncertain that all bacterial interactions are\nconsistent with the relationships in the Wiggum plot,\nbecause\ngenera\nwith\npositive\nrelationships\nin\nthe\nWiggum plot might grow well under the same environ-\nmental conditions without a mutualistic relationship.",
-        "\nBacterial co-abundance groups (CAGs)\nAll genus-like-level groups, except for an unidentified\ngroup, were entered into this analysis.",
-        "\nNakayama J, Watanabe K, Jiang J, Matsuda K, Chao S-H, Haryono P, et al.\nDiversity in gut bacterial community of school-age children in Asia."
+        "\nNakayama J, Watanabe K, Jiang J, Matsuda K, Chao S-H, Haryono P, et al.\nDiversity in gut bacterial community of school-age children in Asia.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
+        "\nBacterial strains and culture conditions\nCultivable strains were selected based on the Wiggum plot\nresults and were obtained from public culture collections\n(Additional file 16)."
       ],
       "relevance_score": 1.0,
       "frequency": 21,
@@ -13434,14 +13682,14 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
+        "TAXON",
         "ENTITY",
-        "TAXON"
+        "SO"
       ],
       "examples": [
-        "In\naddition, it is uncertain that all bacterial interactions are\nconsistent with the relationships in the Wiggum plot,\nbecause\ngenera\nwith\npositive\nrelationships\nin\nthe\nWiggum plot might grow well under the same environ-\nmental conditions without a mutualistic relationship.",
+        "We then performed in vitro assays to\ninvestigate some relevant relationships among genera.",
         "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup).",
-        "\nBox-plots show the interquartile range (IQR) of the sum of z-scores converted from the relative abundance of genera belonging to the same\nCAG."
+        "Furthermore, our\nresults showed that Japanese adults (21–69 years old)\nhave a greater abundance of the genera Blautia and\nBifidobacterium (interquartile ranges (IQR) of 18 (12–24)\n% and 7 (2–14) %, respectively) and a relatively lower\nabundance of genera related to Bacteroidetes (IQR 4\n(1–10) %), compared with those reported in previous\nstudies in other nations."
       ],
       "relevance_score": 0.9,
       "frequency": 26,
@@ -13715,14 +13963,14 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "TAXON",
         "CHEBI",
-        "ENTITY"
+        "ENTITY",
+        "TAXON"
       ],
       "examples": [
-        "\nHowever, children younger than 20 years fell into both\nthe infant and adult clusters, regardless of their age,\nwhen clustered based on the abundance of genus-like\ngroups, thus illustrating the individual differences in the\ngut microbiota maturation process.",
-        "\nMariat D, Firmesse O, Levenez F, Guimarăes V, Sokol H, Doré J, et al. The\nFirmicutes/Bacteroidetes ratio of the human microbiota changes with age.",
-        "\nWang F, Yu T, Huang G, Cai D, Liang X, et al. Gut microbiota community\nand its assembly associated with age and diet in Chinese centenarians."
+        "In this study, we\nobserved an increase in gut microbiota diversity with\naging until the centenarian stage.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
+        "It is unclear when\nand how the microbiota composition shifts from the\nadult stage to the elderly stage."
       ],
       "relevance_score": 1.0,
       "frequency": 78,
@@ -14518,7 +14766,7 @@
         "ENTITY"
       ],
       "examples": [
-        "Other reports have indicated that the phylogenetic\n* Correspondence: t-odamak@morinagamilk.co.jp\n1Next Generation Science Institute, Morinaga Milk Industry Co., Ltd., Zama,\nKanagawa, Japan\nFull list of author information is available at the end of the article\n© 2016 Odamaki et al. Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0\nInternational License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and\nreproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to\nthe Creative Commons license, and indicate if changes were made.",
+        "\nDiversity analysis\nThe\nmicrobial\ndiversity\nwithin\neach\nage-segmented\ngroup [alpha diversity including Chao1, number of\nobserved species (the number of OTUs), phylogenetic\ndistance (PD) whole tree, and Shannon diversity index]\nand the distances between subjects (UniFrac distance as\nbeta diversity) were estimated using QIIME version 1.8.0\nsoftware.",
         "Their report provided important insights, such as\nthe\nperiod\nrequired\nto\nform\nan\nadult-like\ngut\nmicrobiota, greater between-subject variation among\nchildren than adults, differences in the phylogenetic\ncomposition\nof\ngut\nmicrobiota\namong\nindividuals\nfrom different countries and an increase in bacterial\ndiversity with age.",
         "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61]."
       ],
@@ -14776,8 +15024,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\n(PDF 401 kb)\nAdditional file 6: Bacterial groups at genus-like level in each CAG.",
-        "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup)."
+        "\nResults\nOverview of gut microbiota composition in each age\ngroup\nA total of 1,839,703 high-quality paired sequences were\nobtained from the 371 samples, with 4,959 ± 1,813\n(average ± standard deviation) reads per sample, which\nwere clustered into 5,952 OTUs and classified into 187\nbacterial groups at the genus level (186 genera and one\nunidentified\ngroup).",
+        "\n(PDF 401 kb)\nAdditional file 6: Bacterial groups at genus-like level in each CAG."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -14813,9 +15061,9 @@
         "ENTITY"
       ],
       "examples": [
-        "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community.",
-        "\nWe\nfirst\ncalculated\nUniFrac\ndistances to determine the extent of similarity between\nmicrobial communities.",
-        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid."
+        "\nDiversity analysis\nThe\nmicrobial\ndiversity\nwithin\neach\nage-segmented\ngroup [alpha diversity including Chao1, number of\nobserved species (the number of OTUs), phylogenetic\ndistance (PD) whole tree, and Shannon diversity index]\nand the distances between subjects (UniFrac distance as\nbeta diversity) were estimated using QIIME version 1.8.0\nsoftware.",
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
+        "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -14885,16 +15133,16 @@
     {
       "term": "Actinobacteria",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
         "ENTITY"
       ],
       "examples": [
-        "The relative abundance of Actinobacteria substan-\ntially decreased after weaning and continued to decrease\nwith age.",
         "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
+        "The relative abundance of Actinobacteria substan-\ntially decreased after weaning and continued to decrease\nwith age.",
         "\nAlthough there are differences among individuals, our\nanalysis of the phylum composition of gut microbiota in\neach age group showed a significant shift in the relative\nabundance of Actinobacteria in infants from before to\nafter weaning."
       ],
       "relevance_score": 1.0,
@@ -14971,8 +15219,8 @@
         "ENTITY"
       ],
       "examples": [
-        "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
         "The change in the relative abun-\ndance of Proteobacteria was opposite that of Firmicutes.",
+        "Orange, Actinobacteria; Blue,\nFirmicutes; Red, Bacteroidetes; Pink, Proteobacteria; Black, sum of other phyla.",
         "\nIncreases in the relative abundance of Bacteroidetes and\nProteobacteria were observed in subjects over 70 years\nold."
       ],
       "relevance_score": 1.0,
@@ -15065,8 +15313,8 @@
     {
       "term": "Eubacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -15130,9 +15378,9 @@
         "ENTITY"
       ],
       "examples": [
-        "A similar negative relation-\nship was observed between Escherichia coli JCM 1649, be-\nlong to family Enterobacteriaceae and Blautia producta\nJCM 1471.",
-        "Almost all of the correlations were\npositive; the only four negative correlations were observed\nbetween Enterobacteriaceae and Lachnospiraceae, Entero-\nbacteriaceae and Blautia, Bifidobacterium and Parabacter-\noides and Veillonella and [Mogibacteriaceae].",
-        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3)."
+        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3).",
+        "It has\nalso been reported that Bifidobacterium populations can\nbe stimulated efficiently with a concomitant decrease in\nEnterobacteriaceae [32, 33].",
+        "\nIn the present study, the Wiggum plot showed nega-\ntive relationships between the relative abundance of\nEnterobacteriaceae, which creates an greater endotoxin\nchallenge for the weakened intestinal barrier and thus\nresults in increased stimulation of the inflammatory\nresponse [26], and the abundance of Blautia and\nLachnospiraceae;g (Fig. 4), which belonged to the adult-\nassociated CAG (Lachnospiraceae;g CAG)."
       ],
       "relevance_score": 1.0,
       "frequency": 6,
@@ -15202,17 +15450,17 @@
     {
       "term": "Bifidobacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
         "ENTITY"
       ],
       "examples": [
-        "\nGiven the age-related reduction in the abundance of\nthe\ngenus\nBifidobacterium,\nwhich\ndown-regulates\npro-inflammatory responses in the gut epithelium\n[28–30], our results suggested that the aging-related\ndysbiosis in elderly subjects may be a contributing\nfactor to inflammatory responses that occur with\nadvancing age.",
-        "\nSequential changes occurred in the relative abundance of\nBacteroides, Lachnospiraceae and Bifidobacterium CAGs in\nthe gut microbiota during childhood and adolescence.",
-        "Almost all of the correlations were\npositive; the only four negative correlations were observed\nbetween Enterobacteriaceae and Lachnospiraceae, Entero-\nbacteriaceae and Blautia, Bifidobacterium and Parabacter-\noides and Veillonella and [Mogibacteriaceae]."
+        "Acetate, one of the main fer-\nmentation products of Bifidobacterium, was reported to\npromote the growth of butyrate-producing bacteria and\nthe in vitro production of butyrate [34, 35].",
+        "\nThe transition from infant to centenarian was accompanied\nby distinctive CAG dominance, with a significant abun-\ndance of Bacteroides, [Eubacterium] and Clostridiaceae\nCAGs (elderly-associated CAGs); Enterobacteriaceae CAGs\n(infant\nand\nelderly-associated\nCAGs);\nBifidobacterium\nCAGs (infant/child-associated CAGs); and Lachnospiraceae\nCAGs (adult-associated CAGs) (Fig. 3).",
+        "Each\nnumber below the figure indicates a group as shown in Table 1\nOdamaki et al. BMC Microbiology  (2016) 16:90 \nPage 5 of 12\nLachnospiraceae and Bifidobacterium CAGs and the\nalpha diversity of gut microbiota continued to change\nsequentially with age in subjects younger than twenty,\nreflecting the human gut microbiota maturation process."
       ],
       "relevance_score": 1.0,
       "frequency": 19,
@@ -15444,8 +15692,8 @@
         "ENTITY"
       ],
       "examples": [
-        "In\naccordance with the Wiggum plot results, both of Parabac-\nteroides distasonis JCM 5825 and Bifidobacterium longum\nJCM 1217 growth were suppressed when co-cultivate with\neach other (Additional file 7).",
         "\nSugahara H, Odamaki T, Fukuda S, Kato T, Xiao J, Abe F, et al. Probiotic\nBifidobacterium longum alters gut luminal metabolism through modification\nof the gut microbial community.",
+        "\nOdamaki T, Xiao J-Z, Iwabuchi N, Sakamoto M, Takahashi N, Kondo S, et al.\nInfluence of Bifidobacterium longum BB536 intake on faecal microbiota in\nindividuals with Japanese cedar pollinosis during the pollen season.",
         "Further-\nmore, Bifidobacterium longum has been reported to alter\ngut luminal metabolism via interactions with Bacteroides\ncaccae and Eubacterium rectale [36]."
       ],
       "relevance_score": 1.0,
@@ -15576,17 +15824,17 @@
     {
       "term": "transporter genes",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
         "ENTITY"
       ],
       "examples": [
-        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota.",
-        "To begin\nto address this question, we performed PICRUSt analysis\nto predict the relative abundance of transporter genes\nbecause we hypothesized that bacterial transporters that\nincorporate nutrients from the gut environment would\ndiffer if dietary habit was a predominant contributor to\ngut microbiota composition.",
-        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt."
+        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt.",
+        "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61].",
+        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota."
       ],
       "relevance_score": 1.0,
       "frequency": 8,
@@ -15739,8 +15987,8 @@
     {
       "term": "Faecalibacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -15919,8 +16167,8 @@
     {
       "term": "autoimmune disease",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "DISEASE",
@@ -16061,8 +16309,8 @@
     {
       "term": "Fusobacterium",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -16187,16 +16435,16 @@
     {
       "term": "primer sets",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
         "ENTITY"
       ],
       "examples": [
-        "The primer sets are shown in\nAdditional file 17 [57–60].",
-        "\nSequencing and data processing\nThe V3-V4 region of the bacterial 16S rRNA gene was\nthen amplified by PCR with the TaKaRa Ex Taq HS Kit\n(TaKaRa Bio, Shiga, Japan) and the primer sets Tru357F\n(5′-CGCTCTTCCGATCTCTGTACGGRAGGCAGCA\nG-3′) and Tru806R (5′-CGCTCTTCCGATCTGACG-\nGACTACHVGGGTWTCTAAT-3′)."
+        "\nSequencing and data processing\nThe V3-V4 region of the bacterial 16S rRNA gene was\nthen amplified by PCR with the TaKaRa Ex Taq HS Kit\n(TaKaRa Bio, Shiga, Japan) and the primer sets Tru357F\n(5′-CGCTCTTCCGATCTCTGTACGGRAGGCAGCA\nG-3′) and Tru806R (5′-CGCTCTTCCGATCTGACG-\nGACTACHVGGGTWTCTAAT-3′).",
+        "The primer sets are shown in\nAdditional file 17 [57–60]."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -16240,8 +16488,8 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "After verifying the\namplified DNA based on PCR product size using the\nQIAxcel system (Qiagen, Valencia, CA, USA), the\ntriplicate samples were combined."
@@ -16300,14 +16548,14 @@
     {
       "term": "DNA product",
       "models_used": [
-        "en_ner_jnlpba_md",
         "en_ner_craft_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
         "PROTEIN",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "After validating the 2nd\namplified DNA product using the QIAxcel system,\nthe PCR products were purified using a QIAquick 96\nPCR Purification Kit (Qiagen, Valencia, CA, USA) ac-\ncording to the manufacturer’s protocol."
@@ -16408,8 +16656,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nTaxonomic analysis\nThe sequences were analyzed using the QIIME software\npackage version 1.8.0 [51, 52] (http://qiime.org/).",
-        "Independent of the\ntaxonomic analysis, 97 % of the OTUs were picked using a\nclosed-reference OTU picking protocol (QIIME 1.8.0 [51,\n52]) and the Greengenes database (database/13_8) [54] pre-\nclustered at 97 % identity."
+        "Independent of the\ntaxonomic analysis, 97 % of the OTUs were picked using a\nclosed-reference OTU picking protocol (QIIME 1.8.0 [51,\n52]) and the Greengenes database (database/13_8) [54] pre-\nclustered at 97 % identity.",
+        "\nTaxonomic analysis\nThe sequences were analyzed using the QIIME software\npackage version 1.8.0 [51, 52] (http://qiime.org/)."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -16443,8 +16691,8 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
         "\nPotential chimeric sequences were removed using\nUCHIME,\nassigned\nto\noperational\ntaxonomic\nunits\n(OTUs) using Open-reference OTU picking [53] with a\n97 % threshold of pairwise identity, and then classified\ntaxonomically using the Greengenes reference database\n(http://greengenes.secondgenome.com/downloads/database/\n13_5) [54]."
@@ -16736,13 +16984,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nFunctional properties predicted by PICRUSt\nWe\nperformed\nPICRUSt\nanalysis\nto\npredict\nthe\nrelative abundance of transporter genes because an\naltered diet [2] and antibiotic treatment [31] have\nbeen reported to be among the most powerful factors\nthat affect the gut microbiota.",
         "Notably, all the drug transporters\nbased on Kyoto Encyclopedia of Genes and Genomes (KEGG) Orthology groups were found in the\ninfant/elderly-enriched cluster.",
-        "\nPhylogenetic investigation of communities by\nreconstruction of unobserved states (PICRUSt) analysis\nPICRUSt analysis was performed to predict the relative\nabundance of transporter genes [61]."
+        "To begin\nto address this question, we performed PICRUSt analysis\nto predict the relative abundance of transporter genes\nbecause we hypothesized that bacterial transporters that\nincorporate nutrients from the gut environment would\ndiffer if dietary habit was a predominant contributor to\ngut microbiota composition.",
+        "XLSX 875 kb)\nAdditional file 13: Hierarchical Ward’s linkage clustering based on the\nproportion of transporter genes predicted by PICRUSt."
       ],
       "relevance_score": 0.7999999999999999,
       "frequency": 8,
@@ -16836,12 +17084,12 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
-        "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160."
+        "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
+        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160."
       ],
       "relevance_score": 1.0,
       "frequency": 4,
@@ -16917,8 +17165,8 @@
     {
       "term": "PCR primers",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "DNA",
@@ -16959,13 +17207,13 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
         "CHEBI",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid.",
-        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences."
+        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences.",
+        "XLSX 857 kb)\nAbbreviations\nCAG: co-abundance group; DNA: deoxyribonucleic acid; OTU: operational\ntaxonomic units; PCR: polymerase chain reaction; QIIME: quantitative insights\ninto microbial ecology; rRNA: ribosomal ribonucleic acid."
       ],
       "relevance_score": 0.6000000000000001,
       "frequency": 3,
@@ -17055,6 +17303,84 @@
       ]
     },
     {
+      "term": "intestinal microbiota",
+      "models_used": [
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "ENTITY"
+      ],
+      "examples": [
+        "\nTsuji H, Oozeer R, Matsuda K, Matsuki T, Ohta T, Nomoto K, et al. Molecular\nmonitoring of the development of intestinal microbiota in Japanese infants.",
+        "\nGrönlund M, Grześkowiak Ł, Isolauri E, Salminen S. Influence of mother’s\nintestinal microbiota on gut colonization in the infant.",
+        "\nClaesson MJ, Cusack S, O’Sullivan O, Greene-Diniz R, de Weerd H, Flannery E, et\nal. Composition, variability, and temporal stability of the intestinal microbiota\nof the elderly."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 6,
+      "raw_entities": [
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 43439,
+          "end": 43460,
+          "context": "Development of the\nhuman infant intestinal microbiota.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 43849,
+          "end": 43870,
+          "context": "\nTsuji H, Oozeer R, Matsuda K, Matsuki T, Ohta T, Nomoto K, et al. Molecular\nmonitoring of the development of intestinal microbiota in Japanese infants.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 43999,
+          "end": 44020,
+          "context": "\nGrönlund M, Grześkowiak Ł, Isolauri E, Salminen S. Influence of mother’s\nintestinal microbiota on gut colonization in the infant.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 44794,
+          "end": 44815,
+          "context": "\nBergström A, Skov TH, Bahl MI, Roager HM, Christensen LB, Ejlerskov KT, et\nal. Establishment of intestinal microbiota during early life: a longitudinal,\nexplorative study of a large cohort of Danish infants.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 45578,
+          "end": 45599,
+          "context": "\nClaesson MJ, Cusack S, O’Sullivan O, Greene-Diniz R, de Weerd H, Flannery E, et\nal. Composition, variability, and temporal stability of the intestinal microbiota\nof the elderly.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "intestinal microbiota",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 47714,
+          "end": 47735,
+          "context": "\nCampbell JH, Foster CM, Vishnivetskaya T, Campbell AG, Yang ZK, Wymore A,\net al. Host genetic and environmental effects on mouse intestinal microbiota.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
       "term": "bacterial phyla",
       "models_used": [
         "en_ner_craft_md",
@@ -17065,8 +17391,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla.",
-        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children."
+        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children.",
+        "\nMahowald MA, Rey FE, Seedorf H, Turnbaugh PJ, Fulton RS, Wollam A,\net al. Characterizing a model human gut microbiota composed of\nmembers of its two dominant bacterial phyla."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -17112,8 +17438,8 @@
         "ENTITY"
       ],
       "examples": [
-        "\nMueller S, Saunier K, Hanisch C, Norin E, Alm L, Midtvedt T, et al. Differences\nin fecal microbiota in different European study populations in relation to\nage, gender, and country: a cross-sectional study.",
-        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children."
+        "\nCheng J, Ringel-Kulka T, Heikamp-de Jong I, Ringel Y, Carroll I, de Vos WM,\net al. Discordant temporal development of bacterial phyla and the\nemergence of core in the fecal microbiota of young children.",
+        "\nMueller S, Saunier K, Hanisch C, Norin E, Alm L, Midtvedt T, et al. Differences\nin fecal microbiota in different European study populations in relation to\nage, gender, and country: a cross-sectional study."
       ],
       "relevance_score": 1.0,
       "frequency": 2,
@@ -17161,6 +17487,86 @@
           "start": 46306,
           "end": 46326,
           "context": "\nWesolowska-Andersen A, Bahl MI, Carvalho V, Kristiansen K, Sicheritz-Pontén T,\nGupta R, et al. Choice of bacterial DNA extraction method from fecal material\ninfluences community structure as evaluated by metagenomic analysis.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "term": "microbiome",
+      "models_used": [
+        "en_ner_craft_md",
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "TAXON",
+        "ENTITY"
+      ],
+      "examples": [
+        "\nLe Chatelier E, Nielsen T, Qin J, Prifti E, Hildebrand F, Falony G, et al.\nRichness of human gut microbiome correlates with metabolic markers.",
+        "\nMicrobiome.",
+        "\nBrown CT, Davis-Richardson AG, Giongo A, Gano KA, Crabb DB, Mukherjee\nN, et al. Gut microbiome metagenomics analysis suggests a functional\nmodel for the development of autoimmunity for type 1 diabetes."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 6,
+      "raw_entities": [
+        {
+          "term": "Microbiome",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 46328,
+          "end": 46338,
+          "context": "\nMicrobiome.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 50340,
+          "end": 50350,
+          "context": "\nCantarel BL, Lombard V, Henrissat B. Complex carbohydrate utilization by\nthe healthy human microbiome.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 44620,
+          "end": 44630,
+          "context": "\nYatsunenko T, Rey FE, Manary MJ, Trehan I, Dominguez-Bello MG, Contreras\nM, et al. Human gut microbiome viewed across age and geography.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 47112,
+          "end": 47122,
+          "context": "\nSchnorr SL, Candela M, Rampelli S, Centanni M, Consolandi C, Basaglia G, et al.\nGut microbiome of the Hadza hunter-gatherers.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 50665,
+          "end": 50675,
+          "context": "\nBrown CT, Davis-Richardson AG, Giongo A, Gano KA, Crabb DB, Mukherjee\nN, et al. Gut microbiome metagenomics analysis suggests a functional\nmodel for the development of autoimmunity for type 1 diabetes.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "microbiome",
+          "label": "TAXON",
+          "model": "en_ner_craft_md",
+          "start": 50909,
+          "end": 50919,
+          "context": "\nLe Chatelier E, Nielsen T, Qin J, Prifti E, Hildebrand F, Falony G, et al.\nRichness of human gut microbiome correlates with metabolic markers.",
           "relevance_score": 1.0,
           "confidence": 1.0
         }
@@ -17245,6 +17651,32 @@
       ]
     },
     {
+      "term": "Bifidobacterium breve CNCM I-",
+      "models_used": [
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "ENTITY"
+      ],
+      "examples": [
+        "\nBermudez BM, Muñoz QS, Gomez LC, Matencio E, Bernal MJ, Romero F,\net al. Cell-free culture supernatant of Bifidobacterium breve CNCM I-\n4035 decreases pro-inflammatory cytokines in human dendritic cells\nchallenged with Salmonella typhi through TLR activation."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 1,
+      "raw_entities": [
+        {
+          "term": "Bifidobacterium breve CNCM I-",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 48417,
+          "end": 48447,
+          "context": "\nBermudez BM, Muñoz QS, Gomez LC, Matencio E, Bernal MJ, Romero F,\net al. Cell-free culture supernatant of Bifidobacterium breve CNCM I-\n4035 decreases pro-inflammatory cytokines in human dendritic cells\nchallenged with Salmonella typhi through TLR activation.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
       "term": "Bifidobacterium infantis",
       "models_used": [
         "en_core_sci_lg"
@@ -17273,8 +17705,8 @@
     {
       "term": "Bifidobacterium breve",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "CHEMICAL",
@@ -17322,8 +17754,8 @@
     {
       "term": "airway inflammation",
       "models_used": [
-        "en_ner_bc5cdr_md",
-        "en_core_sci_lg"
+        "en_core_sci_lg",
+        "en_ner_bc5cdr_md"
       ],
       "labels": [
         "DISEASE",
@@ -17494,12 +17926,12 @@
         "en_core_sci_lg"
       ],
       "labels": [
-        "SO",
-        "ENTITY"
+        "ENTITY",
+        "SO"
       ],
       "examples": [
-        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
-        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences."
+        "\nLangille MGI, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA,\net al. Predictive functional profiling of microbial communities using 16S\nrRNA marker gene sequences.",
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities."
       ],
       "relevance_score": 1.0,
       "frequency": 3,
@@ -17693,6 +18125,32 @@
       ]
     },
     {
+      "term": "real-time PCR analysis",
+      "models_used": [
+        "en_core_sci_lg"
+      ],
+      "labels": [
+        "ENTITY"
+      ],
+      "examples": [
+        "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 1,
+      "raw_entities": [
+        {
+          "term": "real-time PCR analysis",
+          "label": "ENTITY",
+          "model": "en_core_sci_lg",
+          "start": 54389,
+          "end": 54411,
+          "context": "\nMatsuki T, Watanabe K, Fujimoto J, Takada T, Tanaka R. Use of 16S rRNA gene-\ntargeted group-specific primers for real-time PCR analysis of predominant\nbacteria in human feces.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
       "term": "rRNA-targeted reverse transcription-\nPCR",
       "models_used": [
         "en_core_sci_lg"
@@ -17747,17 +18205,17 @@
     {
       "term": "16S rRNA gene",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
-        "SO",
-        "DNA"
+        "DNA",
+        "SO"
       ],
       "examples": [
-        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
         "\nAvailability of data and materials\nDNA sequences corresponding to the 16S rRNA gene data have been\ndeposited in DDBJ under accession number DRA004160.",
-        "These patterns might be characteristic of\nthe gut microbiota composition of the Japanese popu-\nlation,\nalthough\nthey\nmay\nalso\nreflect\nthe\nDNA\nextraction method [16, 17] and the amplified region\nof the 16S rRNA gene [24]."
+        "\nData deposition\nDNA sequences corresponding to the 16S rRNA gene\ndata have been deposited in DDBJ under accession\nnumber DRA004160.",
+        "\nResults: Fecal samples from 367 healthy Japanese subjects between the ages of 0 and 104 years were analyzed by\nhigh-throughput sequencing of amplicons derived from the V3-V4 region of the 16S rRNA gene."
       ],
       "relevance_score": 1.0,
       "frequency": 8,
@@ -17910,8 +18368,8 @@
     {
       "term": "bacterial 16S rRNA gene",
       "models_used": [
-        "en_ner_jnlpba_md",
-        "en_ner_craft_md"
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
       ],
       "labels": [
         "TAXON",
@@ -18056,6 +18514,44 @@
           "end": 47678,
           "context": "\nCampbell JH, Foster CM, Vishnivetskaya T, Campbell AG, Yang ZK, Wymore A,\net al. Host genetic and environmental effects on mouse intestinal microbiota.",
           "relevance_score": 0.8999999999999999,
+          "confidence": 1.0
+        }
+      ]
+    },
+    {
+      "term": "16S rRNA gene sequences",
+      "models_used": [
+        "en_ner_craft_md",
+        "en_ner_jnlpba_md"
+      ],
+      "labels": [
+        "DNA",
+        "SO"
+      ],
+      "examples": [
+        "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities."
+      ],
+      "relevance_score": 1.0,
+      "frequency": 2,
+      "raw_entities": [
+        {
+          "term": "16S rRNA gene sequences",
+          "label": "SO",
+          "model": "en_ner_craft_md",
+          "start": 52967,
+          "end": 52990,
+          "context": "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
+          "relevance_score": 1.0,
+          "confidence": 1.0
+        },
+        {
+          "term": "16S rRNA gene sequences",
+          "label": "DNA",
+          "model": "en_ner_jnlpba_md",
+          "start": 52967,
+          "end": 52990,
+          "context": "\nKuczynski J, Stombaugh J, Walters WA, González A, Caporaso JG, Knight R.\nUsing QIIME to analyze 16S rRNA gene sequences from microbial\ncommunities.",
+          "relevance_score": 1.0,
           "confidence": 1.0
         }
       ]
@@ -18228,12 +18724,12 @@
       "original_count": 124,
       "exact_removed": 0,
       "fuzzy_removed": 15,
-      "semantic_removed": 5,
-      "final_count": 104
+      "semantic_removed": 0,
+      "final_count": 109
     },
     "overall": {
-      "final_unique_terms": 104,
-      "total_reduction_percent": 77.04,
+      "final_unique_terms": 109,
+      "total_reduction_percent": 75.94,
       "pipeline_stages_completed": [
         "extraction",
         "deduplication"

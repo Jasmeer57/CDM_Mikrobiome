@@ -24,7 +24,9 @@ class DeduplicationResult:
     exact_removed: int
     fuzzy_removed: int
     semantic_removed: int
+    biomedical_removed: int
     deduplicated_terms: List[Dict[str, Any]]
+    biomedical_duplicates: List[Dict[str, Any]]
 
 
 class Deduplicator:
@@ -247,6 +249,190 @@ class Deduplicator:
 
         return deduplicated
 
+    def _biomedical_deduplication(self, terms: List[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+        """Perform BioMistral-powered biomedical context-aware deduplication"""
+        if not self.config.biomedical_enabled or len(terms) <= 1:
+            return terms, []
+
+        logger.info("Starting biomedical context-aware deduplication...")
+
+        try:
+            # Initialize BioMistral for biomedical reasoning
+            from transformers import pipeline
+
+            # Use a smaller, efficient model for duplicate detection
+            biomedical_classifier = pipeline(
+                "text-classification",
+                model="microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext",
+                device=0 if self.semantic_model else -1  # Use GPU if available
+            )
+
+        except Exception as e:
+            logger.warning(f"BioMistral model not available: {e}. Skipping biomedical deduplication.")
+            return terms, []
+
+        deduplicated = []
+        biomedical_duplicates = []
+        term_groups = []
+
+        # Group terms by semantic similarity first for efficiency
+        term_embeddings = {}
+        if self.semantic_model:
+            for i, term_data in enumerate(terms):
+                term = term_data.get('term', '')
+                if term:
+                    embedding = self.semantic_model.encode(term, convert_to_tensor=True)
+                    term_embeddings[i] = embedding
+
+        # Find potential duplicate groups using semantic embeddings
+        processed_indices = set()
+        for i, term_data_i in enumerate(terms):
+            if i in processed_indices:
+                continue
+
+            term_i = term_data_i.get('term', '')
+            if not term_i:
+                processed_indices.add(i)
+                continue
+
+            current_group = [i]
+
+            # Find semantically similar terms
+            if self.semantic_model and i in term_embeddings:
+                for j, term_data_j in enumerate(terms[i+1:], i+1):
+                    if j in processed_indices:
+                        continue
+
+                    term_j = term_data_j.get('term', '')
+                    if not term_j or j not in term_embeddings:
+                        continue
+
+                    # Calculate semantic similarity
+                    similarity = float((term_embeddings[i] @ term_embeddings[j]).cpu().numpy())
+                    if similarity >= self.config.semantic_threshold:
+                        current_group.append(j)
+                        processed_indices.add(j)
+
+            if len(current_group) > 1:
+                term_groups.append(current_group)
+            processed_indices.add(i)
+
+        # Process each group with BioMistral for biomedical context
+        for group in tqdm(term_groups, desc="Biomedical deduplication"):
+            if len(group) == 1:
+                deduplicated.append(terms[group[0]])
+                continue
+
+            # Create comparison prompts for BioMistral
+            group_terms = [terms[idx].get('term', '') for idx in group]
+            duplicate_matrix = {}
+
+            for i in range(len(group)):
+                for j in range(i+1, len(group)):
+                    term1, term2 = group_terms[i], group_terms[j]
+
+                    # Create biomedical comparison prompt
+                    comparison_prompt = f"""
+                    Compare these two biomedical terms in the context of microbiome research:
+                    Term 1: "{term1}"
+                    Term 2: "{term2}"
+
+                    Question: Are these terms referring to the same biological concept, entity, or measurement in microbiome/biomedical research?
+                    Consider:
+                    - Do they represent the same biological entity (e.g., same bacterium, same gene, same protein)?
+                    - Do they refer to the same measurement or observation?
+                    - Are they synonymous in biomedical context?
+                    - Could they be merged without losing clinical/scientific meaning?
+
+                    Answer with only: YES (if duplicates) or NO (if distinct concepts)
+                    """
+
+                    try:
+                        # Use BioMistral for classification
+                        result = biomedical_classifier(comparison_prompt[:512])  # Limit context length
+                        is_duplicate = "YES" in result[0]['label'].upper()
+
+                        if is_duplicate:
+                            duplicate_matrix[(i, j)] = True
+                        else:
+                            duplicate_matrix[(i, j)] = False
+
+                    except Exception as e:
+                        logger.debug(f"BioMistral comparison failed for {term1} vs {term2}: {e}")
+                        # Fallback to semantic similarity
+                        duplicate_matrix[(i, j)] = False
+
+            # Find duplicate clusters within the group
+            duplicate_clusters = []
+            used_indices = set()
+
+            for i in range(len(group)):
+                if i in used_indices:
+                    continue
+
+                cluster = [i]
+                used_indices.add(i)
+
+                for j in range(i+1, len(group)):
+                    if j in used_indices:
+                        continue
+
+                    # Check if all pairs in the cluster are duplicates
+                    all_duplicates = all(
+                        duplicate_matrix.get((min(cluster[k], j), max(cluster[k], j)), False)
+                        for k in range(len(cluster))
+                    )
+
+                    if all_duplicates:
+                        cluster.append(j)
+                        used_indices.add(j)
+
+                duplicate_clusters.append(cluster)
+
+            # Process duplicate clusters
+            for cluster in duplicate_clusters:
+                if len(cluster) == 1:
+                    # No duplicates, keep the term
+                    deduplicated.append(terms[group[cluster[0]]])
+                else:
+                    # Found duplicates, keep the best one and record others
+                    cluster_terms = [terms[group[idx]] for idx in cluster]
+
+                    # Select the best term (highest frequency, then shortest, then first)
+                    best_term_data = max(cluster_terms, key=lambda x: (
+                        x.get('frequency', 0),
+                        -len(x.get('term', '')),  # Negative for shorter preference
+                        -cluster_terms.index(x)   # Negative for first preference
+                    ))
+
+                    # Add reasoning for biomedical duplicate detection
+                    removed_terms = [t for t in cluster_terms if t != best_term_data]
+                    for removed_term in removed_terms:
+                        removed_term['biomedical_duplicate_reason'] = {
+                            'kept_term': best_term_data.get('term', ''),
+                            'removed_term': removed_term.get('term', ''),
+                            'context': 'microbiome_biomedical',
+                            'method': 'biomistral_classification',
+                            'confidence': 'high'
+                        }
+                        biomedical_duplicates.append(removed_term)
+
+                    # Mark the kept term
+                    best_term_data['biomedical_kept'] = True
+                    best_term_data['biomedical_duplicate_group'] = [t.get('term', '') for t in cluster_terms]
+                    deduplicated.append(best_term_data)
+
+        # Add terms not in any group
+        all_grouped_indices = set(idx for group in term_groups for idx in group)
+        for i, term_data in enumerate(terms):
+            if i not in all_grouped_indices:
+                deduplicated.append(term_data)
+
+        biomedical_removed = len(terms) - len(deduplicated)
+        logger.info(f"Biomedical deduplication: {len(terms)} → {len(deduplicated)} (removed {biomedical_removed})")
+
+        return deduplicated, biomedical_duplicates
+
     def deduplicate_terms(self, terms: List[Dict[str, Any]]) -> DeduplicationResult:
         """Perform complete multi-layer deduplication"""
         logger.info(f"Starting multi-layer deduplication for {len(terms)} terms...")
@@ -265,17 +451,23 @@ class Deduplicator:
         after_semantic = self._semantic_deduplication(after_fuzzy)
         semantic_removed = len(after_fuzzy) - len(after_semantic)
 
+        # Step 4: Biomedical context-aware deduplication
+        after_biomedical, biomedical_duplicates = self._biomedical_deduplication(after_semantic)
+        biomedical_removed = len(after_semantic) - len(after_biomedical)
+
         result = DeduplicationResult(
             original_count=original_count,
-            final_count=len(after_semantic),
+            final_count=len(after_biomedical),
             exact_removed=exact_removed,
             fuzzy_removed=fuzzy_removed,
             semantic_removed=semantic_removed,
-            deduplicated_terms=after_semantic
+            biomedical_removed=biomedical_removed,
+            deduplicated_terms=after_biomedical,
+            biomedical_duplicates=biomedical_duplicates
         )
 
-        total_reduction = (original_count - len(after_semantic)) / original_count * 100 if original_count > 0 else 0
-        logger.info(f"Deduplication complete: {original_count} → {len(after_semantic)} ({total_reduction:.1f}% reduction)")
+        total_reduction = (original_count - len(after_biomedical)) / original_count * 100 if original_count > 0 else 0
+        logger.info(f"Deduplication complete: {original_count} → {len(after_biomedical)} ({total_reduction:.1f}% reduction)")
 
         return result
 

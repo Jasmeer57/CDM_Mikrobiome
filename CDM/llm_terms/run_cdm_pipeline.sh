@@ -111,7 +111,7 @@ echo "✅ Ollama service started successfully!"
 # Download required models if not already available
 echo "📥 Checking required models..."
 
-MODELS=("phi3:mini" "qwen3:8b" "nomic-embed-text:latest")
+MODELS=("phi3:mini" "qwen3:8b" "biomistral:7b" "nomic-embed-text:latest")
 for model in "${MODELS[@]}"; do
     if ! ollama list | grep -q "$model"; then
         echo "📥 Downloading model: $model..."
@@ -169,13 +169,15 @@ if [[ "$CUDA_VISIBLE_DEVICES" != "" ]]; then
     fi
 fi
 
-# Run the pipeline
+# Run the pipeline with BioMistral deduplication
 python main.py \
     --input-file "$INPUT_FILE" \
     --model "$MODEL_TO_USE" \
     --max-entities "$MAX_ENTITIES" \
     --semantic-model nomic-embed-text \
     --semantic-threshold 0.8 \
+    --enable-biomistral-deduplication \
+    --biomistral-dedup-model biomistral:7b \
     --max-workers "$SLURM_CPUS_PER_TASK" \
     --verbose
 

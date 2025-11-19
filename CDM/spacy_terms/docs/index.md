@@ -14,7 +14,7 @@ This advanced pipeline extracts high-quality biomedical terminology from scienti
 
 - **🔬 Multi-Model NER**: 4 specialized sciSpaCy models running in parallel
 - **🔍 4-Layer Filtering**: Basic → Advanced → Biomedical → CDM optimization
-- **🔄 3-Strategy Deduplication**: Exact → Fuzzy → Semantic (with upgraded Nomic v1.5)
+- **🔄 4-Strategy Deduplication**: Exact → Fuzzy → Semantic → BioMistral Biomedical (NEW!)
 - **🏥 CDM Integration**: Optimized for Common Data Model terminology
 - **💾 Multi-Format Output**: JSON, CSV, SQLite with CDM schema
 - **🚀 Production Ready**: FastAPI, Docker, monitoring stack

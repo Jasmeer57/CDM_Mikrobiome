@@ -192,6 +192,19 @@ class OutputWriter:
                     processing_time REAL,
                     cdm_ready_count INTEGER
                 )
+
+                CREATE TABLE IF NOT EXISTS biomedical_duplicates (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id INTEGER,
+                    removed_term TEXT NOT NULL,
+                    kept_term TEXT NOT NULL,
+                    context TEXT,
+                    method TEXT,
+                    confidence TEXT,
+                    reasoning TEXT,
+                    term_data JSON,
+                    FOREIGN KEY (run_id) REFERENCES pipeline_runs (id)
+                )
             ''')
 
             # Create indexes for performance
@@ -285,6 +298,31 @@ class OutputWriter:
                 len(terms),
                 cdm_ready_count
             ))
+
+            # Store biomedical duplicates if available
+            biomedical_duplicates = results.get('biomedical_duplicates', [])
+            if biomedical_duplicates:
+                run_id = cursor.lastrowid  # Get the ID of the pipeline run
+
+                for duplicate_data in biomedical_duplicates:
+                    reasoning = duplicate_data.get('biomedical_duplicate_reason', {})
+
+                    cursor.execute('''
+                        INSERT INTO biomedical_duplicates (
+                            run_id, removed_term, kept_term, context, method, confidence, reasoning, term_data
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        run_id,
+                        reasoning.get('removed_term', ''),
+                        reasoning.get('kept_term', ''),
+                        reasoning.get('context', ''),
+                        reasoning.get('method', ''),
+                        reasoning.get('confidence', ''),
+                        json.dumps(reasoning),
+                        json.dumps(duplicate_data)
+                    ))
+
+                logger.info(f"Stored {len(biomedical_duplicates)} biomedical duplicates in SQLite")
 
             conn.commit()
             conn.close()

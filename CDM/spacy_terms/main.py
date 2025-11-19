@@ -28,8 +28,22 @@ from src.config.settings import get_config, validate_config
 from src.modules.terms_extractor import TermsExtractor, create_terms_extractor
 from src.modules.deduplication import Deduplicator, create_deduplicator
 from src.modules.ai_correction import AITermCorrector, create_ai_corrector
-from src.modules.umls_mapping import UMLSMapper, create_umls_mapper
-from src.modules.omop_mapping import OMOPMapper, create_omop_mapper
+
+# Conditional imports for optional modules
+try:
+    from src.modules.umls_mapping import UMLSMapper, create_umls_mapper
+except ImportError:
+    UMLSMapper = None
+    def create_umls_mapper(config):
+        return None
+
+try:
+    from src.modules.omop_mapping import OMOPMapper, create_omop_mapper
+except ImportError:
+    OMOPMapper = None
+    def create_omop_mapper(config):
+        return None
+
 from src.utils.output_writer import OutputWriter, create_output_writer
 
 
@@ -149,8 +163,12 @@ def process_documents(
         "exact_removed": dedup_result.exact_removed,
         "fuzzy_removed": dedup_result.fuzzy_removed,
         "semantic_removed": dedup_result.semantic_removed,
+        "biomedical_removed": dedup_result.biomedical_removed,
         "final_count": len(deduplicated_terms)
     }
+
+    # Store biomedical duplicates for parsing
+    results["biomedical_duplicates"] = getattr(dedup_result, 'biomedical_duplicates', [])
 
     # Step 3: AI Correction (if enabled)
     if config.ai_correction.enabled:
@@ -262,6 +280,10 @@ def main():
     parser.add_argument("--fuzzy_threshold", type=float, default=0.85, help="Fuzzy matching threshold")
     parser.add_argument("--semantic_threshold", type=float, default=0.9, help="Semantic similarity threshold")
 
+    # Biomedical deduplication arguments
+    parser.add_argument("--disable_biomedical_dedup", action="store_true", help="Disable BioMistral biomedical deduplication")
+    parser.add_argument("--biomedical_context", type=str, default="microbiome", choices=["microbiome", "biomedical", "clinical", "genomics"], help="Biomedical context for deduplication")
+
     # Feature toggles
     parser.add_argument("--disable_ai_correction", action="store_true", help="Disable AI term correction")
     parser.add_argument("--disable_umls", action="store_true", help="Disable UMLS mapping")
@@ -294,6 +316,8 @@ def main():
     config.deduplication.default_semantic_model = args.semantic_model
     config.deduplication.fuzzy_threshold = args.fuzzy_threshold
     config.deduplication.semantic_threshold = args.semantic_threshold
+    config.deduplication.biomedical_enabled = not args.disable_biomedical_dedup
+    config.deduplication.biomedical_context = args.biomedical_context
     config.output_formats = args.output_formats
 
     config.ai_correction.enabled = not args.disable_ai_correction

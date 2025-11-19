@@ -112,6 +112,18 @@ Examples:
     )
 
     parser.add_argument(
+        '--enable-biomistral-deduplication',
+        action='store_true',
+        help='Enable BioMistral biomedical deduplication for contextual duplicates'
+    )
+
+    parser.add_argument(
+        '--biomistral-dedup-model',
+        default='biomistral:7b',
+        help='BioMistral model for deduplication (default: biomistral:7b)'
+    )
+
+    parser.add_argument(
         '--enable-omop-mapping',
         action='store_true',
         help='Enable OMOP CDM standard vocabulary mapping'

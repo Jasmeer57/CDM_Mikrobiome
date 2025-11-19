@@ -50,9 +50,11 @@ sbatch run_cdm_pipeline.sh /home/user/data/microbiome_paper.txt 150
 - **Models**:
   - `phi3:mini` (for GPUs < 32GB)
   - `qwen3:8b` (for GPUs ≥ 32GB)
+  - `biomistral:7b` (biomedical deduplication)
   - `nomic-embed-text` (semantic deduplication)
 - **Semantic Threshold**: 0.8 (similarity for deduplication)
 - **Max Workers**: Uses all allocated CPUs
+- **🔬 BioMistral Deduplication**: Enabled by default for contextual biomedical duplicates
 
 ## Output Files
 

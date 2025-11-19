@@ -23,7 +23,7 @@ class SciSpaCyConfig:
 
 @dataclass
 class DeduplicationConfig:
-    """Configuration for deduplication layers"""
+    """Configuration for 4-layer deduplication system"""
     exact_enabled: bool = True
     fuzzy_threshold: float = 0.85
     fuzzy_enabled: bool = True
@@ -35,6 +35,12 @@ class DeduplicationConfig:
         "mpnet": "sentence-transformers/all-mpnet-base-v2"
     })
     default_semantic_model: str = "mini-lm"
+
+    # BioMistral biomedical deduplication settings
+    biomedical_enabled: bool = True
+    biomedical_model: str = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext"
+    biomedical_context: str = "microbiome"  # Can be "microbiome", "biomedical", "clinical", etc.
+    biomedical_confidence_threshold: float = 0.7
 
 
 @dataclass
