@@ -1,0 +1,58 @@
+# Core Dependencies
+spacy>=3.4.0
+scispacy>=0.5.0
+sentence-transformers>=2.2.0
+torch>=1.13.0
+transformers>=4.20.0
+numpy>=1.21.0
+pandas>=1.3.0
+
+# Text Processing & Deduplication
+rapidfuzz>=2.0.0
+faiss-cpu>=1.7.0
+
+# Web Framework
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+python-multipart>=0.0.6
+
+# API & HTTP
+requests>=2.28.0
+httpx>=0.24.0
+aiofiles>=22.1.0
+
+# Data Formats
+pydantic>=2.0.0
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Background Tasks
+celery>=5.2.0
+redis>=4.3.0
+
+# Database
+sqlalchemy>=2.0.0
+sqlite3
+
+# CLI & Utilities
+click>=8.0.0
+tqdm>=4.64.0
+pyyaml>=6.0
+
+# Development & Testing
+pytest>=7.0.0
+pytest-asyncio>=0.20.0
+black>=22.0.0
+isort>=5.10.0
+
+# Optional: AI Models
+openai>=1.0.0
+anthropic>=0.3.0
+
+# Optional: Advanced NLP
+nltk>=3.7
+textblob>=0.17.0
+
+# Monitoring & Logging
+structlog>=22.0.0
+prometheus-client>=0.15.0
