@@ -807,9 +807,7 @@ If you use this suite in your research, please cite:
 
 ## 📊 Roadmap
 
-- [ ] Integration with BioPortal for real-time ontology validation
 - [ ] Fine-tuned BioMistral-7B for specialized microbiome extraction
-- [ ] Advanced OMOP mapping with confidence scoring
 - [ ] Web UI for interactive exploration and validation
 - [ ] Benchmark dataset publication for community evaluation
 - [ ] Multi-language support (German, Spanish, Chinese)
