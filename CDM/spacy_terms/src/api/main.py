@@ -58,11 +58,12 @@ class PipelineConfig(BaseModel):
     """Pipeline configuration model"""
     fuzzy_threshold: float = Field(0.85, ge=0.0, le=1.0, description="Fuzzy matching threshold")
     semantic_threshold: float = Field(0.9, ge=0.0, le=1.0, description="Semantic similarity threshold")
-    semantic_model: str = Field("mini-lm", description="Semantic model for deduplication")
+    semantic_model: str = Field("mini-lm", description="Semantic model for deduplication (mini-lm, nomic, mpnet)")
     enable_ai_correction: bool = Field(False, description="Enable AI term correction")
     enable_umls_mapping: bool = Field(False, description="Enable UMLS mapping")
     enable_omop_mapping: bool = Field(False, description="Enable OMOP mapping")
-    output_formats: List[str] = Field(["json", "csv"], description="Output formats")
+    enable_cdm_optimization: bool = Field(True, description="Enable CDM-specific optimization")
+    output_formats: List[str] = Field(["json", "csv"], description="Output formats (json, csv, sqlite)")
 
 class ExtractionRequest(BaseModel):
     """Extraction request model"""
@@ -146,6 +147,9 @@ async def process_text_background(job_id: str, text: str, config: PipelineConfig
         pipeline_config.deduplication.default_semantic_model = config.semantic_model
         pipeline_config.ai_correction.enabled = config.enable_ai_correction
         pipeline_config.umls.enabled = config.enable_umls_mapping
+        # Enable CDM optimization from terms extractor
+        if hasattr(pipeline_config.scispacy, 'cdm_optimization'):
+            pipeline_config.scispacy.cdm_optimization = config.enable_cdm_optimization
         pipeline_config.omop.enabled = config.enable_omop_mapping
         pipeline_config.output_formats = config.output_formats
 
@@ -234,6 +238,37 @@ async def root():
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+
+@app.get("/config")
+async def get_available_configurations():
+    """Get available configuration options"""
+    return {
+        "semantic_models": {
+            "mini-lm": "sentence-transformers/all-MiniLM-L12-v2 (default, fast)",
+            "nomic": "nomic-ai/nomic-embed-text-v1.5 (upgraded, improved biomedical)",
+            "mpnet": "sentence-transformers/all-mpnet-base-v2 (high accuracy)"
+        },
+        "cdm_domains": [
+            "PERSON_SUBJECT",
+            "CONDITION_DISEASE",
+            "DRUG_SUBSTANCE",
+            "PROCEDURE_INTERVENTION",
+            "MEASUREMENT_OBSERVATION",
+            "OBSERVATION"
+        ],
+        "output_formats": ["json", "csv", "sqlite"]
+    }
+
+@app.get("/cdm-stats")
+async def get_cdm_statistics():
+    """Get CDM-specific statistics"""
+    # This would typically query the database for recent runs
+    return {
+        "total_extractions": 0,
+        "cdm_ready_terms": 0,
+        "cdm_domain_distribution": {},
+        "latest_run": None
+    }
 
 @app.post("/extract", response_model=ExtractionResponse)
 async def extract_terms(

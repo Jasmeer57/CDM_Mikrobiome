@@ -1,0 +1,71 @@
+site_name: Scientific Term Extraction Pipeline
+site_description: Production-ready pipeline for CDM terminology extraction with multi-layer filtering
+repo_url: https://github.com/your-repo/spacy_terms
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - search.highlight
+    - content.code.annotate
+    - content.tabs.link
+  palette:
+    - scheme: default
+      primary: teal
+      accent: blue
+    - scheme: slate
+      primary: teal
+      accent: blue
+
+plugins:
+  - search
+  - mkdocstrings
+  - awesome-pages
+  - minify:
+      minify_html: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - getting-started/installation.md
+    - getting-started/quickstart.md
+    - getting-started/configuration.md
+  - User Guide:
+    - user-guide/cli-usage.md
+    - user-guide/api-reference.md
+    - user-guide/cdm-integration.md
+    - user-guide/output-formats.md
+  - Technical:
+    - technical/architecture.md
+    - technical/cdm-optimization.md
+    - technical/deduplication.md
+    - technical/performance.md
+  - Deployment:
+    - deployment/docker.md
+    - deployment/kubernetes.md
+    - deployment/monitoring.md
+  - Examples:
+    - examples/notebooks/
+    - examples/scripts/
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.details
+  - tables
+  - toc
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+
+extra:
+  version: 2.0.0
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX
+
+copyright: Copyright &copy; 2025 - Scientific Term Extraction Pipeline

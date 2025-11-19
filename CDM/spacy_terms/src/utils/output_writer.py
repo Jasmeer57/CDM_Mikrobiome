@@ -91,8 +91,8 @@ class OutputWriter:
             # Create DataFrame and save
             df = pd.DataFrame(flattened_terms)
 
-            # Reorder columns to put important ones first
-            important_cols = ['term', 'frequency', 'relevance_score', 'models_used', 'labels']
+            # Reorder columns to put important ones first (including CDM fields)
+            important_cols = ['term', 'frequency', 'relevance_score', 'cdm_domain', 'cdm_relevance', 'models_used', 'labels']
             existing_cols = df.columns.tolist()
             ordered_cols = []
 
@@ -295,6 +295,18 @@ class OutputWriter:
         except Exception as e:
             logger.error(f"Failed to save SQLite: {e}")
             raise
+
+    def _get_cdm_table(self, cdm_domain: str) -> str:
+        """Map CDM domain to CDM table"""
+        cdm_table_mapping = {
+            "PERSON_SUBJECT": "PERSON",
+            "CONDITION_DISEASE": "CONDITION_OCCURRENCE",
+            "DRUG_SUBSTANCE": "DRUG_EXPOSURE",
+            "PROCEDURE_INTERVENTION": "PROCEDURE_OCCURRENCE",
+            "MEASUREMENT_OBSERVATION": "MEASUREMENT",
+            "OBSERVATION": "OBSERVATION"
+        }
+        return cdm_table_mapping.get(cdm_domain, "UNKNOWN")
 
     def save_results(self, results: Dict[str, Any], formats: List[str]) -> Dict[str, str]:
         """Save results in specified formats"""
