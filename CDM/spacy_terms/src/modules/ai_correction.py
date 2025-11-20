@@ -85,38 +85,52 @@ class AITermCorrector:
             raise
 
     def _create_correction_prompt(self, term: str, examples: List[str]) -> str:
-        """Create prompt for term correction"""
+        """
+        ENHANCED: Advanced prompt engineering from reference do.py
+        Comprehensive biomedical term validation and correction with context-aware decision logic
+        """
         examples_text = "\n".join([
             f"{i+1}. \"{example}\"" for i, example in enumerate(examples[:2])
         ])
 
+        # Enhanced prompt based on reference do.py with sophisticated biomedical validation
         return f"""
-**Task**: You are a biomedical data cleaning expert. Analyze the scientific term and decide whether to KEEP it, CORRECT it, or REMOVE it.
+        **Task**: You are a data cleaning expert specializing in biomedical literature. Your job is to analyze a term and, based on its context, decide whether to KEEP it, CORRECT it, or REMOVE it.
 
-**Term**: "{term}"
+        **Term**: "{term}"
 
-**Contextual Examples**:
-{examples_text}
+        **Contextual Examples**:
+        1. "{examples[0] if len(examples) > 0 else 'N/A'}"
+        2. "{examples[1] if len(examples) > 1 else 'N/A'}"
 
-**Decision Logic**:
-1. **REMOVE**: Only if the term is clearly non-scientific (author initials, citations, figure references)
-2. **CORRECT**: If the term has typos or awkward phrasing but represents a valid concept
-3. **KEEP**: If the term is correct or if uncertain (default action)
+        **Decision Logic**:
+        1.  **REMOVE**: ONLY if the term is a clear non-scientific artifact like author initials ('YY'), citation markers ('et al'), or figure references ('Fig.').
+        2.  **CORRECT**: If the term is a plausible scientific concept but seems to have a typo or awkward phrasing, suggest a corrected version. For example, 'acid fatty middle-chain' could be corrected to 'medium-chain fatty acid'.
+        3.  **KEEP**: If the term is correct as-is or if you are in any doubt. This is the default action.
 
-**Output Format**:
-Reasoning: [One sentence explanation]
-```json
-{{
-  "classification": "KEEP_OR_CORRECT_OR_REMOVE",
-  "corrected_term": "corrected version or original",
-  "confidence": 0.0-1.0,
-  "definition": "brief definition or empty",
-  "standardized_term": "standardized terminology",
-  "category": "biological/chemical/medical/technical",
-  "is_valid": true/false
-}}
-```
-"""
+        **Biomedical Validation Criteria**:
+        - Is this a legitimate biomedical/biological/chemical term?
+        - Does it represent a specific concept, entity, or measurement?
+        - Would this term appear in a scientific database or ontology?
+        - Is it relevant to microbiome, biomedical, or clinical research?
+
+        **Instructions**:
+        First, provide your reasoning. Then, provide your final decision in a strict JSON format.
+
+        **Output Format**:
+        Reasoning: [Your one-sentence reasoning here.]
+        ```json
+        {{
+          "classification": "KEEP_OR_CORRECT_OR_REMOVE",
+          "corrected_term": "The corrected term here, or the original term if keeping.",
+          "definition": "Your one-sentence definition here, or an empty string for REMOVE.",
+          "confidence": 0.0-1.0,
+          "is_valid": true/false,
+          "standardized_term": "Standardized terminology if applicable",
+          "category": "biological/chemical/medical/technical"
+        }}
+        """
+        # Enhanced prompt from reference do.py with better structure and biomedical focus
 
     def _call_openai_api(self, prompt: str) -> Optional[Dict[str, Any]]:
         """Call OpenAI-compatible API"""

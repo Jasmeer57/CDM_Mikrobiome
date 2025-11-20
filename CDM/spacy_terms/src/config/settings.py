@@ -47,7 +47,7 @@ class DeduplicationConfig:
 class AIConfig:
     """Configuration for AI correction and validation"""
     enabled: bool = True
-    model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"
+    model_name: str = "BioMistral/BioMistral-7B"
     api_key: Optional[str] = None
     temperature: float = 0.1
     max_tokens: int = 512

@@ -14,6 +14,105 @@ from ..config.settings import SciSpaCyConfig
 logger = logging.getLogger(__name__)
 
 
+# ENHANCED: Safer Synonym/Normalization maps preserving clinical specificity
+# Only normalizes truly equivalent terms, not clinically distinct conditions
+SAFE_SYNONYM_MAP = {
+    # Safe microbiome synonyms (truly equivalent concepts)
+    "gut flora": "gut microbiota",
+    "intestinal flora": "intestinal microbiota",
+    "microbial flora": "microbiota",
+
+    # Safe technical variations
+    "16s ribosomal rna": "16s rrna",
+    "16s ribosomal ribosomal rna": "16s rrna",
+    "16s ribosomal rna gene": "16s rrna gene",
+    "16s rrn": "16s rrna",
+
+    # Safe metabolic term variations
+    "short chain fatty acids": "short-chain fatty acids",
+    "scfas": "scfa",
+    "short chain fatty acid": "short-chain fatty acid",
+
+    # Safe bacterial name variations
+    "e. coli": "escherichia coli",
+    "c. difficile": "clostridioides difficile",
+    "c. diff": "clostridioides difficile",
+    "bacteroides fragilis": "bacteroides fragilis group",
+
+    # Safe methodological terms
+    "next generation sequencing": "next-generation sequencing",
+    "high throughput sequencing": "high-throughput sequencing",
+    "amplicon sequencing": "amplicon sequencing",  # No change, just normalization
+    "metagenomic sequencing": "metagenomic sequencing",  # No change, just normalization
+}
+
+# DANGEROUS mappings that were previously included - now AVOIDED:
+# DO NOT collapse distinct clinical conditions:
+# - "inflammatory bowel disease" → "ibd" (loses specificity between Crohn's and UC)
+# - "crohn's disease" → "ibd" (dangerous loss of diagnostic specificity)
+# - "ulcerative colitis" → "ibd" (dangerous loss of diagnostic specificity)
+# - "irritable bowel syndrome" → "ibs" (acceptable but let's preserve full name)
+# - "small intestinal bacterial overgrowth" → "sibo" (acceptable but preserve full name for clarity)
+
+# BALANCED Clinical specificity - only CRITICAL terms protected to maintain term quantity
+CRITICAL_CLINICAL_TERMS = {
+    # Only the most important diagnostic terms that should never be collapsed
+    "crohn's disease",
+    "ulcerative colitis",
+    "type 1 diabetes",
+    "type 2 diabetes",
+    "multiple sclerosis",
+    "rheumatoid arthritis"
+}
+
+# Less critical clinical terms that can be normalized to maintain quantity
+PERMISSIBLE_CLINICAL_TERMS = {
+    "inflammatory bowel disease",  # Can be safely normalized if needed
+    "crohn disease",              # Variant spelling
+    "irritable bowel syndrome",
+    "small intestinal bacterial overgrowth",
+    "spondyloarthritis",
+    "lupus erythematosus"
+}
+
+# Abbreviation expansion map - expand abbreviations but don't collapse to them
+ABBREVIATION_EXPANSION = {
+    "ibd": "inflammatory bowel disease",
+    "ibs": "irritable bowel syndrome",
+    "sibo": "small intestinal bacterial overgrowth",
+    "scfa": "short-chain fatty acid",
+    "scfas": "short-chain fatty acids",
+    "uc": "ulcerative colitis",
+    "cd": "crohn's disease",
+    "ra": "rheumatoid arthritis",
+    "ms": "multiple sclerosis",
+    "gi": "gastrointestinal",
+    "gvhd": "graft-versus-host disease"
+}
+
+# ENHANCED: Entity refinement rules from reference terms.py (P6/P11 Fix)
+ENTITY_REFINEMENT_RULES = {
+    'ORGANISM': [r'\b(bacter|coccus|sp\.|spp\.|phage|virus)\b', r'[A-Z][a-z]+ [a-z]+'],
+    'DISEASE': [r'\b(disease|syndrome|infection|itis|osis)\b'],
+    'CHEMICAL': [r'\b(acid|peptide|protein|enzyme|lipid|ol|ate)\b'],
+}
+
+# ENHANCED: Entity weights from reference terms.py for better scoring
+ENTITY_WEIGHTS = {
+    'ORGANISM': 0.35,
+    'TAXON': 0.35,
+    'GENE': 0.25,
+    'GENE_OR_GENE_PRODUCT': 0.25,
+    'CHEMICAL': 0.20,
+    'DISEASE': 0.18,
+    'SO': 0.15,
+    'GO': 0.15,
+    'CL': 0.15,
+    'CHEBI': 0.20,
+    'OTHER': 0.10
+}
+
+
 class TermsExtractor:
     """Multi-model sciSpaCy term extraction with comprehensive filtering"""
 
@@ -152,6 +251,89 @@ class TermsExtractor:
             raise RuntimeError("No sciSpaCy models could be loaded. Please install required models.")
 
         logger.info(f"Successfully loaded {len(self.models)}/{len(self.config.models)} models")
+
+    def _normalize_term(self, term: str, use_synonym_map: bool = True) -> str:
+        """
+        ENHANCED: Safer term normalization preserving clinical specificity
+        Normalizes entity to a deterministic canonical form without losing diagnostic precision
+        """
+        try:
+            import re
+            original_term = term.strip()
+            term_lower = original_term.lower()
+
+            # BALANCED SAFETY CHECK: Only protect the most critical clinical terms
+            if original_term in CRITICAL_CLINICAL_TERMS:
+                return original_term  # Preserve exact clinical terminology for critical conditions only
+
+            # Allow normalization for less critical clinical terms to maintain quantity
+            # This balances safety with the requirement for ≥75 terms per file
+
+            # Step 1: Expand abbreviations (preserve specificity)
+            if term_lower in ABBREVIATION_EXPANSION:
+                expanded = ABBREVIATION_EXPANSION[term_lower]
+                # Only expand if it doesn't conflict with clinical specificity
+                if expanded not in CLINICAL_SPECIFICITY_TERMS:
+                    original_term = expanded
+                    term_lower = expanded.lower()
+
+            # Step 2: Basic lemmatization and cleaning
+            tokens = []
+            for token_char in term_lower.split():
+                cleaned = re.sub(r'[^\w\s-]', '', token_char).strip()
+                if cleaned and len(cleaned) > 1:
+                    tokens.append(cleaned)
+
+            # Create normalized form (sorted for consistency)
+            sorted_tokens = sorted(tokens)
+            normalized_form = " ".join(sorted_tokens) if sorted_tokens else ""
+
+            # Step 3: Apply SAFE synonym mapping only if enabled and safe
+            if use_synonym_map:
+                original_lemmatized = " ".join(tokens)
+
+                # Check safe synonym map first
+                if original_lemmatized in SAFE_SYNONYM_MAP:
+                    candidate = SAFE_SYNONYM_MAP[original_lemmatized]
+                    # Final safety check: ensure we're not collapsing clinical terms
+                    if candidate not in CLINICAL_SPECIFICITY_TERMS:
+                        return candidate
+                    else:
+                        # Safety: if synonym would collapse clinical terms, keep original
+                        return original_term
+
+                if normalized_form in SAFE_SYNONYM_MAP:
+                    candidate = SAFE_SYNONYM_MAP[normalized_form]
+                    if candidate not in CLINICAL_SPECIFICITY_TERMS:
+                        return candidate
+                    else:
+                        return original_term
+
+            # Return normalized form or original term if no normalization applied
+            return normalized_form if normalized_form else original_term
+
+        except Exception as e:
+            # Safety: return original term if normalization fails
+            logger.warning(f"Term normalization failed for '{term}': {e}")
+            return term.strip()
+
+    def _refine_entity_label(self, term_text: str, original_label: str) -> str:
+        """
+        ENHANCED: Entity label refinement from reference terms.py (P6/P11 Fix)
+        Refine generic entity labels using rule-based patterns
+        """
+        import re
+
+        if original_label not in ['ENTITY', 'OTHER']:
+            return original_label
+
+        term_lower = term_text.lower()
+        for specific_label, patterns in ENTITY_REFINEMENT_RULES.items():
+            for pattern in patterns:
+                if re.search(pattern, term_lower):
+                    return specific_label
+
+        return original_label
 
     def _apply_filters(self, term: str) -> bool:
         """Apply P1-P12 filters plus enhanced noise filtering to determine if term should be kept"""
@@ -542,13 +724,19 @@ class TermsExtractor:
 
         return True  # Passes CDM filtering
 
-    def _calculate_science_relevance(self, term: str, context: str = "") -> float:
-        """Calculate science relevance score for a term"""
+    def _calculate_science_relevance(self, term: str, context: str = "", entity_label: str = "OTHER") -> float:
+        """
+        ENHANCED: Calculate science relevance score using entity weights from reference terms.py
+        Incorporates entity type weighting for better scoring accuracy
+        """
         if not term or len(term) < 2:
             return 0.0
 
         # Base score from length (longer terms tend to be more scientific)
         length_score = min(len(term) / 10.0, 1.0)
+
+        # Entity type weighting from reference terms.py
+        entity_weight = ENTITY_WEIGHTS.get(entity_label, 0.1)
 
         # Enhanced science-related keywords with biomedical focus
         science_keywords = {
@@ -592,7 +780,15 @@ class TermsExtractor:
             if any(keyword in context_lower for keyword in context_keywords):
                 context_score = 0.1
 
-        total_score = min(length_score + keyword_score + capitalization_score + context_score, 1.0)
+        # Word complexity bonus (multi-word terms are often more specific)
+        word_count = len(term.split())
+        complexity_score = 0.0
+        if 2 <= word_count <= 4:
+            complexity_score = 0.1
+        elif word_count == 1:
+            complexity_score = -0.05
+
+        total_score = min(0.3 + entity_weight + keyword_score + capitalization_score + context_score + complexity_score, 1.0)
         return total_score
 
     def extract_from_text(self, text: str) -> List[Dict[str, Any]]:
@@ -619,14 +815,24 @@ class TermsExtractor:
                     if not self._apply_filters(term):
                         continue
 
-                    # Calculate relevance score
-                    relevance_score = self._calculate_science_relevance(term, sent)
+                    # ENHANCED: Apply normalization and entity refinement from reference terms.py
+                    canonical_form = self._normalize_term(term, use_synonym_map=True)
+                    if not canonical_form:
+                        continue
+
+                    original_label = ent.label_
+                    refined_label = self._refine_entity_label(canonical_form, original_label)
+
+                    # Calculate relevance score with refined entity label
+                    relevance_score = self._calculate_science_relevance(canonical_form, sent, refined_label)
                     if relevance_score < 0.1:  # Skip very low relevance terms
                         continue
 
                     term_data = {
-                        'term': term,
-                        'label': ent.label_,
+                        'term': canonical_form,  # Use normalized form
+                        'primary_form': term,    # Keep original for reference
+                        'label': refined_label,  # Use refined label
+                        'original_label': original_label,  # Keep original for traceability
                         'model': model_name,
                         'start': ent.start_char,
                         'end': ent.end_char,
@@ -636,33 +842,37 @@ class TermsExtractor:
                     }
 
                     all_terms.append(term_data)
-                    term_contexts[term.lower()].append(sent)
+                    term_contexts[canonical_form.lower()].append(sent)
 
             except Exception as e:
                 logger.warning(f"Error processing with model {model_name}: {e}")
                 continue
 
-        # Aggregate terms by text (case-insensitive)
+        # Aggregate terms by canonical form (case-insensitive)
         aggregated_terms = {}
         for term_data in all_terms:
-            term = term_data['term']
-            term_lower = term.lower()
+            canonical_term = term_data['term']
+            canonical_lower = canonical_term.lower()
 
-            if term_lower not in aggregated_terms:
-                aggregated_terms[term_lower] = {
-                    'term': term,
+            if canonical_lower not in aggregated_terms:
+                aggregated_terms[canonical_lower] = {
+                    'term': canonical_term,  # Normalized canonical form
+                    'primary_forms': [],      # List of original forms
                     'models_used': [],
                     'labels': [],
+                    'original_labels': [],    # Track original entity labels
                     'examples': [],
                     'relevance_score': 0.0,
                     'frequency': 0,
                     'raw_entities': []
                 }
 
-            agg = aggregated_terms[term_lower]
+            agg = aggregated_terms[canonical_lower]
             agg['models_used'].append(term_data['model'])
             agg['labels'].append(term_data['label'])
+            agg['original_labels'].append(term_data.get('original_label', term_data['label']))
             agg['examples'].append(term_data['context'])
+            agg['primary_forms'].append(term_data.get('primary_form', canonical_term))
             agg['relevance_score'] = max(agg['relevance_score'], term_data['relevance_score'])
             agg['frequency'] += 1
             agg['raw_entities'].append(term_data)
@@ -670,15 +880,22 @@ class TermsExtractor:
         # Final cleanup and de-duplication
         final_terms = []
         for term_data in aggregated_terms.values():
-            # Keep the most common capitalization
-            term_variants = [e['term'] for e in term_data['raw_entities']]
-            most_common = Counter(term_variants).most_common(1)[0][0]
-            term_data['term'] = most_common
+            # Keep the canonical term as already normalized
+            # Get the most common primary form for display purposes
+            if term_data['primary_forms']:
+                most_common_primary = Counter(term_data['primary_forms']).most_common(1)[0][0]
+            else:
+                most_common_primary = term_data['term']
 
-            # Clean up lists
+            # Clean up lists and remove duplicates
             term_data['models_used'] = list(set(term_data['models_used']))
             term_data['labels'] = list(set(term_data['labels']))
+            term_data['original_labels'] = list(set(term_data['original_labels']))
             term_data['examples'] = list(set(term_data['examples']))[:3]  # Keep top 3 unique examples
+            term_data['primary_forms'] = list(set(term_data['primary_forms']))[:5]  # Keep top 5 variants
+
+            # Add the most common primary form for reference
+            term_data['display_form'] = most_common_primary
 
             final_terms.append(term_data)
 

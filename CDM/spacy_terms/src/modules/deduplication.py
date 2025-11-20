@@ -49,7 +49,7 @@ class Deduplicator:
             logger.info(f"Loading semantic model: {model_name}")
 
             from sentence_transformers import SentenceTransformer
-            self.semantic_model = SentenceTransformer(model_name)
+            self.semantic_model = SentenceTransformer(model_name, trust_remote_code=True)
             logger.info(f"✓ Semantic model loaded: {self.config.default_semantic_model}")
 
         except ImportError:
