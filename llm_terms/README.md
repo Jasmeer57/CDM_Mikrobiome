@@ -77,8 +77,8 @@ The CDM Pipeline extracts structured biomedical entities from text using advance
 ### **Local Setup**
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd cdm-pipeline
+git clone https://github.com/SCAI-BIO/Microbiome-CDM.git
+cd Microbiome-CDM/llm_terms
 
 # Install dependencies
 pip install -r requirements.txt

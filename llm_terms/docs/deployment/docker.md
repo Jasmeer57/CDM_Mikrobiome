@@ -10,8 +10,8 @@ The CDM Entity Extraction Pipeline provides comprehensive Docker support with mu
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/cdm-pipeline
-cd cdm-pipeline
+git clone https://github.com/SCAI-BIO/Microbiome-CDM.git
+cd Microbiome-CDM/llm_terms
 
 # Copy environment file
 cp .env.example .env

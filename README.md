@@ -637,7 +637,7 @@ SEMANTIC_MODEL=nomic
 **Option A: Docker (Recommended)**
 
 ```bash
-git clone https://github.com/your-org/microbiome-cdm-suite.git
+git clone https://github.com/SCAI-BIO/Microbiome-CDM.git
 cd microbiome-cdm-suite
 docker-compose up --build
 ```
@@ -645,7 +645,7 @@ docker-compose up --build
 **Option B: Local Installation**
 
 ```bash
-git clone https://github.com/your-org/microbiome-cdm-suite.git
+git clone https://github.com/SCAI-BIO/Microbiome-CDM.git
 cd microbiome-cdm-suite
 
 # Create virtual environment
@@ -790,9 +790,9 @@ This project is licensed under the MIT License—see the LICENSE file for detail
 
 For questions, bugs, or feature requests:
 
-- **GitHub Issues**: https://github.com/your-org/microbiome-cdm-suite/issues
-- **Discussions**: https://github.com/your-org/microbiome-cdm-suite/discussions
-- **Email**: support@example.com
+- **GitHub Issues**: https://github.com/SCAI-BIO/Microbiome-CDM/issues
+- **Discussions**: https://github.com/SCAI-BIO/Microbiome-CDM/discussions
+- **Email**: jasmeer.singh.kalra@scai.fraunhofer.de
 
 ---
 
@@ -805,7 +805,7 @@ If you use this suite in your research, please cite:
   title={Microbiome CDM Entity Extraction Suite},
   author={Your Organization},
   year={2025},
-  url={https://github.com/your-org/microbiome-cdm-suite}
+  url={https://github.com/SCAI-BIO/Microbiome-CDM}
 }
 ```
 

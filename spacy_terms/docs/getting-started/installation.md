@@ -11,8 +11,8 @@
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/your-repo/spacy_terms.git
-cd spacy_terms
+git clone https://github.com/SCAI-BIO/Microbiome-CDM.git
+cd Microbiome-CDM/spacy_terms
 ```
 
 ### 2. Create Virtual Environment
@@ -171,7 +171,7 @@ docker build --no-cache -t sci-term-extractor .
 
 ### Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/your-repo/spacy_terms/issues)
+- **Issues**: [GitHub Issues](https://github.com/SCAI-BIO/Microbiome-CDM/issues)
 - **Documentation**: [Full Documentation](https://your-docs-site.com)
 - **API Reference**: [API Docs](http://localhost:8000/docs)
 
