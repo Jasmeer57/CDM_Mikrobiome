@@ -211,8 +211,19 @@ spacy_terms/
 │   └── api/
 │       └── main.py                # FastAPI application
 ├── data/                             # Input directory
-├── output/                           # Output directory
-└── logs/                             # Log files
+├── docs/                             # API and safety documentation
+│   ├── api/
+│   │   ├── configuration-api.md      # Configuration API docs
+│   │   ├── extraction-endpoints.md   # Extraction endpoints docs
+│   │   └── health-endpoints.md       # Health check endpoints docs
+│   └── safety/
+│       └── medical-safety.md         # Medical safety documentation
+├── tests/                            # Test suite
+│   └── test_critical_components.py   # Critical component tests
+├── slurm_complete_pipeline.sh        # HPC SLURM deployment script
+├── mkdocs.yml                        # MkDocs configuration
+├── site/                             # Generated documentation site
+└── logs/                             # Log files (runtime, excluded from git)
 ```
 
 ## 🔧 Pipeline Modules

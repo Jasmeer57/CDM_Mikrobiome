@@ -19,29 +19,27 @@ Both pipelines feature production-grade containerization (Docker), REST API expo
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/microbiome-cdm-suite.git
-cd microbiome-cdm-suite
+git clone https://github.com/SCAI-BIO/Microbiome-CDM.git
+cd Microbiome-CDM
 
-# Start all services
-docker-compose up --build
-
-# Access points
-# API: http://localhost:8000
-# Swagger UI: http://localhost:8000/docs
-# Documentation: http://localhost:8001
+# Start all services (choose one pipeline)
+cd llm_terms && docker-compose up --build  # LLM Pipeline
+# OR
+cd spacy_terms && docker-compose up --build  # spaCy Pipeline
 ```
 
 ### Local Usage
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
-
 # LLM Pipeline
-python llm_pipeline/main.py --input "data/paper.txt" --model "phi3:mini"
+cd llm_terms
+pip install -r requirements.txt
+python main.py --input "data/paper.txt" --model "phi3:mini"
 
 # spaCy Pipeline
-python spacy_pipeline/main.py \
+cd spacy_terms
+pip install -r requirements.txt
+python main.py \
     --input_dir "./data" \
     --semantic_model nomic \
     --output_formats json csv sqlite
@@ -469,7 +467,7 @@ microbiome-cdm-suite/
 │   ├── database.py                # SQLite ORM layer
 │   └── schemas.py                 # Pydantic request/response models
 │
-├── llm_pipeline/                  # 🤖 LLM-Based Extraction
+├── llm_terms/                     # 🤖 LLM-Based Extraction
 │   ├── main.py                    # CLI orchestrator
 │   ├── core/
 │   │   ├── pipeline.py            # Main orchestration
@@ -478,9 +476,11 @@ microbiome-cdm-suite/
 │   ├── extractors/                # Ollama API integration
 │   ├── biomedical/                # BioMistral validation
 │   ├── mappers/                   # OMOP/UMLS mapping
+│   ├── utils/                     # Safety and validation utilities
+│   ├── docs/                      # API and deployment documentation
 │   └── config/                    # Entity type configurations
 │
-├── spacy_pipeline/                # ⚡ spaCy-Based Extraction
+├── spacy_terms/                   # ⚡ spaCy-Based Extraction
 │   ├── main.py                    # CLI entry point
 │   ├── src/
 │   │   ├── modules/
@@ -488,14 +488,18 @@ microbiome-cdm-suite/
 │   │   │   └── deduplication.py   # 3-strategy deduplication
 │   │   ├── config/
 │   │   │   └── settings.py        # Configuration management
+│   │   ├── api/
+│   │   │   └── main.py            # FastAPI endpoints
 │   │   └── utils/
 │   │       └── output_writer.py   # Multi-format output
+│   ├── docs/                      # API and safety documentation
+│   ├── tests/                     # Test suite
 │   └── requirements.txt           # spaCy-specific dependencies
 │
 ├── docs/                          # 📚 MkDocs documentation
 │   ├── index.md
-│   ├── llm_pipeline.md
-│   ├── spacy_pipeline.md
+│   ├── llm_terms.md
+│   ├── spacy_terms.md
 │   └── comparison.md
 │
 ├── docker-compose.yml             # Service orchestration
@@ -540,7 +544,8 @@ curl -X POST "http://localhost:8000/extract/spacy" \
 **LLM Pipeline**
 
 ```bash
-python llm_pipeline/main.py \
+cd llm_terms
+python main.py \
   --input "data/paper.txt" \
   --model "phi3:mini" \
   --output_format json
@@ -549,7 +554,8 @@ python llm_pipeline/main.py \
 **spaCy Pipeline**
 
 ```bash
-python spacy_pipeline/main.py \
+cd spacy_terms
+python main.py \
   --input_dir "./data" \
   --semantic_model nomic \
   --fuzzy_threshold 0.85 \

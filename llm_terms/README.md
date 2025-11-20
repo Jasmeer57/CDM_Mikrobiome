@@ -259,19 +259,41 @@ Duplicate Analysis (biomistral_duplicate_analysis.json)
 ### **Project Structure**
 ```
 llm_terms/
-├── main.py                 # Main CLI entry point
+├── main.py                    # Main CLI entry point
+├── api_server.py              # FastAPI REST API server
+├── run_cdm_pipeline.sh        # SLURM HPC deployment script
 ├── core/
-│   ├── pipeline.py        # Main orchestrator
-│   ├── llm_client.py      # LLM interface
-│   ├── entity_filter.py   # Quality filtering
-│   ├── semantic_deduplicator.py  # Semantic deduplication
+│   ├── pipeline.py            # Main orchestrator
+│   ├── llm_client.py          # LLM interface
+│   ├── entity_filter.py       # Quality filtering
+│   ├── semantic_deduplicator.py    # Semantic deduplication
 │   └── biomedical_deduplicator.py  # BioMistral deduplication (NEW!)
 ├── extractors/
 │   └── entity_extractor.py
+├── utils/                     # Safety and validation utilities
+│   ├── content_safety.py      # Medical content filtering
+│   ├── audit_logger.py        # Enhanced audit logging
+│   ├── input_validator.py     # Input validation
+│   ├── result_validator.py    # Result validation
+│   └── safety_enhancements.py # Safety mechanisms
+├── biomedical/                # BioMistral validation
+│   └── biomistral_validator.py
 ├── config/
 │   └── cdm_config.py
-└── database/
-    └── models.py         # Database models
+├── mappers/                   # CDM mapping utilities
+│   ├── mapping.py
+│   ├── omop_mapper.py
+│   └── umls.py
+├── database/
+│   └── models.py              # Database models
+├── docs/                      # API and deployment documentation
+│   ├── api_reference.md
+│   └── complete_pipeline_guide.md
+├── Docs/                      # Presentations and additional docs
+├── requirements.txt           # Python dependencies
+├── docker-compose.yml         # Docker orchestration
+├── Dockerfile                 # Docker configuration
+└── SAFETY_ENHANCEMENTS.md     # Comprehensive safety guide
 ```
 
 ### **Adding New Deduplication Methods**
