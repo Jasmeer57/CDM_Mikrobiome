@@ -194,7 +194,7 @@ butyrate               → CHEMICAL (metabolites)
 {
   "metadata": {
     "timestamp": "2025-11-19T01:29:47Z",
-    "model_used": "phi3:mini",
+    "model_used": "Qwen3:32b",
     "pipeline_version": "1.0.0",
     "extraction_config": {
       "chunk_size": 5000,
