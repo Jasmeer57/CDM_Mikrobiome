@@ -3,11 +3,34 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
 # Environments
 venv/
 env/
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 .idea/  # IDE files
 .vscode/ # VS Code files
 
@@ -18,5 +41,41 @@ model_cache/
 *.err
 *.out
 
-# Specific problem file's parent directories
+# Runtime and Output Files
+*.db
+*.sqlite
+*.sqlite3
+audit_trail.db
+cdm_entities.json
+biomistral_duplicate_analysis.json
+comprehensive_results.json
+cdm_pipeline.log
+llm_terms.log
+
+# Logs and Output Directories
+logs/
+output/
+test_logs/
+logs_*/
+
+# Temporary Files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Reference-specific directories (should not be in git)
 CDM/spacy_CDM/terms_original.py/model_cache/
