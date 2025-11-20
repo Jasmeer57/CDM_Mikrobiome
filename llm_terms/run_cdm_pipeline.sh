@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=cdm_pipeline
-#SBATCH --output=logs/cdm_pipeline_%j.out
-#SBATCH --error=logs/cdm_pipeline_%j.err
+#SBATCH --job-name=llm_terms
+#SBATCH --output=logs/llm_terms_%j.out
+#SBATCH --error=logs/llm_terms_%j.err
 #SBATCH --time=24:00:00
 #SBATCH --mem=120G
 #SBATCH --cpus-per-task=16
@@ -83,14 +83,13 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export PYTHONPATH="${PYTHONPATH}:$(pwd)"
 export TOKENIZERS_PARALLELISM=false
 
-# Navigate to project directory
-cd cdm_pipeline || {
-    echo "❌ Error: cdm_pipeline directory not found!"
-    echo "Current directory: $(pwd)"
-    exit 1
-}
-
+# We're already in the correct llm_terms directory
 echo "📂 Working directory: $(pwd)"
+if [[ ! -f "main.py" ]]; then
+    echo "❌ Error: main.py not found! Make sure you're running this from llm_terms directory."
+    exit 1
+fi
+
 echo ""
 
 # === OLLAMA SETUP ===
@@ -207,8 +206,8 @@ if [[ $PIPELINE_EXIT_CODE -eq 0 ]]; then
         jq -r '.extraction_statistics.entity_type_distribution // {} | to_entries[] | "     \(.key): \(.value)"' cdm_entities.json 2>/dev/null || echo "     Not available"
     fi
 
-    if [[ -f "cdm_pipeline.db" ]]; then
-        echo "   - Database created: cdm_pipeline.db"
+    if [[ -f "llm_terms.db" ]]; then
+        echo "   - Database created: llm_terms.db"
     fi
 else
     echo "❌ Pipeline failed with exit code: $PIPELINE_EXIT_CODE"

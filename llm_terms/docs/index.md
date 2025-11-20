@@ -88,7 +88,8 @@ python main.py \
 ### Python API
 
 ```python
-from cdm_pipeline import CDMEntityPipeline
+import main  # Import main module from current directory
+from main import CDMEntityPipeline
 
 # Initialize pipeline
 pipeline = CDMEntityPipeline(
@@ -115,7 +116,7 @@ print(f"Found {len(entities)} entities")
 ## 🏗️ Architecture
 
 ```
-cdm_pipeline/
+llm_terms/
 ├── main.py                    # CLI interface
 ├── config/                    # Configuration modules
 │   ├── cdm_config.py         # CDM entity types & pipeline config

@@ -60,9 +60,9 @@ sbatch run_cdm_pipeline.sh /home/user/data/microbiome_paper.txt 150
 
 ### Generated Files
 - `cdm_entities.json` - Main entity extraction results
-- `cdm_pipeline.db` - SQLite database with all records
-- `logs/cdm_pipeline_*.out` - Job output logs
-- `logs/cdm_pipeline_*.err` - Job error logs
+- `llm_terms.db` - SQLite database with all records
+- `logs/llm_terms_*.out` - Job output logs
+- `logs/llm_terms_*.err` - Job error logs
 
 ### Output Content
 The `cdm_entities.json` file contains:
@@ -110,7 +110,7 @@ squeue -u $USER
 squeue -j <job_id>
 
 # View job logs
-tail -f logs/cdm_pipeline_<job_id>.out
+tail -f logs/llm_terms_<job_id>.out
 ```
 
 ### Job Statistics
@@ -171,7 +171,7 @@ done
 
 ### Monitor All Jobs
 ```bash
-watch -n 30 'squeue -u $USER && echo "=== Completed Jobs ===" && ls logs/cdm_pipeline_*.out | wc -l'
+watch -n 30 'squeue -u $USER && echo "=== Completed Jobs ===" && ls logs/llm_terms_*.out | wc -l'
 ```
 
 ## Supported File Formats

@@ -147,13 +147,13 @@ sbatch run_cdm_pipeline.sh research_paper.txt 200
 
 ### **Main Results**
 - **`cdm_entities.json`** - Primary extraction results with deduplication metadata
-- **`cdm_pipeline.db`** - SQLite database with complete extraction history
+- **`llm_terms.db`** - SQLite database with complete extraction history
 - **`biomistral_duplicate_analysis.json`** - **NEW!** Detailed duplicate analysis for parsing
 
 ### **Log Files**
-- **`logs/cdm_pipeline_*.out`** - Job output logs
-- **`logs/cdm_pipeline_*.err`** - Error logs
-- **`cdm_pipeline.log`** - Detailed pipeline execution log
+- **`logs/llm_terms_*.out`** - Job output logs
+- **`logs/llm_terms_*.err`** - Error logs
+- **`llm_terms.log`** - Detailed pipeline execution log
 
 ### **Duplicate Analysis Output Example**
 ```json
@@ -258,7 +258,7 @@ Duplicate Analysis (biomistral_duplicate_analysis.json)
 
 ### **Project Structure**
 ```
-cdm_pipeline/
+llm_terms/
 ├── main.py                 # Main CLI entry point
 ├── core/
 │   ├── pipeline.py        # Main orchestrator

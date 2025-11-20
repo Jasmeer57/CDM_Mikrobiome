@@ -174,7 +174,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     environment:
-      - POSTGRES_DB=cdm_pipeline
+      - POSTGRES_DB=llm_terms
       - POSTGRES_USER=cdm_user
       - POSTGRES_PASSWORD=REDACTED_PASSWORD
       - PGDATA=/var/lib/postgresql/data/pgdata
@@ -182,7 +182,7 @@ services:
     networks:
       - cdm-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cdm_user -d cdm_pipeline"]
+      test: ["CMD-SHELL", "pg_isready -U cdm_user -d llm_terms"]
       interval: 10s
       timeout: 5s
       retries: 5
