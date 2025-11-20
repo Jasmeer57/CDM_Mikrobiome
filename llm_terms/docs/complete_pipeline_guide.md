@@ -74,7 +74,7 @@ Input Text (Scientific Literature)
 ## 📁 Enhanced File Structure
 
 ```
-cdm_pipeline/
+llm_terms/
 ├── main.py                     # Main CLI entry point (enhanced)
 ├── core/
 │   ├── pipeline.py            # Main orchestrator with safety integration
@@ -277,7 +277,7 @@ python main.py \
 ### Advanced Configuration
 
 ```python
-from cdm_pipeline.core.pipeline import CDMPipeline
+from core.pipeline import CDMPipeline
 from utils.safety_enhancements import create_safety_config, SafetyLevel
 from utils.content_safety import create_medical_safety_filter
 from utils.audit_logger import configure_audit_logging
@@ -430,7 +430,7 @@ results = pipeline.process_document(
 
 ```bash
 #!/bin/bash
-#SBATCH --job-name=cdm_pipeline_safe
+#SBATCH --job-name=llm_terms_safe
 #SBATCH --time=24:00:00
 #SBATCH --mem=16G
 #SBATCH --cpus-per-task=8
@@ -458,7 +458,7 @@ python main.py \
 
 ```python
 from fastapi import FastAPI
-from cdm_pipeline.core.pipeline import CDMPipeline
+from core.pipeline import CDMPipeline
 from utils.safety_enhancements import create_safety_config, SafetyLevel
 
 app = FastAPI(title="Safe CDM Pipeline API")

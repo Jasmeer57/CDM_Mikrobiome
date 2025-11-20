@@ -1,6 +1,6 @@
-site_name: Scientific Term Extraction Pipeline
-site_description: Production-ready pipeline for CDM terminology extraction with multi-layer filtering
-repo_url: https://github.com/your-repo/spacy_terms
+site_name: SpaCy Terms CDM Pipeline
+site_description: Production-ready pipeline for CDM terminology extraction with multi-layer filtering and NLP
+repo_url: https://github.com/SCAI-BIO/Microbiome-CDM
 
 theme:
   name: material
@@ -26,25 +26,14 @@ nav:
   - Home: index.md
   - Getting Started:
     - getting-started/installation.md
-    - getting-started/quickstart.md
-    - getting-started/configuration.md
-  - User Guide:
-    - user-guide/cli-usage.md
-    - user-guide/api-reference.md
-    - user-guide/cdm-integration.md
-    - user-guide/output-formats.md
   - Technical:
-    - technical/architecture.md
-    - technical/cdm-optimization.md
     - technical/deduplication.md
-    - technical/performance.md
-  - Deployment:
-    - deployment/docker.md
-    - deployment/kubernetes.md
-    - deployment/monitoring.md
-  - Examples:
-    - examples/notebooks/
-    - examples/scripts/
+  - API Documentation:
+    - Configuration API: api/configuration-api.md
+    - Extraction Endpoints: api/extraction-endpoints.md
+    - Health Endpoints: api/health-endpoints.md
+  - Safety:
+    - Medical Safety: safety/medical-safety.md
 
 markdown_extensions:
   - pymdownx.superfences
@@ -65,4 +54,4 @@ extra:
     provider: google
     property: G-XXXXXXXXXX
 
-copyright: Copyright &copy; 2025 - Scientific Term Extraction Pipeline
+copyright: Copyright &copy; 2025 - Microbiome CDM Team

@@ -430,7 +430,7 @@ print(f"Processing time: {summary['total_processing_time']:.2f}s")
 ```python
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from cdm_pipeline.core.pipeline import CDMPipeline
+from core.pipeline import CDMPipeline
 from utils.safety_enhancements import SafetyLevel, create_safety_config
 
 app = FastAPI()
@@ -477,7 +477,7 @@ async def extract_entities(request: ExtractionRequest):
 ```python
 #!/usr/bin/env python3
 import os
-from cdm_pipeline.core.pipeline import CDMPipeline
+from core.pipeline import CDMPipeline
 from utils.safety_enhancements import SafetyLevel, create_safety_config
 from utils.audit_logger import configure_audit_logging
 
@@ -548,7 +548,7 @@ if __name__ == '__main__':
 
 ```python
 import pytest
-from cdm_pipeline.core.pipeline import CDMPipeline
+from core.pipeline import CDMPipeline
 from utils.safety_enhancements import SafetyLevel
 
 def test_pipeline_with_safety():

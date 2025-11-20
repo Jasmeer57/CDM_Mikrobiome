@@ -1,68 +1,22 @@
-site_name: CDM Entity Extraction Pipeline
-site_description: Comprehensive Microbiome Common Data Model Entity Extraction with AI
-site_author: CDM Pipeline Team
-site_url: https://cdm-pipeline.readthedocs.io
+site_name: LLM Terms CDM Pipeline
+site_description: Advanced Microbiome Entity Extraction with LLM and AI-Powered Deduplication
+site_author: Microbiome CDM Team
+site_url: https://scai-bio.github.io/Microbiome-CDM/llm_terms/
 
 # Repository
-repo_name: cdm-pipeline
-repo_url: https://github.com/your-org/cdm-pipeline
+repo_name: Microbiome-CDM
+repo_url: https://github.com/SCAI-BIO/Microbiome-CDM
 edit_uri: ""
 
 # Navigation
 nav:
   - Home: index.md
-  - Getting Started:
-      - Introduction: getting-started/introduction.md
-      - Installation: getting-started/installation.md
-      - Quick Start: getting-started/quickstart.md
-      - Configuration: getting-started/configuration.md
-  - User Guide:
-      - CLI Usage: user-guide/cli.md
-      - Entity Types: user-guide/entity-types.md
-      - Pipeline Features: user-guide/features.md
-      - Output Format: user-guide/output.md
-      - Performance Tuning: user-guide/performance.md
-  - Advanced Features:
-      - BioMistral Validation: advanced/biomistral.md
-      - OMOP CDM Mapping: advanced/omop.md
-      - UMLS Integration: advanced/umls.md
-      - Semantic Deduplication: advanced/semantic-deduplication.md
-      - Custom Entity Types: advanced/custom-entities.md
-  - API Reference:
-      - REST API: api/rest-api.md
-      - Python API: api/python-api.md
-      - Pipeline Classes: api/pipeline-classes.md
-      - Configuration Classes: api/config-classes.md
-  - Architecture:
-      - Overview: architecture/overview.md
-      - Core Pipeline: architecture/core.md
-      - Extractors: architecture/extractors.md
-      - Mappers: architecture/mappers.md
-      - Biomedical Module: architecture/biomedical.md
-      - Design Patterns: architecture/patterns.md
+  - API Reference: api_reference.md
+  - Complete Pipeline Guide: complete_pipeline_guide.md
   - Deployment:
       - Docker: deployment/docker.md
-      - FastAPI Server: deployment/fastapi.md
-      - Kubernetes: deployment/kubernetes.md
-      - Cloud Deployment: deployment/cloud.md
-      - Monitoring: deployment/monitoring.md
-  - Development:
-      - Contributing: development/contributing.md
-      - Testing: development/testing.md
-      - Code Style: development/code-style.md
-      - Release Process: development/releases.md
-  - Examples:
-      - Basic Extraction: examples/basic.md
-      - Batch Processing: examples/batch.md
-      - Custom Pipeline: examples/custom.md
-      - Integration Examples: examples/integration.md
-  - Reference:
-      - Configuration Reference: reference/config.md
-      - CLI Reference: reference/cli.md
-      - Entity Type Schema: reference/schema.md
-      - Troubleshooting: reference/troubleshooting.md
-      - FAQ: reference/faq.md
-  - Changelog: changelog.md
+  - Safety:
+      - Safety Enhancements: ../SAFETY_ENHANCEMENTS.md
 
 # Theme
 theme:
@@ -124,11 +78,11 @@ extra:
     property: G-XXXXXXXXXX
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/your-org/cdm-pipeline
+      link: https://github.com/SCAI-BIO/Microbiome-CDM
     - icon: fontawesome/brands/docker
-      link: https://hub.docker.com/r/yourorg/cdm-pipeline
+      link: https://hub.docker.com/r/scai-bio/microbiome-cdm
     - icon: fontawesome/brands/python
-      link: https://pypi.org/project/cdm-pipeline/
+      link: https://pypi.org/project/microbiome-cdm/
   version:
     provider: mike
 
@@ -169,8 +123,8 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.magiclink:
       repo_url_shorthand: true
-      user: your-org
-      repo: cdm-pipeline
+      user: SCAI-BIO
+      repo: Microbiome-CDM
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.snippets:
@@ -193,5 +147,5 @@ exclude_docs: |
 
 # Copyright
 copyright: |
-  &copy; 2024 CDM Pipeline Team -
+  &copy; 2024 Microbiome CDM Team -
   <a href="#__consent">Change Cookie Consent</a>
