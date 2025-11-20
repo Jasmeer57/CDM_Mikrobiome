@@ -2,7 +2,7 @@
 
 > **Production-ready pipeline for extracting biomedical terminology optimized for Common Data Model (CDM) implementation**
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/your-repo/spacy_terms)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/SCAI-BIO/Microbiome-CDM)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://python.org)
 

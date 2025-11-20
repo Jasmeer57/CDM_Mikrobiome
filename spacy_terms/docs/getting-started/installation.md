@@ -172,7 +172,7 @@ docker build --no-cache -t sci-term-extractor .
 ### Getting Help
 
 - **Issues**: [GitHub Issues](https://github.com/SCAI-BIO/Microbiome-CDM/issues)
-- **Documentation**: [Full Documentation](https://your-docs-site.com)
+- **Documentation**: [Local Documentation](http://localhost:8001)
 - **API Reference**: [API Docs](http://localhost:8000/docs)
 
 ## ✅ Installation Complete

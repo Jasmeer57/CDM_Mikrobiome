@@ -357,9 +357,8 @@ python main.py --input-file data.txt --enable-biomistral-deduplication --verbose
 
 ## 🔗 **Related Projects**
 
-- [CDM Standard Specifications](https://example.com/cdm-specs)
-- [OMOP Common Data Model](https://example.com/omop)
-- [Microbiome Research Standards](https://example.com/microbiome-standards)
+- [OMOP Common Data Model](https://ohdsi.github.io/CommonDataModel/)
+- [Documentation](http://localhost:8001)
 
 ---
 

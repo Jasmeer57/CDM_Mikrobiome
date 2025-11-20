@@ -5,7 +5,6 @@ The CDM Entity Extraction API provides a comprehensive RESTful interface for bio
 ## Base URL
 
 ```
-Production: https://api.cdm-pipeline.org/v1
 Development: http://localhost:8000
 ```
 

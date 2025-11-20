@@ -112,7 +112,7 @@ curl http://localhost:8000/health
 
 # Check health with authentication
 curl -H "Authorization: Bearer YOUR_API_KEY" \
-     https://api.your-domain.com/health
+     http://localhost:8000/health
 
 # Health check for load balancer (expect 200 for healthy)
 curl -f http://localhost:8000/health || exit 1

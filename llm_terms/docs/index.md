@@ -55,7 +55,7 @@ A comprehensive, modular pipeline for extracting structured biomedical entities 
 ```bash
 # Clone the repository
 git clone https://github.com/SCAI-BIO/Microbiome-CDM.git
-cd cdm-pipeline
+cd Microbiome-CDM/llm_terms
 
 # Install dependencies
 pip install -r requirements.txt
@@ -198,9 +198,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - 📧 Email: jasmeer.singh.kalra@scai.fraunhofer.de
-- 💬 Discord: [Join our community](https://discord.gg/cdm-pipeline)
 - 🐛 Issues: [GitHub Issues](https://github.com/SCAI-BIO/Microbiome-CDM/issues)
-- 📖 Documentation: [Full Docs](https://cdm-pipeline.readthedocs.io)
+- 📖 Documentation: [Local Docs](http://localhost:8001)
 
 ---
 

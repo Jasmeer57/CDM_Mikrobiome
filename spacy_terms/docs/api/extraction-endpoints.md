@@ -388,7 +388,7 @@ curl "http://localhost:8000/jobs/job_1234567890abcdef"
 
 # With authentication
 curl -H "Authorization: Bearer YOUR_API_KEY" \
-     "https://api.your-domain.com/jobs/job_1234567890abcdef"
+     "http://localhost:8000/jobs/job_1234567890abcdef"
 ```
 
 ## 📁 POST /upload
