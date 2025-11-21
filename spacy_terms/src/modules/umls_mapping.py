@@ -95,6 +95,26 @@ class MappingResult:
             if getattr(self, field_name) is None:
                 setattr(self, field_name, [])
 
+    def to_dict(self):
+        """Convert MappingResult to dictionary for JSON serialization"""
+        return {
+            "term": self.term,
+            "umls_exact": [self._serialize_mapping(mapping) for mapping in self.umls_exact],
+            "umls_others": [self._serialize_mapping(mapping) for mapping in self.umls_others],
+            "bioportal_exact": [self._serialize_mapping(mapping) for mapping in self.bioportal_exact],
+            "bioportal_others": [self._serialize_mapping(mapping) for mapping in self.bioportal_others],
+            "ols_exact": [self._serialize_mapping(mapping) for mapping in self.ols_exact],
+            "ols_others": [self._serialize_mapping(mapping) for mapping in self.ols_others],
+            "ncbo_exact": [self._serialize_mapping(mapping) for mapping in self.ncbo_exact],
+            "ncbo_others": [self._serialize_mapping(mapping) for mapping in self.ncbo_others]
+        }
+
+    def _serialize_mapping(self, mapping):
+        """Helper method to serialize mapping objects"""
+        if hasattr(mapping, '__dict__'):
+            return {k: v for k, v in mapping.__dict__.items() if not k.startswith('_')}
+        return str(mapping)
+
 
 class UMLSMapper:
     """Comprehensive UMLS and ontology mapping"""
