@@ -2,6 +2,7 @@
 CDM Pipeline Core Orchestrator
 """
 
+import os
 import logging
 import re
 import time
@@ -60,10 +61,18 @@ class CDMEntityPipeline:
 
         if enable_comprehensive_mapping:
             from mappers.mapping import ComprehensiveMapper
+            # Get OMOP vocab directory from environment or default
+            omop_vocab_dir = os.environ.get('OMOP_VOCAB_DIR', '/home/jkalra/Documents/CDM/omop_vocab')
+
             self.comprehensive_mapper = ComprehensiveMapper(
                 umls_api_key=umls_api_key,
+                use_local_omop=True,  # Use local mapper by default
+                omop_vocab_dir=omop_vocab_dir,
+                fuzzy_threshold=95,
+                max_matches=3,
                 cache_mappings=True
             )
+            logger.info(f"🗂️  Comprehensive mapping initialized with OMOP vocab: {omop_vocab_dir}")
 
     def validate_prerequisites(self) -> bool:
         """Validate that the pipeline can run."""
@@ -244,12 +253,53 @@ class CDMEntityPipeline:
             if entity_type not in grouped_entities:
                 grouped_entities[entity_type] = []
 
-            grouped_entities[entity_type].append({
+            # Build entity data with all fields including mappings
+            entity_data = {
                 'entity': entity['entity'],
                 'context': entity['context'],
                 'confidence': entity['confidence'],
                 'source': entity['source']
-            })
+            }
+
+            # Add OMOP mappings if available (direct or from comprehensive mapping)
+            omop_mappings = None
+            has_omop_mapping = False
+            best_omop_confidence = 0.0
+            omop_domain_id = None
+            omop_concept_count = 0
+
+            # Check for direct OMOP mappings
+            if 'omop_mappings' in entity:
+                omop_mappings = entity['omop_mappings']
+                has_omop_mapping = entity['has_omop_mapping']
+                best_omop_confidence = entity['best_omop_confidence']
+                omop_domain_id = entity['omop_domain_id']
+                omop_concept_count = entity['omop_concept_count']
+
+            # Check for OMOP mappings in comprehensive mapping
+            elif 'comprehensive_mapping' in entity:
+                comp_mapping = entity['comprehensive_mapping']
+                if comp_mapping.get('omop_count', 0) > 0:
+                    omop_mappings = comp_mapping.get('omop_mappings', [])
+                    has_omop_mapping = True
+                    omop_concept_count = comp_mapping.get('omop_count', 0)
+                    if omop_mappings:
+                        best_omop_confidence = comp_mapping.get('best_confidence', 0.0)
+                        omop_domain_id = omop_mappings[0].get('domain_id') if omop_mappings else None
+
+            # Add OMOP mapping data to entity if available
+            if omop_mappings:
+                entity_data['omop_mappings'] = omop_mappings
+                entity_data['has_omop_mapping'] = has_omop_mapping
+                entity_data['best_omop_confidence'] = best_omop_confidence
+                entity_data['omop_domain_id'] = omop_domain_id
+                entity_data['omop_concept_count'] = omop_concept_count
+
+            # Add comprehensive mapping if available
+            if 'comprehensive_mapping' in entity:
+                entity_data['comprehensive_mapping'] = entity['comprehensive_mapping']
+
+            grouped_entities[entity_type].append(entity_data)
 
         # Generate statistics
         stats = self.generate_statistics(entities)
