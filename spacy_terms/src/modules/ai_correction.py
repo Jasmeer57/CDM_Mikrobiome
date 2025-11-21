@@ -10,7 +10,7 @@ from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from tqdm import tqdm
 import requests
-from ..config.settings import AIConfig
+from src.config.settings import AIConfig
 
 logger = logging.getLogger(__name__)
 
@@ -73,16 +73,35 @@ class AITermCorrector:
             from transformers import pipeline
 
             logger.info("Initializing local model (this may take a few moments)...")
+
+            # Determine device without using device_map='auto' to avoid accelerate dependency
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+            if device == "cuda":
+                logger.info("Using CUDA GPU for inference")
+            else:
+                logger.info("Using CPU for inference")
+
+            # Initialize pipeline with explicit device instead of device_map
             self.model = pipeline(
                 'text-generation',
                 model=self.config.model_name,
-                torch_dtype=torch.bfloat16,
-                device_map='auto'
+                torch_dtype=torch.float16 if device == "cuda" else torch.float32,
+                device=0 if device == "cuda" else -1
             )
-            logger.info(f"Local model initialized: {self.config.model_name}")
+            logger.info(f"Local model initialized: {self.config.model_name} on {device}")
         except Exception as e:
             logger.error(f"Failed to initialize local model: {e}")
-            raise
+            # Fallback to CPU without torch_dtype specification
+            try:
+                self.model = pipeline(
+                    'text-generation',
+                    model=self.config.model_name,
+                    device=-1
+                )
+                logger.info(f"Local model initialized on CPU fallback: {self.config.model_name}")
+            except Exception as fallback_e:
+                logger.error(f"Completely failed to initialize local model: {fallback_e}")
+                raise
 
     def _create_correction_prompt(self, term: str, examples: List[str]) -> str:
         """

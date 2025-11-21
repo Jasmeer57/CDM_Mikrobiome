@@ -11,7 +11,7 @@ from collections import defaultdict
 from tqdm import tqdm
 import re
 from rapidfuzz import process, fuzz
-from ..config.settings import DeduplicationConfig
+from src.config.settings import DeduplicationConfig
 
 logger = logging.getLogger(__name__)
 

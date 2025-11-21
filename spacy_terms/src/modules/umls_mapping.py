@@ -11,8 +11,16 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 import requests
 import spacy
-from scispacy.linking import EntityLinker
-from ..config.settings import UMLSConfig, BioPortalConfig
+
+# Optional scispacy imports
+try:
+    from scispacy.linking import EntityLinker
+    SCISPACY_AVAILABLE = True
+except ImportError:
+    EntityLinker = None
+    SCISPACY_AVAILABLE = False
+
+from src.config.settings import UMLSConfig, BioPortalConfig
 
 logger = logging.getLogger(__name__)
 
@@ -108,6 +116,10 @@ class UMLSMapper:
             logger.info("UMLS mapping disabled")
             return
 
+        if not SCISPACY_AVAILABLE:
+            logger.warning("SciSpacy not available - UMLS mapping disabled")
+            return
+
         try:
             logger.info("Loading SciSpacy model with UMLS linker...")
             self.nlp = spacy.load("en_core_sci_lg")
@@ -127,11 +139,15 @@ class UMLSMapper:
 
     def map_to_umls_scispacy(self, terms: List[str]) -> Dict[str, Dict[str, List[UMLSMapping]]]:
         """Map terms to UMLS using SciSpacy"""
-        if not self.umls_config.enabled or not self.nlp:
+        if not self.umls_config.enabled or not self.nlp or not SCISPACY_AVAILABLE:
+            logger.warning("UMLS mapping disabled or SciSpacy not available")
             return {term: {"exact": [], "others": []} for term in terms}
 
         if not self.linker:
             self._initialize_scispacy()
+
+        if not self.linker:  # Still not available after initialization
+            return {term: {"exact": [], "others": []} for term in terms}
 
         results = {}
         kb = self.linker.kb

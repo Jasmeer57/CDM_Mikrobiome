@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "timestamp": "2025-11-20T23:51:27.034837",
+    "input_files": [
+      "test_data/sample_text.txt"
+    ],
+    "config": {
+      "models": [
+        "en_core_sci_lg",
+        "en_ner_craft_md",
+        "en_ner_bc5cdr_md",
+        "en_ner_jnlpba_md"
+      ],
+      "semantic_model": "mini-lm",
+      "fuzzy_threshold": 0.85,
+      "semantic_threshold": 0.9,
+      "ai_correction_enabled": false,
+      "umls_enabled": false,
+      "omop_enabled": false
+    }
+  },
+  "extraction_results": [],
+  "deduplicated_terms": [],
+  "ai_corrected_terms": [],
+  "umls_mappings": {},
+  "omop_mappings": {},
+  "statistics": {
+    "extraction": {
+      "raw_entities": 0,
+      "filtered_entities": 0
+    },
+    "deduplication": {
+      "original_count": 0,
+      "exact_removed": 0,
+      "fuzzy_removed": 0,
+      "semantic_removed": 0,
+      "biomedical_removed": 0,
+      "final_count": 0
+    },
+    "overall": {
+      "final_unique_terms": 0,
+      "total_reduction_percent": 100.0,
+      "pipeline_stages_completed": [
+        "extraction",
+        "deduplication"
+      ]
+    }
+  },
+  "biomedical_duplicates": []
+}

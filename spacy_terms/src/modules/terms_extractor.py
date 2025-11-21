@@ -9,7 +9,7 @@ from typing import List, Dict, Any, Optional
 from pathlib import Path
 import json
 from collections import defaultdict, Counter
-from ..config.settings import SciSpaCyConfig
+from src.config.settings import SciSpaCyConfig
 
 logger = logging.getLogger(__name__)
 
@@ -235,22 +235,59 @@ class TermsExtractor:
         for model_name in self.config.models:
             try:
                 logger.info(f"Loading model: {model_name}")
-                nlp = spacy.load(model_name, disable=self.config.disabled_components)
 
-                # Add sentencizer for sentence boundaries if not present
-                if "sentencizer" not in nlp.pipe_names:
-                    nlp.add_pipe("sentencizer")
+                # Add timeout handling for model loading
+                import signal
 
-                self.models[model_name] = nlp
-                logger.info(f"✓ Successfully loaded: {model_name}")
+                def timeout_handler(signum, frame):
+                    raise TimeoutError(f"Model loading timed out for {model_name}")
+
+                # Set 30 second timeout per model
+                signal.signal(signal.SIGALRM, timeout_handler)
+                signal.alarm(30)
+
+                try:
+                    nlp = spacy.load(model_name, disable=self.config.disabled_components)
+
+                    # Add sentencizer for sentence boundaries if not present
+                    if "sentencizer" not in nlp.pipe_names:
+                        nlp.add_pipe("sentencizer")
+
+                    self.models[model_name] = nlp
+                    logger.info(f"✓ Successfully loaded: {model_name}")
+                finally:
+                    signal.alarm(0)  # Cancel timeout
+
+            except TimeoutError as te:
+                logger.error(f"✗ Timeout loading model {model_name}: {te}")
+                continue
             except Exception as e:
                 logger.error(f"✗ Failed to load model {model_name}: {e}")
+                # Check if it's a missing model error specifically
+                if "Can't find model" in str(e):
+                    logger.warning(f"Model {model_name} not installed. Install with: pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/{model_name}-0.5.1.tar.gz")
                 continue
 
         if not self.models:
-            raise RuntimeError("No sciSpaCy models could be loaded. Please install required models.")
+            logger.error("CRITICAL: No sciSpaCy models could be loaded - pipeline requires specialized biomedical models")
+            self._initialize_fallback_mode()
+            return
 
         logger.info(f"Successfully loaded {len(self.models)}/{len(self.config.models)} models")
+
+    def _initialize_fallback_mode(self):
+        """Handle case when no sciSpaCy models are available - DO NOT USE BASIC ENGLISH MODELS"""
+        logger.error("CRITICAL: No sciSpaCy models available - pipeline requires specialized biomedical models")
+        logger.error("Please install required sciSpaCy models:")
+        logger.error("  pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_lg-0.5.1.tar.gz")
+        logger.error("  pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz")
+        logger.error("Pipeline will operate in DEBUG MODE only - no term extraction will be performed")
+
+        # Create minimal pipeline for text processing only - NO NER
+        nlp = spacy.blank("en")
+        nlp.add_pipe("sentencizer")
+        self.models["debug_only"] = nlp
+        logger.warning("DEBUG MODE ENABLED - No biomedical term extraction available")
 
     def _normalize_term(self, term: str, use_synonym_map: bool = True) -> str:
         """

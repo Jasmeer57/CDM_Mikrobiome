@@ -16,7 +16,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from tqdm import tqdm
 import pickle
 from pathlib import Path
-from ..config.settings import OMOPConfig
+from src.config.settings import OMOPConfig
 
 logger = logging.getLogger(__name__)
 

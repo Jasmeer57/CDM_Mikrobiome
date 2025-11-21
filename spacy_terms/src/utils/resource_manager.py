@@ -384,7 +384,7 @@ class RateLimiter:
                 "max_calls": self.max_calls,
                 "time_window": self.time_window,
                 "available_slots": max(0, self.max_calls - len(recent_calls)),
-                "reset_time": max(calls) + self.time_window if recent_calls else now
+                "reset_time": max(recent_calls) + self.time_window if recent_calls else now
             }
 
 
