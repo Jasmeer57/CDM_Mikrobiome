@@ -192,7 +192,9 @@ class OutputWriter:
                     processing_time REAL,
                     cdm_ready_count INTEGER
                 )
+            ''')
 
+            cursor.execute('''
                 CREATE TABLE IF NOT EXISTS biomedical_duplicates (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     run_id INTEGER,

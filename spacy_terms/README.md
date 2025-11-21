@@ -16,7 +16,9 @@ A comprehensive, production-ready pipeline for extracting high-quality biomedica
 - **Provide structured output** in multiple formats (JSON, CSV, SQLite)
 
 ### 🚀 Core Extraction
-- **Multi-sciSpaCy models**: en_core_sci_lg, en_ner_craft_md, en_ner_bc5cdr_md, en_ner_jnlpba_md
+- **Multi-sciSpaCy models**: en_core_sci_md, en_core_sci_lg, en_ner_craft_md, en_ner_bc5cdr_md, en_ner_jnlpba_md
+  - **en_core_sci_md**: Medium model optimized for UMLS entity linking
+  - **en_core_sci_lg**: Large model for comprehensive biomedical NER
 - **4-Layer Quality Filtering**: Basic junk → Advanced quality → Biomedical validation → CDM optimization
 - **Context-aware extraction**: Scientific evidence validation for each term
 - **CDM domain mapping**: Automatic categorization for clinical integration
@@ -96,8 +98,9 @@ cd spacy_terms
 # Install dependencies
 pip install -r requirements.txt
 
-# Install sciSpaCy models
-pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz
+# Install sciSpaCy models (includes medium and large models for UMLS)
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_md-0.5.4.tar.gz    # Medium model for UMLS entity linking
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz    # Large model for comprehensive NER
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_craft_md-0.5.4.tar.gz
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_bc5cdr_md-0.5.4.tar.gz
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_jnlpba_md-0.5.4.tar.gz

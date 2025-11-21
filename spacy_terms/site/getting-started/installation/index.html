@@ -1482,8 +1482,9 @@ python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </s
 <div class="highlight"><pre><span></span><code><span class="c1"># Core dependencies</span>
 pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 
-<span class="c1"># Install sciSpaCy models</span>
-pip<span class="w"> </span>install<span class="w"> </span>https://github.com/allenai/scispacy/releases/download/v0.5.1/en_core_sci_lg-0.5.1.tar.gz
+<span class="c1"># Install sciSpaCy models (includes medium & large models for UMLS)</span>
+pip<span class="w"> </span>install<span class="w"> </span>https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_md-0.5.4.tar.gz    <span class="c1"># Medium model for UMLS entity linking</span>
+pip<span class="w"> </span>install<span class="w"> </span>https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz    <span class="c1"># Large model for comprehensive NER</span>
 pip<span class="w"> </span>install<span class="w"> </span>https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_craft_md-0.5.1.tar.gz
 pip<span class="w"> </span>install<span class="w"> </span>https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz
 pip<span class="w"> </span>install<span class="w"> </span>https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz

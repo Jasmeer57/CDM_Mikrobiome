@@ -44,6 +44,13 @@ except ImportError:
     def create_omop_mapper(config):
         return None
 
+try:
+    from src.modules.entity_linkers import ComprehensiveEntityLinker, create_comprehensive_entity_linker
+except ImportError:
+    ComprehensiveEntityLinker = None
+    def create_comprehensive_entity_linker(umls_config, bioportal_config):
+        return None
+
 from src.utils.output_writer import OutputWriter, create_output_writer
 
 
@@ -90,6 +97,7 @@ def process_documents(
     ai_corrector: AITermCorrector,
     umls_mapper: UMLSMapper,
     omop_mapper: OMOPMapper,
+    entity_linker: ComprehensiveEntityLinker,
     config
 ) -> Dict[str, Any]:
     """Process all documents through the complete pipeline"""
@@ -112,6 +120,7 @@ def process_documents(
         "extraction_results": [],
         "deduplicated_terms": [],
         "ai_corrected_terms": [],
+        "entity_linking_results": {},
         "umls_mappings": {},
         "omop_mappings": {},
         "statistics": {}
@@ -193,10 +202,36 @@ def process_documents(
         results["ai_corrected_terms"] = deduplicated_terms
         logger.info("AI correction disabled, skipping...")
 
-    # Step 4: UMLS Mapping (if enabled)
+    # Step 4: Comprehensive Entity Linking (if available)
+    if entity_linker is not None:
+        logger.info("=" * 50)
+        logger.info("STEP 4: COMPREHENSIVE ENTITY LINKING")
+        logger.info("=" * 50)
+
+        terms_to_link = [t.get("term", "") for t in results["ai_corrected_terms"]]
+        entity_linking_results = entity_linker.link_entities_comprehensive(terms_to_link)
+        results["entity_linking_results"] = {term: result.to_dict() for term, result in entity_linking_results.items()}
+
+        entity_stats = {
+            "total_terms": len(terms_to_link),
+            "supported_ontologies": entity_linker.get_supported_ontologies(),
+            "total_entities": sum(
+                len(result.umls_entities) + len(result.hpo_entities) + len(result.go_entities) +
+                len(result.chebi_entities) + len(result.drugbank_entities) +
+                sum(len(entities) for entities in result.other_ontologies.values())
+                for result in entity_linking_results.values()
+            )
+        }
+        results["statistics"]["entity_linking"] = entity_stats
+
+        logger.info(f"Entity linking complete: {entity_stats['total_entities']} total entities found across {len(entity_stats['supported_ontologies'])} ontologies")
+    else:
+        logger.info("Comprehensive entity linking not available, skipping...")
+
+    # Step 5: UMLS Mapping (if enabled)
     if config.umls.enabled:
         logger.info("=" * 50)
-        logger.info("STEP 4: UMLS & ONTOLOGY MAPPING")
+        logger.info("STEP 5: UMLS & ONTOLOGY MAPPING")
         logger.info("=" * 50)
 
         terms_to_map = [t.get("term", "") for t in results["ai_corrected_terms"]]
@@ -215,10 +250,10 @@ def process_documents(
     else:
         logger.info("UMLS mapping disabled, skipping...")
 
-    # Step 5: OMOP Mapping (if enabled)
+    # Step 6: OMOP Mapping (if enabled)
     if config.omop.enabled and hasattr(config.omop, 'vocab_dir'):
         logger.info("=" * 50)
-        logger.info("STEP 5: OMOP VOCABULARY MAPPING")
+        logger.info("STEP 6: OMOP VOCABULARY MAPPING")
         logger.info("=" * 50)
 
         try:
@@ -252,6 +287,7 @@ def process_documents(
             "extraction",
             "deduplication",
             "ai_correction" if config.ai_correction.enabled else None,
+            "entity_linking" if entity_linker is not None else None,
             "umls_mapping" if config.umls.enabled else None,
             "omop_mapping" if (config.omop.enabled and hasattr(config.omop, 'vocab_dir')) else None
         ]
@@ -346,6 +382,7 @@ def main():
         ai_corrector = create_ai_corrector(config.ai_correction)
         umls_mapper = create_umls_mapper(config.umls, config.bioportal)
         omop_mapper = create_omop_mapper(config.omop.vocab_dir, config.omop) if config.omop.enabled and config.omop.vocab_dir else None
+        entity_linker = create_comprehensive_entity_linker(config.umls, config.bioportal)
 
         # Load input files
         input_files = load_input_files(config.input_dir, config.input_patterns, config.max_files)
@@ -363,6 +400,7 @@ def main():
             ai_corrector=ai_corrector,
             umls_mapper=umls_mapper,
             omop_mapper=omop_mapper,
+            entity_linker=entity_linker,
             config=config
         )
 

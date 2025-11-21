@@ -12,7 +12,8 @@ import os
 class SciSpaCyConfig:
     """Configuration for sciSpaCy models"""
     models: List[str] = field(default_factory=lambda: [
-        "en_core_sci_lg",
+        "en_core_sci_md",     # Medium model for UMLS entity linking
+        "en_core_sci_lg",     # Large model
         "en_ner_craft_md",
         "en_ner_bc5cdr_md",
         "en_ner_jnlpba_md"
