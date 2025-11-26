@@ -1,0 +1,54 @@
+2025-11-26 18:20:33,338 - __main__ - WARNING - Configuration warnings:
+2025-11-26 18:20:33,338 - __main__ - WARNING -   - AI correction enabled but no API key provided
+2025-11-26 18:20:33,338 - __main__ - WARNING -   - UMLS mapping enabled but no API key provided
+2025-11-26 18:20:33,338 - __main__ - WARNING -   - BioPortal mapping enabled but no API key provided
+2025-11-26 18:20:33,338 - __main__ - INFO - Initializing pipeline components...
+2025-11-26 18:20:33,338 - src.utils.model_detector - INFO - Detecting available spaCy models...
+2025-11-26 18:20:48,517 - src.utils.model_detector - INFO - ✓ Model available: en_ner_bc5cdr_md
+2025-11-26 18:21:00,548 - src.utils.model_detector - INFO - ✓ Model available: en_ner_jnlpba_md
+2025-11-26 18:21:13,929 - src.utils.model_detector - INFO - ✓ Model available: en_core_sci_lg
+2025-11-26 18:21:14,328 - src.utils.model_detector - INFO - ✓ Model available: en_core_web_sm
+2025-11-26 18:21:26,297 - src.utils.model_detector - INFO - ✓ Model available: en_core_sci_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO - ✓ Model available: en_ner_craft_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO - Filtering default models to available ones...
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   ✓ en_core_sci_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   ✓ en_core_sci_lg
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   ✓ en_ner_craft_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   ✓ en_ner_bc5cdr_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   ✓ en_ner_jnlpba_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO - Final spaCy model configuration (5 models):
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   [Priority 1] en_core_sci_lg
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   [Priority 2] en_core_sci_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   [Priority 3] en_ner_bc5cdr_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   [Priority 4] en_ner_craft_md
+2025-11-26 18:21:40,227 - src.utils.model_detector - INFO -   [Priority 5] en_ner_jnlpba_md
+2025-11-26 18:21:40,227 - src.modules.terms_extractor - INFO - Loading 5 sciSpaCy models...
+2025-11-26 18:21:40,228 - src.modules.terms_extractor - INFO - Loading model: en_core_sci_lg
+2025-11-26 18:21:53,616 - src.modules.terms_extractor - INFO - ✓ Successfully loaded: en_core_sci_lg
+2025-11-26 18:21:53,617 - src.modules.terms_extractor - INFO - Loading model: en_core_sci_md
+2025-11-26 18:22:05,978 - src.modules.terms_extractor - INFO - ✓ Successfully loaded: en_core_sci_md
+2025-11-26 18:22:05,978 - src.modules.terms_extractor - INFO - Loading model: en_ner_bc5cdr_md
+2025-11-26 18:22:18,306 - src.modules.terms_extractor - INFO - ✓ Successfully loaded: en_ner_bc5cdr_md
+2025-11-26 18:22:18,306 - src.modules.terms_extractor - INFO - Loading model: en_ner_craft_md
+2025-11-26 18:22:30,277 - src.modules.terms_extractor - INFO - ✓ Successfully loaded: en_ner_craft_md
+2025-11-26 18:22:30,277 - src.modules.terms_extractor - INFO - Loading model: en_ner_jnlpba_md
+2025-11-26 18:22:42,245 - src.modules.terms_extractor - INFO - ✓ Successfully loaded: en_ner_jnlpba_md
+2025-11-26 18:22:42,246 - src.modules.terms_extractor - INFO - Successfully loaded 5/5 models
+2025-11-26 18:22:42,249 - src.modules.deduplication - INFO - Loading semantic model: sentence-transformers/all-MiniLM-L12-v2
+2025-11-26 18:22:46,442 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cuda:0
+2025-11-26 18:22:46,442 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L12-v2
+2025-11-26 18:22:48,761 - src.modules.deduplication - INFO - ✓ Semantic model loaded: mini-lm
+2025-11-26 18:22:48,762 - src.modules.entity_linkers - INFO - Loading en_core_sci_md with UMLS linker...
+2025-11-26 18:23:15,856 - nmslib - INFO - Loading index from /home/jkalra/.scispacy/datasets/7e8e091ec80370b87b1652f461eae9d926e543a403a69c1f0968f71157322c25.6d801a1e14867953e36258b0e19a23723ae84b0abd2a723bdd3574c3e0c873b4.nmslib_index.bin
+2025-11-26 18:23:15,859 - nmslib - INFO - Loading regular index.
+2025-11-26 18:23:55,571 - nmslib - INFO - Finished loading index
+2025-11-26 18:23:55,571 - nmslib - INFO - Set HNSW query-time parameters:
+2025-11-26 18:23:55,571 - nmslib - INFO - ef(Search)         =20
+2025-11-26 18:23:55,572 - nmslib - INFO - algoType           =2
+2025-11-26 18:23:55,572 - nmslib - INFO - Set HNSW query-time parameters:
+2025-11-26 18:23:55,572 - nmslib - INFO - ef(Search)         =200
+2025-11-26 18:23:55,572 - nmslib - INFO - algoType           =2
+2025-11-26 18:25:02,572 - src.modules.entity_linkers - INFO - ✓ Initialized en_core_sci_md with UMLS linker
+2025-11-26 18:25:02,573 - src.modules.entity_linkers - INFO - Loading en_core_sci_lg with UMLS linker...
+2025-11-26 18:25:35,651 - nmslib - INFO - Loading index from /home/jkalra/.scispacy/datasets/7e8e091ec80370b87b1652f461eae9d926e543a403a69c1f0968f71157322c25.6d801a1e14867953e36258b0e19a23723ae84b0abd2a723bdd3574c3e0c873b4.nmslib_index.bin
+2025-11-26 18:25:35,657 - nmslib - INFO - Loading regular index.

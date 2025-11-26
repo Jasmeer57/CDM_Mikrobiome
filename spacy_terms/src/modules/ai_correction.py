@@ -44,7 +44,10 @@ class AITermCorrector:
             return
 
         try:
-            if self.config.api_key:
+            if hasattr(self.config, 'use_hf_inference') and self.config.use_hf_inference:
+                # Use HuggingFace Inference API
+                self.client = self._init_hf_client()
+            elif self.config.api_key and not self.config.use_hf_inference:
                 # Use OpenAI API or similar
                 self.client = self._init_openai_client()
             else:
@@ -54,6 +57,20 @@ class AITermCorrector:
         except Exception as e:
             logger.error(f"Failed to initialize AI model: {e}")
             self.config.enabled = False
+
+    def _init_hf_client(self):
+        """Initialize HuggingFace Inference API client"""
+        try:
+            if not self.config.api_key:
+                logger.error("HF_TOKEN not provided for HuggingFace Inference API")
+                return None
+
+            # Use requests for HuggingFace API
+            logger.info(f"Initialized HuggingFace Inference API client for model: {self.config.model_name}")
+            return "hf_inference"
+        except Exception as e:
+            logger.error(f"Failed to initialize HuggingFace client: {e}")
+            return None
 
     def _init_openai_client(self):
         """Initialize OpenAI-compatible API client"""
@@ -151,6 +168,61 @@ class AITermCorrector:
         """
         # Enhanced prompt from reference do.py with better structure and biomedical focus
 
+    def _call_hf_api(self, prompt: str) -> Optional[Dict[str, Any]]:
+        """Call HuggingFace Inference API"""
+        try:
+            import json
+
+            # Format the prompt for instruction-tuned models like BioMistral-7B-0.3-Instruct
+            formatted_prompt = f"""<s>[INST] {self.config.system_prompt}
+
+{prompt} [/INST]"""
+
+            headers = {
+                "Authorization": f"Bearer {self.config.api_key}",
+                "Content-Type": "application/json"
+            }
+
+            payload = {
+                "inputs": formatted_prompt,
+                "parameters": {
+                    "temperature": self.config.temperature,
+                    "max_new_tokens": self.config.max_tokens,
+                    "return_full_text": False,
+                    "do_sample": False,
+                    "pad_token_id": 2  # EOS token for Llama models
+                }
+            }
+
+            # Get API URL from config or construct it
+            api_url = getattr(self.config, 'hf_api_url', f"https://api-inference.huggingface.co/models/{self.config.model_name}")
+
+            response = requests.post(
+                api_url,
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+
+            if response.status_code == 200:
+                result = response.json()
+                if isinstance(result, list) and len(result) > 0:
+                    content = result[0].get('generated_text', '')
+                    return self._parse_json_response(content)
+                elif 'generated_text' in result:
+                    content = result['generated_text']
+                    return self._parse_json_response(content)
+                else:
+                    logger.error(f"Unexpected response format from HuggingFace API: {result}")
+                    return None
+            else:
+                logger.error(f"HuggingFace API error: {response.status_code} - {response.text}")
+                return None
+
+        except Exception as e:
+            logger.error(f"HuggingFace API call failed: {e}")
+            return None
+
     def _call_openai_api(self, prompt: str) -> Optional[Dict[str, Any]]:
         """Call OpenAI-compatible API"""
         try:
@@ -230,7 +302,9 @@ class AITermCorrector:
 
         # Call appropriate model
         try:
-            if self.client:
+            if self.client == "hf_inference":
+                result_data = self._call_hf_api(prompt)
+            elif self.client:
                 result_data = self._call_openai_api(prompt)
             else:
                 result_data = self._call_local_model(prompt)

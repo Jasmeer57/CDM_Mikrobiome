@@ -122,14 +122,68 @@ docker-compose up -d
 
 ## 🚀 Usage
 
+### Model Selection Features
+
+The pipeline now includes **dynamic model detection** that automatically detects and uses only the spaCy models that are installed and available in your environment.
+
+#### List Available Models
+```bash
+# See all available scientific models with priority rankings
+python main.py --list_available_models
+
+# Example output:
+# Available Scientific spaCy Models:
+# ==================================================
+# ✓ [  1] en_core_sci_lg (scientific)
+# ✓ [  2] en_core_sci_md (scientific)
+# ✓ [  3] en_ner_bc5cdr_md (scientific)
+# ✓ [  4] en_ner_craft_md (scientific)
+# ✓ [  5] en_ner_jnlpba_md (scientific)
+# ✓ [  6] en_core_sci_scibert (scientific)
+```
+
+#### Model Selection Options
+```bash
+# Use specific models (highest priority first)
+python main.py --models en_core_sci_lg en_ner_bc5cdr_md --input_dir ./data
+
+# Use all available scientific models
+python main.py --use_all_available_models --input_dir ./data
+
+# Disable automatic model detection (use configured models only)
+python main.py --disable_auto_detect_models --input_dir ./data
+
+# Combine with other options
+python main.py \
+  --models en_core_sci_lg en_ner_bc5cdr_md \
+  --input_dir ./data \
+  --output_formats json csv \
+  --fuzzy_threshold 0.85 \
+  --semantic_threshold 0.9
+```
+
+#### Model Priority System
+Models are automatically prioritized for optimal extraction quality:
+1. **en_core_sci_lg** - Large scientific model (highest priority)
+2. **en_core_sci_md** - Medium scientific model
+3. **en_ner_bc5cdr_md** - Chemical/disease NER
+4. **en_ner_craft_md** - General scientific NER
+5. **en_ner_jnlpba_md** - Biomedical NER
+6. **en_core_sci_scibert** - SciBERT model
+7. **en_core_web_lg/md/sm** - General English (fallback only)
+
 ### CLI Usage
 ```bash
-# Basic extraction
+# Basic extraction (auto-detects available models)
 python main.py --input_dir ./data --output_formats json csv
 
-# With all features enabled
+# With specific models
+python main.py --models en_core_sci_lg en_ner_bc5cdr_md --input_dir ./data
+
+# With all features enabled and model selection
 python main.py \
   --input_dir ./data \
+  --models en_core_sci_lg en_core_sci_md \
   --semantic_model mini-lm \
   --fuzzy_threshold 0.85 \
   --semantic_threshold 0.9 \
@@ -192,6 +246,39 @@ export SEMANTIC_MODEL=mini-lm
 ### Configuration File
 Edit `src/config/settings.py` for detailed configuration options.
 
+#### Model Detection Configuration
+```python
+@dataclass
+class SciSpaCyConfig:
+    # User-specified models (will be validated against available models)
+    preferred_models: Optional[List[str]] = None  # None means auto-detect
+
+    # Fallback models if preferred models are not available
+    models: List[str] = field(default_factory=lambda: [
+        "en_core_sci_md",     # Medium model for UMLS entity linking
+        "en_core_sci_lg",     # Large model
+        "en_ner_craft_md",
+        "en_ner_bc5cdr_md",
+        "en_ner_jnlpba_md"
+    ])
+
+    # Model selection options
+    auto_detect_models: bool = True  # Whether to auto-detect available models
+    use_all_available: bool = False  # Whether to use all available models or just preferred ones
+```
+
+#### Model Detection Logic
+1. **User-specified models** (`--models`) - Only use models if they're available
+2. **All available models** (`--use_all_available_models`) - Use every compatible model
+3. **Auto-detect** (default) - Use configured models that are available
+4. **No detection** (`--disable_auto_detect_models`) - Use models as configured
+
+#### Model Selection Behavior
+- **Automatic Fallback**: If preferred models aren't available, falls back to available models
+- **Priority Ordering**: Models are automatically sorted by extraction quality priority
+- **Compatibility Checking**: Only loads models that can be successfully initialized
+- **Error Handling**: Graceful degradation when models fail to load
+
 ## 📁 Project Structure
 ```
 spacy_terms/
@@ -210,6 +297,7 @@ spacy_terms/
 │   │   ├── umls_mapping.py        # UMLS & ontology mapping
 │   │   └── omop_mapping.py        # OMOP vocabulary mapping
 │   ├── utils/
+│   │   ├── model_detector.py       # Dynamic spaCy model detection
 │   │   └── output_writer.py        # Multi-format output
 │   └── api/
 │       └── main.py                # FastAPI application
@@ -231,13 +319,28 @@ spacy_terms/
 
 ## 🔧 Pipeline Modules
 
-### 1. Terms Extractor (`src/modules/terms_extractor.py`)
+### 1. Model Detector (`src/utils/model_detector.py`)
+- **Dynamic model detection** using `spacy validate` output
+- **Compatibility checking** for each model before loading
+- **Priority-based ordering** for optimal extraction quality
+- **Graceful fallback** when models are unavailable
+- **Command-line integration** for model selection
+
+#### Key Functions:
+- `get_available_scientific_models()` - Detects loadable scientific models
+- `update_scispacy_config_with_available_models()` - Updates configuration dynamically
+- `set_preferred_models()` - Sets user-specified model preferences
+- `get_available_model_info()` - Provides detailed model information
+
+### 2. Terms Extractor (`src/modules/terms_extractor.py`)
+- **Dynamic model loading** based on detected availability
 - Loads and manages multiple sciSpaCy models
 - Applies P1-P12 filters for noise removal
 - Calculates science relevance scores
 - Supports text and file input
+- **Automatic model prioritization** for best results
 
-### 2. Deduplication (`src/modules/deduplication.py`)
+### 3. Deduplication (`src/modules/deduplication.py`)
 - Three-layer deduplication: Exact → Fuzzy → Semantic
 - Configurable semantic models (MiniLM, Nomic, MPNet)
 - Efficient batch processing with caching

@@ -11,6 +11,10 @@ import os
 @dataclass
 class SciSpaCyConfig:
     """Configuration for sciSpaCy models"""
+    # User-specified models (will be validated against available models)
+    preferred_models: Optional[List[str]] = None  # None means auto-detect
+
+    # Fallback models if preferred models are not available
     models: List[str] = field(default_factory=lambda: [
         "en_core_sci_md",     # Medium model for UMLS entity linking
         "en_core_sci_lg",     # Large model
@@ -18,6 +22,11 @@ class SciSpaCyConfig:
         "en_ner_bc5cdr_md",
         "en_ner_jnlpba_md"
     ])
+
+    # Model selection options
+    auto_detect_models: bool = True  # Whether to auto-detect available models
+    use_all_available: bool = False  # Whether to use all available models or just preferred ones
+
     disabled_components: List[str] = field(default_factory=lambda: ["parser"])
     batch_size: int = 1000
 
@@ -48,8 +57,10 @@ class DeduplicationConfig:
 class AIConfig:
     """Configuration for AI correction and validation"""
     enabled: bool = True
-    model_name: str = "BioMistral/BioMistral-7B"
+    model_name: str = "BioMistral/BioMistral-7B-0.3-Instruct"
     api_key: Optional[str] = None
+    use_hf_inference: bool = True
+    hf_api_url: str = "https://api-inference.huggingface.co/models/BioMistral/BioMistral-7B-0.3-Instruct"
     temperature: float = 0.1
     max_tokens: int = 512
     system_prompt: str = """You are a scientific term validation expert. Your task is to:
@@ -176,6 +187,8 @@ def get_config() -> PipelineConfig:
     # API Keys
     if os.getenv("OPENAI_API_KEY"):
         config.ai_correction.api_key = os.getenv("OPENAI_API_KEY")
+    if os.getenv("HF_TOKEN"):
+        config.ai_correction.api_key = os.getenv("HF_TOKEN")
     if os.getenv("UMLS_API_KEY"):
         config.umls.api_key = os.getenv("UMLS_API_KEY")
     if os.getenv("BIOPORTAL_API_KEY"):

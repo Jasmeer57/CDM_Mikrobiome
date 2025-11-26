@@ -10,6 +10,7 @@ from pathlib import Path
 import json
 from collections import defaultdict, Counter
 from src.config.settings import SciSpaCyConfig
+from src.utils.model_detector import update_scispacy_config_with_available_models, sort_models_by_priority
 
 logger = logging.getLogger(__name__)
 
@@ -170,6 +171,12 @@ class TermsExtractor:
     }
 
     def __init__(self, config: SciSpaCyConfig):
+        # Update config to use only available models
+        update_scispacy_config_with_available_models(config)
+
+        # Sort models by priority for optimal results
+        config.models = sort_models_by_priority(config.models)
+
         self.config = config
         self.models = {}
         self._load_models()

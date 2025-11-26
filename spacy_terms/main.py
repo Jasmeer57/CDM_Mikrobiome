@@ -28,6 +28,7 @@ from src.config.settings import get_config, validate_config
 from src.modules.terms_extractor import TermsExtractor, create_terms_extractor
 from src.modules.deduplication import Deduplicator, create_deduplicator
 from src.modules.ai_correction import AITermCorrector, create_ai_corrector
+from src.utils.model_detector import get_available_model_info
 
 # Conditional imports for optional modules
 try:
@@ -320,6 +321,12 @@ def main():
     parser.add_argument("--disable_biomedical_dedup", action="store_true", help="Disable BioMistral biomedical deduplication")
     parser.add_argument("--biomedical_context", type=str, default="microbiome", choices=["microbiome", "biomedical", "clinical", "genomics"], help="Biomedical context for deduplication")
 
+    # SpaCy model arguments
+    parser.add_argument("--models", nargs="+", help="Specific spaCy models to use (e.g., en_core_sci_lg en_ner_bc5cdr_md)")
+    parser.add_argument("--use_all_available_models", action="store_true", help="Use all available scientific models")
+    parser.add_argument("--disable_auto_detect_models", action="store_true", help="Disable automatic model detection")
+    parser.add_argument("--list_available_models", action="store_true", help="List all available scientific spaCy models and exit")
+
     # Feature toggles
     parser.add_argument("--disable_ai_correction", action="store_true", help="Disable AI term correction")
     parser.add_argument("--disable_umls", action="store_true", help="Disable UMLS mapping")
@@ -336,6 +343,23 @@ def main():
     parser.add_argument("--log_file", type=str, help="Log file path")
 
     args = parser.parse_args()
+
+    # Handle listing available models
+    if args.list_available_models:
+        print("Available Scientific spaCy Models:")
+        print("=" * 50)
+        model_info = get_available_model_info()
+        if model_info:
+            for model_name, info in sorted(model_info.items(), key=lambda x: x[1]["priority"]):
+                status = "✓" if info["compatible"] else "✗"
+                priority = info["priority"]
+                model_type = info["type"]
+                print(f"{status} [{priority:3d}] {model_name} ({model_type})")
+        else:
+            print("No scientific models found. Please install sciSpaCy models:")
+            print("  pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_core_sci_lg-0.5.1.tar.gz")
+            print("  pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz")
+        return 0
 
     # Setup logging
     setup_logging(args.log_level, args.log_file)
@@ -355,6 +379,20 @@ def main():
     config.deduplication.biomedical_enabled = not args.disable_biomedical_dedup
     config.deduplication.biomedical_context = args.biomedical_context
     config.output_formats = args.output_formats
+
+    # SpaCy model configuration
+    if args.models:
+        config.scispacy.preferred_models = args.models
+        logger.info(f"Using user-specified models: {args.models}")
+
+    config.scispacy.use_all_available = args.use_all_available_models
+    config.scispacy.auto_detect_models = not args.disable_auto_detect_models
+
+    if args.use_all_available_models:
+        logger.info("Will use all available scientific models")
+
+    if args.disable_auto_detect_models:
+        logger.info("Automatic model detection disabled - using configured models only")
 
     config.ai_correction.enabled = not args.disable_ai_correction
     config.umls.enabled = not args.disable_umls
