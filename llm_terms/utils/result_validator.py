@@ -627,8 +627,8 @@ def create_default_validator() -> CDMResultValidator:
     """Create a default result validator"""
     return CDMResultValidator()
 
-def validate_extraction_results(entities: List[Dict[str, Any]],
-                               context: Dict[str, Any] = None) -> ValidationResult:
-    """Convenience function to validate extraction results"""
     validator = create_default_validator()
     return validator.validate_results(entities, context)
+
+# Alias for backward compatibility
+ResultValidator = CDMResultValidator
