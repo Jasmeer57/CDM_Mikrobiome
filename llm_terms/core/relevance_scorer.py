@@ -11,7 +11,7 @@ class MicrobiomeRelevanceScorer:
             'gut', 'microbiome', 'microbiota', 'bacteria', 'bacterial', 'intestinal',
             'colon', 'fecal', 'faecal', 'stool', 'dysbiosis', 'probiotic', 'prebiotic',
             'fermentation', 'scfa', 'short-chain fatty acid', 'mucosa', 'lumen',
-            'commensal', 'pathogen', 'axis', 'metabolite'
+            'commensal', 'pathogen', 'axis', 'metabolite', 'butyrate', 'propionate', 'acetate'
         }
         
         self.high_relevance_types = {'ORGANISM', 'CHEMICAL', 'DISEASE', 'GENE'}

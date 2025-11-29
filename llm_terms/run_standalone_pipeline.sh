@@ -30,9 +30,16 @@ module load CUDA/12.3.0
 mkdir -p logs
 
 # === CONDA ENVIRONMENT ===
+# === CONDA ENVIRONMENT ===
 echo "Setting up conda environment..."
-conda create -n llm-terms-cdm python=3.9 -y
-conda activate llm-terms-cdm
+if conda info --envs | grep -q "llm-terms-cdm"; then
+    echo "Environment llm-terms-cdm already exists. Activating..."
+    conda activate llm-terms-cdm
+else
+    echo "Creating new environment llm-terms-cdm..."
+    conda create -n llm-terms-cdm python=3.9 -y
+    conda activate llm-terms-cdm
+fi
 
 # === INSTALL DEPENDENCIES ===
 echo "Installing dependencies..."

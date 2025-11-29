@@ -17,7 +17,7 @@ class TestMicrobiomeRelevanceScorer(unittest.TestCase):
             'entity_type': 'ORGANISM',
             'context': 'Bacteroides fragilis is a common gut bacterium.'
         }
-        score = self.scorer.calculate_relevance_score(entity)
+        score = self.scorer.calculate_score(entity)
         self.assertGreater(score, 0.5)
 
     def test_low_relevance_generic(self):
@@ -26,7 +26,7 @@ class TestMicrobiomeRelevanceScorer(unittest.TestCase):
             'entity_type': 'CELL_TYPE',
             'context': 'The cell is the basic unit of life.'
         }
-        score = self.scorer.calculate_relevance_score(entity)
+        score = self.scorer.calculate_score(entity)
         self.assertLess(score, 0.5)
 
     def test_scfa_relevance(self):
@@ -35,7 +35,7 @@ class TestMicrobiomeRelevanceScorer(unittest.TestCase):
             'entity_type': 'CHEMICAL',
             'context': 'Butyrate is a short-chain fatty acid.'
         }
-        score = self.scorer.calculate_relevance_score(entity)
+        score = self.scorer.calculate_score(entity)
         self.assertGreater(score, 0.6)
 
     def test_score_entities_list(self):
