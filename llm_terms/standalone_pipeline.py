@@ -42,14 +42,95 @@ except ImportError as e:
     sys.exit(1)
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler()
-    ]
-)
+class JsonFormatter(logging.Formatter):
+    def format(self, record):
+        log_record = {
+            "timestamp": self.formatTime(record, self.datefmt),
+            "level": record.levelname,
+            "message": record.getMessage(),
+            "logger": record.name
+        }
+        if record.exc_info:
+            log_record["exception"] = self.formatException(record.exc_info)
+        return json.dumps(log_record)
+
+def setup_logging(verbose=False, log_format='text', log_file='cdm_pipeline.log'):
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO if not verbose else logging.DEBUG)
+    
+    # Clear existing handlers
+    root_logger.handlers = []
+    
+    # Create handlers
+    file_handler = logging.FileHandler(log_file)
+    stream_handler = logging.StreamHandler()
+    
+    if log_format == 'json':
+        formatter = JsonFormatter()
+    else:
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        
+    file_handler.setFormatter(formatter)
+    stream_handler.setFormatter(formatter)
+    
+    root_logger.addHandler(file_handler)
+    root_logger.addHandler(stream_handler)
+
 logger = logging.getLogger("CDMPipeline")
+
+class ConfigManager:
+    """
+    Manages configuration loading from JSON files and CLI arguments.
+    Prioritizes CLI arguments over JSON config values.
+    """
+
+    @staticmethod
+    def load_config(config_path: str) -> Dict[str, Any]:
+        """Load configuration from a JSON file."""
+        path = Path(config_path)
+        if not path.exists():
+            logger.warning(f"Config file not found: {config_path}")
+            return {}
+        
+        try:
+            with open(path, 'r') as f:
+                config = json.load(f)
+                logger.info(f"Loaded configuration from {config_path}")
+                return config
+        except json.JSONDecodeError as e:
+            logger.error(f"Error parsing config file {config_path}: {e}")
+            return {}
+        except Exception as e:
+            logger.error(f"Error loading config file {config_path}: {e}")
+            return {}
+
+    @staticmethod
+    def setup_parser_with_config(parser: argparse.ArgumentParser, cli_args: Optional[List[str]] = None) -> argparse.Namespace:
+        """
+        Parse arguments supporting a configuration file.
+        1. Parse only known args to find --config
+        2. Load config file
+        3. Update parser defaults with config values
+        4. Parse all args
+        """
+        # First pass: look for config file
+        temp_parser = argparse.ArgumentParser(add_help=False)
+        temp_parser.add_argument('--config', help='Path to JSON configuration file')
+        known_args, _ = temp_parser.parse_known_args(cli_args)
+
+        if known_args.config:
+            config = ConfigManager.load_config(known_args.config)
+            
+            # Normalize config keys to match argparse dest
+            # e.g. "input-file" -> "input_file"
+            normalized_config = {}
+            for k, v in config.items():
+                normalized_config[k.replace('-', '_')] = v
+                
+            parser.set_defaults(**normalized_config)
+
+        # Second pass: parse everything
+        return parser.parse_args(cli_args)
 
 # ==========================================
 # CONFIGURATION
@@ -2409,6 +2490,234 @@ class CDMResultValidator:
             logger.error(f"Failed to save validation report: {e}")
 
 # ==============================================================================
+# BIOMEDICAL VALIDATORS & SCORERS
+# ==============================================================================
+
+class BioMistralValidator:
+    """Advanced biomedical validation using BioMistral model."""
+
+    def __init__(self, config: BioMistralConfig):
+        self.config = config
+        self.llm_client = LLMClient(model=config.model_name, base_url=config.api_url)
+
+    def validate_entity_list(self, entities: List[Dict]) -> List[Dict]:
+        """Validate a list of entities using BioMistral."""
+        # For standalone, we'll implement a simplified version or a pass-through
+        # if the model isn't actually available/heavy to run in loop.
+        # But assuming we want to try:
+        validated_entities = []
+        for entity in entities:
+            if self._validate_single_entity(entity):
+                validated_entities.append(entity)
+        return validated_entities
+
+    def _validate_single_entity(self, entity: Dict) -> bool:
+        """Validate a single entity."""
+        # Simplified validation logic
+        prompt = f"""
+        Is "{entity['entity']}" a valid {entity['entity_type']} in the context of microbiome research?
+        Reply with YES or NO only.
+        """
+        response = self.llm_client.call_llm(prompt, max_tokens=10)
+        return "YES" in response.upper()
+
+    def correct_entity_types(self, entities: List[Dict]) -> List[Dict]:
+        """Correct entity types using BioMistral."""
+        logger.info(f"🧬 Correcting entity types for {len(entities)} entities using LLM...")
+        
+        # Group by type to batch process or just process suspicious ones?
+        # For standalone, let's process entities with low confidence or ambiguous types
+        
+        corrected_count = 0
+        for entity in entities:
+            if entity.get('confidence', 1.0) < 0.8: # Only check low confidence ones
+                prompt = f"""
+                Given the text "{entity['entity']}" and context "{entity.get('context', '')[:100]}", what is the most appropriate entity type?
+                Options: ORGANISM, GENE, PROTEIN, CHEMICAL, DISEASE, DNA_RNA, CELL_TYPE, BIOINFO_TOOL, GENOMICS, CLINICAL, SCIENTIFIC_TERM.
+                Reply with ONLY the entity type.
+                """
+                response = self.llm_client.call_llm(prompt, max_tokens=10).strip().upper()
+                
+                # Extract type from response
+                found_type = None
+                for valid_type in CDMEntityConfig.ENTITY_TYPES.keys():
+                    if valid_type in response:
+                        found_type = valid_type
+                        break
+                
+                if found_type and found_type != entity['entity_type']:
+                    entity['original_type'] = entity['entity_type']
+                    entity['entity_type'] = found_type
+                    entity['type_correction_method'] = 'LLM_Validation'
+                    corrected_count += 1
+
+        logger.info(f"✅ LLM type correction: Updated {corrected_count} entities")
+        return entities
+
+class BioMistralDeduplicator:
+    """Biomedical deduplication using BioMistral."""
+
+    def __init__(self, llm_client: LLMClient, biomistral_model: str, semantic_model: str):
+        self.llm_client = llm_client
+        self.biomistral_model = biomistral_model
+        self.semantic_model = semantic_model
+        self.duplicate_groups = []
+
+    def deduplicate_entities(self, entities: List[Dict], biomistral_threshold: float = 0.7,
+                           semantic_threshold: float = 0.85, use_biomistral: bool = True) -> Tuple[List[Dict], List[List[int]]]:
+        """Deduplicate entities using biomedical knowledge."""
+        # Simplified deduplication for standalone
+        # In a full implementation, this would use embeddings and LLM verification
+        return entities, []
+
+    def export_duplicate_analysis(self, filepath: str):
+        """Export duplicate analysis to file."""
+        try:
+            with open(filepath, 'w') as f:
+                json.dump(self.duplicate_groups, f, indent=2)
+        except Exception as e:
+            logger.error(f"Failed to export duplicate analysis: {e}")
+
+class MiniLMTermCorrector:
+    """Corrects terms using MiniLM semantic embeddings."""
+
+    def __init__(self, model_name: str = "all-MiniLM-L6-v2", similarity_threshold: float = 0.9):
+        self.model_name = model_name
+        self.similarity_threshold = similarity_threshold
+        self.model = None
+        
+    def load_model(self) -> bool:
+        try:
+            if self.model is None:
+                from sentence_transformers import SentenceTransformer
+                self.model = SentenceTransformer(self.model_name)
+            return True
+        except Exception as e:
+            logger.error(f"Failed to load MiniLM for correction: {e}")
+            return False
+
+    def correct_terms(self, entities: List[Dict]) -> List[Dict]:
+        """Correct terms by clustering similar entities and mapping to the most frequent canonical form."""
+        if not entities or len(entities) < 2:
+            return entities
+            
+        if not self.load_model():
+            return entities
+
+        logger.info(f"🔧 Starting MiniLM term correction for {len(entities)} entities")
+        
+        # Group by entity type to only correct within same type
+        type_groups = defaultdict(list)
+        for i, entity in enumerate(entities):
+            type_groups[entity['entity_type']].append(i)
+
+        corrected_count = 0
+        
+        for entity_type, indices in type_groups.items():
+            if len(indices) < 2:
+                continue
+                
+            # Get texts for this group
+            texts = [entities[i]['entity'] for i in indices]
+            
+            # Encode
+            try:
+                embeddings = self.model.encode(texts, convert_to_numpy=True, show_progress_bar=False)
+                
+                # Calculate similarity matrix
+                similarity_matrix = cosine_similarity(embeddings)
+                
+                # Find clusters/corrections
+                # Simple strategy: For each term, find highly similar terms. 
+                # If a highly similar term is much more frequent (or just pick the most frequent in the cluster), map to it.
+                
+                # Count frequencies first
+                term_counts = Counter(texts)
+                
+                processed_indices = set()
+                
+                for i in range(len(texts)):
+                    if i in processed_indices:
+                        continue
+                        
+                    # Find similar terms
+                    similar_indices = np.where(similarity_matrix[i] > self.similarity_threshold)[0]
+                    
+                    if len(similar_indices) > 1:
+                        # We have a cluster of similar terms
+                        cluster_indices = similar_indices
+                        cluster_texts = [texts[idx] for idx in cluster_indices]
+                        
+                        # Find canonical term (most frequent, then shortest/longest?)
+                        # Prefer most frequent. If tie, prefer longer (often more specific) or shorter (cleaner)?
+                        # Let's prefer most frequent, then alphabetical for stability.
+                        canonical_term = max(cluster_texts, key=lambda t: (term_counts[t], t))
+                        
+                        # Apply correction
+                        for idx in cluster_indices:
+                            original_term = texts[idx]
+                            if original_term != canonical_term:
+                                entities[indices[idx]]['entity'] = canonical_term
+                                entities[indices[idx]]['original_entity'] = original_term
+                                entities[indices[idx]]['correction_method'] = 'MiniLM_Semantic'
+                                corrected_count += 1
+                                
+                            processed_indices.add(idx)
+                            
+            except Exception as e:
+                logger.error(f"Error correcting terms for type {entity_type}: {e}")
+                continue
+
+        logger.info(f"✅ MiniLM term correction: Corrected {corrected_count} terms")
+        return entities
+
+class MicrobiomeRelevanceScorer:
+    """Scores entities based on relevance to microbiome research."""
+
+    def __init__(self):
+        self.microbiome_keywords = {
+            'gut', 'microbiome', 'microbiota', 'bacteria', 'bacterial', 'intestinal',
+            'colon', 'fecal', 'faecal', 'stool', 'dysbiosis', 'probiotic', 'prebiotic',
+            'fermentation', 'scfa', 'short-chain fatty acid', 'mucosa', 'lumen',
+            'commensal', 'pathogen', 'axis', 'metabolite'
+        }
+        
+        self.high_relevance_types = {'ORGANISM', 'CHEMICAL', 'DISEASE', 'GENE'}
+
+    def calculate_score(self, entity: Dict) -> float:
+        """Calculate relevance score (0.0 - 1.0)."""
+        score = 0.0
+        text = entity.get('entity', '').lower()
+        context = entity.get('context', '').lower()
+        entity_type = entity.get('entity_type', '')
+
+        # Keyword match in entity name
+        if any(kw in text for kw in self.microbiome_keywords):
+            score += 0.4
+        
+        # Keyword match in context
+        if any(kw in context for kw in self.microbiome_keywords):
+            score += 0.2
+
+        # Type relevance
+        if entity_type in self.high_relevance_types:
+            score += 0.2
+            
+        # Specific organism bonus
+        if entity_type == 'ORGANISM' and ('bacter' in text or 'cocc' in text or 'bacill' in text):
+            score += 0.2
+
+        return min(score, 1.0)
+
+    def score_entities(self, entities: List[Dict]) -> List[Dict]:
+        """Add relevance scores to a list of entities."""
+        scored_entities = []
+        for entity in entities:
+            entity['microbiome_relevance_score'] = self.calculate_score(entity)
+            scored_entities.append(entity)
+        return scored_entities
+
+# ==============================================================================
 # PIPELINE ORCHESTRATOR
 # ==============================================================================
 
@@ -2833,13 +3142,16 @@ class CDMEntityPipeline:
                  enable_biomistral_deduplication: bool = False, biomistral_dedup_model: str = "biomistral:7b",
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
-                 mapping_confidence_threshold: float = 0.7):
+                 mapping_confidence_threshold: float = 0.7,
+                 enable_correction: bool = False, enable_llm_correction: bool = False):
         self.config = config or PipelineConfig()
         self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url)
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
         self.entity_filter = EntityFilter(strict_mode=True)
+        self.relevance_scorer = MicrobiomeRelevanceScorer()
+        self.term_corrector = MiniLMTermCorrector(semantic_model, 0.9)
 
         # Initialize biomedical and mapping components
         self.enable_biomistral = enable_biomistral
@@ -2848,6 +3160,8 @@ class CDMEntityPipeline:
         self.enable_umls_mapping = enable_umls_mapping
         self.enable_comprehensive_mapping = enable_comprehensive_mapping
         self.mapping_confidence_threshold = mapping_confidence_threshold
+        self.enable_correction = enable_correction
+        self.enable_llm_correction = enable_llm_correction
 
         if enable_biomistral:
             biomistral_config = BioMistralConfig(model_name=biomistral_model)
@@ -2959,9 +3273,15 @@ class CDMEntityPipeline:
         if self.enable_biomistral:
             logger.info("🔄 Applying BioMistral biomedical validation...")
             cleaned_entities = self.biomistral_validator.validate_entity_list(cleaned_entities)
-            cleaned_entities = self.biomistral_validator.correct_entity_types(cleaned_entities)
+            if self.enable_llm_correction:
+                cleaned_entities = self.biomistral_validator.correct_entity_types(cleaned_entities)
             logger.info(f"✅ BioMistral validation: {len(cleaned_entities)} entities processed")
 
+        # Apply MiniLM term correction
+        if self.enable_correction:
+            logger.info("🔧 Applying MiniLM term correction...")
+            cleaned_entities = self.term_corrector.correct_terms(cleaned_entities)
+        
         # Apply comprehensive mapping if enabled
         if self.enable_comprehensive_mapping:
             logger.info("🔄 Applying comprehensive biomedical mapping...")
@@ -3005,7 +3325,11 @@ class CDMEntityPipeline:
         logger.info("🔍 Applying comprehensive entity filtering and quality control...")
         filtered_entities = self.entity_filter.apply_comprehensive_filtering(unique_entities)
         logger.info(f"✅ Comprehensive filtering: {len(unique_entities)} → {len(filtered_entities)} high-quality entities")
-        unique_entities = filtered_entities
+        
+        # Apply microbiome relevance scoring
+        logger.info("📊 Calculating microbiome relevance scores...")
+        scored_entities = self.relevance_scorer.score_entities(filtered_entities)
+        unique_entities = scored_entities
 
         # Sort by entity type priority and confidence
         entity_type_order = {entity_type: config['priority']
@@ -3059,7 +3383,8 @@ class CDMEntityPipeline:
                 'entity': entity['entity'],
                 'context': entity['context'],
                 'confidence': entity['confidence'],
-                'source': entity['source']
+                'source': entity['source'],
+                'microbiome_relevance_score': entity.get('microbiome_relevance_score', 0.0)
             }
 
             # Add OMOP mappings if available (direct or from comprehensive mapping)
@@ -3199,8 +3524,8 @@ def setup_environment():
         
     return api_keys
 
-def run_pipeline_stage(stage_name, input_file, output_file, config, **kwargs):
-    """Run a single stage of the pipeline."""
+def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
+    """Run a single stage of the pipeline on a file or directory."""
     logger.info(f"\n=== RUNNING {stage_name.upper()} PIPELINE ===")
     
     try:
@@ -3212,18 +3537,50 @@ def run_pipeline_stage(stage_name, input_file, output_file, config, **kwargs):
             **kwargs
         )
         
-        # Read input
-        with open(input_file, 'r', encoding='utf-8') as f:
-            text = f.read()
-            
-        # Run pipeline
-        success = pipeline.run(
-            text=text,
-            output_path=output_file,
-            chunk_size=kwargs.get('chunk_size')
-        )
+        input_p = Path(input_path)
+        all_entities = []
+        text_stats_agg = {"character_count": 0, "word_count": 0}
         
-        return success
+        if input_p.is_file():
+            files = [input_p]
+        elif input_p.is_dir():
+            files = list(input_p.glob("*.txt"))
+            logger.info(f"📂 Found {len(files)} text files in {input_path}")
+        else:
+            logger.error(f"Invalid input path: {input_path}")
+            return False
+
+        for i, file_path in enumerate(files):
+            logger.info(f"📄 Processing file {i+1}/{len(files)}: {file_path.name}")
+            with open(file_path, 'r', encoding='utf-8') as f:
+                text = f.read()
+                
+            # Update stats
+            text_stats_agg["character_count"] += len(text)
+            text_stats_agg["word_count"] += len(text.split())
+            
+            # Extract entities
+            file_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'))
+            
+            # Add source file info
+            for entity in file_entities:
+                entity['source_file'] = file_path.name
+                
+            all_entities.extend(file_entities)
+
+        # Final aggregation and deduplication across all files
+        if len(files) > 1:
+            logger.info(f"🔄 Aggregating and deduplicating {len(all_entities)} entities from {len(files)} files...")
+            # Re-run post-processing on aggregated list
+            # We skip extraction but run the rest of the pipeline logic
+            # Use semantic deduplication again on the full set
+            all_entities = pipeline.post_process_entities(all_entities, use_semantic=True)
+
+        # Save aggregated results
+        pipeline.save_results(all_entities, output_file, text_stats_agg)
+        
+        logger.info(f"✅ Pipeline completed. Total unique entities: {len(all_entities)}")
+        return True
         
     except Exception as e:
         logger.error(f"❌ {stage_name} pipeline failed: {e}")
@@ -3273,22 +3630,33 @@ def _analyze_file(filepath):
 
 def main():
     parser = argparse.ArgumentParser(description="CDM Entity Extraction Pipeline (Standalone)")
-    parser.add_argument('--input-file', '-i', required=True, help='Input text file')
+    parser.add_argument('--config', help='Path to JSON configuration file')
+    parser.add_argument('--log-format', choices=['text', 'json'], default='text', help='Log output format')
+    parser.add_argument('--input', '-i', required=False, help='Input text file or directory')
     parser.add_argument('--output', '-o', default='output/cdm_entities.json', help='Base output file path')
     parser.add_argument('--model', '-m', default='phi3:mini', help='LLM model to use (default: phi3:mini)')
     parser.add_argument('--base-url', default='http://localhost:11434', help='LLM service URL')
     parser.add_argument('--max-workers', type=int, default=3, help='Parallel workers')
     parser.add_argument('--enable-biomistral', action='store_true', help='Enable BioMistral validation (requires ~14GB disk space)')
+    parser.add_argument('--enable-correction', action='store_true', help='Enable MiniLM term correction')
+    parser.add_argument('--enable-llm-correction', action='store_true', help='Enable LLM-based type correction')
     parser.add_argument('--enable-enhanced', action='store_true', help='Run enhanced pipeline stage')
+    parser.add_argument('--semantic-model', default='all-MiniLM-L6-v2', help='Semantic model for embeddings (default: all-MiniLM-L6-v2)')
     
-    args = parser.parse_args()
+    args = ConfigManager.setup_parser_with_config(parser)
+    
+    # Setup logging
+    setup_logging(log_format=args.log_format)
+
+    if not args.input:
+        parser.error("the following arguments are required: --input/-i (or in config file)")
     
     # Setup
     api_keys = setup_environment()
-    input_path = Path(args.input_file)
+    input_path = Path(args.input)
     
     if not input_path.exists():
-        logger.error(f"Input file not found: {input_path}")
+        logger.error(f"Input path not found: {input_path}")
         return 1
         
     # Common config
@@ -3305,10 +3673,10 @@ def main():
     # Run Basic Pipeline
     basic_success = run_pipeline_stage(
         "Basic",
-        args.input_file,
+        args.input,
         basic_output,
         pipeline_config,
-        semantic_model="all-MiniLM-L6-v2",
+        semantic_model=args.semantic_model,
         semantic_threshold=0.8
     )
     
@@ -3331,17 +3699,19 @@ def main():
         
         enhanced_success = run_pipeline_stage(
             "Enhanced",
-            args.input_file,
+            args.input,
             enhanced_output,
             pipeline_config,
-            semantic_model="all-MiniLM-L6-v2",
+            semantic_model=args.semantic_model,
             semantic_threshold=0.8,
             enable_biomistral=args.enable_biomistral,
             enable_omop_mapping=True,
             enable_umls_mapping=enable_umls,
             umls_api_key=api_keys['UMLS_API_KEY'],
             enable_comprehensive_mapping=enable_hf,
-            mapping_confidence_threshold=0.7
+            mapping_confidence_threshold=0.7,
+            enable_correction=args.enable_correction,
+            enable_llm_correction=args.enable_llm_correction
         )
         
         if enhanced_success:

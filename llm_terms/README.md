@@ -15,6 +15,11 @@
 3. **Pattern-Based Normalization** - Scientific name standardization
 4. **Semantic Deduplication** - Contextual similarity understanding
 5. **Biomedical AI Deduplication** - Microbiome-aware duplicate detection
+6. **Term Correction** - MiniLM & LLM-based typo/variant correction
+7. **Relevance Scoring** - Microbiome-specific relevance scoring
+
+## 🛡️ **Safety & Setup**
+For detailed instructions on setting up a secure virtual environment and installing dependencies, please see [SAFETY_INSTRUCTIONS.md](SAFETY_INSTRUCTIONS.md).
 
 ## 📋 **Overview**
 
@@ -127,8 +132,17 @@ python main.py \
   --semantic-threshold 0.8 \
   --enable-biomistral-deduplication \
   --biomistral-dedup-model biomistral:7b \
+  --enable-biomistral-deduplication \
+  --biomistral-dedup-model biomistral:7b \
+  --enable-correction \
+  --enable-llm-correction \
   --max-workers 4 \
   --verbose
+```
+
+### **Process a Directory of Files**
+```bash
+python main.py --input-file data/ --output results/combined_output.json
 ```
 
 ### **HPC Cluster (SLURM)**
@@ -201,7 +215,10 @@ sbatch run_cdm_pipeline.sh research_paper.txt 200
 ### **Quality Parameters**
 - `--min-confidence`: Minimum confidence threshold (default: 0.6)
 - `--chunk-size`: Text chunk size (auto-adaptive)
+- `--chunk-size`: Text chunk size (auto-adaptive)
 - `--verbose`: Enable detailed logging
+- `--enable-correction`: Enable MiniLM term correction
+- `--enable-llm-correction`: Enable LLM-based type correction
 
 ## 🏗️ **Pipeline Architecture**
 

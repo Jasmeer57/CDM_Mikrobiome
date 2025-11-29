@@ -95,6 +95,8 @@ python main.py \
     --model "llama3.1:8b" \
     --max-entities "$MAX_ENTITIES" \
     --semantic-threshold 0.9 \  # Stricter deduplication
+    --enable-correction \       # Enable term correction
+    --enable-llm-correction \   # Enable LLM type correction
     --max-workers 8 \           # Fewer workers
     --verbose
 ```

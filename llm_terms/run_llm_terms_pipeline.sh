@@ -264,14 +264,15 @@ echo ""
 echo "=== PIPELINE CONFIGURATION ==="
 echo "Pipeline configuration:"
 echo "  - Input file: ./data/input_text.txt (update as needed)"
-echo "  - Model: qwen3:8b"
+echo "  - Model: qwen3:14b"
 echo "  - Base URL: http://localhost:11434"
 echo "  - Semantic model: all-MiniLM-L6-v2"
 echo "  - Semantic threshold: 0.8"
 echo "  - Max entities: 200"
 echo "  - Min confidence: 0.6"
 echo "  - Max workers: 3"
-echo "  - BioMistral validation: DISABLED (enable with --enable-biomistral)"
+echo "  - BioMistral validation: ENABLED (--enable-biomistral)"
+echo "  - Term Correction: ENABLED (--enable-correction)"
 echo "  - OMOP mapping: DISABLED (enable with --enable-omop-mapping)"
 echo "  - UMLS mapping: DISABLED (enable with --enable-umls-mapping)"
 echo ""
@@ -315,18 +316,13 @@ echo ""
 
 # Basic pipeline run
 echo "Running basic CDM entity extraction pipeline..."
-cd cdm_pipeline
-python main.py \
-    --input-file "$INPUT_FILE" \
+python standalone_pipeline.py \
+    --input "$INPUT_FILE" \
     --output "../output/cdm_entities.json" \
-    --model qwen3:8b \
+    --model qwen3:14b \
     --base-url http://localhost:11434 \
     --semantic-model all-MiniLM-L6-v2 \
-    --semantic-threshold 0.8 \
-    --max-entities 200 \
-    --min-confidence 0.6 \
-    --max-workers 3 \
-    --verbose
+    --max-workers 3
 
 BASIC_EXIT_CODE=$?
 
@@ -339,17 +335,16 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
     echo "Running enhanced pipeline with available features..."
 
     # Build command dynamically based on available API keys
-    ENHANCED_CMD="python main.py \
-        --input-file \"$INPUT_FILE\" \
+    ENHANCED_CMD="python standalone_pipeline.py \
+        --input \"$INPUT_FILE\" \
         --output \"../output/cdm_entities_enhanced.json\" \
-        --model qwen3:8b \
+        --model qwen3:14b \
         --base-url ${OLLAMA_BASE_URL:-http://localhost:11434} \
         --semantic-model all-MiniLM-L6-v2 \
-        --semantic-threshold 0.8 \
-        --max-entities 200 \
-        --min-confidence 0.6 \
         --max-workers 3 \
+        --enable-enhanced \
         --enable-biomistral \
+        --enable-correction \
         --enable-omop-mapping"
 
     # Add UMLS mapping if API key is available
@@ -376,7 +371,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
         echo "⚠️  Skipping comprehensive mapping (no HF token)"
     fi
 
-    ENHANCED_CMD="$ENHANCED_CMD --mapping-confidence-threshold 0.7 --verbose"
+    ENHANCED_CMD="$ENHANCED_CMD"
 
     echo "Executing: $ENHANCED_CMD"
     eval "$ENHANCED_CMD"

@@ -13,6 +13,8 @@ from extractors.entity_extractor import CDMEntityExtractor
 from core.semantic_deduplicator import SemanticDeduplicator
 from core.entity_filter import EntityFilter
 from core.biomedical_deduplicator import BioMistralDeduplicator
+from core.term_corrector import MiniLMTermCorrector
+from core.relevance_scorer import MicrobiomeRelevanceScorer
 from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
 from mappers.omop_mapper import OMOPMapper
 from mappers.umls import UMLSMapper
@@ -30,13 +32,16 @@ class CDMEntityPipeline:
                  enable_biomistral_deduplication: bool = False, biomistral_dedup_model: str = "biomistral:7b",
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
-                 mapping_confidence_threshold: float = 0.7):
+                 mapping_confidence_threshold: float = 0.7,
+                 enable_correction: bool = False, enable_llm_correction: bool = False):
         self.config = config or PipelineConfig()
         self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url)
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
         self.entity_filter = EntityFilter(strict_mode=True)
+        self.relevance_scorer = MicrobiomeRelevanceScorer()
+        self.term_corrector = MiniLMTermCorrector(semantic_model, 0.9)
 
         # Initialize biomedical and mapping components
         self.enable_biomistral = enable_biomistral
@@ -45,6 +50,8 @@ class CDMEntityPipeline:
         self.enable_umls_mapping = enable_umls_mapping
         self.enable_comprehensive_mapping = enable_comprehensive_mapping
         self.mapping_confidence_threshold = mapping_confidence_threshold
+        self.enable_correction = enable_correction
+        self.enable_llm_correction = enable_llm_correction
 
         if enable_biomistral:
             from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
@@ -158,8 +165,14 @@ class CDMEntityPipeline:
         if self.enable_biomistral:
             logger.info("🔄 Applying BioMistral biomedical validation...")
             cleaned_entities = self.biomistral_validator.validate_entity_list(cleaned_entities)
-            cleaned_entities = self.biomistral_validator.correct_entity_types(cleaned_entities)
+            if self.enable_llm_correction:
+                cleaned_entities = self.biomistral_validator.correct_entity_types(cleaned_entities)
             logger.info(f"✅ BioMistral validation: {len(cleaned_entities)} entities processed")
+
+        # Apply MiniLM term correction
+        if self.enable_correction:
+            logger.info("🔧 Applying MiniLM term correction...")
+            cleaned_entities = self.term_corrector.correct_terms(cleaned_entities)
 
         # Apply comprehensive mapping if enabled
         if self.enable_comprehensive_mapping:
@@ -204,7 +217,11 @@ class CDMEntityPipeline:
         logger.info("🔍 Applying comprehensive entity filtering and quality control...")
         filtered_entities = self.entity_filter.apply_comprehensive_filtering(unique_entities)
         logger.info(f"✅ Comprehensive filtering: {len(unique_entities)} → {len(filtered_entities)} high-quality entities")
-        unique_entities = filtered_entities
+        
+        # Apply microbiome relevance scoring
+        logger.info("📊 Calculating microbiome relevance scores...")
+        scored_entities = self.relevance_scorer.score_entities(filtered_entities)
+        unique_entities = scored_entities
 
         # Sort by entity type priority and confidence
         entity_type_order = {entity_type: config['priority']
@@ -258,7 +275,8 @@ class CDMEntityPipeline:
                 'entity': entity['entity'],
                 'context': entity['context'],
                 'confidence': entity['confidence'],
-                'source': entity['source']
+                'source': entity['source'],
+                'microbiome_relevance_score': entity.get('microbiome_relevance_score', 0.0)
             }
 
             # Add OMOP mappings if available (direct or from comprehensive mapping)
