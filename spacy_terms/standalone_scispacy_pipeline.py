@@ -974,6 +974,7 @@ def main():
     parser.add_argument("--input_dir", default="./data", help="Input directory")
     parser.add_argument("--output_dir", default="./output", help="Output directory")
     parser.add_argument("--model", default="en_core_sci_lg", help="Spacy model name")
+    parser.add_argument("--skip_mapping", action="store_true", help="Skip mapping and ranking phases")
     args = parser.parse_args()
     
     config = PipelineConfig(
@@ -994,7 +995,7 @@ def main():
     # Initialize components
     extractor = TermsExtractor(config)
     deduplicator = Deduplicator(config)
-    mapper = ComprehensiveMapper(config)
+    mapper = ComprehensiveMapper(config) if not args.skip_mapping else None
     
     # Process files
     files = list(input_path.glob("*.txt"))
@@ -1003,14 +1004,48 @@ def main():
     all_results = []
     
     for file_path in files:
-        result = process_file(file_path, extractor, deduplicator, mapper)
-        if result:
-            all_results.append(result)
+        # Process file inline to handle skip_mapping logic easily
+        logger.info(f"Processing {file_path.name}...")
+        try:
+            text = file_path.read_text(encoding='utf-8')
+        except Exception as e:
+            logger.error(f"Error reading {file_path}: {e}")
+            continue
             
-            # Save individual result
-            out_file = output_path / f"{file_path.stem}_results.json"
-            with open(out_file, 'w') as f:
-                json.dump(result, f, indent=2)
+        # 1. Extraction
+        raw_terms = extractor.extract(text)
+        logger.info(f"  Extracted {len(raw_terms)} raw terms")
+        
+        # 2. Deduplication
+        dedup_terms = deduplicator.deduplicate(raw_terms)
+        logger.info(f"  Deduplicated to {len(dedup_terms)} terms")
+        
+        final_terms = dedup_terms
+        
+        # 3. Mapping & Ranking (Optional)
+        if not args.skip_mapping and mapper:
+            mapped_terms = mapper.map_terms(dedup_terms)
+            logger.info(f"  Mapped {len(mapped_terms)} terms")
+            
+            final_terms = extractor.rank_terms(mapped_terms)
+            logger.info(f"  Ranked {len(final_terms)} terms")
+        
+        result = {
+            "file": file_path.name,
+            "timestamp": datetime.now().isoformat(),
+            "stats": {
+                "raw_count": len(raw_terms),
+                "final_count": len(final_terms)
+            },
+            "terms": final_terms
+        }
+        
+        all_results.append(result)
+            
+        # Save individual result
+        out_file = output_path / f"{file_path.stem}_results.json"
+        with open(out_file, 'w') as f:
+            json.dump(result, f, indent=2)
                 
     # Save summary
     summary = {
