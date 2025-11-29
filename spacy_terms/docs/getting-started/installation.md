@@ -37,6 +37,21 @@ pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_core
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_craft_md-0.5.1.tar.gz
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz
+pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz
+```
+
+### 4. Parallel SpaCy Pipeline (Optional)
+To run with standard SpaCy models (en_core_web_lg, etc.) in parallel:
+
+```bash
+# Create separate venv
+python3 -m venv venv_spacy_39
+source venv_spacy_39/bin/activate
+
+# Install dependencies
+pip install spacy scispacy rapidfuzz sentence-transformers pandas requests torch
+python -m spacy download en_core_web_lg
+python -m spacy download en_core_web_trf
 ```
 
 ## 🐳 Docker Installation

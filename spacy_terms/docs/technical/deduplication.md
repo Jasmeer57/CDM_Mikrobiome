@@ -1,6 +1,6 @@
-# 4-Layer Biomedical Deduplication
+# 5-Layer Biomedical Deduplication
 
-The pipeline features an advanced **4-layer deduplication system** that progressively removes duplicates at different levels of semantic understanding.
+The pipeline features an advanced **5-layer deduplication system** that progressively removes duplicates at different levels of semantic understanding.
 
 ## 🔄 Deduplication Layers
 
@@ -23,7 +23,13 @@ The pipeline features an advanced **4-layer deduplication system** that progress
 - **Threshold**: 90% (configurable)
 - **Examples**: `gut microbiota` vs `intestinal microflora`
 
-### **Layer 4: BioMistral Biomedical Deduplication** ⭐ **NEW**
+### **Layer 4: Typo Correction & Semantic Quality Filter** ⭐ **NEW**
+- **Purpose**: Fix spelling errors and remove generic noise
+- **Method**: MiniLM + Fuzzy matching
+- **Typo Correction**: Merges `bacteroides` and `bacteriodes` (lexical + semantic check)
+- **Quality Filter**: Removes generic terms like `study`, `analysis` based on semantic similarity to noise concepts
+
+### **Layer 5: BioMistral Biomedical Deduplication** ⭐ **NEW**
 - **Purpose**: Context-aware biomedical duplicate detection
 - **Method**: BioMistral/BioPubMedBERT classification with domain-specific prompts
 - **Context**: Microbiome, biomedical, clinical, genomics

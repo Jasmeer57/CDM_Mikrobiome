@@ -52,6 +52,11 @@ class PipelineConfig:
     bioportal_api_key: Optional[str] = os.getenv("BIOPORTAL_API_KEY")
     umls_api_key: Optional[str] = os.getenv("UMLS_API_KEY")
 
+    # Validation
+    validate_biomistral: bool = False
+    biomistral_model: str = "BioMistral/BioMistral-7B"
+    load_4bit: bool = False
+
 # --- Logging Setup ---
 
 logging.basicConfig(
@@ -140,7 +145,7 @@ GEO_BLOCKLIST = {
 BIOMEDICAL_KEYWORDS = {
     'microbi', 'bacteri', 'gene', 'dna', 'rna', 'protein', 'enzyme', 'cell',
     'disease', 'infect', 'immun', 'metabol', 'pathogen', 'clinic', 'medic',
-    'therap', 'antibiot', 'resistan', 'sequenc', 'analy', 'study', 'result',
+    'therap', 'antibiot', 'resistan', 'sequenc', 
     'acid', 'fatty', 'chain', 'synthesis', 'receptor', 'pathway',
     'genome', 'genom', 'transcript', 'express', 'mutat', 'amplif',
     'phylum', 'class', 'order', 'family', 'genus', 'species', 'strain',
@@ -333,28 +338,55 @@ class TermsExtractor:
         return term_lower
 
     def rank_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Rank terms: Microbiome > Biomedical > CDM > Others"""
+        """
+        Rank terms using a weighted scoring system:
+        - Microbiome Core: +5.0
+        - CDM Core: +3.0
+        - Biomedical: +1.0
+        - Mapped: +2.0
+        - Validated: +2.0
+        - Frequency: + log(freq) * 0.5
+        """
+        import math
+        
         for term in terms:
             score = 1.0
             t_lower = term['term'].lower()
             
-            # Boost Microbiome terms (Highest Priority)
-            if any(x in t_lower for x in ['microbi', 'bacter', 'gut', 'flora', 'pathogen']):
+            # 1. Microbiome Core (Highest Priority)
+            microbiome_core = ['microbi', 'bacter', 'gut', 'flora', 'pathogen', 'dysbiosis', 'probiotic', 'antibiotic', 'resistome']
+            if any(x in t_lower for x in microbiome_core):
+                score += 5.0
+                
+            # 2. CDM Core (Study Design & Clinical)
+            # Ensure CDM_KEYWORDS are used effectively
+            if any(kw in t_lower for kw in CDM_KEYWORDS):
                 score += 3.0
                 
-            # Boost Biomedical Keywords
+            # 3. Biomedical Keywords (General)
             if any(kw in t_lower for kw in BIOMEDICAL_KEYWORDS):
                 score += 1.0
                 
-            # Boost CDM Keywords
-            if any(kw in t_lower for kw in CDM_KEYWORDS):
-                score += 0.5
-                
-            # Boost Mapped terms
+            # 4. Mapped Boost (High Confidence)
             if term.get('mappings'):
+                score += 2.0
+                
+            # 5. Validation Boost
+            if term.get('validation', {}).get('is_valid') == 'Yes':
+                score += 2.0
+                
+            # 6. Frequency Boost (Logarithmic)
+            freq = term.get('frequency', 1)
+            if freq > 1:
+                score += math.log(freq) * 0.5
+                
+            # 7. Length Penalty/Boost
+            if len(t_lower) < 5:
+                score -= 0.5
+            elif len(t_lower) > 10:
                 score += 0.5
                 
-            term['score'] = score
+            term['score'] = round(score, 2)
             
         # Sort by score descending
         return sorted(terms, key=lambda x: x['score'], reverse=True)
@@ -399,10 +431,116 @@ class Deduplicator:
         # 4. Biomedical Deduplication (BioMistral)
         terms = self._biomedical_dedup(terms)
 
-        # 5. Aggressive Final Pass (No Duplicates!)
+        # 5. Semantic Quality Filter (New)
+        terms = self._semantic_quality_filter(terms)
+
+        # 6. Typo Correction
+        terms = self._correct_typos(terms)
+
+        # 7. Aggressive Final Pass (No Duplicates!)
         terms = self._aggressive_dedup(terms)
             
         return terms
+
+    def _semantic_quality_filter(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Filter out terms that are semantically similar to generic research concepts.
+        Uses MiniLM embeddings.
+        """
+        if not self.semantic_model or not terms:
+            return terms
+            
+        logger.info("Running Semantic Quality Filter...")
+        
+        # Prototypes of generic/noise concepts
+        NOISE_PROTOTYPES = [
+            "scientific study", "research analysis", "statistical method", "data collection",
+            "experimental result", "clinical trial", "literature review", "author contribution",
+            "funding source", "conflict of interest", "copyright statement", "figure legend",
+            "table caption", "supplementary material", "university department", "correspondence address",
+            "p-value", "confidence interval", "standard deviation", "sample size"
+        ]
+        
+        term_strings = [t['term'] for t in terms]
+        
+        # Encode terms and noise prototypes
+        term_embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
+        noise_embeddings = self.semantic_model.encode(NOISE_PROTOTYPES, convert_to_tensor=True)
+        
+        from sentence_transformers.util import cos_sim
+        # Shape: [num_terms, num_noise]
+        scores = cos_sim(term_embeddings, noise_embeddings)
+        
+        keep_indices = []
+        for i in range(len(terms)):
+            # Check max similarity to ANY noise prototype
+            max_noise_score = scores[i].max().item()
+            
+            # If too close to noise (e.g. > 0.75), discard
+            if max_noise_score < 0.75:
+                keep_indices.append(i)
+            else:
+                # Optional: Log what was filtered for debugging
+                # logger.debug(f"Filtered generic term: {terms[i]['term']} (Score: {max_noise_score:.2f})")
+                pass
+                
+        logger.info(f"Semantic Filter: {len(terms)} -> {len(keep_indices)} terms")
+        return [terms[i] for i in keep_indices]
+
+    def _correct_typos(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Correct typos by merging terms that are lexically and semantically very similar.
+        Uses MiniLM for semantic confirmation if available.
+        """
+        if len(terms) < 2: return terms
+        
+        logger.info("Running typo correction...")
+        try:
+            from rapidfuzz import fuzz
+        except ImportError:
+            return terms
+
+        # Sort by frequency (descending) then length (descending)
+        terms.sort(key=lambda x: (x.get('frequency', 0), len(x.get('term', ''))), reverse=True)
+        
+        keep_indices = set(range(len(terms)))
+        term_strings = [t.get('term', '') for t in terms]
+        
+        # Pre-compute embeddings if semantic model is available
+        embeddings = None
+        if self.semantic_model:
+            embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
+            from sentence_transformers.util import cos_sim
+            cosine_scores = cos_sim(embeddings, embeddings)
+
+        for i in range(len(terms)):
+            if i not in keep_indices: continue
+            
+            for j in range(i + 1, len(terms)):
+                if j not in keep_indices: continue
+                
+                s1 = term_strings[i]
+                s2 = term_strings[j]
+                
+                # 1. Lexical Check (High Fuzzy Ratio)
+                lexical_score = fuzz.ratio(s1, s2)
+                if lexical_score < 90: 
+                    continue
+                    
+                # 2. Semantic Confirmation (if model available)
+                if self.semantic_model:
+                    semantic_score = cosine_scores[i][j]
+                    if semantic_score < 0.85: 
+                        continue
+                
+                # Merge s2 into s1
+                terms[i]['frequency'] = terms[i].get('frequency', 1) + terms[j].get('frequency', 1)
+                terms[i]['typo_corrections'] = terms[i].get('typo_corrections', [])
+                terms[i]['typo_corrections'].append(s2)
+                
+                keep_indices.discard(j)
+                    
+        return [terms[i] for i in sorted(keep_indices)]
 
     def _aggressive_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Final aggressive pass to remove any remaining near-duplicates"""
@@ -905,6 +1043,149 @@ class ComprehensiveMapper:
                 
         return terms
 
+    def _map_ncbo(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Map using NCBO Annotator"""
+        if not self.config.bioportal_api_key:
+            return terms
+            
+        import requests
+        logger.info(f"Mapping {len(terms)} terms using NCBO Annotator...")
+        session = requests.Session()
+        headers = {"Authorization": f"apikey token={self.config.bioportal_api_key}"}
+        
+        for term_data in terms:
+            term = term_data['term']
+            try:
+                params = {
+                    "text": term,
+                    "longest_only": "true",
+                    "ontologies": "SNOMEDCT,LOINC,RXNORM,MESH,ICD10",
+                    "apikey": self.config.bioportal_api_key
+                }
+                
+                response = session.get("https://data.bioontology.org/annotator", params=params, timeout=5)
+                if response.status_code == 200:
+                    data = response.json()
+                    matches = []
+                    for annotation in data[:3]:
+                        annotated_class = annotation.get("annotatedClass", {})
+                        matches.append({
+                            "id": annotated_class.get("@id"),
+                            "label": annotated_class.get("prefLabel"),
+                            "ontology": annotated_class.get("links", {}).get("ontology", "").split("/")[-1],
+                            "source": "NCBO"
+                        })
+                        
+                    if matches:
+                        term_data['mappings'] = term_data.get('mappings', {})
+                        term_data['mappings']['ncbo'] = matches
+                        
+                time.sleep(0.1)
+                
+            except Exception as e:
+                logger.warning(f"NCBO error for {term}: {e}")
+                
+        return terms
+
+
+class BioMistralValidator:
+    """Validator using BioMistral-7B"""
+    def __init__(self, config: PipelineConfig):
+        self.config = config
+        self.pipeline = None
+        self.tokenizer = None
+        self.model = None
+
+    def load_model(self):
+        """Load the BioMistral model"""
+        try:
+            from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+            import torch
+            
+            model_name = self.config.biomistral_model
+            logger.info(f"Loading BioMistral model: {model_name} (4-bit: {self.config.load_4bit})...")
+            
+            kwargs = {
+                "device_map": "auto",
+                "trust_remote_code": True
+            }
+            
+            if self.config.load_4bit:
+                try:
+                    from transformers import BitsAndBytesConfig
+                    kwargs["quantization_config"] = BitsAndBytesConfig(
+                        load_in_4bit=True,
+                        bnb_4bit_compute_dtype=torch.float16
+                    )
+                except ImportError:
+                    logger.warning("bitsandbytes not installed. Falling back to standard loading.")
+            
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+            self.model = AutoModelForCausalLM.from_pretrained(model_name, **kwargs)
+            
+            # Create generation pipeline
+            self.pipeline = pipeline(
+                "text-generation",
+                model=self.model,
+                tokenizer=self.tokenizer,
+                max_new_tokens=10
+            )
+            logger.info("BioMistral model loaded successfully.")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to load BioMistral model: {e}")
+            return False
+
+    def validate_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Validate terms using BioMistral"""
+        if not self.config.validate_biomistral:
+            return terms
+            
+        if not self.pipeline:
+            if not self.load_model():
+                return terms
+
+        logger.info(f"Validating {len(terms)} terms with BioMistral...")
+        
+        for term_data in tqdm(terms, desc="BioMistral Validation"):
+            term = term_data.get('term', '')
+            if not term: continue
+            
+            prompt = f"""
+            Task: Verify if the following term is a valid, specific scientific concept relevant to microbiome, biomedical, or clinical research.
+            Term: "{term}"
+            
+            Criteria:
+            - Must be a specific biological entity, chemical, disease, method, or concept.
+            - Reject generic words (e.g., "study", "result", "high").
+            - Reject incoherent fragments.
+            
+            Answer (Yes/No):
+            """
+            
+            try:
+                outputs = self.pipeline(
+                    prompt, 
+                    do_sample=False, 
+                    temperature=0.1,
+                    return_full_text=False
+                )
+                response = outputs[0]['generated_text'].strip().lower()
+                is_valid = "yes" in response
+                
+                term_data['validation'] = {
+                    'model': self.config.biomistral_model,
+                    'is_valid': is_valid,
+                    'raw_response': response
+                }
+                
+            except Exception as e:
+                logger.warning(f"Validation failed for '{term}': {e}")
+                term_data['validation'] = {'error': str(e)}
+                
+        return terms
+
 
 class Mapper:
     """Maps terms to ontologies using APIs"""
@@ -969,20 +1250,26 @@ def process_file(file_path: Path, extractor: TermsExtractor, deduplicator: Dedup
         "terms": final_terms
     }
 
-def main():
-    parser = argparse.ArgumentParser(description="Standalone SciSpaCy Pipeline")
-    parser.add_argument("--input_dir", default="./data", help="Input directory")
-    parser.add_argument("--output_dir", default="./output", help="Output directory")
-    parser.add_argument("--model", default="en_core_sci_lg", help="Spacy model name")
-    parser.add_argument("--skip_mapping", action="store_true", help="Skip mapping and ranking phases")
-    args = parser.parse_args()
-    
-    config = PipelineConfig(
-        input_dir=args.input_dir,
-        output_dir=args.output_dir,
-        spacy_model=args.model
-    )
-    
+SCISPACY_MODELS = [
+    "en_core_sci_sm",
+    "en_core_sci_md",
+    "en_core_sci_lg",
+    "en_core_sci_scibert",
+    "en_ner_craft_md",
+    "en_ner_jnlpba_md",
+    "en_ner_bc5cdr_md",
+    "en_ner_bionlp13cg_md"
+]
+
+SPACY_MODELS = [
+    "en_core_web_sm",
+    "en_core_web_md",
+    "en_core_web_lg",
+    "en_core_web_trf"
+]
+
+def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
+    """Run the pipeline with the given configuration"""
     # Ensure directories exist
     input_path = Path(config.input_dir)
     output_path = Path(config.output_dir)
@@ -993,18 +1280,20 @@ def main():
         return
         
     # Initialize components
-    extractor = TermsExtractor(config)
-    deduplicator = Deduplicator(config)
-    mapper = ComprehensiveMapper(config) if not args.skip_mapping else None
-    
+    logger.info(f"Initializing pipeline with model: {config.spacy_model}")
+    try:
+        extractor = TermsExtractor(config)
+        deduplicator = Deduplicator(config)
+        mapper = ComprehensiveMapper(config) if not skip_mapping else None
+    except Exception as e:
+        logger.error(f"Failed to initialize components for {config.spacy_model}: {e}")
+        return
+
     # Process files
     files = list(input_path.glob("*.txt"))
     logger.info(f"Found {len(files)} files in {input_path}")
     
-    all_results = []
-    
     for file_path in files:
-        # Process file inline to handle skip_mapping logic easily
         logger.info(f"Processing {file_path.name}...")
         try:
             text = file_path.read_text(encoding='utf-8')
@@ -1023,7 +1312,7 @@ def main():
         final_terms = dedup_terms
         
         # 3. Mapping & Ranking (Optional)
-        if not args.skip_mapping and mapper:
+        if not skip_mapping and mapper:
             mapped_terms = mapper.map_terms(dedup_terms)
             logger.info(f"  Mapped {len(mapped_terms)} terms")
             
@@ -1032,6 +1321,7 @@ def main():
         
         result = {
             "file": file_path.name,
+            "model": config.spacy_model,
             "timestamp": datetime.now().isoformat(),
             "stats": {
                 "raw_count": len(raw_terms),
@@ -1040,24 +1330,193 @@ def main():
             "terms": final_terms
         }
         
-        all_results.append(result)
-            
         # Save individual result
-        out_file = output_path / f"{file_path.stem}_results.json"
+        out_file = output_path / f"{file_path.stem}_{config.spacy_model}_results.json"
         with open(out_file, 'w') as f:
             json.dump(result, f, indent=2)
-                
-    # Save summary
-    summary = {
-        "total_files": len(files),
-        "total_terms": sum(len(r['terms']) for r in all_results),
-        "timestamp": datetime.now().isoformat()
-    }
-    with open(output_path / "pipeline_summary.json", 'w') as f:
-        json.dump(summary, f, indent=2)
+            
+    # Clean up to free memory
+    del extractor
+    del deduplicator
+    if mapper: del mapper
+    import gc
+    gc.collect()
+
+def main():
+    parser = argparse.ArgumentParser(description="Standalone SciSpaCy Pipeline")
+    parser.add_argument("--input_dir", default="./data", help="Input directory")
+    parser.add_argument("--output_dir", default="./output", help="Output directory")
+    parser.add_argument("--model", default="en_core_sci_lg", help="Spacy model name")
+    parser.add_argument("--skip_mapping", action="store_true", help="Skip mapping and ranking phases")
+    parser.add_argument("--run_all_models", action="store_true", help="Run pipeline with ALL available scispacy models")
+    parser.add_argument("--ensemble", action="store_true", help="Run ALL models and combine/deduplicate results into one file")
+    
+    # Validation arguments
+    parser.add_argument("--validate_biomistral", action="store_true", help="Enable BioMistral-7B validation")
+    parser.add_argument("--biomistral_model", default="BioMistral/BioMistral-7B", help="BioMistral model name")
+    parser.add_argument("--load_4bit", action="store_true", help="Load BioMistral in 4-bit quantization")
+    parser.add_argument("--use_spacy_models", action="store_true", help="Use standard SpaCy models instead of SciSpaCy")
+    
+    args = parser.parse_args()
+    
+    if args.ensemble:
+        models_to_run = SPACY_MODELS if args.use_spacy_models else SCISPACY_MODELS
+        logger.info(f"Running ENSEMBLE pipeline with models: {models_to_run}")
         
-    logger.info("Pipeline completed successfully!")
-    logger.info(f"Results saved to {output_path}")
+        # Ensure output directory exists
+        output_path = Path(args.output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize Deduplicator, Mapper, and Validator (once)
+        base_config = PipelineConfig(
+            input_dir=args.input_dir, 
+            output_dir=args.output_dir, 
+            spacy_model="en_core_web_lg" if args.use_spacy_models else "en_core_sci_lg",
+            validate_biomistral=args.validate_biomistral,
+            biomistral_model=args.biomistral_model,
+            load_4bit=args.load_4bit
+        )
+        deduplicator = Deduplicator(base_config)
+        mapper = ComprehensiveMapper(base_config) if not args.skip_mapping else None
+        validator = BioMistralValidator(base_config) if args.validate_biomistral else None
+        
+        input_path = Path(args.input_dir)
+        files = list(input_path.glob("*.txt"))
+        
+        for file_path in files:
+            logger.info(f"Processing {file_path.name} in ENSEMBLE mode...")
+            try:
+                text = file_path.read_text(encoding='utf-8')
+            except Exception as e:
+                logger.error(f"Error reading {file_path}: {e}")
+                continue
+                
+            all_raw_terms = []
+            
+            # 1. Extraction from ALL models
+            for model_name in models_to_run:
+                logger.info(f"  Extracting with {model_name}...")
+                try:
+                    # Create config for this specific model
+                    model_config = PipelineConfig(input_dir=args.input_dir, output_dir=args.output_dir, spacy_model=model_name)
+                    extractor = TermsExtractor(model_config)
+                    terms = extractor.extract(text)
+                    logger.info(f"    -> Found {len(terms)} terms")
+                    
+                    # Tag terms with their source model for traceability
+                    for t in terms:
+                        t['source_model'] = model_name
+                        
+                    all_raw_terms.extend(terms)
+                    
+                    # Cleanup to save memory
+                    del extractor
+                    import gc
+                    gc.collect()
+                    
+                except Exception as e:
+                    logger.error(f"    Failed to run {model_name}: {e}")
+            
+            logger.info(f"  Total raw terms collected: {len(all_raw_terms)}")
+            
+            # 2. Deduplication (Global)
+            dedup_terms = deduplicator.deduplicate(all_raw_terms)
+            logger.info(f"  Globally deduplicated to {len(dedup_terms)} terms")
+            
+            final_terms = dedup_terms
+            
+            # 3. Mapping & Ranking
+            if not args.skip_mapping and mapper:
+                mapped_terms = mapper.map_terms(dedup_terms)
+                final_terms = TermsExtractor(base_config).rank_terms(mapped_terms) # Use base config for ranking
+            
+            # 4. Validation
+            if validator:
+                final_terms = validator.validate_terms(final_terms)
+
+            result = {
+                "file": file_path.name,
+                "mode": "ensemble",
+                "models_used": models_to_run,
+                "timestamp": datetime.now().isoformat(),
+                "stats": {
+                    "raw_count": len(all_raw_terms),
+                    "final_count": len(final_terms)
+                },
+                "terms": final_terms
+            }
+            
+            # Save JSON
+            out_file = output_path / f"{file_path.stem}_ensemble_results.json"
+            with open(out_file, 'w') as f:
+                json.dump(result, f, indent=2)
+            
+            # Save CSV
+            csv_file = output_path / f"{file_path.stem}_ensemble_results.csv"
+            try:
+                import pandas as pd
+                # 5. Format Output
+                source_label = "spacy" if args.use_spacy_models else "scispacy"
+                formatted_terms = []
+                for t in final_terms:
+                    row = {
+                        "term": t['term'],
+                        "original": t.get('primary_form', t['term']),
+                        "label": t.get('label', 'ENTITY'),
+                        "source": source_label,
+                        "source_model": t.get('source_model', 'unknown'),
+                        "score": t.get('score', 0.0),
+                        "validation_valid": t.get("validation", {}).get("is_valid"),
+                        "validation_response": t.get("validation", {}).get("raw_response")
+                    }
+                    # Add mappings if available
+                    if "mappings" in t:
+                        for source, matches in t["mappings"].items():
+                            if matches:
+                                row[f"mapping_{source}_id"] = matches[0].get("id")
+                                row[f"mapping_{source}_label"] = matches[0].get("label")
+                    flat_terms.append(row)
+                
+                df = pd.read_json(json.dumps(flat_terms)) # Quick way to normalize if needed, or just DataFrame(flat_terms)
+                df = pd.DataFrame(flat_terms)
+                df.to_csv(csv_file, index=False)
+                logger.info(f"Saved CSV results to {csv_file}")
+            except Exception as e:
+                logger.warning(f"Failed to save CSV: {e}")
+                
+        # 5. Consolidate Results
+        logger.info("Consolidating all ensemble results...")
+        try:
+            consolidate_results(args.output_dir, os.path.join(args.output_dir, "consolidated_results"))
+        except Exception as e:
+            logger.error(f"Failed to consolidate results: {e}")
+            
+        logger.info("Ensemble execution completed!")
+        
+    elif args.run_all_models:
+        logger.info(f"Running pipeline on ALL models: {SCISPACY_MODELS}")
+        for model_name in SCISPACY_MODELS:
+            logger.info(f"=== Starting run for model: {model_name} ===")
+            config = PipelineConfig(
+                input_dir=args.input_dir,
+                output_dir=os.path.join(args.output_dir, model_name), # Subdir for each model
+                spacy_model=model_name,
+                validate_biomistral=args.validate_biomistral,
+                biomistral_model=args.biomistral_model,
+                load_4bit=args.load_4bit
+            )
+            run_pipeline(config, args.skip_mapping)
+            logger.info(f"=== Completed run for model: {model_name} ===")
+    else:
+        config = PipelineConfig(
+            input_dir=args.input_dir,
+            output_dir=args.output_dir,
+            spacy_model=args.model,
+            validate_biomistral=args.validate_biomistral,
+            biomistral_model=args.biomistral_model,
+            load_4bit=args.load_4bit
+        )
+        run_pipeline(config, args.skip_mapping)
 
 if __name__ == "__main__":
     main()

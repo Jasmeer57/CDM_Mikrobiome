@@ -13,8 +13,11 @@ This advanced pipeline extracts high-quality biomedical terminology from scienti
 ### ✨ Key Features
 
 - **🔬 Multi-Model NER**: 4 specialized sciSpaCy models running in parallel
+- **⚡ Parallel SpaCy Pipeline**: Support for standard SpaCy models (sm, md, lg, trf) in parallel
 - **🔍 4-Layer Filtering**: Basic → Advanced → Biomedical → CDM optimization
-- **🔄 4-Strategy Deduplication**: Exact → Fuzzy → Semantic → BioMistral Biomedical (NEW!)
+- **🔄 5-Strategy Deduplication**: Exact → Fuzzy → Semantic → Typo Correction → BioMistral Biomedical
+- **🧠 Enhanced Scoring**: Weighted relevance scoring (Microbiome=5.0, CDM=3.0)
+- **🧹 Semantic Quality Filter**: Proactive removal of generic research terms
 - **🏥 CDM Integration**: Optimized for Common Data Model terminology
 - **💾 Multi-Format Output**: JSON, CSV, SQLite with CDM schema
 - **🚀 Production Ready**: FastAPI, Docker, monitoring stack

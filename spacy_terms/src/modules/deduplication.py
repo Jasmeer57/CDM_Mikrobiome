@@ -250,188 +250,190 @@ class Deduplicator:
         return deduplicated
 
     def _biomedical_deduplication(self, terms: List[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-        """Perform BioMistral-powered biomedical context-aware deduplication"""
-        if not self.config.biomedical_enabled or len(terms) <= 1:
+        """Biomedical context-aware deduplication (Cross-Encoder)"""
+        if not self.config.biomedical_enabled or len(terms) < 2:
             return terms, []
-
-        logger.info("Starting biomedical context-aware deduplication...")
 
         try:
-            # Initialize BioMistral for biomedical reasoning
-            from transformers import pipeline
-
-            # Use a smaller, efficient model for duplicate detection
-            biomedical_classifier = pipeline(
-                "text-classification",
-                model="microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext",
-                device=0 if self.semantic_model else -1  # Use GPU if available
-            )
-
-        except Exception as e:
-            logger.warning(f"BioMistral model not available: {e}. Skipping biomedical deduplication.")
+            from sentence_transformers import CrossEncoder
+        except ImportError:
+            logger.warning("sentence-transformers not installed. Biomedical deduplication disabled.")
             return terms, []
 
-        deduplicated = []
-        biomedical_duplicates = []
-        term_groups = []
+        logger.info("Running biomedical deduplication (Cross-Encoder)...")
+        
+        # Load Cross-Encoder model
+        try:
+            model_name = "cross-encoder/stsb-roberta-base"
+            logger.info(f"Loading Cross-Encoder: {model_name}")
+            model = CrossEncoder(model_name)
+        except Exception as e:
+            logger.warning(f"Failed to load Cross-Encoder model: {e}")
+            return terms, []
 
-        # Group terms by semantic similarity first for efficiency
-        term_embeddings = {}
+        keep_indices = set(range(len(terms)))
+        term_strings = [t.get('term', '') for t in terms]
+        
+        # 1. Identify candidate pairs to check
+        potential_pairs = []
+        
         if self.semantic_model:
-            for i, term_data in enumerate(terms):
-                term = term_data.get('term', '')
-                if term:
-                    embedding = self.semantic_model.encode(term, convert_to_tensor=True)
-                    term_embeddings[i] = embedding
+            # Use embeddings to find candidates efficiently
+            embeddings = self._get_embeddings(term_strings)
+            from sentence_transformers.util import cos_sim
+            scores = cos_sim(embeddings, embeddings)
+            
+            for i in range(len(terms)):
+                if i not in keep_indices: continue
+                for j in range(i + 1, len(terms)):
+                    if j not in keep_indices: continue
+                    # Check if semantically somewhat close (e.g. > 0.75)
+                    if scores[i][j] > 0.75: 
+                        potential_pairs.append((i, j))
+        else:
+            # Fallback: Check for word overlap
+            for i in range(len(terms)):
+                if i not in keep_indices: continue
+                for j in range(i + 1, len(terms)):
+                    if j not in keep_indices: continue
+                    words_i = set(term_strings[i].split())
+                    words_j = set(term_strings[j].split())
+                    if words_i.intersection(words_j):
+                        potential_pairs.append((i, j))
 
-        # Find potential duplicate groups using semantic embeddings
-        processed_indices = set()
-        for i, term_data_i in enumerate(terms):
-            if i in processed_indices:
-                continue
+        if not potential_pairs:
+            return terms, []
 
-            term_i = term_data_i.get('term', '')
-            if not term_i:
-                processed_indices.add(i)
-                continue
+        # 2. Score pairs with Cross-Encoder
+        logger.info(f"Checking {len(potential_pairs)} candidate pairs with Cross-Encoder...")
+        
+        biomedical_duplicates = []
+        
+        # Prepare pairs for batch processing
+        sentence_pairs = [[term_strings[i], term_strings[j]] for i, j in potential_pairs]
+        
+        try:
+            similarity_scores = model.predict(sentence_pairs)
+            
+            for k, score in enumerate(similarity_scores):
+                i, j = potential_pairs[k]
+                
+                # Threshold for "Duplicate" in biomedical context
+                if score > 0.85:
+                    # Keep the one that looks "better" (longer or more frequent)
+                    if len(term_strings[i]) < len(term_strings[j]):
+                        if j in keep_indices: # Ensure not already removed
+                            keep_indices.discard(i)
+                            biomedical_duplicates.append(terms[i])
+                    else:
+                        if i in keep_indices:
+                            keep_indices.discard(j)
+                            biomedical_duplicates.append(terms[j])
+                        
+        except Exception as e:
+            logger.warning(f"Cross-Encoder check failed: {e}")
 
-            current_group = [i]
+        return [terms[i] for i in sorted(keep_indices)], biomedical_duplicates
 
-            # Find semantically similar terms
-            if self.semantic_model and i in term_embeddings:
-                for j, term_data_j in enumerate(terms[i+1:], i+1):
-                    if j in processed_indices:
-                        continue
+    def _correct_typos(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Correct typos by merging terms that are lexically and semantically very similar.
+        Uses MiniLM for semantic confirmation if available.
+        """
+        if len(terms) < 2: return terms
+        
+        logger.info("Running typo correction...")
+        try:
+            from rapidfuzz import fuzz
+        except ImportError:
+            return terms
 
-                    term_j = term_data_j.get('term', '')
-                    if not term_j or j not in term_embeddings:
-                        continue
+        # Sort by frequency (descending) then length (descending)
+        # We assume higher frequency terms are more likely to be "correct"
+        terms.sort(key=lambda x: (x.get('frequency', 0), len(x.get('term', ''))), reverse=True)
+        
+        keep_indices = set(range(len(terms)))
+        term_strings = [t.get('term', '') for t in terms]
+        
+        # Pre-compute embeddings if semantic model is available
+        embeddings = None
+        if self.semantic_model:
+            embeddings = self._get_embeddings(term_strings)
+            from sentence_transformers.util import cos_sim
+            cosine_scores = cos_sim(embeddings, embeddings)
 
-                    # Calculate semantic similarity
-                    similarity = float((term_embeddings[i] @ term_embeddings[j]).cpu().numpy())
-                    if similarity >= self.config.semantic_threshold:
-                        current_group.append(j)
-                        processed_indices.add(j)
-
-            if len(current_group) > 1:
-                term_groups.append(current_group)
-            processed_indices.add(i)
-
-        # Process each group with BioMistral for biomedical context
-        for group in tqdm(term_groups, desc="Biomedical deduplication"):
-            if len(group) == 1:
-                deduplicated.append(terms[group[0]])
-                continue
-
-            # Create comparison prompts for BioMistral
-            group_terms = [terms[idx].get('term', '') for idx in group]
-            duplicate_matrix = {}
-
-            for i in range(len(group)):
-                for j in range(i+1, len(group)):
-                    term1, term2 = group_terms[i], group_terms[j]
-
-                    # Create biomedical comparison prompt
-                    comparison_prompt = f"""
-                    Compare these two biomedical terms in the context of microbiome research:
-                    Term 1: "{term1}"
-                    Term 2: "{term2}"
-
-                    Question: Are these terms referring to the same biological concept, entity, or measurement in microbiome/biomedical research?
-                    Consider:
-                    - Do they represent the same biological entity (e.g., same bacterium, same gene, same protein)?
-                    - Do they refer to the same measurement or observation?
-                    - Are they synonymous in biomedical context?
-                    - Could they be merged without losing clinical/scientific meaning?
-
-                    Answer with only: YES (if duplicates) or NO (if distinct concepts)
-                    """
-
-                    try:
-                        # Use BioMistral for classification
-                        result = biomedical_classifier(comparison_prompt[:512])  # Limit context length
-                        is_duplicate = "YES" in result[0]['label'].upper()
-
-                        if is_duplicate:
-                            duplicate_matrix[(i, j)] = True
-                        else:
-                            duplicate_matrix[(i, j)] = False
-
-                    except Exception as e:
-                        logger.debug(f"BioMistral comparison failed for {term1} vs {term2}: {e}")
-                        # Fallback to semantic similarity
-                        duplicate_matrix[(i, j)] = False
-
-            # Find duplicate clusters within the group
-            duplicate_clusters = []
-            used_indices = set()
-
-            for i in range(len(group)):
-                if i in used_indices:
+        for i in range(len(terms)):
+            if i not in keep_indices: continue
+            
+            for j in range(i + 1, len(terms)):
+                if j not in keep_indices: continue
+                
+                s1 = term_strings[i]
+                s2 = term_strings[j]
+                
+                # 1. Lexical Check (High Fuzzy Ratio)
+                # Ratio > 95 means very few character differences (likely typo)
+                lexical_score = fuzz.ratio(s1, s2)
+                if lexical_score < 90: 
                     continue
-
-                cluster = [i]
-                used_indices.add(i)
-
-                for j in range(i+1, len(group)):
-                    if j in used_indices:
+                    
+                # 2. Semantic Confirmation (if model available)
+                # If lexically similar but semantically different (rare, but possible), don't merge
+                if self.semantic_model:
+                    semantic_score = cosine_scores[i][j]
+                    if semantic_score < 0.85: # Should be very high for typos
                         continue
+                
+                # If we reach here, s2 is likely a typo of s1 (since s1 is more frequent/longer)
+                # Merge s2 into s1
+                # Update s1's frequency
+                terms[i]['frequency'] = terms[i].get('frequency', 1) + terms[j].get('frequency', 1)
+                
+                # Record the correction
+                terms[i]['typo_corrections'] = terms[i].get('typo_corrections', [])
+                terms[i]['typo_corrections'].append(s2)
+                
+                keep_indices.discard(j)
+                    
+        return [terms[i] for i in sorted(keep_indices)]
 
-                    # Check if all pairs in the cluster are duplicates
-                    all_duplicates = all(
-                        duplicate_matrix.get((min(cluster[k], j), max(cluster[k], j)), False)
-                        for k in range(len(cluster))
-                    )
-
-                    if all_duplicates:
-                        cluster.append(j)
-                        used_indices.add(j)
-
-                duplicate_clusters.append(cluster)
-
-            # Process duplicate clusters
-            for cluster in duplicate_clusters:
-                if len(cluster) == 1:
-                    # No duplicates, keep the term
-                    deduplicated.append(terms[group[cluster[0]]])
-                else:
-                    # Found duplicates, keep the best one and record others
-                    cluster_terms = [terms[group[idx]] for idx in cluster]
-
-                    # Select the best term (highest frequency, then shortest, then first)
-                    best_term_data = max(cluster_terms, key=lambda x: (
-                        x.get('frequency', 0),
-                        -len(x.get('term', '')),  # Negative for shorter preference
-                        -cluster_terms.index(x)   # Negative for first preference
-                    ))
-
-                    # Add reasoning for biomedical duplicate detection
-                    removed_terms = [t for t in cluster_terms if t != best_term_data]
-                    for removed_term in removed_terms:
-                        removed_term['biomedical_duplicate_reason'] = {
-                            'kept_term': best_term_data.get('term', ''),
-                            'removed_term': removed_term.get('term', ''),
-                            'context': 'microbiome_biomedical',
-                            'method': 'biomistral_classification',
-                            'confidence': 'high'
-                        }
-                        biomedical_duplicates.append(removed_term)
-
-                    # Mark the kept term
-                    best_term_data['biomedical_kept'] = True
-                    best_term_data['biomedical_duplicate_group'] = [t.get('term', '') for t in cluster_terms]
-                    deduplicated.append(best_term_data)
-
-        # Add terms not in any group
-        all_grouped_indices = set(idx for group in term_groups for idx in group)
-        for i, term_data in enumerate(terms):
-            if i not in all_grouped_indices:
-                deduplicated.append(term_data)
-
-        biomedical_removed = len(terms) - len(deduplicated)
-        logger.info(f"Biomedical deduplication: {len(terms)} → {len(deduplicated)} (removed {biomedical_removed})")
-
-        return deduplicated, biomedical_duplicates
+    def _aggressive_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Final aggressive pass to remove any remaining near-duplicates"""
+        if len(terms) < 2: return terms
+        
+        logger.info("Running aggressive final deduplication...")
+        try:
+            from rapidfuzz import fuzz
+        except ImportError:
+            return terms
+            
+        # Sort by length descending (keep longer/more specific terms usually)
+        terms.sort(key=lambda x: len(x.get('term', '')), reverse=True)
+        keep_indices = set(range(len(terms)))
+        term_strings = [t.get('term', '') for t in terms]
+        
+        for i in range(len(terms)):
+            if i not in keep_indices: continue
+            
+            for j in range(i + 1, len(terms)):
+                if j not in keep_indices: continue
+                
+                s1 = term_strings[i]
+                s2 = term_strings[j]
+                
+                if not s1 or not s2: continue
+                
+                # Substring check
+                if s2 in s1: # s2 is shorter and inside s1
+                    # e.g. "gut microbiome" (s1) vs "microbiome" (s2) -> Keep s1
+                    keep_indices.discard(j)
+                    continue
+                    
+                # High fuzzy match
+                if fuzz.ratio(s1, s2) > 92:
+                    keep_indices.discard(j)
+                    
+        return [terms[i] for i in sorted(keep_indices)]
 
     def deduplicate_terms(self, terms: List[Dict[str, Any]]) -> DeduplicationResult:
         """Perform complete multi-layer deduplication"""
@@ -455,19 +457,72 @@ class Deduplicator:
         after_biomedical, biomedical_duplicates = self._biomedical_deduplication(after_semantic)
         biomedical_removed = len(after_semantic) - len(after_biomedical)
 
+        # Step 5: Semantic Quality Filter (New)
+        after_semantic_filter = self._semantic_quality_filter(after_biomedical)
+        semantic_filter_removed = len(after_biomedical) - len(after_semantic_filter)
+
+        # Step 6: Typo Correction
+        after_typo = self._correct_typos(after_semantic_filter)
+        typo_removed = len(after_semantic_filter) - len(after_typo)
+
+        # Step 7: Aggressive Final Pass
+        after_aggressive = self._aggressive_dedup(after_typo)
+        aggressive_removed = len(after_typo) - len(after_aggressive)
+
         result = DeduplicationResult(
             original_count=original_count,
-            final_count=len(after_biomedical),
+            final_count=len(after_aggressive),
             exact_removed=exact_removed,
             fuzzy_removed=fuzzy_removed,
             semantic_removed=semantic_removed,
-            biomedical_removed=biomedical_removed,
-            deduplicated_terms=after_biomedical,
+            biomedical_removed=biomedical_removed + semantic_filter_removed + typo_removed + aggressive_removed, 
+            deduplicated_terms=after_aggressive,
             biomedical_duplicates=biomedical_duplicates
         )
 
-        total_reduction = (original_count - len(after_biomedical)) / original_count * 100 if original_count > 0 else 0
-        logger.info(f"Deduplication complete: {original_count} → {len(after_biomedical)} ({total_reduction:.1f}% reduction)")
+        total_reduction = (original_count - len(after_aggressive)) / original_count * 100 if original_count > 0 else 0
+        logger.info(f"Deduplication complete: {original_count} → {len(after_aggressive)} ({total_reduction:.1f}% reduction)")
+
+    def _semantic_quality_filter(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Filter out terms that are semantically similar to generic research concepts.
+        Uses MiniLM embeddings.
+        """
+        if not self.semantic_model or not terms:
+            return terms
+            
+        logger.info("Running Semantic Quality Filter...")
+        
+        # Prototypes of generic/noise concepts
+        NOISE_PROTOTYPES = [
+            "scientific study", "research analysis", "statistical method", "data collection",
+            "experimental result", "clinical trial", "literature review", "author contribution",
+            "funding source", "conflict of interest", "copyright statement", "figure legend",
+            "table caption", "supplementary material", "university department", "correspondence address",
+            "p-value", "confidence interval", "standard deviation", "sample size"
+        ]
+        
+        term_strings = [t.get('term', '') for t in terms]
+        
+        # Encode terms and noise prototypes
+        embeddings = self._get_embeddings(term_strings)
+        noise_embeddings = self._get_embeddings(NOISE_PROTOTYPES)
+        
+        from sentence_transformers.util import cos_sim
+        # Shape: [num_terms, num_noise]
+        scores = cos_sim(embeddings, noise_embeddings)
+        
+        keep_indices = []
+        for i in range(len(terms)):
+            # Check max similarity to ANY noise prototype
+            max_noise_score = scores[i].max().item()
+            
+            # If too close to noise (e.g. > 0.75), discard
+            if max_noise_score < 0.75:
+                keep_indices.append(i)
+                
+        logger.info(f"Semantic Filter: {len(terms)} -> {len(keep_indices)} terms")
+        return [terms[i] for i in keep_indices]
 
         return result
 

@@ -170,6 +170,105 @@ class TermsExtractor:
         "author contributions", "funding", "acknowledgments", "competing interests"
     }
 
+    # HIGH-VALUE BIOMEDICAL KEYWORDS - must contain at least one
+    BIOMEDICAL_KEYWORDS = {
+        # Microbiology/Bacteria
+        'microbi', 'microbe', 'bacteri', 'microbiota', 'microbiome',
+        'pathogen', 'commensal', 'symbio', 'probiot', 'prebiot',
+
+        # Genetics/Molecular Biology
+        'gene', 'dna', 'rna', 'protein', 'enzyme', 'genome', 'genom',
+        'transcript', 'express', 'mutat', 'sequenc', 'amplif',
+        'polymeras', 'primer', 'nucleotid',
+
+        # Microbial Taxonomy
+        'phylum', 'class', 'order', 'family', 'genus', 'species',
+        'strain', 'isolat', 'culture', 'colony',
+
+        # Microbial Groups
+        'actinobacteri', 'proteobacteri', 'bacteroidet', 'firmicut',
+        'firmicutes', 'bacteroidetes', 'proteobacteria', 'actinobacteria',
+        'enterobacteri', 'bifidobacteri', 'lactobacillus', 'eubacteri',
+        'clostridi', 'streptococc', 'escherichi', 'salmonell',
+
+        # Analytical Techniques
+        'sequencing', 'pcr', 'amplification', 'extraction', 'purification',
+        'quantification', 'amplif', 'denaturing', 'gel electrophores',
+        'chromatograph', 'spectromet', 'biochem',
+
+        # Microbial Ecology
+        'diversity', 'abundance', 'richness', 'evenness', 'composition',
+        'community', 'population', 'clustering', 'phylogen', 'taxonom',
+        'ecolog', 'habitat', 'niche',
+
+        # Analytical Methods
+        '16s', 'rrna', 'ribosomal', 'v3-v4', 'region', 'amplicon',
+        'otu', 'asv', 'picrust', 'uchime', 'qiime', 'mothur',
+
+        # Health/Medical Context
+        'clinical', 'medical', 'health', 'disease', 'therapeut',
+        'antibiot', 'antimicrobial', 'resistance', 'susceptibilit',
+        'infection', 'inflammation', 'immune', 'immunolog',
+
+        # Biochemical Processes
+        'metabol', 'catabol', 'anabol', 'ferment', 'oxidation',
+        'reduction', 'synthesis', 'pathway', 'catalyt', 'enzymat',
+
+        # Cell Biology
+        'cellular', 'membrane', 'cytoplasm', 'nucleus', 'organelle',
+        'mitochondria', 'chloroplast', 'vacuole', 'ribosome',
+    }
+
+    # CDM ESSENTIAL DOMAINS AND KEYWORDS
+    CDM_KEYWORDS = {
+        # Person/Subject Domain
+        'patient', 'subject', 'individual', 'population', 'human', 'people',
+        'participant', 'cohort', 'healthy', 'diseased', 'infected', 'affected',
+
+        # Condition/Disease Domain
+        'disease', 'disorder', 'syndrome', 'infection', 'inflammation',
+        'antibiotic', 'antimicrobial', 'resistance', 'susceptibility',
+        'immune', 'immunolog', 'autoimmune', 'allerg', 'reaction',
+        'cancer', 'tumor', 'metabol', 'deficiency', 'mutation',
+        'pain', 'fever', 'symptom', 'complication', 'mortality',
+
+        # Drug/Substance Domain
+        'drug', 'medication', 'medicine', 'pharmaceutical', 'compound',
+        'therapy', 'treatment', 'therapeut', 'dose', 'administration',
+        'antibiot', 'antimicrobial', 'vaccin', 'immune', 'supplement',
+        'toxin', 'poison', 'chemical', 'biomarker', 'marker',
+
+        # Procedure/Observation Domain
+        'procedure', 'protocol', 'method', 'technique', 'surgery',
+        'diagnosis', 'exam', 'test', 'screening', 'monitor', 'assessment',
+        'biopsy', 'culture', 'laboratory', 'lab', 'imaging', 'scan',
+        'separation', 'purification', 'extraction', 'isolation',
+
+        # Measurement/Result Domain
+        'measurement', 'analysis', 'result', 'value', 'level', 'concentration',
+        'quantity', 'count', 'rate', 'ratio', 'proportion', 'percentage',
+        'score', 'index', 'marker', 'biomarker', 'endpoint', 'outcome',
+
+        # Microorganism Domain (High priority for CDM)
+        'bacteria', 'bacteri', 'microbe', 'microbi', 'microorganism', 'pathogen',
+        'virus', 'viral', 'fungi', 'parasite', 'yeast', 'mold', 'protozoa',
+        'strain', 'isolat', 'serotype', 'genotype', 'phenotype', 'virulenc',
+
+        # Genetic/Molecular Domain
+        'gene', 'genetic', 'dna', 'rna', 'protein', 'enzyme', 'genome',
+        'sequencing', 'sequence', 'variant', 'mutation', 'expression',
+        'amplification', 'pcr', 'polymeras', 'primer', 'probe', 'hybridiz',
+
+        # Clinical/Health Domain
+        'clinical', 'medical', 'health', 'hospital', 'clinic', 'nursing',
+        'emergency', 'outpatient', 'inpatient', 'ambulatory', 'rehabilitation',
+        'prevention', 'wellness', 'fitness', 'nutrition', 'diet', 'exercise',
+
+        # Data/Metadata Domain
+        'record', 'data', 'study', 'research', 'trial', 'cohort', 'observation',
+        'longitudinal', 'prospective', 'retrospective', 'case', 'control'
+    }
+
     def __init__(self, config: SciSpaCyConfig):
         # Update config to use only available models
         update_scispacy_config_with_available_models(config)
@@ -502,53 +601,8 @@ class TermsExtractor:
         term_lower = term.lower()
 
         # HIGH-VALUE BIOMEDICAL KEYWORDS - must contain at least one
-        biomedical_keywords = {
-            # Microbiology/Bacteria
-            'microbi', 'microbe', 'bacteri', 'microbiota', 'microbiome',
-            'pathogen', 'commensal', 'symbio', 'probiot', 'prebiot',
-
-            # Genetics/Molecular Biology
-            'gene', 'dna', 'rna', 'protein', 'enzyme', 'genome', 'genom',
-            'transcript', 'express', 'mutat', 'sequenc', 'amplif',
-            'polymeras', 'primer', 'nucleotid',
-
-            # Microbial Taxonomy
-            'phylum', 'class', 'order', 'family', 'genus', 'species',
-            'strain', 'isolat', 'culture', 'colony',
-
-            # Microbial Groups
-            'actinobacteri', 'proteobacteri', 'bacteroidet', 'firmicut',
-            'firmicutes', 'bacteroidetes', 'proteobacteria', 'actinobacteria',
-            'enterobacteri', 'bifidobacteri', 'lactobacillus', 'eubacteri',
-            'clostridi', 'streptococc', 'escherichi', 'salmonell',
-
-            # Analytical Techniques
-            'sequencing', 'pcr', 'amplification', 'extraction', 'purification',
-            'quantification', 'amplif', 'denaturing', 'gel electrophores',
-            'chromatograph', 'spectromet', 'biochem',
-
-            # Microbial Ecology
-            'diversity', 'abundance', 'richness', 'evenness', 'composition',
-            'community', 'population', 'clustering', 'phylogen', 'taxonom',
-            'ecolog', 'habitat', 'niche',
-
-            # Analytical Methods
-            '16s', 'rrna', 'ribosomal', 'v3-v4', 'region', 'amplicon',
-            'otu', 'asv', 'picrust', 'uchime', 'qiime', 'mothur',
-
-            # Health/Medical Context
-            'clinical', 'medical', 'health', 'disease', 'therapeut',
-            'antibiot', 'antimicrobial', 'resistance', 'susceptibilit',
-            'infection', 'inflammation', 'immune', 'immunolog',
-
-            # Biochemical Processes
-            'metabol', 'catabol', 'anabol', 'ferment', 'oxidation',
-            'reduction', 'synthesis', 'pathway', 'catalyt', 'enzymat',
-
-            # Cell Biology
-            'cellular', 'membrane', 'cytoplasm', 'nucleus', 'organelle',
-            'mitochondria', 'chloroplast', 'vacuole', 'ribosome',
-        }
+        # (Now using class constant)
+        biomedical_keywords = self.BIOMEDICAL_KEYWORDS
 
         # Must contain at least one biomedical keyword
         has_biomedical_keyword = any(keyword in term_lower for keyword in biomedical_keywords)
@@ -627,54 +681,8 @@ class TermsExtractor:
         term_lower = term.lower()
 
         # CDM ESSENTIAL DOMAINS AND KEYWORDS
-        cdm_keywords = {
-            # Person/Subject Domain
-            'patient', 'subject', 'individual', 'population', 'human', 'people',
-            'participant', 'cohort', 'healthy', 'diseased', 'infected', 'affected',
-
-            # Condition/Disease Domain
-            'disease', 'disorder', 'syndrome', 'infection', 'inflammation',
-            'antibiotic', 'antimicrobial', 'resistance', 'susceptibility',
-            'immune', 'immunolog', 'autoimmune', 'allerg', 'reaction',
-            'cancer', 'tumor', 'metabol', 'deficiency', 'mutation',
-            'pain', 'fever', 'symptom', 'complication', 'mortality',
-
-            # Drug/Substance Domain
-            'drug', 'medication', 'medicine', 'pharmaceutical', 'compound',
-            'therapy', 'treatment', 'therapeut', 'dose', 'administration',
-            'antibiot', 'antimicrobial', 'vaccin', 'immune', 'supplement',
-            'toxin', 'poison', 'chemical', 'biomarker', 'marker',
-
-            # Procedure/Observation Domain
-            'procedure', 'protocol', 'method', 'technique', 'surgery',
-            'diagnosis', 'exam', 'test', 'screening', 'monitor', 'assessment',
-            'biopsy', 'culture', 'laboratory', 'lab', 'imaging', 'scan',
-            'separation', 'purification', 'extraction', 'isolation',
-
-            # Measurement/Result Domain
-            'measurement', 'analysis', 'result', 'value', 'level', 'concentration',
-            'quantity', 'count', 'rate', 'ratio', 'proportion', 'percentage',
-            'score', 'index', 'marker', 'biomarker', 'endpoint', 'outcome',
-
-            # Microorganism Domain (High priority for CDM)
-            'bacteria', 'bacteri', 'microbe', 'microbi', 'microorganism', 'pathogen',
-            'virus', 'viral', 'fungi', 'parasite', 'yeast', 'mold', 'protozoa',
-            'strain', 'isolat', 'serotype', 'genotype', 'phenotype', 'virulenc',
-
-            # Genetic/Molecular Domain
-            'gene', 'genetic', 'dna', 'rna', 'protein', 'enzyme', 'genome',
-            'sequencing', 'sequence', 'variant', 'mutation', 'expression',
-            'amplification', 'pcr', 'polymeras', 'primer', 'probe', 'hybridiz',
-
-            # Clinical/Health Domain
-            'clinical', 'medical', 'health', 'hospital', 'clinic', 'nursing',
-            'emergency', 'outpatient', 'inpatient', 'ambulatory', 'rehabilitation',
-            'prevention', 'wellness', 'fitness', 'nutrition', 'diet', 'exercise',
-
-            # Data/Metadata Domain
-            'record', 'data', 'study', 'research', 'trial', 'cohort', 'observation',
-            'longitudinal', 'prospective', 'retrospective', 'case', 'control'
-        }
+        # (Now using class constant)
+        cdm_keywords = self.CDM_KEYWORDS
 
         # Must contain at least one CDM keyword
         has_cdm_keyword = any(keyword in term_lower for keyword in cdm_keywords)
@@ -943,7 +951,60 @@ class TermsExtractor:
 
             final_terms.append(term_data)
 
-        return final_terms
+        return self.rank_terms(final_terms)
+
+    def rank_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Rank terms using a weighted scoring system (Microbiome CDM Optimized):
+        - Microbiome Core: +5.0
+        - CDM Core: +3.0
+        - Biomedical: +1.0
+        - Mapped: +2.0
+        - Validated: +2.0
+        - Frequency: + log(freq) * 0.5
+        """
+        import math
+        
+        for term in terms:
+            score = 1.0
+            t_lower = term.get('term', '').lower()
+            
+            # 1. Microbiome Core (Highest Priority)
+            microbiome_core = ['microbi', 'bacter', 'gut', 'flora', 'pathogen', 'dysbiosis', 'probiotic', 'antibiotic', 'resistome']
+            if any(x in t_lower for x in microbiome_core):
+                score += 5.0
+                
+            # 2. CDM Core (Study Design & Clinical)
+            if any(kw in t_lower for kw in self.CDM_KEYWORDS):
+                score += 3.0
+                
+            # 3. Biomedical Keywords (General)
+            if any(kw in t_lower for kw in self.BIOMEDICAL_KEYWORDS):
+                score += 1.0
+                
+            # 4. Mapped Boost (High Confidence)
+            if term.get('mappings'):
+                score += 2.0
+                
+            # 5. Validation Boost
+            if term.get('validation', {}).get('is_valid') == 'Yes':
+                score += 2.0
+                
+            # 6. Frequency Boost (Logarithmic)
+            freq = term.get('frequency', 1)
+            if freq > 1:
+                score += math.log(freq) * 0.5
+                
+            # 7. Length Penalty/Boost
+            if len(t_lower) < 5:
+                score -= 0.5
+            elif len(t_lower) > 10:
+                score += 0.5
+                
+            term['relevance_score'] = round(score, 2)
+            
+        # Sort by score descending
+        return sorted(terms, key=lambda x: x['relevance_score'], reverse=True)
 
     def extract_from_file(self, file_path: str) -> List[Dict[str, Any]]:
         """Extract terms from a file"""

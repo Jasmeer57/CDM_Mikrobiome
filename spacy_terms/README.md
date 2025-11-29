@@ -27,11 +27,15 @@ A comprehensive, production-ready pipeline for extracting high-quality biomedica
 - **Exact deduplication**: Case-insensitive exact matching
 - **Fuzzy deduplication**: Weighted similarity matching (85% threshold)
 - **Semantic deduplication**: Sentence transformer embeddings (90% threshold)
+- **Semantic deduplication**: Sentence transformer embeddings (90% threshold)
+- **Typo Correction**: MiniLM-based correction of lexical and semantic near-duplicates
+- **Semantic Quality Filter**: MiniLM-based filtering of generic research terms (e.g., "study", "analysis")
 - **100% deduplication guarantee**: No duplicate concepts in final output
 
 ### 🏥 CDM-Specific Optimization
 - **CDM Domain Focus**: Person/Subject, Condition/Disease, Drug/Substance, Procedure/Intervention, Measurement/Observation
-- **Clinical relevance scoring**: Terms evaluated for healthcare applicability
+- **CDM Domain Focus**: Person/Subject, Condition/Disease, Drug/Substance, Procedure/Intervention, Measurement/Observation
+- **Clinical relevance scoring**: Weighted scoring (Microbiome=5.0, CDM=3.0, Biomed=1.0)
 - **Standard vocabulary ready**: Direct integration with OMOP/CDM standards
 - **Evidence-based extraction**: All terms include scientific context
 
@@ -104,9 +108,31 @@ pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/e
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_craft_md-0.5.4.tar.gz
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_bc5cdr_md-0.5.4.tar.gz
 pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_jnlpba_md-0.5.4.tar.gz
+pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_jnlpba_md-0.5.4.tar.gz
 ```
 
-### Option 2: Docker
+### Option 2: Parallel SpaCy Pipeline (Standard Models)
+To run with standard SpaCy models (en_core_web_lg, etc.) without conflicts:
+
+```bash
+# Create separate venv
+python3 -m venv venv_spacy_39
+source venv_spacy_39/bin/activate
+
+# Install dependencies
+pip install spacy scispacy rapidfuzz sentence-transformers pandas requests torch
+python -m spacy download en_core_web_lg
+
+# Run Pipeline
+python standalone_scispacy_pipeline.py \
+    --input_dir papers_txt \
+    --output_dir output_spacy_ensemble \
+    --ensemble \
+    --use_spacy_models \
+    --skip_mapping
+```
+
+### Option 3: Docker
 ```bash
 # Build image
 docker build -t sci-term-extractor .
