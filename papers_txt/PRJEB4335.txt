@@ -1,0 +1,1238 @@
+Cell Host & Microbe
+Article
+Alterations in the Gut Microbiota
+Associated with HIV-1 Infection
+Catherine A. Lozupone,1 Marcella Li,1 Thomas B. Campbell,1 Sonia C. Flores,1 Derek Linderman,1 Matthew J. Gebert,3
+Rob Knight,2,3 Andrew P. Fontenot,1 and Brent E. Palmer1,*
+1Department of Medicine, University of Colorado Denver, Anschutz Medical Campus, Aurora, CO 80045, USA
+2Howard Hughes Medical Institute
+3Department of Chemistry and Biochemistry and Biofrontiers Institute, University of Colorado, Boulder, CO 80309, USA
+*Correspondence: brent.palmer@ucdenver.edu
+http://dx.doi.org/10.1016/j.chom.2013.08.006
+SUMMARY
+Understanding gut microbiota alterations associated
+with HIV infection and factors that drive these alter-
+ations may help explain gut-linked diseases preva-
+lent with HIV. 16S rRNA sequencing of feces from
+HIV-infected individuals revealed that HIV infection
+is associated with highly characteristic gut commu-
+nity changes, and antiretroviral therapy does not
+consistently restore the microbiota to an HIV-nega-
+tive state. Despite the chronic gut inﬂammation char-
+acteristic of HIV infection, the associated microbiota
+showed limited similarity with other inﬂammatory
+states and instead showed increased, rather than
+decreased, diversity. Meta-analysis revealed that
+the microbiota of HIV-infected individuals in the
+U.S. was most similar to a Prevotella-rich community
+composition typically observed in healthy individuals
+in agrarian cultures of Malawi and Venezuela and
+related to that of U.S. individuals with carbohy-
+drate-rich, protein- and fat-poor diets. By evaluating
+innate and adaptive immune responses to lysates
+from bacteria that differ with HIV, we explore the
+functional drivers of these compositional differ-
+ences.
+INTRODUCTION
+HIV-1 infection induces rapid and substantial damage to gut-
+associated lymphoid tissues (GALTs), with massive depletion
+of Th17 cells, a subset of CD4+ T cells that control intestinal bac-
+teria (Brenchley et al., 2004). Loss of this CD4+ T cell subset may
+facilitate disease progression by allowing translocation of bacte-
+rial products such as lipopolysaccharide to blood, causing sys-
+temic T cell activation (Brenchley et al., 2006).
+In healthy individuals, intestinal bacteria help control harmful
+pathogens, educate the immune system, and aid in digestion
+(Lozupone et al., 2012), but distinctive compositions of this com-
+plex community have been associated with pathologies that are
+of increased prevalence with HIV infection, including metabolic
+disorders (Madge et al., 1999; Vijay-Kumar et al., 2010), chronic
+inﬂammation (Bjarnason et al., 1996; Willing et al., 2010),
+wasting/malnutrition (Smith et al., 2013; Wanke et al., 2000),
+atherosclerosis (Hsue et al., 2009; Koeth et al., 2013), and sus-
+ceptibility to opportunistic infections (Chang et al., 2008).
+Considering the important role that both innate and adaptive im-
+munity play in shaping gut microbiota composition (Carvalho
+et al., 2012; Hepworth et al., 2013), understanding how compo-
+sition differs with HIV infection, immunologic driving factors of
+these differences, and their implication for gut-linked diseases
+that increase in prevalence with HIV is of paramount importance.
+Using 16S rRNA sequencing of feces, we show that HIV infec-
+tion is associated with highly characteristic changes in gut com-
+munity structure and that antiretroviral therapy (ART) does not
+consistently restore the microbiota to an HIV-negative like state.
+Using meta-analysis, we demonstrate that although the HIV-
+associated microbiota bears some resemblance to that of other
+chronic inﬂammatory states, the differences between HIV-asso-
+ciated and healthy gut microbiota are also related to composi-
+tional changes previously associated with diet (Wu et al., 2011)
+and Western compared to agrarian cultures (De Filippo et al.,
+2010; Yatsunenko et al., 2012), suggesting an interplay between
+diet and the immune system in shaping gut microbiota composi-
+tion. By comparing T cell proliferation and cytokine responses to
+lysates from bacteria that differ with HIV infection in blood from
+HIV-positive and -negative individuals, we begin to explore the
+relationship between immune dysfunction and HIV-associated
+microbiota change.
+RESULTS
+Stool Microbiota in Chronic Untreated HIV Infection Is
+Distinctive
+We sequenced the V4 region of 16S rRNA genes from fecal sam-
+ples of individuals with chronic HIV infection (n = 22), recent
+infection (n = 3), and HIV-negative controls (n = 13) (Table 1,
+see Table S1 online). Eleven individuals with chronic infection
+had not recently undergone ART, and eight had been on ART
+for R12 months with viral suppression for R6 months (see the
+Experimental Procedures for further cohort details). Individuals
+were excluded during recruitment if they were pregnant,
+weighed <110 pounds, or had received antibiotics within the
+prior 30 days, resulting in inclusion of only relatively healthy
+HIV-positive subjects; no chronically HIV-infected individual
+had a peripheral CD4+ T cell count below 204 cells/ml (Table 1).
+Principal Coordinates Analysis (PCoA) of fecal samples based
+on 16S rRNA sequences using both unweighted (Figure 1) and
+weighted (Figure S1) UniFrac showed a strong difference in
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+329
+microbiota of individuals with chronic untreated HIV infection
+compared to HIV-negative controls. UniFrac evaluates micro-
+biota similarity based on shared evolutionary history of bacterial
+taxa, and the weighted metric differs from unweighted because it
+accounts for change in relative abundance in addition to pres-
+ence or absence (Lozupone and Knight, 2005; Lozupone et al.,
+2007). Fecal microbiota with chronic untreated HIV infection
+also had greater overall diversity, with higher evenness as
+measured by the Shannon diversity index (p = 0.013) and rich-
+ness as measured by phylogenetic diversity (PD) (p = 0.0003)
+(Table 2).
+To further determine the degree to which gut microbiota with
+chronic untreated infection differed from HIV-negative controls,
+we used a supervised learning technique called Random Forests
+(Knights et al., 2011a). The purpose of the Random Forests clas-
+siﬁer is to learn a function that maps a set of predictive features
+to a discrete state, in this case healthy versus chronically in-
+fected with HIV and without ART. We used as features the rela-
+tive abundance in each sample of 97% identity (ID) Operational
+Taxonomic Units (OTUs; clusters in which sequences have
+R97% identity over their aligned 16S rRNA genes, which
+approximates assignment to the same species; Stackebrandt
+and Goebal, 1994). The measure of the method’s success is its
+ability to classify new samples as coming from an HIV-positive
+or -negative individual. We only used one sample per individual
+when multiple time points were collected. The model could clas-
+sify unknown samples according to HIV status with a 4.33% ±
+0.821% error rate, which is 10.6 times higher than the baseline
+error rate for random guessing of 45.83%, indicating that HIV-
+associated microbiota exhibit highly characteristic differences.
+To investigate whether disease severity impacted gut micro-
+biota in HIV infection, we determined whether microbiota diver-
+sity correlated with peripheral CD4+ T cell count or plasma HIV-1
+RNA viral load in 11 individuals with chronic infection who were
+not on ART. As an estimate of divergence from healthy, we
+calculated the average pairwise weighted and unweighted Uni-
+Frac distance between each HIV microbiota sample and HIV-
+negative control samples. The magnitude of divergence from
+HIV-negative microbiota samples was not correlated with
+CD4+ T cell count or plasma HIV-1 RNA viral load (all Spearman
+correlation p values > 0.73).
+Individuals Recently Infected with HIV Have Relatively
+Subtle Microbiota Differences
+The microbiota of recently infected untreated individuals differed
+little from uninfected controls. Samples from two of three
+recently infected individuals clustered in an intermediate position
+between healthy and untreated chronic infection in an un-
+weighted UniFrac PCoA plot (Figure 1A). However, these individ-
+uals clustered with chronically infected subjects when using
+weighted UniFrac (Figure S1), suggesting that changes in relative
+abundance of existing taxa may occur faster than gain or loss of
+taxa.
+Effects of ART Treatment
+No chronically infected individual sampled pre and post 6.7–
+8.5 months of ART exhibited a strong shift toward the HIV-nega-
+tive individuals (Figure 1A), indicating that short-term ART was
+insufﬁcient to restore the microbiota. However, the microbiota
+of two individuals treated for 7.1–8.5 months for whom we did
+not collect pre-ART samples showed a closer resemblance to
+HIV-negative individuals than to subjects with untreated chronic
+HIV-1 infection (Figure 1B). Of the eight HIV-chronic individuals
+on long-term ART (12.1–57.6 months), ﬁve clustered with un-
+treated chronically infected individuals, and three clustered
+with HIV-negative individuals (Figure 1B). Individuals on ART
+for as long as 57.6 months could still cluster with HIV-positive
+subjects with chronic infection, indicating that ART duration
+alone does not predict restoration to a HIV-negative phenotype.
+Untreated HIV-infected individuals had signiﬁcantly higher alpha
+diversity (PD and evenness) compared to ART-treated and HIV-
+negative individuals, which were not signiﬁcantly different from
+each other (Table 2).
+Taxa that Discriminate between HIV-Negative
+Individuals and Chronic HIV Infection
+The fecal microbiota of untreated individuals with chronic infec-
+tion exhibited signiﬁcantly higher relative abundances of Prevo-
+tellaceae (Prevotella), Erysipelotrichaceae (Catenibacterium and
+Bulleidia), Veillonellaceae (Dialister and Mitsuokella), Clostridium
+cluster XIII, and the genus Desulfovibrio compared to HIV
+negative (Figure 1, Figure 2, Table S2). HIV-negative individuals
+had increased Bacteroidaceae (Bacteroides), Rikenellaceae
+Table 1. Description of Cohorts
+Cohort
+N
+Age
+(Years)
+Sex (M, Male;
+F, Female)
+Race
+BMI
+Duration
+ART (Months)
+CD4
+(Cells/mL)
+Viral Load
+(Copies/mL)
+W
+Wh AA AI ?
+1: Recent HIV infection
+3
+31 ± 4.36
+M, 2; F, 1
+3 0
+0
+0
+0 32.5 ± 8.30 0
+614 ± 521.8
+(107–1,342)
+164,880 ± 210,225
+(418–449,000)
+2: Chronic HIV untreated
+11 30 ± 5.61
+M, 11; F, 0
+6 2
+2
+1
+0 25.0 ± 4.83 0
+551 ± 218.2
+(270–1095)
+139,109 ± 255,929
+(1,350–869,000)
+2*: Chronic HIV short-term
+ART
+6a
+34 ± 10.27 M, 5; F, 1
+3 2
+1
+0
+0 27.1 ± 3.67 7.68 ± 0.78
+609 ± 50.6
+(547–681)
+83 ± 105.0
+(39–247)
+3: Chronic HIV long-term ART 8
+45 ± 8.30
+M, 7; F, 1
+5 2
+1
+0
+0 24.7 ± 6.45 33.6 ± 17.97
+483 ± 258.0
+(204–876)
+124 ± 280.8
+(<20–819)
+4: HIV-seronegative
+13 37 ± 12.26 M, 8; F, 5
+10 1
+1
+0
+1 25.6 ± 3.03 0
+NA
+0
+Race abbreviations are W (white, not Hispanic), Wh (white-Hispanic), AA (African American), AI (American Indian), and ? (unknown). See also Table S1.
+Values are given as mean ± SD with ranges in parentheses.
+aThree of the six individuals in cohort 2* are also in cohort 2 because they were sampled both before and after short-term ART treatment.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+330
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+(Alistipes), and Porphyromonadaceae (Parabacteroides) (Fig-
+ure 1, Figure 2, Table S2).
+To identify 97% ID OTUs that differentiate individuals with
+chronic HIV infection from HIV-negative controls, we used the
+discriminative OTU features from the Random Forests classiﬁer
+(see the Experimental Procedures). Random Forests assigns
+an importance score to each OTU by estimating the increase
+in error caused by removing that OTU from the set of predictors.
+Discriminative OTUs depleted in HIV infection subjects were
+highly related (>97% ID) to type species in the families
+Bacteroidaceae (Bacteroides uniformis/ﬂuxus, Bacteroides xyla-
+nisolvens, Bacteroides ﬁnegoldii, Bacteroides thetaiotaomicron,
+and Bacteroides massiliensis), Rikenellaceae (Alistipes putridi-
+nis), and Porphyromonadaceae (Parabacteroides distasonis)
+(Table S2). Species highly related to OTUs that increased
+in relative abundance with HIV infection included species
+in
+the
+families
+Erysipelotrichaceae
+(Eubacterium
+biforme,
+Catenibacterium mitsuoki), Prevotellaceae (Prevotella copri and
+Prevotella stercorea), Veillonellaceae (Dialister propionicifaciens,
+Mitsuokella
+jalaludinii,
+Allisonella
+histaminiformans,
+Mega-
+sphaera elsdenii, and Acidaminococcus fermentans), Rumino-
+coccaceae (Ruminococcus callidus), and Desulfovibrionaceae
+(Desulfovibrio piger) (Table S2).
+The identiﬁcation of discriminatory 97% ID OTUs closely
+related to readily obtainable type species allows for investigation
+of immunologic driving factors of HIV-associated microbiota
+changes. However, since differences in biological attributes
+can occur even at the strain level (e.g., consider enterotoxic
+versus commensal Escherichia coli), we determined whether
+OTUs that change with HIV infection are related in phylogenetic
+lineages. Type species in lineages with a broad conservation of
+HIV-associated change are more likely to share the traits that
+drove HIV association. A positive association with HIV was
+broadly conserved across the Prevotellaceae but particularly in
+a lineage containing P. copri and P. stercorea (Figure S2A). An
+HIV-negative association was conserved across the Bacteroides
+genus (Figure S2A).
+Evaluating the HIV-Associated Community Type in a
+Broader Context
+Since HIV-positive individuals suffer from increased incidence of
+diarrhea in the absence of obvious enteric pathogens and
+increased intestinal inﬂammation (Bjarnason et al., 1996;
+Brenchley and Douek, 2008), we had expected an expansion
+of bacteria that increase with other chronic intestinal inﬂamma-
+tory diseases. We were thus surprised that the most obvious
+compositional difference was an expansion of Prevotella and
+decrease in Bacteroides. To our knowledge, Prevotella had
+never before been described to be particularly proinﬂammatory,
+but Prevotella-rich/Bacteroides-poor gut microbiota had been
+observed in healthy individuals living in agrarian societies in Bur-
+kina Faso (De Filippo et al., 2010) and in Malawi and Venezuela
+(Yatsunenko et al., 2012), and in U.S. adults who consumed diets
+poor in animal protein and saturated fats and rich in carbohy-
+drates (as assessed over the prior year with a food frequency
+questionnaire) (Wu et al., 2011). Since Prevotella and Bacter-
+oides are only two genera in the very complex gut community,
+we wanted to determine whether Prevotella enrichment in HIV
+infection is an indicator for the same complex combinations of
+co-occurring taxa of Prevotella-rich microbiota in health. We
+thus combined this study’s data with data from (1) a survey of
+fecal microbiota in individuals from Malawi, the Amazonas State
+of Venezuela, and the U.S. (Yatsunenko et al., 2012) and (2) a
+study linking long-term dietary patterns in healthy U.S. adults
+PC1 (12%)
+PC2 (7.2%)
+Clostridium XI
+Veillonellaceae
+Erysipelotrichaceae
+Prevotellaceae
+Rikenellaceae
+Bacteroidaceae
+Porphyromonadaceae
+Lachnospiraceae
+Ruminococcaceae
+Succinivibrionaceae
+Fusobacteriaceae
+PC1 (12%)
+)
+%
+2
+.
+7
+(
+2
+C
+P
+8.5
+7.1
+25.3
+56.9
+47
+7.2
+~28
+26.7
+57.6
+12.5
+14.4
+B
+A
+HIV chronic untreated
+HIV chronic short-term ART
+HIV recent
+HIV negative
+HIV chronic long-term ART
+HIV negative
+8.1
+8.5
+6.7
+HIV chronic short-term ART
+Figure 1. Unweighted UniFrac Clustering of HIV Data Set
+Each point represents a single fecal sample. (A) and (B) represent the same PCoA analysis but for clarity, (A) only shows HIV-positive individuals not on ART at the
+time of initial sample collection and HIV-negative controls, and (B) shows only HIV-positive individuals on ART. Points are labeled with ART duration at the time of
+sample collection in months. Samples from the same individual at two time points are joined with a line. Bacterial families are plotted as a weighted average of the
+coordinates of all samples, where the weights are the relative abundances of the taxon in the samples (gray circles). The size of the sphere representing a taxon is
+proportional to the mean relative abundance of the taxon across samples. See Figure S1 for results with Weighted UniFrac.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+331
+with Bacteroides- versus Prevotella-rich enterotypes (Wu et al.,
+2011).
+PCoA clustering with unweighted UniFrac was largely driven
+by technical variation between studies (Figure 3A), as might be
+expected since they varied methodologically (Table S3) (Lozu-
+pone et al., 2013). However, by coloring the points by the relative
+abundance of Bacteroides (Figure 3B) and Prevotella (Figure 3C),
+it is clear that the major diversity differences within all three data
+sets are associated with a tradeoff between these genera along
+the same axis of variation. Samples from HIV-positive individuals
+from the U.S. clustered closer to individuals from Malawi and
+Venezuelan Amerindians than to HIV-negative individuals from
+the U.S. (Figure 3D). Additionally, the discriminative 97% ID
+OTUs that differentiated adults from Western and agrarian cul-
+tures using Random Forests analysis (Yatsunenko et al., 2012)
+were highly related and sometimes identical to those that
+discriminated between HIV-negative and -positive individuals
+(Figure S2). This was particularly evident for the Bacteroidales
+order, where Western and HIV-negative associated OTUs clus-
+tered together in the Bacteroides and Alistipes genera and
+agrarian and HIV-positive associated OTUs clustered together
+in the Prevotella genus (Figure S2A). However, consistent with
+the notion that Bacteroides and Prevotella are indicator taxa
+for more complex community assemblages, parallels between
+agrarian
+cultures
+and
+HIV-positive
+individuals
+were
+also
+observed in other taxonomic groups (see Figure S2 for more
+details).
+Since HIV infection induces chronic gut inﬂammation (Bjarna-
+son et al., 1996; Brenchley and Douek, 2008), we also used
+meta-analysis to determine whether there is a relationship with
+a chronic inﬂammatory disease of the gut using data from fecal
+samples collected from individuals with Crohn’s disease and
+healthy controls in Willing et al. (2010). Samples from HIV-
+infected individuals (including recent and chronic untreated
+and ART treated individuals) aligned with individuals with Ileal
+Crohn’s disease across a distinct axis of variation from that
+associated with diet/culture (see Figure S3 and the Supple-
+mental Information).
+Immune Responses to Selected Bacteria Modulated by
+HIV Infection
+Microbiota changes with HIV infection can have several underly-
+ing causes, including (1) a compromised ability of the innate and/
+or adaptive immune system to control commensal bacteria, (2)
+the indirect selection of inﬂammation-tolerant versus sensitive
+bacteria resulting from a chronic inﬂammatory state, or (3) a
+loss of interaction with CD4+ T cells that produce regulatory
+responses that promote tolerance of beneﬁcial microbes.
+Although the immunologic driving factors of microbiota changes
+in HIV infection are likely to be complex, we began to explore
+drivers of compositional differences by examining cytokine and
+CD4+ T cell proliferative response to bacteria highly related to
+OTUs that differed with HIV infection status using peripheral
+blood mononuclear cells (PBMCs) from a separate cohort of un-
+treated chronic HIV-positive and HIV-negative individuals. We
+tested (1) two species from the genus Bacteroides, which had
+a conserved decrease with HIV infection (Bacteroides dorei
+and Bacteroides ﬂuxus); (2) two species highly related to OTUs
+that increased with HIV infection, P. copri (Prevotellaceae) and
+E. biforme (Erysipelotrichaceae) (Table S2, Figure S2); and (3)
+E. coli serotype O55:K59(B5), which did not change.
+We ﬁrst examined proinﬂammatory (TNF-a) and anti-inﬂam-
+matory (IL-10) cytokines in six HIV-negative and six HIV-positive
+subjects after incubating PBMCs for 24 hr with bacterial lysate.
+HIV-infected subjects tended to have elevated levels of both
+TNF-a and IL-10 to all bacteria in comparison with HIV-negative
+controls (Figure S4). Previous studies have shown that both of
+these cytokines are elevated in plasma of HIV-positive subjects
+(Dutertre et al., 2012; Said et al., 2010). However, E. biforme had
+a signiﬁcantly higher TNF-a:IL-10 ratio (Figure 4A) in both HIV-
+negative and HIV-infected subjects, indicating that it is more
+proinﬂammatory than the other bacteria tested.
+Next, we examined CD4+ T cell proliferative responses to
+these bacteria in 10 subjects with HIV infection and 11 HIV-
+negative controls. Because responses to gut bacteria in periph-
+eral blood are often below the limit of detection directly ex vivo
+(Howe et al., 2009), we labeled PBMC with Cell Trace to track
+cell division and cultured the PBMC with the bacteria lysate
+for 6 days. This method ampliﬁes bacteria-speciﬁc CD4+
+T cells to easily detected frequencies. All bacteria, but not
+LPS, induced CD4+ T cell proliferation in both HIV-infected
+and HIV-negative subjects. However, responses to B. ﬂuxus
+and B. dorei were reduced with HIV infection, while responses
+to P. copri, E. biforme, and E. coli were not signiﬁcantly different
+(Figure 4B).
+DISCUSSION
+Because HIV targets central players of innate and adaptive
+immunity including CD4+ T cells, monocytes, and macrophages
+(McMichael et al., 2010; Mogensen et al., 2010), changes in gut
+microbiota with infection support the notion that the immune
+system plays an important role in shaping composition. That
+immune dysfunction can cause gut microbiota changes with
+concomitant health effects has been supported in mice lacking
+speciﬁc components of the immune system, including TLR5,
+IL-22, or the inﬂammasome. Compositional shifts in gut micro-
+biota in these models were associated with development of
+colitis (Carvalho et al., 2012; Elinav et al., 2011; Zenewicz
+et al., 2013) and metabolic syndrome (Vijay-Kumar et al.,
+2010), diseases that are increased in prevalence with HIV
+(Knox et al., 2000; Wanke, 1999).
+Table 2. Comparison of Alpha Diversity in HIV-Positive and
+-Negative Individuals with and without ART Treatment
+Observed
+Species
+Shannon
+PD
+HIV negative
+508 ± 21.6
+5.6 ± 0.19
+27.9 ± 1.46
+Chronic HIV, ART untreated
+563 ± 30.5
+6.3 ± 0.15
+36.4 ± 1.31
+Chronic HIV on long-term
+ART
+469 ± 39.6
+5.68 ± 0.16
+28.69 ± 1.19
+Recent HIV
+517 ± 64.4
+5.76 ± 0.49
+31.7 ± 3.06
+p value (ART untreated
+versus negative) t test
+0.144
+0.013
+0.0003
+p value (ART untreated
+versus ART treated) t test
+0.070
+0.016
+0.0006
+Values are given as mean ± SD.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+332
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+Strong and characteristic change with HIV infection despite
+matching the control cohort for age, sex, race, and geographic
+location is surprising, since studies of the macaque microbiota
+in SIV infection failed to detect signiﬁcant changes independent
+of colitis, and yet macaques experience a similar depletion of
+CD4+ T cells and inﬂammation in the gut compared to HIV-
+infected humans (McKenna et al., 2008; Veazey et al., 1998).
+This difference may be related in part to SIV infection duration
+(e.g., macaques in one longitudinal study were only followed
+8 weeks post infection (McKenna et al., 2008). Microbiota
+changes in two of three recently infected HIV-positive humans in
+our study were subtle compared to changes with chronic infec-
+tion, indicating that microbiota changes begin during early infec-
+tion and continue over time. In fact, a recent study, which charac-
+terized gut microbial communities of six wild-living chimpanzees
+fromGombeNationalParkinTanzaniawhowerenaturallyinfected
+with SIV over the course of a 13 year survey, showed that SIV
+infection was associated with increased temporal variability of
+microbiota composition within individuals (Moeller et al., 2013).
+However, the compositional changes observed in chimpanzees
+with long-term SIV infection were not as consistent across individ-
+uals as what we observe here in HIV-infected humans.
+The similarity between gut microbiota of HIV-infected individ-
+uals in the U.S. and HIV-negative individuals in agrarian cultures
+suggests that the relatively strong phenotype with HIV infection
+in humans may also be due to speciﬁc elements of our cohort’s
+lifestyle, since Western populations appear to have a stronger
+deviation of the pre- versus the post-HIV-infection microbiota.
+Indeed, similar to healthy humans in agrarian cultures, the
+healthy gut microbiota of macaques is already Prevotella rich
+and Bacteroides poor (McKenna et al., 2008). It will be of interest
+to see if HIV-associated changes in agrarian cultures are less
+pronounced than in the U.S. or if they are more pronounced in
+macaques consuming a Western-type diet.
+HIV-associated enteropathy is initiated during acute infection,
+continues through advanced disease, and involves increased
+intestinal inﬂammation (Bjarnason et al., 1996; Brenchley and
+Douek, 2008). We thus had expected an expansion of bacteria
+that increase with other chronic intestinal inﬂammatory diseases
+and a decrease in diversity, which has been observed in several
+unhealthy or inﬂammatory states (Chang et al., 2008; Willing
+et al., 2010). Although a previous study that used 16S rRNA
+gene quantiﬁcation of order-level bacterial taxa showed a trend
+toward a greater proportion with HIV infection of Enterobacter-
+iales (Ellis et al., 2011), a taxon often associated with inﬂamma-
+tory conditions (Koren et al., 2012; Mukhopadhya et al., 2012),
+we did not detect signiﬁcant changes in Enterobacteriales at
+either coarse or ﬁne taxonomic levels. Furthermore, microbiota
+in untreated HIV infection, but not with ART, had increased diver-
+sity compared to the control population. This is consistent with
+the resemblance to the microbiota in agrarian cultures, which
+also has increased diversity compared to that of healthy U.S.
+adults (Yatsunenko et al., 2012), but not with other unhealthy
+states such as inﬂammatory bowel disease (Willing et al., 2010)
+or recurrent Clostridium difﬁcile infection (Chang et al., 2008).
+Since we excluded individuals with GI symptoms that warranted
+antibiotic treatment during the preceding 30 days, we cannot
+exclude the possibility that Enterobacteriales are enriched or
+Recent
+Seronegative
+Chronic untreated cohort
+Chronic treated 
+Figure 2. Taxonomy Bar Charts Showing Dominance of Prevotellaceae in HIV-Infected Subjects
+Families signiﬁcantly different between ART-naive individuals chronically infected with HIV and HIV-negative controls are marked with a star (p < 0.05 ANOVA with
+FDR correction; only the ﬁrst time point was used for individuals who had multiple time points). Those enriched in HIV negative have a blue star, and those
+enriched in HIV (Chronic) are in green. Samples from the same individual at two time points are adjacent and joined with a bridge. See Tables S2A, S2B, and S2C
+for lists of discriminatory genera, families, and 97% OTUs, respectively, and Figure S2 for a phylogenetic tree relating discriminatory 97% OTUs.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+333
+diversity decreased in HIV-infected individuals with acute diar-
+rhea or advanced AIDS.
+However, our analysis of the pro-/anti-inﬂammatory properties
+of cultured isolates related to OTUs that increased with chronic
+HIV infection indicated that E. biforme, but not P. copri, was
+signiﬁcantly more proinﬂammatory than bacteria in the HIV-
+negative-associated Bacteroides genus. E. biforme is enriched
+in individuals with irritable bowel syndrome (Ponnusamy et al.,
+2011), and it increased in the active disease stage compared
+to remission in an individual with ulcerative colitis (Harrington
+et al., 2008). D. piger which increased with HIV infection is signif-
+icantly higher in IBD patients compared to healthy controls (Jia
+et al., 2012; Loubinoux et al., 2002). Enrichment of these taxa
+with HIV infection is thus consistent with the relationship we
+observed between HIV and Ileal Crohn’s disease in both ART-
+treated and ART-untreated individuals at the community level.
+Despite potential links between certain bacterial lineages and
+proinﬂammatory states in HIV infection, overall the predominant
+pattern of microbiota change with HIV infection was surprisingly
+along a Prevotella-Bacteroides gradient. Prevotella- versus
+Bacteroides-rich communities correlate with overall diversity
+differences observed both across cultures and within Western
+populations, although there is some controversy over whether
+they represent discrete ‘‘enterotypes,’’ as initially proposed
+(Arumugam et al., 2011), or whether this variation occurs across
+a gradient (Koren et al., 2013; Wu et al., 2011; Yatsunenko et al.,
+2012). Diet has been implicated as a primary driving factor of this
+gradient, since Prevotella were enriched in healthy U.S. adults
+Global Gut
+HIV
+Long term diet
+A
+Study
+Bacteroides
+Low
+High
+B
+Prevotella
+Low
+High
+C
+Malawi
+Venezuela
+D
+US HIV Chronic
+US Seronegative 
+US HIV unknown
+US HIV Recent 
+PC1 (13%)
+)
+%
+0
+1
+( 
+2
+C
+P
+PC1 (13%)
+)
+%
+0
+1
+( 
+2
+C
+P
+Global Gut
+HIV
+Long term diet
+PC1 (13%)
+)
+%
+0
+1
+( 
+2
+C
+P
+Global Gut
+HIV
+Long term diet
+PC1 (13%)
+)
+%
+0
+1
+( 
+2
+C
+P
+Global Gut
+HIV
+Long term diet
+Figure 3. The Fecal Microbiota of HIV-Positive Individuals in the U.S. Resemble those of HIV-Negative Individuals in Agrarian Cultures at the
+Community Level
+Unweighted UniFrac PCoA plot comparing data from this study with a global survey of fecal microbial community composition conducted in individuals from
+Malawi, the Amazonas State of Venezuela, and the U.S. (Yatsunenko et al., 2012) (global gut) and (2) a study linking long-term dietary patterns with gut microbial
+enterotypes (Wu et al., 2011) (long-term diet), using a reference mapping protocol.
+(A) Points colored by study.
+(B) Same plot, but with points colored across a red-blue spectrum from low to high relative abundance of the genus Bacteroides.
+(C) Same as for (B), but for the Prevotella genus.
+(D) Points colored by country of residence and HIV status.
+See Figure S3 for an additional meta-analysis exploring the relationship of HIV infection with Crohn’s disease.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+334
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+who consumed diets poor in animal protein and saturated fats
+and rich in carbohydrates and simple sugars (Wu et al., 2011),
+and in healthy individuals in agrarian cultures with diets domi-
+nated by maize-, cassava-, and other plant-derived polysaccha-
+rides (De Filippo et al., 2010; Yatsunenko et al., 2012). Although
+we do not have dietary information for our HIV-positive cohort
+and thus do not know whether they uniformly consume a diet
+that is particularly carbohydrate rich or animal fat/protein poor,
+that both HIV infection duration and ART treatment had an effect
+on the degree/consistency of Prevotella richness with HIV infec-
+tion further supports immunologic and not strictly dietary driving
+factors. This raises the intriguing possibility that the predominant
+type of gut microbiota diversity variation that occurs across cul-
+tures and within Western populations is driven by an interplay
+between diet and the immune system.
+CD4+ T cells are profoundly depleted in GALT with HIV infec-
+tion (Brenchley and Douek, 2008). Interactions between CD4+
+T cells and commensal gut bacteria and concomitant changes
+in microbiota composition are not well understood, although
+recent work has demonstrated that immunoglobulin A (IgA) is
+important for maintaining balance between gut bacteria and
+host (Kawamoto et al., 2012). B cell immunity and subsequent
+IgA production are dependent on CD4+ T follicular helper cells
+which are impaired in HIV infection (Cubas et al., 2013). Recently
+it was shown that innate lympoid cells regulate CD4+ T cell re-
+sponses to intestinal bacteria (Hepworth et al., 2013). CD4+
+T cell-microbe interactions are perhaps best understood for
+Bacteroides fragilis, which is in a genus that consistently and
+dramatically decreases with HIV infection. This species, and
+speciﬁcally a zwitterionic polysaccharide on its capsule called
+polysaccharide A (PSA), restores CD4+ T cell development in
+germ-free mice by eliciting expansion of antigen-experienced
+(‘‘educated’’) CD4+CD45Rblow T cells (Mazmanian et al., 2005).
+B. fragilis PSA can also mediate conversion of CD4+ T cells
+into anti-inﬂammatory Foxp3+ Treg cells (Round and Mazma-
+nian, 2010) and can provide protection from inﬂammatory dis-
+ease (Mazmanian et al., 2005, 2008).When administered as a
+probiotic, another Bacteroides species, B. uniformis, can correct
+T cell proliferation deﬁciencies displayed in ‘‘Western diet’’-fed
+mice (Gaufﬁn Cano et al., 2012) and induces higher secretion
+of IL-10, a negative regulator of inﬂammatory response.
+Given these interactions between Bacteroides species and
+CD4+ T cells, it is of interest that Bacteroides decrease in HIV-
+positive individuals when CD4+ T cell populations are compro-
+mised, suggesting that CD4+ T cell interactions may be essential
+for persistence of Bacteroides in the gut. Even within the overall
+compromised T cell populations of HIV-positive subjects, we
+show that proliferative responses to Bacteroides species are
+preferentially depleted compared to other species tested. One
+potential explanation is that CD4+ T cell responses are dimin-
+ished because of reduced levels of Bacteroides antigen. How-
+ever, an increased proliferative response to P. copri and
+E. biforme was not observed despite their increase in relative
+abundance with HIV infection, indicating that antigen con-
+centration is not the only explaining factor. Another potential
+explanation, given the known interaction of Bacteroides with
+CD4+T cells via PSA, is that Bacteroides-speciﬁc T cells are
+preferentially activated and thus killed, which is consistent with
+B. fluxus
+B. dorei
+E. biforme
+P. copri
+LPS
+0
+20
+40
+60
+80
+100
+*
+TNF-α/IL-10 ratio
+-
++
+-
++
+-
++
+-
++
+-
++
+-
++
+0
+5
+10
+15
+20
+25
+B. fluxus
+B. dorei
+E. biforme
+P. copri
+LPS
+E. coli
+HIV Status
+p=0.03
+p=0.54
+p=0.22
+p=0.08
+p=0.75
+p=0.14
+CD4+ T cell proliferation (%)
+A
+B
+Figure 4. Characterization of Immune Responses to Selected Bacteria in Untreated HIV-Positive and HIV-Negative Subjects
+(A) TNF-a to IL-10 ratio (as measured using a bead array assay) after a 24 hr stimulation. An asterisk indicates that E. biforme had a signiﬁcantly higher TNF-a/IL-10
+ratio compared to the other bacterial isolates with the Kruskal-Wallis ANOVA and Dunn test. Red signiﬁes HIV-positive and blue HIV-negative subjects.
+(B) Percentage of divided (cell trace low) CD4+ T cells enumerated by ﬂow cytometry after a 6 day stimulation. Statistical signiﬁcance was determined using
+Mann-Whitney t tests. Bacteria that decreased in relative abundance with chronic, untreated HIV infection are shown in red, those that increased are in blue, and
+no difference is shown in black. Points in the scatterplots depict each individual, and the bar is the median. See also Figure S4.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+335
+enhanced HIV infection of intestinal lamina propria CD4+ T cells
+generally upon exposure to commensal bacteria (Dillon et al.,
+2012). Conducting immunologic assays on samples for which
+we have matched gut microbiota compositional data will help
+to determine the degree to which T cell proliferative response
+changes may be driven by changes in antigen presence or
+concentration.
+Mouse experiments have supported the notion that a Bacter-
+oides-poor microbiota in the context of a Western diet may have
+negative health effects (Gaufﬁn Cano et al., 2012). Oral adminis-
+tration of B. uniformis to mice consuming a high-fat diet resulted
+in decreased inﬂammation, body weight gain, liver steatosis,
+liver cholesterol, and triglyceride concentrations and increased
+small adipocyte numbers. In this light, it is interesting that lipo-
+dystrophy, a disorder characterized by some of these same fea-
+tures, has been increasingly observed in HIV-positive individuals
+(Carr et al., 1998; Wanke, 1999). Although lipodystrophy and
+dyslipidemia are linked to ART, particularly the protease inhibi-
+tors (Carr et al., 1998), it also can occur in the absence of ART,
+leading some to suggest that it is in part due to HIV infection itself
+(Madge et al., 1999; Nicholaou et al., 2013).
+Prevotella-rich microbiota have been linked with high plasma
+levels of trimethylamine-N-oxide (TMAO), a proatherogenic car-
+diovascular risk-associated compound that can be produced
+from dietary L-carnitine in red meat by intestinal microbiota
+(Koeth et al., 2013). Given high rates and early onset of athero-
+sclerosis and coronary heart disease in HIV-infected individuals
+(Boccara et al., 2013; Hsue et al., 2009), it will be of interest to see
+if a Prevotella-rich microbiota in HIV-infected individuals is asso-
+ciated with high TMAO levels in plasma.
+The failure of ART to consistently restore the gut microbiota to
+a state resembling HIV-negative individuals is consistent with
+persistence of gastrointestinal diseases with ART. HIV-positive
+subjects on successful ART remain at greater risk of multiple
+inﬂammatory diseases, including atherosclerosis (Hsue et al.,
+2009). Diseases of nutrition ranging from wasting to lipodystro-
+phy persist, or for lipodystrophy can even be exacerbated by
+ART (Carr et al., 1998; Wanke, 1999; Wanke et al., 2000).
+Although ART can improve chronic diarrhea in patients with
+advanced HIV infection and lead to disappearance of parasites
+such as Cryptosporidium sp. from stool (Foudraine et al.,
+1998), other parasites can persist (Boyles et al., 2012). A persis-
+tence of an HIV-associated microbiota in some individuals on
+long-term ART is also consistent with the observation that ART
+treatment generally does not completely restore CD4+ T cells
+in GALT (Estes et al., 2008). Discordance between CD4+ T cell
+counts in GALT and the periphery may explain why we did not
+observe a correlation between peripheral CD4+ T cell count
+and the degree of divergence in fecal microbiota composition
+from HIV-negative control samples.
+It will be important to further study the effects of HIV infection
+on the gut microbiota in the context of different disease states,
+cultures, and diets so that the complex interactions between
+lifestyle, diets, and the immune system in shaping microbiota
+composition can be determined. Further studies of the immuno-
+modulatory properties and inﬂammation tolerance of bacterial
+isolates related to OTUs that change during HIV infection will
+provide insight into driving factors of gut microbiota changes
+and their potential impact on health.
+EXPERIMENTAL PROCEDURES
+Subject Recruitment
+Four cohorts were prospectively recruited from the University of Colorado
+Hospital Infectious Disease Group Practice: (1) recent HIV-1 infection, individ-
+uals likely infected within the prior 6 months; (2) chronic HIV-1 infection
+untreated, individuals infected for >6 months and ART drug naive or off treat-
+ment for >6 months; (3) chronic HIV-1 infection on long-term ART, ART treat-
+ment for R12 months with a minimum of three ART drugs prior to study entry
+and viral suppressed for >6 months; and (4) healthy controls, HIV-negative
+individuals matched to HIV-infected participants for sex, age, geographic
+location, and smoking status (see the Supplemental Experimental Procedures
+for further cohort characteristics). Individuals from cohort 2 sometimes initi-
+ated ART treatment immediately following the initial visit and donated an addi-
+tional fecal sample 6.7–8.5 months later. Informed consent was obtained from
+each subject, and the study protocol was approved by the Colorado Multiple
+Institution Review Board.
+DNA Extraction and Sequencing
+Stool samples were collected on a sterile swab by the patient either during or
+12 hr prior to the visit and stored at 80C. DNA was extracted using the stan-
+dard Power Soil Kit protocol (MoBio). Extracted DNA was PCR ampliﬁed with
+barcoded primers targeting the V4 region of 16S rRNA as detailed in Yatsu-
+nenko et al. (2012). Control water samples that had undergone the same
+DNA extraction and PCR ampliﬁcation procedures were also sequenced.
+Each PCR product was quantiﬁed using PicoGreen (Invitrogen), and equal
+amounts (ng) of DNA from each sample were pooled and cleaned using the
+UltraClean PCR Clean-Up Kit (MoBio). Sequences were generated on two
+runs on a MiSeq personal sequencer (Illumina, San Diego, CA).
+Sequence Data Analysis
+Raw sequences were quality ﬁltered and assigned to samples based on their
+barcodes using the default parameters of QIIME version 1.5.0 (Caporaso et al.,
+2010) (see the Supplemental Experimental Procedures). Sequences were
+assigned to 97% ID OTUs by comparing them to a nonredundant reference
+database of near-full length sequences (February 4, 2011, Greengenes data-
+base) (DeSantis et al., 2006), and unassigned sequences were clustered into
+de novo OTUs using UCLUSTref (Edgar, 2010). Since samples contained
+between 4,694 and 72,828 sequences, analyses were standardized at 4,600
+sequences per sample to avoid biases.
+UniFrac PCoA analyses were conducted using QIIME as detailed in the Sup-
+plemental Information. Random Forests classiﬁcation on the HIV data was car-
+ried
+out
+using
+SourceTracker
+software (http://sourceforge.net/projects/
+sourcetracker/) (Knights et al., 2011b) and custom code as detailed in the Sup-
+plemental Information. Alpha diversity was calculated using three different
+measures (1) observed species, the number of 97% ID OTUs observed in
+4,600 sequences; (2) Shannon Index (Shannon, 1948); and (3) PD (Faith,
+1992). Only one sample was used for individuals sampled at two time points.
+Bacterial families and genera in each sample were determined using the
+RDP classiﬁer retrained on the greengenes taxonomy (McDonald et al.,
+2012) and statistically compared as detailed in the Supplemental Information.
+Discriminating OTUs were related to each other and to bacterial type strains
+using the ARB software package (Ludwig et al., 2004) as detailed in the Sup-
+plemental Information.
+To compare sequences from our samples to other studies, we used the
+QIIME database (http://microbio.me/qiime), which assigns sequences to
+97% ID OTUs by comparing them to a reference database of near-full-length
+sequences (February 4, 2011, Greengenes database) (DeSantis et al., 2006)
+using UCLUSTref (Edgar, 2010) as described in Lozupone et al. (2013). Unas-
+signed sequences were dropped from the analysis. We removed samples from
+individuals not between the ages of 10 and 66 and standardized at 4,600
+sequences per sample.
+Immunologic Assays
+Bacterial lysates for B. dorei (DSM 17855), B. ﬂuxus (DSM 22534), P. copri
+(DSM18205), E. biforme (DSM 3989), and E. coli serotype O55:K59(B5) were
+prepared and quantiﬁed as detailed in the Supplemental Information. PBMCs
+were isolated from blood of ten untreated HIV-positive subjects with chronic
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+336
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+infection (median CD4+ T cells 508 cells/ml; range 248–742 and VL 55,495
+copies of HIV RNA/ml; range 554–123,000) and 11 HIV-negative subjects as
+described in the Supplemental Information. For the T cell proliferation assays,
+PBMCs were labeled with 2 mM Cell Trace to track cell division (Invitrogen);
+plated at 1 3 106 cells/ml in a 48-well plate; and cultured with 1 mg/ml of bac-
+terial lysates, LPS, 2.5 mg/ml PHA, or medium alone at 37C in a humidiﬁed 5%
+CO2 atmosphere. After 6 days, cells were washed with PBS containing 1%
+BSA and surface stained with anti-CD4 (PE-Cy5-5; BD Biosciences), anti-
+CD3 (Qdot 605; Invitrogen), anti-CD19 (Alexa Fluor 405; Caltag), CD45RA,
+and CD27 for 30 min at 4C, then washed and ﬁxed with 1% formaldehyde.
+Cells were analyzed using a LSR-II ﬂow cytometer (BD Immunocytometry Sys-
+tems) as described in the Supplemental Information.
+For the cytokine analysis, PBMCs (1 3 106 cells/ml) were cultured in 96-well
+plates with 1 mg/ml of bacterial lysates, LPS, or medium alone. Cultures were
+incubated at 37C in a humidiﬁed 5% CO2 atmosphere for 24 hr, and culture
+supernatants were harvested and centrifuged to remove remaining cells and
+stored at 80C. IL-10 and TNF-a levels were assayed using a 7-plex Inﬂam-
+matory Cytokine kit (Meso Scale Development, Gaithersberg MD). Assays
+were performed per manufacturer’s instructions and analyzed using a Sector
+Imager 2400 (Meso Scale Discovery).
+ACCESSION NUMBERS
+The sequence data have been deposited in the QIIME database (http://www.
+microbio.me/qiime/)
+and
+at
+EBI
+(http://www.ebi.ac.uk/ena/;
+accession
+number ERP003611).
+SUPPLEMENTAL INFORMATION
+Supplemental Information includes four ﬁgures, three tables, Supplemental
+Experimental Procedures, and Supplemental References and can be found
+with this article online at http://dx.doi.org/10.1016/j.chom.2013.08.006.
+ACKNOWLEDGMENTS
+This work was supported by a LHMP-sponsored project (UO1HL098996 to
+A.P.F., T.B.C., S.C.F., and R.K.) and by the Colorado Clinical and Translational
+Sciences Institute (UL1TR000005). C.A.L. was supported by K01DK090285,
+and R.K. was supported by the Howard Hughes Medical Institute. We would
+like to thank Beverly Putnam and Christine Grismer for subject recruitment,
+Sam MaWhinney and Amanda Allshouse for statistical support, Dan Knights
+for contributing custom code for Random Forests analysis, and Maria del Car-
+men Portillo for help with anaerobic culture. We would particularly like to thank
+the study participants.
+Received: May 23, 2013
+Revised: July 3, 2013
+Accepted: August 16, 2013
+Published: September 11, 2013
+REFERENCES
+Arumugam, M., Raes, J., Pelletier, E., Le Paslier, D., Yamada, T., Mende, D.R.,
+Fernandes, G.R., Tap, J., Bruls, T., Batto, J.M., et al.; MetaHIT Consortium.
+(2011). Enterotypes of the human gut microbiome. Nature 473, 174–180.
+Bjarnason, I., Sharpstone, D.R., Francis, N., Marker, A., Taylor, C., Barrett, M.,
+Macpherson, A., Baldwin, C., Menzies, I.S., Crane, R.C., et al. (1996). Intestinal
+inﬂammation, ileal structure and function in HIV. AIDS 10, 1385–1391.
+Boccara, F., Lang, S., Meuleman, C., Ederhy, S., Mary-Krause, M.,
+Costagliola, D., Capeau, J., and Cohen, A. (2013). HIV and coronary heart
+disease: time for a better understanding. J. Am. Coll. Cardiol. 61, 511–523.
+Boyles, T.H., Black, J., Meintjes, G., and Mendelson, M. (2012). Failure to erad-
+icate Isospora belli diarrhoea despite immune reconstitution in adults with
+HIV—a case series. PLoS ONE 7, e42844, http://dx.doi.org/10.1371/journal.
+pone.0042844.
+Brenchley, J.M., and Douek, D.C. (2008). HIV infection and the gastrointestinal
+immune system. Mucosal Immunol. 1, 23–30.
+Brenchley, J.M., Schacker, T.W., Ruff, L.E., Price, D.A., Taylor, J.H., Beilman,
+G.J., Nguyen, P.L., Khoruts, A., Larson, M., Haase, A.T., and Douek, D.C.
+(2004). CD4+ T cell depletion during all stages of HIV disease occurs predom-
+inantly in the gastrointestinal tract. J. Exp. Med. 200, 749–759.
+Brenchley, J.M., Price, D.A., Schacker, T.W., Asher, T.E., Silvestri, G., Rao, S.,
+Kazzaz, Z., Bornstein, E., Lambotte, O., Altmann, D., et al. (2006). Microbial
+translocation is a cause of systemic immune activation in chronic HIV infection.
+Nat. Med. 12, 1365–1371.
+Caporaso, J.G., Kuczynski, J., Stombaugh, J., Bittinger, K., Bushman, F.D.,
+Costello, E.K., Fierer, N., Pen˜ a, A.G., Goodrich, J.K., Gordon, J.I., et al.
+(2010). QIIME allows analysis of high-throughput community sequencing
+data. Nat. Methods 7, 335–336.
+Carr, A., Samaras, K., Burton, S., Law, M., Freund, J., Chisholm, D.J., and
+Cooper, D.A. (1998). A syndrome of peripheral lipodystrophy, hyperlipidaemia
+and insulin resistance in patients receiving HIV protease inhibitors. AIDS 12,
+F51–F58.
+Carvalho, F.A., Koren, O., Goodrich, J.K., Johansson, M.E., Nalbantoglu, I.,
+Aitken, J.D., Su, Y., Chassaing, B., Walters, W.A., Gonza´ lez, A., et al. (2012).
+Transient inability to manage proteobacteria promotes chronic gut inﬂamma-
+tion in TLR5-deﬁcient mice. Cell Host Microbe 12, 139–152.
+Chang, J.Y., Antonopoulos, D.A., Kalra, A., Tonelli, A., Khalife, W.T., Schmidt,
+T.M., and Young, V.B. (2008). Decreased diversity of the fecal Microbiome in
+recurrent Clostridium difﬁcile-associated diarrhea. J. Infect. Dis. 197, 435–438.
+Cubas, R.A., Mudd, J.C., Savoye, A.L., Perreau, M., van Grevenynghe, J.,
+Metcalf, T., Connick, E., Meditz, A., Freeman, G.J., Abesada-Terk, G., Jr.,
+et al. (2013). Inadequate T follicular cell help impairs B cell immunity during
+HIV infection. Nat. Med. 19, 494–499.
+De Filippo, C., Cavalieri, D., Di Paola, M., Ramazzotti, M., Poullet, J.B.,
+Massart, S., Collini, S., Pieraccini, G., and Lionetti, P. (2010). Impact of diet
+in shaping gut microbiota revealed by a comparative study in children from
+Europe and rural Africa. Proc. Natl. Acad. Sci. USA 107, 14691–14696.
+DeSantis, T.Z., Hugenholtz, P., Larsen, N., Rojas, M., Brodie, E.L., Keller, K.,
+Huber, T., Dalevi, D., Hu, P., and Andersen, G.L. (2006). Greengenes, a
+chimera-checked 16S rRNA gene database and workbench compatible with
+ARB. Appl. Environ. Microbiol. 72, 5069–5072.
+Dillon, S.M., Manuzak, J.A., Leone, A.K., Lee, E.J., Rogers, L.M., McCarter,
+M.D., and Wilson, C.C. (2012). HIV-1 infection of human intestinal lamina prop-
+ria CD4+ T cells in vitro is enhanced by exposure to commensal Escherichia
+coli. J. Immunol. 189, 885–896.
+Dutertre, C.A., Amraoui, S., DeRosa, A., Jourdain, J.P., Vimeux, L., Goguet,
+M., Degrelle, S., Feuillet, V., Liovat, A.S., Mu¨ ller-Trutwin, M., et al. (2012).
+Pivotal role of M-DC8+ monocytes from viremic HIV-infected patients in
+TNFa overproduction in response to microbial products. Blood 120, 2259–
+2268.
+Edgar, R.C. (2010). Search and clustering orders of magnitude faster than
+BLAST. Bioinformatics 26, 2460–2461.
+Elinav, E., Strowig, T., Kau, A.L., Henao-Mejia, J., Thaiss, C.A., Booth, C.J.,
+Peaper, D.R., Bertin, J., Eisenbarth, S.C., Gordon, J.I., and Flavell, R.A.
+(2011). NLRP6 inﬂammasome regulates colonic microbial ecology and risk
+for colitis. Cell 145, 745–757.
+Ellis, C.L., Ma, Z.M., Mann, S.K., Li, C.S., Wu, J., Knight, T.H., Yotter, T.,
+Hayes, T.L., Maniar, A.H., Troia-Cancio, P.V., et al. (2011). Molecular charac-
+terization of stool microbiota in HIV-infected subjects by panbacterial and
+order-level 16S ribosomal DNA (rDNA) quantiﬁcation and correlations with
+immune activation. J. Acquir. Immune Deﬁc. Syndr. 57, 363–370.
+Estes, J., Baker, J.V., Brenchley, J.M., Khoruts, A., Barthold, J.L., Bantle, A.,
+Reilly, C.S., Beilman, G.J., George, M.E., Douek, D.C., et al. (2008). Collagen
+deposition limits immune reconstitution in the gut. J. Infect. Dis. 198, 456–464.
+Faith, D.P. (1992). Conservation evaluation and phylogenetic diversity. Biol.
+Conserv. 61, 1–10.
+Foudraine, N.A., Weverling, G.J., van Gool, T., Roos, M.T., de Wolf, F.,
+Koopmans, P.P., van den Broek, P.J., Meenhorst, P.L., van Leeuwen, R.,
+Lange, J.M., and Reiss, P. (1998). Improvement of chronic diarrhoea in
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+337
+patients with advanced HIV-1 infection during potent antiretroviral therapy.
+AIDS 12, 35–41.
+Gaufﬁn Cano, P., Santacruz, A., Moya, A., and Sanz, Y. (2012). Bacteroides
+uniformis CECT 7771 ameliorates metabolic and immunological dysfunction
+in mice with high-fat-diet induced obesity. PLoS ONE 7, e41079, http://dx.
+doi.org/10.1371/journal.pone.0041079.
+Harrington, C.R., Lucchini, S., Ridgway, K.P., Wegmann, U., Eaton, T.J.,
+Hinton, J.C., Gasson, M.J., and Narbad, A. (2008). A short-oligonucleotide
+microarray that allows improved detection of gastrointestinal tract microbial
+communities. BMC Microbiol. 8, 195, http://dx.doi.org/10.1186/1471-2180-
+8-195.
+Hepworth, M.R., Monticelli, L.A., Fung, T.C., Ziegler, C.G., Grunberg, S.,
+Sinha, R., Mantegazza, A.R., Ma, H.L., Crawford, A., Angelosanto, J.M.,
+et al. (2013). Innate lymphoid cells regulate CD4+ T-cell responses to intestinal
+commensal bacteria. Nature 498, 113–117.
+Howe, R., Dillon, S., Rogers, L., McCarter, M., Kelly, C., Gonzalez, R.,
+Madinger, N., and Wilson, C.C. (2009). Evidence for dendritic cell-dependent
+CD4(+) T helper-1 type responses to commensal bacteria in normal human
+intestinal lamina propria. Clin. Immunol. 131, 317–332.
+Hsue, P.Y., Hunt, P.W., Schnell, A., Kalapus, S.C., Hoh, R., Ganz, P., Martin,
+J.N., and Deeks, S.G. (2009). Role of viral replication, antiretroviral therapy,
+and immunodeﬁciency in HIV-associated atherosclerosis. AIDS 23, 1059–
+1067.
+Jia, W., Whitehead, R.N., Grifﬁths, L., Dawson, C., Bai, H., Waring, R.H.,
+Ramsden, D.B., Hunter, J.O., Cauchi, M., Bessant, C., et al. (2012). Diversity
+and distribution of sulphate-reducing bacteria in human faeces from healthy
+subjects and patients with inﬂammatory bowel disease. FEMS Immunol.
+Med. Microbiol. 65, 55–68.
+Kawamoto, S., Tran, T.H., Maruya, M., Suzuki, K., Doi, Y., Tsutsui, Y., Kato,
+L.M., and Fagarasan, S. (2012). The inhibitory receptor PD-1 regulates IgA
+selection and bacterial composition in the gut. Science 336, 485–489.
+Knights, D., Costello, E.K., and Knight, R. (2011a). Supervised classiﬁcation of
+human microbiota. FEMS Microbiol. Rev. 35, 343–359.
+Knights, D., Kuczynski, J., Koren, O., Ley, R.E., Field, D., Knight, R., DeSantis,
+T.Z., and Kelley, S.T. (2011b). Supervised classiﬁcation of microbiota mitigates
+mislabeling errors. ISME J. 5, 570–573.
+Knox, T.A., Spiegelman, D., Skinner, S.C., and Gorbach, S. (2000). Diarrhea
+and abnormalities of gastrointestinal function in a cohort of men and women
+with HIV infection. Am. J. Gastroenterol. 95, 3482–3489.
+Koeth, R.A., Wang, Z., Levison, B.S., Buffa, J.A., Org, E., Sheehy, B.T., Britt,
+E.B., Fu, X., Wu, Y., Li, L., et al. (2013). Intestinal microbiota metabolism of
+L-carnitine, a nutrient in red meat, promotes atherosclerosis. Nat. Med. 19,
+576–585.
+Koren, O., Goodrich, J.K., Cullender, T.C., Spor, A., Laitinen, K., Ba¨ ckhed,
+H.K., Gonzalez, A., Werner, J.J., Angenent, L.T., Knight, R., et al. (2012).
+Host remodeling of the gut microbiome and metabolic changes during preg-
+nancy. Cell 150, 470–480.
+Koren, O., Knights, D., Gonzalez, A., Waldron, L., Segata, N., Knight, R.,
+Huttenhower, C., and Ley, R.E. (2013). A guide to enterotypes across the
+human body: meta-analysis of microbial community structures in human
+microbiome datasets. PLoS Comput. Biol. 9, e1002863, http://dx.doi.org/10.
+1371/journal.pcbi.1002863.
+Loubinoux, J., Bronowicki, J.P., Pereira, I.A., Mougenel, J.L., and Faou, A.E.
+(2002). Sulfate-reducing bacteria in human feces and their association with
+inﬂammatory bowel diseases. FEMS Microbiol. Ecol. 40, 107–112.
+Lozupone, C., and Knight, R. (2005). UniFrac: a new phylogenetic method for
+comparing microbial communities. Appl. Environ. Microbiol. 71, 8228–8235.
+Lozupone, C.A., Hamady, M., Kelley, S.T., and Knight, R. (2007). Quantitative
+and qualitative beta diversity measures lead to different insights into factors
+that structure microbial communities. Appl. Environ. Microbiol. 73, 1576–1585.
+Lozupone, C.A., Stombaugh, J.I., Gordon, J.I., Jansson, J.K., and Knight, R.
+(2012). Diversity, stability and resilience of the human gut microbiota. Nature
+489, 220–230.
+Lozupone, C.A., Stombaugh, J., Gonzalez, A., Ackermann, G., Wendel, D.,
+Vazquez-Baeza, Y., Jansson, J.K., Gordon, J.I., and Knight, R. (2013). Meta-
+analyses of studies of the human microbiota. Genome Res. Published online
+July 16, 2013. http://dx.doi.org/10.1101/gr.151803.112.
+Ludwig, W., Strunk, O., Westram, R., Richter, L., Meier, H., Yadhukumar,
+Buchner, A., Lai, T., Steppi, S., Jobb, G., et al. (2004). ARB: a software environ-
+ment for sequence data. Nucleic Acids Res. 32, 1363–1371.
+Madge, S., Kinloch-de-Loes, S., Mercey, D., Johnson, M.A., and Weller, I.V.D.
+(1999). Lipodystrophy in patients naive to HIV protease inhibitors. AIDS 13,
+735–737.
+Mazmanian, S.K., Liu, C.H., Tzianabos, A.O., and Kasper, D.L. (2005). An
+immunomodulatory molecule of symbiotic bacteria directs maturation of the
+host immune system. Cell 122, 107–118.
+Mazmanian, S.K., Round, J.L., and Kasper, D.L. (2008). A microbial symbiosis
+factor prevents intestinal inﬂammatory disease. Nature 453, 620–625.
+McDonald, D., Price, M.N., Goodrich, J., Nawrocki, E.P., DeSantis, T.Z.,
+Probst, A., Andersen, G.L., Knight, R., and Hugenholtz, P. (2012). An improved
+Greengenes taxonomy with explicit ranks for ecological and evolutionary ana-
+lyses of bacteria and archaea. ISME J. 6, 610–618.
+McKenna, P., Hoffmann, C., Minkah, N., Aye, P.P., Lackner, A., Liu, Z.,
+Lozupone, C.A., Hamady, M., Knight, R., and Bushman, F.D. (2008). The
+macaque gut microbiome in health, lentiviral infection, and chronic enteroco-
+litis. PLoS Pathog. 4, e20, http://dx.doi.org/10.1371/journal.ppat.0040020.
+McMichael, A.J., Borrow, P., Tomaras, G.D., Goonetilleke, N., and Haynes,
+B.F. (2010). The immune response during acute HIV-1 infection: clues for
+vaccine development. Nat. Rev. Immunol. 10, 11–23.
+Moeller, A.H., Shilts, M., Li, Y., Rudicell, R.S., Lonsdorf, E.V., Pusey, A.E.,
+Wilson, M.L., Hahn, B.H., and Ochman, H. (2013). SIV-induced instability of
+the chimpanzee gut microbiome. Cell Host Microbe 14, this issue, 340–345.
+Mogensen, T.H., Melchjorsen, J., Larsen, C.S., and Paludan, S.R. (2010).
+Innate immune recognition and activation during HIV infection. Retrovirology
+7, 54, http://dx.doi.org/10.1186/1742-4690-7-54.
+Mukhopadhya, I., Hansen, R., El-Omar, E.M., and Hold, G.L. (2012). IBD—
+what role do Proteobacteria play? Nat. Rev. Gastroenterol. Hepatol. 9,
+219–230.
+Nicholaou, M.J., Martinson, J.J., Abraham, A.G., Brown, T.T., Hussain, S.K.,
+Wolinsky, S.M., and Kingsley, L.A. (2013). HAART-associated dyslipidemia
+varies by biogeographical ancestry in the multicenter AIDS cohort study.
+AIDS Res. Hum. Retroviruses 29, 871–879.
+Ponnusamy, K., Choi, J.N., Kim, J., Lee, S.Y., and Lee, C.H. (2011). Microbial
+community and metabolomic comparison of irritable bowel syndrome faeces.
+J. Med. Microbiol. 60, 817–827.
+Round, J.L., and Mazmanian, S.K. (2010). Inducible Foxp3+ regulatory T-cell
+development by a commensal bacterium of the intestinal microbiota. Proc.
+Natl. Acad. Sci. USA 107, 12204–12209.
+Said, E.A., Dupuy, F.P., Trautmann, L., Zhang, Y., Shi, Y., El-Far, M., Hill, B.J.,
+Noto, A., Ancuta, P., Peretz, Y., et al. (2010). Programmed death-1-induced
+interleukin-10 production by monocytes impairs CD4+ T cell activation during
+HIV infection. Nat. Med. 16, 452–459.
+Shannon, C.E. (1948). A mathematical theory of communication. Bell Syst.
+Tech. J. 27, 379–423.
+Smith, M.I., Yatsunenko, T., Manary, M.J., Trehan, I., Mkakosya, R., Cheng, J.,
+Kau, A.L., Rich, S.S., Concannon, P., Mychaleckyj, J.C., et al. (2013). Gut
+microbiomes of Malawian twin pairs discordant for kwashiorkor. Science
+339, 548–554.
+Stackebrandt, E., and Goebal, B.M. (1994). Taxonomic note: a place for DNA-
+DNA reassociation and 16S rRNA sequence analysis in the present species
+deﬁnition in bacteriology. Int. Syst. Bacteriol. 44, 846–849.
+Veazey, R.S., DeMaria, M., Chalifoux, L.V., Shvetz, D.E., Pauley, D.R., Knight,
+H.L., Rosenzweig, M., Johnson, R.P., Desrosiers, R.C., and Lackner, A.A.
+(1998). Gastrointestinal tract as a major site of CD4+ T cell depletion and viral
+replication in SIV infection. Science 280, 427–431.
+Vijay-Kumar, M., Aitken, J.D., Carvalho, F.A., Cullender, T.C., Mwangi, S.,
+Srinivasan, S., Sitaraman, S.V., Knight, R., Ley, R.E., and Gewirtz, A.T.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+338
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+(2010). Metabolic syndrome and altered gut microbiota in mice lacking Toll-like
+receptor 5. Science 328, 228–231.
+Wanke, C.A. (1999). Epidemiological and clinical aspects of the metabolic
+complications of HIV infection the fat redistribution syndrome. AIDS 13,
+1287–1293.
+Wanke, C.A., Silva, M., Knox, T.A., Forrester, J., Speigelman, D., and Gorbach,
+S.L. (2000). Weight loss and wasting remain common complications in individ-
+uals infected with human immunodeﬁciency virus in the era of highly active
+antiretroviral therapy. Clin. Infect. Dis. 31, 803–805.
+Willing, B.P., Dicksved, J., Halfvarson, J., Andersson, A.F., Lucio, M., Zheng,
+Z., Jarnerot, G., Tysk, C., Jansson, J.K., and Engstrand, L. (2010). A pyrose-
+quencing study in twins shows that gastrointestinal microbial proﬁles vary
+with inﬂammatory bowel disease phenotypes. Gastroenterology 139, 1844–
+1854.
+Wu, G.D., Chen, J., Hoffmann, C., Bittinger, K., Chen, Y.Y., Keilbaugh, S.A.,
+Bewtra, M., Knights, D., Walters, W.A., Knight, R., et al. (2011). Linking long-
+term dietary patterns with gut microbial enterotypes. Science 334, 105–108.
+Yatsunenko, T., Rey, F.E., Manary, M.J., Trehan, I., Dominguez-Bello, M.G.,
+Contreras, M., Magris, M., Hidalgo, G., Baldassano, R.N., Anokhin, A.P.,
+et al. (2012). Human gut microbiome viewed across age and geography.
+Nature 486, 222–227.
+Zenewicz, L.A., Yin, X., Wang, G., Elinav, E., Hao, L., Zhao, L., and Flavell, R.A.
+(2013). IL-22 deﬁciency alters colonic microbiota to be transmissible and col-
+itogenic. J. Immunol. 190, 5306–5312.
+Cell Host & Microbe
+Gut Microbiota Alterations with HIV-1 Infection
+Cell Host & Microbe 14, 329–339, September 11, 2013 ª2013 Elsevier Inc.
+339

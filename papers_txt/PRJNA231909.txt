@@ -1,0 +1,1393 @@
+ARTICLE
+Trait-based community assembly and succession
+of the infant gut microbiome
+John Guittar
+1, Ashley Shade
+2,3 & Elena Litchman1,4
+The human gut microbiome develops over early childhood and aids in food digestion and
+immunomodulation, but the mechanisms driving its development remain elusive. Here we
+use data curated from literature and online repositories to examine trait-based patterns of gut
+microbiome succession in 56 infants over their ﬁrst three years of life. We also develop a new
+phylogeny-based approach of inferring trait values that can extend readily to other microbial
+systems and questions. Trait-based patterns suggest that infant gut succession begins with a
+functionally variable cohort of taxa, adept at proliferating rapidly within hosts, which gradually
+matures into a more functionally uniform cohort of taxa adapted to thrive in the anoxic gut
+and disperse between anoxic patches as oxygen-tolerant spores. Trait-based composition
+stabilizes after the ﬁrst year, while taxonomic turnover continues unabated, suggesting
+functional redundancy in the traits examined. Trait-based approaches powerfully complement
+taxonomy-based approaches to understanding the mechanisms of microbial community
+assembly and succession.
+https://doi.org/10.1038/s41467-019-08377-w
+OPEN
+1 Kellogg Biological Station, Michigan State University, 3700 E Gull Lake Dr., Hickory Corners, MI 49060, USA. 2 Department of Microbiology and Molecular
+Genetics, Department of Plant, Soil and Microbial Sciences, Michigan State University, East Lansing, MI 48840, USA. 3 Program in Ecology, Evolutionary
+Biology and Behavior, Michigan State University, East Lansing, MI 48840, USA. 4 Department of Integrative Biology, Michigan State University, East Lansing,
+MI 48824, USA. Correspondence and requests for materials should be addressed to J.G. (email: guittarj@msu.edu)
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+1
+1234567890():,;
+C
+lassical ecological theory posits that successional patterns
+arise from the combined inﬂuence of dispersal, species
+interactions, and the environment1,2, and this general
+framework extends readily to gut communities3. Before a microbe
+can inhabit the colon, the most distal and speciose part of the
+gastrointestinal tract, it must ﬁrst be swallowed by the host and
+survive the acidic conditions of the stomach and small intestine
+(i.e., it must disperse). A species will persist in the colon only if it
+can acquire enough resources to reproduce (i.e., it must be
+competitive) or arrive there in high enough numbers to sustain a
+population4. Microbial colonists may then alter the environment,
+e.g., by depleting intestinal oxygen5 or providing opportunities
+for cross-feeding6, favoring taxa with different phenotypes as
+succession proceeds.
+Yet successional patterns in the gut may differ from classical
+successional expectations due to the active inﬂuence of the host
+and the host mother7,8. Early colonists are passed directly from
+the mother during or even before birth9, and therefore may lack
+characteristics that would otherwise facilitate early arrival, e.g., via
+active dispersal, and instead have characteristics selected for in
+the mother’s gut or vaginal environment. Following birth,
+mothers supply bacterial growth factors in breast milk and con-
+tinue to introduce new taxa through physical contact10. Mean-
+while, the maturing infant is beginning to suppress undesirable
+taxa through immune response11, and actively cultivate com-
+mensal taxa by providing nitrogen-rich mucus and favorable
+habitat in the outer mucus layer of the large intestine12. Gut
+community composition is also affected by the introduction of
+solid food13, in particular with the introduction of insoluble
+ﬁber14.
+One approach to determining the relative inﬂuence of different
+mechanisms of community assembly is to examine patterns in
+trait-based community composition15. A trait is commonly
+deﬁned as a measurable organismal characteristic directly or
+indirectly linked to ﬁtness or performance16. As such, observable
+shifts in the trait-based composition of a community imply shifts
+in local environmental conditions favoring different species and/
+or dispersal limitation (i.e., when a taxon does not colonize a site
+because it does not arrive). Despite the success and proliferation
+of trait-based approaches to study community assembly in
+plant17,18, animal19,20, and phytoplankton systems21, they have
+only rarely been used for bacterial and archaeal systems22,23. This
+is due partly to the challenges of identifying ecologically relevant
+traits for a functionally diverse cohort of taxa, and partly to a
+dearth of curated trait data. But thanks to recent advances in
+high-throughput
+molecular
+techniques,
+renewed
+efforts
+to
+directly collect phenotypic data24, and the aggregation of data
+from disparate sources25,26, trait-based approaches to microbial
+community dynamics are becoming more feasible, especially for
+well-studied systems like the human gut.
+Here, we examine trait-based successional patterns in a cohort
+of 56 infants from Finland and Estonia for which longitudinal
+microbiome survey data were publicly available27,28. We develop
+a unique approach to inferring microbial trait data, which entails
+(1) building a phylogeny that contains the taxa from infant gut
+samples and 13,900 other taxa with formally described type
+specimens and Latin binomials29, (2) using the Latin binomials to
+map trait data curated from literature and online repositories
+onto the tips of the phylogeny, and (3) inferring unknown trait
+values using hidden state prediction. We then compare taxo-
+nomic and trait-based community turnover in time (i.e., over
+infant development) and space (i.e., across infants) to gain insight
+into the mechanisms driving successional patterns. We show
+signiﬁcant trends in predicted traits over the ﬁrst year of infant
+development, during which time oxygen-tolerant taxa and ﬂa-
+gellated taxa become less abundant, and slower-growing taxa (i.e.,
+taxa with fewer 16S rRNA gene copies) and sporulating taxa
+become more abundant. Intriguingly, during this time, micro-
+biomes become more similar across infants in both taxonomic
+and trait-based compositions. Taxonomic turnover continues
+after the ﬁrst year, but is largely redundant with respect to the
+traits examined. The trait-based patterns in our analysis suggest
+that succession begins with a functionally variable cohort of early
+arrivers, adept at proliferating rapidly within hosts, which gra-
+dually matures into a more functionally uniform cohort of taxa
+able to both thrive in the anoxic gut environment and disperse
+between anoxic patches (e.g., guts) as oxygen-tolerant spores.
+Results
+Trait-based patterns of succession. We observed consistent
+taxonomic and trait-based shifts in infant gut microbiomes during
+the ﬁrst 3 years of infant life (Fig. 1, Fig. 2). With respect to
+taxonomic composition, early succession was dominated by Bac-
+teroidaceae and Biﬁdobacteriaceae (Fig. 1a, b), whereas late suc-
+cession was dominated by Lachnospiraceae, Ruminococcaceae,
+and (still) Bacteroidaceae (Fig. 1e,f). About three-fourths of the
+operational taxonomic units (OTUs) in this study, deﬁned using a
+threshold of 97% sequence similarity in the 16S rRNA V4 region,
+exhibited signiﬁcant positive or negative trends in abundance over
+succession across all infants, based on linear regressions. The
+extensive number of signiﬁcant trends emphasizes the tax-
+onomically predictable nature of gut microbiome development. To
+evaluate trait-based shifts over development, we combine curated
+trait data and hidden state predictions to generate a custom
+database of 12 microbial traits for the OTUs in the infant
+microbiome samples (see Methods). Early and late successional
+specialists differed signiﬁcantly in their predicted trait values: late
+successional specialists were less tolerant of oxygen, were more
+capable of sporulation, and had higher temperature optima than
+early successional specialists (Supplementary Figure 1).
+Community weighted means (CWMs) of several traits trended
+signiﬁcantly over the course of succession (Fig. 2), illustrating the
+functionally predictable nature of gut microbiome development30.
+A CWM is the mean trait value of the OTUs in a community,
+weighted by their relative abundances. Ecologically speaking,
+CWMs characterize the dominant traits of a community, and can
+be thought of both in terms of how they reﬂect system properties
+(i.e., as response traits) and how they inﬂuence system properties
+(i.e., as effect traits)31. For example, oxygen-tolerant taxa (e.g.,
+facultative anaerobes) present at the onset of succession were
+rapidly overtaken by obligate anaerobes (Fig. 2i), presumably in
+response to a drop in gut oxygen concentration due to increased
+uptake by epithelial cells32. Meanwhile, the mean number of B-
+vitamin pathways in OTU genomes decreased over time (Fig. 2b),
+contradicting our expectation that human hosts would selectively
+enrich such taxa over the course of succession to promote the
+production of these essential nutrients.
+Pronounced shifts in the predicted values of two traits
+potentially related to dispersal ability suggest that dispersal
+dynamics may play a key role in shaping successional patterns.
+First, the initial presence and subsequent decline of taxa likely to
+have ﬂagella (Fig. 2h) could mean that the ability to actively
+disperse over short distances (i.e., spread within hosts) improves
+colonization rates during early succession, but that ﬂagella are not
+as advantageous
+in the mature gut. In
+support of this,
+unﬂagellated strains have been shown to be poorer colonizers
+of chickens’ gastrointestinal tracts than ﬂagellated strains33, and a
+positive relationship has been drawn between motility and
+bacterial transmission34. Second, the increase over time in
+predicted sporulating ability (Fig. 2j, Supplementary Figure 3)
+may reﬂect the long-term advantages of being able to disperse
+ARTICLE
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+2
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+among hosts and/or persist within hosts in a dormant state
+during stressful conditions24,35. As succession proceeds and the
+gut environment becomes increasingly anoxic, obligate anaerobes
+gain a competitive advantage over facultative anaerobes because
+they do not need to maintain the machinery for tolerating
+oxidative stress. However, this advantage comes at the cost of
+being more vulnerable to oxidative stress while dispersing
+through oxic environments to colonize new hosts. Sporulating
+taxa circumvent this potential tradeoff by traversing oxic
+environments as oxygen-tolerant spores, and then thriving in
+the gut as anaerobes. The observed increase of sporulating taxa
+over gut community development, both in total abundance
+(Fig. 2j) and OTU richness (Supplementary Figure 3), likely
+reﬂects the steady arrival and successful colonization of these taxa
+well-adapted for the anoxic gut environment.
+The mean predicted number of 16S rRNA gene copies, a
+genomic trait associated with the ability to quickly exploit
+available resources due to higher maximum potential growth
+rates36, decreased steadily in gut microbiomes over time (Fig. 2a).
+A decrease in mean 16S rRNA gene copy number over time is
+characteristic of primary succession in microbial systems that are
+initially rich in resources8, such as a vial of sterile nutrient broth
+placed in an open-air environment37. However, a decrease in
+mean 16S rRNA gene copy number could also arise if faster-
+growing taxa thrive on easily-digested milk or formula, the
+primary carbon source during early succession, and slower-
+growing taxa only begin to thrive as the primary carbon source
+shifts toward increasingly complex molecules derived from solid
+food. In either case, the decrease in mean 16S rRNA gene copy
+number over time likely reﬂects a shift from taxa capable of rapid
+low-efﬁciency growth to slower high-efﬁciency growth over
+succession23,38.
+Many predicted traits correlated signiﬁcantly among taxa
+(Supplementary Figure 2). The strongest positive correlations
+were between gene number and genome size, genome size and
+B-vitamin pathway number, and sporulation and Gram-
+positive status, while the strongest negative correlations were
+between optimal growth temperature and oxygen tolerance,
+Gram-positive status and B-vitamin pathway number, and GC
+content and 16S rRNA gene copy number. The remaining
+Pearson correlation coefﬁcients were less than 0.6 or greater
+than −0.6. On one hand, correlations among traits are
+noteworthy because they may be independent indicators of a
+taxon’s position on the same ecological tradeoff axis (i.e., they
+may constitute a trait syndrome). For example, the negative
+correlation observed between sporulation score and oxygen
+tolerance may be because these traits provide two alternative
+methods of dealing with oxidative stress, either by becoming
+metabolically dormant until oxidative stress is relaxed, or by
+carrying the cellular machinery to tolerate it, respectively. On
+the other hand, correlations among traits may simply be
+artifacts of arbitrary genomic linkage, and not independent
+instances of evolutionary adaptation. As such, the mechanisms
+we invoke as possible explanations for the trait-based patterns
+observed in this study are merely hypotheses which hopefully
+spur further experimental work.
+0.0
+0.2
+0.4
+0.6
+Relative abundance
+Early successional
+a
+All others
+Clostridiaceae
+Veillonellaceae
+Lachnospiraceae
+Bifidobacteriaceae
+Bacteroidaceae
+Early successional
+b
+0.0
+0.2
+0.4
+0.6
+Relative abundance
+Mid−successional/no trend
+c
+All others
+Ruminococcaceae
+Alcaligenaceae
+Porphyromonadaceae
+Lachnospiraceae
+Bacteroidaceae
+Mid−successional/no trend
+d
+0.0
+0.2
+0.4
+0.6
+0
+10
+20
+30
+Months after birth
+Relative abundance
+Late successional
+e
+All others
+Clostridiaceae
+Veillonellaceae
+Lachnospiraceae
+Bifidobacteriaceae
+Bacteroidaceae
+0.0
+0.1
+0.2
+0.3
+Relative abundance across all samples
+Late successional
+f
+Fig. 1 OTU abundances over gut succession. OTUs were placed into one of three successional groups based on their average trends in abundance
+across 56 infants over development. Taxa were categorized as early successional if their abundances increased signiﬁcantly over time (p < 0.05), and late
+successional if their abundances decreased signiﬁcantly over time, based on linear regressions; OTUs that did not trend signiﬁcantly over time were placed
+into a mid-successional or no-trend category. a, c, and e Combined relative abundances of the OTUs of each successional category over time. b, d, and
+f The ﬁve most commonly-represented families among the OTUs of each successional category, and their total relative abundances over the entire
+sampling period
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+ARTICLE
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+3
+To explore how early arrival of different taxa could affect the
+trajectory of gut succession, we compared trait-based successional
+patterns of infants delivered vaginally and by C-section (Fig. 3).
+We reasoned that any consistent community differences between
+the two groups of infants would likely arise due to differences in
+early colonization, i.e., because infants born vaginally were
+initially colonized by taxa from the mother during delivery, and
+infants born by C-section were initially colonized by a different
+cohort of taxa arriving from the ambient environment (e.g., the
+mother’s skin, hospital surfaces). Notable trait-based differences
+between the microbiomes in C-section infants, relative to those in
+vaginally delivered infants, were initially elevated numbers of
+Gram-positive taxa (Fig. 3f), and prolonged persistence of
+oxygen-tolerant taxa (Fig. 3i). There were also initially elevated
+mean 16S rRNA gene copy numbers (Fig. 3a) and initially higher
+prevalence of ﬂagellated taxa (Fig. 3h) in C-section infants,
+relative to vaginally born infants, but these differences were not
+statistically signiﬁcant after accounting for multiple comparisons.
+At minimum, these results suggest that taxa encountered by
+infants during vaginal delivery are functionally distinct from
+those encountered by infants after C-section delivery in the
+hospital environment. More interestingly, however, they suggest
+that gut colonization patterns differ depending on the composi-
+tion of the initial pool of colonizing taxa. Signiﬁcant trait-based
+compositional differences by birth mode persisted for up to 2
+years (Fig. 3i), corroborating previous research showing that
+differences in early colonization can have lasting effects on
+community composition39,40, a phenomenon also termed priority
+effects41,42. On the other hand, sustained trait-based differences
+between infants by delivery mode are surprising, given recent
+work that found strong selective forces to quickly discourage the
+growth of immigrant taxa from the mother’s skin or birth canal;43
+hence, our ﬁndings suggest that the persistent differences by birth
+mode may result from a lack of arrival (i.e., dispersal limitation)
+of gut-adapted taxa from the mother, rather than qualitatively
+different community ﬁlters among infants.
+Exposure to antibiotics was associated with consistent trait-
+based shifts in gut microbiome composition (Fig. 3). Speciﬁcally,
+infants exposed to repeated antibiotic treatments had gut taxa
+that were on average less likely to be Gram-positive (Fig. 3f),
+smaller (Fig. 3g), and less capable of sporulation (Fig. 3j) than
+infants exposed to no antibiotics. Decreases in the relative
+5.25
+5.50
+5.75
+6.00
+16S gene copies (#)
+a
+5.0
+5.5
+6.0
+B vitamins (#)
+b
+44
+45
+46
+47
+48
+GC content (%)
+c
+3400
+3600
+3800
+4000
+Gene number (#)
+d
+3.6
+3.8
+4.0
+4.2
+4.4
+Genome size (Mb)
+e
+0.3
+0.4
+0.5
+Gram−positive (%)
+f
+0.85
+0.90
+0.95
+1.00
+Length (log [µm])
+g
+0.2
+0.3
+Motility (%)
+h
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+O2 tolerance score
+i
+0.100
+0.125
+0.150
+0.175
+0.200
+3
+9
+15
+21
+27
+33
+Sporulation score
+j
+35
+36
+37
+3
+9
+15
+21
+27
+33
+Temp. optimum (°C)
+k
+−0.35
+−0.30
+−0.25
+−0.20
+3
+9
+15
+21
+27
+33
+Width (log [µm])
+l
+Months after birth
+Fig. 2 Abundance-weighted trait means over gut succession. Filled red circles show average abundance-weighted means of predicted trait values of gut
+microbiomes of up to 56 infants in each month of development (a-l). N is equal to the number of samples in each month, and ranges from 27 to 59.
+Vertical red lines show 95% conﬁdence intervals. Black trendlines were ﬁt using generalized additive models
+ARTICLE
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+4
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+abundances of Gram-positive taxa over time is arguably expected
+given that Gram-positive taxa lack the protective outer membrane
+that make Gram-negative bacteria generally more resistant to
+antibiotics44. The drop in mean predicted sporulation score is less
+expected, given that spores are generally very resistant to
+antibiotics24. However, spore formation is far from the only
+mechanism of antibiotic tolerance in Bacteria, and other strategies
+may be more effective for survival in the gut environment. For
+instance, antibiotic treatments usually result in decreases in the
+relative abundances of spore-forming taxa in the class Clostridia,
+and increases in the relative abundances of non-spore-forming
+taxa in the family Enterobacteriaceae32. More generally, con-
+sistent with prior work45, the persistent differences in trait-based
+community composition between infants that underwent heavy
+antibiotic treatments and those that did not suggests that these
+disturbances can exert long-term effects on community structure
+and function.
+Trait variances within infant gut communities decreased over
+time in seven traits, and increased over time only in three traits
+(Supplementary Figure 4). The overall decrease in trait-based
+variance
+over
+time
+indicates
+that
+individuals
+of
+the
+gut
+community became more functionally homogeneous with respect
+to the traits examined in this study, perhaps due to increasingly
+strict environmental ﬁltering processes46 and/or competitive
+exclusion of poorly adapted taxa47.
+Comparing taxonomic and trait-based successional patterns.
+To evaluate the degree to which taxonomic changes aligned with
+trait-based changes, we compared taxonomic and trait-based
+5.5
+6.0
+6.5
+16S gene copies (#)
+a
+**
+5
+6
+7
+B vitamins (#)
+b
+43
+44
+45
+46
+47
+48
+GC content (%)
+c
+3400
+3600
+3800
+4000
+Gene number (#)
+d
+3.7
+3.9
+4.1
+4.3
+Genome size (Mb)
+e
+**
+*
+0.3
+0.4
+0.5
+Gram−positive (%)
+f
+*
+*
+0.90
+0.95
+1.00
+1.05
+Length (log [µm])
+g
+*
+0.2
+0.3
+0.4
+0.5
+Motility (%)
+h
+**
+1.2
+1.4
+1.6
+O2 tolerance score
+i
+*
+* **
+0.125
+0.150
+0.175
+0.200
+0.225
+3
+9
+15
+21
+27
+33
+Sporulation score
+j
+* ** *
+*
+35
+36
+37
+38
+3
+9
+15
+21
+27
+33
+Temp. optimum (°C)
+k
+−0.3
+−0.2
+3
+9
+15
+21
+27
+33
+Width (log [µm])
+l
+Months after birth
+
+Control
+Antibiotics
+C−section
+Fig. 3 Trait-based successional patterns differ by delivery mode and antibiotic history. Abundance-weighted means of predicted trait values of infant
+microbiomes over succession, grouped by infant delivery mode and antibiotic history (a-l). Filled circles show average abundance-weighted trait means of
+samples within 6-month periods in each cohort of infants. N is equal to the number of samples in each 6-month period; there were between 25 to 31 total
+samples from six infants delivered by C-section who received little to no antibiotics ("C-section" group), 66–91 total samples from 18 infants who were
+treated with antibiotics for at least 50 days ("Antibiotics" group), and 72–93 total samples from 18 control infants that were delivered vaginally and
+received no antibiotics ("Control" group). Vertical lines show 95% conﬁdence intervals. Asterisks denote signiﬁcance based on Welch t tests performed
+between each treatment group and the control group (*: adjusted p < 0.05; **: adjusted p < 0.01; ***: adjusted p < 0.001)
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+ARTICLE
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+5
+turnover over time within infants, both in terms of short-term
+compositional variability (measured as the dissimilarity between
+subsequent samples) and long-term directional turnover (mea-
+sured as the dissimilarity between each sample and the ﬁnal
+sample collected). Compositional variability was higher in the
+ﬁrst year of development, both in terms of OTUs (Fig. 4a) and
+predicted traits (Fig. 4c), than in the second or third years of
+development. A decrease in compositional variability over time is
+a classical feature of many ecological successional systems48. To
+evaluate whether trait-based compositional variability was higher
+or lower than expected by chance, given the magnitudes of
+taxonomic variability observed, we compared observed patterns
+to predictions from null model simulations for which trait values
+were randomly shufﬂed among taxa and trait-based composi-
+tional variability was re-calculated (see Methods). In other words,
+we calculated what trait-based compositional variability would
+look like if the traits in our study were completely decoupled from
+taxon performance. Differences between observed and null
+model predictions were neither large nor signiﬁcant (Fig. 4c),
+suggesting that the traits in our study had little inﬂuence on
+compositional variability over succession.
+An analysis of directional turnover over succession revealed
+that infant gut communities matured and stabilized faster in their
+trait-based compositions than in their OTU-based compositions.
+Speciﬁcally, OTU-based directional turnover was relatively steady
+across all 3 years of study (Fig. 4b), whereas trait-based
+directional turnover was high only in the ﬁrst year (Fig. 4d)
+before dropping to nearly-baseline levels of trait-based composi-
+tional variability (Fig. 4c). Trait-based directional turnover
+signiﬁcantly exceeded null model predictions of trait-agnostic
+turnover (Fig. 4d), suggesting that infant gut microbiomes
+stabilize (i.e., cease to exhibit directional turnover) in terms of
+traits and their associated functions sooner than they stabilize in
+terms of OTUs, aligning with previous metagenomic work30. The
+fact that OTU-based directional turnover continued steadily over
+the ﬁrst 3 years of infant development despite a relative slowing of
+trait-based directional turnover after the ﬁrst year indicates that
+late-stage OTU-based turnover was functionally redundant with
+respect to the traits examined in this study. Functionally
+redundant turnover could arise due to variable immigration rates
+(i.e., if functionally redundant taxa immigrated into the gut at
+variable rates over time), or due to ecological drift (i.e., if
+0.4
+0.6
+0.8
+1.0
+3
+9
+15
+21
+27
+33
+Months after birth
+OTU−based dissimilarity
+to next sample
+a
+0.4
+0.6
+0.8
+1.0
+3
+9
+15
+21
+27
+33
+Months after birth
+OTU−based dissimilarity
+to final sample
+b
+2.0
+3.0
+4.0
+5.0
+6.0
+3
+9
+15
+21
+27
+33
+Months after birth
+Trait−based dissimilarity
+to next sample
+c
+*
+*** **
+***
+2.0
+3.0
+4.0
+5.0
+6.0
+3
+9
+15
+21
+27
+33
+Months after birth
+Trait−based dissimilarity
+to final sample
+d
+Observed
+Null model
+Fig. 4 Trait-based composition stabilizes earlier than taxonomic composition. Filled circles show mean pairwise compositional dissimilarities of gut
+microbiome samples collected from individual infants, averaged within 6-month periods for each infant, and then across infants. OTU-based dissimilarity
+was calculated using Bray–Curtis dissimilarity. Trait-based dissimilarity was calculated using multidimensional Euclidean distance after scaling the
+distributions of values for each trait to ensure equal contribution. a Mean OTU-based dissimilarity between subsequent samples declines slightly over time.
+b Mean OTU-based dissimilarity between samples and the ﬁnal samples taken from each infant decreases steadily throughout the sampling period until
+ﬁnally reaching baseline levels of between-sample dissimilarity in the last 6-month period, seen in a. c Mean trait-based dissimilarity between subsequent
+samples appears elevated in the ﬁrst year, but does not differ signiﬁcantly from null model predictions that assume trait-agnostic turnover (see Methods).
+d Mean trait-based dissimilarity between samples and the ﬁnal samples taken from each infant decreases rapidly and approaches baseline levels of
+between-sample dissimilarity within the ﬁrst year, seen in c. Moreover, trait-based community composition converges toward that of the ﬁnal sample
+signiﬁcantly faster than null model expectations, illustrating the non-random nature of trait-based community turnover over succession. In all panels,
+N equals 56, the number of infants. Vertical lines show 95% conﬁdence intervals. Asterisks denote signiﬁcance between observed and null model
+predictions based on Welch t tests (*p < 0.05; **p < 0.01; ***p < 0.001)
+ARTICLE
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+6
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+functionally redundant taxa increased or decreased in relative
+abundances due to stochastic birth/death events). With respect to
+the latter: even though the gut community has a large number of
+individuals (i.e., cells), which, all else being equal, makes it less
+susceptible to ecological drift49, many of its constituent taxa are
+rare and therefore still vulnerable to stochastic variation in their
+relative population sizes over time. Future work should quantify
+immigration rates, and consider other traits as potential drivers of
+late-stage successional community turnover, such as those
+relating to metabolism of speciﬁc dietary compounds50, cross-
+feeding6, or phage-host interactions51.
+Compositional differences across microbiomes. Surprisingly,
+gut community compositions became more similar (i.e., con-
+verged) across infants as they matured (Fig. 5). This ran counter
+to our expectations that gut community compositions would
+diverge as infants shifted from subsisting on milk and/or formula
+(i.e., simple substrates with low resource variability expected
+among hosts) to solid foods (i.e., complex substrates with higher
+resource variability expected among hosts), and as interactions
+between infants and their idiosyncratic home environments
+accumulated
+over
+time.
+Compositional
+convergence
+across
+infants over development may reﬂect a process whereby a sto-
+chastic cohort of initial taxa colonize infant guts but are gradually
+replaced, or supplemented with, taxa better suited for the gut
+environment. Such initial compositional differences among
+infants could be generated by stochastic colonization dynamics,
+differences in the pool of potential immigrants from the infants’
+mothers, or a combination of the both. Regardless, it is likely that
+gut community convergence across infants over development is
+partly due to the delayed arrival of taxa well-adapted for the gut
+environment, i.e., dispersal limitation.
+Compositional convergence among infant gut communities
+was more pronounced and abrupt in terms of traits (Fig. 5b) than
+in OTUs (Fig. 5a), which converged only slightly and gradually
+over time. Trait-based rates of convergence signiﬁcantly exceeded
+null model expectations of trait-agnostic convergence (Fig. 5b),
+indicating that trait-based convergence was not random with
+respect to the traits examined in this study. This discrepancy
+between OTU-based and trait-based patterns of convergence
+among infants leads to two insights. First, it is another reminder
+that microbial communities with different OTU-based composi-
+tions do not necessarily differ in their functional potentials30,52.
+Second, it means that community succession can be more
+predictable with respect to traits than OTUs. Once again, these
+results indicate that OTU-based turnover over late succession is
+largely functionally redundant with respect to the traits examined.
+Functional redundancy among gut microbiome taxa may beneﬁt
+the host by improving community resilience in response to
+disturbance53. Interestingly,
+mean compositional differences
+among infants born by C-section were, on average, greater both
+in terms of OTU-based and trait-based dissimilarity (Supple-
+mentary Figure 5). Such differences could arise if the taxa to
+which C-section infants are initially exposed are more taxono-
+mically and functionally variable than the taxa to which vaginally
+delivered infants are exposed.
+Discussion
+As in the ecological studies of macroorganisms, trait-based ana-
+lysis of gut microbiome succession offers insights into the
+mechanisms of community assembly, such as dispersal limitation
+and ecological ﬁltering, and the balance between stochastic and
+deterministic forces. The stabilization of trait-based community
+composition after the ﬁrst year of development (Fig. 4), and the
+drop in variance of predicted trait values in gut communities for
+most traits over time (Supplementary Figure 4), both suggest that
+succession is at least partially functionally deterministic, with
+early dynamics potentially reﬂecting stochastic colonization
+during the birthing process, followed by the gradual colonization
+and enrichment of a more functionally uniform cohort of taxa
+better adapted for the mature gut environment. Rates of OTU-
+based directional turnover remained steady over the ﬁrst 3 years
+of succession (Fig. 4b), even though trait-based directional
+turnover essentially stabilized after only 1 year (Fig. 4d), under-
+scoring the fact that OTU-based compositional changes need not
+imply changes in trait-based composition54. However, there are
+0.0
+0.2
+0.4
+0.6
+0.8
+3
+9
+15
+21
+27
+33
+Months after birth
+OTU−based dissimilarity
+among infants
+a
+***
+**
+*** ***
+0
+2
+4
+6
+3
+9
+15
+21
+27
+33
+Months after birth
+Trait−based dissimilarity
+among infants
+b
+Observed
+Null model
+Fig. 5 Infants’ microbiomes converge compositionally over time. Filled circles show mean compositional dissimilarities of gut microbiomes across infants
+within each 6-month periods. Mean dissimilarities were calculated by ﬁrst taking the mean dissimilarity of all sample pairs, except those from the same
+infant, in each of the ﬁrst 36 months of development (for these means, N ranges from 88 to 3410), and then taking their means within each 6-month
+period; hence, for each circle, N equals 6. OTU-based dissimilarity was calculated using Bray–Curtis dissimilarity. Trait-based dissimilarity was calculated
+using multidimensional Euclidean distance after scaling the distributions of values for each trait to ensure equal contribution. a OTU-based dissimilarity
+among infants decreased slightly over time, indicating a modest convergence in taxonomic composition. b Trait-based dissimilarity among infants fell
+quickly over the ﬁrst 18 months and then remained relatively static thereafter, indicating rapid convergence in trait-based composition during early
+succession. The magnitude of trait-based compositional convergence across infants was signiﬁcantly greater than predicted by a null model assuming trait-
+agnostic turnover. Vertical lines show 95% conﬁdence intervals. Asterisks denote signiﬁcance between observed and null model predictions based on
+Welch t tests (*p<0.05; **p<0.01; ***p<0.001)
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+ARTICLE
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+7
+surely aspects of community assembly that cannot be understood
+using only the traits used in this study, and future work should
+expand the number of traits considered. Moreover, because our
+study is observational, we cannot distinguish between an OTU
+that fails to disperse to a potential host and an OTU that arrives
+but fails to establish, so future research should also explore the
+relationship between OTU arrival and detection in fecal samples
+to better disentangle dispersal limitation and niched-based dif-
+ferences among taxa.
+Comparisons of trait-based patterns between cohorts of infants
+are an opportunity to understand the effects of speciﬁc events
+(e.g., delivery mode, antibiotic exposure), and serve as natural
+experiments that can reveal how gut communities respond to,
+and recover from, systematic disturbances. In our analysis, for
+example, delivery mode resulted in sustained differences in
+community composition, indicating that priority effects can play
+an important role in gut community assembly41,42, a result that
+likely extends to other types of disturbance during early life, such
+as gastrointestinal illness or malnutrition. Similarly, repeated
+antibiotics treatments led to signiﬁcant differences in trait-based
+community compositions (Fig. 3), suggesting that gut commu-
+nities are not inﬁnitely functionally resistant and/or that tradeoffs
+exist between antibiotic resistance and other traits52. Under-
+standing trait-based differences between other cohorts, such as
+healthy versus diseased55, or on and off speciﬁc diets56, could
+provide insight into additional factors shaping gut microbiome
+community assembly. For example, the unhealthy, dysbiotic gut
+may have a higher prevalence of microaerobic and bioﬁlm-
+forming species57, a difference that could be detected using trait-
+based analyses. Trait-based approaches, which link organismal
+structures to ecological functions, are poised to advance our
+mechanistic understanding of the gut microbiome, and their
+usefulness will only increase as we improve our knowledge of how
+traits mediate microbial interactions and as we increase the depth
+and breadth of microbial trait databases.
+Methods
+Infant microbiome sampling and sequence processing. Our foremost aim in this
+study was to characterize general patterns of gut primary succession that hold true
+regardless of host-related differences. As such, unless otherwise noted, we include
+all infants in our analyses, regardless of delivery mode or other host differences
+speciﬁc to each included study. Longitudinal infant gut microbiome data were
+compiled from two studies from the DIABIMMUNE study group (https://pubs.
+broadinstitute.org/diabimmune), one focused on the effects of antibiotics on gut
+community development28, and the other focused on the effects of type-1 diabetes
+on gut community development27. In the antibiotics study, infants either had nine
+or more antibiotic on gut community development courses, or no antibiotic
+courses28. In the type-1 diabetes study, infants tested positive for HLA DR-DQ
+alleles conferring risk of type-1 diabetes; of the infants which met our sampling
+criteria (see below), three developed type-1 diabetes during the sampling period27.
+Stool samples of infants were collected by participants’ parents and stored in
+their house freezers until the next scheduled visit to the local study center. Samples
+were then shipped on dry ice to the DIABIMMUNE Core Laboratory, where they
+were stored at −80 °C until being sent to the Broad Institute for DNA extraction
+and 16S rRNA amplicon sequencing. Sequencing was performed on the Illumina
+HiSeq 2500 platform using the 515 F and 806 R primers. Of 74 infants across the
+two studies, only those with at least 12 samples and those which extended more
+than 30 months were used in this study, yielding 56 infants with 12–36 sampling
+points (mean = 26.45; median = 27) taken at semi-regular intervals over the ﬁrst 3
+years of infant life (Supplementary Figure 6). All subjects were from Finland,
+except one from Estonia.
+Infants varied in their modes of delivery and antibiotic histories, providing an
+opportunity to explore the potential effects of these natural experiments on trait-
+based gut community composition. To this end, infants were divided into three
+groups: (1) high antibiotic exposure (n = 18), if they underwent at least 50 days of
+antibiotic treatment and were delivered vaginally, (2) C-section delivery (n = 6), if
+they were delivered by C-section and underwent two or fewer rounds of antibiotics,
+and (3) a control group that was delivered vaginally and received no antibiotic
+treatments (n = 18). In some instances, antibiotic treatment durations were not
+reported, in which case we assumed 7 days per treatment. Twelve types of
+antibiotics were administered for a variety of ailments, with the most common
+being amoxicillin, trimethoprim, and sulfadiazine aimed at treating acute ear
+infections. Infant metadata, drawn from the two studies from which sequence data
+for this study are drawn27,28, is available in Supplementary Data 1.
+Sequence processing was done using USEARCH version 10.0.24058. Raw
+sequencing data were downloaded from the DIABIMMUNE website https://pubs.
+broadinstitute.org/diabimmune/. Chimeras and reads ﬂagged with more than one
+error were excluded, and the remaining reads were truncated to 250 bp, the
+expected overlap when using 515 F and 806 R primers. Reads were clustered into
+OTUs at 97% sequence identity using the UPARSE-OTU algorithm
+(Supplementary Data 2). Representative sequences from each OTU were mapped
+to the SILVA v123 database59 to determine potential taxonomic identities
+(Supplementary Data 3). To avoid bias in sampling effort, samples were rareﬁed to
+5,000 sequences, and seven samples with fewer than 5000 sequences were removed.
+Assembling trait data. We compiled data on 16 genomic, physiological, and life
+history traits of bacteria from public databases and individual studies (Table 1,
+Supplementary Data 4). Trait data were only included if they were explicitly
+associated with taxa with full Latin binomials (i.e., Genus and Species labels) and
+also appeared either in our SILVA-derived taxonomy ﬁle for the combined gut
+community samples or in the curated taxonomy ﬁle from the 132 release of the
+Living Tree Project29. Altogether, these amounted to 57,543 collected trait data
+spread across 10,906 taxa. When a taxon had more than one trait value, the mean
+or mode was used, depending on whether the trait was quantiﬁed continuously or
+discretely.
+Descriptions and data sources for each trait are listed brieﬂy in Table 1, but here
+we elaborate with a few additional details: (1) the numbers of B-vitamin synthesis
+pathways in the genome were drawn from ref. 60 and are based on genome
+annotations from the pubSEED platform61. (2) In some cases, optimal temperature
+was calculated as the mean of lower and upper temperature ranges, consistent with
+ref. 26. (3) IgA binding afﬁnity refers to the degree that immunoglobulin A bound
+to speciﬁc bacterial taxa, and was quantiﬁed using an IgA coating index calculated
+in ref. 62 using ﬂow-cytometry-based bacterial cell sorting and 16S rRNA
+sequencing to characterize the coating load of IgA on speciﬁc taxa from fecal
+samples in a murine model. (4) Sporulation score indicates the tendency of taxa to
+sporulate, and was calculated in ref. 24 as a continuous score ranging from zero to
+one that depended on a combination of targeted phenotypic culturing and whole-
+genome sequencing from stool samples. When possible, we used sporulation scores
+from ref. 24. When sporulation scores from ref. 24 were unavailable for a given
+Latin binomial, we drew on sporulation data from other repositories (Table 1),
+which were generally binary, either noting the presence or absence of spores; in
+cases when spores were present, taxa were given sporulation scores of 0.549, equal
+to the median sporulation score of the taxa with sporulation scores greater than
+zero in ref. 24; when spores were not observed, taxa were given sporulation scores of
+zero.
+Predicting unknown trait data. We estimated unknown trait data using hidden
+state prediction methods based on phylogenetic inference (Supplementary Data 5).
+Speciﬁcally, we generated a phylogenetic tree with the 3311 OTUs from our
+USEARCH pipeline (before any taxa were lost due to rarefying) and the 13,900
+OTUs from the 132 release of the Living Tree Project (LTP)29 (Supplementary
+Figure 7; Supplementary Data 6). The topology of the tree reﬂects percent sequence
+similarity among taxa in the 16S rRNA V4 region, and was generated using
+agglomerative clustering of a distance matrix based on the U-sort heuristic58.
+Because LTP representative sequences were of the entire 16S rRNA gene (i.e., the
+ribosomal small subunit), they were truncated to the 250 bp of the V4 region using
+515 F and 806 R primer sequences before generating the distance matrix. Trait data
+were then mapped onto the tips of the phylogenetic tree with Latin binomials. The
+LTP database was uniquely well-suited to interface with literature-derived trait data
+because each sequence represents a type strain with Genus and Species annotations
+drawn from the literature, not inferred phylogenetically.
+Missing trait values were estimated using three hidden state prediction
+algorithms: independent contrasts, subtree averaging, and weighted squared-
+change parsimony, each calculated using the R package Castor version 1.3.463. The
+three methods have different strengths and weaknesses63,64, but their predictions
+correlated strongly (Supplementary Table 1), lending conﬁdence to our results. We
+ultimately used weighted square-change parsimony for our analysis, which
+recursively calculates locally parsimonious states for each node based on its
+descending subtree, until reaching a parsimonious state estimate for the tree root65.
+Because all curated trait data were either numeric or converted to numeric (e.g.,
+Gram-negative = 0 and Gram-positive = 1), state predictions for discrete traits
+could be fractional (e.g., a Gram-positive score of 0.5), reﬂecting their probabilistic
+uncertainty.
+Methods of hidden state prediction offer estimates for all taxa with hidden
+states, even when there is not sufﬁcient conﬁdence to warrant estimation. To
+mitigate this, we discarded predictions that were statistically no better than
+random. More speciﬁcally, for each trait, we ﬁrst pruned the full phylogenetic tree
+so that only OTUs (i.e., tree tips) with direct trait observations remained. Next, we
+calculated differences in trait values for up to 10,000 randomly selected OTU pairs
+within each 0.005 increment of phylogenetic distance (i.e., percent 16S rRNA
+V4 sequence similarity). Five generic models were then used to predict average trait
+differences between OTU pairs, jyj, as a function of phylogenetic distance, x, and
+ARTICLE
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+8
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+the best ﬁtting model was selected by AIC. The models included: (1) Null: jyj  1;
+(2) Linear regression: jyj  x; (3) Logarithmic regression: jyj  logðxÞ; (4)
+Asymptotic regression: jyj  að1  eðebxÞÞ, where a and b were determined using a
+self-starting nonlinear least squares approach, and the model ﬁt was constrained to
+pass through the origin; and (5) Logistic regression: jyj 
+a
+1þeðbx
+c Þ, where a, b, and c
+were determined using a self-starting nonlinear least squares approach. Null
+models provided the best ﬁt for aggregation score, IgA binding afﬁnity, pH
+optimum, and salt optimum, indicating that for these traits, trait values should not
+be estimated at any phylogenetic distance. For the remaining 12 traits, we identiﬁed
+the phylogenetic distances at which the values of each trait were no longer
+evolutionarily conserved, i.e., when model-predicted trait differences between OTU
+pairs were no different than null expectations. We deﬁned null expectations as the
+mean trait difference of all OTU pairs with more than 0.1 phylogenetic distance
+between them. We only predicted traits of OTUs when there were taxa with known
+(i.e., literature-derived) trait values within trait-speciﬁc thresholds of phylogenetic
+distance; we deﬁned these thresholds as the points at which model predictions rose
+to 90% of null expectations (Table 2; refer to Supplementary Figure 8 for a
+graphical rendering of the approach). Of the traits that were amenable to hidden
+state prediction, coverage ranged from 78.7% (16S rRNA gene copy number) to
+99.9% (temperature optimum) of sequences used in this study (Supplementary
+Figure 9). We assessed statistical independence among traits predictions using
+Pearson correlation coefﬁcients; p-values were adjusted for multiple comparisons
+using the Benjamini–Hochberg procedure.
+Trait-based successional patterns within and across infants. Trait-based suc-
+cessional patterns were evaluated at both the OTU-level and the community level
+(i.e., on the level of individual samples). For the OTU-level analysis, OTUs were
+placed into one of three groups based on results of linear models of OTU abun-
+dances over time across all infants: OTUs with signiﬁcant negative trends in
+abundance over time (p < 0.05, β<0) were categorized as early successional; OTUs
+with signiﬁcant positive trends in abundance over time (p < 0.05, β > 0) were
+categorized as late successional; otherwise, taxa were placed into a third category
+that included OTUs with sporadic, unvarying, or hump-shaped patterns of
+abundance over time. Statistical differences in the predicted trait values of OTUs in
+the three groups were evaluated with Welch t tests; p-values were adjusted for
+multiple comparisons using the Benjamini–Hochberg procedure.
+Trait-based differences at the community level were quantiﬁed using CWMs. A
+CWM is the mean trait value of the OTUs in a community, weighted by their
+relative abundances. Here, a CWM is formally equal to PS
+i¼1 pixi, where pi is the
+abundance of OTU i (i = 1, 2, …S), and xi is the trait value for OTU i. We used
+Welch t tests to test for differences in CWMs between infants treated with and
+without antibiotics, and infants delivered by C-section and vaginally, for each 6-
+month period of infant development; p-values were adjusted for multiple
+comparisons using the Benjamini–Hochberg procedure.
+Comparison of taxonomic and trait-based turnover. We quantiﬁed differences
+in microbiome community compositions in two ways. First, we used Bray–Curtis
+dissimilarity to quantify differences in the OTU-based compositions of samples66.
+Second, we quantiﬁed trait-based differences among communities with multi-
+dimensional Euclidean distance67. Speciﬁcally, Euclidean distance between two
+communities was calculated by (1) scaling predicted trait values by their standard
+deviations to give each trait equal weight, (2) calculating the CWMs of each trait
+for both communities, and then (3) using the Pythagorean theorem to determine
+the distance between the two communities in n-dimensional trait space.
+We examined OTU-based and trait-based community changes over time in two
+ways. First, to quantify changes in short-term compositional variability over infant
+development, we examined compositional differences of subsequent samples from
+the same infant, at intervals approximately between 1 to 3 months. Second, to
+quantify rates of long-term directional turnover over infant development, we
+examined compositional differences between samples and the ﬁnal sample from
+each infant. To determine whether trait-based rates of compositional variability
+and directional turnover exceeded those expected by chance, we compared
+observed rates of trait-based turnover to null models of trait-agnostic community
+change. Speciﬁcally, we generated 1000 mock versions of our data with trait values
+randomly shufﬂed among OTUs, and recalculating pairwise sample dissimilarities.
+In other words, null models reﬂect what trait-based turnover would have been if
+organismal traits were unrelated to performance. We tested for statistical
+differences between observed and null turnover rates within 6-month periods using
+Welch t tests.
+To determine if community composition converged or diverged across infants
+as development progressed, we divided samples into 1-month slices and calculated
+mean OTU-based and trait-based distances for all pairwise combinations of
+samples, excluding pairs of samples from the same infant. To determine whether
+Table 2 Maximum phylogenetic distances used to infer trait
+values
+Trait
+Max. distance
+Aggregation score
+0.00
+B vitamins
+0.06
+16S gene copies
+0.05
+GC content
+0.12
+Gene number
+0.08
+Genome size
+0.09
+Gram-positive
+0.10
+IgA binding afﬁnity
+0.00
+Length
+0.12
+Motility
+0.08
+Oxygen tolerance
+0.11
+pH optimum
+0.00
+Salt optimum
+0.00
+Sporulation score
+0.06
+Temperature optimum
+0.14
+Width
+0.12
+Percent sequence dissimilarities (i.e., phylogenetic distances) in the 16S rRNA V4 region at
+which statistical support for trait conservatism disappears for each trait (see Methods and
+Supplementary Figure 9)
+Table 1 Sources of trait data gathered in this study
+Trait
+Description/units
+Sources
+Aggregation score
+0 (never) to 1 (observed aggregation)
+BacDive25; IJSEM26
+B vitamins
+No. B-vitamin pathways in genome
+Ref. 60
+16S gene copies
+No. in 16S rRNA gene copies in genome
+rrnDB68
+GC content
+Percent guanine and cytosine in genome
+IJSEM26; NCBI69
+Gene number
+No. genes in genome
+NCBI69
+Genome size
+Genome size in megabases
+NCBI69
+Gram-positive
+0 (Gram-negative) to 1 (Gram-positive)
+BacDive25; GOLD70; IJSEM26
+IgA binding afﬁnity
+log ([IgA+]/[IgA–] + 1)
+Ref. 62
+Length
+log (μm)
+BacDive25; GOLD70; IJSEM26
+Motility
+0 (never motile) to 1 (always motile)
+BacDive25; GOLD70; IJSEM26
+Oxygen tolerance
+0 (obligate anaerobe) to 5 (obligate aerobe)
+BacDive25; GOLD70; IJSEM26
+pH optimum
+pH
+GOLD70; IJSEM26
+Salt optimum
+g per l
+IJSEM26
+Sporulation score
+0 (never sporulates) to 1 (sporulates easily)
+BacDive25; GOLD70; IJSEM26; ref. 24
+Temperature optimum
+°C
+IJSEM26
+Width
+log (μm)
+BacDive; GOLD70; IJSEM26
+IgA: immunoglobulin A, BacDive: bacterial diversity metadatabase, IJSEM: International Journal of Systematic and Evolutionary Microbiology, GOLD: Genomes OnLine Database: Joint Genome Institute,
+NCBI: National Center for Biotechnology Information, rrnDB: the ribosomal RNA operon copy number database
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+ARTICLE
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+9
+observed rates of trait-based compositional convergence/divergence across infants
+differed from those expected by chance, we compared our observations to null
+models of trait-agnostic community changes over time. Similar to our analysis of
+trait-based turnover within infants, null models were performed by randomly
+shufﬂing trait values among OTUs and recalculating pairwise sample
+dissimilarities. We tested for statistical differences between observed and null
+model rates of convergence within 6-month periods using Welch t tests.
+Data availability
+Raw sequencing data are available online at the NCBI project accession numbers
+PRJNA231909 and PRJNA290381. Custom scripts used in the bioinformatic
+pipeline and statistical analyses are available at: https:/github.com/ShadeLab/
+microbiome_trait_succession. All relevant data used in this study are included as
+Supplementary Data ﬁles, available at: https://ﬁgshare.com/projects/Trait-
+based_succession_of_the_infant_gut_microbiome/58202.
+Received: 28 June 2018 Accepted: 31 December 2018
+References
+1.
+Pickett, S. T. A., Collins, S. L. & Armesto, J. J. Models, mechanisms and
+pathways of succession. Bot. Rev. 53, 335–371 (1987).
+2.
+Tilman, D. Constraints and tradeoffs: toward a predictive theory of
+competition and succession. Oikos 58, 3 (1990).
+3.
+Lozupone, C. et al. Identifying genomic and metabolic features that can
+underlie early successional and opportunistic lifestyles of human gut
+symbionts. Genome Res. 22, 1974–1984 (2012).
+4.
+Leibold, M. A. et al. The metacommunity concept: a framework for multi-scale
+community ecology. Ecol. Lett. 7, 601–613 (2004).
+5.
+Bäckhed, F. et al. Dynamics and stabilization of the human gut microbiome
+during the ﬁrst year of life. Cell. Host. Microbe 17, 690–703 (2015).
+6.
+Belenguer, A. et al. Two routes of metabolic cross-feeding between
+Biﬁdobacterium adolescentis and butyrate-producing anaerobes from the
+human gut. Appl. Environ. Microbiol. 72, 3593–3599 (2006).
+7.
+Adair, K. L. & Douglas, A. E. Making a microbiome: the many determinants of
+host-associated microbial community composition. Curr. Opin. Microbiol. 35,
+23–29 (2017).
+8.
+Fierer, N., Nemergut, D., Knight, R. & Craine, J. M. Changes through time:
+integrating microorganisms into the study of succession. Res. Microbiol. 161,
+635–642 (2010).
+9.
+Ardissone, A. N. et al. Meconium microbiome analysis identiﬁes bacteria
+correlated with premature birth. PLoS ONE 9, 1–8 (2014).
+10. Fernández, L. et al. The human milk microbiota: origin and potential roles in
+health and disease. Pharmacol. Res. 69, 1–10 (2013).
+11. Round, J. L. & Mazmanian, S. K. The gut microbiota shapes intestinal immune
+responses during health and disease. Nat. Rev. Immunol. 9, 313–323 (2009).
+12. Li, H. et al. The outer mucus layer hosts a distinct intestinal microbial niche.
+Nat. Commun. 6, 8292 (2015).
+13. David, L. A. et al. Diet rapidly and reproducibly alters the human gut
+microbiome. Nature 505, 559–563 (2013).
+14. Vallès, Y. et al. Microbial succession in the gut: directional trends of
+taxonomic and functional change in a birth cohort of Spanish infants. PLoS.
+Genet. 10, e1004406 (2014).
+15. McGill, B. J., Enquist, B. J., Weiher, E. & Westoby, M. Rebuilding community
+ecology from functional traits. Trends Ecol. Evol. 21, 178–185 (2006).
+16. Violle, C. et al. Let the concept of trait be functional! Oikos 116, 882–892
+(2007).
+17. Cornwell, W. & Ackerly, D. Community assembly and shifts in plant trait
+distributions across an environmental gradient in coastal California. Ecol.
+Monogr. 79, 109–126 (2009).
+18. Guittar, J., Goldberg, D., Klanderud, K., Telford, R. J. & Vandvik, V. Can trait
+patterns along gradients predict plant community responses to climate
+change? Ecology 97, 2791–2801 (2016).
+19. Frimpong, E. A. & Angermeier, P. L. Traits-based approaches in the analysis
+of stream ﬁsh communities. Am. Fish. Soc. Symp. 73, 109–136 (2010).
+20. Luck, G. W. et al. Improving the application of vertebrate trait-based
+frameworks to the study of ecosystem services. J. Anim. Ecol. 81, 1065–1076
+(2012).
+21. Litchman, E. & Klausmeier, C. A. Trait-based community ecology of
+phytoplankton. Annu. Rev. Ecol. Evol. Syst. 39, 615–639 (2008).
+22. Allison, S. D. A trait-based approach for modelling microbial litter
+decomposition. Ecol. Lett. 15, 1058–1070 (2012).
+23. Ortiz-Álvarez, R., Fierer, N., de Los Ríos, A., Casamayor, E. O. & Barberán, A.
+Consistent changes in the taxonomic structure and functional attributes of
+bacterial communities during primary succession. Isme. J. 12, 1658–1667
+(2018).
+24. Browne, H. P. et al. Culturing of ‘unculturable’ human microbiota reveals
+novel taxa and extensive sporulation. Nature 533, 543–546 (2016).
+25. Söhngen, C. et al. Bac Dive – the bacterial diversity metadatabase in 2016.
+Nucleic Acids Res. 44, D581–D585 (2016).
+26. Barberán, A., Caceres Velazquez, H., Jones, S. & Fierer, N. Hiding in plain
+sight: mining bacterial species records for phenotypic trait information.
+mSphere 2, e00237–17 (2017).
+27. Kostic, A. D., et al. The dynamics of the human infant gut microbiome in
+development and in progression toward type 1 diabetes. Cell Host Microbe 17,
+260-273 (2015).
+28. Yassour, M. et al. Natural history of the infant gut microbiome and impact of
+antibiotic treatment on bacterial strain diversity and stability. Sci. Transl. Med.
+8, 343ra81 (2016).
+29. Muñoz, R. et al. Release LTPs104 of the all-species living tree. Syst. Appl.
+Microbiol. 34, 169–170 (2011).
+30. Koenig, J. E. et al. Succession of microbial consortia in the developing infant
+gut microbiome. Proc. Natl Acad. Sci. USA 108(Suppl), 4578–4585 (2011).
+31. Lavorel, S. & Garnier, E. Predicting changes in community composition and
+ecosystem functioning from plant traits: revisiting the Holy Grail. Funct. Ecol.
+16, 545–556 (2002).
+32. Rivera-Chávez, F. et al. Depletion of butyrate-producing Clostridia from the
+gut microbiota drives an aerobic luminal expansion of Salmonella. Cell Host
+Microbe 19, 443–454 (2016).
+33. Nachamkin, I., Yang, X. H. & Stern, N. J. Role of Campylobacter jejuni ﬂagella
+as colonization factors for three-day-old chicks: analysis with ﬂagellar
+mutants. Appl. Environ. Microbiol. 59, 1269–1273 (1993).
+34. Josenhans, C. & Suerbaum, S. The role of motility as a virulence factor in
+bacteria. Int. J. Med. Microbiol. 291, 605–614 (2002).
+35. Lennon, J. & Jones, S. Microbial seed banks: the ecological and evolutionary
+implications of dormancy. Nat. Rev. Microbiol. 9, 119 (2011).
+36. Klappenbach, J. A., Dunbar, J. M., Thomas, M. & Schmidt, T. M. rRNA
+operon copy number reﬂects ecological strategies of bacteria. Appl. Envir.
+Microbiol 66, 1328–1333 (2000).
+37. Nemergut, D. R. et al. Decreases in average bacterial community rRNA operon
+copy number during succession. Isme. J. 10, 1147–1156 (2016).
+38. Litchman, E., Edwards, K. F. & Klausmeier, C. A. Microbial resource
+utilization traits and trade-offs: Implications for community structure,
+functioning, and biogeochemical impacts at present and in the future. Front.
+Microbiol. 6, 254 (2015).
+39. Salminen, S., Gibson, G. R., McCartney, A. L. & Isolauri, E. Inﬂuence of mode
+of delivery on gut microbiota composition in seven year old children. Gut 53,
+1388–1389 (2004).
+40. Azad, M. B. et al. Gut microbiota of healthy Canadian infants: proﬁles by
+mode of delivery and infant diet at 4 months. CMAJ 185, 385–394 (2013).
+41. Fukami, T. & Nakajima, M. Community assembly: alternative stable states or
+alternative transient states? Ecol. Lett. 14, 973–984 (2011).
+42. Sprockett, D., Fukami, T. & Relman, D. A. Role of priority effects in the early-
+life assembly of the gut microbiota. Nat. Rev. Gastroenterol. Hepatol. 15,
+197–205 (2018).
+43. Ferretti, P. et al. Mother-to-infant microbial transmission from different body
+sites shapes the developing infant gut microbiome. Cell. Host. Microbe 24,
+133–145.e5 (2018).
+44. Mcdonnell, G. & Russell, A. D. Antiseptics and disinfectants: activity, action,
+and resistance. Clin. Microbiol. Rev. 12, 147–179 (1999).
+45. Jernberg, C., Löfmark, S., Edlund, C. & Jansson, J. K. Long-term impacts of
+antibiotic exposure on the human intestinal microbiota. Microbiology 156,
+3216–3223 (2010).
+46. Cavender-Bares, J., Ackerly, D., Baum, D. & Bazzaz, F. Phylogenetic
+overdispersion in Floridian oak communities. Am. Nat. 163, 823–843 (2004).
+47. Mayﬁeld, M. M. & Levine, J. M. Opposing effects of competitive exclusion on
+the phylogenetic structure of communities. Ecol. Lett. 13, 1085–1093 (2010).
+48. Anderson, K. J. Temporal patterns in rates of community change during
+succession. Am. Nat. 169, 780–793 (2007).
+49. Louca, S. et al. Function and functional redundancy in microbial systems. Nat.
+Ecol. Evol. 2, 936–943 (2018).
+50. Corfe, B. M., Harden, C. J., Bull, M. & Garaiova, I. The multifactorial interplay
+of diet, the microbiome and appetite control: current knowledge and future
+challenges. Proc. Nutr. Soc. 74, 235–244 (2015).
+51. Reyes, A., Wu, M., McNulty, N. P., Rohwer, F. L. & Gordon, J. I. Gnotobiotic
+mouse model of phage-bacterial host dynamics in the human gut. Proc. Natl
+Acad. Sci. 110, 20236–20241 (2013).
+52. Allison, S. & Martiny, J. Resistance, resilience, and redundancy in microbial
+communities. Proc. Natl Acad. Sci. 105, 11512–11519 (2008).
+53. Ley, R. E., Peterson, D. A. & Gordon, J. I. Ecological and evolutionary
+forces shaping microbial diversity in the human intestine. Cell 124, 837–848
+(2006).
+ARTICLE
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+10
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+54. Strickland, M. S., Lauber, C., Fierer, N. & Bradford, M. A. Testing the
+functional signiﬁcance of microbial community composition. Ecology 90,
+441–451 (2009).
+55. Sekirov, I., Russell, S. & Antunes, L. Gut microbiota in health and disease.
+Physiol. Rev. 90, 859–904 (2010).
+56. David, L. A. et al. Host lifestyle affects human microbiota on daily timescales.
+Genome Biol. 15, R89 (2014).
+57. Srivastava, A., Gupta, J., Kumar, S. & Kumar, A. Gut bioﬁlm forming bacteria
+in inﬂammatory bowel disease. Microb. Pathog. 112, 5–14 (2017).
+58. Edgar, R. C. Search and clustering orders of magnitude faster than BLAST.
+Bioinformatics 27, 2194–2200 (2010).
+59. Quast, C. et al. The SILVA ribosomal RNA gene database project: imporved
+data processing and web-based tools. Nucleic Acids Res. 41, D590–D596
+(2012).
+60. Magnúsdóttir, S., Ravcheev, D., De Crécy-Lagard, V. & Thiele, I. Systematic
+genome assessment of B-vitamin biosynthesis suggests cooperation among gut
+microbes. Front. Genet. 6, 148 (2015).
+61. Overbeek, R. et al. The SEED and the Rapid Annotation of microbial
+genomes using Subsystems Technology (RAST). Nucleic Acids Res. 42, D206-
+D214 (2014).
+62. Palm, N. W. et al. Immunoglobulin A coating identiﬁes colitogenic bacteria in
+inﬂammatory bowel disease. Cell 158, 1000–1010 (2014).
+63. Louca, S. & Doebeli, M. Efﬁcient comparative phylogenetics on large trees.
+Bioinformatics 34, 1053–1055 (2017).
+64. Zaneveld, J. R. R. & Thurber, R. L. V. Hidden state prediction: a modiﬁcation
+of classic ancestral state reconstruction algorithms helps unravel complex
+symbioses. Front. Microbiol. 5, 1–8 (2014).
+65. Maddison, W. P. Squared-change parsimony reconstructions of ancestral
+states for continuous-valued characters on a phylogenetic tree. Syst. Biol. 40,
+304–314 (1991).
+66. Beals, E. W. Bray-Curtis ordination: an effective strategy for analysis of
+multivariate ecological data. Adv. Ecol. Res. 14, 1–55 (1984).
+67. Petchey, O. L. & Gaston, K. J. Functional diversity (FD), species richness and
+community composition. Ecol. Lett. 5, 402–411 (2002).
+68. Stoddard, S. F., Smith B. J., Roller, B. R. & Schmidt, T. M. rrnDB: improved tools
+for interpreting rRNA gene abundance in bacteria and archaea and a new
+foundation for future development. Nucleic Acids Res. D1, D593-D598
+(2015).
+69. NCBI. Genome. https://www.ncbi.nlm.nih.gov/genome, National Center for
+Biotechnology Information (2018).
+70. Mukherjee, S. et al. Genomes OnLine database (GOLD) v.7: updates and new
+features. Nucleic Acids Res. 47, D649-D659 (2018).
+Acknowledgements
+This work was supported in part by Michigan State University through computational
+resources provided by the Institute for Cyber-Enabled Research. A.S. acknowledges
+support from the National Science Foundation under Grant No DEB#1749544. J.G. was
+supported by the Michigan State University Foundation funding to E.L.
+Author contributions
+J.G., A.S. and E.L. conceived the study, J.G. developed methods, analyzed data, and wrote
+the paper, and all authors discussed analysis and revised the paper.
+Additional information
+Supplementary Information accompanies this paper at https://doi.org/10.1038/s41467-
+019-08377-w.
+Competing interests: The authors declare no competing interests.
+Reprints and permission information is available online at http://npg.nature.com/
+reprintsandpermissions/
+Journal peer review information Nature Communications thanks the anonymous
+reviewers for their contributions to the peer review of this work. Peer reviewer reports are
+available.
+Publisher’s note: Springer Nature remains neutral with regard to jurisdictional claims in
+published maps and institutional afﬁliations.
+Open Access This article is licensed under a Creative Commons
+Attribution 4.0 International License, which permits use, sharing,
+adaptation, distribution and reproduction in any medium or format, as long as you give
+appropriate credit to the original author(s) and the source, provide a link to the Creative
+Commons license, and indicate if changes were made. The images or other third party
+material in this article are included in the article’s Creative Commons license, unless
+indicated otherwise in a credit line to the material. If material is not included in the
+article’s Creative Commons license and your intended use is not permitted by statutory
+regulation or exceeds the permitted use, you will need to obtain permission directly from
+the copyright holder. To view a copy of this license, visit http://creativecommons.org/
+licenses/by/4.0/.
+© The Author(s) 2019
+NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-019-08377-w
+ARTICLE
+NATURE COMMUNICATIONS |  (2019) 10:512 | https://doi.org/10.1038/s41467-019-08377-w | www.nature.com/naturecommunications
+11

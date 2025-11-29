@@ -1,0 +1,918 @@
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+Journal of Cystic Fibrosis xxx (xxxx) xxx 
+Contents lists available at ScienceDirect 
+Journal of Cystic Fibrosis 
+journal homepage: www.elsevier.com/locate/jcf 
+Development of the gut microbiota in early life: The impact of cystic 
+ﬁbrosis and antibiotic treatment ✩ 
+Maartje Kristensen a , ∗, Sabine M.P.J. Prevaes a , Gino Kalkman b , 
+Gerdien A. Tramper-Stranders c , Raiza Hasrat f , Karin M. de Winter- de Groot a , 
+Hettie M. Janssens d , Harm A. Tiddens d , Mireille van Westreenen e , 
+Elisabeth A.M. Sanders f , g , Bert Arets a , Bart Keijser b , Cornelis K. van der Ent a , 
+Debby Bogaert f , h , ∗∗
+a Department of Pediatric pulmonology, Wilhelmina Children’s Hospital, University Medical Center Utrecht, the Netherlands 
+b Microbiology and Systems Biology, TNO, Zeist, the Netherlands 
+c Department of paediatrics, Fransiscus Gasthuis & Vlietland, Rotterdam, the Netherlands 
+d Department of Pediatric Pulmonology and Allergology, Sophia Children’s Hospital, Erasmus University Medical Center, the Netherlands 
+e Department of Medical Microbiology and Infectious Diseases, Erasmus University Medical Center, the Netherlands 
+f Department of Pediatric infectious diseases and immunology, Wilhelmina Children’s Hospital, University Medical Center Utrecht, the Netherlands 
+g Rijksinstituut voor Volksgezondheid en Milieu, Bilthoven, the Netherlands 
+h The Queen’s Medical Research Institute, University of Edinburgh, United Kingdom 
+a r t i c l e 
+i n f o 
+Article history: 
+Received 25 September 2019 
+Revised 25 March 2020 
+Accepted 21 April 2020 
+Available online xxx 
+Keywords: 
+Cystic ﬁbrosis 
+Gut 
+Microbiome 
+Infants 
+a b s t r a c t 
+Objectives: Patients with Cystic Fibrosis (CF) suffer from pancreatic insuﬃciency, lipid malabsorption and 
+gastrointestinal complaints, next to progressive pulmonary disease. Altered mucosal homoeostasis due 
+to malfunctioning chloride channels results in an adapted microbial composition of the gastrointestinal 
+and the respiratory tract. Additionally, antibiotic treatment has the potential to distort resident micro- 
+bial communities dramatically. This study aims to investigate early life development of the gut microbial 
+community composition of children with CF compared to healthy infants and to study the independent 
+effects of antibiotics taking into account other clinical and lifestyle factors. 
+Study design: Faecal samples from 20 infants with CF and 45 healthy infants were collected regularly 
+during the ﬁrst 18 months of life and microbial composition was determined using 16S rRNA based se- 
+quencing. 
+Results: We observed signiﬁcant differences in the overall microbiota composition between infants with 
+CF and healthy infants ( p < 0.001). Akkermansia and Anaerostipes were signiﬁcantly more abundant in con- 
+trol infants, whereas Streptococci and E. coli were signiﬁcantly more abundant in infants with CF, also 
+after correction for several clinical factors ( p < 0.05). Antibiotic use in infants with CF was associated with 
+a lower alpha diversity, a reduced abundance of Biﬁdobacterium and Bacteroides , and a higher abundance 
+of Enterococcus . 
+Conclusion: Microbial development of the gut is different in infants with CF compared to healthy infants 
+from the ﬁrst months of life on, and further deviates over time, in part as a result of antibiotic treatment. 
+The resulting dysbiosis may have signiﬁcant functional consequences for the microbial ecosystem in CF 
+patients. 
+© 2020 European Cystic Fibrosis Society. Published by Elsevier B.V. All rights reserved. 
+✩ This study has in part been previously presented at ECFS 2016. 
+∗Corresponding author at: Peadiatric Pulmonary Disease, Lundlaan 6, 3584 EA 
+Utrecht, Utrecht, the Netherlands. 
+∗∗Corresponding author at: Queen’s Medical Research Institute, University of Ed- 
+inburgh, 47 Little France Crescent, EH16 4TJ, Edinburgh, United Kingdom. 
+E-mail 
+addresses: 
+m.i.kristensen@umcutrecht.nl 
+(M. 
+Kristensen), 
+D.Bogaert@ed.ac.uk (D. Bogaert). 
+1. Introduction 
+Cystic Fibrosis (CF) is a hereditary autosomal recessive disease 
+caused by mutations in the CFTR (Cystic Fibrosis Transmembrane 
+conductance Regulator) gene. Pulmonary infections and inﬂamma- 
+tion are the most important factors driving morbidity and mortal- 
+ity. We have previously described that the respiratory tract micro- 
+biome in young children with CF is signiﬁcantly different when 
+https://doi.org/10.1016/j.jcf.2020.04.007 
+1569-1993/© 2020 European Cystic Fibrosis Society. Published by Elsevier B.V. All rights reserved. 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+2 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+List of abbreviations 
+CF 
+Cystic Fibrosis 
+CFTR 
+Cystic Fibrosis Transmembrane conductance 
+Regulator 
+DNA 
+Deoxyribonucleic acid 
+nMDS 
+non-metric Multidimensional Scaling 
+PERMANOVA Permutational Multivariate Analysis of Vari- 
+ance 
+qPCR 
+quantitative Polymerase Chain Reaction 
+rRNA 
+ribosomal Ribonucleic Acid 
+SS-ANOVA 
+Smoothing Spline Analysis of Variance 
+compared to healthy controls [1] However, due to CFTR dysfunc- 
+tion, many other organ systems, such as the pancreas and gut 
+are also affected, leading to diabetes and lipid malabsorption [2–
+4] . Gastro-intestinal complications, such as constipation and meco- 
+nium ileus, are caused by dehydration of the intestinal luminal 
+environment [5 , 6] . Knowledge on the importance of the gut mi- 
+crobiome in immune maturation, immune signalling and digestion 
+is rapidly expanding [7–9] . Importantly, recent studies suggest a 
+link between microbial composition in the gut and respiratory out- 
+comes in patients with CF [10–13] . Although several studies have 
+described the gut microbial composition in children with CF, the 
+bio-chemical effects of the CFTR mutation and the effects of re- 
+peated antibiotic use on the gut microbiome are still incompletely 
+understood. A two year follow-up of two children by Duytschaever 
+et al. showed lower stability and species richness in the predom- 
+inant faecal microbiota in infants with CF [14] Studies by Madan 
+et al. and Hoen et al. even show a relation between the develop- 
+ment of the gut microbiota and respiratory microbiota over time 
+[15 , 10] . Repeated and chronic use of antibiotics has been shown to 
+inﬂuence the microbial composition in both the respiratory tract 
+and the gut of CF patients [1 , 16 , 17] . In addition, several factors 
+which are known to contribute to the gut microbial composition, 
+such as dietary intake and pancreatic function, are different in CF 
+patients [6 , 18] . To study the independent effects of CF disease (i.e. 
+the CFTR channel dysfunction), antibiotics and other clinical and 
+lifestyle factors on the gut microbiome, studies with longitudinal 
+follow-up are needed. A better understanding of the differences in 
+gut microbiota composition and microbial stability between CF pa- 
+tients and healthy controls might enable further optimization of 
+the choice and timing of antibiotic therapies and might impact on 
+nutritional supplementation. In order to investigate the early de- 
+velopment of the gut microbiota and the impact of CF and antibi- 
+otic use, we set up a longitudinal study in which we followed chil- 
+dren with CF and healthy controls from birth on. 
+2. Materials and methods 
+2.1. Study population 
+Between 2011 and 2013 all children that were referred to one 
+of the two participating CF treatment centres were invited to par- 
+ticipate in the study, as previously described by Prevaes et al. 
+[1] . A total of 20 infants with CF were included shortly after a 
+positive new born screening for CF. From the WHeezing-Illnesses- 
+STudy-LEidsche-Rijn (WHISTLER) cohort (a cohort of healthy new- 
+born children from the Netherlands), 45 age and sex matched con- 
+trols were included [1] . Faecal samples were collected from all chil- 
+dren monthly during the ﬁrst half year of life and at months 8, 
+10, 12, 15 and 18, as well as during and one month after clinical 
+signs of respiratory infection. Questionnaires on clinical parame- 
+ters were ﬁlled out at every sampling moment. This study was ap- 
+proved by the medical ethics committee of the University Medical 
+Centre Utrecht. 
+2.2. Sequencing 
+All faecal samples were stored at −80 °Celsius. DNA was iso- 
+lated using the Agowa Mag Mini DNA Isolation Kit in combina- 
+tion with phenol and bead-beating and eluted in elution buffer. 
+(See appendix for further details) Amplicon libraries of the V4 hy- 
+pervariable region were constructed and sequenced using the Illu- 
+mina MiSeq platform (Illumina, Eindhoven, the Netherlands). The 
+sequence data was processed using Mothur as previously described 
+by Kozich et al. 2013 and further described in the appendix [19 , 20] . 
+MastiType Multi Kit (ThermoFisher scientiﬁc) was performed, to 
+conﬁrm that this taxon represented E. coli. 
+2.3. Statistical analysis 
+2.3.1. Microbial development over time in healthy children and 
+children with CF 
+Statistical analyses were performed in R (version 3.3.1). Alpha 
+diversity was calculated for all samples using the Shannon index 
+and the Chao1 index. Using a Smoothing Spline Analysis of Vari- 
+ance (SS-ANOVA,R-package: ﬁtTimeSeries), periods were identiﬁed 
+during which the alpha-diversity was signiﬁcantly different be- 
+tween healthy infants and infants with CF [21] Mean relative abun- 
+dances for the most abundant OTU’s were calculated per month for 
+healthy and control samples. To determine speciﬁc periods during 
+which genera were differentially present in healthy and CF sam- 
+ples, the read counts were normalized using metagenomeSeq and 
+an SS-ANOVA was performed (R-package: ﬁtTimeSeries) [21] The 
+Benjamini Hochberg procedure was used to correct for multiple 
+testing [22] . A non-metric dimensional scaling (nMDS) plot was 
+made to visualise the diversity of the overall microbial composi- 
+tion (R-package: Vegan). This non-parametric method is used for 
+dimension reduction, whereby per sample the complete microbiota 
+composition is depicted as a single point in a two-dimensional 
+space. This method also allows the plotting of the most abundant 
+species into this same space, showing how their abundance in- 
+ﬂuences the distribution of microbial data. A permutational mul- 
+tivariate analysis of variance (PERMANOVA) of all samples, with 
+time of sampling as strata, was used to test for signiﬁcant differ- 
+ences between microbial community proﬁles of healthy samples 
+and CF samples. PERMANOVA was also used to test the effects 
+of age within the stratiﬁed CF and control groups, using individ- 
+ual study participants as strata (R-package: Vegan; Adonis). A den- 
+drogram of all samples was constructed using the Bray-Curtis dis- 
+similarity, with the optimal number of clusters deﬁned by the Sil- 
+houette index (R-package: cluster). Differences between the num- 
+ber of CF and control samples within clusters were tested using 
+chi-square tests, and corrected for multiple testing with the Ben- 
+jamini Hochberg procedure. To visualize gut microbiota develop- 
+ment in children over time an alluvial plot was constructed using 
+the Alluvial package in R (R-package: Alluvial). The microbial sta- 
+bility over time was evaluated using the Bray-Curtis dissimilarity 
+between consecutive samples from the same child. A linear mixed 
+effects model of these Bray-Curtis dissimilarities was used to de- 
+termine the difference in stability between infants with CF and 
+healthy infant over time. (R-package: lmerTest). To compare micro- 
+biota development over time in healthy infants and infants with 
+CF we generated and cross validated a Random Forest based mi- 
+crobiota aging model, using the control group as reference. (see 
+appendix for further details) This model was used to estimate (re- 
+construct) the microbial age of the CF group over time [23] . It was 
+then used to predict the age of children with CF using the micro- 
+bial composition of their faecal samples. (R- package: RandomFor- 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+3 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+Table 1 
+Demographics and clinical parameters, stratiﬁed by infants with CF and control infants. 
+Population characteristics 
+CF ( n = 20) 
+Controls ( n = 45) 
+p -values 
+Male sex 
+10 (50%) 
+27 (60%) 
+NS 
+Date of birth, range 
+Dec. 2010 – Oct. 2013 
+Dec. 2010 – Febr. 2013 
+NA 
+Age range in months (mean) at inclusion 
+0.6–6.1 ( [2] ) 
+0.7–6.3 ( [2] ) 
+NS 
+CFTR Mutations 
+Severe: mostly F508del/F508del ∗
+16 (80%) 
+NA 
+NA 
+Moderate: R334-c1132 C > T 
+1 (5%) 
+NA 
+NA 
+Mild: F508del/R117H and R117H/R117H 
+3 (15%) 
+NA 
+NA 
+Symptoms at diagnosis 
+Meconium ilius 
+2 (10% 
+NA 
+NA 
+Pancreatic insuﬃciency 
+16 (80%) 
+NA 
+NA 
+Delayed passage of meconium 
+3 (15%) 
+0 (0)% 
+NS 
+Born by natural delivery 
+18 (90%) 
+42 (93%) 
+NS 
+Mean gestational age in weeks 
+39 + 2/7 
+39 + 6/7 
+NS 
+Birth weight in grams 
+3483 
+3673 
+NS 
+Participants with siblings 
+8 (40%) 
+39 (87%) 
+0.003 
+Use of antibiotics before inclusion 
+4 (20%) 
+0 (0%) 
+0.007 
+Day care attendance at age 3 months 
+1 (5%) 
+12 (26%) 
+0.08 
+Day care attendance at age 6 months 
+5 (25%) 
+39 (87%) 
+< 0.001 
+Duration of exclusive breastfeeding 
+< 0.001 
+< 6 weeks 
+12 (60%) 
+14 (31%) 
+6 weeks – 3 months 
+1 (5%) 
+5 (11%) 
+3 – 6 months 
+6 (30%) 
+12 (27%) 
+> 6 months 
+1 (5%) 
+14 (31%) 
+Exposure to environmental tobacco smoke 
+0 (0%) 
+0 (0%) 
+NS 
+Vaccinated according to Dutch NIP ∗∗
+20 (100%) 
+44 (98%) 
+NS 
+est) A linear mixed effects model was used to evaluate the differ- 
+ences in predicted age between healthy and infants with CF. Dif- 
+ferences in the relative abundances of the different genera were 
+tested using a linear mixed effects model on the log-relative abun- 
+dances, corrected for age antibiotic use, duration of breastfeeding 
+and day-care attendance and siblings (R-package: lmerTest). 
+2.3.2. Effects of antibiotics on the CF gut microbiota 
+Effects of antibiotic use on the alpha diversity was assessed us- 
+ing the Shannon index. Hereby, differences between samples taken 
+during or within one month after antibiotic use versus samples 
+taken not during or shortly after antibiotic use, corrected for age, 
+were detected by SS-ANOVA. A mixed effects model correcting for 
+age and repeated measurements was used to evaluate cumulative 
+antibiotic effects. (R-package: lmerTest) Relative abundances were 
+log transformed to achieve approximate normality, after which a 
+linear mixed effects model was ﬁtted to determine the effect of 
+cumulative antibiotic use on the relative abundance of the top-50 
+genera, corrected for age and repeated measurements. 
+3. Results 
+Baseline characteristics of the study population, as previously 
+described by Prevaes et al. are summarized in Table 1. (1) 
+Infants in the control group had signiﬁcantly more siblings, at- 
+tended day-care more frequently and received breastfeeding for a 
+longer period of time. In the control group there was very little an- 
+tibiotic use, whereas most infants in the CF group used antibiotics 
+during the ﬁrst 18 months of life (Supplementary Fig. 1). A total of 
+717 faecal samples were sequenced: 214 samples from CF children 
+and 503 samples from healthy controls. The number of collected CF 
+and control samples per month is summarised in Supplementary 
+File 1. The mean number of reads per sample was 25443 (range 
+821–60,930). 
+3.1. Microbial diversity and composition 
+The alpha diversity, calculated by the Shannon index gradually 
+increased between month 5 and month 13 in both CF and control 
+samples with age. ( Fig. 1 A) The Shannon diversity was signiﬁcantly 
+higher in infants with CF compared to controls between month 1 
+and month 13 (SS-ANOVA: p < 0.05). Evenness more than richness 
+determined the difference in alpha diversity between groups, since 
+richness (Chao1 index) was only different between CF and control 
+children between month 3 and 6 (SS-ANOVA: p < 0.05). 
+With respect to the overall microbial community composi- 
+tion, we observed a signiﬁcant difference between samples from 
+healthy children and children with CF, after correction for age 
+(PERMANOVA: R-squared 0.06; p < 0.001), as well as an effect of 
+age after stratiﬁcation for CF status (PERMANOVA: CF group: R- 
+squared 0.07; p < 0.001, control group: R-squared 0.29; p < 0.001). In 
+Fig. 2 all samples are depicted in an nMDS plot, suggesting a dif- 
+ferent time dependant shift in community composition for CF and 
+control samples, as well as a higher beta diversity in CF samples. 
+Next, all samples were clustered using hierarchical clustering, 
+using the Bray-Curtis dissimilarity. We observed 17 different clus- 
+ters or community proﬁles (Supplementary Fig. 2). The biggest 
+cluster contained 432 samples and was dominated by Biﬁdobac- 
+terium , more commonly present in control children (chi-square 
+test: adjusted p < 0.001), followed by a Biﬁdobacterium and Blau- 
+tia dominated cluster,. Several smaller clusters were dominated by 
+a variety of different bacteria such as Blautia, E. coli, Streptococ- 
+cus and Enterococcus, and were more commonly observed in CF 
+(chi-square test: all adjusted p -values < 0.001). Microbiota develop- 
+ment over time in control children and children with CF is visu- 
+alized in Supplementary Fig. 3. This ﬁgure shows how the micro- 
+biota proﬁles developed over time. In the control group most chil- 
+dren started in the Biﬁdobacterium cluster and, from 8 months on, 
+tended to make the transition to the Biﬁdobacterium-Blautia clus- 
+ter (logistic mixed effects model: p < 0.001). In the CF group, most 
+children also started in the Biﬁdobacterium cluster. However, after 
+18 months, CF children are more explicitly divided over the Biﬁ- 
+dobacterium cluster, the Blautia cluster, the Biﬁdobacterium-Blautia 
+combined cluster, and several other smaller clusters. 
+Stability of microbiota over time (measure of ecological stabil- 
+ity and resilience) was calculated as the Bray Curtis distance be- 
+tween two consecutive samples of the same child. We observed a 
+higher Bray Curtis distance between consecutive CF samples, indi- 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+4 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+Fig. 1. (A) Alpha diversity (Shannon diversity index) in CF and controls. CF and control samples differed signiﬁcantly between month 2 and 13 (SS-ANOVA: p < 0.05). (B): 
+Alpha diversity in CF samples not taken during antibiotic treatment and CF samples taken during, or within one month of antibiotic treatment, differing signiﬁcantly between 
+month 7 and 18 (SS-ANOVA: p < 0.05). 
+Fig. 2. nMDS plot of all samples of CF samples or control children coloured according to age. Ellipses indicate the group centroids per age. The most abundant taxa have 
+been plotted in the ﬁgure to show the underlying microbial differences between the samples. 
+cating a lower stability in microbiota composition in infants with 
+CF compared to control children throughout the study period (Lin- 
+ear mixed effect model: p < 0.001), (Supplementary Fig. 4). 
+We could reconstruct microbiota development in the healthy 
+population using 20 biomarker genera, which were identiﬁed us- 
+ing a random forest algorithm, allowing us to predict the age of 
+healthy children by their faecal microbial composition (R-squared = 
+0.80), ( Fig. 3 ). When comparing children with CF to healthy chil- 
+dren, we observed a larger spread in the predicted age, irregular 
+development of the predicted age over time and a delay in micro- 
+biota aging in the CF group over the entire ﬁrst 18 months of life 
+(mixed effects model: p < 0.001), suggesting altered stability and 
+development over time. 
+With respect to individual taxa, the most abundant taxon in 
+both CF and control samples was Biﬁdobacterium , followed by 
+Blautia and Streptococcus ( Fig. 4 ). An SS-ANOVA illustrated how- 
+ever, that Biﬁdobacterium was reduced throughout the full ﬁrst 18 
+months of life in CF infants compared to controls ( p < 0.01), and 
+Blautia was reduced during the ﬁrst two months and between 
+month 10 and 18 ( p < 0.05). In contrast, Streptococcus as well as E. 
+coli were more abundant in CF children during the ﬁrst months 
+of life and later in life between month 9–10 and 17–18 (Supple- 
+mentary Fig. 5). After correction for age, antibiotic use, breastfeed- 
+ing, day-care attendance and siblings, we observed an indepen- 
+dent effect of CF on reduced Akkermansia, Eggerthella, Anostipes and 
+Clostridium IV abundance, and increased Streptococcus , E. coli, Veil- 
+lonella and Clostridiacea I abundance in infants with CF (mixed ef- 
+fects model: p < 0.05), ( Fig. 5 A, Supplementary File 2). 
+Due to the very low incidence of antibiotic use in healthy in- 
+fants, we evaluated the effect of antibiotics in infants with CF only. 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+5 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+Fig. 3. Mean relative abundance of the top-15 OTU’s over time for children with 
+cystic ﬁbrosis and healthy controls. 
+Prophylactic treatment with cotrimoxazole was the most common 
+reason for antibiotic use (121 of the 214 sample moments). De- 
+tailed information about antibiotic treatments and other medica- 
+tion used by the CF patients can be found in Supplementary File 
+2. In samples which were obtained during or within a month af- 
+ter antibiotic treatment ( n = 128), alpha diversity was signiﬁcantly 
+lower, especially after the age of 8 months compared to sam- 
+ples obtained in the absence of antibiotic treatment (SS-ANOVA: 
+p < 0.05), ( Fig. 1 B). A mixed effects model corrected for age showed 
+that the amount of time during which antibiotics were used is also 
+associated with an increase of several potential pathogens such as 
+Enterococcus, Clostridium XIVa and Neisseria . The abundance of sev- 
+eral commensals such as Biﬁdobacterium, Ruminococcus and Akker- 
+mansia was signiﬁcantly decreased in relation to the cumulative 
+exposure to antibiotics ( Fig. 5 B). Similar patterns were found when 
+antibiotic status was categorised as use of antibiotics at time of 
+sampling or one month before, use of antibiotics in the past or no 
+use of antibiotic up to sampling in infants with CF. A summary of 
+the results of all mixed effects models can be found in Supplemen- 
+tary File 2. 
+4. Discussion 
+Our cohort study clearly shows distinct differences in diversity, 
+composition, stability and development of the microbial commu- 
+nity in the gut between healthy infants and infants with CF start- 
+ing in the ﬁrst months of life. Since part of the children had not 
+yet used antibiotics up to 4–6 months of age, this suggests a direct 
+Fig. 4. True age plotted against the microbiota age (calculated by a Random Forest model based on the 20 biomarker genera in the healthy control group). Splines through 
+the predicted age per time-point are shown. In children with CF we observe a larger spread in the predicted age. ( p < 0.01). 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+6 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+Fig. 5. (A) Relative effect size and 95% conﬁdence interval of genera differentially present between CF and controls, corrected for antibiotic use, breast feeding, day-care 
+attendance, siblings, age and repeated sampling. (B) Genera which had a signiﬁcantly association with cumulative antibiotic use in CF, corrected for age and repeated 
+sampling. 
+inﬂuence of the CFTR dysfunction on gut microbiome composition 
+and development. We observed amongst others a higher abun- 
+dance of commensals such as Akkermansia in the control group, 
+while more potentially pro-inﬂammatory bacteria, such as E. coli, 
+were more abundant in the CF group. In addition, the longitudi- 
+nal sampling of both children with CF and healthy control children 
+revealed an independent effect of antibiotic use on microbial di- 
+versity and composition. 
+4.1. Differences between infants with CF and control infants 
+Most of the healthy children in this study initially showed a Bi- 
+ﬁdobacterium dominated proﬁle, from which they switch to a pro- 
+ﬁle dominated by both Biﬁdobacterium and Blautia between month 
+8 and month 18. In the CF group, although most children also start 
+with a Biﬁdobacterium dominated proﬁle, part of the children have 
+predominance of Streptococcus or E. coli from one month of life on. 
+Also from the ﬁrst months of life children with CF show a differ- 
+ence in microbiota aging, combined with reduced ecosystem stabil- 
+ity suggesting aberrant maturation, which becomes more apparent 
+with older age. 
+During the ﬁrst 18 months of life Akkermansia, Eggertella, 
+Clostridia IV , and Anaerostipes were more abundant in the healthy 
+group than in the CF group, even after correction for antibiotic use, 
+breastfeeding and day care attendance and siblings. Both Clostridia 
+IV as well as Anaerostipes are butyrate producing bacteria, support- 
+ing the gastro-intestinal epithelial barrier [24] . Akkermansia is a 
+mucus degrading bacteria, associated with a healthy mucosal layer 
+[25] . Decrease of these commensals might weaken the epithelial 
+layer of the gut in infants with CF. As in previous literature Biﬁ- 
+dobacterium was more abundant in healthy infants, however, af- 
+ter correction for age, antibiotic use, day-care attendance, siblings 
+and breastfeeding this difference was no longer signiﬁcant, indi- 
+cating that this difference is likely to be caused largely by a lack of 
+breastfeeding in the ﬁrst months of life as well as cumulative an- 
+tibiotics use later on [14 , 26] . Our data are supported by de Freitas 
+et al., who also described a signiﬁcantly lower abundance of Biﬁ- 
+dobacterium in children with CF who used antibiotics, compared to 
+healthy children, but in general found no independent difference 
+between healthy children and children with CF [27] . Also, several 
+other studies ﬁnd do differences in Biﬁdobacterium abundance be- 
+tween healthy children and children with CF, though most of these 
+studies lack information on the independent effects of antibiotics 
+[14 , 28 , 29] . 
+In contrast, pro-inﬂammatory bacteria such as E. coli were more 
+abundant in the faecal microbiota of children with CF from the 
+start, also after correction for antibiotic use, which is in line with 
+previous observations by Nielsen et al. [29] In mice, high fat diets 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+7 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+have been associated with a higher abundance of E. coli . [30] . This 
+might indicate that pancreatic insuﬃciency and high fat diets play 
+an important role in the differences between the microbial compo- 
+sition in the healthy and the CF gut. Nielsen et al. indeed showed a 
+higher diversity in the gut microbiome in pancreatic suﬃcient pa- 
+tients compared to pancreatic insuﬃcient patients [29] . Strikingly, 
+most bacteria that are more abundant in CF infants, such as Veil- 
+lonella, E. coli , and Streptococcus , are bacteria generally present in 
+the small intestines [24] . Since we analysed stool samples, it is 
+not possible to determine from which part of the gut these bac- 
+teria originate. One theory is that this observation is the result of 
+a delayed transit time of the faeces through the small intestines 
+in patients with CF, leading to bacterial overgrowth in the small 
+intestines [31 , 32] . Differences in pH in the CF gut or possibly the 
+growth of bacteria outside their typical niche (the growth of typi- 
+cal “small intestine bacteria” in the large intestines) may also play 
+a role [32] . Lastly, the use of antibiotics may also have an effect 
+on the bacterial density of the gut, possibly lowering the bacterial 
+load of the large intestines [33] . 
+4.2. Effects of antibiotic treatment on the gut microbiota in children 
+with CF 
+From the literature we know that antibiotic treatment will of- 
+ten lead to long lasting changes in the gut microbial composition 
+and probably contributes substantially to the decreased microbial 
+stability in the CF group. In this study we found a higher alpha 
+diversity in infants with CF compared to healthy controls between 
+month 2 and month 13, in contrast to previous literature, where 
+CF has been associated with a lower alpha diversity in the gut 
+[16 , 34 , 35] . However, further analyses showed that from 8 months 
+on CF infants on antibiotics have a signiﬁcantly lower alpha di- 
+versity than CF infants that do not use antibiotics. This may sug- 
+gest that the alpha diversity of infants with CF only starts to de- 
+cline when they are treated with repetitive or chronic antibiotic 
+courses. A decreased alpha diversity has indeed been associated 
+with cumulative antibiotic use in many diseases [17] . Additionally, 
+Madan et al. found that type of feeding also plays an important 
+role in microbial diversity, something we did not correct for in this 
+study [15] . Due to our relative small group size we were unable to 
+correct for several sources of heterogeneity within the CF group, 
+while analysing the effects of antibiotics on the microbial com- 
+position. among other factors, the pancreatic enzyme replacement 
+therapy used by 75% of the CF group in this cohort might addition- 
+ally have an effect on the microbial community composition and 
+diversity. 
+Cumulative antibiotic exposure in infants was associated with 
+a decrease of Biﬁdobacterium. Biﬁdobacterium has been related to 
+intestinal health and decrease of the abundance of Biﬁdobacterium 
+has been observed in several medical conditions, including Crohn’s 
+disease and type 2 diabetes [36 , 37] . Functions of Biﬁdobacterium in 
+the gut include immune maturation, production of vitamin B and 
+antioxidants, and protection against pathogens through the pro- 
+duction of short chain fatty acids [38–40] . Two recent probiotic 
+studies in CF patients, which included among other bacteria Biﬁ- 
+dobacteria spp, indeed showed a decrease in intestinal inﬂamma- 
+tion and pulmonary exacerbation, suggesting a positive clinical im- 
+pact of Biﬁdobacterium supplements in CF patients [41 , 42] . In ad- 
+dition to the negative association between Biﬁdobacterium and an- 
+tibiotic use, several butyrate producing bacteria such as Eggerthella, 
+Anaerostipes, Butyricicoccus and Ruminococcus also decreased upon 
+antibiotic use. Based on the microbial community composition in 
+faecal samples from patients with CF, Coffey et al. predicted that 
+multiple genes involved in short-chain fatty acid (SCFA) produc- 
+tion are enriched in CF faecal material, as well as butyrate, pro- 
+duced by Ruminococcus, to be reduced [28] . All this is in line with 
+the observation by Vernocchi et al. that stool samples from CF pa- 
+tients contained less butyrate compared to healthy stool samples 
+[43] . Potential consequences of lower concentrations of butyrate 
+are a compromised mucosal barrier function, as well as increased 
+inﬂammation levels in the gut [44 , 45] . 
+In previous studies in other patient populations, different types 
+of antibiotics have been associated with a lower abundance of En- 
+terococci . However, in our study Enterococcus is signiﬁcantly more 
+abundant in infants that used antibiotics. We hypothesize that an- 
+tibiotic resistance of Enterococci species in children with CF may 
+explain this observation. Children with CF generally receive pro- 
+longed antibiotic courses, which probably facilitates antibiotic re- 
+sistance development when compared with studies including pa- 
+tient populations receiving short course antibiotic treatment [46–
+48] . Although it cannot be ruled out that speciﬁc types of antibi- 
+otics might have differential effects on Enterococcus and other bac- 
+teria, unfortunately, this study lacks the power to analyse the ef- 
+fects of different classes of antibiotics. However, several types of 
+antibiotics such as cotrimoxazole and azithromycin, which are fre- 
+quently used in this patient group, seem to have little effect on 
+Enterococci spp . It might be worthwhile however, to study this as- 
+pect in future studies in more detail, since antibiotic treatment is 
+currently still the corner stone of treatment in CF. And since we 
+cannot do without, it would be worth to ﬁnd classes that are ef- 
+fective, but induce least harm on an ecological level. 
+Recent literature has also shown a direct relation between gut 
+microbiome, respiratory microbiome and respiratory health: both 
+Hoen et al. and Madan et al. found associations between the mi- 
+crobial composition in the gut and in the respiratory tract in young 
+children with CF. Hoen et al. found microbial shifts in the overall 
+gut microbial composition prior to exacerbations, and a signiﬁcant 
+decrease in Parabacteroides abundance prior to colonization with 
+Pseudomonas aeruginosa [10] . Madan et al. found that for several 
+genera there was a direct correlation between the abundance in 
+the gut and the respiratory tract, and that for other genera, such 
+as Escherichia, Enterococcus and Blautia colonization of the gut pre- 
+ceded the presence in the respiratory tract [10 , 11] .In our current 
+dataset we lacked power to ﬁnd associations between the gut mi- 
+crobial composition and respiratory outcomes. However, a study in 
+healthy infants by Reyman et al. showed that early life gut mi- 
+crobial composition is related to the subsequent number of res- 
+piratory infections, with more infections in infants with low abun- 
+dance of Biﬁdobacterium and a higher abundance of Klebsiella and 
+Enterococcus [49] . In this study we observe, especially early in life, 
+a lower abundance of Biﬁdobacterium in infants with CF, as well 
+as a higher abundance of Enterococcus , possibly contributing to a 
+more pro-inﬂammatory proﬁle [50] . 
+4.3. Strengths and weaknesses 
+The longitudinal set-up of this study allowed us to get a better 
+understanding of differences in the development of the microbial 
+composition over time between CF and non-CF infants. Because 
+sampling started during the ﬁrst months of life, before start of an- 
+tibiotics in most children, it was possible to evaluate the effect of 
+the CF pathophysiology on the microbial composition in early life 
+in an independent manner. In order to study differences between 
+healthy and CF children, independent of other treatment or envi- 
+ronmental factors, we corrected for the use of antibiotics. However, 
+because of the sporadic use of antibiotics in the control group, and 
+the repeated use of antibiotics in almost all CF infants above a cer- 
+tain age, appropriate correction is diﬃcult. We therefore used dif- 
+ferent statistical approaches to strengthen our conclusions. Finally, 
+our cohort of infants with CF is quite small, limiting the power for 
+speciﬁc analyses This is, in part, compensated by frequent resam- 
+pling. 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+8 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+5. Conclusion 
+This longitudinal study identiﬁed marked differences in gut 
+microbiota between healthy and CF infants, both in terms of 
+composition and in dynamic development over time. In addition, 
+within the CF group, antibiotic treatment was independently asso- 
+ciated with distinct differences in the gut microbiome composition. 
+Hence, both the direct effects of the malfunctioning chloride chan- 
+nels as well as the effects of cumulative antimicrobial treatment 
+seem to play a role in the decreased abundance of beneﬁcial bacte- 
+ria, and the decreased microbial stability observed in children with 
+CF. The resulting deviation from healthy controls might indicate an 
+increasing state of dysbiosis, which may have signiﬁcant functional 
+consequences in metabolic function, barrier function and inﬂam- 
+mation status of the host. 
+Author contributions 
+Maartje Kristensen helped collect the samples, performed data 
+analysis and prepared the ﬁrst version of the manuscript. Cornelis 
+K. van der Ent, Sabine M.P.J. Prevaes, and Karin M. de Winter- 
+de Groot helped design the study and helped collect the sam- 
+ples. Hettie M. Janssens, Harm A. Tiddens, Mireille van Westree- 
+nen and Bert Arets helped to collect the samples. Debby Bogaert 
+helped design the study, perform data analysis and critically re- 
+viewed and revised the manuscript. Elisabeth A.M. Sanders and 
+Gerdien A. Tramper-Stranders helped design the study. Raiza Has- 
+rat performed part of the laboratory analysis and was responsible 
+for sample management. Gino Kalkman performed data analysis 
+and Bart Keijser was responsible for sequencing of the samples. All 
+authors reviewed and revised the manuscript. All authors approved 
+the ﬁnal manuscript as submitted and agree to be accountable for 
+all aspects of the work. 
+Funding 
+The current study was funded through a Wilhelmina Children’s 
+Hospital research grand. 
+Declaration of Competing Interest 
+The authors have no conﬂicts of interest relevant to this article 
+to disclose. 
+Acknowledgement 
+The authors would like thank Mei Ling Chu, Jody van En- 
+gelsdorp Gastelaars for management of the sample collection and 
+Thomas Krak for his help with designing the ﬁgures. The sequence 
+data generated and analysed during the current study will be made 
+available in the SRA repository, https://www.ncbi.nlm.nih.gov/sra/ 
+PRJNA554232 upon publication. In addition to study protocols, the 
+statistical analysis plan, and the informed consent form will be 
+made available upon publication to researchers who provide a 
+methodologically sound proposal for use in achieving the goals 
+of the approved proposal. Proposals should be submitted to Prof. 
+Debby Bogaert. 
+Supplementary materials 
+Supplementary material associated with this article can be 
+found, in the online version, at doi: 10.1016/j.jcf.2020.04.007 . 
+References 
+[1] Prevaes SMPJ , de Winter-de Groot KM , Janssens HM , de Steenhuijsen 
+Piters WAA , Tramper-Stranders GA , Wyllie AL , et al. Development of the na- 
+sopharyngeal microbiota in infants with cystic ﬁbrosis. Am J Respir Crit Care 
+Med [Internet] 2016;193(5):504–15 Mar 1 [cited 2017 Nov 30]Available from: 
+http://www.ncbi.nlm.nih.gov/pubmed/264 924 86 . 
+[2] Marshall BC , Butler SM , Stoddard M , Moran AM , Liou TG , Mor- 
+gan WJ , et al. Epidemiology of cystic ﬁbrosis-related diabetes. J Pediatr 
+2005;146(5):681–7 May 1 . 
+[3] Peretti N , Marcil V , Drouin E , Levy E . Mechanisms of lipid malabsorption 
+in cystic ﬁbrosis: the impact of essential fatty acids deﬁciency. Nutr Metab 
+BioMed Central Ltd. 2005;Vol. 2:11 . 
+[4] Walkowiak J, Lisowska A, Blaszczy ´nski M. The changing face of the ex- 
+ocrine pancreas in cystic ﬁbrosis: pancreatic suﬃciency, pancreatitis and 
+genotype. Eur J Gastroenterol Hepatol [Internet] 2008;20(3):157–60. [cited 
+2020 Feb 17]Available from https://insights.ovid.com/crossref?an=0 0 042737- 
+20 08030 0 0-0 0 0 01 . 
+[5] Finkelstein SM, Wielinski CL, Elliott GR, Warwick WJ, Barbosa J, Wu S-C, 
+et al. Diabetes mellitus associated with cystic ﬁbrosis. J Pediatr [Internet] 
+1988;112(3):373–7. Mar 1 [cited 2017 Nov 30]Available from http://www. 
+sciencedirect.com/science/article/pii/S0022347688803159 . 
+[6] Bronstein MN, Sokol RJ, Abman SH, Chatﬁeld BA, Hammond KB, Ham- 
+bidge KM, et al. Pancreatic insuﬃciency, growth, and nutrition in infants 
+identiﬁed by newborn screening as having cystic ﬁbrosis. J Pediatr [Internet] 
+1992;120(4):533–40. Apr 1 [cited 2017 Nov 30]Available from http://www. 
+sciencedirect.com/science/article/pii/S0022347605824783 . 
+[7] Flint HJ, Scott KP, Louis P, Duncan SH. The role of the gut microbiota in nutri- 
+tion and health. Nat Rev Gastroenterol Hepatol [Internet] 2012;9(10):577–89. 
+Sep 4 [cited 2017 Nov 30]Available from http://www.nature.com/doiﬁnder/10. 
+1038/nrgastro.2012.156 . 
+[8] Chung H, Pamp SJ, Hill JA, Surana NK, Edelman SM, Troy EB, et al. Gut im- 
+mune maturation depends on colonization with a host-speciﬁc microbiota. 
+Cell [Internet] 2012;149(7):1578–93. Jun 22 [cited 2017 Nov 30]Available from 
+http://www.sciencedirect.com/science/article/pii/S0 0928674120 06290 . 
+[9] Round JL, Mazmanian SK. The gut microbiota shapes intestinal immune re- 
+sponses during health and disease. Nat Rev Immunol [Internet] 2009;9(5):313–
+23. May 1 [cited 2017 Nov 30]Available from 
+http://www.nature.com/ 
+doiﬁnder/10.1038/nri2515 . 
+[10] Hoen AG , Li J , Moulton LA , O’Toole GA , Housman ML , Koestler DC , et al. Asso- 
+ciations between gut microbial colonization in early life and respiratory out- 
+comes in cystic ﬁbrosis. J Pediatr 2015;167(1):133–8 Jul . 
+[11] Madan JC, Koestler DC, Stanton BA, Davidson L, Moulton LA, Housman ML, 
+et al. Serial analysis of the gut and respiratory microbiome in cystic ﬁbrosis 
+in infancy: interaction between intestinal and respiratory tracts and impact 
+of nutritional exposures. MBio [Internet] 2012;3(4). Aug 31 [cited 2017 Nov 
+30]e00251-12. Available from http://www.ncbi.nlm.nih.gov/pubmed/22911969 . 
+[12] Anand S , Mande SS . Diet, microbiota and gut-lung connection. Front Microbiol 
+2018;9(SEP) . 
+[13] Scales BS , Dickson RP , Huffnagle GB . A tale of two sites: how inﬂammation 
+can reshape the microbiomes of the gut and lungs. J Leukoc Biol 2016 . 
+[14] Duytschaever G , Huys G , Bekaert M , Boulanger L , De Boeck K , Vandamme P . 
+Cross-sectional and longitudinal comparisons of the predominant fecal micro- 
+biota compositions of a group of pediatric patients with cystic ﬁbrosis and 
+their healthy siblings. Appl Environ Microbiol 2011;77(22):8015–24 Nov . 
+[15] Madan JC , Koestler DC , Stanton BA , Davidson L , Moulton LA , Housman ML , 
+et al. Serial analysis of the gut and respiratory microbiome in cystic ﬁbrosis 
+in infancy: interaction between intestinal and respiratory tracts and impact of 
+nutritional exposures. MBio 2012;3(4) . 
+[16] Dethlefsen L, Relman DA. Incomplete recovery and individualized responses 
+of the human distal gut microbiota to repeated antibiotic perturbation. 
+Proc Natl Acad Sci U S A [Internet] 2011;108:4554–61. Mar 15 [cited 2017 
+Nov 30]Suppl 1(Supplement 1)Available from http://www.ncbi.nlm.nih.gov/ 
+pubmed/20847294 . 
+[17] Langdon A, Crook N, Dantas G. The effects of antibiotics on the microbiome 
+throughout development and alternative approaches for therapeutic modula- 
+tion. Genome Med [Internet] 2016;8(1):39. Dec 13 [cited 2017 Nov 30]Avail- 
+able from http://www.ncbi.nlm.nih.gov/pubmed/27074706 . 
+[18] Wu GD, Chen J, Hoffmann C, Bittinger K, Chen Y-Y, Keilbaugh SA, et al. Linking 
+long-term dietary patterns with gut microbial enterotypes. Science [Internet] 
+2011 Oct 7;334(6052):105–8. [cited 2017 Nov 30]Available from http://www. 
+sciencemag.org/cgi/doi/10.1126/science.1208344 . 
+[19] Schloss PD, Westcott SL, Ryabin T, Hall JR, Hartmann M, Hollister EB, et al. In- 
+troducing mothur: open-source, platform-independent, community-supported 
+software for describing and comparing microbial communities. Appl Environ 
+Microbiol [Internet] 2009;75(23):7537–41. Dec 1 [cited 2017 Nov 30]Available 
+from http://www.ncbi.nlm.nih.gov/pubmed/19801464 . 
+[20] Kozich JJ, Westcott SL, Baxter NT, Highlander SK, Schloss PD. Development of 
+a dual-index sequencing strategy and curation pipeline for analyzing ampli- 
+con sequence data on the MiSeq Illumina sequencing platform. Appl Environ 
+Microbiol [Internet] 2013;79(17):5112–20. Sep 1 [cited 2017 Nov 30]Available 
+from http://www.ncbi.nlm.nih.gov/pubmed/23793624 . 
+[21] Talukder H, Paulson J.N, Bravo H.C. ﬁtTimeSeries: longitudinal differential 
+abundance analysis for marker-gene surveys 2017. 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 
+M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al. / Journal of Cystic Fibrosis xxx (xxxx) xxx 
+9 
+ARTICLE IN PRESS 
+JID: JCF 
+[m5G; May 30, 2020;9:13 ] 
+[22] Benjamini Y, Hochberg Y. Controlling the false discovery rate: a practical 
+and powerful approach to multiple testing [Internet]. Vol. 57. J R Stat Soc. 
+SerB (Methodol). WileyRoyal Statistical Society 1995:289–300. [cited 2017 Dec 
+12]Available from https://www.jstor.org/stable/2346101?seq=1 . 
+[23] Subramanian S, Huq S, Yatsunenko T, Haque R, Mahfuz M, Alam MA, et al. Per- 
+sistent gut microbiota immaturity in malnourished Bangladeshi children. Nat 
+[Internet] 2014;510(7505):417–21. Jun 19 [cited 2017 Nov 30]Available from 
+https://www.nature.com/articles/nature13421 . 
+[24] Rivière A, Selak M, Lantin D, Leroy F, De Vuyst L. Biﬁdobacteria and butyrate- 
+producing colon bacteria: importance and strategies for their stimulation in 
+the human gut. Front Microbiol [Internet] 2016;7:979. Jun 28 [cited 2018 Jul 
+11]Available from http://www.ncbi.nlm.nih.gov/pubmed/27446020 . 
+[25] Belzer C, de Vos WM. Microbes inside—from diversity to function: the case 
+of Akkermansia. ISME J [Internet] 2012;6(8):1449–58. Aug 22 [cited 2018 Jul 
+11]Available from http://www.ncbi.nlm.nih.gov/pubmed/22437156 . 
+[26] Miragoli F , Federici S , Ferrari S , Minuti A , Rebecchi A , Bruzzese E , et al. Impact 
+of cystic ﬁbrosis disease on archaea and bacteria composition of gut micro- 
+biota. FEMS Microbiol Ecol 2017;93(2) Feb . 
+[27] de Freitas MB , Moreira EAM , Tomio C , Moreno YMF , Daltoe FP , Barbosa E , 
+et al. Altered intestinal microbiota composition, antibiotic therapy and intesti- 
+nal inﬂammation in children and adolescents with cystic ﬁbrosis. PLoS ONE 
+2018;13(6):e0198457 . 
+[28] Coffey MJ, Nielsen S, Wemheuer B, Kaakoush NO, Garg M, Needham B, 
+et al. Gut microbiota in children with cystic ﬁbrosis: a taxonomic and 
+functional dysbiosis. Sci Rep 2019;9(1). https://www.nature.com/articles/ 
+s41598- 019- 55028- 7#citeas Dec 1 . 
+[29] Nielsen S , Needham B , Leach ST , Day AS , Jaffe A , Thomas T , et al. Disrupted 
+progression of the intestinal microbiota with age in children with cystic ﬁbro- 
+sis. Sci Rep 2016;6:24857 May . 
+[30] Anitha M, Reichardt F, Tabatabavakili S, Nezami BG, Chassaing B, Mwangi S, 
+et al. Intestinal dysbiosis contributes to the delayed gastrointestinal tran- 
+sit in high-fat diet fed mice. Cell Mol Gastroenterol Hepatol [Internet] 
+2016;2(3):328–39. May [cited 2017 Dec 6]Available from http://www.ncbi. 
+nlm.nih.gov/pubmed/27446985 . 
+[31] De Lisle RC. Altered transit and bacterial overgrowth in the cystic ﬁbrosis 
+mouse small intestine. Am J Physiol Liver Physiol [Internet] 2007;293(1):G104–
+11. Jul [cited 2020 Mar 18]Available from https://www.physiology.org/doi/10. 
+1152/ajpgi.0 0548.20 06 . 
+[32] Gelfond D , Ma C , Semler J , Borowitz D . Intestinal ph and gastrointestinal transit 
+proﬁles in cystic ﬁbrosis patients measured by wireless motility capsule. Dig 
+Dis Sci 2013;58(8):2275–81 Aug 17 . 
+[33] Manichanh C , Reeder J , Gibert P , Varela E , Llopis M , Antolin M , et al. Reshap- 
+ing the gut microbiome with bacterial transplantation and antibiotic intake. 
+Genome Res 2010;20(10):1411–19 Oct 1 . 
+[34] Jakobsson HE, Jernberg C, Andersson AF, Sjölund-Karlsson M, Jansson JK, En- 
+gstrand LRatner AJ, editor. Short-term antibiotic treatment has differing long- 
+term impacts on the human throat and gut microbiome. editor. PLoS ONE 
+[Internet] 2010;5(3):e9836. Mar 24 [cited 2017 Dec 6]Available from http: 
+//dx.plos.org/10.1371/journal.pone.0 0 09836 . 
+[35] Jernberg C, Löfmark S, Edlund C, Jansson JK. Long-term ecological impacts of 
+antibiotic administration on the human intestinal microbiota. ISME J [Internet] 
+2007;1(1):56–66. [cited 2017 Dec 6]Available from http://www.ncbi.nlm.nih. 
+gov/pubmed/18043614 . 
+[36] Joossens M., Huys G., Cnockaert M., De Preter V., Verbeke K., Rutgeerts P., et al. 
+Dysbiosis of the faecal microbiota in patients with Crohn’s disease and their 
+unaffected relatives. [cited 2017 Dec 1]; Available from: https://gut.bmj.com/ 
+content/60/5/631.short . 
+[37] Wu X, Ma C, Han L, Nawaz M, Gao F, Zhang X, et al. Molecular character- 
+isation of the faecal microbiota in patients with type II diabetes. Curr Mi- 
+crobiol [Internet] 2010;61(1):69–78. Jul 20 [cited 2017 Dec 1]Available from 
+http://link.springer.com/10.10 07/s0 0284- 010- 9582- 9 . 
+[38] Leahy SC, Higgins DG, Fitzgerald GF, Sinderen D. Getting better with biﬁ- 
+dobacteria. J Appl Microbiol [Internet] 2005;98(6):1303–15. Jun [cited 2018 Jul 
+16]Available from http://doi.wiley.com/10.1111/j.1365-2672.20 05.0260 0.x . 
+[39] Gagnon M, Savard P, Rivière A, LaPointe G, Roy D. Bioaccessible antioxidants in 
+milk fermented by Biﬁdobacterium longum subsp. longum strains. Biomed Res 
+Int [Internet] 2015;2015:1–12. Feb 23 [cited 2018 Jul 16]Available from http: 
+//www.hindawi.com/journals/bmri/2015/169381/ . 
+[40] Garrido D, Dallas DC, Mills DA. Consumption of human milk glycoconjugates 
+by infant-associated biﬁdobacteria: mechanisms and implications. Microbiol- 
+ogy [Internet] 2013;159(Pt_4):649–64. Apr 1 [cited 2018 Jul 16]Available from 
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4083661/ . 
+[41] Fallahi G, Motamed F, YouseﬁA, Shaﬁeyoun A, NajaﬁM, Khodadad A, Ahmad- 
+vand A. The effect of probiotics on fecal calprotectin in patients with cystic 
+ﬁbrosis. Turkish Journal of Pediatrics [Internet] 2013;55(5):475–8. [cited 2017 
+Dec 1]; Available from: https://eprints.qut.edu.au/101674/ . 
+[42] Jafari S-A, Mehdizadeh-Hakkak A, Kianifar H-R, Hebrani P, Ahanchian H, Ab- 
+basnejad E. Effects of probiotics on quality of life in children with cystic ﬁbro- 
+sis; a randomized controlled trial. Iran J Pediatr [Internet] 2013;23(6):669–74. 
+Dec [cited 2017 Dec 1]Available from http://www.ncbi.nlm.nih.gov/pubmed/ 
+24910746 . 
+[43] Vernocchi P, Del Chierico F, Russo A, Majo F, Rossitto M, Valerio M, 
+et al.Popoff MR, editor Gut microbiota signatures in cystic ﬁbrosis: loss of host 
+CFTR function drives the microbiota enterophenotype. editor. PLoS ONE [In- 
+ternet] 2018;13(12):e0208171. Dec 6 [cited 2020 Feb 17]Available from http: 
+//dx.plos.org/10.1371/journal.pone.0208171 . 
+[44] Chen G , Ran X , Li B , Li Y , He D , Huang B , et al. Sodium butyrate inhibits in- 
+ﬂammation and maintains epithelium barrier integrity in a TNBS-induced in- 
+ﬂammatory bowel disease mice model. EBioMedicine 2018;30:317–25 Apr 1 . 
+[45] Segain JP , Galmiche JP , Raingeard De La Blétière D , Bourreille A , Leray V , Ger- 
+vois N , et al. Butyrate inhibits inﬂammatory responses through NF κB inhibi- 
+tion: implications for Crohn’s disease. Gut 20 0 0;47(3):397–403 Sep 1 . 
+[46] Brismar B, Edlund C, Nord CE. Comparative effects of clarithromycin and ery- 
+thromycin on the normal intestinal microﬂora. Scand J Infect Dis [Internet] 
+1991;23(5):635–42. [cited 2017 Dec 6]Available from http://www.ncbi.nlm. 
+nih.gov/pubmed/1837385 . 
+[47] Kager L, Liljeqvist L, Malmborg AS, Nord CE. Effect of clindamycin prophylaxis 
+on the colonic microﬂora in patients undergoing colorectal surgery. Antimicrob 
+Agents Chemother [Internet] 1981;20(6):736–40. Dec [cited 2017 Dec 6]Avail- 
+able from http://www.ncbi.nlm.nih.gov/pubmed/7325640 . 
+[48] Nord CE, Sillerström E, Wahlund E. Effect of tigecycline on normal oropha- 
+ryngeal and intestinal microﬂora. Antimicrob Agents Chemother [Internet] 
+2006;50(10):3375–80. Oct [cited 2017 Dec 6]Available from http://www.ncbi. 
+nlm.nih.gov/pubmed/17005820 . 
+[49] Reyman M, van Houten, van Baarle MA, Bosch AATM D, Man, Chu MLJN WH, 
+et al. Impact of delivery mode-associated gut microbiota dynamics on health 
+in the ﬁrst year of life. Nat Commun 2019;10(1). Dec 1 https://www.nature. 
+com/articles/s41467- 019- 13014- 7 . 
+[50] Steck N, Hoffmann M, Sava IG, Kim SC, Hahne H, Tonkonogy SL, et al. Entero- 
+coccus faecalis metalloprotease compromises epithelial barrier and contributes 
+to intestinal inﬂammation. Gastroenterology [Internet] 2011;141(3):959–71. 
+Available from http://dx.doi.org/10.1053/j.gastro.2011.05.035 . 
+Please cite this article as: M. Kristensen, S.M.P.J. Prevaes and G. Kalkman et al., Development of the gut microbiota in early life: The 
+impact of cystic ﬁbrosis and antibiotic treatment, Journal of Cystic Fibrosis, https://doi.org/10.1016/j.jcf.2020.04.007 

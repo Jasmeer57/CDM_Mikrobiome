@@ -1,0 +1,830 @@
+Individualized Dynamics in the Gut Microbiota Precede
+Crohn’s Disease Flares
+Tzipi Braun, MS1, Ayelet Di Segni, PhD1, Marina BenShoshan, MS1,2, Sandra Neuman, RN3, Nina Levhar, MS3, Michael Bubis, BS3,
+Orit Picard, PhD3, Katya Sosnovski, MS1,2, Gilat Efroni, PhD1, Sarit Farage Barhom, PhD1, Efrat Glick Saar, PhD1, Avishay Lahad, MD2,4,
+Batia Weiss, MD2,4, DoronYablecovitch, MD2,3, AdiLahat, MD2,3, Rami Eliakim, MD2,3, Uri Kopylov, MD2,3,Shomron Ben-Horin, MD2,3 and
+Yael Haberman, MD, PhD2,4,5 On behalf of Israeli IBD Research Nucleus (IIRN)
+OBJECTIVES:
+Crohn’s disease (CD) is a chronic relapsing-remitting gut inflammatory disorder with a heterogeneous
+unpredictable course. Dysbiosis occurs in CD; however, whether microbial dynamics in quiescent CD
+are instrumental in increasing the risk of a subsequent flare remains undefined.
+METHODS:
+We analyzed the long-term dynamics of microbial composition in a prospective observational cohort of
+patients with quiescent CD (45 cases, 217 samples) over 2 years or until clinical flare occurred, aiming
+to identify whether changes in the microbiome precede and predict clinical relapse. Machine learning
+was used to prioritize microbial and clinical factors that discriminate between relapsers and
+nonrelapsers in the quiescent phase.
+RESULTS:
+Patients with CD in clinical, biomarker, and mucosal remission showed significantly reduced microbial
+richness and increased dysbiosis index compared with healthy controls. Of the 45 patients with
+quiescent CD, 12 (27%) flared during follow-up. Samples in quiescent patients preceding flare showed
+significantly reduced abundance of Christensenellaceae and S24.7, and increased abundance of
+Gemellaceae compared with those in remission throughout. A composite flare index was associated
+with a subsequent flare. Notably, higher individualized microbial instability in the quiescent phase was
+associated with a higher risk of a subsequent flare (hazard ratio 11.32, 95% confidence interval 3–42,
+P 5 0.0035) using two preflare samples. Importantly, machine learning prioritized the flare index and
+the intrapersonal instability over clinical factors to best discriminate between relapsers and
+nonrelapsers.
+DISCUSSION:
+Individualized microbial variations in quiescent CD significantly increase the risk of future exacerbation
+and may provide a model to guide personalized preemptive therapy intensification.
+SUPPLEMENTARY MATERIAL accompanies this paper at http://links.lww.com/AJG/A54
+Am J Gastroenterol 2019;114:1142–1151. https://doi.org/10.14309/ajg.0000000000000136
+INTRODUCTION
+Crohn’s disease (CD) has no cure, and it is a chronic relapsing-
+remitting disease with an unpredictable course (1). Cross-
+sectional studies have revealed dysbiosis, or deviation from
+what is considered a healthy microbiota, in the gut of patients
+with CD. Dysbiosis was primarily noted at the community level,
+comprising a general decrease in alpha diversity with genus- and
+clade-speciﬁc enrichment and depletion (2–4). However, it is
+hitherto poorly deﬁned whether these observations reﬂect a pri-
+mary process, which contributes to pathogenesis, or are they
+secondary to a survival advantage in the inﬂammatory micro-
+environment (5). We have previously shown that ileal dysbiosis
+exists in CD in the absence of overt local ileal inﬂammation (2)
+and that dysbiosis in early-onset treatment-naive patients is very
+similar to that of adults with long-standing disease on medi-
+cations (6), indicating that dysbiosis is not just an eﬀect of
+treatment or local inﬂammation. Moreover, murine studies have
+shown that gut dysbiosis from patients with CD augments the
+host’s proinﬂammatory immune responses (7), thereby possibly
+playing a role in disease pathogenesis.
+Disease-speciﬁc changes may be patient speciﬁc, and it was
+already suggested that longitudinal, patient-focused studies will
+provide an important step toward understanding microbiome-
+related diseases and their roles in personalized medicine (4). It has
+1Cancer Research Center, Sheba Medical Center, Tel-Hashomer, Israel; 2Sackler Faculty of Medicine, Tel Aviv University, Tel Aviv, Israel; 3Department of
+Gastroenterology, Sheba Medical Center, Tel-Hashomer, Israel; 4The Pediatric Gastroenterology Unit, The Edmond and Lily Safra Children’s Hospital, Sheba
+Medical Center, Tel-Hashomer, Israel; 5Cincinnati Children’s Hospital Medical Center, Department of Pediatrics, University of Cincinnati, College of Medicine,
+Cincinnati, Ohio. Correspondence: Yael Haberman, MD, PhD. E-mail: Yael.Haberman@sheba.health.gov.il.
+Received July 31, 2018; accepted December 10, 2018; published online February 5, 2019
+The American Journal of GASTROENTEROLOGY
+VOLUME 114 | JULY 2019
+www.amjgastro.com
+ARTICLE
+1142
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+INFLAMMATORY BOWEL DISEASE
+been shown that the extent of dysbiosis in patients with active CD
+diminished with reduction of inﬂammation, but full recovery of
+dysbiosis to the control level was not observed after induction (8)
+or maintenance therapy (9). A recent study has shown that the gut
+microbiome of patients with CD ﬂuctuates more compared with
+healthy individuals.(10). However, microbiome dynamics over
+timein patientswithquiescent CDhave not been described to date,
+and their potential association and predictive values for future
+disease ﬂares remain poorly deﬁned. Therefore, we prospectively
+studied a 2-year-long cohort (256 fecal samples) through 16S
+rRNA amplicon microbial sequencing (11) aiming to evaluate
+whether patients with clinical, biomarker, and endoscopic mucosal
+remission still have microbial dysbiosis and reduced richness
+compared with healthy controls and whether microbial charac-
+teristics in quiescent CD predict the risk of disease exacerbation.
+METHODS
+Study design
+Ethical approval for the study was granted by the Sheba Research
+Ethics Committee. Written informed consent was obtained. This
+was a prospective observational cohort study of adult patients
+(aged .18 years) with quiescent CD involving the small bowel
+(either L1 small bowel or L3 ileocolonic CD by the Montreal
+classiﬁcation). To be included, patients had to have quiescent
+stable disease for 3–24 months before inclusion. Stable disease
+was deﬁned as being corticosteroid-free and having clinical re-
+mission as per the Crohn’s Disease Activity Index (CDAI) of
+,150 or experiencing mild disease symptoms (CDAI ,220) not
+necessitating alteration of treatment or its dose in the last 3
+months before inclusion. Patients were excluded if they were
+unable/unwilling to provide informed consent, had severe
+comorbidities, were pregnant, or if they had isolated colonic CD.
+Clinical observations from this study at study inception were
+previously reported (11). A subcohort of 45 patients of the orig-
+inal cohort of 61 patients with quiescent CD was included in this
+analysis, as allocation of the fecal samples for microbial analyses
+started already after study initiation. The primary outcome was
+the occurrence of a clinical ﬂare, deﬁned as an increase of .70
+points on the CDAI from baseline and a CDAI of .150, or the
+need for rescue medication for CD necessitated by disease
+worsening as determined by physician global assessment. For
+simplicity, we categorized patients into either clinical remission
+(quiescent) or active disease. In addition to clinical assessment,
+fecal calprotectin (B ¨UHLMANN Laboratories AG, Basel, Swit-
+zerland), fecal microbial characterization, and C-reactive protein
+were measured routinely every 3 months. Patients underwent
+video capsule endoscopy every 6 months. In patients with isolated
+small bowel disease (L1), SB-III capsule (Given Imaging,
+Yokneam, Israel) was used. In patients with small bowel and
+colonic CD (L3), a colonic capsule (PillCam colon capsule; Given
+Imaging, Yokneam, Israel) was administered. Mucosal inﬂam-
+mation was quantiﬁed using the Lewis score (LS), and mucosal
+healing was deﬁned as an LS of ,135 (12). Fecal samples for
+parallel fecal calprotectin measurement and microbial charac-
+terization were self-collected in sterile containers, brought to the
+laboratory within 24 hours, and frozen immediately in 280 °C
+until DNA extraction. Samples obtained within 6 weeks of anti-
+biotics exposure were excluded. Samples from this cohort of patients
+in remission were compared with samples obtained from a diﬀerent
+local cohort of 17 patients with CD with active inﬂammation and 22
+healthy controls (Table 1). The inclusion of healthy controls and
+active CD groups are used as 2 extreme references for clinical and
+microbial variations. The caring physicians were blinded to the
+microbial composition analyses at all time points.
+Microbial characterization and statistics
+DNA extraction and polymerase chain reaction (PCR) ampliﬁ-
+cation of the 16S rRNA gene V4 variable region using Illumina-
+adapted universal primers 515F/806R (13) was conducted as
+previously described (14–16). Paired-end reads (175 bp) were
+processed in QIIME 1.9.1 (17). Sequences that passed quality
+ﬁltering were clustered into phylotypes (operational taxonomic
+units, OTUs) at 97% sequence identity using a uclust-based (18)
+closed-reference protocol, against the Greengenes August 2013
+database (19). Samples had amedian of12,638 (average of14,258)
+paired-end sequences. Faith’s phylogenetic diversity (20) was
+used as a measure of microbial richness, or within-sample di-
+versity after samples was randomly rariﬁed to 2000 sequences.
+Unweighted UniFrac distance was used as a measure of b di-
+versity, or between-sample diversity (21). All downstream data
+analyses were performed in R. All zeroes were replaced with
+a minimal value of the lowest taxonomic relative abundance in
+the data set to account for the discrete nature of sequencing and
+enable log transform. R package randomForest (22) version 4.6-12
+was used, with the out-of-box estimate of error rate, and each patient
+was sampled once to avoid bias, using average values from the entire
+patients’ available samples for variables that change over time.
+Mann-Whitney U and Yates’ chi-square tests were used to test the
+statistical diﬀerences with Bonferroni correction as needed. Spear-
+man’s rank correlation was used to assess monotonic relationships
+betweencontentiousvariables.Ascatterplotisshownforcorrelation
+results, with a local polynomial regression ﬁtting calculated by
+weighted least squares method and a 0.95 conﬁdence interval using
+at-based approximation. P , 0.05 was considered statistically sig-
+niﬁcant. R MaAsLin (Multivariate Association with Linear Models)
+package (23) version 0.0.5 was used for comparison between deﬁned
+clinical groups. Control, active, and remission CD patients were
+compared, using all samples in the cohort. Samples taken during
+remission from patients who subsequently ﬂared were compared to
+those who remained in remission. For both analysis, a Q value
+thresholdof,0.1wasused,whilecontrollingfortheeﬀectofsex,age,
+bodymassindex(BMI),andsmoking.Rareaunderthecurve(AUC)
+package version 0.3.0 was used to calculate the receiver operating
+characteristic (ROC) curve and the ROC AUC. Hazard ratios for
+survival without a ﬂare per individualized microbial instability was
+calculated using the Youden index of 0.502.
+Data and material availability. The study data sets were de-
+posited at the National Center for Biotechnology Information as
+BioProject PRJNA450540.
+RESULTS
+Gut microbiome composition of patients with CD in remission
+differs from controls
+Patients with quiescent CD were monitored as described earlier.
+The primary outcome was the occurrence of a clinical ﬂare, de-
+ﬁned as an increase of .70 points on the CDAI from baseline and
+a CDAI .150, or the need for rescue medication for CD neces-
+sitated by disease worsening as determined by physician global
+assessment. Overall, 12/45 (27%) met the primary outcome and
+experienced a disease ﬂare during follow-up. Forty of the 45
+patients had longitudinal sampling (median of 5 samples per
+patient, Figure 1a), as 5 cases subjected only 1 sample (2 that
+© 2019 by The American College of Gastroenterology
+The American Journal of GASTROENTEROLOGY
+INFLAMMATORY BOWEL DISEASE
+Microbial Dynamics Precede Crohn’s Disease Flares
+1143
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+withdrawnfromthestudyand3that ﬂared).EachrowinFigure1a
+corresponds to an enrolled quiescent CD with longitudinal fecal
+sampling. Samples from quiescent CD were further compared
+with samples obtained from 17 patients with CD with active in-
+ﬂammation and 22 healthy controls, resulting in 256 fecal samples
+that were subjected in parallel for fecal calprotectin and 16S rRNA
+amplicon sequencing. Baseline characteristics of patients with
+active and quiescent CD and controls are summarized in Table 1.
+Active CD cases, as anticipated, had signiﬁcantly higher calpro-
+tectin compared with patients in clinical remission (P , 0.01,
+Table 1). However, quiescent CD showed variations in their cal-
+protectin values within the same patient over time and between
+patients (Figure 1a, higher calprotectin is represented by larger
+circle size).
+An unweighted UniFrac-based Principal Coordinates Analy-
+sis (PCoA) analysis of the cohort was performed to visually ex-
+plore the similarity and variation between samples’ microbial
+composition (Figure 1b). Healthy controls predominantly clus-
+tered on the left side of the plot, active disease samples on the
+right, and CD in remission samples positioned mostly in between
+as indicated by the respective PC1 values (Figure 1b, c). As pre-
+viously shown (2,3,6), microbial variation was highly inﬂuenced
+by microbial richness, and we noted a strong negative correlation
+(Figure 1d, e) between PC1 and the microbial richness (Spear-
+man’s rank correlation rho 5 20.89, P , 2.2e-16, n 5 256). We
+used the MaAsLin pipeline to identify microbial taxa that were
+signiﬁcantly diﬀerent between active, remission, and control
+samples, while controlling for sex, age, BMI, and smoking (see
+Figure 1, Supplementary Digital Content 1, http://links.lww.com/
+AJG/A54).
+A treatment-na¨ıve CD cohort analysis previously determined
+a Microbial Dysbiosis Index (MDI) (3). Increased MDI and re-
+duced microbial richness was associated with disease and clinical
+severity. We therefore tested whether the microbiome gut com-
+position of patients with CD in remission reverts back to features
+resembling the healthy controls with respect to dysbiosis (MDI)
+and reduced microbial richness. MDI and microbial richness
+showed signiﬁcant diﬀerences between controls, clinically active
+samples, and remission samples, with the microbial richness
+values being lower and the MDI values being higher in active
+samples compared with controls, while remission samples being
+interspersed in between controls and active samples (Figure 2a).
+We also noted a signiﬁcant negative correlation (Spearman’s rank
+correlation rho 5 20.46, P , 1.3e-5, n 5 84) between microbial
+richness and MDI values (Figure 2b), with the two variables
+exhibiting a mirror image of each other (Figure 2a).
+We (11) and others (24,25) have previously shown that clinical
+remission does not always correlate with inﬂammatory bio-
+markers normalization, nor with mucosal healing. We therefore
+next stratiﬁed our samples based on C-reactive protein (,5 and
+$5) and fecal calprotectin (,100 and $100) values and on
+whether they achieved mucosal healing determined by capsule
+endoscopy LS scoring (,135 and $135) (26,27).
+Results for MDI and microbial richness using those classi-
+ﬁcations are shown in Figure 2c. Overall, patients with CD with
+no systemic inﬂammation (normal C-reactive protein ,5) and
+Table 1. Patients’ demographics and disease characteristics
+Control
+Active CD
+Quiescent CD
+CD with longitudinal sampling
+CD relapsers
+CD nonrelapsers
+N 5 22
+N 5 17
+N 5 45
+N 5 9 (34 samplesa)
+N 5 31 (165 sample)
+Age, mean (s.d.)
+41 (16)
+39 (15)
+33 (10)
+30 (9)
+34 (11)
+Sex, M (%)
+12 (55%)
+12 (70%)
+28 (62%)
+6 (67%)
+18 (58%)
+BMI
+22 (4)
+24 (4)
+26 (3)
+23 (4)***
+Colonic involvement (L2)
+2 (12%)
+3 (7%)
+—
+2 (6%)
+Complicated phenotype (B2/B3)
+8 (47%)
+19 (43%)
+3 (33)
+13 (42%)
+Biomarkers
+n 5 15
+C-reactive protein median (IQR)
+4.4 (0.5,14.8)
+1 (0.5, 3.6)
+1.84 (0.95, 6.05)
+1.6 (0.58, 3.95)**
+Calprotectin median (IQR)
+588 (197, 729)
+36 (30, 149)*
+48 (30, 108)
+39 (30, 103)
+Highest Lewis score (IQR)
+—
+233 (225, 600)
+143 (0.300)**
+Treatment, n (%)
+N 5 44
+No
+1 (6%)
+6 (14%)
+1 (11%)
+5 (16%)
+5ASA
+1 (6%)
+5 (11%)
+1 (11%)
+3 (10%)
+Corticosteroids
+1 (6%)
+0
+0
+0
+IM
+4 (24%)
+13 (30%)
+6 (67%)
+6 (19%)**
+Biologics (anti-TNF/vedolizumab)
+7 (41%)
+16 (36%)
+1 (11%)
+13 (42%)
+Combo (biologic with IM)
+3 (24%)
+4 (9%)
+0
+4 (13%)
+CD, Crohn’s disease; IM, immunomodulator; IQR, Interquartile range.
+aThirty-four samples were obtained before flare, and additional 13 samples were obtained during disease flare. Only preflare samples were included.
+*P , 0.01 for active vs first remission sample (P , 0.05 is not shown because no such value was found).
+**P , 0.05 for preflare against throughout remission longitudinal samples.
+***P , 0.05 for preflare against throughout remission longitudinal samples.
+The American Journal of GASTROENTEROLOGY
+VOLUME 114 | JULY 2019
+www.amjgastro.com
+INFLAMMATORY BOWEL DISEASE
+Braun et al.
+1144
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+no mucosal inﬂammation (calprotectin ,100 or LS , 135) still
+showed MDI and microbial richness that tended to diﬀer from
+that observed in controls. Sensitivity analysis using a “snapshot”
+consisting of a single randomly selected sample per patient to
+ensure that the observed association is nota result ofa bias created
+by the repeating sampling (28–32) yielded similar results (see
+Figure 2, Supplementary Digital Content 1, http://links.lww.com/
+AJG/A54). Taken together, these data show that microbial var-
+iations in CD do not fully resemble to those seen in “normal”
+status observed in healthy controls, even in patients with CD in
+complete clinical, biomarker, and mucosal remission.
+Microbiome composition in remission before a flare differs
+between relapsers and nonrelapsers
+We next aimed at exploring whether microbial composition in
+samples obtained before a subsequent ﬂare (preﬂare) in patients
+who did eventually ﬂare (relapsers) will signiﬁcantly diﬀer from
+CD cases that remained in remission (nonrelapsers) throughout
+follow-up. The baseline characteristics in ﬂaring and nonﬂaring
+patients with longitudinal sampling are shown in Table 1. For the
+laboratory and capsule endoscopy variables, fecal calprotectin
+values were not signiﬁcantly diﬀerent, whereas C-reactive protein
+and LS values were diﬀerent between relapsers and nonrelapsers
+(Mann-Whitney U test P 5 0.63, 0.04, and 0.01, n 5 204, 198, and
+77, respectively, Figure 3d). Fourteen percent of the patients in
+remission were not treated with biologics, steroids, or small
+molecules during this study period. The frequency of patients
+withnotherapydidnotdiﬀerbetweentherelapserandnonrelapser
+groups (Table 1). Of the clinical metadata tested (age, BMI, sex,
+smoking, previous surgeries, medications, disease location, and
+diseasebehavior),onlyBMIandimmunomodulatorexposurewere
+signiﬁcantly associated with an outcome of a ﬂare (Table 1).
+In the PCoA analysis (Figure 3a), preﬂare samples in relapsers
+tend to cluster closer to the active samples, whereas no-ﬂare
+samples from nonrelapsers tended to approximate controls. This
+was also evident by PC1 values, which were not statistically dif-
+ferent between active and preﬂare, nor between healthy controls
+and no-ﬂare samples, but were signiﬁcantly diﬀerent between the
+Figure 1. Gut microbial composition across patients with active CD, patients with quiescent CD, and controls. (a) Each row corresponds to an enrolled
+quiescent CD with longitudinal fecal sampling. Measured calprotectin values are represented as circle size. Samples are colored by disease activity. (b)
+Unweighted UniFrac PCoA plot colored by disease activity (active or quiescent) and controls. Control samples tend to cluster more on the right, whereas
+active samples cluster more to the left, with remission samples spreading in between. (c) PCoA PC1 value by disease activity. Asterisks indicate significant
+differences (Bonferroni-corrected Mann-Whitney U test: ***P , 0.001, *P , 0.05 between active [n 5 30], quiescent [n 5 204], and control [n 5 22]). (d)
+PC1 values are shown against microbial richness (Spearman’s rank correlation rho 5 20.89, P , 2.2e-16, n 5 256). Samples are colored by disease
+activity. (e) Unweighted UniFrac PCoA similar to (b), colored by microbial richness. CD, Crohn’s disease; PCoA, Principal Coordinates Analysis.
+© 2019 by The American College of Gastroenterology
+The American Journal of GASTROENTEROLOGY
+INFLAMMATORY BOWEL DISEASE
+Microbial Dynamics Precede Crohn’s Disease Flares
+1145
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+2 groups of interest (Figure 3b). Although MDI did not show
+signiﬁcant diﬀerence between preﬂare and no-ﬂare samples, the
+intrapersonal microbial richness and within-group b diversity
+was signiﬁcantly diﬀerent between relapsers and nonrelapsers
+(Mann-Whitney U test P 5 0.25, 8.7e-5, and 3.8e-14, n 5 204,
+204, and 14,926, respectively) (Figure 3c). Fecal calprotectin
+values were not signiﬁcantly diﬀerent, whereas C-reactive protein
+and LS values were diﬀerent between relapsers and nonrelapsers
+(Table 1, Figure 3d, see Figure 3, Supplementary Digital Content
+1, http://links.lww.com/AJG/A54).
+Seventeen speciﬁc microbial taxa at all taxonomic levels were
+signiﬁcantly diﬀerent between preﬂare in relapsers and no-ﬂare
+samples, after controlling for patients’ sex, age, BMI, and smok-
+ing, as identiﬁed by the MaAsLin pipeline (23) (see Table 1,
+Supplemental Digital Content, http://links.lww.com/AJG/A54,
+and Figure 3e). The most prominent ones were S24.7 family of the
+Bacteroidales order, Gemellaceae and Christensenellaceae fami-
+lies of the Firmicutes phyla, and Sutterella genus and Desulfovi-
+brionaceae family of the Proteobacteria phyla. Interestingly, with
+the exception of Gemellaceae, which had a higher relative
+abundance in preﬂare samples, all the identiﬁed taxa were more
+abundant in patients who did not ﬂare compared with patients
+with eventual ﬂare.
+To evaluate the microbiome as a predictive tool, we used
+a supervised learning random forest (RF) model to prioritize
+those taxa that best discriminating relpasers from nonrelapsers
+using samples obtained during the phase. To avoid overﬁtting
+bias to various samples originating from the same patient, the
+Figure 2. Patients with CD in clinical, biomarker, and mucosal remission show microbial richness and microbial dysbiosis index (MDI) in between active CD
+and control. (a) Microbial richness (upper) and MDI (lower) of controls (n 5 22), active CD (n 5 30), and quiescent CD (n 5 204) patients’ samples. (b)
+Scatter plot of samples’ microbial richness plotted against MDI. All samples are plotted (Spearman’s rank correlation rho 5 20.32, P , 1.9e-7, n 5 256),
+with a local polynomial regression fitting and a 0.95 confidence interval. (c) Boxplots of microbial richness (upper) and MDI (lower) of controls (n 5 22)
+against, from left to right as indicated: lower (n 5 156) or higher (n 5 78) than 100 fecal calprotectin, lower (n 5 170) or higher (n 5 56) than 5 mg/L
+C-reactive protein, both calprotectin and C-reactive protein lower than the designated threshold value (n 5 115) or at least 1 higher value (n 5 114), and
+lower (n 5 31) or higher (n 5 50) than 135 LS. Asterisks indicate significant differences (Bonferroni-corrected Mann-Whitney U test: ***q , 0.001, **q ,
+0.01, *q , 0.05). CD, Crohn’s disease; LS, Lewis score; MDI, microbial dysbiosis index.
+The American Journal of GASTROENTEROLOGY
+VOLUME 114 | JULY 2019
+www.amjgastro.com
+INFLAMMATORY BOWEL DISEASE
+Braun et al.
+1146
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+Figure 3. Clinical and microbial features that differ in patients who eventually flared. Samples in remission are divided by outcome; samples from patients
+who became active/flared (relapsers) are defined as preflare, and samples of patients who remained in remission throughout follow-up (nonrelapsers) are
+defined as no flare. (a) Unweighted UniFrac PCoA plot colored as indicated. (b) PCoA PC1 values in active, preflare, no flare, or control samples (n 5 256).
+(c) Preflare and no-flare MDI (left, n 5 204), microbial richness (middle, n 5 204), and b diversity (between-sample distance) within each group (right, n 5
+14,926). (d) Preflare and no-flare calprotectin (left, n 5 204), C-reactive protein (middle, n 5 198), and LS (right, n 5 77). (e) Significant taxa relative
+abundance between preflare and no-flare sample as calculated by MaAslin. Only taxa at the (genus [g] and family [f] levels) are shown here. (f) Top ten taxa
+discriminating betweenpreflareandnoflare,prioritizedusingrandomforestmeandecreaseGini. (g)Patients’longitudinalsamples’ flareindexagainsttime.
+(h) Preflare and no-flare flare index (n 5 204). (i) Flare index plotted against microbial richness (left) and MDI (right) (Spearman’s rank correlation rho 5
+20.38, 0.25, P 5 5.5e-10, 5e-5, respectively, n 5 256). Local polynomial regression fitting and a 0.95 confidence interval are shown. Asterisks indicate
+significant differences (Bonferroni-corrected Mann-Whitney U test: ***q , 0.001, *q , 0.05). LS, Lewis score; PCoA, Principal Coordinates Analysis; MDI,
+microbial dysbiosis Index.
+© 2019 by The American College of Gastroenterology
+The American Journal of GASTROENTEROLOGY
+INFLAMMATORY BOWEL DISEASE
+Microbial Dynamics Precede Crohn’s Disease Flares
+1147
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+average taxonomic relative abundance per patient was used. An
+ROC AUC of 0.78 was obtained when using all 17 samples (see
+Figure 4, Supplementary Digital Content 1, http://links.lww.com/
+AJG/A54). The taxa with the highest contribution to the classi-
+ﬁcation, as calculated by mean decreased gini (22), were Gemel-
+laceae,
+Christensenellaceae,
+and
+S24.7
+(Figure
+3f).
+After
+narrowing the RF to use only those 3 top contributing taxa, the
+classiﬁcation improved the ROC AUC to 0.87 (see Figure 4,
+Supplementary Digital Content 1, http://links.lww.com/AJG/
+A54). To verify this ﬁnding, we constructed a “ﬂare index” based
+on the relative abundance of these three taxa, using the same
+approach as was used for MDI. Using this approach, Gemellaceae
+showed higher abundance in preﬂare samples, whereas S24.7 and
+Christensenellaceae had lower abundance in preﬂare samples.
+The ﬂare index was therefore composed of log of [abundance in
+organisms increased preﬂare] over [abundance of organisms
+decreased preﬂare] or log of [Gemellaceae] over [S24.7 1
+Christensenellaceae]. Using the ﬂare index in ROC analyses
+outperformed the RF result using the same three taxa, with an
+AUC of 0.91 (see Figure 4, Supplementary Digital Content 1,
+http://links.lww.com/AJG/A54). In the longitudinal sampling
+(Figure 3g, h), preﬂare samples had signiﬁcantly higher ﬂare in-
+dexvalues than no-ﬂare samples(Mann-Whitney Utest P59.2e-
+11, n 5 204), and a signiﬁcant correlation between ﬂare index,
+microbial richness, and MDI was also noted (Figure 3i).
+Higher intrapersonal microbial variation (or instability) emerges
+before CD flares
+Microbial b diversity is a measure of between-sample distance.
+Higher b diversity between samples implies a lower degree of
+similarity within the bacterial composition. The intrapersonal
+microbial richness and within-group b diversity signiﬁcantly
+diﬀered between preﬂare of relapsers and no-ﬂare samples from
+nonrelapsers (Figure 3c). We therefore next deﬁned in-
+dividualized intrapersonal microbial variation (or instability)
+values for patients with CD with longitudinal samples, as the
+Figure 4. Intrapersonal instability (b diversity) as a predictor of CD flares. (a). Unweighted UniFrac PCoA plot showing all samples. Two patients’samples are
+marked by larger circle size; one that eventually flared (orange for preflare samples and red for active samples) and one that did not (no flare in blue). Normal
+confident ellipse is shown, assuming a multivariate t-distribution with a confidence level of 0.95. (b) Heatmaps representing the b diversity distances between
+samples of six example patients, three of which flared (upper) and 3 did not (lower). The colors at the diagonal represent the inflammatory status of the sample. (c)
+Top prioritized variables for classification of preflare and no-flare outcome as calculated by random forest mean decrease Gini. (d) ROC analysis of the microbial
+instability values per patient, of the last two, three and four samples in remission. The AUC for each is noted. (e) Kaplan-Meier survival without a flare, comparing
+patients with intrapersonal instability values lower or higher than the Youden index of 0.502, over the last 2 samples before a flare/end of the study. AUC, area under
+the curve; CD, Crohn’s disease; PCoA, Principal Coordinates Analysis; ROC, receiver operating characteristic.
+The American Journal of GASTROENTEROLOGY
+VOLUME 114 | JULY 2019
+www.amjgastro.com
+INFLAMMATORY BOWEL DISEASE
+Braun et al.
+1148
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+average b diversity between samples of each such individual, and
+compared those values between relapsers and nonrelapsers. For
+example, all samples that originated from a single patient who
+eventually ﬂared (orange/red) and from another patient who
+remained in remission (blue) were marked on the PCoA ﬁgure
+(Figure 4a). As shown, the samples of the no-ﬂare patient
+remained clustered relatively close to each other, with a low av-
+erage intrapersonal b diversity (instability) value of 0.46, whereas
+the samples of the ﬂared patient were more dispersed, with
+a relatively higher mean intrapersonal b diversity (instability)
+value of 0.55. This trend could also be observed in a heatmap of
+the b diversity distances between diﬀerent samples originating
+from the same patient, where orange stands for a higher diversity
+or instability (Figure 4b).
+Machine learning RF was used to prioritize microbial, de-
+mographic, and clinical values with the aim of prioritizing the top
+factors that are able to discriminate between relapsers and non-
+relapsers in the quiescent CD phase. Factors that were considered
+were those that were signiﬁcantly diﬀerent between the 2 groups
+in the univariate analyses in Table 1 (BMI, LS, treatment, and
+C-reactive protein), the ﬂare index, the intrapersonal b diversity
+(microbial instability), microbial richness, and those factors that
+are indicated in Figure 4c. The top predicting variables were the
+ﬂare index, intrapersonal microbial variation (instability), BMI,
+LS, and microbial richness (Figure 4c). Because microbial taxo-
+nomic proﬁles can be highly variable among patients and studies
+(4), we next focused on the community-based intrapersonal mi-
+crobial instability as a predictor of subsequent ﬂares.
+Intrapersonal microbial instability was negatively correlated
+with per-patient mean microbiome richness and positively cor-
+related with the mean ﬂare index (Spearman’s rank correlation
+rho 5 20.49a and 0.57, P , 1.2e-3 and 1.4e-4, respectively, n 5
+40; see Figure 5, Supplementary Digital Content 1, http://links.
+lww.com/AJG/A54). We calculated the intrapersonal instability
+values of the last 2, 3, or 4 fecal samples per patient using the
+longitudinal samples. Notably, the intrapersonal microbial in-
+stability preceding ﬂares was signiﬁcantly higher in relapsers vs
+individuals who did not ﬂare (Bonferroni-corrected Mann-
+Whitney U test q , 0.01 when using 3 and 4 and q , 0.05 when
+using 2 preﬂare samples). This increased intrapersonal microbial
+instability was associated with a higher likelihood of a future ﬂare,
+improving from AUC 5 0.78 to AUC 5 0.80, and AUC 5 0.92,
+using 2, 3, and 4 fecal samples, respectively (Figure 4d). An in-
+trapersonal microbial instability $0.502 was the best threshold
+for identifying patients at risk of experiencing future ﬂare (hazard
+ratio 11.32, 95% conﬁdence interval 3–42, log-rank test P 5
+0.0035, sensitivity 88.89%, speciﬁcity 67.74%, positive predictive
+value 44.44%, and negative predictive value 95.45%) (Figure 4d)
+when using 2 preﬂare samples. Collectively, these results suggest
+that higher intrapersonal instability (variation) increases the
+probability of a future ﬂare.
+DISCUSSION
+We capture the long-term dynamic behavior of the gut micro-
+biota in quiescent CD and identify microbial factors that are
+associated with a subsequent ﬂare. Speciﬁc changes at the taxa
+(“ﬂare index”) and at the community (instability) levels were
+found to precede clinical ﬂare and to predict disease exacerbation.
+We further emphasize the instability at the microbial community
+as a predicator of a future ﬂare as taxonomic changes are highly
+variable between studies, populations, and patients (4). It has
+already been shown that in patients with CD, the microbiome
+composition varies more than in healthy individuals (10). Similar
+to these results, we noted an association between the individual
+microbial instability and lower diversity. However, we expand
+these observations and show that within patients with quiescent
+CD, higher intrapersonal microbial ﬂuctuations or instability
+increase the likelihood of a subsequent ﬂare with a high sensitivity
+of 89% and negative predictive value of 95%. In a broader view,
+these results may imply that microbiome changes during the
+quiescent phase may be the cause or an associated reporter of
+other factors upstream of the inﬂammatory process preﬂare that
+subsequently lead to a disease ﬂare.
+We have identiﬁed speciﬁc taxa that were associated with
+a consequent ﬂare. Most showed reduced abundance in patients
+with a subsequent ﬂare, which is in correlation with the overall
+lower microbial richness observed before ﬂares. Three taxa in
+particular were predictive of ﬂare. The Christensenellaceae family
+of the Clostridiales order and S24.7 family of the Bacteroidales
+order had lower abundance in patients with a subsequent ﬂare.
+Christensenellaceae was previously observed to be missing from
+active CD gut microbiome (33), and S24.7 abundance was re-
+duced in experimental colitic mice after the onset of colitis (34).
+The Gemellaceae family showed higher abundance in patients
+with a subsequent ﬂare and was also previously associated with
+CD (3,35). These three taxa are all part of the MDI (3). However,
+the ﬂare index outperformed the MDI in predicting ﬂares in our
+cohort, as the MDI was not associated with a subsequent ﬂare.
+Interestingly, when prioritizing clinical, demographic, and
+microbial factors in a supervised learning RF algorithm to predict
+a subsequent ﬂare, the top contributing factors (Figure 4c) were the
+“ﬂare index” and the intrapersonal instability. The following con-
+tributing factors were BMI, LS, and microbial richness. Importantly,
+C-reactive protein and treatment exposure that were shown to be
+signiﬁcantly diﬀerent in the univariate analyses (Table 1) were not
+within the top 5 contributing factors. The strong contribution of the
+BMI is consistent with the signiﬁcantly higher BMI values seen here
+in patients who ﬂared compared with patients who remained in
+remission (Table 1) and with older studies connecting higher BMI
+with unfavorable disease outcome (36–38).
+Limitations of this study include the relatively modest cohort
+size, which is nonetheless among the largest CD cohorts ever to
+undergo comprehensive prospective follow-up and microbial
+characterization in patients is remission. We included only
+patients who had stable disease for 3–24 months before inclusion.
+Thus, whether the results can be extended to patients with CD
+with longer duration ofremission remains to be proven. Strengths
+of the study include its prospective nature with a median of 5
+longitudinal fecal samples per patient that were submitted in
+parallel to both microbial characterization and fecal calprotectin
+measurement and the focus on only patients with CD rather than
+ulcerative colitis and CD altogether. Future studies will be needed
+to further validate these results in an independent cohort, whereas
+supplemental shotgun metagenomic and metatranscriptomic
+and mechanistic studies in murine models may provide further
+insights into the role of the microbiome in eliciting CD ﬂare.
+In summary, the optimal monitoring strategy for predicating
+CD ﬂare in CD is undeﬁned. Greater understanding of personal
+pathways driving disease exacerbations is key to proactively ad-
+just therapeutic approaches to reduce personal and global disease
+burden. Our results support the idea that microbial changes exist
+in the absence of clinical, systemic, and mucosal inﬂammation, as
+© 2019 by The American College of Gastroenterology
+The American Journal of GASTROENTEROLOGY
+INFLAMMATORY BOWEL DISEASE
+Microbial Dynamics Precede Crohn’s Disease Flares
+1149
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+changes in microbial factors are present to some extent also in
+patients withclinical, biomarker, or mucosal remission. However,
+these changes are further exacerbated with disease activity in-
+dicating host-microbe bidirectional relationships that augment
+the inﬂammatory process and likely play a role in pathogenesis. In
+addition, we show that a composite “ﬂare index” and personal
+microbial instability during remission predict a subsequent ex-
+acerbation. It is possible that microbial dynamics and environ-
+mental and personal variations build up until a certain threshold
+is crossed, leading to a full clinical ﬂare. Collectively, these results
+indicate a potential contribution of the microbial composition to
+CD ﬂare pathogenesis, rather than merely being an epiphenom-
+enon of an ongoing inﬂammation underlying the disease. Those
+factors can be used to guide personalized preemptive therapy
+intensiﬁcation and may impact future standard of care.
+ACKNOWLEDGMENTS
+The authors thank the research coordinators for their tireless
+attention, the patients who agreed to participate in this important
+study, and A. Amir for reviewing the manuscript. The authors greatly
+appreciate the Leona M. and Harry B. Helmsley Charitable Trust
+support of the study, the IIRN advisory board, and associated sites for
+their advice and constructive feedback.
+CONFLICTS OF INTEREST
+Guarantor of the article: Yael Haberman, MD, PhD.
+Speciﬁc author contributions: T.B. performed most of the data
+analysis, contributed to the experimental design, and was a major
+contributor in writing the manuscript. Y.H. had major contribution
+to experimental design, data analysis, and writing of the manuscript
+and obtained funding. A.D.S., M.B.S., G.E., K.S., M.B., and O.P.
+performed most of the experiments, helped in experimental design,
+and contributed in writing the manuscript. S.F.B., E.G.S., S.N., N.L.,
+A.L., and B.W. helped in experimental design, sequencing, patients’
+data collection, and manuscript writing. A.L., U.K., D.Y., R.E., and
+S.B.H. had a measure contribution in experimental design, funding,
+and manuscript writing.
+Financial support: Support for this work was provided by the Leona
+M. and Harry B. Helmsley Charitable Trust. This study was also
+supported in part by the Israel Science Foundation (Y.H., grant no.
+908/15), the I-CORE program (Y.H., grant no. 41/11), and the ERC
+starting grant (Y.H., grant no. 758313).
+Potential competing interests: None.
+REFERENCES
+1.
+Liverani E, Scaioli E, Digby RJ, et al. How to predict clinical relapse in
+inﬂammatory bowel disease patients. World J Gastroenterol 2016;22:
+1017–33.
+2.
+Haberman Y, Tickle TL, Dexheimer PJ, et al. Pediatric Crohn disease
+patients exhibit speciﬁc ileal transcriptome and microbiome signature.
+J Clin Invest 2014;124:3617–33.
+3.
+Gevers D, Kugathasan S, Denson LA, et al. The treatment-naive
+microbiome in new-onset Crohn’s disease. Cell Host Microbe 2014;15:
+382–92.
+4.
+Schirmer M, Franzosa EA, Lloyd-Price J, et al. Dynamics of
+metatranscription in the inﬂammatory bowel disease gut microbiome.
+Nat Microbiol 2018;3:337–46.
+5.
+Ni J, Wu GD, Albenberg L, et al. Gut microbiota and IBD: Causation or
+correlation? Nat Rev Gastroenterol Hepatol 2017;14:573–84.
+6.
+Frank DN, St Amand AL, Feldman RA, et al. Molecular-phylogenetic
+characterization of microbial community imbalances in human
+inﬂammatory bowel diseases. Proc Natl Acad Sci USA 2007;104:13780–5.
+7.
+Nagao-Kitamoto H, Shreiner AB, Gillilland MG III, et al. Functional
+characterization of inﬂammatory bowel disease-associated gut dysbiosis
+in gnotobiotic mice. Cell Mol Gastroenterol Hepatol 2016;2:468–81.
+8.
+Lewis JD, Chen EZ, Baldassano RN, et al. Inﬂammation, antibiotics, and
+diet as environmental stressors of the gut microbiome in pediatric
+Crohn’s disease. Cell Host Microbe 2015;18:489–500.
+9.
+Shaw KA, Bertha M, Hofmekler T, et al. Dysbiosis, inﬂammation, and
+response to treatment: A longitudinal study of pediatric subjects with
+newly diagnosed inﬂammatory bowel disease. Genome Med 2016;8:75.
+10. Halfvarson J, Brislawn CJ, Lamendella R, et al. Dynamics of the human
+gut microbiome in inﬂammatory bowel disease. Nat Microbiol 2017;2:
+17004.
+11. Kopylov U, Yablecovitch D, Lahat A, et al. Detection of small bowel
+mucosal healing and deep remission in patients with known small bowel
+Crohn’s disease using biomarkers, capsule endoscopy, and imaging. Am J
+Gastroenterol 2015;110:1316–23.
+12. Gralnek IM, Defranchis R, Seidman E, et al. Development of a capsule
+endoscopy scoring index for small bowel mucosal inﬂammatory change.
+Aliment Pharmacol Ther 2008;27:146–54.
+13. Caporaso JG, Lauber CL, Walters WA, et al. Ultra-high-throughput
+microbial community analysis on the Illumina HiSeq and MiSeq
+platforms. ISME J 2012;6:1621–4.
+14. Flores GE, Henley JB, Fierer N. A direct PCR approach to accelerate
+analyses of human-associated microbial communities. PLoS One 2012;7:
+e44563.
+15. Flores S, Sun J, King J, et al. Internal validation of the GlobalFiler™Express
+PCR Ampliﬁcation Kit for the direct ampliﬁcation of reference DNA
+samples on a high-throughput automated workﬂow. Forensic Sci Int
+Genet 2014;10:33–9.
+16. Braun T, Di Segni A, BenShoshan M, et al. Fecal microbial
+characterization of hospitalized patients with suspected infectious
+diarrhea shows signiﬁcant dysbiosis. Sci Rep 2017;7:1088.
+17. Caporaso JG, Kuczynski J, Stombaugh J, et al. QIIME allows analysis of
+high-throughput community sequencing data. Nat Methods 2010;7:
+335–6.
+18. Edgar RC. Search and clustering orders of magnitude faster than BLAST.
+Bioinformatics 2010;26:2460–1.
+19. McDonald D, Price MN, Goodrich J, et al. An improved Greengenes
+taxonomy with explicit ranks for ecological and evolutionary analyses of
+bacteria and archaea. ISME J 2012;6:610–8.
+20. Faith DP. The role of the phylogenetic diversity measure, PD, in bio-
+informatics: Getting the deﬁnition right. Evol Bioinform Online 2007;2:
+277–83.
+21. Lozupone C, Lladser ME, Knights D, et al. UniFrac: An eﬀective distance
+metric for microbial community comparison. ISME J 2011;5:169–72.
+22. Svetnik V, Liaw A, Tong C, et al. Random forest: A classiﬁcation and
+regression tool for compound classiﬁcation and QSAR modeling. J Chem
+Inf Comput Sci 2003;43:1947–58.
+23. Morgan XC, Tickle TL, Sokol H, et al. Dysfunction of the intestinal
+microbiome in inﬂammatory bowel disease and treatment. Genome Biol
+2012;13:R79.
+Study Highlights
+WHAT IS KNOWN
+3 CD is a chronic relapsing-remitting disease with
+unpredictable lifelong course.
+3 Cross-sectionalstudies revealed gut microbialdysbiosis in CD.
+3 Longitudinal studies indicated that CD microbiome fluctuates
+more compared with healthy individuals.
+WHAT IS NEW HERE
+3 CD patients with stable clinical quiescent disease, and with
+biomarkers and mucosal remission, show increased
+microbial dysbiosis and reduced richness in comparison to
+healthy controls.
+3 Microbial composition (“flare index”) and dynamics
+(instability) in quiescent CD increase the risk of a subsequent
+flare.
+The American Journal of GASTROENTEROLOGY
+VOLUME 114 | JULY 2019
+www.amjgastro.com
+INFLAMMATORY BOWEL DISEASE
+Braun et al.
+1150
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.
+24. Falvey JD, Hoskin T, Meijer B, et al. Disease activity assessment in IBD:
+Clinical indices and biomarkers fail to predict endoscopic remission.
+Inﬂamm Bowel Dis 2015;21:824–31.
+25. Laharie D, Mesli S, El Hajbi F, et al. Prediction of Crohn’s disease relapse
+with faecal calprotectin in inﬂiximab responders: A prospective study.
+Aliment Pharmacol Ther 2011;34:462–9.
+26. Efthymiou A, Viazis N, MantzarisG, et al. Does clinical responsecorrelate
+with mucosal healing in patients with Crohn’s disease of the small bowel?
+A prospective, case-series study using wireless capsule endoscopy.
+Inﬂamm Bowel Dis 2008;14:1542–7.
+27. Yablecovitch D, Lahat A, Neuman S, et al. The Lewis score or the capsule
+endoscopy Crohn’s disease activity index: Which one is better for the
+assessment of small bowel inﬂammation in established Crohn’s disease?
+Therap Adv Gastroenterol 2018;11:1756283X17747780.
+28. Turnbaugh PJ, Hamady M, Yatsunenko T, et al. A core gut microbiome in
+obese and lean twins. Nature 2009;457:480–4.
+29. Caporaso JG, Lauber CL, Costello EK, et al. Moving pictures of the human
+microbiome. Genome Biol 2011;12:R50.
+30. Costello EK, Lauber CL, Hamady M, et al. Bacterial community
+variation in human body habitats across space and time. Science 2009;
+326:1694–7.
+31. Dethlefsen L, Relman DA. Incomplete recovery and individualized
+responses of the human distal gut microbiota to repeated antibiotic
+perturbation. Proc Natl Acad Sci USA 2011;108(Suppl 1):4554–61.
+32. Jakobsson HE, Jernberg C, Andersson AF, et al. Short-term antibiotic
+treatment has diﬀering long-term impacts on the human throat and gut
+microbiome. PLoS One 2010;5:e9836.
+33. Pascal V, Pozuelo M, Borruel N, et al. A microbial signature for Crohn’s
+disease. Gut 2017;66:813–22.
+34. Osaka T, Moriyama E, Arai S, et al. Meta-analysis of fecal microbiota and
+metabolites in experimental colitic mice during the inﬂammatory and
+healing phases. Nutrients 2017;9:E1329.
+35. Sokol H, Leducq V, Aschard H, et al. Fungal microbiota dysbiosis in IBD.
+Gut 2017;66:1039–48.
+36. Hass DJ, Brensinger CM, Lewis JD, et al. The impact of increased body
+mass index on the clinical course of Crohn’s disease. Clin Gastroenterol
+Hepatol 2006;4:482–8.
+37. Mendall MA, Gunasekera AV, John BJ, et al. Is obesity a risk factor for
+Crohn’s disease?. Dig Dis Sci 2011;56:837–44.
+38. Singh S, Dulai PS, Zarrinpar A, et al. Obesity in IBD: Epidemiology,
+pathogenesis, disease course and treatment outcomes. Nat Rev
+Gastroenterol Hepatol 2017;14:110–21.
+© 2019 by The American College of Gastroenterology
+The American Journal of GASTROENTEROLOGY
+INFLAMMATORY BOWEL DISEASE
+Microbial Dynamics Precede Crohn’s Disease Flares
+1151
+Copyright © 2019 by The American College of Gastroenterology. Unauthorized reproduction of this article is prohibited.

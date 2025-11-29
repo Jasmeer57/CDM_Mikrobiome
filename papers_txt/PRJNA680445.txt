@@ -1,0 +1,908 @@
+life
+Article
+The Core of Gut Life: Firmicutes Proﬁle in Patients with
+Relapsing-Remitting Multiple Sclerosis
+Madina Kozhieva 1, Natalia Naumova 2,*
+, Tatiana Alikina 2, Alexey Boyko 3, Valentin Vlassov 2 and
+Marsel R. Kabilov 2
+
+
+Citation: Kozhieva, M.; Naumova,
+N.; Alikina, T.; Boyko, A.; Vlassov, V.;
+Kabilov, M.R. The Core of Gut Life:
+Firmicutes Proﬁle in Patients with
+Relapsing-Remitting Multiple
+Sclerosis. Life 2021, 11, 55. https://
+doi.org/10.3390/life11010055
+Received: 29 November 2020
+Accepted: 11 January 2021
+Published: 14 January 2021
+Publisher’s Note: MDPI stays neu-
+tral with regard to jurisdictional clai-
+ms in published maps and institutio-
+nal afﬁliations.
+Copyright: © 2021 by the authors. Li-
+censee MDPI, Basel,
+Switzerland.
+This article is an open access article
+distributed under the terms and con-
+ditions of the Creative Commons At-
+tribution (CC BY)
+license (https://
+creativecommons.org/licenses/by/
+4.0/).
+1
+Department of Neurology, Neurosurgery and Medical Genetics of the Pirogov Medical University,
+117513 Moscow, Russia; kozhieva.m@fccps.ru
+2
+Institute of Chemical Biology and Fundamental Medicine SB RAS, 630090 Novosibirsk, Russia;
+alikina@niboch.nsc.ru (T.A.); Valentin.Vlassov@niboch.nsc.ru (V.V.); kabilov@niboch.nsc.ru (M.R.K.)
+3
+Department of Neuroimmunology of the Federal Center of CVPI, 117513 Moscow, Russia; boiko.a@fccps.ru
+*
+Correspondence: naumova@niboch.nsc.ru or nnaumova@mail.ru
+Abstract: The multiple sclerosis (MS) incidence rate has been increasing in Russia, but the in-
+formation about the gut bacteriobiome in the MS-afﬂicted patients is scarce. Using the Illumina
+MiSeq sequencing of 16S rRNA gene amplicons, we aimed to analyze the Firmicutes phylum and
+its taxa in a cohort of Moscow patients with relapsing-remitting MS, assessing the effects of age,
+BMI, disease modifying therapy (DMT), disability (EDSS), and gender. Among 1252 identiﬁed
+bacterial OTUs, 857 represented Firmicutes. The phylum was the most abundant also in sequence
+reads, overall averaging 74 ± 13%. The general linear model (GLM) analysis implicated Firmi-
+cutes/Clostridia/Clostridiales/Lachospiraceae/Blautia/Blautia wexlerae as increasing with BMI, and only
+Lachospiraceae/Blautia/Blautia wexlerae as increasing with age. A marked DMT-related decrease in
+Firmicutes was observed in females at the phylum, class (Clostridia), and order (Clostridiales) levels.
+The results of our study implicate DMT and gender as factors shaping the fecal Firmicutes assem-
+blages. Together with the gender-dependent differential MS incidence growth rate in the country,
+the results suggest the likely involvement of gender-speciﬁc pathoecological mechanisms underlying
+the occurrence of the disease, switching between its phenotypes and response to disease-modifying
+therapies. Overall, the presented proﬁle of Firmicutes can be used as a reference for more detailed
+research aimed at elucidating the contribution of this core phylum and its lower taxa into the etiology
+and progression of relapsing-remitting multiple sclerosis.
+Keywords: multiple sclerosis; relapsing-remitting course; fecal bacteriobiome; 16S rRNA gene
+amplicon sequencing
+1. Introduction
+The culture-independent identification of a plethora of gut microorganisms, which has
+been made possible by rapid advancements in methodology and instruments, has con-
+tributed to revealing the intimate relationship between the microbiota and the host, and by
+now there is no doubt that the gut microbiota significantly shapes human health [1–3].
+Multiple sclerosis (MS) is one of the neurological disorders with increasing evidence impli-
+cating the gut microbiome as a key susceptibility factor [4–6]: MS patients have dysbiosis
+compared to healthy individuals [7–9], although the cause–effect relationship between gut
+microbiota dysbiosis and MS so far has not been unambiguously revealed [2,10,11]. Micro-
+bial involvement has been suggested as a cause of some chronic inﬂammatory diseases,
+including MS [12–14], and hence as a potential target for safer novel therapeutic strategies
+to treat the disease [7,15]. In the case of relapsing-remitting MS (RRMS), switching from
+relapse into a more prolonged remittance stage is a minimum. Such microbiota-based strate-
+gies need a better outline of the relationship between the microbiota and the host [16] in
+the RRMS-afﬂicted subjects in different regions of the world, elucidating the global picture.
+Life 2021, 11, 55. https://doi.org/10.3390/life11010055
+https://www.mdpi.com/journal/life
+Life 2021, 11, 55
+2 of 11
+The pathological and clinical symptoms of MS may vary widely [17], often presenting
+a challenge for correct diagnostics [18,19]. Presently, the relapsing-remitting course of the
+disease is the most common [5,20] and, consequently, the most studied [5,21]. The differ-
+ences existing between the microbiomes of MS patients and healthy subjects were found to
+be exacerbated in chloroform-resistant, spore-forming bacteria, which primarily belong to
+the phylum Firmicutes (the Bacilli and Clostridia classes) [22], the core phylum in the human
+gut [23–25].
+However, some studies included fecal samples from RRMS patients only in the re-
+mission phase [26,27]. The geographic origin of the surveyed population may have a
+greater impact on the composition of the gut microbiota than BMI or sex [23,28]. The MS
+prevalence and incidence rate has been steadily increasing in Russia [29]. Based on all
+these factors, we decided to aim our study at obtaining a picture of the gut 16S rRNA gene
+amplicon sequence abundance and the diversity of the Firmicutes phylum and its taxa in
+a cohort of Russian RRMS patients in remission or relapse, and at assessing the effects
+of body mass index, disease modifying therapy, disability assessment, and sex within
+the cohort.
+2. Materials and Methods
+2.1. Participants and Fecal Sample Collection
+Sixty-four patients with remitting-relapsing MS course, as diagnosed by the Mac-
+Donald criteria [30], which have been validated in Russia [31], were recruited for the trial
+(Table 1). All the patients underwent clinical examination to assess their neurological status
+and disability according to the Expanded Disability Status Scale (EDSS) [32]. Some of the
+patients received disease-modifying therapy (DMT) as high-dose interferon-beta-1. No other
+medicines were administered, as they could have modified the gut microbiome [33]. The pa-
+tients had no history of treatment with antibiotics at least for 3 months prior to feces sam-
+pling, as well as no probiotics and/or probiotics as special supplementation. All the patients
+were duly informed, gave their consent to the study, and signed the informed consent.
+Table 1. Demographics of the study cohort (N = 64).
+Mean
+Median
+Min
+Max
+Age, years
+37.8
+37.0
+19.0
+62.0
+BMI $, kg/m2
+24.0
+23.4
+18.3
+35.6
+EDSS &
+2.2
+2.0
+1.0
+4.5
+$ BMI stands for body mass index; & EDSS stands for expanded disability status scale.
+Fecal samples were collected in 10 mL sterile fecal specimen containers and stored
+frozen at approximately −20 ◦C. Samples were transferred to the laboratory within 1 week
+of collection and stored at −80 ◦C until they could be used for DNA extraction. The samples
+were collected at least one month prior to the corticosteroid treatment.
+The protocol of the study was approved by the Ethics Committee of the Pirogov
+National Science and Research Medical University. All the clinical aspects of the study
+were supervised by a neurologist. New medicines, sorbents, and/or laxatives (including
+magnesium salts and castor oil), as well as any diet changes, were cancelled or not started
+at least one week prior to the fecal sample collection.
+2.2. DNA Extraction and Sequencing
+DNA was extracted from 50 to 100 mg of thawed patient fecal samples using the
+MetaHIT protocol [34]. The bead-beating was performed using TissueLyser II (Qiagen,
+Hilden, Germany) for 10 min at 30 Hz. No further puriﬁcation of the DNA was needed.
+The quality of the DNA was assessed using agarose gel electrophoresis.
+The 16S rRNA gene region was ampliﬁed with the primer pair V3–V4 combined
+with Illumina adapter sequences [35]. PCR ampliﬁcation was performed as described
+earlier [36]. All the PCR reactions used 25 ng of fecal DNA as a template and were
+Life 2021, 11, 55
+3 of 11
+performed in triplicate. A total of 200 ng PCR product from each sample was pooled
+together and puriﬁed through MinElute Gel Extraction Kit (Qiagen, Hilden, Germany).
+The obtained libraries were sequenced with 2 × 300 bp paired-ends reagents on MiSeq
+(Illumina, San Diego, CA, USA) in SB RAS Genomics Core Facility (ICBFM SB RAS,
+Novosibirsk, Russia). The read data were deposited in GenBank under the study accession
+number PRJNA680445.
+2.3. Bioinformatic and Statistical Analyses
+Raw sequences were analyzed with the UPARSE pipeline [37] using Usearch v10.0.
+The UPARSE pipeline included the merging of paired reads; read quality ﬁltering; length
+trimming; the merging of identical reads (dereplication); discarding singleton reads; remov-
+ing chimeras; and operational taxonomic unit (OTU) clustering using the UPARSE-OTU
+algorithm. The OTU sequences were assigned a taxonomy using the SINTAX [38] and 16S
+RDP training set v16 [39].
+The taxonomic structure of the obtained sequence assemblages—i.e., a collection of
+different species at one site at one time [40]—was estimated by the ratio of the number of
+taxon-speciﬁc sequence reads to the total number of sequence reads—i.e., by the relative
+abundance of taxa—which was expressed as a percentage.
+The results are expressed as a mean and standard deviation (s.d.). Normal distribution
+was assessed using the Shapiro–Wilk test. A general linear model with two categorical
+factors (DMT and sex) and three continuous factors (age, BMI, and EDSS) was used to
+assess the inﬂuence of demographic and therapeutic variables on the Firmicutes abundance.
+Between-group comparisons were carried out as a post hoc analysis using the Fisher’s LSD
+test in the Statistica v.13.3 software (Statsoft, Tulsa, OK, USA). Alpha-biodiversity indices
+were calculated using Usearch.
+3. Results
+3.1. Total Bacteriobiome Diversity
+After the quality ﬁltering and chimera removal, a total of 1256 different OTUs were
+identiﬁed at a 97% sequence identity level, of which the overwhelming majority (1252) was
+Bacteria, with the other four representing the Euryarchaeota phylum of the Archaea domain.
+Twelve bacterial phyla were identiﬁed, containing 21 classes, 25 orders, 54 families,
+and 174 genera, along with unidentiﬁed taxa. Most of the bacterial OTUs represented the
+Firmicutes phylum (857 OTUs, or ca. 68% of the total bacterial OTU number), with Bac-
+teroidetes and Actinobacteria being the second and the third most OTU-rich phyla, with 148
+(12%) and 84 OTUs (7%), respectively. Clostridia was the OTU-richest class (669 OTUs),
+accounting for 53% of the total OTU richness, with Bacteroidia (135 OTUs) and Actinobacteria
+(79) contributing 11% and 6%, respectively. Thus, these three classes drastically prevailed
+in the fecal bacteriobiomes studied.
+Overall in the samples, the number of dominant OTUs—i.e., OTUs contributing ≥1%
+of the total sequence number in a sample—was 29, i.e., 2.0% of the total number of OTUs.
+They represented four phyla (Firmicutes, Bacteroidetes, Actinobacteria, and Proteobacteria),
+six classes (Clostridia, Bacilli, Negativicutes, Bacteroidia, Actinobacteria, and Gammaproteobacteria),
+8 orders, 11 families, and 20 genera—i.e., far less taxonomic richness as compared to the
+total list of identiﬁed OTUs.
+Members of the Firmicutes phylum were by far the most abundant not only in OTU
+richness but also in the relative abundance of sequence reads, which averaged 74 ± 13%
+for the studied cohort. The phylum was the only one with its relative abundance data
+complying with the normal distribution, as judged on the basis of Shapiro–Wilk’s test
+and the normal probability plots. Within the phylum’s lower taxonomic levels, Clostridia,
+Clostridiales, Ruminococcaceae, Fecalibacterium, and Fecalibacterium prausnitzii also showed a
+distribution pattern complying with the normal one. The performed statistical analysis,
+using GLM to elucidate the effect of age, body mass index, and EDSS as continuous factors
+(covariates) and sex and disease-modifying therapy as categorical factors, did not show age,
+Life 2021, 11, 55
+4 of 11
+BMI, and EDSS effects on Ruminococcaceae (Tables S4, S6 and S8) and its lower taxa, whereas
+the taxa Lachospiraceae/Blautia/Blautia wexlerae (Table 2; Tables S5, S7 and S9) had some age-
+and BMI-related shifts in their relative abundance. It should be noted that although the data
+on the relative abundance of Lachospiraceae and its Blautia genus and Blautia wexlerae were
+not normally distributed, their residuals were, therefore the GLM results pertaining to the
+taxa were taken into consideration. The proﬁles for the GLM-predicted relative abundance
+visualize these effects (Figure 1). The BMI effect in the studied cohort was revealed already
+at the phylum level (the predicted relative abundance is shown in Figure 1a), and further
+down at the class and order levels. The effect of sex and EDSS as individual factors was not
+statistically signiﬁcant, with both making negligible contributions to the total data variance
+(Table 2).
+ 
+(a) 
+(b) 
+ 
+(c) 
+(d) 
+Figure 1. Proﬁles for the GLM-predicted values of relative abundance: (a) Firmicutes, (b) Lachnospiraceae, (c) Blautia,
+and (d) Blautia wexlerae. Markers show mean values and whiskers show 0.95 conﬁdence intervals. DMT: No—no therapy.
+Yes—interferon treatment. Sex: F—females, M—males.
+3.2. DMT Effect on the Firmicutes Taxa Abundance
+Disease-modifying therapy as a separate factor was found to have a negligible effect,
+both microbially and statistically, on the Firmicutes taxa abundance (Table 2, Tables S1–S9).
+However, quite a noticeable portion of the data variance was accounted for by the in-
+teraction between DMT and the patients’ sex (Table 2); a marked DMT-related decrease
+in Firmicutes was observed in females at the phylum, class, and order levels (Table 3,
+Tables S1–S3), and at the family level only for Lachnospiraceae (Table S5). At the same levels,
+there was a difference between females and males in the DMT subcohort, with males
+having substantially (more than 10%) increased relative abundance at the phylum, class,
+and order levels (Table 3) and the effect decreasing in its size and statistical signiﬁcance at
+the family, genus, and species levels (Lachnospiraceae/Blautia/Blautia wexlerae).
+Life 2021, 11, 55
+5 of 11
+Table 2. General linear model results for the factors’ contribution to the variance in different taxa sequence reads’ relative abundance.
+Taxonomic Level
+Phylum
+Class
+Order
+Family
+Genus
+OTU
+Factor
+Firmicutes
+Clostridia
+Clostridiales
+Ruminococcaceae
+Lachnospiraceae
+Fecalibacterium
+Blautia
+Fecalibacterium prausnitzii
+Blautia wexlerae
+Age
+1.5
+2.5
+2.2
+1.6
+8.6 *
+0.0
+7.9
+0.0
+8.7
+BMI $
+6.3
+6.2
+6.8
+0.5
+6.4
+1.4
+6.6
+1.3
+9.7
+EDSS &
+0.2
+0.1
+0.1
+0.0
+0.0
+0.5
+1.6
+0.6
+0.1
+DMT #
+0.0
+0.4
+0.5
+0.6
+0.3
+0.1
+0.5
+0.1
+0.5
+Sex
+1.6
+2.4
+2.3
+4.1
+0.0
+0.0
+0.1
+0.0
+0.4
+DMT × Sex
+7.9
+8.7
+7.4
+0.3
+9.0
+2.1
+3.9
+2.0
+4.2
+Error
+79.6
+75.5
+76.5
+89.3
+74.9
+93.6
+76.7
+93.7
+75.1
+# DMT stands for disease-modifying therapy; $ BMI stands for body mass index; & EDSS stands for expanded disability status scale. * Factors (GLM) with the p-values ≤0.05 are highlighted in bold, and the
+p-values of 0.05 ≤0.10 are underscored.
+Table 3. Relative abundance (%) of Firmicutes-speciﬁc sequence reads.
+Factor Rate
+Taxon Level
+N
+Phylum
+Class
+Order
+Family
+Genus
+Species
+Firmicutes
+Clostridia
+Clostridiales
+Ruminococcaceae
+Lachnospiraceae
+Fecalibacterium
+Blautia
+Fecalibacterium prausnitzii
+Blautia wexlerae
+Entire cohort
+64
+74.0
+66.0
+65.0
+31.0
+27.3
+11.0
+5.1
+10.9
+1.8
+DMT #
+No
+25
+76.0
+69.1
+68.3
+32.9
+29.0
+12.1
+5.1
+12.0
+1.6
+DMT
+39
+72.7
+63.9
+62.9
+29.7
+26.1
+10.3
+5.0
+10.3
+2.0
+Sex
+Females
+44
+72.4
+63.8
+62.8
+29.5
+26.9
+10.8
+5.1
+10.7
+1.9
+Males
+20
+77.5
+70.7
+69.8
+34.2
+28.1
+11.4
+5.0
+11.4
+1.7
+DMT × Sex
+No
+Females
+17
+77.0 b *
+70.1 b
+69.1 b
+32.0
+31.3 b
+12.6
+5.8
+12.5
+1.9
+No
+Males
+8
+73.8 ab
+67.0 ab
+66.5 ab
+34.8
+24.2 ab
+11.0
+3.6
+11.0
+1.0
+DMT
+Females
+27
+69.4 a
+59.8 a
+58.9 a
+27.9
+24.1 a
+9.7
+4.6
+9.7
+1.8
+DMT
+Males
+12
+80.0 b
+73.2 b
+72.0 b
+33.7
+30.7 ab
+11.7
+5.9
+11.6
+2.2
+# DMT stands for disease-modifying therapy; * different letters indicate that the values are different at p ≤0.05 (Fisher’s LSD test); the factors and differences at p ≤0.05 and p ≤0.10 are highlighted in bold or
+underscored, respectively.
+Life 2021, 11, 55
+6 of 11
+The α-biodiversity indices calculated only for the Firmicutes OTUs were also subjected
+to GLM analysis and showed no DMT-related differential abundance (Table 4), averaging
+for the entire cohort 243 ± 56 observed OTUs (species richness), 299 ± 70 all OTUs (Chao-1),
+3.51 ± 0.03 (Shannon), 0.145 ± 0.030 (evenness), and Fisher’s α (39 ± 10). However,
+the interaction between DMT and sex had an effect on the evenness, as DMT decreased
+this α-biodiversity index by 15% in males.
+Table 4. Alpha-biodiversity indices for Firmicutes OTUs in the fecal samples of patients with relapsing-remitting multiple
+sclerosis.
+Factor Rate
+N
+Richness (OTUs)
+Chao-1
+Shannon
+Evenness
+Fisher’s α
+Entire cohort
+64
+243
+299
+3.51
+0.145
+39
+DMT #
+No
+25
+243
+299
+3.47
+0.140
+39
+DMT
+39
+243
+299
+3.54
+0.149
+39
+Sex
+Females
+44
+246
+303
+3.56
+0.150
+40
+Males
+20
+237
+290
+3.42
+0.134
+38
+DMT × Sex
+No
+Females
+17
+246
+303
+3.49
+0.141 ab*
+40
+No
+Males
+8
+247
+303
+3.60
+0.156 b
+40
+DMT
+Females
+27
+239
+291
+3.44
+0.137 ab
+38
+DMT
+Males
+12
+236
+289
+3.41
+0.133 a
+38
+# DMT stands for disease modifying therapy; * different letters indicate that the values are different at p ≤0.05 (Fisher’s LSD test); the factors
+and differences at p ≤0.05 are highlighted in bold.
+4. Discussion
+Our study of the cohort of patients with relapsing-remitting MS found Firmicutes
+to be ultimately prevailing in the fecal bacteriobiome, accounting for more than three
+quarters of the relative abundance. In general, the ﬁnding agrees with the established
+global pattern of the phylum prevalence, albeit with some exceptions [41], in the gut/fecal
+bacteriobiome of both healthy individuals [24,42–44] and those compromised by various
+disorders/diseases [41,45,46]. In this study, we did not aim at comparing the RRMS cohort
+with healthy individuals, yet a lower percentage of Firmicutes was often reported for
+healthy cohorts elsewhere [26,42,47–50]. As for comparing our RRMS cohort with the
+RRMS cohorts of other ethnicity/regions, Firmucutes was at least 20% more abundant in
+the studied cohort as compared with the Italian and Japanese ones [26,51]; the effect very
+likely resulted from the stark national differences in diet between these cohorts.
+The gut microbiota diversity is generally believed to change with age [44,52], and our
+cohort was not an exception, as age accounted for several percent of the variance in the
+Lachnospiraceae family, the second-ranked family in terms of relative abundance in the
+Firmicutes phylum; its Blautia genus; and Blautia wexlerae, one of the main dominant species
+in the study, with a ca. 2% abundance. Recently, a higher relative abundance of Blautia
+was reported in healthy Dutch adults as compared with children [53], and in children with
+cystic ﬁbrosis Blautia was reported to be positively associated with age, the latter being
+the strongest predictor of overall fecal bacterial diversity [54]. However, we could not
+ﬁnd reported association speciﬁcally between Blautia/Blautia wexlerae with the age of the
+MS-afﬂicted patients.
+The Firmicutes abundance was reported to be associated with BMI in healthy individu-
+als [55,56]. However, the information is sometimes confusing, as some studies reported
+increased BMI-related abundance [50,57], whereas others reported a decreased one [58].
+As for the Firmicutes lower taxa, Blautia, for instance, was shown to be signiﬁcantly and
+inversely associated with visceral fat accumulation by healthy Japanese people of both
+sexes [42]. Therefore, our ﬁnding that BMI accounts for several percent of the Firmicutes
+taxa abundance variance, with Blautia/Blautia wexlerae being mostly responsible for the
+effect (increase), apparently either complies or contradicts other reported data, in any case
+Life 2021, 11, 55
+7 of 11
+contributing to the general outline of RRMS bacteriobiome. Additionally, we could not
+ﬁnd the information about Blautia abundance associated with BMI in other RRMS cohorts
+to make any comparison, so the implications of such association for disease phenotype and
+overall progression remains to be determined.
+It is difﬁcult to interpret changes in the Blautia/Blautia wexlerae presence in fecal
+assemblages in terms of the beneﬁt for human health, as the reported data can be confusing
+or lacking. The overabundance of Blautia was reported in a Russian cohort with prediabetes
+and type 2 diabetes [57]; however, the genus was ultimately dominant also in healthy
+subjects with a normal level of glucose tolerance. On the other hand, some studies report
+Blautia as being proinﬂammatory [58].
+Our ﬁnding that sex as a separate factor had not contributed to the data variance of
+the Firmicutes gut fecal assemblages of the RRMS patients may indicate the effect of some
+equalizing (in this respect) factor, since sex-related differences in the gut microbiota were
+revealed in some studies with autoimmune diseases [59].
+Our result that disease-modifying therapy as an individual factor had not signif-
+icantly contributed to the data variance was unexpected, as previous studies revealed
+DMT-related differences in the gut microbiota of MS patients: the dimethyl fumarate or
+interferon β-b treatment decreased the Firmicutes phylum relative abundance [60,61]. Yet,
+other studies reported an increased Firmicutes abundance, mostly driven by Fecalibacterium,
+in the dimethyl fumarate-treated patients [62], or no difference in the Firmicutes abundance
+between no-DMT and DMT cohorts [61]. However, in our study the observed 2% decrease
+in the Fecalibacterium abundance was not statistically signiﬁcant and could hardly be phys-
+iologically relevant with its negligible contribution to the data variance. Our ﬁnding of
+sex-related differences in Firmicutes abundance between the no-DMT and DMT-subcohorts
+strongly suggests that there exists a sex-dependent effect on modulating the gut Firmicutes
+abundance according to DMT, at least in the studied RRMS cohort. The effect may be
+partially due to sex-associated diet differences [51,57,63,64], as the studied RRMS patients
+did not follow any speciﬁc diet recommendations.
+The studied cohort included RRMS patients with clinical and neurodegenerative
+evidence of the two phenotypes of the disease activity—i.e., remission or relapse. However,
+the performed GLM analysis using EDSS as continuous factor, rather than using phenotype
+as a categorical one, showed that in the studied RRMS cohort there was no association
+between EDSS and the Firmicutes phylum and its lower taxa abundance. This is apparently
+in contrast with other studies that reported Firmicutes to be increased in MS patients
+during times of higher disease activity, and decreased at disease quiescence [26]. However,
+the discrepancy is very likely due to the absence of total synonymy between the EDSS and
+the clinical assessment of the disease activity phenotype, as well as other confounding
+factors—e.g., the timing and duration of DMT, etc.
+Fecalibacterium representatives, and speciﬁcally Fecalibacterium prausnitzii, are known
+to metabolize dietary ﬁbers as major short-chain fatty acid producers providing energy
+sources for enterocytes and achieving anti-inﬂammatory effects in the gut [65], and hence
+are generally considered to be beneﬁcial for human health. The studied RRMS cohort
+overall had 11% of the genus relative abundance, thus being very close to the RRMS
+cohorts of some other ethnicities/races [66]. However, as the genus abundance showed no
+association with EDSS or DMT, it does not seem to be a promising target for microbiota
+modulation therapies to beneﬁt RRMS patients’ condition.
+Finally, we would reiterate some aspects pertaining to interpreting the fecal micro-
+biome data in disease. Firstly, the overwhelming majority of the published results, based on
+the data for stool/feces samples, refer to such results euphemistically as the “gut micro-
+biome” or the “intestinal microbiome”, rather than the “fecal microbiome”. However,
+as S. Fujio-Vejar et al. (2017) [42] rightly noted, the human fecal microbiota is not an en-
+tirely reliable reﬂection of the cecal or colonic microbiota. Secondly, a high inter-individual
+variability is observed in the studied populations/cohorts/groups, and our study is not an
+exception. The heterogeneity is usually attributed to an unspeciﬁed and hence unaccounted
+Life 2021, 11, 55
+8 of 11
+for plethora of inﬂuencing factors. However, one feces sample is usually collected from a
+sole stool event—i.e., without any individual replication. The latter, if performed, will de-
+crease the intra-individual variability, consequently reducing some of the inter-individual
+one. Thirdly, we cannot help but note that associations between fecal/gut microbiota com-
+position and host characteristics neither suggest nor prove any cause–effect dependence,
+allowing for two-way interpretation; the increased abundance of a certain taxon, especially
+apparently non-beneﬁcial microbes, may be the essential enhancing agent of a disease,
+but it can also be one of the host’s means of adapting and/or mitigating some pathoeco-
+physiological processes, triggered in a host by genetic and/or external factors. Last but not
+least, one should always bear in mind that the proportions of gene copy numbers, be they
+16S rRNA or functional genes, are not entirely synonymic with the number of the relevant
+organisms present and the intensity of the processes they perform. Thus, the microbiome
+proﬁles provide just scaffolding that will be useful for constructing more comprehensive
+and/or targeted research.
+5. Conclusions
+Here, we presented the ﬁrst gut bacteriobiome proﬁling of a Russian cohort of patients
+with relapsing-remitting multiple sclerosis, focusing solely on the Firmicutes phylum as
+the ultimate dominant and its taxa abundance as related to age, sex, body mass index,
+disease-modifying therapy, and disability assessment. The results of our study impli-
+cate sex as a modulating/driving factor in the fecal Firmicutes assemblages examined.
+In general, the results comply with the sex-dependent differential incidence growth rate
+in Russia, which suggests sex-speciﬁc peculiarities in the pathophysiology of the disease.
+Our results also suggest the likely involvement of sex-speciﬁc pathoecological mechanisms
+underlying the occurrence and spread of the disease, switching between its phenotypes
+and response to disease-modifying therapies. We believe that our ﬁndings make a small
+but important contribution to constructing a global picture of the intestinal microbiota
+diversity in relapsing-remitting MS patients. The presented proﬁle of Firmicutes indicates
+the avenues for detailed microbiological and physiological research aimed at elucidating
+the contribution of this core phylum and its taxa into the etiology and progression of
+relapsing-remitting multiple sclerosis.
+Supplementary Materials: The following are available online at https://www.mdpi.com/2075-172
+9/11/1/55/s1: Table S1. GLM results for the Firmicutes-speciﬁc sequence reads abundance. Table S2.
+GLM results for the Clostridia-speciﬁc sequence reads abundance. Table S3. GLM results for the
+Clostridiales-speciﬁc sequence reads abundance. Table S4. GLM results for the Ruminococcaceae-
+speciﬁc sequence reads abundance. Table S5. GLM results for the Lachnospiraceae-speciﬁc sequence
+reads abundance. Table S6. GLM results for the Faecalibacterium-speciﬁc sequence reads abundance.
+Table S7. GLM results for the Blautia-speciﬁc sequence reads abundance. Table S8. GLM results for
+the Faecalibacterium prausnitzii-speciﬁc sequence reads abundance. Table S9. GLM results for the
+Blautia wexlerae speciﬁc sequence reads abundance.
+Author Contributions: Conceptualization, A.B. and V.V.; methodology, M.K. and M.R.K.; software,
+M.R.K.; validation, N.N., T.A. and M.R.K.; formal analysis, N.N.; investigation, M.K. and T.A.;
+resources, M.R.K. and V.V.; data curation, M.K.; writing—original draft preparation, N.N.; writing—
+review and editing, A.B., V.V. and M.R.K.; visualization, N.N.; supervision, V.V.; project administra-
+tion, A.B.; funding acquisition, V.V. All the authors have read and agreed to the published version of
+the manuscript.
+Funding: This research was funded by the RUSSIAN FOUNDATION FOR BASIC RESEARCH,
+research project number 17-00-00295 (17-00-00210 and 17-00-00206). Bioinformatic analysis was
+partially supported by the MINISTRY OF SCIENCE AND HIGHER EDUCATION OF THE RUSSIAN
+FEDERATION, project number AAAA-A17-117020210021-7.
+Institutional Review Board Statement: The the study was approved by the Ethic Committee of the
+PIROGOV NATIONAL SCIENCE AND RESEARCH MEDICAL UNIVERSITY (Moscow, Russia;
+(protocol No. 107 dated 25/10/2016).
+Life 2021, 11, 55
+9 of 11
+Informed Consent Statement: All patients were duly informed and gave their consent to the study
+and signed the Information Consent.
+Data Availability Statement: The read data were deposited in GenBank under the study accession
+number PRJNA680445, and are available at https://www.ncbi.nlm.nih.gov/bioproject/PRJNA680445/.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+References
+1.
+Opazo, M.C.; Ortega-Rocha, E.M.; Coronado-Arrázola, I.; Bonifaz, L.C.; Boudin, H.; Neunlist, M.; Riedel, C.A. Intestinal
+Microbiota Inﬂuences Non-intestinal Related Autoimmune Diseases. Front. Microbiol. 2018, 9, 432. [CrossRef] [PubMed]
+2.
+Li, B.; Selmi, C.; Tang, R.; Gershwin, M.E.; Ma, X. The microbiome and autoimmunity: A paradigm from the gut-liver axis.
+Cell Mol. Immunol. 2018, 15, 595–609. [CrossRef] [PubMed]
+3.
+Ogunrinola, G.A.; Oyewale, J.O.; Oshamika, O.O.; Olasehinde, G.I. The Human Microbiome and Its Impacts on Health.
+Int. J. Microbiol. 2020, 8045646. [CrossRef] [PubMed]
+4.
+Cryan, J.F.; O’Riordan, K.J.; Sandhu, K.; Peterson, V.; Dinan, T.G. The gut microbiome in neurological disorders. Lancet Neurol.
+2020, 19, 179–194. [CrossRef]
+5.
+Mirza, A.; Forbes, J.D.; Zhu, F.; Bernstein, C.N.; van Domselaar, G.; Graham, M.; Waubant, E.; Tremlett, H. The multiple sclerosis
+gut microbiota: A systematic review. Mult. Scler. Relat. Disord. 2020, 37, 101427. [CrossRef]
+6.
+Zhu, F.; Ju, Y.; Wang, W.; Wang, Q.; Guo, R.; Ma, Q.; Sun, Q.; Fan, Y.; Xie, Y.; Yang, Z.; et al. Metagenome-wide association of gut
+microbiome features for schizophrenia. Nat. Commun. 2020, 11, 1612. [CrossRef]
+7.
+Chen, J.; Chia, N.; Kalari, K.; Yao, J.Z.; Novotna, M.; Paz Soldan, M.M.; Luckey, D.H.; Marietta, E.V.; Jeraldo, P.R.; Chen, X.; et al.
+Multiple sclerosis patients have a distinct gut microbiota compared to healthy controls. Sci. Rep. 2016, 6, 28484. [CrossRef]
+8.
+Kirby, T.O.; Ochoa-Repáraz, J. The Gut Microbiome in Multiple Sclerosis: A Potential Therapeutic Avenue. Med. Sci. 2018, 6, 69.
+[CrossRef]
+9.
+Wing, A.C.; Kremenchutzky, M. Multiple sclerosis and fecal microbiome transplantation: Are you going to eat that? Benef. Microbes.
+2019, 10, 27–32. [CrossRef]
+10.
+Bell, J.S.; Spencer, J.I.; Yates, R.L.; Yee, S.A.; Jacobs, B.M.; DeLuca, G.C. Invited Review: From nose to gut–The role of the
+microbiome in neurological disease. Neuropathol. Appl. Neurobiol. 2019, 45, 195–215. [CrossRef]
+11.
+Boziki, M.K.; Kesidou, E.; Theotokis, P.; Mentis, A.A.; Karafoulidou, E.; Melnikov, M.; Sviridova, A.; Rogovski, V.; Boyko, A.;
+Grigoriadis, N. Microbiome in Multiple Sclerosis; Where Are We, What We Know and Do Not Know. Brain Sci. 2020, 10, 234.
+[CrossRef]
+12.
+Kell, D.B.; Pretorius, E. No effects without causes: The Iron Dysregulation and Dormant Microbes hypothesis for chronic,
+inﬂammatory diseases. Biol. Rev. 2018, 93, 1518–1557. [CrossRef] [PubMed]
+13.
+Sato, W.; Yamamura, T. Multiple sclerosis: Possibility of a gut environment-induced disease. Neurochem. Int. 2019, 130, 104475.
+[CrossRef] [PubMed]
+14.
+Toghi, M.; Bitarafan, S.; Kasmaei, H.D.; Ghafouri-Fard, S. Biﬁdobacteria: A probable missing puzzle piece in the pathogenesis of
+multiple sclerosis. Mult. Scler. Relat. Disord. 2019, 36, 101378. [CrossRef] [PubMed]
+15.
+Stanisavljevi´c, S.; Dini´c, M.; Jevti´c, B.; Ðedovi´c, N.; Momˇcilovi´c, M.; Ðoki´c, J.; Goli´c, N.; Mostarica Stojkovi´c, M.; Miljkovi´c, Ð.
+Gut Microbiota Confers Resistance of Albino Oxford Rats to the Induction of Experimental Autoimmune Encephalomyelitis.
+Front. Immunol. 2018, 9, 942. [CrossRef] [PubMed]
+16.
+Freedman, S.N.; Shahi, S.K.; Mangalam, A.K. The Gut Feeling: Breaking Down the Role of Gut Microbiome in Multiple Sclerosis.
+Neurotherapeutics 2018, 15, 109–125. [CrossRef] [PubMed]
+17.
+Imitola, J. New age for progressive multiple sclerosis. Proc. Natl. Acad. Sci. USA 2019, 116, 8646–8648. [CrossRef]
+18.
+Brownlee, W.J.; Hardy, T.A.; Fazekas, F.; Miller, D.H. Multiple Sclerosis. 1. Diagnosis of multiple sclerosis: Progress and challenges.
+Lancet 2016, 389, 1336–1346. [CrossRef]
+19.
+Solomon, A.J.; Corboy, J.R. The tension between early diagnosis and misdiagnosis in multiple sclerosis. Nat. Rev. Neurol. 2017, 13,
+567–572. [CrossRef]
+20.
+Brenton, J.N.; Goldman, M.D. A study of dietary modiﬁcation: Perceptions and attitudes of patients with multiple sclerosis.
+Mult. Scler. Relat. Disord. 2016, 8, 54–57. [CrossRef]
+21.
+Gandy, K.A.O.; Zhang, J.; Nagarkatti, P.; Nagarkatti, M. The role of gut microbiota in shaping the relapse-remitting and
+chronic-progressive forms of multiple sclerosis in mouse models. Sci. Rep. 2019, 9, 6923. [CrossRef] [PubMed]
+22.
+Cekanaviciute, E.; Pröbstel, A.-K.; Thomann, A.; Runia, T.F.; Casaccia, P.; Katz Sand, I.; Crabtree, E.; Singh, S.; Morrissey, J.;
+Barba, P.; et al. Multiple sclerosis-associated changes in the composition and immune functions of spore-forming Bacteria.
+mSystems 2018, 3, e00083-18. [CrossRef]
+23.
+Escobar, J.S.; Klotz, B.; Valdes, B.E.; Agudelo, G.M. The gut microbiota of Colombians differs from that of Americans, Europeans
+and Asians. BMC Microbiol. 2014, 14, 311. [CrossRef] [PubMed]
+24.
+Afolayan, A.O.; Ayeni, F.A.; Moissl-Eichinger, C.; Gorkiewicz, G.; Halwachs, B.; Högenauer, C. Impact of a Nomadic Pastoral
+Lifestyle on the Gut Microbiome in the Fulani Living in Nigeria. Front. Microbiol. 2019, 10, 2138. [CrossRef] [PubMed]
+Life 2021, 11, 55
+10 of 11
+25.
+Parbie, P.K.; Mizutani, T.; Ishizaka, A.; Kawana-Tachikawa, A.; Runtuwene, L.R.; Seki, S.; Abana, C.Z.; Kushitor, D.; Bonney, E.Y.;
+Ofori, S.B.; et al. Fecal microbiome composition in healthy adults in Ghana. JAP J. Inf. Dis. 2020. [CrossRef]
+26.
+Cosorich, I.; Dalla-Costa, G.; Sorini, C.; Ferrarese, R.; Messina, M.J.; Dolpady, J.; Radice, E.; Mariani, A.; Testoni, P.A.;
+Canducci, F.; et al. High frequency of intestinal T(H)17 cells correlates with microbiota alterations and disease activity in multiple
+sclerosis. Sci. Adv. 2017, 3, e1700492. [CrossRef]
+27.
+Miyake, S.; Kim, S.; Suda, W.; Oshima, K.; Nakamura, M.; Matsuoka, T.; Chihara, N.; Tomita, A.; Sato, W.; Kim, S.W.; et al.
+Dysbiosis in the Gut Microbiota of Patients with Multiple Sclerosis, with a Striking Depletion of Species Belonging to Clostridia
+XIVa and IV Clusters. PLoS ONE 2015, 10, e0137429. [CrossRef] [PubMed]
+28.
+Lan, D.; Ji, W.; Lin, B.; Chen, Y.; Huang, C.; Xiong, X.; Fu, M.; Mipam, T.D.; Ai, Y.; Zeng, B.; et al. Correlations between gut
+microbiota community structures of Tibetans and geography. Sci. Rep. 2017, 7, 16982. [CrossRef]
+29.
+Boyko, A.N.; Melnikov, M. Prevalence and Incidence of Multiple Sclerosis in Russian Federation: 30 Years of Studies. Brain Sci.
+2020, 10, 305. [CrossRef]
+30.
+Polman, C.H.; Reingold, S.C.; Banwell, B.; Clanet, M.; Cohen, J.A.; Filippi, M.; Fujihara, K.; Havrdova, E.; Hutchinson, M.;
+Kappos, L.; et al. Diagnostic criteria for multiple sclerosis: 2010 revisions to the McDonald criteria. Ann. Neurol. 2011, 69, 292–302.
+[CrossRef]
+31.
+Belova, A.N.; Shalenkov, I.V.; Shakurova, D.N.; Boyko, A.N. Revised McDonald criteria for multiple sclerosis diagnostics in
+central Russia: Sensitivity and speciﬁcity. Mult. Scler. J. 2014, 20, 1896–1899. [CrossRef] [PubMed]
+32.
+Kurtzke, J.F. Rating neurologic impairment in multiple sclerosis. An Expanded disability status scale (EDSS). Neurology 1983, 39,
+291–302. [CrossRef] [PubMed]
+33.
+Rumah, K.R.; Vartanian, T.K.; Fischetti, V.A. Oral Multiple Sclerosis Drugs Inhibit the In vitro Growth of Epsilon Toxin Producing
+Gut Bacterium, Clostridium perfringens. Front. Cell Infect. Microbiol. 2017, 7, 11. [CrossRef]
+34.
+Godon, J.J.; Zumstein, E.; Dabert, P.; Habouzit, F.; Moletta, R. Molecular microbial diversity of an anaerobic digestor as determined
+by small-subunit rDNA sequence analysis. Appl. Environ. Microbiol. 1997, 63, 2802–2813. [CrossRef] [PubMed]
+35.
+Fadrosh, D.W.; Ma, B.; Gajer, P.; Sengamalay, N.; Ott, S.; Brotman, R.M.; Ravel, J. An improved dual-indexing approach for
+multiplexed 16S rRNA gene sequencing on the Illumina MiSeq platform. Microbiome 2014, 2, 6. [CrossRef] [PubMed]
+36.
+Igolkina, A.A.; Grekhov, G.A.; Pershina, E.V.; Samosorova, G.G.; Leunova, V.M.; Semenova, A.N.; Baturina, O.A.; Kabilov, M.R.;
+Andronov, E.E. Identifying components of mixed and contaminated soil samples by detecting speciﬁc signatures of control 16S
+rRNA libraries. Ecol. Indic. 2018, 94, 446–453. [CrossRef]
+37.
+Edgar, R.C. UPARSE: Highly accurate OTU sequences from microbial amplicon reads. Nat. Methods 2013, 10, 996–998. [CrossRef]
+38.
+Edgar, R.C. SINTAX: A Simple Non-Bayesian Taxonomy Classiﬁer for 16S and ITS Sequences. bioRxiv 2016. [CrossRef]
+39.
+Wang, Q.; Garrity, G.M.; Tiedje, J.M.; Cole, J.R. Naïve Bayesian Classiﬁer for Rapid Assignment of rRNA Sequences into the New
+Bacterial Taxonomy. Appl. Environ. Microbiol. 2007, 73, 5261–5267. [CrossRef]
+40.
+Fauth, E.; Bernardo, J.; Camara, M.; Resetarits, W.J.; van Buskirk, J.; McCollum, S.A. Simplifying the Jargon of Community
+Ecology: A Conceptual Approach. Am. Naturalist. 1996, 147, 282–286. [CrossRef]
+41.
+Ahmad, A.; Yang, W.; Chen, G.; Shaﬁq, M.; Javed, S.; Ali Zaidi, S.S.; Shahid, R.; Liu, C.; Bokhari, H. Analysis of gut microbiota of
+obese individuals with type 2 diabetes and healthy individuals. PLoS ONE 2019, 14, e0226372. [CrossRef] [PubMed]
+42.
+Fujio-Vejar, S.; Vasquez, Y.; Morales, P.; Magne, F.; Vera-Wolf, P.; Ugalde, J.A.; Navarrete, P.; Gotteland, M. The Gut Microbiota of
+Healthy Chilean Subjects Reveals a High Abundance of the Phylum Verrucomicrobia. Front. Microbiol. 2017, 8, 1221. [CrossRef]
+[PubMed]
+43.
+Ozato, N.; Saito, S.; Yamaguchi, T.; Katashima, M.; Tokuda, I.; Sawada, K.; Katsuragi, Y.; Kakuta, M.; Imoto, S.; Ihara, K.; et al.
+Blautia genus associated with visceral fat accumulation in adults 20–76 years of age. NPJ Bioﬁlms Microbiomes 2019, 5, 28.
+[CrossRef] [PubMed]
+44.
+Vaiserman, A.; Romanenko, M.; Piven, L.; Moseiko, V.; Lushchak, O.; Kryzhanovska, N.; Guryanov, V.; Koliada, A. Differences
+in the gut Firmicutes to Bacteroidetes ratio across age groups in healthy Ukrainian population. BMC Microbiol. 2020, 20, 221.
+[CrossRef]
+45.
+Janulewicz, P.A.; Seth, R.K.; Carlson, J.M.; Ajama, J.; Quinn, E.; Heeren, T.; Klimas, N.; Lasley, S.M.; Horner, R.D.; Sullivan, K.; et al.
+The Gut-Microbiome in Gulf War Veterans: A Preliminary Report. Int. J. Environ. Res. Publ. Health 2019, 16, 3751. [CrossRef]
+46.
+Ren, Z.; Fan, Y.; Li, A.; Shen, Q.; Wu, J.; Ren, L.; Lu, H.; Ding, S.; Ren, H.; Liu, C.; et al. Alterations of the Human Gut Microbiome
+in Chronic Kidney Disease. Adv. Sci. 2020, 7, 2001936. [CrossRef]
+47.
+Walker, A.W.; Ince, J.; Duncan, S.H.; Webster, L.M.; Holtrop, G.; Ze, X.; Brown, D.; Stares, M.D.; Scott, P.; Bergerat, A.; et al.
+Dominant and diet-responsive groups of bacteria within the human colonic microbiota. ISME J. 2011, 5, 220–230. [CrossRef]
+48.
+Arumugam, M.; Raes, J.; Pelletier, E.; Le Paslier, D.; Yamada, T.; Mende, D.R.; Femandes, G.R.; Tap, J.; Bruls, T.; Batto, J.-M.; et al.
+Enterotypes of the human gut microbiome. Nature 2011, 473, 174–180. [CrossRef]
+49.
+Kozhieva, M.; Naumova, N.; Alikina, T.; Boyko, A.; Vlassov, V.; Kabilov, M. Primary progressive multiple sclerosis in a Russian
+cohort: Relationship with gut bacterial diversity. BMC Microbiol. 2019, 19, 309. [CrossRef]
+50.
+Valeriani, F.; Gallè, F.; Cattaruzza, M.S.; Antinozzi, M.; Gianfranceschi, G.; Postiglione, N.; Romano Spica, V.; Liguori, G.
+Are nutrition and physical activity associated with gut microbiota? A pilot study on a sample of healthy young adult. Ann. Ig.
+2020, 32, 521–527. [CrossRef]
+Life 2021, 11, 55
+11 of 11
+51.
+Rinninella, E.; Cintoni, M.; Raoul, P.; Lopetuso, L.R.; Scaldaferri, F.; Pulcini, G.; Miggiano, G.A.D.; Gasbarrini, A.; Mele, M.C.
+Food Components and Dietary Habits: Keys for a Healthy Gut Microbiota Composition. Nutrients 2019, 11, 2393. [CrossRef]
+[PubMed]
+52.
+Odamaki, T.; Kato, K.; Sugahara, H.; Hashikura, N.; Takahashi, S.; Xiao, J.Z.; Abe, F.; Osawa, R. Age-related changes in gut
+microbiota composition from newborn to centenarian: A cross-sectional study. BMC Microbiol. 2016, 16, 90. [CrossRef] [PubMed]
+53.
+Radjabzadeh, D.; Boer, C.G.; Beth, S.A.; van der Wal, P.; Kiefte-De Jong, J.C.; Jansen, M.; Konstantinov, S.R.; Peppelenbosch, M.P.;
+Hays, J.P.; Jaddoe, V.; et al. Diversity, compositional and functional differences between gut microbiota of children and adults.
+Sci. Rep. 2020, 10, 1040. [CrossRef] [PubMed]
+54.
+Loman, B.R.; Shrestha, C.L.; Thompson, R.; Groner, J.A.; Mejias, A.; Ruoff, K.L.; O’Toole, G.A.; Bailey, M.T.; Kopp, B.T. Age and
+environmental exposures inﬂuence the fecal bacteriome of young children with cystic ﬁbrosis. Pediatric Pulmonol. 2020, 55,
+1661–1670. [CrossRef]
+55.
+Dominianni, C.; Sinha, R.; Goedert, J.J.; Pei, Z.; Yang, L.; Hayes, R.B.; Ahn, J. Sex, body mass index, and dietary ﬁber intake
+inﬂuence the human gut microbiome. PLoS ONE 2015, 10, e0124599. [CrossRef]
+56.
+Gallè, F.; Valeriani, F.; Cattaruzza, M.S.; Gianfranceschi, G.; Liguori, R.; Antinozzi, M.; Mederer, B.; Liguori, G.; Romano Spica, V.
+Mediterranean Diet, Physical Activity and Gut Microbiome Composition: A Cross-Sectional Study among Healthy Young Italian
+Adults. Nutrients 2020, 12, 2164. [CrossRef]
+57.
+Egshatyan, L.; Kashtanova, D.; Popenko, A.; Tkacheva, O.; Tyakht, A.; Alexeev, D.; Karamnova, N.; Kostryukova, E.; Babenko, V.;
+Vakhitova, M.; et al. Gut microbiota and diet in patients with different glucose tolerance. Endocr. Connect. 2016, 5, 1–9. [CrossRef]
+58.
+Le Chatelier, E.; Nielsen, T.; Qin, J.; Prifti, E.; Hildebrand, F.; Falony, G.; Almeida, M.; Arumugam, M.; Batto, J.M.; Kennedy, S.; et al.
+Richness of human gut microbiome correlates with metabolic markers. Nature 2013, 500, 541–546. [CrossRef]
+59.
+Markle, J.G.; Frank, D.N.; Mortin-Toth, S.; Robertson, C.E.; Feazel, L.M.; Rolle-Kampczyk, U.; von Bergen, M.; McCoy, K.D.;
+Macpherson, A.J.; Danska, J.S. Sex differences in the gut microbiome drive hormone-dependent regulation of autoimmunity.
+Science 2013, 339, 1084–1088. [CrossRef]
+60.
+Katz Sand, I.; Zhu, Y.; Ntranos, A.; Clemente, J.C.; Cekanaviciute, E.; Brandstadter, R.; Crabtree-Hartman, E.; Singh, S.; Bencosme, Y.;
+Debelius, J.; et al. Disease-modifying therapies alter gut microbial composition in MS. Neurol. Neuroimmunol. Neuroinflamm. 2019,
+6, e517. [CrossRef]
+61.
+Castillo-Álvarez, F.; Pérez-Matute, P.; Oteo, J.A.; Marzo-Sola, M.E. The inﬂuence of interferon β-1b on gut microbiota composition
+in patients with multiple sclerosis. Neurologia 2018. [CrossRef]
+62.
+Storm-Larsen, C.; Myhr, K.M.; Farbu, E.; Midgard, R.; Nyquist, K.; Broch, L.; Berg-Hansen, P.; Buness, A.; Holm, K.;
+Ueland, T.; et al. Gut microbiota composition during a 12-week intervention with delayed-release dimethyl fumarate in multiple
+sclerosis—A pilot trial. Mult. Scler. J. Exp. Transl. Clin. 2019, 5. [CrossRef] [PubMed]
+63.
+Jain, A.; Li, X.H.; Chen, W.N. Similarities and differences in gut microbiome composition correlate with dietary patterns of Indian
+and Chinese adults. AMB Express 2018, 8, 104. [CrossRef] [PubMed]
+64.
+Santos-Marcos, J.A.; Haro, C.; Vega-Rojas, A.; Alcala-Diaz, J.F.; Molina-Abril, H.; Leon-Acuña, A.; Lopez-Moreno, J.; Landa, B.B.;
+Tena-Sempere, M.; Perez-Martinez, P.; et al. Sex Differences in the Gut Microbiota as Potential Determinants of Gender
+Predisposition to Disease. Mol. Nutr. Food Res. 2019, 63, e1800870. [CrossRef] [PubMed]
+65.
+Hiippala, K.; Jouhten, H.; Ronkainen, A.; Hartikainen, A.; Kainulainen, V.; Jalanka, J.; Satokari, R. The Potential of Gut
+Commensals in Reinforcing Intestinal Barrier Function and Alleviating Inﬂammation. Nutrients 2018, 10, 988. [CrossRef]
+66.
+Cignarella, F.; Cantoni, C.; Ghezzi, L.; Salter, A.; Dorsett, Y.; Chen, L.; Phillips, D.; Weinstock, G.M.; Fontana, L.; Cross, A.H.; et al.
+Intermittent Fasting Confers Protection in CNS Autoimmunity by Altering the Gut Microbiota. Cell Metab. 2018, 27, 1222–1235.e6.
+[CrossRef]

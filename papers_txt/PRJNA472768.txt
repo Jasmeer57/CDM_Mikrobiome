@@ -1,0 +1,1423 @@
+Letters
+https://doi.org/10.1038/s41591-019-0485-4
+1Department of Genetics, Harvard Medical School, Boston, MA, USA. 2Wyss Institute for Biologically Inspired Engineering, Harvard University, Boston, 
+MA, USA. 3Fitbiomics, New York, NY, USA. 4Section on Pathophysiology and Molecular Pharmacology, Joslin Diabetes Center, Boston, MA, USA. 5Section 
+on Islet Cell and Regenerative Biology, Joslin Diabetes Center, Boston, MA, USA. 6Department of Biomedical Informatics, Harvard Medical School, Boston, 
+MA, USA. 7Department of Microbiology and Immunobiology, Harvard Medical School, Boston, MA, USA. 8Broad Institute of MIT and Harvard, Cambridge, 
+MA, USA. 9Section on Clinical, Behavioral and Outcomes Research, Joslin Diabetes Center, Boston, MA, USA. 10Department of Medicine, Harvard Medical 
+School, Boston, MA, USA. 11Department of Nutrition, Harvard T.H. Chan School of Public Health, Boston, MA, USA. 12Department of Combinatorics and 
+Optimization, University of Waterloo, Waterloo, Ontario, Canada. 13These authors contributed equally: Jonathan Scheiman, Jacob M. Luber,  
+Theodore A. Chavkin. *e-mail: gc@hms.harvard.edu; aleksandar.kostic@joslin.harvard.edu
+The human gut microbiome is linked to many states of human 
+health and disease1. The metabolic repertoire of the gut micro-
+biome is vast, but the health implications of these bacterial 
+pathways are poorly understood. In this study, we identify a 
+link between members of the genus Veillonella and exercise 
+performance. We observed an increase in Veillonella relative 
+abundance in marathon runners postmarathon and isolated a 
+strain of Veillonella atypica from stool samples. Inoculation of 
+this strain into mice significantly increased exhaustive tread-
+mill run time. Veillonella utilize lactate as their sole carbon 
+source, which prompted us to perform a shotgun metage-
+nomic analysis in a cohort of elite athletes, finding that every 
+gene in a major pathway metabolizing lactate to propionate is 
+at higher relative abundance postexercise. Using 13C3-labeled 
+lactate in mice, we demonstrate that serum lactate crosses 
+the epithelial barrier into the lumen of the gut. We also show 
+that intrarectal instillation of propionate is sufficient to repro-
+duce the increased treadmill run time performance observed 
+with V. atypica gavage. Taken together, these studies reveal 
+that V. atypica improves run time via its metabolic conversion 
+of exercise-induced lactate into propionate, thereby identify-
+ing a natural, microbiome-encoded enzymatic process that 
+enhances athletic performance.
+Human microbiome studies have generally examined indi-
+viduals who are ‘healthy’ or diseased and identified features of 
+the microbiome associated with these states2–4. Athlete microbi-
+omes have been found to contain distinct microbial compositions 
+defined by elevated abundances of Veillonellaceae, Bacteroides, 
+Prevotella, Methanobrevibacter or Akkermansia5,6. These studies 
+show that exercise is associated with changes in microbiome com-
+position, although the effects of these microbial genera on pheno-
+type remain unknown.
+To identify gut bacteria associated with athletic performance and 
+recovery states, we recruited athletes (n = 15) who ran in the 2015 
+Boston Marathon, along with a set of sedentary controls (n = 10), 
+and conducted 16S ribosomal DNA (rDNA) sequencing on approxi-
+mately daily samples collected up to one week before and one week 
+after marathon day (n = 209 samples; Supplementary Tables 1 and 2). 
+Phylum-level relative abundance partitioned by individual, time 
+(−5 to +5 d in relation to running the marathon), and whether the 
+participant was an athlete (Fig. 1a) showed that, at this high-level 
+taxonomic view, any orthogonal differences were likely to be due to 
+variation at the level of the individual. The bacterial genus Veillonella 
+was the most differentially abundant microbiome feature between 
+pre- and postexercise states (Supplementary Table 2). There was a 
+significant difference in relative Veillonella abundance (P = 0.02, 
+Wilcoxon rank-sum test with continuity correction) between sam-
+ples collected before and after exercise (Fig. 1b). To validate the sig-
+nificance of the association between Veillonella and postmarathon 
+state, we constructed a series of generalized linear mixed-effect 
+models (GLMMs) to predict Veillonella relative abundance in the 
+marathon participants (Fig. 1c and Methods). Subsequently, signifi-
+cance was calculated for all of the coefficients included in the GLMM 
+(Fig. 1d, Wald Z-tests), revealing that no coefficients were significant 
+except time in relation to the marathon in days (P = 0.0014, Wald 
+Z-test; n = 15). Both leave-one-out cross-validation (LOOCV) and 
+iterative permutation of labels were conducted as part of the GLMM 
+analysis (Extended Data Fig. 1 and Methods). Additionally, it appears 
+that Veillonella is more prevalent among runners than non-runners 
+(Extended Data Fig. 2), although this was not statistically significant. 
+These correlations raise the question of whether there is a causal link 
+between Veillonella and marathon runners’ performance, but no 
+conclusions can be made without proper validation.
+To assess whether there are any potential benefits of Veillonella 
+on performance in an animal exercise model, we designed an AB/
+BA crossover mouse experiment spanning 2 weeks, consisting 
+of a control group (Lactobacillus bulgaricus gavage; n = 16) and a 
+treatment group (Veillonella atypica gavage; n = 16), with a 
+Meta-omics analysis of elite athletes identifies a 
+performance-enhancing microbe that functions 
+via lactate metabolism
+Jonathan Scheiman1,2,3,13, Jacob M. Luber   4,5,6,7,8,13, Theodore A. Chavkin4,5,7,13, Tara MacDonald9,10, 
+Angela Tung   1,2, Loc-Duyen Pham4,5, Marsha C. Wibowo4,5,7, Renee C. Wurth3,11, 
+Sukanya Punthambaker1,2, Braden T. Tierney4,5,6,7, Zhen Yang4,5,12, Mohammad W. Hattab2, 
+Julian Avila-Pacheco8, Clary B. Clish   8, Sarah Lessard9,10, George M. Church1,2* and 
+Aleksandar D. Kostic   4,5,7*
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+treatment/control crossover happening between weeks (n = 32 
+mice in total). L. bulgaricus was chosen as a control due its inability 
+to catabolize lactate, thus mimicking the bacterial load but with-
+out impacting lactate metabolism7. The Veillonella strain used, 
+Veillonella atypica, was directly isolated from one of the marathon 
+runners. Mice were administered either V. atypica or L. bulgaricus 
+and run to exhaustion 5 h later (Methods). In aggregate, on both 
+sides of the crossover, mice gavaged with V. atypica had statistically 
+significantly longer maximum run times than mice gavaged with 
+L. bulgaricus (P = 0.02, paired t-test; Fig. 2a, Supplementary Table 3 
+and Extended Data Fig. 3). Both LOOCV and iterative permutation 
+of labels were conducted as part of the GLMM analysis (Extended 
+Data Fig. 3 and Methods). Per-mouse run times overlaid on the 
+GLMM fits (Extended Data Fig. 4), as well as the difference between 
+the maximum run times in L. bulgaricus versus V. atypica gavage, 
+showed a distinction between ‘responders’ and ‘non-responders’ 
+to V. atypica gavage (Extended Data Fig. 5). Mice treated with 
+V. atypica ran, on average, 13% longer than the control group (Fig. 2a). 
+Testing the significance of coefficients in the GLMM for their 
+contribution to treadmill run time (Wald Z-test) showed that the 
+−5
+–0.015
+–0.010
+–0.005
+0
+0.005
+0.010
+P values
+Time (**P = 0.0014)
+Sex (NS)
+Weight (NS)
+BMI (NS)
+Age (NS) 
+Race: ‘Asian/White’ (NS)
+Race: ‘White’ (NS)
+Menstruation: ‘N’ (NS)
+Menstruation: ‘Pregnant’ (NS)
+Menstruation: ‘Y’ (NS)
+Vegetables (NS)
+Fruits (NS)
+Grains (NS)
+Protein (NS)
+Dairy (NS)
+Protein supplements (NS)
+0
+0.01
+0.02
+0.03
+–6
+–5
+–4
+–3
+–2
+–1
+0
+1
+2
+3
+4
+5
+Days in relation to 2015 boston marathon
+Veillonella relative abundance
+(16S)
+Subject ID
+SG01
+SG03
+SG04
+SG05
+SG06
+SG07
+SG08
+SG10
+SG11
+SG12
+SG16
+SG17
+SG18
+SG21
+SG22
+b
+a
+−5
+−4
+−3
+−2
+−1
+1
+2
+3
+4
+5
+SG01
+SG03
+SG04
+SG05
+SG06
+SG07
+SG08
+SG10
+SG11
+SG12
+SG16
+SG17
+SG18
+SG21
+SG22
+Phylum
+Bacteroidetes
+Firmicutes
+Proteobacteria
+Tenericutes
+Verrucomicrobia
+−4
+−3
+−2
+−1
+1
+2
+3
+4
+5
+SG01
+SG03
+SG04
+SG05
+SG06
+SG07
+SG08
+SG10
+SG11
+SG12
+SG16
+SG17
+SG18
+SG21
+SG22
+0
+0
+0.005
+0
+0.005
+0
+0.005
+0
+0
+0.005
+0
+0.005
+0.030
+0
+0.005
+0
+0.005
+0
+Relative abundance
+Relative abundance
+Time relative to t0 (d)
+Time relative to t0 (d)
+c
+d
+Individual
+Individual
+Fig. 1 | Gut Veillonella abundance is significantly associated with marathon running. a, Phylum-level relative abundance in marathon runners, partitioned 
+by individual and time (−5 to +5 d in relation to running the marathon (t0), where negative values are premarathon and positive values are postmarathon), 
+showing few global differences in composition. b, Veillonella relative abundance at the genus level, partitioned by individual and time (−5 to +5 d in 
+relation to running the marathon), showing that there is a significant difference in Veillonella relative abundance (P = 0.02, two-sided Wilcoxon rank-sum 
+test with continuity correction; n = 15 individuals) between samples collected before and after exercise. c, GLMMs predicting longitudinal Veillonella 
+relative abundance in the marathon participants. Differences in intercepts between fits for different marathon runners represent random effects. d, 
+95% confidence intervals for all of the fixed effects (coefficients) included in the GLMMs. All coefficients except time (P = 0.0014, Wald Z-test; time 
+postmarathon corresponds to increased Veillonella relative abundance) were not significant (NS), suggesting that Veillonella blooms in runners correspond 
+to exercise state and not other fixed effects (n = 15 individuals).
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+sequence effect was not significant (P = 0.758), while treatment day 
+(P = 0.031; negative effect on run time) and Veillonella treatment 
+(P = 0.016; positive effect on run time) were significant (Fig. 2b and 
+Extended Data Fig. 3). In a separate experiment, levels of inflamma-
+tory cytokines were quantified postexercise, and were significantly 
+reduced in Veillonella-treated animals compared with L. bulgari-
+cus or phosphate buffered saline (PBS) (Extended Data Fig. 6 and 
+Supplementary Table 4). To assess changes in muscle physiology, the 
+glucose transporter GLUT4 was quantified via western blot, but we 
+observed no changes regardless of treatment (Extended Data Fig. 7).
+To test whether our results would be replicated in an indepen-
+dent cohort of human athletes, we performed shotgun metagenomic 
+sequencing of stool samples (n = 87) from ultramarathoners and 
+Olympic trial rowers both before and after exercise (Supplementary 
+Table 5). Putative taxonomic abundances reproduced the previous 
+16S sequencing-based association with Veillonella (Extended Data 
+Fig. 8)8. By utilizing novel algorithms that allow for cheap con-
+struction of metagenomic gene catalogs at a massive scale through 
+the efficient use of cloud computing, we investigated phenotypic 
+modulating effects of millions of microbial genes on athletes by 
+building a sample (n = 87) by gene (n = 2,288,155) relative abun-
+dance matrix (Extended Data Figs. 8 and 9 and Methods)9–13. The 
+inability of Veillonella to ferment carbohydrates, coupled with the 
+high observed abundance of the lactate import permease in previ-
+ously sequenced isolates, suggests that metabolic enzymes facili-
+tating lactate breakdown are likely conserved14. Across the entire 
+ultramarathon and rower cohorts, there exists a group of gene 
+families with differential relative abundance pre- and postexercise 
+(Extended Data Fig. 9), representing every step of the enriched 
+methylmalonyl-CoA pathway (P = 0.00147; Methods), degrading 
+lactate into propionate, as assigned by Enzyme Commision (EC) 
+ID numbers (Fig. 3a). Given the limited prevalence of the meth-
+ylmalonyl-CoA pathway across lactate-utilizing microbes, this 
+enrichment postexercise may implicate Veillonella in causing func-
+tional changes in the metabolic repertoire of the gut microbiome. 
+We verified strong production of acetate and propionate by per-
+forming mass spectrometry on spent media collected after growing 
+three Veillonella strains isolated from the human athletes (V. par-
+vula, V. dispar and V. atypica) in lactate-supplemented brain–heart 
+infusion media (BHIL) and semi-synthetic lactate media (Fig. 4a, 
+Supplementary Table 6 and Methods).
+Veillonella species metabolize lactate into the short-chain fatty 
+acids (SCFAs) acetate and propionate via the methylmalonyl-CoA 
+pathway15. Lactate dehydrogenase—the enzyme responsible for 
+the first step of lactate metabolism—is present in a phylogeneti-
+cally diverse group of bacteria (Fig. 3b). Querying microbial isolate 
+strain genome annotations from National Center for Biotechnology 
+Information (NCBI) shows that, unlike V. atypica, many other 
+microbes are theoretically capable of utilizing lactate through lac-
+tate dehydrogenase, but do not possess the full pathway to convert 
+lactate into propionate (Fig. 3c). Other obligate anaerobes, such as 
+Anaerostipes caccae and Eubacterium hallii commonly ferment lac-
+tate into butyrate via different pathways (Fig. 3c). E. hallii can also 
+produce propionate; however, this has been demonstrated as a bio-
+transformation of 1,2-propanediol, rather than a complete pathway 
+from lactate to propionate. Of note, the reference genomes on NCBI 
+for both Veillonella dispar and Veillonella parvula are not annotated 
+to have the succinate-CoA transferase needed for propionate pro-
+duction to occur; this is likely to be due to an annotation error, as 
+we validated the production of propionate via mass spectrometry 
+on isolates of these species (Supplementary Table 6).
+Taken together, these results show that not only is the genus 
+Veillonella enriched in athletes after exercise but the metabolic 
+pathway that Veillonella species utilize for lactate metabolism is 
+also enriched. This result raises the possibility that systemic lactate 
+resulting from muscle activity during exercise may enter the gastro-
+intestinal lumen and become metabolized by Veillonella.
+Next, we sought to determine whether systemic lactate is capable 
+of crossing the epithelial barrier into the gut lumen, as this has not 
+been demonstrated before to our knowledge. To investigate this, we 
+*
+0
+500
+1,000
+1,500
+2,000
+L. bulgaricus
+V. atypica
+Treatment
+Maximum time to exhaustion (s)
+500
+1,000
+1,500
+1
+2
+3
+4
+5
+6
+Exercise day
+Time to exhaustion (s)
+Treatment
+L. bulgaricus
+V. atypica
+Sequence
+LLLVVV
+VVVLLL
+Treatment    Crossover
+*
+Week 1
+Week 2
+a
+b
+Fig. 2 | V. atypica gavage improves treadmill run time in mice. a, Mice gavaged with V. atypica had greater maximum run times per week than mice 
+gavaged with L. bulgaricus in an AB/BA crossover trial. The graph shows the maximum run times out of 3 d of consecutive treadmill running for a given 
+treatment (all mice switched treatments for the second week). The jitter plot shows each mouse as an individual point, with the central bar representing 
+the mean and error bars representing s.e.m. (n = 32). *P = 0.02, as determined by two-sided paired t-test. b, GLMMs predicting run time in the 2-week 
+AB/BA crossover trial. The colors of the lines (GLMM fits) and points (runs by an arbitrary mouse) represent the treatment sequence (in the legend, 
+L represents L. bulgaricus and V represents Veillonella atypica). The shapes of the points represent the treatment at a given time point. These models 
+incorporate both random effects (individual variation per mouse that manifests longitudinally) and fixed effects (treatment day, treatment sequence 
+and treatment given). Visualization of all of the longitudinal data points with the GLMM predictions overlayed shows the effect of V. atypica increasing 
+performance on both sides of the crossover when aggregated by treatment group (thick lines), as well as the trends for each of the 32 individual mice  
+(thin lines). *P = 0.016, as determined by Wald Z-test on model coefficients.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+performed tail vein injections of 13C3 sodium lactate into mice col-
+onized with either V. atypica or L. bulgaricus, and sacrificed them 
+12 min after injection. This time point was chosen because it was 
+the earliest time at which we observed serum lactate levels return 
+to baseline levels after tail vein injections in pilot experiments. At 
+sacrifice, we immediately collected serum and plasma following car-
+diac puncture, and collected intestinal luminal contents by removing 
+the colon and cecum from the mice and gently sampling the inner 
+surface of the tissue. By performing liquid chromatography–mass 
+spectrometry (LC-MS) on these tissues, we were able to identify 13C3-
+labeled lactate present in both the serum and plasma, as well as in the 
+lumen of the colons and ceca (Fig. 4b–d and Supplementary Table 7). 
+We were unable to detect any 13C3-labeled propionate in these tissues; 
+however, the 12-min time point from tail vein injection to sacrifice 
+is likely to have been insufficient time for labeled lactate crossing the 
+gut barrier to be metabolized into propionate by the gut Veillonella.
+As we have shown that serum lactate is capable of entering the 
+intestinal lumen, we sought to determine whether Veillonella colo-
+nization may actively limit blood lactate levels by serving as a meta-
+bolic ‘sink’. To test the capability of Veillonella to accelerate blood 
+lactate clearance in vivo, we performed intraperitoneal injections of 
+sodium lactate in mice colonized with either V. atypica or L. bulgari-
+cus, and monitored blood lactate over time. Neither the basal nor the 
+peak lactate levels between the treatment groups were significantly 
+different (Extended Data Fig. 10 and Supplementary Table 8). The 
+vast majority of lactate processing occurs in the liver16, and although 
+systemic lactate infiltrates the intestinal lumen, we did not observe 
+a change in overall lactate clearance on inoculation with Veillonella.
+Propionate has been shown to increase the heart rate and maxi-
+mum rate of oxygen consumption, and to affect blood pressure in 
+mice17–19, as well as raise the resting energy expenditure and lipid 
+oxidation in fasted humans20. To test whether the exercise-enhanc-
+ing effects of Veillonella may be attributable at least in part to pro-
+pionate, we performed intrarectal instillation of propionate in our 
+mouse treadmill model. Propionate was introduced intrarectally 
+rather than orally because colonic absorption provides a more direct 
+route for propionate to reach the systemic circulation, mirroring the 
+location of Veillonella-sourced propionate. Intrarectal propionate 
+instillation (n = 8) compared with saline vehicle (n = 8) resulted in 
+increased treadmill run times similar to those of V. atypica gavage 
+a
+b
+c
+Enzyme present
+Enzyme absent
+Escherichia coli
+Butyrivibrio fibrisolvens
+Anaerostipes caccae
+Clostridium butyricum
+Eubacterium limosum
+Eubacterium hallii
+Selenomonas ruminantium
+Veillonella parvula
+Veillonella atypica
+Veillonella dispar
+Leuconostoc lactis
+Pediococcus pentosaceus
+Streptococcus thermophilus
+Staphylococcus aureus
+Bacillus subtilis
+Actinomyces viscosus
+Bifidobacterium bifidum
+Rothia dentocariosa
+Mycoplasma gallisepticum
+Acholeplasma laidlawii
+Acholeplasma laidlawii
+Actinomyces viscosus
+Anaerostipes caccae
+Bacillus subtilis
+Bifidobacterium bifidum
+Butyrivibrio fibrisolvens
+Clostridium butyricum
+Escherichia coli
+Eubacterium hallii
+Eubacterium limosum
+Lactobacillus bulgaricus
+Leuconostoc lactis
+Mycoplasma gallisepticum
+Pediococcus pentosaceus
+Rothia dentocariosa
+Selenomonas ruminantium
+Staphylococcus aureus
+Streptococcus thermophilus
+Veillonella atypica
+Veillonella dispar
+Veillonella parvula
+Acylphosphatase/phosphate acetyltransferase
+Fumarate hydratase
+Fumarate reductase
+Lactate dehydrogenase
+Malate dehydrogenase
+Methylmalonyl-CoA carboxyltransferase
+Methylmalonyl-CoA epimerase
+Methylmalonyl-CoA mutase
+Pyruvate:ferredoxin oxidoreductase
+Pyruvate carboxylase
+Pyruvate dehydrogenase
+Succinate-CoA transferase
+Succinate dehydrogenase
+Before 
+exercise
+After
+exercise
+**
+OH
+O
+O–
+Lactate
+O
+O
+O–
+Pyruvate
+O
+CoA
+Acetyl-CoA
+O
+O–
+Acetate
+O
+O
+–O
+O
+O–
+Oxaloacetate
+O
+–O
+O
+O–
+Succinate
+O
+–O
+O
+CoA
+Succinyl-CoA
+O
+CoA
+O
+–O
+Methylmalonyl-CoA
+O
+CoA
+Propionyl-CoA
+O
+O–
+Propionate
+TCA
+Cycle
+log-transformed relative abundance
+–10
+–12
+–14
+–16
+–18
+Fig. 3 | The athlete gut microbiome is functionally enriched for the metabolism of lactate to propionate postexercise. a, The methylmalonyl-CoA pathway, 
+with conserved steps of the tricarboxylic acid (TCA) cycle abbreviated. Inset, significantly differentially expressed gene families within the methylmalonyl-
+CoA pathway in a pair of non-redundant gene catalogs created from metagenomic sequencing of athlete stool samples. The log-transformed relative 
+abundance increases after exercise for every enzyme in the methylmalonyl-CoA pathway. **P = 0.00147, as determined by two-sided Fisher’s exact test (n = 8 
+enzymes in the pathway). Data are represented as a violin plot, which displays the distribution of data as a rotated kernel density distribution. b, Bacterial 
+phylogenetic tree showing the diversity of microbes that have the ability to utilize lactate as a carbon source. c, Prevalence of enzymes in the methylmalonyl-
+CoA pathway that break down lactate into acetate and propionate in reference genomes from this representative subset of lactate-processing microbes.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Butyrate (µM)
+Propionate (µM)
+Pyruvate (µM)
+Lactate (µM)
+Acetate (µM)
+V. atypica LM
+19 ± 0.3***
+10,611 ± 584**
+4 ± 0.4***
+431 ± 5.6***
+92,432 ± 3,129**
+L. bulgaricus LM
+9 ± 0.5*
+3 ± 1.5
+32 ± 2.7
+737 ± 45
+4,985 ± 247**
+LM alone
+11 ± 0.1
+4 ± 0.5
+41 ± 0.4
+851 ± 6.6
+1,741 ± 12.2
+V. atypica BHIL
+69 ± 0.5*
+2,286 ± 68*
+NA
+NA
+4,149 ± 118*
+BHIL alone
+147 ± 4.1
+160 ± 1.4
+NA
+NA
+7,557 ± 30
+f
+Muscle
+Liver
+Glucose
+Glucose
+Glucose
+Lactate
+Lactate
+Lactate
+Microbiome
+Lactate
+SCFAs
+Improved
+performance
+d
+Intravenous injection
+of 13C3 lactate
+Blood lactate
+Time
+Sample
+Serum
+Plasma
+Cecal contents
+Colon contents
+LC-MS
+Serum
+Plasma
+Cecal contents
+Colon contents
+0
+0.02
+0.04
+0.06
+Ratio of labeled/unlabeled
+13C3 lactate
+Natural abundance
+Serum
+Plasma
+Cecal contents
+Colon contents
+0
+50
+100
+150
+200
+Fold-change relative to
+natural abundance
+P = 0.0011
+P = 0.00001
+P = 3 × 10−6
+P = 6 × 10−6
+a
+b
+e
+c
+PBS
+Propionate
+0
+500
+1,000
+1,500
+2,000
+Treadmill run time (s)
+P = 0.028
+Fig. 4 | Serum lactate crosses the epithelial barrier into the gut lumen, and colorectal propionate instillation is sufficient to enhance treadmill run time. 
+a, SCFAs detected in spent media after 48 h of growth with the indicated strain. LM, semi-synthetic lactate media; NA, not quantified. Each table entry 
+shows the mean ± s.e.m. (BHIL, n = 2; LM, n = 3). P values from left to right, row by row were: ***P = 0.0008; **P = 0.003; ***P = 4.4 × 10−7; ***P = 1.4 × 10−6; 
+**P = 0.001; *P = 0.023; **P = 0.006; *P = 0.03; *P = 0.02; and *P = 0.015, compared with the media control, as determined by two-sided Welch’s t-test. b, 
+Schematic of the 13C3 flux-tracing experimental design. Mice were injected with 13C3 sodium lactate, then sacrificed after 12 min. Serum and plasma were 
+collected via cardiac puncture. Cecum and colon contents were collected by dissection. c, Abundance of 13C3 lactate quantified relative to the abundance 
+of unlabeled lactate. d, 13C3 lactate abundance normalized to the expected natural abundance of 13C3 lactate. The ratio of labeled/unlabeled lactate was 
+quantified for experimental samples, as well as for the unlabeled lactate standard. Experimental samples are represented as the fold-change relative to 
+the unlabeled standard. In c and d, each mouse sample is represented as an individual point, with the central bar representing the mean and error bars 
+representing s.e.m. (n = 7). P values were determined by two-sided, one-sample t-test versus natural abundance. e, Intracolonic infusion of propionate 
+improves the maximum run time in mice. The graph shows the maximum run times out of 3 d of consecutive treadmill running. The jitter plot shows each 
+mouse as an individual point, with the central bar representing the mean and error bars representing s.e.m. (n = 8). The P value was determined by two-
+sided unpaired t-test. f, Proposed model of the microbiome–exercise interaction. Black arrows represent the well-known steps of the Cori cycle, where 
+glucose is converted to lactate in the muscle, enters the liver via blood circulation, and is then is converted back to glucose in the liver via gluconeogenesis. 
+Red arrows represent the steps proposed in this work. First, lactate produced in the muscle enters the intestinal lumen via the blood circulation. In the 
+intestine, it acts as a carbon source for specific microbes, including Veillonella species. This causes the observed bloom in intestinal Veillonella, as well as 
+the production of SCFA byproducts (predominantly propionate), which are taken up by the host via the intestinal epithelium. The presence of microbiome-
+sourced SCFAs in the blood improves athletic performance via an unknown mechanism. Together, this creates an addendum to the Cori cycle by 
+converting an exercise byproduct into a performance-enhancing molecule, mediated by naturally occurring members of the athlete gut microbiome.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+(P = 0.03; Fig. 4e). As in the Veillonella gavage experiments, we ran 
+the same panel of inflammatory cytokines on serum taken 40 min 
+after treadmill running, but found no significant differences in 
+cytokine levels (Extended Data Fig. 6 and Supplementary Table 4). 
+Therefore, the introduction of propionate into the colon is sufficient 
+to result in an enhanced exercise phenotype via a mechanism that 
+does not impact the inflammatory cytokines measured.
+Coupling computational approaches, multi’omic data collec-
+tion approaches and experimental validation looks promising as 
+a method to approach unvalidated metagenomic associations that 
+have been proposed in the past decade. Acting on this principle, we 
+observed that: (1) Veillonella abundance increased in the gut micro-
+biome postexercise in two independent cohorts of athletes; (2) the 
+Veillonella methylmalonyl-CoA pathway is overrepresented in ath-
+lete metagenomic samples postexercise; (3) systemic lactate can 
+cross the gut barrier into the lumen of the gut; (4) in a longitudinal 
+AB/BA crossover study in mice, Veillonella inoculation improved 
+treadmill performance; and (5) treadmill performance is improved 
+in mice administered propionate via intracolonic infusion.
+These data illustrate a model in which systemic lactate produced 
+during exercise crosses to the gut lumen and is metabolized by 
+Veillonella into propionate in the colon, which in turn serves to pro-
+mote performance. Gut colonization of Veillonella may be augmenting 
+the Cori cycle by providing an alternative lactate-processing method 
+whereby systemic lactate is converted into SCFAs that re-enter the cir-
+culation (Fig. 4f). SCFAs are absorbed in the sigmoid and rectal region 
+of the colon and enter circulation via the pelvic plexus, bypassing the 
+liver and draining via the vena cava to reach the systemic circulation 
+directly21. Microbiome-derived SCFAs then augment performance 
+directly and acutely, suggesting that lactate generated during sustained 
+bouts of exercise could be accessible to the microbiome and converted 
+to these SCFAs that improve athletic performance.
+In conclusion, we have shown that the microbiome may be a crit-
+ical component of physical performance, and highlight the benefits 
+derived from it. An important question is how this performance-
+facilitating organism first came to be more prevalent among ath-
+letes. We propose that the high-lactate environment of the athlete 
+provides a selective advantage for colonization by lactate-metaboliz-
+ing organisms such as Veillonella. Future studies are needed to help 
+explain why there is an apparent preference for Veillonella and not 
+any of the many other lactate-metabolizing organisms. Veillonella in 
+the physically active host therefore serves as a potential example of 
+a symbiotic relationship in the human microbiome.
+Online content
+Any methods, additional references, Nature Research reporting 
+summaries, source data, statements of code and data availability and 
+associated accession codes are available at https://doi.org/10.1038/
+s41591-019-0485-4.
+Received: 21 May 2018; Accepted: 10 May 2019;  
+Published: xx xx xxxx
+References
+	1.	 Gilbert, J. A. et al. Current understanding of the human microbiome. Nat. 
+Med. 24, 392–400 (2018).
+	2.	 Lax, S. et al. Longitudinal analysis of microbial interaction between humans 
+and the indoor environment. Science 345, 1048–1052 (2014).
+	3.	 Rothschild, D. et al. Environment dominates over host genetics in shaping 
+human gut microbiota. Nature 555, 210–215 (2018).
+	4.	 Dusko Ehrlich, S. & The MetaHIT Consortium. in Metagenomics of the 
+Human Body 307–316 (Springer, 2011).
+	5.	 Petersen, L. M. et al. Community characteristics of the gut microbiomes of 
+competitive cyclists. Microbiome 5, 98 (2017).
+	6.	 Clarke, S. F. et al. Exercise and associated dietary extremes impact on gut 
+microbial diversity. Gut 63, 1913–1920 (2014).
+	7.	 Garvie, E. I. Bacterial lactate dehydrogenases. Microbiol. Rev. 44, 106–139 
+(1980).
+	8.	 Truong, D. T. et al. MetaPhlAn2 for enhanced metagenomic taxonomic 
+profiling. Nat. Methods 12, 902–903 (2015).
+	9.	 Luber, J. M., Tierney, B. T., Cofer, E. M., Patel, C. J. & Kostic, A. D. Aether: 
+leveraging linear programming for optimal cloud computing in genomics. 
+Bioinformatics 34, 1565–1567 (2017).
+	10.	Li, D., Liu, C.-M., Luo, R., Sadakane, K. & Lam, T.-W. MEGAHIT: an 
+ultra-fast single-node solution for large and complex metagenomics assembly 
+via succinct de Bruijn graph. Bioinformatics 31, 1674–1676 (2015).
+	11.	Seemann, T. Prokka: rapid prokaryotic genome annotation. Bioinformatics 30, 
+2068–2069 (2014).
+	12.	Fu, L., Niu, B., Zhu, Z., Wu, S. & Li, W. CD-HIT: accelerated for clustering 
+the next-generation sequencing data. Bioinformatics 28, 3150–3152 (2012).
+	13.	Qin, J. et al. A metagenome-wide association study of gut microbiota in type 
+2 diabetes. Nature 490, 55–60 (2012).
+	14.	Van den Bogert, B., Boekhorst, J., Smid, E. J., Zoetendal, E. G. & Kleerebezem, 
+M. Draft genome sequence of Veillonella parvula HSIVP1, isolated from the 
+human small intestine. Genome Announc. 1, e00977-13 (2013).
+	15.	Ng, S. K. C. & Hamilton, I. R. Carbon dioxide fixation by Veillonella parvula 
+M4 and its relation to propionic acid formation. Can. J. Microbiol. 19, 
+715–723 (1973).
+	16.	Phypers, B. & Pierce, J. M. T. Lactate physiology in health and disease. 
+Contin. Educ. Anaesth. Crit. Care Pain 6, 128–132 (2006).
+	17.	Kimura, I. et al. Short-chain fatty acids and ketones directly regulate 
+sympathetic nervous system via G protein-coupled receptor 41 (GPR41). 
+Proc. Natl Acad. Sci. USA 108, 8030–8035 (2011).
+	18.	Pluznick, J. A novel SCFA receptor, the microbiota, and blood pressure 
+regulation. Gut Microbes 5, 202–207 (2014).
+	19.	Pluznick, J. L. et al. Olfactory receptor responding to gut microbiota-derived 
+signals plays a role in renin secretion and blood pressure regulation. Proc. 
+Natl Acad. Sci. USA 110, 4410–4415 (2013).
+	20.	Chambers, E. S. et al. Acute oral sodium propionate supplementation raises 
+resting energy expenditure and lipid oxidation in fasted humans. Diabetes 
+Obes. Metab. 20, 1034–1039 (2018).
+	21.	Araghizadeh, F. & Abdelnaby, A. in Colorectal Surgery (eds Bailey, H. R., 
+Billingham, R. P., Stamos, M. J. & Snyder, M. J.) 3–17 (Elsevier Health 
+Sciences, 2012).
+Acknowledgements
+This work was funded by the Synthetic Biology platform at the Wyss Institute for 
+Biologically Inspired Engineering at Harvard University; National Institutes of Health 
+(NIH)/National Human Genome Research Institute grant T32 HG002295 (to J.M.L.; 
+principal investigator: P. J. Park); NIH/National Institute of Diabetes and Digestive and 
+Kidney Diseases grant T32 DK007260 (to T.A.C.; principal investigator: T. K. Blackwell); 
+a National Science Foundation Graduate Research Fellowship Program fellowship (to 
+J.M.L.); National Library of Medicine BIRT grant T15LM007092 (to B.T.T.); an AWS 
+Research Credits for Education Grant (to J.M.L. and A.D.K.); a Smith Family Foundation 
+Award for Excellence in Biomedical Research (to A.D.K.); an American Diabetes 
+Association Pathway to Stop Diabetes Initiator Award (to A.D.K.) and NIH/National 
+Institute of Diabetes and Digestive and Kidney Diseases Diabetes Research Center 
+grant P30DK036836-30 (to J.M.L., T.A.C., T.M., B.T.T., L.-D.P., Z.Y., M.C.W., S.L. and 
+A.D.K.; principal investigator: G. L. King). We acknowledge C. J. Patel and S. R. Stein for 
+statistical advice, and S. Softic for assistance with tail vein injections.
+Author contributions
+J.S., G.M.C. and A.D.K. conceived the project. J.S. collected the athlete samples and 
+metadata. J.M.L. performed the computational analysis and modeling, with assistance 
+from T.A.C., M.C.W., R.C.W., B.T.T., Z.Y. and M.W.H. T.A.C. designed and performed 
+the model organism experiments, with assistance from J.M.L., T.M., A.T., L.-D.P., 
+M.C.W., S.P. and S.L. J.A.-P. and C.B.C. processed the metabolomic samples. J.M.L., 
+T.A.C. and A.D.K. wrote the manuscript. G.M.C. and A.D.K. supervised the project.
+Competing interests
+J.S. and G.M.C. are co-founders of FitBiomics. Along with A.D.K., they hold equity in 
+FitBiomics.
+Additional information
+Extended data is available for this paper at https://doi.org/10.1038/s41591-019-0485-4.
+Supplementary information is available for this paper at https://doi.org/10.1038/
+s41591-019-0485-4.
+Reprints and permissions information is available at www.nature.com/reprints.
+Correspondence and requests for materials should be addressed to G.M.C. or A.D.K.
+Peer review information: Joao Monteiro was the primary editor on this article and 
+managed its editorial process and peer review in collaboration with the rest of the 
+editorial team.
+Publisher’s note: Springer Nature remains neutral with regard to jurisdictional claims in 
+published maps and institutional affiliations.
+© The Author(s), under exclusive licence to Springer Nature America, Inc. 2019
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Methods
+Participation recruitment. All study participants were recruited following a Sports 
+Genomics protocol (number IRB15-0869) approved by the Institutional Review 
+Board of the Wyss Institute for Biologically Inspired Engineering. Each participant 
+read and signed a consent form before study enrollment, and we have complied 
+with all of the relevant ethical regulations.
+Sample collection, extraction and library preparation. For the collection of 
+materials, study participants were provided with a 15 ml falcon tube with a 1 ml 
+pipette tip inserted inside. Participants were instructed to dip the pipette tips into 
+soiled toilet tissue, then place them back into the tubes and label the tubes with the 
+date and time of collection. Samples were kept at 4 °C for short-term storage until 
+sample pickup, at which point they were immediately placed onto dry ice, then 
+transferred to a −80 °C freezer for long-term storage.
+Fecal samples were thawed on ice and resuspended in 2–5 ml of PBS, 250 µl of 
+which was used for DNA extraction using the Mo Bio PowerSoil high-throughput 
+DNA extraction kit, following the manufacturer’s protocol. For 16S rDNA library 
+construction, 1–5 µl of purified DNA was used for PCR amplification of the V4 
+variable region using Q5 Hot Start Polymerase (NEB). Primers were adapted from 
+the Earth Microbiome Project (http://www.earthmicrobiome.org/), attaching 
+Illumina paired-end adapters (forward: CTT TCC CTA CAC GAC GCT CTT 
+CCG ATC TGT GCC AGC MGC CGC GGT AA; reverse: GGA GTT CAG ACG 
+TGT GCT CTT CCG ATC TGG ACT ACH VGG GTW TCT AAT). Illumina 
+barcodes were added to libraries during a second PCR step (forward: AAT GAT 
+ACG GCG ACC ACC GAG ATC TAC ACT CTT TCC CTA CAC GAC GCT C; 
+reverse: CAA GCA GAA GAC GGC ATA CGA GAT GTG ACT GGA GTT CAG 
+ACG TGT GCT C) and end products were purified via column chromatography 
+(Zymo Research). Individual libraries were quantified and normalized for 
+sequencing using the Quant-iT PicoGreen reagent (Thermo Fisher Scientific). For 
+whole-genome shotgun library construction, 1 ng of purified DNA was used for 
+Illumina’s Nextera XT Tagmentation kit, following the manufacturer’s protocol. 
+Libraries were submitted to the Harvard Biopolymers core sequencing facility for 
+bioanalyzer quality control and 150-base pair paired-end sequencing reads using 
+either the Illumina MiSeq or HiSeq 2500 system (high output mode) for 16S rDNA 
+and shotgun analysis, respectively.
+Metadata collection. Each study participant was provided with a questionnaire 
+to collect health, dietary and athletic background information (adapted from The 
+American Gut; http://americangut.org/). Additionally, for each sample collection, 
+study participants filled out a daily annotation sheet to collect dietary, exercise and 
+sleep information.
+16S analysis. Each subject provided fecal samples on a daily basis, up to one week 
+before and one week after the marathon (controls did not run in the marathon but 
+provided fecal samples). Next, we extracted genomic DNA from these samples and 
+performed 16S rDNA amplicon sequencing, followed by bioinformatic analysis, 
+to obtain genus-level resolution of bacteria in each individual’s microbiome 
+(Supplementary Tables 1 and 2).
+16S reads were processed with the DADA2 pipeline and phyloseq22,23. Default 
+settings were used for filtering and trimming. Built-in training models were 
+utilized to learn error rates for the amplicon dataset. Identical sequencing reads 
+were combined through DADA2’s dereplication functionality, and the DADA2 
+sequence–variant inference algorithm was applied to each dataset. Subsequently, 
+paired-end reads were merged, a sequence table was constructed, taxonomy was 
+assigned, and abundance was calculated at all possible taxonomic levels.
+16S mixed-effects modeling in the human cohort. We constructed a series of 
+GLMMs to predict Veillonella relative abundance in the marathon participants 
+from both random effects (individual variation per athlete that manifests 
+longitudinally) and fixed effects (United States Department of Agriculture (USDA) 
+MyPlate consumption categories, protein powder supplementation, menstruation 
+status, race, time, body mass index (BMI), weight, gender and age).
+The longitudinal nature of the microbiome sampling, coupled with the 
+unique lifestyles of athletes, means that diet, physical characteristics, age, gender, 
+ethnicity and the menstrual cycle could potentially confound the association 
+between postmarathon state and Veillonella relative abundance24,25. As some food 
+compounds can selectively increase the relative abundance of Veillonella, 1,267 
+meal records logging every instance of food consumption over the course of 
+the study (Supplementary Table 1) were quantified according to USDA MyPlate 
+and associated with daily microbiome samples. LOOCV was performed for the 
+GLMM analysis where the P value for the time coefficient was calculated for all 
+permutations of eliminating one athlete, which revealed a general trend of no 
+individual athlete driving significance, with one minor outlier (Extended Data Fig. 
+1; Wald Z-tests). To ensure that an arbitrary shuffling of participant labeling would 
+not yield significant results, the GLMM was trained 1,000 times on input data with 
+permuted labels, which generated uniformly distributed P values and showed the 
+significance of the original labeling (Extended Data Fig. 1; Wald Z-tests). Thus, 
+the observed significance of the association between Veillonella relative abundance 
+and pre- and postmarathon state is likely not confounded by any fixed effects. To 
+test whether Veillonella has any phenotypic impact on running ability, we next 
+introduced Veillonella to mice in a treadmill experiment.
+Modeling of 16S Veillonella relative abundance for athletes participating in 
+the marathon was done with the R nlme package26. A total of 1,267 meal records 
+logging every instance of food consumption over the course of the study were 
+quantified according to USDA MyPlate and associated with daily 16S samples by a 
+nutritionist. Relative abundance was first modeled as:
+Abundance = β0 + βtime + βsex + βweight + βBMI + βage + βrace + βmenstruation  
++ βvegetables + βfruits + βgrains + βprotein + βdairy + βdietary protein supplementation
+Subsequently, a second model was generated that included interaction terms 
+of time:vegetables and time:menstruation. Significance was calculated for all of the 
+coefficients included in the GLMM with Wald Z-tests (default calculation in the 
+library utilized). Coefficients were created with the coefplot2 package27.
+The code for the two models is provided below.
+Model_1 < -lme(Veillonella~time + sex + weight + BMI + age + race  
++ menstruation + vegetables + fruits + grains + protein + dairy + dietary_protein_
+supp,random = ~1|subjectID,data = marathon16S)
+Model_2 < -lme(Veillonella~time + sex + weight + BMI + race + menstruation  
++ vegetables + fruits + grains + protein + dairy + dietary_protein_ 
+supp + time:vegetables + time:menstruation,random = ~1|subjectID, 
+data = marathon16S)
+Model predictions overlayed on the underlying data were visualized with the 
+ggplot2 R package28.
+Model results were validated with both LOOCV and permutation testing on 
+shuffled labels.
+Preparation of bacteria for gavage. V. atypica and L. bulgaricus were grown 
+in 250 ml BHIL (10 ml of 60% sodium lactate per liter) and MRS broth, 
+respectively. The optical density measured at a wavelength of 600 nm (OD600) was 
+monitored and at an optical density of 0.4–0.6, cells were pelleted by refrigerated 
+centrifugation at 5,000g for 10 min. The pellet was washed in PBS and resuspended 
+in 2 ml residual PBS. Aliquots of 100 µl were frozen at −80 °C and the numbers 
+of colony-forming units (c.f.u.) per ml were measured by serial dilution onto 
+BHIL agar plates. V. atypica was gavaged in wild-type C57BL/6 mice to determine 
+viability and transit time through the gastrointestinal tract, observing peak viable 
+bacterial c.f.u. counts in fecal pellets 5 h after gavage.
+Treadmill crossover experiment. Animal research was approved by the Joslin 
+Diabetes Center Institutional Animal Care and Use Committee and we complied 
+with all of the relevant ethical regulations. For the treadmill experiments, 8- to 
+12-week-old CL57BL/6 mice (n = 32) were acclimated to treadmilling with 
+two bouts of 30 min of 5 m min−1 walking, split over two consecutive days. For 
+exhaustion measurements, mice were fasted for 7 h before exercise. Then, 6 h before 
+exercise, mice were gavaged with 200 µl of 2.5% sodium bicarbonate to neutralize 
+the stomach contents, and 20 min after the first gavage, mice were gavaged 
+200 µl of either V. atypica or L. bulgaricus, prepared as above and normalized to 
+5 × 109 c.f.u. ml−1. Next, 5 h postgavage, mice were run on the treadmill, starting at 
+5 m min−1 and increasing the speed by 1 m min−1 every minute until exhaustion. 
+The time of exhaustion was recorded for every animal, defined as a mouse failing 
+to return to the treadmill from the rest platform after three consecutive attempts 
+to continue running. This protocol was repeated for two more days, followed by 
+4 d of rest and 3 d of crossover treatment. On the first day of treatment, serum was 
+collected 40 min postexhaustion via a tail vein bleed and measured via Ciraplex 
+multiplex mouse cytokine assay (Aushon Biosystems).
+Treadmill run time mixed-effects modeling. Despite the high number of mice 
+utilized in the AB/BA crossover experiment, comparisons of raw run times in this 
+context could be confounded both by carryover effect (modeled as a sequence 
+effect) inherent in the longitudinal study design, as well as unavoidably high 
+intermouse variation. To account for this, we constructed a series of GLMMs 
+predicting run time (Methods). These models incorporate both random effects 
+(individual variation per mouse that manifests longitudinally) and fixed effects 
+(treatment day, treatment sequence and treatment type given). Modeling was 
+conducted with the R nlme package26. Visualization of coefficients was conducted 
+using the coef2plot R package27. Visualization of predictions overlayed on data was 
+conducted using the R ggplot2 package28.
+Visualization of all longitudinal data points with the GLMM predictions 
+overlayed showed both the effect of V. atypica increasing performance on both 
+sides of the crossover when aggregated by treatment group (thick lines), and 
+the trends for each of the 32 individual mice (thin lines) (Fig. 2b). LOOCV was 
+performed for the GLMM analysis where the P value for the V. atypica treatment 
+coefficient was calculated for all permutations of eliminating one mouse, which 
+revealed that no individual mice were driving significance (Extended Data Fig. 3; 
+Wald Z-tests). To ensure that an arbitrary shuffling of mouse labeling would not 
+yield significant results, the GLMM was trained 1,000 times on input data with 
+permuted labels, which generated uniformly distributed P values and showed the 
+significance of the original labeling (Extended Data Fig. 3; Wald Z-tests). This 
+longitudinal modeling approach allows us to interpret that, as the treadmill runs 
+were conducted back to back each week on subsequent days, the mice in aggregate 
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+had decreasing run times as the time to exhaustion decreased (visible as a slope 
+of predictions in Fig. 2b), while V. atypica treatment independently increased run 
+times (visible as the crossover of predictions showing the Veillonella treatment 
+group having longer times to exhaustion on both sides of the crossover in Fig. 2b). 
+To identify possible biological mechanisms for the Veillonella effect, we quantified 
+levels of various inflammatory cytokines in the blood immediately following the 
+treadmill run. We observed that several proinflammatory cytokines, including 
+tumor necrosis factor-α and interferon-γ, were significantly reduced in V. atypica-
+treated mice compared with both the baseline and the control treatment (Extended 
+Data Fig. 6 and Supplementary Tables 4 and 13). In a separate experiment, we 
+quantified levels of the muscle glucose transporter GLUT4 to assess the effects on 
+muscle physiology, but found no difference between the V. atypica treatment and 
+control (Extended Data Fig. 7). Together, taking into account intermouse variation, 
+the longitudinal study design and the possible carryover effects of an AB/BA 
+crossover trial, V. atypica treatment causes substantial increases in treadmill run 
+time in mice.
+The models were constructed to predict treadmill run time in the AB/BA 
+crossover experiment to include the treatment effect of Veillonella, period effects 
+(time of treatment), carryover effects due to the treatment crossover, and effects  
+for naturally occurring mouse variation. In general, we can model expected run 
+time as:
+Sequence: V. atypica → L. bulgaricus Week 1: μ + π1 + αA Week 2: μ + π2 + αB + λA
+Sequence: L. bulgaricus → V. atypica Week 1: μ + π1 + αB Week 2: μ + π2 + αA + λB
+Where αA and αB are treatment effects, λA and λB are carryover effects, and π1 
+and π2 are period effects.
+We initially attempted to model carryover effect as a sequence effect or a 
+period-specific treatment effect (interaction term). The R code for the models is 
+provided below:
+Model_1 < -lme(seconds_run~treatment + sequence + period,random  
+= ~1|subject,data = datain)
+Model_2 < - lme(seconds_run~treatment*period,random  
+= ~1|subject,data = datain)
+By gauging the correlation of coefficients, we selected model_1 for the analysis 
+in Fig. 2.
+Metagenomic analysis. All of the steps in the processing of raw metagenomic data 
+were done utilizing the Aether package9. Raw reads were de novo assembled using 
+megahit10. Open reading frames and annotations were generated using prokka11. 
+A gene family catalog was generated from the called open reading frames at 95% 
+identity utilizing the CD-HIT software package12. A raw abundance count matrix 
+was generated utilizing the gene family catalog, Bowtie 2 and SAMtools29,30. The 
+raw abundance count matrix was normalized both by sample and by gene length13. 
+Metabolic pathways were queried using MetaCyc, and EC IDs were pulled from 
+prokka annotations11,31. R was utilized to perform the majority of statistical tests, 
+with the exception of pairwise analysis of variance (ANOVA) tests, for which the 
+SciPy library in Python was used32. Root mean square error calculations were 
+performed using the plotrix package33.
+MetaPhlAn2 taxonomy in metagenomics data. Putative taxonomic abundances 
+were calculated with MetaPhlAn2 (ref. 8) and found to have the same association 
+between Veillonella and exercise status as the previous marathon runner results 
+(P = 0.03; Extended Data Fig. 8).
+Annotations. To compare trends in the aggregate microbiome with the metabolic 
+processes of microbes that had elevated 16S abundance in the previous experiment, 
+a pairwise ANOVA was performed on all ~2.3 million genes in the catalog to 
+look for significant differences before and after exercise. A total of 396 gene 
+families with unique annotations showed statistically different relative abundance 
+(P < 0.005). While false discovery rate correction did not yield significant 
+individual genes, of these 396 gene families, 391 share functional annotations with 
+the reference assemblies of the V. atypica-type strain on NCBI. Of the significant 
+genus-level results from the 16S data, Veillonella has extremely high-quality 
+assemblies of cultured isolates.
+Significant alleles are present in each of the 87 samples (Extended Data Fig. 8). 
+Interestingly, when all 396 significant alleles are segregated by exercise state and 
+sample, discordant shifts of relative abundance are observed (Extended Data  
+Fig. 8). This suggests that changes in global microbiome function are associated 
+with Veillonella abundance, and that conserved Veillonella genes may generally play 
+metabolic roles.
+Comparative genomics. Genome annotations were retrieved from NCBI reference 
+genomes. Phylogenetic trees were generated from NCBI taxonomy and visualized 
+with phylo.io34. Heat maps were generated with the pheatmap package in R35.
+Gene catalog creation. Raw reads were processed and de novo assembled into 
+4,802,186 contigs9,10. A total of 4,792,638 total open reading frames were called, 
+which were subsequently clustered into 2,288,155 gene families with a threshold 
+of 95% identity to create a gene catalog alongside putative annotations assigned 
+by homology11,12. Of these gene families, 801,307 were assigned annotations 
+and 1,486,948 were putatively classified as hypothetical proteins. Comparing 
+annotation state versus gene family size yields the expected result that larger 
+families, which are likely to be present in more microbes, tend to have many more 
+annotations (Extended Data Fig. 8). Raw reads were then aligned back to the gene 
+catalog to create a raw count abundance matrix29,30. This matrix was normalized 
+both per sample and by gene length to create a relative abundance matrix13.
+Pathway elucidation. Reactions involved in the breakdown of lactate to both 
+propionate and acetate were manually associated with EC IDs using MetaCyc31.
+In vitro growth and SCFA analysis. Veillonella species (V. dispar, V. parvula and 
+V. atypica) were isolated and purified from several study participants and grown 
+in three different media compositions: (1) BHIL (10 ml of 60% sodium lactate 
+per liter); (2) MRS broth (BD) supplemented with lactate (10 ml of 60% sodium 
+lactate per liter); and (3) semi-synthetic lactate medium (per liter: 5 g bacto yeast 
+extract, 0.75 g sodium thioglycolate, 25 ml basic fuchsin and 21 ml 60% sodium 
+lactate (pH 7.5)). Veillonella species were inoculated into each medium, under 
+anaerobic conditions, and allowed to grow for 48 h to reach the stationary phase. 
+After 48 h, bacteria were pelleted and supernatants were collected for lactate and 
+SCFA measurements. Approximately 10 µl of supernatant was used to measure the 
+lactate via the Lactate Scout (lactate.com). The remaining supernatants were frozen 
+at −80 °C, then submitted to the Harvard Small Molecule Mass Spectrometry core 
+facility for butyrate, propionate and acetate quantitative analysis.
+SCFAs identified from the mass spectrometry in all three media conditions 
+corresponded with the propionate end product suggested by the metagenomic 
+results. Acetate was not observed in MRS or BHIL, likely due to high existing 
+concentrations in the media making the forward reaction thermodynamically 
+unfavorable. However, acetate production was observed in semi-synthetic lactate 
+media (Supplementary Table 7).
+13C3-lactate flux tracing. Ten-week-old C57BL/6 mice were treated with  
+sodium bicarbonate followed by 109 c.f.u. of either V. atypica (n = 4) or L. bulgaricus 
+(n = 4), prepared as above. Then, 20% w/w 13C3 sodium lactate (Cambridge  
+Isotope Laboratories) was diluted to a concentration of 400 mM in PBS. Mice  
+were injected with 100 µl intravenously via the tail vein and, after 9 min, 
+anesthetized with isoflurane. One mouse treated with V. atypica was unable to be 
+injected due to vein clamping and had to be removed. Next, 10 min postinjection, 
+anesthesia was confirmed via foot pinch and mice were sacrificed via cardiac 
+puncture. Whole blood was divided into two samples to obtain both serum and 
+plasma. These were flash frozen in liquid nitrogen at 12 min postinjection and 
+stored at −80˚C.
+Immediately following cardiac puncture, mice were dissected to remove the 
+colon and cecum, and the contents were removed by squeezing with sterilized 
+forceps into preweighed tubes. The contents were immediately flash frozen in 
+liquid nitrogen. The timing varied slightly, but this was done between 17 and 
+19 min postinjection.
+Samples were analyzed for lactate and propionate by the Broad Institute 
+Metabolomics Platform. LC-MS metabolomics were performed as previously 
+described36. LC-MS traces were identified and integrated to quantify the presence 
+of 13C0- and 13C3-lactate isotopes.
+Colorectal propionate instillation. Treadmilling followed the same protocol as 
+above. Mice were fasted 7 h before exercise to normalize their metabolic profiles. 
+Some 30 min before exercise, mice were treated with 200 µl of either PBS vehicle 
+alone (n = 8) or 150 mM sodium propionate in PBS (n = 8), using a flexible gavage 
+needle to introduce 200 µl of solution into the colon. Mice were then run to 
+exhaustion as above. This protocol was repeated for three consecutive days. On 
+the first day of treatment, serum was collected 40 min postexhaustion via tail vein 
+bleed and measured using the Ciraplex multiplex mouse cytokine assay (Aushon 
+Biosystems).
+Lactate clearance. To measure the lactate clearance rate, mice were first fasted 
+for 7 h before measurement to stabilize the basal lactate levels. Then, 5 h before 
+measurement, mice were treated with sodium bicarbonate followed by 109 c.f.u. of 
+either V. atypica or L. bulgaricus, prepared as above (n = 8). Next, 30 min before 
+measurement, mice were weighed and individually caged, and a baseline blood 
+lactate reading was taken using a Lactate Scout meter. Mice were administered 
+sodium lactate via intraperitoneal injection with a dose of 750 mg kg−1, prepared 
+as a 75 mg ml−1 solution of sodium lactate in pH 7.0 PBS. Blood lactate levels were 
+monitored with a Lactate Scout meter at 5, 15, 25, 35 and 45 min postinjection.
+Statistics. For Fig. 1a,b, Wilcoxon rank-sum tests with continuity correction 
+were used to investigate differences in taxonomic composition before and after 
+exercise. The mean Veillonella abundance was 0.9 orders of magnitude greater 1 d 
+postexercise compared with 1 h before exercise.
+For Fig. 1c,d, longitudinal data were modeled using a GLMM approach. In our 
+model, the random effect was individual variation per marathon runner. Fixed 
+effects are shown in Fig. 1d. An advantage of this type of statistical analysis is that it 
+can account for the large variation between marathon participants in this type  
+of study.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+To determine statistical significance, a Wald Z-test was used to assign P values 
+to coefficients in the GLMM. No outliers were removed in this analysis.
+For Fig. 2a, each animal was treated with both V. atypica and L. bulgaricus 
+as part of the AB/BA crossover. Because all 32 animals were treated twice and 
+compared between treatments, the P value was generated using a paired t-test 
+(P = 0.022). The normality assumption was assessed via Shapiro–Wilk’s normality 
+test (P = 0.67), validating the use of the t-test.
+For Fig 2b, longitudinal data were modeled using a GLMM approach. In our 
+model, the random effect was individual variation per mouse. Fixed effects were 
+treatment effect, period effect (the time point at which measurements were made) 
+and carryover/sequence effect (if the order of treatments in the crossover affected 
+later results). An advantage of this type of statistical analysis is that it can account 
+for the large variation between mice in this type of study.
+Figure 2b shows the number of seconds run until exhaustion at six time 
+points, with each of the 32 mice having one measurement per time point. For each 
+treatment order (LLLVVV and VVVLLL), the GLMM was fitted both to each 
+individual mouse (skinny blue and red lines; note that these are all parallel for mice 
+in the same treatment order—the space between these lines represents the ‘random 
+effect’ of natural variation between mice) and all mice with the same treatment 
+order (thick blue and red lines).
+To determine statistical significance, a Wald Z-test was used to assign P values 
+to coefficients in the GLMM. No outliers were removed from this analysis.
+For Fig. 3a and Extended Data Fig. 9, P values for individual genes were 
+generated utilizing pairwise ANOVA comparing the relative abundance before and 
+after exercise. Non-significant families were associated with homologs common 
+in other microbes that do not change in abundance. To determine the significance 
+of potential over-representation, 1,000 global EC IDs were randomly selected, and 
+mean differences in relative abundance between samples taken before and after 
+exercise were calculated. These EC IDs were used to construct an odds table to 
+determine the probability of having a set of eight selected EC IDs with increases in 
+mean gene level relative abundance after exercise. This calculation determined that 
+the relative abundance changes in Fig. 3b–i are significant (P = 0.00147, Fisher’s 
+exact test for count data).
+For Supplementary Table 1, P values were generated using Welch’s t-test 
+(unequal variances t-test).
+For Fig. 4d, P values were generated using a one-sample t-test. Ratios of 
+labeled/unlabeled lactate from samples were compared with the expected ratio 
+determined mathematically. Each sample was independently compared with the 
+expected ratio, then multiple hypothesis correction was performed using the false 
+discovery rate correction method of Benjamini and Hochberg (serum, P = 0.00001; 
+plasma, P = 0.00001; cecum content, P = 0.00001; colon content, P = 0.001).
+For Fig. 4e, the P value (P = 0.028) was generated using Welch’s t-test (unequal 
+variances t-test).
+Reporting Summary. Further information on research design is available in the 
+Nature Research Reporting Summary linked to this article.
+Data availability
+All raw sequencing data have been uploaded to NCBI and SRA in the form of the 
+BioProjects PRJNA472785 (16S) and PRJNA472768 (MGX). These are linked to 
+associated BioSamples, which in turn are linked to the paired-end read files in the 
+SRA, and correspond to the metadata in the Supplementary Information files.
+Code availability
+Unless otherwise noted, all plots were generated in R version 3.4.1 with the ggplot2, 
+dplyr, scales, grid and reshape2 packages28,37–40. Large-scale data analysis was done 
+on AWS, utilizing machines running Ubuntu 16.04. Data curation methods were 
+coded in python version 2.7.12. The Aether package utilized for analysis is available 
+at https://github.com/kosticlab/aether.
+References
+	22.	Callahan, B. J. et al. DADA2: high-resolution sample inference from Illumina 
+amplicon data. Nat. Methods 13, 581–583 (2016).
+	23.	McMurdie, P. J. & Holmes, S. phyloseq: an R package for reproducible 
+interactive analysis and graphics of microbiome census data. PLoS ONE 8, 
+e61217 (2013).
+	24.	Jurkowski, J. E., Jones, N. L., Toews, C. J. & Sutton, J. R. Effects of menstrual 
+cycle on blood lactate, O2 delivery, and performance during exercise. J. Appl. 
+Physiol. 51, 1493–1499 (1981).
+	25.	Pimentel, G. et al. Blood lactose after dairy product intake in healthy men. 
+Br. J. Nutr. 118, 1070–1077 (2017).
+	26.	Pinheiro, J., Bates, D., DebRoy, S., Sarkar, D & R Development Core Team. 
+nlme: Linear and nonlinear mixed effects models. R package version 3.1-117 
+http://CRAN.R-project.org/package=nlme (2014).
+	27.	Bolker, B. M. coefplot2: Coefficient Plots. R package version 0.1.3.3 
+http://r-forge.r-project.org/R/?group_id=1059 (2012).
+	28.	Wickham, H. & Chang, W. ggplot2: An implementation of the grammar of 
+graphics. R package version 1 http://CRAN.R-project.org/package=ggplot2 
+(2015).
+	29.	Langmead, B. & Salzberg, S. L. Fast gapped-read alignment with Bowtie 2. 
+Nat. Methods 9, 357–359 (2012).
+	30.	Li, H. et al. The Sequence Alignment/Map format and SAMtools. 
+Bioinformatics 25, 2078–2079 (2009).
+	31.	Caspi, R. et al. The MetaCyc database of metabolic pathways and enzymes 
+and the BioCyc collection of pathway/genome databases. Nucleic Acids Res. 
+38, D473–D479 (2010).
+	32.	Jones, E et al. SciPy: Open source scientific tools for python, http://www.
+scipy.org/ (2001).
+	33.	Lemon, J. et al. plotrix: Various plotting functions. R package version 3.7 
+https://cran.r-project.org/package=plotrix (2007).
+	34.	Robinson, O., Dylus, D. & Dessimoz, C. Phylo.io: interactive viewing and 
+comparison of large phylogenetic trees on the web. Mol. Biol. Evol. 33, 
+2163–2166 (2016).
+	35.	Kolde, R. Pheatmap: pretty heatmaps. R package version 61 (2012).
+	36.	Fujisaka, S. et al. Diet, genetics, and the gut microbiome drive  
+dynamic changes in plasma metabolites. Cell Rep. 22,  
+3072–3086 (2018).
+	37.	R Development Core Team R: A Language and Environment for Statistical 
+Computing (R Foundation for Statistical Computing, 2013).
+	38.	Wickham, H. & Francois, R. dplyr: A grammar of data manipulation.  
+R package version 0.4.3 (2015).
+	39.	Murrell, P. The grid graphics package. R. News 2, 14–19 (2002).
+	40.	Wickham, H. reshape2: Flexibly reshape data: a reboot of the reshape 
+package. R package version 1 (2012).
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 1 | Statistical validations of association between Veillonella abundance and marathon running. a, Histogram of P values (Wald 
+Z-tests) for time coefficient from LOOCV models predicting 16S Veillonella abundance. The red line represents the P value for the model trained without 
+any hold outs. b, Histogram of P values for time coefficients from 1,000 label permutations in GLMM models predicting Veillonella relative abundance. The 
+red line represents the P value for the model trained without any label permutation.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 2 | Microbiome composition in control subjects. a, 16S composition in control subjects. b, Veillonella relative abundance in  
+control subjects.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 3 | Statistical validations of the association between Veillonella gavage and mouse treadmill run time. a, Density plot of maximum 
+run times in the AB/BA crossover study. A two-sided Shapiro–Wilk normality test on the maximum run times for each mouse in each treatment group 
+resulted in P = 0.67, with the null hypothesis that the distribution of data is normal (n = 64). b, 95% confidence intervals for the coefficient effect on 
+treadmill run time in AB/BA crossover (Wald Z-tests, n = 64). Center values are the regression estimate for each coefficient. Error bars represent the 
+95% confidence interval. c, Histogram of P values for the treatment coefficient from LOOCV models predicting treadmill run time. The red line represents 
+the P value for the model trained without any hold outs (Wald Z-tests, n = 64). d, Histogram of P values for the treatment coefficient from 1,000 label 
+permutations in GLMM models predicting treadmill run time. The red line represents the P value for the model trained without any label permutation 
+(Wald Z-tests, n = 64 per permutation).
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 4 | AB/BA crossover study results segregated by individual mouse. Each of the 32 facets (each representing an individual mouse) 
+has six longitudinal treadmill run times plotted (three pre- and three post-treatment crossover). The shapes of the points represent the treatment 
+sequence. Each mouse facet has two horizontal lines showing the mean run time when dosed with L. bulgaricus (light blue) or V. atypica (light red). Each 
+facet has a GLMM fit to all data in a treatment sequence (green), a LOOCV GLMM fit trained on all mice except for the mouse the facet represents (red), 
+and a GLMM fit showing the change in intercept related to random effect for each mouse (blue).
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 5 | Difference in maximum treadmill run time. Difference in maximum run time between V. atypica and L. Bulgaricus gavage treatment 
+periods, segregated into ‘responders’ and ‘non-responders’ to V. atypica treatment (n = 32).
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 6 | Mouse serum cytokine response. a,b, Cytokines after V. atypica and L. bulgaricus gavage. Each mouse sample is represented as 
+an individual point, with the central bar representing the mean and error bars representing s.e.m. (n = 64, 32 and 32 for baseline, L. bulgaricus and V. 
+atypica, respectively). c,d, Cytokines after intrarectal propionate instillation. Each mouse sample is represented as an individual point, with the central bar 
+representing the mean and error bars representing s.e.m. (n = 32, 16 and 16 for baseline, L. bulgaricus and V. atypica, respectively). P values were determined 
+by one-way ANOVA followed by Tukey’s posthoc test.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 7 | GLUT4 measurement in mice following gavage. a, Representative section of western blot showing GLUT4 abundance in pre-
+exercise states, as well as following L. bulgaricus and V. atypica gavage. A stain-free control was used to normalize the densitometry analysis shown. 
+The experiment was performed once (n = 8). b, Fold-change in GLUT4 abundance. Each point represents an individual mouse sample, the centre bar 
+represents the mean and error bars represent s.e.m. (n = 8).
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 8 | Metagenomic analysis of athlete gut microbiome samples. a, Fraction of putative Veillonella relative abundance from 
+metagenomics (calculated utilizing MetaPhlAn2) before and after exercise in rowers and runners. b, Significant alleles (calculated from pairwise ANOVA) 
+that are present in each of the 87 samples. c, The aforementioned 396 significant alleles segregated by exercise state and sample. d, Histogram comparing 
+non-redundant gene family size and annotation fraction.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 9 | Enzyme-level abundance analysis of the methylmalonyl-CoA pathway. Enzyme-resolution, log-transformed relative abundances 
+of differentially abundant non-redundant gene families mapped by EC ID to methylmalonyl-CoA pathway components. a, Pathway in aggregate. b–i, 
+Individual reactions in the pathway (n = 8). Data are represented as violin plots, which display the distribution of data as a rotated kernel density 
+distribution.
+Nature Medicine | www.nature.com/naturemedicine
+Letters
+NaTUrE MEDICInE
+Extended Data Fig. 10 | Lactate clearance following IP injection in mice. a, Mice were gavaged either V. atypica or L. bulgaricus and, 5 h later, injected with 
+sodium lactate (750 mg kg−1). Blood lactate was measured 5 min postinjection and every subsequent 10 min (n = 8). Points are means ± s.e.m. b, Area 
+under the curve (AUC) was determined for each mouse and compared between treatments. Each mouse is represented as an individual point, with the 
+central bar representing the mean and error bars representing s.e.m. (P = 0.72 by two-sided unpaired t-test, n = 8).
+Nature Medicine | www.nature.com/naturemedicine
+1
+nature research  |  reporting summary
+October 2018
+Corresponding author(s):
+Aleksandar D. Kostic and George M. Church
+Last updated by author(s): Apr 25, 2019
+Reporting Summary
+Nature Research wishes to improve the reproducibility of the work that we publish. This form provides structure for consistency and transparency 
+in reporting. For further information on Nature Research policies, see Authors & Referees and the Editorial Policy Checklist.
+Statistics
+For all statistical analyses, confirm that the following items are present in the figure legend, table legend, main text, or Methods section.
+n/a Confirmed
+The exact sample size (n) for each experimental group/condition, given as a discrete number and unit of measurement
+A statement on whether measurements were taken from distinct samples or whether the same sample was measured repeatedly
+The statistical test(s) used AND whether they are one- or two-sided 
+Only common tests should be described solely by name; describe more complex techniques in the Methods section.
+A description of all covariates tested
+A description of any assumptions or corrections, such as tests of normality and adjustment for multiple comparisons
+A full description of the statistical parameters including central tendency (e.g. means) or other basic estimates (e.g. regression coefficient) 
+AND variation (e.g. standard deviation) or associated estimates of uncertainty (e.g. confidence intervals)
+For null hypothesis testing, the test statistic (e.g. F, t, r) with confidence intervals, effect sizes, degrees of freedom and P value noted 
+Give P values as exact values whenever suitable.
+For Bayesian analysis, information on the choice of priors and Markov chain Monte Carlo settings
+For hierarchical and complex designs, identification of the appropriate level for tests and full reporting of outcomes
+Estimates of effect sizes (e.g. Cohen's d, Pearson's r), indicating how they were calculated
+Our web collection on statistics for biologists contains articles on many of the points above.
+Software and code
+Policy information about availability of computer code
+Data collection
+no software was used
+Data analysis
+Unless otherwise noted, all plots were generated in R version 3.4.1 with the ggplot2, dplyr, scales, grid, and reshape2 packages. Large 
+scale data analysis was done on AWS utilizing machines running Ubuntu 16.04. Data curation methods were coded in python version 
+2.7.12. Unless otherwise noted specifically in the rest of the methods section, code utilized is available to access at https://github.com/
+kosticlab/athlete and https://github.com/kosticlab/aether. Putative taxonomic abundances were calculated with Metaphlan2. 16S reads 
+were processed with the dada2 pipeline and phyloseq. 16S Veillonella relative abundance modeling for athletes participating in the 
+marathon was done with the R nlme package. Coefficients were were created with the coefplot2 package. Phylogenetic trees were 
+generated from NCBI taxonomy and visualized with phylo.io. All steps in the the processing of raw metagenomic data were done utilizing 
+the Aether package. Raw reads were de novo assembled using megahit. Open reading frames and annotations were generated using 
+prokka. A gene family catalog was generated from the called open reading frames at 95% identity utilizing the CD-HIT software package. 
+A raw abundance count matrix was generated utilizing the gene family catalog, bowtie2, and samtools. The raw abundance count matrix 
+was normalized both by sample and by gene length. Metabolic pathways were queried using MetaCyc and EC IDs were pulled from 
+prokka annotations. Heatmaps were generated with the pheatmap package in R.R was utilized to perform the majority of statistical tests 
+with the exception of pairwise ANOVA tests, for which the SciPy library in python was used. Root mean square error calculations were 
+performed using the plotrix package. The canopy algorithm utilized is available here: https://bitbucket.org/HeyHo/mgs-canopy-
+algorithm/wiki/Home. Reactions involved with the breakdown of lactate to both propionate and acetate were manually associated with 
+EC IDs using MetaCyc.
+For manuscripts utilizing custom algorithms or software that are central to the research but not yet described in published literature, software must be made available to editors/reviewers. 
+We strongly encourage code deposition in a community repository (e.g. GitHub). See the Nature Research guidelines for submitting code & software for further information.
+2
+nature research  |  reporting summary
+October 2018
+Data
+Policy information about availability of data
+All manuscripts must include a data availability statement. This statement should provide the following information, where applicable: 
+- Accession codes, unique identifiers, or web links for publicly available datasets 
+- A list of figures that have associated raw data 
+- A description of any restrictions on data availability
+All raw sequencing data has been uploaded to NCBI and SRA in the form of the BioProjects PRJNA472785 (16S) and PRJNA472768 (MGX) which are linked to 
+associated BioSamples which are in turn linked to the paired end read files on SRA and correspond to the metadata in the supplement. Additionally, all sequencing 
+files are also available to download from a web browser at https://s3.amazonaws.com/athlete-sequencing-data/index.html.
+Field-specific reporting
+Please select the one below that is the best fit for your research. If you are not sure, read the appropriate sections before making your selection.
+Life sciences
+Behavioural & social sciences
+ Ecological, evolutionary & environmental sciences
+For a reference copy of the document with all sections, see nature.com/documents/nr-reporting-summary-flat.pdf
+Life sciences study design
+All studies must disclose on these points even when the disclosure is negative.
+Sample size
+No sample size calculation was performed. Leading up to the 2015 Boston Marathon, we attempted to recruit as many participating athletes 
+as possible and collect as many samples as possible from each participant one week before and one week after the race. An equal amount of 
+sedentary controls were then recruited for participation. These sample sizes were sufficient to observe a statistically robust association 
+between Veillonella abundance and time after marathon.
+Data exclusions
+No data were excluded from the analysis.
+Replication
+Animal research studies were performed a minimum of three times. All attempts at replication were successful.
+Randomization
+All animals were randomly allocated into experimental groups.
+Blinding
+Investigators were blinded to group allocation during data collection and analysis.
+Reporting for specific materials, systems and methods
+We require information from authors about some types of materials, experimental systems and methods used in many studies. Here, indicate whether each material, 
+system or method listed is relevant to your study. If you are not sure if a list item applies to your research, read the appropriate section before selecting a response. 
+Materials & experimental systems
+n/a Involved in the study
+Antibodies
+Eukaryotic cell lines
+Palaeontology
+Animals and other organisms
+Human research participants
+Clinical data
+Methods
+n/a Involved in the study
+ChIP-seq
+Flow cytometry
+MRI-based neuroimaging
+Animals and other organisms
+Policy information about studies involving animals; ARRIVE guidelines recommended for reporting animal research
+Laboratory animals
+All laboratory animals were male Mus musculus strain C57BL/6J aged 8-12 weeks.
+Wild animals
+The study did not involve wild animals.
+Field-collected samples
+The study did not involve samples collected from the field.
+Ethics oversight
+Animal research was approved by the Joslin Diabetes Center IACUC. We have complied with all relevant ethical regulations.
+3
+nature research  |  reporting summary
+October 2018
+Note that full information on the approval of the study protocol must also be provided in the manuscript.
+Human research participants
+Policy information about studies involving human research participants
+Population characteristics
+Athlete 
+26 total (15 marathon) 
+65% female (73%) 
+Average age is 27.4 (27.1) 
+Average BMI = 22.4 (22.4) 
+85% white, 11.5% asian, 4% mixed (73%, 20%, 7%, respectively) 
+100% from US (96%) 
+Controls 
+12 total (11 marathon study) 
+50% female (55%) 
+Average age = 29.5 (29.2) 
+Average BMI = 22.7 (22.9) 
+50% white, 33% asian, 8% black (45%, 36%, 9% respectively) 
+58% from US (55%)
+Recruitment
+Participants were recruited via IRB approved flyers and word of mouth. Our study design relied on prospective selection of the 
+participants, therefore the concern of self-selection bias with regard to outcomes has been eliminated. Each potential 
+participant went though a screening process prior to enrollment to assess study exclusion criteria, which included recent use of 
+antibiotics, pregnancy, travel abroad, or recent inflammatory bowel states. Additionally, participants were determined to be 
+athletes or controls based on screening questions that determined frequency of exercise and training for upcoming athletic 
+competitions.
+Ethics oversight
+All study participants were recruited following an IRB approved Sports Genomics protocol (#IRB15-0869), conducted at the Wyss 
+Institute for Biologically Inspired Engineering. Each participant read and signed a consent form prior to study enrollment. We 
+have complied with all relevant ethical regulations.
+Note that full information on the approval of the study protocol must also be provided in the manuscript.

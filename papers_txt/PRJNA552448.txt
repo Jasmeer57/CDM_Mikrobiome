@@ -1,0 +1,2375 @@
+Article
+Whole-Virome Analysis Sheds Light on Viral Dark
+Matter in Inﬂammatory Bowel Disease
+Graphical Abstract
+Highlights
+d Analyzing viral dark matter changes our understanding of the
+gut virome
+d Gene-based clustering can address the challenges of high
+inter-individual variation
+d Healthy human gut virome is dominated by a stable core of
+virulent bacteriophages
+d In Crohn’s disease, the virulent core is replaced with
+temperate bacteriophages
+Authors
+Adam G. Clooney, Thomas D.S. Sutton,
+Andrey N. Shkoporov, ...,
+Scott E. Plevy, R. Paul Ross, Colin Hill
+Correspondence
+adamgclooney@gmail.com (A.G.C.),
+c.hill@ucc.ie (C.H.)
+In Brief
+In this study, Clooney et al. describe
+changes in the composition and function
+of the human gut virome by analyzing
+both known and unknown viral
+sequences. They provide evidence that a
+healthy core of virulent bacteriophage is
+replaced by temperate bacteriophage in
+inﬂammatory bowel disease.
+Clooney et al., 2019, Cell Host & Microbe 26, 1–15
+December 11, 2019 ª 2019 Elsevier Inc.
+https://doi.org/10.1016/j.chom.2019.10.009
+Cell Host & Microbe
+Article
+Whole-Virome Analysis Sheds Light on Viral
+Dark Matter in Inﬂammatory Bowel Disease
+Adam G. Clooney,1,3,6,* Thomas D.S. Sutton,1,3 Andrey N. Shkoporov,1 Ross K. Holohan,1 Karen M. Daly,1 Orla O’Regan,1
+Feargal J. Ryan,1,4 Lorraine A. Draper,1,4 Scott E. Plevy,2,5 R. Paul Ross,1 and Colin Hill1,*
+1APC Microbiome Ireland, School of Microbiology, University College Cork, Cork, Ireland
+2Janssen Pharmaceutical Companies of Johnson & Johnson, Spring House, PA, USA
+3These authors contributed equally
+4Present address: South Australian Health and Medical Research Institute, Adelaide, Australia
+5Present address: Synlogic, Cambridge, MA, USA
+6Lead Contact
+*Correspondence: adamgclooney@gmail.com (A.G.C.), c.hill@ucc.ie (C.H.)
+https://doi.org/10.1016/j.chom.2019.10.009
+SUMMARY
+The human gut virome is thought to signiﬁcantly
+impact the microbiome and human health. However,
+most virome analyses have been performed on a
+limited fraction of known viruses. Using whole-vi-
+rome analysis on a published keystone inﬂammatory
+bowel disease (IBD) cohort and an in-house ulcera-
+tive colitis dataset, we shed light on the composition
+of the human gut virome in IBD beyond this identiﬁ-
+able minority. We observe IBD-speciﬁc changes to
+the virome and increased numbers of temperate
+phage sequences in individuals with Crohn’s dis-
+ease. Unlike prior database-dependent methods,
+no changes in viral richness were observed. Among
+IBD subjects, the changes in virome composition re-
+ﬂected alterations in bacterial composition. Further-
+more, incorporating both bacteriome and virome
+composition offered greater classiﬁcation power
+between health and disease. This approach to
+analyzing whole virome across cohorts highlights
+signiﬁcant IBD signals, which may be crucial for
+developing future biomarkers and therapeutics.
+INTRODUCTION
+The virome is likely to be one of the major forces shaping the hu-
+man gut microbiome but is perhaps its least understood compo-
+nent. The virome is dominated by bacteriophage (phage), which
+play vital roles in many microbial communities by driving diver-
+sity, aiding nutrient turnover (Weitz et al., 2015), and facilitating
+horizontal gene transfer (Canchaya et al., 2003). Understanding
+the role of bacteriophages in microbial community structures
+will be essential if we are to understand or control the alterations
+in human gut microbiome composition and diversity associated
+with many diseases, including inﬂammatory bowel disease (IBD)
+(Gevers et al., 2014; Halfvarson et al., 2017), obesity (Le Chatelier
+et al., 2013), and diabetes (Forslund et al., 2015).
+Many gut bacteria (and potential phage hosts) remain difﬁcult
+to culture (Forster et al., 2019), which means that analyzing the
+virome depends heavily on metagenomic sequencing and bio-
+informatic approaches. However, a lack of universal marker
+genes on phage (similar to 16S rRNA in bacteria) and a subse-
+quent lack of taxonomic information due to poorly populated da-
+tabases (Krishnamurthy and Wang, 2017) means that database-
+independent methods are required and that virome analysis
+must be carried out at the level of metagenomic assembly or in-
+dividual viral genomes. Early metagenomic studies highlighted
+the novelty and diversity of the human gut virome but were
+able to classify only a minor fraction (2%) of sequenced DNA
+(Minot
+et
+al.,
+2011).
+Improvements
+in
+high-throughput
+sequencing technologies have allowed the virome to be
+analyzed in unprecedented detail with studies sequencing up
+to 50 million reads per sample (Zuo et al., 2019). It has been
+conﬁrmed that the virome is incredibly diverse, that the majority
+do not align to known sequences in databases (i.e., viral dark
+matter) (Roux et al., 2015b), and that composition is highly
+unique to individuals (Reyes et al., 2010; Moreno-Gallego
+et al., 2019; Shkoporov et al., 2019).
+IBD, including Crohn’s disease (CD) and ulcerative colitis (UC),
+is a chronic disorder of the intestinal tract resulting in periods of
+ﬂare and remission. Although the etiology of IBD remains unclear,
+it appears to be multifactorial and has been repeatedly associated
+with alterations in the human gut microbiome. These include
+decreased bacterial diversity and a reduced abundance of certain
+Firmicutes and Bacteroides. There is an emerging body of data
+providing evidence that the gut virome is altered in IBD (Norman
+et al., 2015; Zuo et al.,2019; Fernandes et al., 2019) with increased
+overall virome diversity and an increased relative abundance of
+the family Caudovirales. Yet nearly all ﬁndings have been drawn
+from compositional changes of the identiﬁable fraction of the vi-
+rome, which can be as little as 15% of the data (Norman et al.,
+2015).This limitstheoverall understanding ofthe viromeand ham-
+pers the identiﬁcation of potential disease biomarkers.
+A database-independent analysis method is essential if we are
+to fully characterize changes in the gut virome in health and dis-
+ease. This approach begins with metagenomic assembly of
+short reads to resolve viral genomes and subsequent alignment
+of reads to these assemblies to determine their relative abun-
+dance. Spurious alignments to repeat and conserved regions
+are removed from further analysis by using a breadth of coverage
+ﬁlter (Roux et al., 2017). However, at this level of resolution, the
+virome exhibits enormous diversity and interpersonal variation
+Cell Host & Microbe 26, 1–15, December 11, 2019 ª 2019 Elsevier Inc.
+1
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+(Reyes et al., 2010), obscuring any patterns in the virome across
+individuals and cohorts. As part of this study, we reanalyzed a
+previously published keystone dataset (Norman et al., 2015)
+consisting of subjects with CD and UC and healthy controls.
+We overcame the high levels of inter-individual variation associ-
+ated with strain-level resolution by using protein homology and
+MCL (Markov cluster algorithm) to group viral sequences into pu-
+tative higher taxonomic ranks. In this way, it was possible to
+describe compositional changes across the entire virome in
+health and disease beyond the known minority. We propose
+that a core virome in healthy individuals shifts toward a commu-
+nity that is less stable and dominated by temperate phage in IBD.
+We show that virome alterations mimic those of the bacteriome
+and that when used together, they offer an improved method for
+classifying IBD patients from healthy subjects. We also validated
+our results using a longitudinal cohort of patients with UC in both
+active and inactive states of disease. This analysis approach
+supports future virome studies by providing insight into changes
+in composition across the entire dataset. By comparing the
+whole-virome composition of other published datasets, it may
+also reveal further disease-speciﬁc alterations that had been
+previously obscured. For details of the analysis methods used
+in this study, see STAR Methods.
+RESULTS
+Datasets
+We reanalyzed a previously published dataset of healthy and IBD
+gut viromes (Norman et al., 2015). The dataset was comprised of
+165 virome samples from 130 subjects, which consisted of 61
+healthy controls, 27 subjects with CD, and 42 with UC. Of these,
+six samples were known to be collected during CD ﬂare, eight in
+CD remission, 13 in UC ﬂare and 20 in UC remission. To expand
+upon these ﬁndings, we explored a second dataset of longitudi-
+nal samples for 40 subjects with UC, focusing on the impact of
+disease status (i.e., ﬂare or remission) on gut virome composi-
+tion. The cohort was part of the PURSUIT-M phase 3 clinical trial
+(STAR Methods). This dataset was generated in house and con-
+sisted of samples from periods of ﬂare (82) and remission (31).
+For this dataset, disease activity was determined by Mayo score.
+For all subjects, initial samples were taken during a period of ﬂare
+(week 0). Two further time points were taken for each subject at
+weeks 6 and 30. For both datasets, 16S rRNA gene-sequencing
+data was also obtained and performed on 149 (dataset 1) and
+109 (dataset 2) samples.
+Clustering Is Required to Overcome Virome Individuality
+and Allow Cohort Comparisons
+Initially,viromeanalysiswasperformed ontheNorman etal.(2015)
+dataset by aligning quality ﬁltered reads to the ﬁnal set of virus-like
+sequences (VLSs; see STAR Methods), made non-redundant at
+90% identity over 90% of length. This resulted in a mean of
+80.38% (±29.29%) quality-ﬁltered reads per sample being used
+in the ﬁnal analysis. Because VLSs represent groups of highly
+related viral genomes (whole or partial), analysis was carried out
+at a strain or species level. This was reﬂected in the extremely
+high levels of individuality among subjects. It was also observed
+that the individualsthemselves were the primary drivers of separa-
+tion and longitudinal samples grouped together (Figure 1A). This
+individual speciﬁcity masked compositional differences of the vi-
+rome across cohorts and each of the cohorts (control, CD, and
+UC) showed little divergence. Principal coordinate (PC) axes 1
+and 2 described very little of the variation (4.85% and 3.59%), sug-
+gesting thatdisease-speciﬁcchanges inviromecomposition were
+not visible at the level of VLSs (patterns of b diversity were repro-
+ducible across various metrics; data not shown).
+Lower taxonomic resolution (i.e., a higher taxonomic rank)
+was required to overcome this high level of interpersonal varia-
+tion and identify compositional changes in the virome associ-
+ated with disease. This was achieved by clustering VLSs based
+on protein-coding gene-sharing networks (Bin Jang et al., 2019)
+(see STAR Methods). The VLSs clustered into 472 viral clusters
+(VCs) of >2 members with 2,382 singletons remaining, hence-
+forward referred to as a VC with 1 member. The resulting VCs
+formed a new count table, and a VC-based analysis of b diver-
+sity was carried out (Figure 1B). Samples largely grouped per
+condition with noticeable increases in the eigenvalues to
+10.36% and 5.58% variation explained for PC-axes 1 and 2,
+respectively, meaning the biological signals that drove separa-
+tion between samples were considerably stronger. However, it
+should be noted that samples with true deviation from the main
+cohort (such as subjects N208 and N56) remained distinctive,
+suggesting that the clustering process retains true composi-
+tional differences. To further determine if clustering VLSs could
+overcome the masking effect of inter-individual variation, the
+relative abundances of shared and unique VLSs and VCs
+were plotted for control subjects (Figure 1C). At a VLS level, in-
+ter-individual variation was represented by a high proportion
+of sequences unique to a given subject (relative abundance
+14% ± 8%). Furthermore, sequences that were shared across
+30% of individuals made up a minor proportion of the
+virome (relative abundance 1.7% ± 4%), and no VLSs were
+shared across 50% or more of individuals. In contrast, inter-in-
+dividuality was far less evident at a VC level, and the proportion
+of VCs unique to an individual was lower (relative abundance
+1.3% ± 3%). Shared VCs also made up a substantially
+larger proportion of the virome with a relative abundance of
+15% ± 6% per subject shared across 30% of the cohort,
+7.1% ± 6.6% across 50%, and 0.7% ± 1.4% across 70%.
+Furthermore, a total of eight VCs were shared across 30% of
+CD and UC cohorts (Figure 1D). Analysis was continued at a
+VC level, because these shared features made it possible to
+compare viromes across and between cohorts.
+Analysis of Viral Clusters Reveals IBD-Speciﬁc
+Alterations in the Gut Virome
+In the Norman et al., (2015) dataset, b diversity principal coordi-
+nate analysis (PCoA) (Spearman distances) yielded the greatest
+degree of separation between the viromes of CD patients (relapse
+and remission) and healthy controls (PERMANOVA, p = 0.0023
+and p = 0.0032, respectively) followed by UC relapse and remis-
+sion (PERMANOVA, p = 0.002 and p = 0.0023, respectively) (Fig-
+ure 2A). Variations observed between disease states of each con-
+dition were not signiﬁcant, which may be due to small sample
+sizes (PERMANOVA, p > 0.05). PCoA without the division of
+relapse or remission status showed that CD and UC b diversity
+signiﬁcantly differed from healthy controls (PERMANOVA, p =
+0.0002 and 0.0002, respectively; Figure S1A). The healthy cohort
+2
+Cell Host & Microbe 26, 1–15, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+also had the greatest similarity across subjects, having the lowest
+pairwise distances between points (Figure S1B), which supports
+the previous observations of shared VCs across individuals (Fig-
+ure 1D). This core virome (deﬁned as presence across >50% of
+subjects) in the healthy cohort was composed of two VCs (vc2
+and vc7) shared across >70% of subjects and six (vc1, vc10,
+vc23, vc25, vc32, and vc39) across >50%. vc1 was classiﬁed as
+temperate Siphoviridae with CRISPR hits to various Firmicutes
+and Parascardovia (phylum: Actinobacteria), and vc10 was classi-
+ﬁed as a crAss-like phage (Guerin et al., 2018). However, the ma-
+jority of these VCs were unclassiﬁed (i.e., did not cluster with
+known viral genomes). This highlights the important biological sig-
+nals that are often overlooked by database-dependent analysis
+methods. Core VCs were not found across UC subjects, and
+just one VC (vc32 unclassiﬁed, CRISPR hits to Bacteroides dorei)
+was found across >50% of CD subjects.
+Signiﬁcant differences had been observed in the richness of
+both Caudovirales and the virome overall between health and
+disease in the original analysis (Norman et al., 2015). Contrary
+to those previous ﬁndings, there were no signiﬁcant differences
+in virome richness across the cohorts or disease states when VC
+count tables were used (Wilcoxon test: CD ﬂare versus remis-
+sion, p = 0.31; UC ﬂare versus remission, p = 0.96; CD versus
+healthy, p = 0.12; UC versus healthy, p = 0.83) (Figure 2B). The
+Shannon diversity metric also did not yield a signiﬁcant differ-
+ence (Wilcoxon test: CD versus healthy, p = 0.38; UC versus
+healthy, p = 0.25; UC versus CD, p = 0.76) (Figure S2A and
+S2B). When only VCs classiﬁed as the order Caudovirales were
+considered (Figure 2C), a signiﬁcant increase in richness was
+observed in CD versus healthy only (Wilcoxon test, p = 0.024).
+This suggests that changes in the composition of identiﬁable
+fraction of the virome may not reﬂect the virome as a whole.
+−0.4
+−0.2
+0.0
+0.2
+−0.50
+−0.25
+0.00
+0.25
+PC1: 4.85 %
+PC2: 3.59 %
+CD (35)
+Control (64)
+UC (66)
+A 
+−0.4
+−0.2
+0.0
+0.2
+−0.4
+−0.2
+0.0
+0.2
+PC1: 10.36 %
+PC2: 5.58 %
+CD (35)
+Control (64)
+UC (66)
+B
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+        Viral contig
+VC
+Viral contig
+      VC
+Viral Contig
+VC
+Number of Shared Contigs/Clusters
+0.00
+0.25
+0.50
+0.75
+1.00
+Shared VCs (Control)
+0.00
+0.25
+0.50
+0.75
+1.00
+Shared viral contigs (Control)
+Unique to Subject
+5%
+10%
+20%
+30%
+50%
+70%
+30%
+50%
+70%
+C
+D
+Control (n=61)
+CD (n=27)
+UC (n=42)
+N56
+N208
+N208
+N56
+Relative abundance
+Relative abundance
+VC β-diversity
+VLS β-diversity
+Figure 1. A Comparison of Shared Viral Features across the Norman et al. Dataset Samples Pre- and Post-clustering of VLSs and VCs
+(A and B) PCoA of Spearman distances using (A) VLSs (pre-clustering) and (B) viral clusters (post-clustering) count tables. Points from subjects N208 and N56 are
+represented with a square and have a black border.
+(C) The relative abundance of VLSs (top) and VCs (bottom) for control subjects at varying thresholds of shared viral features across subjects.
+(D) The number of VLSs or VCs shared across 30%, 50%, and 70% of subjects in each cohort.
+Cell Host & Microbe 26, 1–15, December 11, 2019
+3
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+−0.6
+−0.4
+−0.2
+0.0
+0.2
+−0.75
+−0.50
+−0.25
+0.00
+0.25
+PC1: 10.36 %
+PC2: 5.58 %
+CD Flare (6)
+CD Remission (8)
+Control (64)
+UC Flare (13)
+UC Remission (20)
+A
+0.31
+0.12
+0.58
+0.83
+0.8
+0.96
+0
+100
+200
+300
+400
+Observed VCs
+CD Flare (4)
+CD Remission (4)
+Control (61)
+UC Flare (8)
+UC Remission (8)
+B 
+E
+F
+0
+10
+20
+30
+−20
+0
+20
+log2FoldChange
+Significance (−log10 FDR)
+     Control (n=61)                                                                                       (n=27) CD
+0
+10
+20
+30
+−30
+−20
+−10
+0
+10
+20
+30
+log2FoldChange
+Significance (−log10 FDR)
+Control (n=61)                                                                                     (n=42) UC
+Anelloviridae
+CrAss−like
+Genomoviridae
+Heterogeneous
+Microviridae
+Myoviridae
+Podoviridae
+Siphoviridae
+Smacoviridae
+Unclassified
+0
+       1M
+       2M
+       3M
+CD
+Control
+UC
+Reads aligned to temperate VCs
+CD (27)
+Control (61)
+UC (42)
+D
+0.024 *
+0.44
+0.12
+0
+20
+40
+60
+80
+CD
+Control
+UC
+CD (27)
+Control (61)
+UC (42)
+C
+Observed VCs Caudovirales VCs
+0.012 *
+0.27
+0.15
+VC β-diversity
+Figure 2. Virome Composition Comparison of the Norman et al. IBD Cohorts to Controls
+(A) PCoA using Spearman distances.
+(B) a diversity (observed VCs, sample sizes are reduced relative to A due to the retention of only one sample per subject). A Wilcoxon test was employed for tests
+of signiﬁcance.
+(C) a diversity of observed VLPs for any VCs classiﬁed as Caudovirales (Wilcoxon test).
+(D) Read alignment for samples in each cohort to VCs classiﬁed as temperate (Wilcoxon test).
+(E and F) (E) Volcano plots of differential abundance results between controls and CD (DESeq2) and(F) Control and UC (DESeq2). All points above the red dotted
+lines are signiﬁcant.
+4
+Cell Host & Microbe 26, 1–15, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+Furthermore, although Anelloviridae were detected in our reanal-
+ysis of this dataset, signiﬁcant differences in abundance were
+not observed across control CD or UC cohorts, contradictory
+to previous ﬁndings (Wilcoxon test, p > 0.05).
+Differential abundance analysis identiﬁed 37 VCs that were
+increased in CD relative to controls and 34 increased in UC rela-
+tive to controls. Importantly, of these VCs increased in disease,
+over 80% appeared to be temperate (30 of the 37 VCs increased
+in CD and 28 of the 34 VCs increased in UC). Furthermore,
+temperate VCs made up just 32% and 24% of VCs increased
+in controls relative CD and UC, respectively. Further investiga-
+tion of temperate VC abundance in each cohort indicated that
+temperate VCs recruited signiﬁcantly more reads from CD sub-
+jects than healthy controls (Wilcoxon test, p = 0.012) (Figure 2D).
+The temperate, or virulent, switch was also reﬂected in the taxo-
+nomic classiﬁcation of VCs, which were most differentially abun-
+dant. VCs that were increased in healthy cohorts were classiﬁed
+as the predominantly virulent Microviridae (two) and a crAss-like
+phage (one) (Figures 2E and 2F). Similarly, VCs increased in dis-
+ease were classiﬁed as Siphoviridae (nine in CD and eight in UC)
+and Myoviridae (one in CD and two in UC), which feature a num-
+ber of known temperate species. These ﬁndings also support the
+increased Caudovirales richness observed in CD. Furthermore,
+of the 17 Siphoviridae VCs increased in IBD relative to healthy
+(nine in CD and eight in UC), 15 were classiﬁed as temperate
+and had CRISPR hits to Firmicutes. These observations corre-
+spond with the reduced Firmicutes abundance observed in
+IBD (Frank et al., 2007) and further support evidence that
+increased temperate phage abundance is linked to disease. In-
+duction of Firmicutes prophage in the IBD virome would explain
+the observed reduction in host abundance and increased
+temperate Firmicutes phage virions. Many of the most differen-
+tially abundant clusters were taxonomically unassigned and
+represent viral dark matter (49 VCs increased in control versus
+−0.2
+0.0
+0.2
+−0.4
+−0.2
+0.0
+0.2
+PC1: 16.8 %
+PC2: 5.82 %
+CD Flare (6)
+CD Remission (8)
+Control (50)
+UC Flare (11)
+UC Remission (20)
+A 
+0.31
+0.012
+0.018
+0.53
+0.051
+0.27
+0
+200
+400
+600
+800
+16S Chao1 diversity
+CD Flare (4)
+CD Remission (4)
+Control (47)
+UC Flare (6)
+UC Remission (8)
+B
+Clostridium sensu stricto
+Ruminococcus
+Dialister
+Clostridiales unclassified
+Lachnospiraceae unclassified
+Catenibacterium
+Veillonella
+Barnesiella
+Coprococcus
+Methanobrevibacter
+Ruminococcus2
+Megasphaera
+Clostridium IV
+Faecalibacterium
+Ruminococcaceae unclassified
+Bacteroides
+Blautia
+Firmicutes unclassified
+Fusobacterium
+Ruminococcaceae unclassified
+0
+20
+40
+−20
+−10
+0
+10
+20
+log2FoldChange
+Significance (−log10 FDR)
+a Cyanobacteria/Chloroplast
+Control (n=47)                                                               (n=28) CD
+Akkermansia
+Clostridium sensu stricto
+Clostridiales unclassified
+Catenibacterium
+Firmicutes unclassified
+Faecalibacterium
+Blautia
+Ruminococcaceae unclassified
+Lachnospiraceae unclassified
+Clostridiales unclassified
+Lachnospiraceae unclassified
+Ruminococcaceae unclassified
+0
+20
+40
+60
+−20
+−10
+0
+10
+20
+log2FoldChange
+Significance (−log10 FDR)
+a
+a
+a
+a
+a
+Actinobacteria
+Unclassified
+Bacteroidetes
+Euryarchaeota
+Firmicutes
+Fusobacteria
+Proteobacteria
+Verrucomicrobia
+Control (n=47)                                                             (n=39) UC
+C
+D 
+Lachnospiraceae unclassified
+Lachnospiraceae unclassified
+Ruminococcaceae unclassified
+16S β-diversity
+Figure 3. Bacterial Compositional Comparison of the Norman et al. IBD Cohorts and Controls
+(A) PCoA using unweighted UniFrac distances.
+(B) a diversity (Chao1 diversity; sample sizes are reduced relative to A due to the retention of only one sample per subject).
+(C and D) (C) Differential abundance results between controls and CD(D) Control and UC. All points above the red dotted lines are signiﬁcant.
+Cell Host & Microbe 26, 1–15, December 11, 2019
+5
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+CD and 25 VCs increased in control versus UC) (Tables S1
+and S2).
+The bacteriome also differs between patients with IBD and
+controls. Bacterial b diversity assessed through 16S rRNA
+gene fragment sequencing showed CD (relapse and remission)
+samples grouping furthest from controls (PERMANOVA, p =
+0.0065 and p = 0.0332, respectively) followed by UC (relapse
+and remission) (PERMANOVA, p = 0.018 and p = 0.001, respec-
+tively) (Figure 3A), which was reﬂected in the virome composi-
+tion. Interestingly, and in contrast to the virome, the largest de-
+gree of variation among samples was observed in the control
+cohort. Furthermore, the CD cohort exhibited the smallest dis-
+tances between points (Figures S1C and S1D).
+Decreased bacterial a diversity was observed in the IBD co-
+horts versus healthy controls, with the largest differences
+observed in CD ﬂare (Wilcoxon test, p = 0.012) and remission
+(Wilcoxon test, p = 0.018) along with UC Flare (Wilcoxon test,
+p = 0.051) (Figure 3B). Due to the small sample sizes, this anal-
+ysis was also repeated without the division of disease status
+and using various metrics (Figures S2C and S2D). For both
+Chao1 diversity (Wilcoxon test: CD versus healthy, p =
+1.8e10; UC versus healthy, p = 1.6e4) and Shannon diversity
+(Wilcoxon test: CD versus healthy, p = 4.8e10; UC versus
+healthy, p = 3.3e4), the healthy cohort was signiﬁcantly
+higher than both IBD cohorts, while UC was also signiﬁcantly
+increased when compared to CD (Wilcoxon test: Chao1 CD
+versus UC, p = 8.3e4; Shannon CD versus UC, p = 9.7e3).
+A large number of bacterial taxa were found to be differentially
+abundant between control versus CD (Figure 3C) and control
+versus UC (Figure 3D). A total of 113 RSVs (ribosomal sequence
+variants) were decreased in CD versus controls, while only 17
+were increased. Similarly, 69 were increased in control versus
+UC, and only 21 signiﬁcantly increased in UC (Tables S3 and
+S4). Many of the taxa increased in controls versus both IBD co-
+horts (such as the genus Faecalibacterium) were in accordance
+with previous reports (Garcı´a-Lo´ pez et al., 2015; Lopez-Siles
+et al., 2018; Gevers et al., 2014; Pascal et al., 2017; Machiels
+et al., 2014). The most differentially abundant RSVs increased
+in IBD (such as Fusobacterium and Veillonella in CD or Clos-
+tridium sensu stricto and Lachnospiraceae family in UC) were
+also in accordance with the literature (Pascal et al., 2017; Strauss
+et al., 2011; Gevers et al., 2014; Joossens et al., 2011; Willing
+et al., 2010).
+Correlations between PCoA and Abundance Counts
+Reveal Key Drivers of Gut Microbiome Composition
+The drivers of signiﬁcant shifts in b diversity were assessed
+through correlations between principal coordinates and the rela-
+tive abundances of VCs (for the virome) and RSVs (for the bacter-
+iome). There were 25 VCs signiﬁcantly correlated to PC-axes 1
+and/or 2 (Spearman, p < 0.05) (Figure 4A; Table S5). Dependent
+upon the correlation coefﬁcient, the associations could further
+be broken down into four quadrants and largely supported differ-
+ential abundance data. In quadrant 1 (top left, Figure 4A), toward
+subjects with IBD, there were 18 signiﬁcant correlations that
+were comprised of Siphoviridae and Myoviridae VCs, as well
+as some heterogeneous and unclassiﬁed VCs. In quadrant 3
+(bottom left, Figure 4A), 1 Myoviridae and 1 unclassiﬁed VC
+A
+Ruminococcus gnavus
+B
+Clostridiales 
+unclassified
+Lachnospiraceae 
+unclassified
+−0.5
+0.0
+0.5
+1.0
+−1.0
+−0.5
+0.0
+0.5
+PC1: 16.8 %
+PC2: 5.82 %
+Clostridiales 
+unclassified
+Alistipes 
+indistinctus
+Blautia
+CD Flare (6)
+CD Remission (8)
+Control (64)
+UC Flare (13)
+UC Remission (20)
+CrAss-like 
+phages
+Microviridae
+−1.0
+−0.5
+0.0
+0.5
+−1
+0
+PC1: 10.36 %
+PC2: 5.58 %
+Microviridae
+Myoviridae
+Siphoviridae
+Siphoviridae
+Siphoviridae
+Myoviridae
+Myoviridae
+Siphoviridae
+CD Flare (6)
+CD Remission (8)
+Control (50)
+UC Flare (11)
+UC Remission (20)
+Alistipes
+Ruminococcaceae 
+unclassified
+Firmicutes 
+unclassified
+Figure 4. Viral and Bacterial Drivers of b Diversity Separation
+(A and B) Drivers of PCoA separation (Norman et al., 2015 dataset) for (A) the virome (Spearman distances) and (B) 16S unweighted UniFrac. VC and RSV
+abundances were correlated, using Spearman correlations, with PC-axes 1 and 2. Only signiﬁcant Spearman correlations with a rho >0.35 or <0.35 were
+graphed for the virome and rho >0.5 or <0.5 for the 16S (or a maximum of the top 6 for each quadrant). Red arrows indicate unclassiﬁed VCs or RSVs. The length
+of the arrow represents the degree of correlation to the PC-axes.
+6
+Cell Host & Microbe 26, 1–15, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+were signiﬁcantly correlated toward subjects with IBD. VCs
+classed as Microviridae and crAss-like phages and two unclas-
+siﬁed VCs were signiﬁcantly correlated toward the healthy con-
+trols (quadrant 4, bottom right, Figure 4A). This provides further
+evidence that a shift from a virulent core of crAss-like phage
+and Microviridae to one of primarily temperate phage may be
+associated with IBD.
+There were 76 bacterial RSVs signiﬁcantly correlated toward
+controls (quadrant 1) (Figure 4B; Table S5). The highest correla-
+tion coefﬁcient corresponded to RSVs assigned to the phylum
+Firmicutes, family Ruminococcaceae, or genus Alistipes. Quad-
+rant 3 correlations, also toward controls, contained 46 RSVs
+including Alistipes indistinctus and the order Clostridiales. For
+quadrant 4, toward IBD subjects, four RSVs were signiﬁcantly
+correlated, including Ruminococcus gnavus and Flavonifractor
+plautii.
+Procrustes analysis revealed signiﬁcant associations between
+bacterial and viral community composition (procuste.randtest,
+correlation coeﬁﬁcient of 0.714, p = 0.001) (Figure S3). However,
+overall VC a diversity did not signiﬁcantly correlate with observed
+bacterial richness (Spearman, p = 0.58) (Figure S2E), although
+there was a signiﬁcant weak correlation with bacterial Shannon
+diversity (Spearman, p = 0.038, r = 0.194) (Figure S2F). It is
+possible that this reﬂects an underlying biological signal, which
+is being masked by temporal variation in phage-host dynamics
+across the various VCs and RSVs.
+Alterations in Virome Composition Are Less Distinct
+between UC Activity States
+Differences in disease states (ﬂare and remission) were investi-
+gated using a second cohort of 40 subjects with UC, sampled
+longitudinally, resulting in 113 virome and 109 16S rRNA ampli-
+con samples (bacteriome). b diversity analysis of virome compo-
+sition using VCs (Figure 5A) did not show signiﬁcant separation
+between ﬂare and remission (PERMANOVA, p = 0.17), despite
+one uncharacterized VC correlating to the PC coordinates
+(vc40). In bacteriome analysis, the shift between ﬂare and remis-
+sion in b diversity was signiﬁcant (PERMANOVA, p = 0.022),
+and 14 RSVs correlated to PC-axes 1 or 2 (Spearman, p >
+0.05) (Figure 5B; Table S6). Those that correlated toward UC
+remission (quadrant 1) included Faecalibacterium prausnitzii,
+Dorea longicatena, and Coprococcus comes. An RSV classiﬁed
+as Ruminococcus gnavus was the only one correlated toward
+UC ﬂare. This agrees with recent reports that genes involved in
+oxidative stress responses in Ruminococcus gnavus strains
+may confer ﬁtness advantages and facilitate colonization of the
+inﬂamed gut (Hall et al., 2017). The virome and bacteriome
+composition were correlated with each other in Procrustes anal-
+ysis in agreement with the above results (procuste.randtest, cor-
+relation coefﬁcient of 0.906, p = 0.001) (Figure S4).
+Although the median a diversity was higher in the virome for
+UC ﬂare (Figure 5C) and UC remission for the bacteriome (Fig-
+ure 5D), these values were not signiﬁcant for either Chao1 or
+Shannon diversity metrics, in agreement with the results ob-
+tained above for the Norman et al. (2015) dataset (Wilcoxon
+test, p > 0.05). Viral load was estimated by spiking a known con-
+centration of lactococcal Q33 phage and was found to be nega-
+tively correlated with viral a diversity (Spearman, r = 0.415, p =
+0.009) (Figure S5A). Viral diversity was also investigated over
+time and in relation to disease status (Figure S5B), and although
+there were ﬂuctuations in the time series, there was no observ-
+able trend with disease status, and a comparison did not yield
+signiﬁcant differences (Spearman, p = 0.383).
+Virome stability across the UC cohort was assessed by
+identifying VCs present in all three time points of subjects,
+similar to the methods used in (Shkoporov et al., 2019). One
+key VC (vc39) was present in all three time points of 37% of
+individuals (13 out of 35) and was the most shared VC across
+the stable fraction of individuals’ viromes. Of the individuals
+that featured vc39 in all three time points, 84% (11 out of
+13) also featured RSVs classiﬁed as Lachnospiraceae in all
+time points, supporting previous CRISPR host prediction.
+Lachnospiraceae was also one of the most stable bacterial
+families across the cohort, being present in all time points of
+82% of all individuals. However, there was no signiﬁcant dif-
+ference between the number of stable VCs per individual
+(i.e., VCs present in all three time points) and remission status
+(Wilcoxon test, p = 0.738).
+Two crAss-like phages were increased in subjects in remission
+when compared to ﬂare, along with two Siphoviridae, one Micro-
+viridae, and seven unclassiﬁed phage (Figure 5E; Table S7).
+Conversely, there were 39 VCs increased in ﬂare. These included
+two Anelloviridae, one Myoviridae, 10 Siphoviridae, and 24 un-
+classiﬁed. Bacteroides and Dialister were the only RSVs
+increased in remission, while seven RSVs were increased in ﬂare
+including Enterococcus, Prevotella, and Streptococcus (Fig-
+ure 5F; Table S8). These ﬁndings suggest that the changes in vi-
+rome composition between ﬂare and remission in UC reﬂect
+those of the bacteriome and are more subtle than those
+observed between UC and healthy cohorts.
+Virome Composition Aids the Classiﬁcation between
+Health and Disease
+The ability of the virome and bacteriome composition to differen-
+tiate between patients with IBD and healthy controls was tested
+through machine learning. Sample sizes were increased by
+combining CD and UC samples to form a composite IBD
+cohort. The virome alone (Figure 6A) yielded an accuracy of
+0.769 (p = 0.032), and four of the top ﬁve contributors (based on
+gain) (vc39, vc23, vc38, and vc45) were increased in controls
+versus both IBD states. All ﬁve of these clusters were unclassiﬁed,
+highlighting the importance of including viral dark matter in virome
+analysis pipelines. The top two contributing VCs had CRISPR pro-
+tospacer alignments to Lachnospiraceae (vc39) and Parabacter-
+oides (vc23), while the remaining two had alignments to Bacter-
+oides (vc32 and vc38). Given the association of Bacteroides
+species with healthy mammalian gut (Delday et al., 2019), these
+ﬁndings further support evidence that the healthy virome closely
+reﬂects the healthy bacteriome. The bacteriome alone had a
+greater predictive power than the virome (accuracy: 0.824, p =
+0.008), with an RSV classiﬁed as Ruminococcaceae contributing
+the largest gain, followed by a Clostridiales and Odoribacter
+splanchnicus (Figure 6B). The virome and the 16S data were com-
+bined and the predictive power was again measured (Figure 6C).
+The accuracy increased to 0.853 (p = 0.0026), with the virome
+contributing ﬁve of the top 20 most important features. Of
+these, four had CRISPR protospacers to bacteria, including the
+order Clostridiales; the family Lachnospiraceae; and the genera
+Cell Host & Microbe 26, 1–15, December 11, 2019
+7
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+Pseudoﬂavonifractor, Clostridium, and Johnsonella, along with
+Fusobacterium and Bacteroides (Figure 7). Differences between
+CD and healthy proved to be the main predictors of disease,
+with 11 VCs or RSVs being decreased in CD alone and one
+increased when compared to controls.
+Receiver operating characteristic (ROC) curve analysis was
+performed as a second measure of accuracy of each model (Fig-
+ure 6D). The AUC (area under the curve) of the virome alone was
+78.31%, a decrease compared to bacteriome, which yielded an
+AUC of 89.72%. However, the virome and 16S combined had the
+−1.0
+−0.5
+0.0
+0.5
+−0.5
+0.0
+0.5
+1.0
+PC1: 8.63 %
+PC2: 6.6 %
+B
+−1.0
+−0.5
+0.0
+0.5
+1.0
+−0.5
+0.0
+0.5
+1.0
+PC3: 4.05 %
+PC4: 3.66 %
+UC Flare (82)
+UC Remission (31)
+A 
+Ruminococcus gnavus
+Clostridiales 
+unclassified
+Bacteroides
+Enterorhabdus
+Ruminococcus bromii
+Coprococcus
+ catus
+Lachnospiraceae 
+unclassified
+Clostridiales 
+unclassified
+Coprococcus comes
+Faecalibacterium
+Ruminococcus torques
+Anaerostipes hadrus
+Dorea longicatena
+0.23
+0
+100
+200
+300
+Chao1 diversity 16S
+0.53
+0
+1
+2
+3
+4
+5
+Shannon diversity 16S
+0.79
+0
+100
+200
+300
+Observed VCs
+C
+0.57
+0
+1
+2
+3
+Shannon diversity VCs
+D
+UC Flare (82)
+UC Flare (82)
+UC Remission (31)
+UC Remission (31)
+UC Flare (79)
+UC Remission (30)
+UC Flare (79)
+UC Flare (79)
+UC Remission (30)
+UC Remission (30)
+Pediococcus
+Streptococcus
+Prevotella
+Enterococcus
+Bacteroides
+Megasphaera
+Lactobacillus
+Lachnospiraceae unclassified
+Dialister
+0
+5
+10
+−20
+−10
+0
+10
+20
+log2FoldChange
+Significance (−log10 FDR)
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+Acidobacteria
+Actinobacteria
+Unclassified
+Bacteroidetes
+Candidatus_Saccharibacteria
+Chlamydiae
+Euryarchaeota
+Firmicutes
+Fusobacteria
+Proteobacteria
+Verrucomicrobia
+UC Remission (79)                                                                                    (30) UC Flare
+F
+E
+ 
+0
+5
+10
+15
+20
+−30
+−20
+−10
+0
+10
+20
+30
+log2FoldChange
+Significance (−log10 FDR)
+Anelloviridae
+CrAss−like
+Genomoviridae
+Heterogeneous
+Microviridae
+Myoviridae
+Podoviridae
+Siphoviridae
+Unclassified
+UC Remission (31)                                                                                (82) UC Flare
+prausnitzii
+Figure 5. Investigation of Differences in Virome and 16S Composition between Subjects from the Longitudinal UC Dataset in UC Flare and UC
+Remission
+(A and B) b diversity for (A) viromes (using Spearman distances) and (B) 16S (unweighted UniFrac). VCs and RSV abundance were correlated with PC-axes 1 and
+2. Only signiﬁcant Spearman correlations with a rho >0.35 or <0.35 were graphed for the virome and rho >0.5 or <0.5 (or top 6 for each quadrant) for the 16S.
+Red arrows indicate unclassiﬁed VCs or RSVs. The length of the arrow represents the degree of correlation to the PC-axes.
+(C and D) a diversity for (C) VC (observed VCs and Shannon) (Wilcoxon test) and (D) 16S (Chao1 and Shannon diversity) (Wilcoxon test).
+(E and F) Differential abundance results between UC ﬂare and remission for (E) VCs (DESeq2) and (F) 16S (DESeq2). All points above the red dotted line are
+signiﬁcant.
+8
+Cell Host & Microbe 26, 1–15, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+largest AUC with 94.79%, successfully predicting all 16 patients
+with IBD and only misclassifying ﬁve controls as IBD.
+Key VCs Revealed by the Analysis of IBD Viromes
+Through various approaches of virome analysis, 10 key VCs
+consistently emerged. A key VC was deﬁned as any that was
+core in one cohort and largely absent from another and/or signif-
+icantly correlated in the PCoA axes and differentially abundant
+between the cohorts. vc23, vc39, and vc10 were present in the
+healthy core and largely absent from the subjects with CD
+(7%, 14%, and 26%, respectively) and UC (12%, 14%, and
+40%, respectively). These three VCs were all in the top seven
+importance factors in the machine learning, while vc39 and
+vc23 were in the top two. vc23, although unclassiﬁed, contained
+CRISPR protospacers to Parabacteroides, while vc39, also un-
+classiﬁed, had hits to undeﬁned Lachnospiraceae (Figure S6).
+vc10, a crAss-like phage, did not have any CRISPR protospacer
+alignments. Intriguingly, none of these three key VCs associated
+with the core virome in healthy individuals featured genes asso-
+ciated with lysogeny, which supports our previous observations
+and those made in recent studies (Shkoporov et al., 2019). Addi-
+tionally, hosts predicted for these VCs have been found to be
+depleted in IBD (e.g., Lachnospiraceae, Parabacteroides) (Frank
+et al., 2007; Kverka et al., 2011) or have been shown to reduce
+the symptoms of inﬂammation in the mammalian gut (Parabac-
+teroides) (Kverka et al., 2011). This supports the idea that the
+virome and bacteriome are closely linked and that in virulent
+phage populations, abundance reﬂects that of the host (Shko-
+porov et al., 2018a).
+Six of the remaining seven key VCs (vc17, vc13, vc5, vc15,
+vc9, and vc22) were signiﬁcantly correlated to the PC-axes
+and were at signiﬁcantly increased abundance in CD and/or
+UC subjects compared to healthy controls. vc13, vc15, and
+vc17, all classiﬁed as Siphoviridae, had CRISPR protospacer
+hits to a number of genera of the phylum Firmicutes, including
+Blautia, Coprobacillus, Peptoniphilus, Ruminococcus, Entero-
+coccus, Lactobacillus, Streptococcus, and Clostridium (Fig-
+ure S6). vc5, vc9, and vc22, classiﬁed as Myoviridae, contained
+CRISPR protospacers to Firmicutes genera Clostridium, Copro-
+bacillus, Enterococcus, Lactobacillus, Johnsonella, Roseburia,
+Ruminococcus, Veillonella, and Flavonifractor along with the
+Proteobacteria Parasutterella (Figure S8). All six of these key
+Accuracy:0.853
+P−Value:0.0026
+vc34
+Seq_0000265
+vc33
+vc28
+vc7
+Seq_0000731
+Seq_0000599
+Seq_0000095
+Seq_0000827
+vc47
+Seq_0000077
+Seq_0000212
+Seq_0001948
+Seq_0000152
+Seq_0000280
+Seq_0000835
+Seq_0000158
+Seq_0000758
+Seq_0000489
+Seq_0000032
+0.0
+0.1
+0.2
+0.3
+Gain
+Accuracy:0.824
+P−Value:0.008
+Seq_0000170
+Seq_0000037
+Seq_0000280
+Seq_0000093
+Seq_0000370
+Seq_0000852
+Seq_0000491
+Seq_0001948
+Seq_0000085
+Seq_0000872
+Seq_0000265
+Seq_0000869
+Seq_0000047
+Seq_0000113
+Seq_0000097
+Seq_0000184
+Seq_0000450
+Seq_0000489
+Seq_0000063
+Seq_0000032
+0.0
+0.1
+0.2
+0.3
+Gain
+Average false positive rate
+Average true positive rate
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+AUC Virome
+78.31%
+AUC 16S
+89.72%
+AUC Virome + 16S
+94.79%
+Accuracy:0.769
+P−Value:0.032
+0.0
+0.1
+0.2
+0.3
+Gain
+vc30
+ERR844071_NODE_56
+length_5651_cov_21.5981
+vc33
+vc64
+vc225
+vc25
+vc50
+vc1
+vc20
+vc9
+vc47
+vc2
+vc101
+vc10
+vc7
+vc45
+vc38
+vc32
+vc23
+vc39
+Microviridae
+CrAss-like
+Microviridae
+Podoviridae
+Myoviridae
+Siphoviridae
+Siphoviridae
+Siphoviridae
+Microviridae
+Microviridae
+Siphoviridae
+Siphoviridae
+Ruminococcaceae
+Clostridiales
+Odoribacter splanchnicus
+Bilophila wadsworthia
+Ruminococcaceae
+Fusobacterium nucleatum
+Ruminococcaceae
+Escherichia/Shigella
+Clostridiales
+Lachnospiraceae
+Ruminococcaceae
+Bacteroides caccae
+Clostridiales
+Lachnospiraceae
+Lachnospiraceae
+Flavonifractor plautii
+Bacteroides xylanisolvens
+Blautia schinkii
+Bacteroides fragilis
+Roseburia
+Ruminococcaceae
+Odoribacter splanchnicus
+Clostridiales
+Lachnospiraceae
+Ruminococcaceae
+Eubacterium hallii
+Blautia schinkii
+Ruminococcaceae
+Ruminococcus torques
+Clostridiales
+Bacteroides
+Dorea longicatena
+Lachnospiraceae
+Lachnospiraceae
+Increased in Controls (vs CD & UC)
+Increased in Controls (vs CD)
+Increased in Controls (vs UC)
+Increased in CD (vs Controls)
+Increased in UC (vs Controls)
+Lachnospiraceae
+Parabacteroides
+Bacteroides
+Bacteroides
+Coprobacillus/Pseudoflavonifractor
+Actinomyces/Bifidobacterium/Clostridium/Eggerthella/
+Lachnoanaerobaculum/Lachnospiraceae
+Clostridium/Johnsonella/Lachnospiraceae/Parasutterella/
+Roseburia/Ruminococcus/Veillonella
+Coprobacillus/Eubacterium/Lachnospiraceae
+Coprobacillus/Holdemania/Lachnospiraceae/
+Parascardovia/Stomatobaculum
+Lachnospiraceae
+Bacteroides
+Bacteroides
+Burkholderiales
+Pseudoflavonifractor
+Clostridiales/Clostridium/Fusobacterium/ Lachnospiraceae
+Bacteroides
+Clostridiales/Clostridium/Johnsonella
+Taxonomy    CRISPR 
+Not differentially abundant 
+between groups
+16S
+VCs
+VCs+16S
+A
+C
+B
+D
+Figure 6. The Classiﬁcation between Healthy Controls and Patients with IBD, from the Norman et al. Dataset, Using VC and 16S Composition
+(A–C) The top 20 importance factors for each model for (A) VCs, (B) 16S, and (C) VCs and 16S combined. Colors of bars correspond to differential abundance
+between groups; black text are the classiﬁcations, while blue text is the bacterial annotation to CRISPR protospacers. Gain refers to the relative contribution of the
+feature to the model.
+(D) The ROC curve analysis for each of the three models including the % accuracy.
+Cell Host & Microbe 26, 1–15, December 11, 2019
+9
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+VCs featured genes associated with lysogeny, which provides
+compelling evidence that IBD is associated with a shift from
+predominantly virulent virome to that dominated by temperate
+phage. Furthermore, these VCs had also predicted hosts that
+are found to be elevated in IBD (Enterococcus, Ruminococcus,
+Streptococcus, Veilonella, and Parasutterella) (Zhou et al.,
+2016; Hall et al., 2017; Pascal et al., 2017; Gevers et al.,
+2014; Ricanek et al., 2012) or are thought to play an important
+immunomodulatory role in the gut by producing short-chain
+fatty acids (Roseburia and Blautia) (Li et al., 2018; Qing et al.,
+2019; Zhang et al., 2012). The remaining key VC was classiﬁed
+as Microviridae (vc101) and was increased in controls and UC
+relative to CD. This may reﬂect the subtle changes between
+CD and UC, which were observed throughout the study. It
+did not have CRISPR protospacer alignments or genes associ-
+ated with lysogeny.
+With the exception of two VCs (vc17 and vc101), strong, signif-
+icant correlations were not observed between key VCs and RSVs
+in the Norman et al. (2015) dataset (Spearman, p > 0.05). These
+ﬁndings contradict those of the Procrustes analysis and further
+suggest that temporal ﬂuctuations in the abundance of phage-
+host populations across individuals may mask underlying sig-
+nals. Despite this, vc17 exhibited a strong positive correlation
+with an RSV classiﬁed as Gammaproteobacteria (Spearman,
+r = 0.51, p = 9.7e9), and vc101 exhibited a strong positive cor-
+relation with three RSVs classiﬁed as Firmicutes (r z 0.52–0.6,
+p < 1e08), one as Bacterioidetes (r = 0.52, p = 2.6e9), and
+one as Fusobacteria (r = 0.51, p = 5.6e9). In the longitudinal
+UC cohort, again, the only strong, signiﬁcant correlation was
+observed between vc101 and an RSV classiﬁed as Bacteroi-
+detes (r = 0.61, p = 1.3e12). It is possible that a uniform signal
+across individuals is masked by inverse positive and negative
+Eubacterium
+   vc20
+   vc7
+   vc34
+Parasutterella
+Johnsonella
+Veillonella
+   vc15
+Pseudoflavonifractor
+Roseburia
+Coprobacillus
+Peptoniphilus
+   vc13
+Fusobacterium
+Blautia
+Clostridiales
+Ruminococcus
+Enterococcus
+   vc17
+   vc9
+   vc5
+   vc28
+Streptococcus
+Lactobacillus
+Mogibacterium
+Actinomyces
+Bacteroides
+    vc2
+Eggerthella
+Lachnoanaerobaculum
+   vc22
+Clostridium
+Flavonifractor
+Bifidobacterium
+   vc32
+   vc38
+   vc25
+   vc30
+   vc33
+Parabacteroides
+   vc23
+Burkholderiales
+Holdemania
+  vc1
+   vc39
+Lachnospiraceae
+Parascardovia
+   vc50
+Stomatobaculum
+Increased in Controls (vs CD & UC)
+Increased in Controls (vs CD)
+Increased in Controls (vs UC)
+Increased in CD (vs Controls)
+Increased in UC (vs Controls)
+Increased in IBD (vs Controls)
+Not differentially abundant 
+between groups
+Figure 7. Network Plot of CRISPR Protospacers to the 20 Most Relevant VCs (Key and Additional Important VCs from Machine Learning) from
+the Norman et al. Study
+Clusters and CRISPR protospacers are colored according to differential abundance results.
+10
+Cell Host & Microbe 26, 1–15, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+relationships of phage-host pairs in different replication cycles.
+Although little is known about phage-host dynamics in the gut,
+it has been suggested that factors such as host population den-
+sity (Silpe and Bassler, 2019), phase variation (Turkington et al.,
+2019), host switching (De Sordi et al., 2017), and the biogeog-
+raphy of the gut itself (Zhao et al., 2019; Maura et al., 2012) signif-
+icantly inﬂuence these dynamics and may therefore mask pat-
+terns in the abundance of speciﬁc phage-host pairs.
+DISCUSSION
+Here, we performed whole-virome analysis on two IBD virome
+datasets: a keystone published dataset (Norman et al., 2015)
+and an in-house UC cohort, which investigated subjects longitu-
+dinally through periods of ﬂare and remission. We apply an anal-
+ysis approach to the gut virome, which interrogates both known
+and unknown sequences and provides insights into viral dark
+matter in human health and disease. By applying a shared-genes
+network approach (Bin Jang et al., 2019) and replacing individual
+VLSs with viral clusters, it is possible to reveal compositional pat-
+terns in the virome across individuals that had been previously
+masked by high inter-individual variation.
+This comprehensive virome analysis revealed a core virome in
+healthy subjects that did not exhibit identiﬁable temperate fea-
+tures. This supports recent reports of a stable, predominantly
+virulent core virome observed in healthy individuals (Shkoporov
+et al., 2019). The healthy core virome was found to be absent
+in IBD and appeared to be replaced by an individual-speciﬁc
+shift toward induced temperate phage. This suggests that a sta-
+ble core of predominantly virulent or pseudolysogenic viruses is
+associated with the maintenance of a healthy human gut. These
+observations also suggest that environmental stresses associ-
+ated with the inﬂamed gut, such as reactive oxygen species (Rig-
+ottier-Gois, 2013), cause a reservoir of integrated prophage to
+enter the lytic cycle. This would correspond with the reduction
+in bacterial a diversity and counts (Vandeputte et al., 2017) and
+an increase in the relative abundance of Caudovirales associated
+with IBD. Additionally, large-scale prophage induction and cell
+lysis would lead to increased levels of pro-inﬂammatory bacterial
+debris available to interact with local innate immune receptors
+and mucosa-associated lymphoid tissue. These observations
+are also supported by reports of integrated prophage directly us-
+ing host physiology and population density to inﬂuence the
+switch from lysogenic to lytic replication (Casjens and Hendrix,
+2015; Silpe and Bassler, 2019). In this way, the temperate virome
+can respond to environmental stress and changes in the host
+population, such as those observed in IBD. Given these observa-
+tions, we theorize that a switch from lysogenic to lytic replication
+cycles is linked to an increase in the relative abundance of
+temperate VLPs in disease. Furthermore, we propose that con-
+ditions in the inﬂamed gut do not support the maintenance of a
+stable, predominantly virulent core virome.
+We identiﬁed ten key VCs that were consistently associated
+with healthy or IBD cohorts, which also provides compelling ev-
+idence that a core gut virome of predominantly virulent phages is
+closely associated with human health. None of the three key VCs
+associated with the core virome in healthy individuals featured
+genes associated with lysogeny. Additionally, all but one
+(vc101) of the seven key VCs associated with IBD featured these
+genes. Furthermore, nearly all of the predicted hosts for these
+key VCs have been associated with IBD. Key VCs found in the
+healthy core had predicted hosts found to be signiﬁcantly
+reduced in IBD or are thought to attenuate the symptoms of
+inﬂammation. Similarly, many key VCs associated with disease
+also had predicted hosts that are signiﬁcantly increased in IBD
+(Enterococcus, Ruminococcus, Streptococcus, Veilonella, and
+Parasutterella) (Zhou et al., 2016; Hall et al., 2017; Pascal et al.,
+2017; Gevers et al., 2014; Ricanek et al., 2012) or are believed
+to interact with the mammalian immune system (Roseburia and
+Blautia) (Li et al., 2018; Qing et al., 2019; Zhang et al., 2012).
+The reduced abundance or absence of a core virome of IBD
+subjects compared to healthy controls was previously described
+(Manrique et al., 2016) using the Norman et al. (2015) dataset. A
+core of 23 bacteriophages was reported, contradictory to what
+we observed pre-clustering. We suspect that is due to the lenient
+criteria used by the authors to deﬁne the presence of a contig—a
+view shared by a recent publication (Gregory et al., 2019). In this
+study, we employed a breadth of coverage ﬁlter (Roux et al.,
+2017) of >75% on the basis that if VLSs were truly present,
+they would recruit reads across the whole genome, thus
+removing spurious read alignments to repeats and regions
+conserved across broadly different viral genomes.
+Whole-virome analysis did not reveal differences between the
+viral richness of the subjects with IBD and healthy controls, a
+ﬁnding contradictory to previous analysis of this dataset (Nor-
+man et al., 2015). This implies that a virome dominated by
+temperate phage in disease replaces, rather than adds to, the
+shared virulent core in healthy controls. This in turn could reﬂect
+an absence of hosts for the virulent-core virome, supported by a
+reduction in bacterial a diversity in disease. It is also possible that
+rather than being replaced, the virulent core has fallen below the
+detection threshold of the analysis method, overshadowed by an
+induced lysogenic fraction in disease. This issue could be exag-
+gerated by multiple displacement ampliﬁcation (MDA), as it is
+known to skew the abundance of dominant sequences in meta-
+genomes (Parras-Molto´ et al., 2018). It is also important to note
+that an absolute decline of virulent phage following the reduction
+of their host abundance in disease would in turn lead to a relative
+increase in temperate phage. These ﬁndings highlight the need
+for future virome studies to quantify total viral load as done pre-
+viously (Shkoporov et al., 2018b) or to use MDA-free library prep-
+aration methods to deﬁnitively conclude whether a healthy core
+virome is replaced or supplemented by induced prophage in
+disease.
+Replicating the work of Norman and colleagues (Norman et al.,
+2015), we assessed the richness of VCs classiﬁed as Caudovir-
+ales. In agreement with previous observations, Caudovirales di-
+versity was increased in the CD cohort. However, we did not
+observe signiﬁcant changes in the whole-virome a diversity be-
+tween UC and healthy controls. It is possible that changes in
+the identiﬁable subsets of the virome do not reﬂect the virome
+as a whole. There was no alteration in viral load between disease
+status in UC; however, there was an inverse relationship be-
+tween viral load and diversity. This suggests that higher viral
+loads are a result of a dominance of a particular phage or phages
+rather than the detection of new members.
+It has been previously reported that the human gut virome ex-
+hibits high levels of inter-individual variation (Reyes et al., 2010;
+Cell Host & Microbe 26, 1–15, December 11, 2019
+11
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+Minot et al., 2011; Shkoporov et al., 2019), which is exacerbated
+by the need to analyze the virome at an assembly or strain level.
+Unlike bacteriome analysis, which is typically performed at
+higher taxonomic ranks, such as family and genus, viral taxon-
+omy does not have a similar deﬁned structure, which makes
+comparisons of cohorts very difﬁcult. Strain-level resolution
+hampers cohort comparisons due to a lack of shared sequences
+across subjects in the dataset, thereby masking compositional
+patterns occurring at higher taxonomic ranks across cohorts.
+Our initial analysis was carried out using VLSs (VLSs made
+non-redundant at 90% identity over 90% of the length), but
+this level of resolution did not reveal shared signals across co-
+horts. We overcame this issue by clustering viral genomes based
+on their protein-coding gene content using vConTACT2 (Bin
+Jang et al., 2019). This gene network clustering approach re-
+vealed shared virome features while retaining relevant biological
+signals across the cohort (as seen by VCs across subjects),
+increased the variation explained in the b diversity, and
+decreased the abundance of unique viral VCs per subject across
+the dataset. Viral clustering also enabled the detection of a core
+virome in healthy subjects consisting of eight VCs across >50%
+of the cohort. This proved to be a key differentiator between
+health and disease throughout the analysis. Many of these
+core VCs were differentially abundant in health and disease
+and were primary drivers of cohort separation and machine
+learning predictions. In b diversity analysis, IBD subjects shifted
+signiﬁcantly away from healthy controls, thus providing evidence
+of compositional differences in the gut viromes. Drivers of these
+separations were associated with temperate phage, such as
+clusters of Myoviridae and Siphoviridae in IBD and clusters of Mi-
+croviridae and crAss-like phages in healthy subjects, which are
+predominantly non-temperate.
+Alterations in the bacteriome agreed with previous observa-
+tions. However, the current study provides evidence that alter-
+ations in the whole human gut virome in IBD occur in conjunction
+with changes in the bacteriome. Although it is not possible from a
+cross-sectional study to know whether the virome alters the bac-
+teriome or vice versa, the viral and bacterial datasets were
+shown to be complementary. Although the bacteriome was
+more accurate in classifying subjects with IBD from controls,
+the addition of the virome improved upon this classiﬁcation to
+over 94% AUC and to over 85% accuracy. We acknowledge
+that this current model is not designed to be used for diagnosis
+but does provide evidence that alterations in the gut microbiota
+are present in both the bacteriome and the virome. Studies build-
+ing the fundamental understanding of interactions between the
+virome and bacteriome in disease, as conducted here, are a
+crucial foundation to the future of virome-based tools to shape
+the microbiome.
+Alterations in both the virome and bacteriome were more se-
+vere in CD patients relative to UC, which may reﬂect the severity
+of the condition relative to UC. In terms of composition, the CD
+virome was furthest from healthy controls, was the least stable,
+and exhibited the greatest number of differential abundant VCs
+and RSVs relative to healthy controls. The CD cohort had the
+least bacterial variability across the cohort, which may also be
+linked to having the lowest bacterial diversity. Interestingly, CD
+had a signiﬁcantly higher diversity of Caudovirales and an
+increased number of reads aligned to temperate VCs when
+compared to healthy controls. This again supports the idea
+that shift from lysogenic to lytic replication cycles may drive a
+change in the bacteriome linked with CD. Contradictory to Zuo
+and colleagues, we did not observe any differences in Caudovir-
+ales diversity between UC and controls along with UC ﬂare
+versus UC remission in either of our datasets (Zuo et al., 2019).
+This may be due to the analysis protocols, whole-virome versus
+database-dependent, or the sample type, fecal versus mucosa.
+It is likely that bacterial-phage dynamics at the mucosal surface
+in disease are signiﬁcantly different to that of fecal samples as
+previously seen in bacterial proﬁles (Gevers et al., 2014). Further-
+more, we did not detect any giant viruses, such as Mimivirus or
+C. ericina virus, in our UC cohorts, as was suggested by Zuo
+and colleagues, and believe their previous detection may have
+been a result of the analysis pipeline chosen in that study (Sutton
+et al., 2019a).
+Virome compositional changes between UC and control co-
+horts were more pronounced than changes observed between
+ﬂare and remission in UC. This ﬁnding, in conjunction with the
+overall comparison between UC, CD, and healthy controls, sug-
+gests that the virome is less perturbed not only between healthy
+and UC but also between ﬂare and remission. This may reﬂect
+the disease severity of UC relative to CD or suggest that these
+conditions interact with the host in different ways. Variation in
+disease location, severity, and risk factors, such as the potential
+paradoxical relationship between CD and UC with smoking (Ber-
+kowitz et al., 2018), have previously alluded to differences in dis-
+ease etiologies. It is possible that virome changes between dis-
+ease states are more subtle than those between health and IBD.
+However, as the virome changes in CD relative to healthy were
+more exaggerated than those seen in UC, it is possible that dis-
+ease status in CD is reﬂected more signiﬁcantly in the virome.
+There are a number of future improvements that can be under-
+taken to expand upon our current ﬁndings. Increased sample
+sizes, particularly for disease state, would increase our ability
+to detect any potential alterations between ﬂare and remission.
+Given that diet is a key factor in shaping the microbiota (Singh
+et al., 2017), inclusion of food frequency questionnaires would
+be beneﬁcial, as many subjects with IBD undergo signiﬁcant
+diet alterations. Furthermore, as many subjects with IBD are on
+various medications, detailed medical and medication history
+(Maier et al., 2018) would likely give deeper insight into this data-
+set. Unfortunately, we did not have access to extensive meta-
+data, including household controls for the longitudinal UC
+cohort, which can assist in statistical analysis and allow the
+exploration of environmental effects. Certain analysis and ﬁgures
+were limited by missing information at the time of sampling,
+particularly information relating to disease activity status (i.e.,
+ﬂare or remission). It has also been shown that fecal water con-
+tent (Bristol stool chart) has been associated with bacterial
+composition (Vandeputte et al., 2016). Future virome studies
+would beneﬁt from the inclusion of water content data in sam-
+ples. Strain-level variation is believed to play an important role
+in phage-host dynamics, particularly when explaining prolifera-
+tion of both virulent phage and hosts in an environment (Breitbart
+et al., 2018; Shkoporov et al., 2019). Consequently, these dy-
+namics may play an important role in the maintenance of the
+healthy core virome. However, despite allowing for the identiﬁca-
+tion of compositional patterns across individuals, analysis at a
+12
+Cell Host & Microbe 26, 1–15, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+VC level also masks these strain-level dynamics. The DNA in
+these samples was subjected to an MDA ampliﬁcation step,
+which has been known to skew overall abundance values (Par-
+ras-Molto´ et al., 2018). More modern shotgun DNA library kits re-
+move the need for ampliﬁcation and should give a more reliable
+indication of diversity (Roux et al., 2016). It is also possible that
+we have excluded some valid viral sequences in our efforts to
+prevent contamination, and conversely, despite our best efforts,
+we may have also erroneously included some bacterial contigs.
+This is ongoing work which will be improved upon as more hall-
+mark viral genes are identiﬁed and prediction software improves.
+This study uses a whole-virome analysis approach to give
+detailed insights into the function of the gut virome and its poten-
+tial role in IBD. We conﬁrm previously reported disease-speciﬁc
+alterations in the IBD virome but, in contrast to previous ﬁndings,
+did not see changes in overall viral alpha diversity. However, we
+did ﬁnd evidence to suggest that a predominantly virulent core
+virome is linked to a healthy gut, and shift from lysogenic to lytic
+replication in the temperate phage population may be linked to
+IBD. It should be noted, however, that it is not yet possible to
+conclude if virome composition reﬂects or shapes the structure
+of the bacteriome in the human gut. This whole-virome analysis
+approach identiﬁed compositional changes across the entire hu-
+man gut virome associated with health and disease. These ﬁnd-
+ings are a signiﬁcant step toward identifying targets for further
+wet-lab characterization and future virome biomarkers. This
+analysis approach also facilitates the comparison of whole vi-
+romes across cohorts in diseases other than IBD and highlights
+how we can beneﬁt from a fuller understanding of the role of the
+microbiome in human health.
+STAR+METHODS
+Detailed methods are provided in the online version of this paper
+and include the following:
+d KEY RESOURCES TABLE
+d LEAD CONTACT AND MATERIALS AVAILABILITY
+d EXPERIMENTAL MODEL AND SUBJECT DETAILS
+B Faecal Samples (Longitudinal UC Dataset)
+d METHOD DETAILS
+B Extraction of Faecal VLP DNA, Library Preparation and
+Sequencing (Longitudinal UC Dataset)
+B Extraction of Total Faecal DNA for 16S rRNA Amplicon
+Sequencing (Longitudinal UC Dataset)
+B Bioinformatic Viral Processing
+B Bioinformatic 16S Processing
+d QUANTIFICATION AND STATISTICAL ANALYSIS
+d DATA AND CODE AVAILABILITY
+SUPPLEMENTAL INFORMATION
+Supplemental Information can be found online at https://doi.org/10.1016/j.
+chom.2019.10.009.
+ACKNOWLEDGMENTS
+We thank Dr. Nilufer Seth and Dr. Prerak Desai from Janssen Biologics for their
+assistance and guidance throughout this study. This study was supported by
+Science Foundation Ireland under grant numbers SFI/12/RC/2273 and SFI/14/
+SP APC/B3032 and a research grant from Janssen Biotech.
+AUTHOR CONTRIBUTIONS
+A.G.C., T.D.S.S., A.N.S., and F.J.R. performed the bioinformatics and statisti-
+cal analysis and drafted the manuscript. R.K.H. performed 16S read process-
+ing. K.M.D. and O.O. extracted the DNA and performed sequencing library
+preparations. A.G.C., T.D.S.S., L.A.D., S.E.P., R.P.R., and C.H. conceived
+the study. All authors approved and contributed to the ﬁnal manuscript.
+DECLARATION OF INTERESTS
+Provisional patent applications have been ﬁled based on these study data.
+Received: June 26, 2019
+Revised: September 2, 2019
+Accepted: October 14, 2019
+Published: November 19, 2019
+REFERENCES
+Allard, G., Ryan, F.J., Jeffery, I.B., and Claesson, M.J. (2015). SPINGO: a rapid
+species-classiﬁer for microbial amplicon sequences. BMC Bioinformatics
+16, 324.
+Berkowitz, L., Schultz, B.M., Salazar, G.A., Pardo-Roa, C., Sebastia´ n, V.P.,
+A´ lvarez-Lobos, M.M., and Bueno, S.M. (2018). Impact of Cigarette Smoking
+on the Gastrointestinal Tract Inﬂammation: Opposing Effects in Crohn’s
+Disease and Ulcerative Colitis. Front. Immunol. 9, 74.
+Bin Jang, H., Bolduc, B., Zablocki, O., Kuhn, J.H., Roux, S., Adriaenssens,
+E.M., Brister, J.R., Kropinski, A.M., Krupovic, M., Lavigne, R., et al. (2019).
+Taxonomic assignment of uncultivated prokaryotic virus genomes is enabled
+by gene-sharing networks. Nat. Biotechnol. 37, 632–639.
+Bolger, A.M., Lohse, M., and Usadel, B. (2014). Trimmomatic: a ﬂexible
+trimmer for Illumina sequence data. Bioinformatics 30, 2114–2120.
+Breitbart, M., Bonnain, C., Malki, K., and Sawaya, N.A. (2018). Phage puppet
+masters of the marine microbial realm. Nat. Microbiol. 3, 754–766.
+Callahan, B.J., McMurdie, P.J., Rosen, M.J., Han, A.W., Johnson, A.J., and
+Holmes, S.P. (2016). DADA2: High-resolution sample inference from Illumina
+amplicon data. Nat. Methods 13, 581–583.
+Canchaya, C., Fournous, G., Chibani-Chennouﬁ, S., Dillmann, M.-L., and
+Br€ussow, H. (2003). Phage as agents of lateral gene transfer. Curr. Opin.
+Microbiol. 6, 417–424.
+Casjens, S.R., and Hendrix, R.W. (2015). Bacteriophage lambda: Early pioneer
+and still relevant. Virology 479-480, 310–330.
+De Sordi, L., Khanna, V., and Debarbieux, L. (2017). The Gut Microbiota
+Facilitates Drifts in the Genetic Diversity and Infectivity of Bacterial Viruses.
+Cell Host Microbe 22, 801–808.e3.
+Delday, M., Mulder, I., Logan, E.T., and Grant, G. (2019). Bacteroides thetaio-
+taomicron Ameliorates Colon Inﬂammation in Preclinical Models of Crohn’s
+Disease. Inﬂamm. Bowel Dis. 25, 85–96.
+Edgar, R.C. (2007). PILER-CR: fast and accurate identiﬁcation of CRISPR re-
+peats. BMC Bioinformatics 8, 18.
+Edgar, R.C., Haas, B.J., Clemente, J.C., Quince, C., and Knight, R. (2011).
+UCHIME
+improves
+sensitivity
+and
+speed
+of
+chimera
+detection.
+Bioinformatics 27, 2194–2200.
+Fernandes, M.A., Verstraete, S.G., Phan, T.G., Deng, X., Stekol, E., LaMere, B.,
+Lynch, S.V., Heyman, M.B., and Delwart, E. (2019). Enteric Virome and
+Bacterial Microbiota in Children With Ulcerative Colitis and Crohn Disease.
+J. Pediatr. Gastroenterol. Nutr. 68, 30–36.
+Forslund, K., Hildebrand, F., Nielsen, T., Falony, G., Le Chatelier, E.,
+Sunagawa, S., Prifti, E., Vieira-Silva, S., Gudmundsdottir, V., Pedersen, H.K.,
+et al.; MetaHIT consortium (2015). Disentangling type 2 diabetes and
+metformin treatment signatures in the human gut microbiota. Nature 528,
+262–266.
+Cell Host & Microbe 26, 1–15, December 11, 2019
+13
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+Forster, S.C., Kumar, N., Anonye, B.O., Almeida, A., Viciani, E., Stares, M.D.,
+Dunn, M., Mkandawire, T.T., Zhu, A., Shao, Y., et al. (2019). A human gut bac-
+terial genome and culture collection for improved metagenomic analyses. Nat.
+Biotechnol. 37, 186–192.
+Frank, D.N., St Amand, A.L., Feldman, R.A., Boedeker, E.C., Harpaz, N., and
+Pace, N.R. (2007). Molecular-phylogenetic characterization of microbial com-
+munity imbalances in human inﬂammatory bowel diseases. Proc. Natl. Acad.
+Sci. USA 104, 13780–13785.
+Garcı´a-Lo´ pez,
+R.,
+Va´ zquez-Castellanos,
+J.F.,
+and
+Moya,
+A.
+(2015).
+Fragmentation and Coverage Variation in Viral Metagenome Assemblies,
+and Their Effect in Diversity Calculations. Front. Bioeng. Biotechnol. 3, 141.
+Gevers, D., Kugathasan, S., Denson, L.A., Va´ zquez-Baeza, Y., Van Treuren,
+W., Ren, B., Schwager, E., Knights, D., Song, S.J., Yassour, M., et al. (2014).
+The treatment-naive microbiome in new-onset Crohn’s disease. Cell Host
+Microbe 15, 382–392.
+Grazziotin, A.L., Koonin, E.V., and Kristensen, D.M. (2017). Prokaryotic Virus
+Orthologous Groups (pVOGs): a resource for comparative genomics and pro-
+tein family annotation. Nucleic Acids Res. 45 (D1), D491–D498.
+Gregory, A.C., Zablocki, O., Howell, A., Bolduc, B., and Sullivan, M.B. (2019).
+The human gut virome database. bioRxiv. https://doi.org/10.1101/655910.
+Guerin, E., Shkoporov, A., Stockdale, S.R., Clooney, A.G., Ryan, F.J., Sutton,
+T.D.S., Draper, L.A., Gonzalez-Tortuero, E., Ross, R.P., and Hill, C. (2018).
+Biology and Taxonomy of crAss-like Bacteriophages, the Most Abundant
+Virus in the Human Gut. Cell Host Microbe. 24, 653–664 e6.
+Halfvarson, J., Brislawn, C.J., Lamendella, R., Va´ zquez-Baeza, Y., Walters,
+W.A., Bramer, L.M., D’Amato, M., Bonﬁglio, F., McDonald, D., Gonzalez, A.,
+et al. (2017). Dynamics of the human gut microbiome in inﬂammatory bowel
+disease. Nat. Microbiol. 2, 17004.
+Hall, A.B., Yassour, M., Sauk, J., Garner, A., Jiang, X., Arthur, T., Lagoudas,
+G.K.,
+Vatanen,
+T.,
+Fornelos,
+N.,
+Wilson,
+R.,
+et
+al.
+(2017).
+A
+novel
+Ruminococcus gnavus clade enriched in inﬂammatory bowel disease patients.
+Genome Med. 9, 103.
+Hyatt, D., Chen, G.L., Locascio, P.F., Land, M.L., Larimer, F.W., and Hauser,
+L.J. (2010). Prodigal: prokaryotic gene recognition and translation initiation
+site identiﬁcation. BMC Bioinformatics 11, 119.
+Joossens, M., Huys, G., Cnockaert, M., De Preter, V., Verbeke, K., Rutgeerts,
+P., Vandamme, P., and Vermeire, S. (2011). Dysbiosis of the faecal microbiota
+in patients with Crohn’s disease and their unaffected relatives. Gut 60,
+631–637.
+Krishnamurthy, S.R., and Wang, D. (2017). Origins and challenges of viral dark
+matter. Virus Res. 239, 136–142.
+Kverka, M., Zakostelska, Z., Klimesova, K., Sokol, D., Hudcovic, T., Hrncir, T.,
+Rossmann, P., Mrazek, J., Kopecny, J., Verdu, E.F., and Tlaskalova-
+Hogenova, H. (2011). Oral administration of Parabacteroides distasonis anti-
+gens attenuates experimental murine colitis through modulation of immunity
+and microbiota composition. Clin. Exp. Immunol. 163, 250–259.
+Langmead, B., and Salzberg, S.L. (2012). Fast gapped-read alignment with
+Bowtie 2. Nat. Methods 9, 357–359.
+Le Chatelier, E., Nielsen, T., Qin, J., Prifti, E., Hildebrand, F., Falony, G.,
+Almeida, M., Arumugam, M., Batto, J.M., Kennedy, S., et al.; MetaHIT con-
+sortium (2013). Richness of human gut microbiome correlates with metabolic
+markers. Nature 500, 541–546.
+Li, H., Handsaker, B., Wysoker, A., Fennell, T., Ruan, J., Homer, N., Marth, G.,
+Abecasis, G., and Durbin, R.; 1000 Genome Project Data Processing
+Subgroup (2009). The Sequence Alignment/Map format and SAMtools.
+Bioinformatics 25, 2078–2079.
+Li, M., van Esch, B.C.A.M., Wagenaar, G.T.M., Garssen, J., Folkerts, G., and
+Henricks, P.A.J. (2018). Pro- and anti-inﬂammatory effects of short chain fatty
+acids on immune and endothelial cells. Eur. J. Pharmacol. 831, 52–59.
+Lopez-Siles, M., Enrich-Capo´ , N., Aldeguer, X., Sabat-Mir, M., Duncan, S.H.,
+Garcia-Gil, L.J., and Martinez-Medina, M. (2018). Alterations in the Abundance
+and Co-occurrence of Akkermansia muciniphila and Faecalibacterium praus-
+nitzii in the Colonic Mucosa of Inﬂammatory Bowel Disease Subjects. Front.
+Cell. Infect. Microbiol. 8, 281.
+Machiels, K., Joossens, M., Sabino, J., De Preter, V., Arijs, I., Eeckhaut, V.,
+Ballet, V., Claes, K., Van Immerseel, F., Verbeke, K., et al. (2014). A decrease
+of the butyrate-producing species Roseburia hominis and Faecalibacterium
+prausnitzii deﬁnes dysbiosis in patients with ulcerative colitis. Gut 63,
+1275–1283.
+Mahony, J., Martel, B., Tremblay, D.M., Neve, H., Heller, K.J., Moineau, S., and
+van Sinderen, D. (2013). Identiﬁcation of a new P335 subgroup through molec-
+ular analysis of lactococcal phages Q33 and BM13. Appl. Environ. Microbiol.
+79, 4401–4409.
+Maier, L., Pruteanu, M., Kuhn, M., Zeller, G., Telzerow, A., Anderson, E.E.,
+Brochado, A.R., Fernandez, K.C., Dose, H., Mori, H., et al. (2018). Extensive
+impact of non-antibiotic drugs on human gut bacteria. Nature 555, 623–628.
+Manrique, P., Bolduc, B., Walk, S.T., van der Oost, J., de Vos, W.M., and
+Young, M.J. (2016). Healthy human gut phageome. Proc. Natl. Acad. Sci.
+USA 113, 10400–10405.
+Maura, D., Galtier, M., Le Bougue´ nec, C., and Debarbieux, L. (2012). Virulent
+bacteriophages can target O104:H4 enteroaggregative Escherichia coli in
+the mouse intestine. Antimicrob. Agents Chemother. 56, 6235.
+Minot, S., Sinha, R., Chen, J., Li, H., Keilbaugh, S.A., Wu, G.D., Lewis, J.D., and
+Bushman, F.D. (2011). The human gut virome: inter-individual variation and dy-
+namic response to diet. Genome Res. 21, 1616–1625.
+Moreno-Gallego, J.L., Chou, S.P., Di Rienzi, S.C., Goodrich, J.K., Spector,
+T.D., Bell, J.T., Youngblut, N.D., Hewson, I., Reyes, A., and Ley, R.E. (2019).
+Virome Diversity Correlates with Intestinal Microbiome Diversity in Adult
+Monozygotic Twins. Cell Host Microbe. 25, 261–272e5.
+Norman, J.M., Handley, S.A., Baldridge, M.T., Droit, L., Liu, C.Y., Keller, B.C.,
+Kambal, A., Monaco, C.L., Zhao, G., Fleshner, P., et al. (2015). Disease-spe-
+ciﬁc alterations in the enteric virome in inﬂammatory bowel disease. Cell
+160, 447–460.
+Nurk, S., Meleshko, D., Korobeynikov, A., and Pevzner, P.A. (2017).
+metaSPAdes: a new versatile metagenomic assembler. Genome Res. 27,
+824–834.
+Parras-Molto´ , M., Rodrı´guez-Galet, A., Sua´ rez-Rodrı´guez, P., and Lo´ pez-
+Bueno, A. (2018). Evaluation of bias induced by viral enrichment and random
+ampliﬁcation protocols in metagenomic surveys of saliva DNA viruses.
+Microbiome 6, 119.
+Pascal, V., Pozuelo, M., Borruel, N., Casellas, F., Campos, D., Santiago, A.,
+Martinez, X., Varela, E., Sarrabayrouse, G., Machiels, K., et al. (2017). A micro-
+bial signature for Crohn’s disease. Gut 66, 813–822.
+Qing, Y., Xie, H., Su, C., Wang, Y., Yu, Q., Pang, Q., and Cui, F. (2019). Gut
+Microbiome, Short-Chain Fatty Acids, and Mucosa Injury in Young Adults
+with Human Immunodeﬁciency Virus Infection. Dig. Dis. Sci. 64, 1830–1843.
+Reyes, A., Haynes, M., Hanson, N., Angly, F.E., Heath, A.C., Rohwer, F., and
+Gordon, J.I. (2010). Viruses in the faecal microbiota of monozygotic twins
+and their mothers. Nature 466, 334–338.
+Ricanek, P., Lothe, S.M., Frye, S.A., Rydning, A., Vatn, M.H., and Tønjum, T.
+(2012). Gut bacterial proﬁle in patients newly diagnosed with treatment-
+naı¨ve Crohn’s disease. Clin. Exp. Gastroenterol. 5, 173–186.
+Rigottier-Gois, L. (2013). Dysbiosis in inﬂammatory bowel diseases: the oxy-
+gen hypothesis. ISME J. 7, 1256–1261.
+Roux, S., Enault, F., Hurwitz, B.L., and Sullivan, M.B. (2015a). VirSorter: mining
+viral signal from microbial genomic data. PeerJ 3, e985.
+Roux, S., Hallam, S.J., Woyke, T., and Sullivan, M.B. (2015b). Viral dark matter
+and virus-host interactions resolved from publicly available microbial ge-
+nomes. eLife 4.
+Roux, S., Solonenko, N.E., Dang, V.T., Poulos, B.T., Schwenck, S.M.,
+Goldsmith, D.B., Coleman, M.L., Breitbart, M., and Sullivan, M.B. (2016).
+Towards quantitative viromics for both double-stranded and single-stranded
+DNA viruses. PeerJ 4, e2777.
+Roux, S., Emerson, J.B., Eloe-Fadrosh, E.A., and Sullivan, M.B. (2017).
+Benchmarking viromics: an in silico evaluation of metagenome-enabled esti-
+mates of viral community composition and diversity. PeerJ 5, e3817.
+Schloss, P.D., Westcott, S.L., Ryabin, T., Hall, J.R., Hartmann, M., Hollister,
+E.B., Lesniewski, R.A., Oakley, B.B., Parks, D.H., Robinson, C.J., et al.
+14
+Cell Host & Microbe 26, 1–15, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+(2009). Introducing mothur: open-source, platform-independent, community-
+supported software for describing and comparing microbial communities.
+Appl. Environ. Microbiol. 75, 7537–7541.
+Shkoporov, A.N., Khokhlova, E.V., Fitzgerald, C.B., Stockdale, S.R., Draper,
+L.A., Ross, R.P., and Hill, C. (2018a). FCrAss001 represents the most abun-
+dant bacteriophage family in the human gut and infects Bacteroides intestina-
+lis. Nat. Commun. 9, 4781.
+Shkoporov, A.N., Ryan, F.J., Draper, L.A., Forde, A., Stockdale, S.R., Daly,
+K.M., McDonnell, S.A., Nolan, J.A., Sutton, T.D.S., Dalmasso, M., et al.
+(2018b). Reproducible protocols for metagenomic analysis of human faecal
+phageomes. Microbiome 6, 68.
+Shkoporov, A.N., Clooney, A.G., Sutton, T.D.S., Ryan, F.J., Daly, K.M., Nolan,
+J.A., McDonnell, S.A., Khokhlova, E.V., Draper, L.A., Forde, A., et al. (2019).
+The Human Gut Virome Is Highly Diverse, Stable, and Individual Speciﬁc.
+Cell Host Microbe 26, 527–541.e5.
+Silpe, J.E., and Bassler, B.L. (2019). A Host-Produced Quorum-Sensing
+Autoinducer Controls a Phage Lysis-Lysogeny Decision. Cell 176, 268–
+280.e13.
+Singh, R.K., Chang, H.W., Yan, D., Lee, K.M., Ucmak, D., Wong, K., Abrouk,
+M., Farahnik, B., Nakamura, M., Zhu, T.H., et al. (2017). Inﬂuence of diet on
+the gut microbiome and implications for human health. J. Transl. Med. 15, 73.
+Strauss, J., Kaplan, G.G., Beck, P.L., Rioux, K., Panaccione, R., Devinney, R.,
+Lynch, T., and Allen-Vercoe, E. (2011). Invasive potential of gut mucosa-
+derived Fusobacterium nucleatum positively correlates with IBD status of
+the host. Inﬂamm. Bowel Dis. 17, 1971–1978.
+Sutton, T.D.S., Clooney, A.G., and Hill, C. (2019a). Giant oversights in the hu-
+man gut virome. Gut. Published online June 11, 2019. https://doi.org/10.1136/
+gutjnl-2019-319067.
+Sutton, T.D.S., Clooney, A.G., Ryan, F.J., Ross, R.P., and Hill, C. (2019b).
+Choice of assembly software has a critical impact on virome characterisation.
+Microbiome 7, 12.
+Tatusov, R.L., Galperin, M.Y., Natale, D.A., and Koonin, E.V. (2000). The COG
+database: a tool for genome-scale analysis of protein functions and evolution.
+Nucleic Acids Res. 28, 33–36.
+The Human Microbiome Jumpstart Reference Strains Consortium (2010). A
+Catalog of Reference Genomes from the Human Microbiome. Science 328,
+https://doi.org/10.1126/science.1183605.
+Turkington, C.J.R., Morozov, A., Clokie, M.R.J., and Bayliss, C.D. (2019).
+Phage-Resistant Phase-Variant Sub-populations Mediate Herd Immunity
+Against
+Bacteriophage
+Invasion
+of
+Bacterial
+Meta-Populations.
+Front.
+Microbiol. 10, 1473.
+Vandeputte, D., Falony, G., Vieira-Silva, S., Tito, R.Y., Joossens, M., and Raes,
+J. (2016). Stool consistency is strongly associated with gut microbiota richness
+and composition, enterotypes and bacterial growth rates. Gut 65, 57–62.
+Vandeputte, D., Kathagen, G., D’hoe, K., Vieira-Silva, S., Valles-Colomer, M.,
+Sabino, J., Wang, J., Tito, R.Y., De Commer, L., Darzi, Y., et al. (2017).
+Quantitative microbiome proﬁling links gut community variation to microbial
+load. Nature 551, 507–511.
+Weitz, J.S., Stock, C.A., Wilhelm, S.W., Bourouiba, L., Coleman, M.L., Buchan,
+A., Follows, M.J., Fuhrman, J.A., Jover, L.F., Lennon, J.T., et al. (2015). A multi-
+trophic model to quantify the effects of marine viruses on microbial food webs
+and ecosystem processes. ISME J. 9, 1352–1364.
+Willing, B.P., Dicksved, J., Halfvarson, J., Andersson, A.F., Lucio, M., Zheng,
+Z., Jarnerot, G., Tysk, C., Jansson, J.K., and Engstrand, L. (2010). A pyrose-
+quencing study in twins shows that gastrointestinal microbial proﬁles vary
+with inﬂammatory bowel disease phenotypes. Gastroenterology. 139, 1844–
+1854e1.
+Wood, D.E., and Salzberg, S.L. (2014). Kraken: ultrafast metagenomic
+sequence classiﬁcation using exact alignments. Genome Biol. 15, R46.
+Zhang, X., Zhao, Y., Zhang, M., Pang, X., Xu, J., Kang, C., Li, M., Zhang, C.,
+Zhang, Z., Zhang, Y., et al. (2012). Structural changes of gut microbiota during
+berberine-mediated prevention of obesity and insulin resistance in high-fat
+diet-fed rats. PLoS ONE 7, e42529.
+Zhao, G., Droit, L., Gilbert, M.H., Schiro, F.R., Didier, P.J., Si, X., Paredes, A.,
+Handley, S.A., Virgin, H.W., Bohm, R.P., and Wang, D. (2019). Virome bioge-
+ography in the lower gastrointestinal tract of rhesus macaques with chronic
+diarrhea. Virology 527, 77–88.
+Zhou, Y., Chen, H., He, H., Du, Y., Hu, J., Li, Y., Li, Y., Zhou, Y., Wang, H.,
+Chen, Y., and Nie, Y. (2016). Increased Enterococcus faecalis infection is asso-
+ciated with clinically active Crohn disease. Medicine (Baltimore) 95, e5019.
+Zuo, T., Lu, X.J., Zhang, Y., Cheung, C.P., Lam, S., Zhang, F., Tang, W., Ching,
+J.Y.L., Zhao, R., Chan, P.K.S., et al. (2019). Gut mucosal virome alterations in
+ulcerative colitis. Gut 68, 1169–1179.
+Cell Host & Microbe 26, 1–15, December 11, 2019
+15
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+STAR+METHODS
+KEY RESOURCES TABLE
+REAGENT or RESOURCE
+SOURCE
+IDENTIFIER
+Bacterial and Virus Strains
+Lactococcus lactis bacteriophage Q33
+Dr. Jennifer Mahony, University
+College Cork (Mahony et al., 2013)
+N/A
+Lactococcus lactis SMQ-86
+Dr. Jennifer Mahony, University
+College Cork (Mahony et al., 2013)
+N/A
+Biological Samples
+Faecal samples
+PURSUIT-M (NCT00488631) phase
+3 trial provided by Janssen Biotech
+N/A
+Critical Commercial Assays
+SuperScript IV First Strand Synthesis
+System
+ThermoFisher Scientiﬁc
+Cat#18091050
+illustra GenomiPhi V2 DNA Ampliﬁcation Kit
+GE Healthcare Life Sciences
+Cat#25660032
+DNeasy Blood & Tissue kit
+QIAGEN
+Cat#69506
+Qubit dsDNA HS kit
+ThermoFisher Scientiﬁc
+Cat#Q32854
+TruSeq Nano DNA Library Prep kit
+Illumina
+Cat#20015965
+QIAamp Fast DNA Stool Mini kit
+QIAGEN
+Cat#51604
+Glass Homogenization Beads 3.5mm
+Biospec Products
+Cat#11079135
+Zirconium Silicate Beads 0.1mm
+Thistle Scientiﬁc
+Cat#11079101z
+Zirconium Silicate Beads 1mm
+Thistle Scientiﬁc
+Cat#11079110z
+Phusion High-Fidelity PCR Master Mix with
+HF Buffer
+ThermoFisher Scientiﬁc
+Cat#F531L
+AMPure XP beads
+Beckman-Coulter
+Cat#A63881
+Nextera XT Index kit v2 Set A
+Illumina
+Cat#FC-131-2001
+Nextera XT Index kit v2 Set B
+Illumina
+Cat#FC-131-2002
+Nextera XT Index kit v2 Set C
+Illumina
+Cat#FC-131-2003
+Nextera XT Index kit v2 Set D
+Illumina
+Cat#FC-131-2004
+Deposited Data
+Virome and 16S data from the publication
+‘‘Disease-speciﬁc alterations in the enteric
+virome in inﬂammatory bowel disease.’’ By
+Norman et al.
+Norman et al., 2015
+NCBI BioProject DB
+PRJEB7772
+Raw virome sequencing data from the
+PURSUIT-M (NCT00488631) phase 3
+clinical trial cohort
+NCBI BioProject DB
+PRJNA552463
+Raw 16 s sequencing data from the
+PURSUIT-M (NCT00488631) phase 3
+clinical trial cohort
+NCBI BioProject DB
+PRJNA552448
+PURSUIT-M (NCT00488631) phase 3
+clinical trial cohort details
+ClinicalTrials.gov
+https://clinicaltrials.gov/ct2/show/
+NCT00488631
+crAss-like phage genomic sequence
+database
+Guerin et al., 2018
+https://doi.org/10.1016/j.chom.2018.
+10.002
+pVOGs database
+Grazziotin et al., 2017
+http://dmk-brain.ecn.uiowa.edu/pVOGs/
+HMP microbial reference genomes
+The Human Microbiome Jumpstart
+Reference Strains Consortium, 2010
+https://www.hmpdacc.org/reference_
+genomes/reference_genomes.php
+Oligonucleotides
+16S-FP (50-TCGTCGGCAGCGTCAGATG
+TGTATAAGAGACAGCCTACGGGNGGC
+WGCAG-30)
+Sigma-Aldrich
+NA
+(Continued on next page)
+e1
+Cell Host & Microbe 26, 1–15.e1–e5, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+LEAD CONTACT AND MATERIALS AVAILABILITY
+Further information and requests for resources and reagents should be directed to and will be fulﬁlled by the Lead Contact, Prof. Colin
+Hill (c.hill@ucc.ie). This study did not generate new unique reagents.
+EXPERIMENTAL MODEL AND SUBJECT DETAILS
+Faecal Samples (Longitudinal UC Dataset)
+Faecal samples from the PURSUIT-M (NCT00488631) phase 3 trial were provided by Janssen Biotech. This was a multicenter, pla-
+cebo-controlled, double-blind, randomized-withdrawal study conducted at 251 centers between September 2007 and October
+Continued
+REAGENT or RESOURCE
+SOURCE
+IDENTIFIER
+16S-RP (50-GTCTCGTGGGCTCGGAGATG
+TGTATAAGAGACAGGACTACHVGGGTA
+TCTAATCC-30)
+Sigma-Aldrich
+NA
+Software and Algorithms
+Trimmomatic v0.36
+Bolger et al., 2014
+http://www.usadellab.org/cms/index.
+php?page=trimmomatic; RRID:
+SCR_011848
+SPAdes v3.10
+Nurk et al., 2017
+https://github.com/ablab/spades; RRID:
+SCR_000131
+Prodigal v2.6.3
+https://github.com/hyattpd/Prodigal
+https://github.com/hyattpd/Prodigal; RRID:
+SCR_011936
+HMMER 3.1b2
+http://hmmer.org/
+http://hmmer.org/; RRID: SCR_005305
+VirSorter v1.0.3
+Roux et al., 2015a
+https://github.com/simroux/VirSorter
+Bowtie2 v2.1.0
+Langmead and Salzberg, 2012
+http://bowtie-bio.sourceforge.net/bowtie2/
+index.shtml; RRID: SCR_005476
+vConTACT2
+Bin Jang et al., 2019
+https://bitbucket.org/MAVERICLab/
+vcontact2/src/master/
+SAMTools v0.1.19
+Li et al., 2009
+http://www.htslib.org/download/; RRID:
+SCR_002105
+PILER-CR v1.06
+Edgar, 2007
+https://www.drive5.com/pilercr/
+phyloseq R package (v.1.26)
+https://joey711.github.io/phyloseq/import-
+data.html
+https://joey711.github.io/phyloseq/import-
+data.html; RRID: SCR_013080
+vegan R package (v.2.5-3)
+https://github.com/vegandevs/vegan
+https://github.com/vegandevs/vegan;
+RRID: SCR_011950
+Hmisc R package (v.4.2-0)
+https://github.com/harrelfe/Hmisc
+https://github.com/harrelfe/Hmisc
+stats R package (v3.6.1)
+https://github.com/SurajGupta/r-source/
+tree/master/src/library/stats/R
+https://github.com/SurajGupta/r-source/
+tree/master/src/library/stats/R
+XgBoost R package (0.71.2)
+https://github.com/dmlc/xgboost/tree/
+master/R-package
+https://github.com/dmlc/xgboost/tree/
+master/R-package
+ROCR (v.1.0-7)
+https://github.com/ipa-tys/ROCR
+https://github.com/ipa-tys/ROCR; RRID:
+SCR_008551
+ggplot2 (v.3.1.0).
+https://github.com/tidyverse/ggplot2
+https://github.com/tidyverse/ggplot2;
+RRID: SCR_014601
+DESeq2 (v.1.22.1)
+https://github.com/mikelove/DESeq2
+https://github.com/mikelove/DESeq2;
+RRID: SCR_015687
+SPINGO (v1.3)
+Allard et al., 2015
+https://github.com/GuyAllard/SPINGO
+UCHIME (v4.2)
+Edgar et al., 2011
+https://drive5.com/uchime/uchime_
+download.html
+mothur (v1.38.0)
+Schloss et al., 2009
+https://github.com/mothur/mothur/
+releases/tag/v.1.42.3; RRID: SCR_011947
+DADA2 (v1.10.1).
+Callahan et al., 2016
+https://benjjneb.github.io/dada2/dada-
+installation.html; RRID: SCR_008205
+Cell Host & Microbe 26, 1–15.e1–e5, December 11, 2019
+e2
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+2011. The institutional review board or ethics committee at each site approved the protocol, and patients provided written informed
+consent. The study cohort consisted of 40 UC subjects with active disease at baseline, and varying disease states throughout the
+study. Disease activity was determined by Mayo score, an index based on rectal bleeding, stool frequency, physician’s global
+assessment and endoscopic ﬁndings. The cohort, of which 23 were male, had a mean age of 39.55 (±16.60 years) and mean BMI
+of 23.74 (±4.46), while 31 were Caucasian and 9 non-Caucasian. Participants who had a partial/total colectomy or an ostomy, signs
+of latent or active granulomatous infection, or signs/symptoms of malignancy were excluded from this study. All subjects were taking
+golimumab at baseline and a full medical and medication history of all participants in the PURSUIT-M trial are found at https://
+clinicaltrials.gov/ct2/show/results/NCT00488631.
+METHOD DETAILS
+Extraction of Faecal VLP DNA, Library Preparation and Sequencing (Longitudinal UC Dataset)
+Extraction of faecal VLP DNA from the longitudinal UC dataset cohort samples, subsequent library preparation and sequencing were
+performed as described by Shkoporov et al. (Shkoporov et al., 2018b; Shkoporov et al., 2019) with the following modiﬁcations: All
+samples were spiked with the lactococcal Q33 (Mahony et al., 2013) into the faecal homogenate at 106 pfu/mL, which allowed for
+quantiﬁcation of the total bacteriophage loads in faecal samples. Shotgun library preparation was carried out using TruSeq Nano
+DNA HT Library Prep Kit (Illumina) following reverse transcription of the samples with ThermoFisher Scientiﬁc SuperScript IV First
+Strand Synthesis System and multiple displacement ampliﬁcation (MDA) with the Illustra GenomiPhi V2 kit (GE Healthcare). Libraries
+were normalized as per the standard manufacturer’s protocol. Ready-to-load libraries were sequenced using 2 3 150 bp paired-end
+chemistry on an Illumina HiSeq 4000 platform (Illumina, San Diego, California) at GATC Biotech AG, Germany.
+Extraction of Total Faecal DNA for 16S rRNA Amplicon Sequencing (Longitudinal UC Dataset)
+Extraction of total faecal DNA from the longitudinal UC dataset cohort samples, subsequent library preparation and sequencing were
+performed as described by Shkoporov et al., 2018 (Shkoporov et al., 2018b). Ready-to-load libraries were sequenced using a pro-
+prietary modiﬁed protocol using 2 3 300 bp paired-end chemistry on an Illumina HiSeq platform (Illumina, San Diego, California) at
+GATC Biotech AG, Germany.
+Bioinformatic Viral Processing
+Norman et al., Dataset
+Raw sequence (2,199,754 ± 983,529 per sample) quality was assessed using FASTQC and ﬁltered utilizing Trimmomatic (Bolger
+et al., 2014) using the following parameters; SLIDINGWINDOW: 4:20, MINLEN: 60 HEADCROP 15; CROP 225. Human reads
+were removed using Kraken (v.0.10.5) (Wood and Salzberg, 2014) and version 38 of the human genome, which resulted in a
+mean of 1,130,518 ± 436,424 sequences per sample. SPAdes meta (Nurk et al., 2017) with default parameters, was chosen to
+assemble the reads into contigs per sample, based on a recent virome assembly comparison (Sutton et al., 2019b) Assemblies
+were subsequently pooled and retained if longer than 1kb. Redundancy was removed with 90% identity over 90% of the length
+(of the shorter) retaining the longest contig in each case. This was calculated by carrying out an all versus all BLASTn and parsing
+resulting alignments with an in-house script, as described in (Shkoporov et al., 2019; Shkoporov et al., 2018b). Brieﬂy, all local align-
+ments between two sequences above an e-value threshold of 1e-5 were summed, removing overlaps between alignments. The length
+of the combined local alignments was then given as a percentage of the length shorter sequence. Bacterial contamination was
+removed by using an extensive set of inclusion criteria to select viral sequences only. Brieﬂy, contigs were required to fulﬁl one of
+the following criteria; 1) Categories 1-6 from VirSorter when run with default parameters and Refseqdb (–db 1) (Roux et al., 2015a)
+positive, 2) circular, 3) a minimum of 2 pVogs with at least 3 per 1kb (Grazziotin et al., 2017), 4) BLASTn alignment to an in-house
+crAssphage database (e-value threshold: 1e-10) (Guerin et al., 2018), 5) greater than 3kb with no BLASTn alignments to the NT data-
+base (January ‘19) (e-value threshold: 1e-10), 6) BLASTn alignments to viral RefSeq database (v.89) (e-value threshold: 1e-10), and 7)
+less than 3 ribosomal proteins as predicted using the COG database (Tatusov et al., 2000). HMMscan was used to search the pVOGs
+hmm proﬁle database using predicted protein sequences on VLS with and e-value ﬁlter of 1e-5, retaining the top hit in each case.
+Quality ﬁltered reads were subsequently aligned to the reference set of viral sequences (n = 7,605) using bowtie2 (Langmead and
+Salzberg, 2012). Using SAMtools (Li et al., 2009), a count table was generated and ﬁnally a 75% breadth of coverage ﬁlter was em-
+ployed to exclude any spurious bowtie2 alignments being identiﬁed as true viral hits. Any viral sequences which did not feature a
+recruited read coverage of at least 1 over 75% of the total sequence length were set to 0. These criteria yielded a ﬁnal database
+of 7,582 viruses like sequences.
+Longitudinal UC Dataset
+The same processing as described above was performed for the longitudinal UC dataset cohort where 2,523,262 ± 1,289,619 raw
+reads were quality ﬁltered (Trimmomatic: SLIDINGWINDOW: 4:20, MINLEN: 60 HEADCROP 15; CROP 135 (fwd), 120 (rev)) and
+assembled yielding 8,089 VLS in the ﬁnal count table. VLS classiﬁed as the spiked exogenous Q33 phage and the internal Illumina
+control PhiX were excluded from further analysis. Subsequent clustering lead to 484 clusters of > 2 members and 4,521 of 1 member.
+Clustering and Taxonomy
+Protein sequences were predicted using Prodigal (n = 121,021) (Hyatt et al., 2010) and subsequently clustered using vConTACT2 (Bin
+Jang et al., 2019) using a pc-inﬂation and vc-inﬂation of 1.5, pcs-mode set to MCL and all other parameters set to default. This
+e3
+Cell Host & Microbe 26, 1–15.e1–e5, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+resulted in 472 viral clusters of R 2 members and 2,382 singletons, hereby referred to as a viral cluster (VC) with 1 member. A cluster
+count table was generated by summing all the counts from the previous table in each cluster. Taxonomic classiﬁcation was assigned
+to a cluster using vConTACT2 and a custom database of viral genomes formed from the concatenation of the taxonomically classiﬁed
+portion of the NCBI’s Viral RefSeq (v.89) and the JGI’s IMG-VR (downloaded 9 January 2019). The resulting clusters were classiﬁed to
+family-level based on the presence of reference genomes within. Clusters containing genomes from multiple families, were termed
+‘‘heterogeneous,’’ and may arise from disagreement between protein-based phylogeny and current taxonomic classiﬁcation dis-
+cussed further by Bolduc et al. CRISPR protospacers were predicted from the human microbiome project bacterial reference ge-
+nomes (The Human Microbiome Jumpstart Reference Strains Consortium 2010) using PILRCR (Edgar, 2007). These were aligned
+to VLS using blastn (-task ‘‘blastn-short’’) and formatted with blastn_formatter. (The top alignments with an e-value score < 1e-5
+to each VLS was retained in each case). A VC was deemed temperate if it contained VLS with alignments to pVOGs featuring
+annotated integrase genes or site speciﬁc recombinase genes. These pVOGs were identiﬁed through string matching ‘‘speciﬁc
+recombinase’’ or ‘‘integrase’’ within the functional annotations of each pVOG. This yielded 28 pVOGs in total. (VOG0221,VOG0275,
+VOG0286,VOG0303,VOG0375,VOG0559,VOG0944,VOG10948,VOG2142,VOG2405,VOG2773,VOG2780,VOG3344,VOG3995,
+VOG4609,VOG4650,VOG4942,VOG5508,VOG5717,VOG6225,VOG6237,VOG6282,VOG6466,VOG7017,VOG7518,VOG8218,
+VOG8244,VOG9501).
+Bioinformatic 16S Processing
+Norman et al. Dataset
+Read quality was assessed on the raw reads (68,146 ± 32,196) using FastQC before and after quality ﬁltering using Trimmomatic
+under the following parameters; HEADCROP:15 CROP:235 SLIDINGWINDOW:4:20 MINLEN:30. The trimmed reads of the Norman
+et al. 16S dataset were then processed using DADA2 (Callahan et al., 2016) (v1.10.1). To do this, reads were quality ﬁltered further
+(truncLen = 230, maxEE = 1.4, truncQ = 11), before dereplication and de novo chimera removal (method = ‘‘consensus’’). 16S
+reads published in this study were processed using the same method (truncLen = c(180,100), maxEE = 1.4, truncQ = 2) and the
+resulting sequence tables of both datasets merged in DADA2. Chimeras were removed de novo from the combined datasets
+(method = ’’consensus’’), followed by a round of reference based chimera removal using UCHIME (Edgar et al., 2011) (v4.2) against
+the ChimeraSlayer Gold database. Resulting non-chimeric RSVs were sorted by length, with all RSVs having a minimum length of
+200 bp and a maximum of 260bp retained. The ﬁnal count table resulted in a mean of 41,060 ± 17,131 counts per sample. Classi-
+ﬁcation of retained RSVs was achieved using mothur (Schloss et al., 2009) (v1.38.0, bootstrap > = 80), while SPINGO (Allard
+et al., 2015) (v1.3, bootstrap > = 0.8, similarity > = 0.5) was used for species-level classiﬁcation. The RDP v11.4 database was
+used in both instances.
+Longitudinal UC Dataset
+The same methods are above were employed to process the 16S raw data from the UC longitudinal dataset. There were
+382,602 ± 181,911 raw reads and the following Trimmomatic parameters were applied: HEADCROP:20 SLIDINGWINDOW:4:20
+CROP:210 MINLEN:50, resulting in a mean of 76,619 ± 40,278 counts in the ﬁnal count table per sample after being subjected to
+the bioinformatics pipeline.
+QUANTIFICATION AND STATISTICAL ANALYSIS
+All statistics and ﬁgure generation was performed in R (v.3.5.1). a and b-diversity was calculated using phyloseq (v.1.26) while dif-
+ferential abundance was carried out using DESeq2 (v.1.22.1). DESeq2 performs an internal normalization, in which a geometric
+mean is calculated for each sequence across all samples. Counts for a sequence in each sample are then divided by this mean.
+The median of these ratios in a sample becomes the size factor for that sample. This procedure corrects for library size and compo-
+sition bias within samples. P values are determined using the Wald test and adjusted with Benjamini-Hochberg. For further details see
+https://bioconductor.org/packages/release/bioc/manuals/DESeq2/man/DESeq2.pdf. All correlations except the relative abun-
+dance of key VCs and RSVs were carried were performed with the cor.test from the stats R package (v3.6.1) using the spearman
+method. Correlations between the relative abundance of key VCs and RSVs were carried out using rcorr from the Hmisc R package
+(v.4.2-0) with Spearman method. PERMANOVA was carried out using Adonis from the vegan R package (v.2.5-3) to investigate for
+signiﬁcance in the b-diversity and measure the degree of variation explained. Procrustes coordinates and signiﬁcance was generated
+using procuste and procuste.randtest also from the vegan library. Machine learning was carried out in R using the XgBoost package
+(0.71.2). In each case the model was trained on 70% of the data and results refer to the remaining 30% of the data which was used to
+test the performance of the model. Parameters were optimized for each model using 5-fold cross validation employing an n.round of
+1000 across 200 iterations. ROC curves and accuracy were performed using the R library ROCR (v.1.0-7). Feature importance was
+based on the gain values (i.e., relative contribution of the feature to the model), with increasing gain referring to increased importance
+for generating a prediction.
+Tests for signiﬁcance between groups for a-diversity, Caudovirales abundance, temperate VC abundance, and virome stability in
+relation to remission status, were performed using a Wilcoxon test. For all statistical tests signiﬁcance was deﬁned as less than 0.05
+and all adjustments (where required) was using the Benjamini-hochberg method and one sample was chosen at random per subject.
+All ﬁgures were generated using ggplot2 (v.3.1.0).
+Cell Host & Microbe 26, 1–15.e1–e5, December 11, 2019
+e4
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
+DATA AND CODE AVAILABILITY
+The longitudinal UC dataset 16S and virome reads are available on the NCBI SRA. The accession number for the 16S sequencing
+data from the longitudinal UC cohort reported in this paper is NCBI SRA: PRJNA552448. The virome sequencing data from the lon-
+gitudinal UC cohort is NCBI SRA: PRJNA552463. Raw sequencing reads (virome and 16S) for the Norman et al., 2015 cohort were
+downloaded from the EMBL-EBI database using a the accession number EMBL-EBI: PRJEB7772 as stated in the original publication
+(Norman et al., 2015).
+e5
+Cell Host & Microbe 26, 1–15.e1–e5, December 11, 2019
+Please cite this article in press as: Clooney et al., Whole-Virome Analysis Sheds Light on Viral Dark Matter in Inﬂammatory Bowel Disease, Cell Host &
+Microbe (2019), https://doi.org/10.1016/j.chom.2019.10.009
