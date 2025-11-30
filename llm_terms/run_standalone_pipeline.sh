@@ -60,11 +60,14 @@ pkill ollama || true
 sleep 2
 
 # Optimize Ollama for A100
-export OLLAMA_NUM_PARALLEL=4
+export OLLAMA_NUM_PARALLEL=2
 export OLLAMA_MAX_LOADED_MODELS=2
 export OLLAMA_FLASH_ATTENTION=1
 export OLLAMA_KV_CACHE_TYPE=f16
 export OLLAMA_KEEP_ALIVE=24h
+
+# Initialize Conda properly for script usage
+eval "$($EBROOTMINIFORGE3/bin/conda shell.bash hook)"
 
 if conda info --envs | grep -q "llm-terms-cdm"; then
    echo "Environment llm-terms-cdm already exists. Activating..."
@@ -455,7 +458,7 @@ fi
 echo ""
 # === OLLAMA SETUP ===
 # Define models to run
-MODELS_TO_RUN=("qwen3:14b")
+MODELS_TO_RUN=("gemma3:12b")
 
 
 # ==================================================
@@ -535,10 +538,11 @@ echo "Running basic CDM entity extraction pipeline..."
 $PYTHON_CMD standalone_pipeline.py \
    --input "$INPUT_FILE" \
    --output "../output/cdm_entities.json" \
-   --model qwen3:14b \
+   --model gemma3:12b \
    --base-url http://localhost:11434 \
    --semantic-model all-MiniLM-L6-v2 \
-   --max-workers 3
+   --max-workers 4 \
+   --max-file-workers 8
 
 
 BASIC_EXIT_CODE=$?
@@ -558,7 +562,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
    ENHANCED_CMD="$PYTHON_CMD standalone_pipeline.py \
        --input \"$INPUT_FILE\" \
        --output \"../output/cdm_entities_enhanced.json\" \
-       --model qwen3:14b \
+       --model gemma3:12b \
        --base-url ${OLLAMA_BASE_URL:-http://localhost:11434} \
        --semantic-model all-MiniLM-L6-v2 \
        --max-workers 4 \

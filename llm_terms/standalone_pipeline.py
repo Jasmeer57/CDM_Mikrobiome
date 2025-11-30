@@ -213,10 +213,10 @@ class CDMEntityConfig:
 
     # Chunking strategies
     CHUNK_SIZES = {
-        'small': 5000,    # < 10k chars
-        'medium': 10000,  # < 50k chars
-        'large': 20000,   # < 100k chars
-        'xlarge': 30000   # > 100k chars
+        'small': 3000,    # < 10k chars
+        'medium': 6000,   # < 50k chars
+        'large': 10000,   # < 100k chars
+        'xlarge': 15000   # > 100k chars
     }
 
     OVERLAP_RATIOS = {
@@ -245,6 +245,12 @@ class CDMEntityConfig:
             'temperature': 0.1,
             'timeout': 1200,
             'num_ctx': 32768
+        },
+        'gemma3:12b': {
+            'max_tokens': 8000,
+            'temperature': 0.1,
+            'timeout': 1200,
+            'num_ctx': 16384
         },
         'biomistral-7B': {
             'max_tokens': 4000,
@@ -281,7 +287,7 @@ class CDMEntityConfig:
 @dataclass
 class PipelineConfig:
     """Main pipeline configuration."""
-    default_model: str = "qwen3:8b"
+    default_model: str = "gemma3:12b"
     default_base_url: str = "http://localhost:11434"
     max_workers: int = 3
     max_file_workers: int = 1
