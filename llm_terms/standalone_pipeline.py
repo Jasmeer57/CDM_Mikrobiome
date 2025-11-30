@@ -467,34 +467,42 @@ class LLMClient:
 
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call LLM with structured prompt and return response."""
-        try:
-            request_config = {
-                "model": self.model,
-                "prompt": prompt,
-                "stream": False,
-                "options": {
-                    "temperature": self.config['temperature'],
-                    "top_p": 0.9,
-                    "max_tokens": max_tokens or self.config['max_tokens'],
-                    "num_ctx": self.config.get('num_ctx', 4096)
+        max_retries = 3
+        base_delay = 2
+
+        for attempt in range(max_retries):
+            try:
+                request_config = {
+                    "model": self.model,
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {
+                        "temperature": self.config['temperature'],
+                        "top_p": 0.9,
+                        "max_tokens": max_tokens or self.config['max_tokens'],
+                        "num_ctx": self.config.get('num_ctx', 4096)
+                    }
                 }
-            }
 
-            response = requests.post(
-                f"{self.base_url}/api/generate",
-                json=request_config,
-                timeout=self.config['timeout']
-            )
+                response = requests.post(
+                    f"{self.base_url}/api/generate",
+                    json=request_config,
+                    timeout=self.config['timeout']
+                )
 
-            if response.status_code == 200:
-                return response.json().get('response', '').strip()
-            else:
-                logger.error(f"LLM API error: {response.status_code} - {response.text}")
-                return ""
+                if response.status_code == 200:
+                    return response.json().get('response', '').strip()
+                else:
+                    logger.warning(f"LLM API error (attempt {attempt+1}/{max_retries}): {response.status_code} - {response.text}")
+                    
+            except Exception as e:
+                logger.warning(f"LLM call failed (attempt {attempt+1}/{max_retries}): {e}")
+            
+            if attempt < max_retries - 1:
+                time.sleep(base_delay * (2 ** attempt))  # Exponential backoff
 
-        except Exception as e:
-            logger.error(f"LLM call failed: {e}")
-            return ""
+        logger.error("LLM call failed after all retries.")
+        return ""
 
     def is_available(self) -> bool:
         """Check if the LLM service is available."""
@@ -3699,8 +3707,13 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
                 }
                 
                 # Extract entities
-                file_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'))
+                raw_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'))
                 
+                # Filter out invalid entities (e.g. error codes or malformed data)
+                file_entities = [e for e in raw_entities if isinstance(e, dict)]
+                if len(file_entities) < len(raw_entities):
+                    logger.warning(f"⚠️  Filtered out {len(raw_entities) - len(file_entities)} invalid entities from {file_path.name}")
+
                 # Add source file info
                 for entity in file_entities:
                     entity['source_file'] = file_path.name

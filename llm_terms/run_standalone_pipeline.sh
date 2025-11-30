@@ -66,8 +66,18 @@ export OLLAMA_FLASH_ATTENTION=1
 export OLLAMA_KV_CACHE_TYPE=f16
 export OLLAMA_KEEP_ALIVE=24h
 
-# Initialize Conda properly for script usage
-eval "$($EBROOTMINIFORGE3/bin/conda shell.bash hook)"
+# Initialize Conda properly
+if [ -n "$EBROOTMINIFORGE3" ]; then
+    source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
+else
+    # Fallback: try to find conda in PATH
+    CONDA_EXE=$(which conda)
+    if [ -n "$CONDA_EXE" ]; then
+        # Go up two levels from bin/conda to get base dir
+        CONDA_BASE=$(dirname $(dirname "$CONDA_EXE"))
+        source "$CONDA_BASE/etc/profile.d/conda.sh"
+    fi
+fi
 
 if conda info --envs | grep -q "llm-terms-cdm"; then
    echo "Environment llm-terms-cdm already exists. Activating..."
