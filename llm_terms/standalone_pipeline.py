@@ -36,9 +36,10 @@ try:
     from sklearn.metrics.pairwise import cosine_similarity
     from rapidfuzz import process, fuzz
     from dotenv import load_dotenv
+    from tqdm import tqdm
 except ImportError as e:
     print(f"Missing dependency: {e}")
-    print("Please install required packages: pip install requests numpy pandas torch transformers sentence-transformers scikit-learn rapidfuzz python-dotenv")
+    print("Please install required packages: pip install requests numpy pandas torch transformers sentence-transformers scikit-learn rapidfuzz python-dotenv tqdm")
     sys.exit(1)
 
 # Configure logging
@@ -3273,11 +3274,11 @@ class CDMEntityPipeline:
         all_entities = []
         with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
             futures = [executor.submit(self.extractor.extract_entities_from_chunk, chunk) for chunk in chunks]
-
-            for future in as_completed(futures):
+            
+            for future in tqdm(as_completed(futures), total=len(chunks), desc="Extracting entities", unit="chunk"):
                 try:
-                    chunk_num, chunk_entities = future.result(timeout=self.llm_client.config['timeout'])
-                    all_entities.extend(chunk_entities)
+                    entities = future.result()
+                    all_entities.extend(entities)
                 except Exception as e:
                     logger.error(f"Error processing chunk: {e}")
 
@@ -3592,8 +3593,9 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             logger.error(f"Invalid input path: {input_path}")
             return False
 
-        for i, file_path in enumerate(files):
+        for i, file_path in enumerate(tqdm(files, desc=f"Processing {stage_name} files", unit="file")):
             logger.info(f"📄 Processing file {i+1}/{len(files)}: {file_path.name}")
+            print(f"[{datetime.now().strftime('%H:%M:%S')}] Processing: {file_path.name}")
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
                 

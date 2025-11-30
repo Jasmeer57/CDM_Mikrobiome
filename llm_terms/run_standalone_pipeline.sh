@@ -26,9 +26,22 @@ module load Miniforge3/24.1.2-0
 source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
 module load CUDA/12.3.0
 
+# === ENVIRONMENT ISOLATION ===
 # Prevent user's local packages from interfering with the conda environment
 export PYTHONPATH=""
 export PYTHONNOUSERSITE=1
+unset PYTHONUSERBASE
+unset LD_LIBRARY_PATH
+
+# Debug environment
+echo "=== PYTHON ENVIRONMENT DEBUG ==="
+echo "Python path: $(which python)"
+echo "Python version: $(python --version)"
+echo "PYTHONPATH: $PYTHONPATH"
+echo "PYTHONNOUSERSITE: $PYTHONNOUSERSITE"
+echo "sys.path check:"
+python -c "import sys; print(sys.path)"
+echo "================================"
 
 # Create logs directory
 mkdir -p logs
@@ -45,81 +58,113 @@ else
     conda activate llm-terms-cdm
 fi
 
+    conda activate llm-terms-cdm
+fi
+
+# === FORCE PATH UPDATE ===
+# Ensure the conda environment binaries are first in the PATH
+export PATH="$CONDA_PREFIX/bin:$PATH"
+
+# === POST-ACTIVATION DEBUG ===
+echo "=== POST-ACTIVATION DEBUG ==="
+echo "Python path: $(which python)"
+echo "Python version: $(python --version)"
+echo "Conda prefix: $CONDA_PREFIX"
+echo "Environment Python: $CONDA_PREFIX/bin/python"
+echo "============================="
+
+# Define explicit python and pip commands
+PYTHON_CMD="$CONDA_PREFIX/bin/python"
+PIP_CMD="$CONDA_PREFIX/bin/pip"
+
+# Verify Python version
+PY_VER=$($PYTHON_CMD --version 2>&1)
+if [[ "$PY_VER" != *"3.9"* ]]; then
+    echo "❌ Error: Expected Python 3.9, but got $PY_VER"
+    echo "Attempting to fix by reinstalling python..."
+    conda install python=3.9 -y
+fi
+
+# === INSTALL DEPENDENCIES ===
 # === INSTALL DEPENDENCIES ===
 echo "Installing dependencies..."
-pip install --upgrade pip
+$PIP_CMD install --upgrade pip
 
 # Install core requirements
 echo "Installing core ML/NLP dependencies..."
-pip install sentence-transformers==2.2.2
-pip install torch==2.1.1
-pip install transformers==4.35.2
-pip install scikit-learn==1.3.2
-pip install einops==0.7.0
+$PIP_CMD install sentence-transformers==3.0.0
+$PIP_CMD install torch==2.1.1
+$PIP_CMD install transformers==4.35.2
+$PIP_CMD install scikit-learn==1.3.2
+$PIP_CMD install einops==0.7.0
 
 # Install scientific computing
 echo "Installing scientific computing dependencies..."
-pip install numpy==1.24.4
-pip install pandas==2.0.3
-pip install scipy==1.11.4
+$PIP_CMD install numpy==1.24.4
+$PIP_CMD install pandas==2.0.3
+$PIP_CMD install scipy==1.11.4
 
 # Install web framework
 echo "Installing web framework dependencies..."
-pip install fastapi==0.104.1
-pip install "uvicorn[standard]==0.24.0"
-pip install python-multipart==0.0.6
+$PIP_CMD install fastapi==0.104.1
+$PIP_CMD install "uvicorn[standard]==0.24.0"
+$PIP_CMD install python-multipart==0.0.6
 
 # Install HTTP and networking
 echo "Installing HTTP dependencies..."
-pip install requests==2.31.0
-pip install urllib3==2.1.0
-pip install httpx==0.25.2
+$PIP_CMD install requests==2.31.0
+$PIP_CMD install urllib3==2.1.0
+$PIP_CMD install httpx==0.25.2
 
 # Install data processing
 echo "Installing data processing dependencies..."
-pip install jsonschema==4.20.0
-pip install pydantic==2.5.0
+$PIP_CMD install jsonschema==4.20.0
+$PIP_CMD install "pydantic>=2.7.0"
 
 # Install biomedical NLP
 echo "Installing biomedical NLP dependencies..."
-pip install spacy==3.7.2
-pip install scispacy>=0.5.4
+$PIP_CMD install spacy==3.7.5
+$PIP_CMD install scispacy==0.6.2
 
 # Install additional text processing
-pip install nltk==3.8.1
+$PIP_CMD install nltk==3.8.1
 
 # Install database support
-pip install sqlalchemy==2.0.23
+$PIP_CMD install sqlalchemy==2.0.23
 
 # Install monitoring and safety
-pip install structlog==23.2.0
-pip install psutil==5.9.6
-pip install python-dotenv==1.0.0
+$PIP_CMD install structlog==23.2.0
+$PIP_CMD install psutil==5.9.6
+$PIP_CMD install python-dotenv==1.0.0
+$PIP_CMD install tqdm==4.66.1
 
 # Install testing dependencies
-pip install pytest==7.4.3
-pip install pytest-asyncio==0.21.1
+$PIP_CMD install pytest==7.4.3
+$PIP_CMD install pytest-asyncio==0.21.1
 
 # === INSTALL SCIPACY MODELS ===
 echo "Installing sciSpaCy models..."
-pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_core_sci_lg-0.5.1.tar.gz
-pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_craft_md-0.5.1.tar.gz
-pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz
-pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz
+# Using medium model instead of large to save resources
+$PIP_CMD install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_md-0.5.4.tar.gz
+$PIP_CMD install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_craft_md-0.5.4.tar.gz
+$PIP_CMD install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_bc5cdr_md-0.5.4.tar.gz
+$PIP_CMD install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_jnlpba_md-0.5.4.tar.gz
 
 # === OPTIONAL: REDIS AND ELASTICSEARCH ===
 echo "Installing optional caching and search dependencies..."
-pip install redis==5.0.1
-pip install elasticsearch==8.11.0
+$PIP_CMD install redis==5.0.1
+$PIP_CMD install elasticsearch==8.11.0
 
 # === DOWNLOAD SPACY MODELS ===
 echo "Downloading spaCy models..."
-python -m spacy download en_core_web_sm
-python -m spacy download en_core_web_md
+$PYTHON_CMD -m spacy download en_core_web_sm
+$PYTHON_CMD -m spacy download en_core_web_md
 
 # === DOWNLOAD NLTK DATA ===
 echo "Downloading NLTK data..."
-python -c "
+# === DOWNLOAD NLTK DATA ===
+echo "Downloading NLTK data..."
+$PYTHON_CMD -c "
 import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -289,16 +334,17 @@ echo "  - UMLS mapping: DISABLED (enable with --enable-umls-mapping)"
 echo ""
 
 # Check if input file exists
-INPUT_FILE="./data/input_text.txt"
+# Check if input file exists
+INPUT_FILE="../papers_txt"
 if [ ! -f "$INPUT_FILE" ]; then
-    echo "WARNING: Input file $INPUT_FILE not found!"
-    echo "Please place your input text file in the data/ directory or modify the INPUT_FILE variable"
-    echo "Available files in data directory:"
     ls -la data/ 2>/dev/null || echo "data directory not found"
     echo ""
-    echo "Creating a sample input file for demonstration..."
-    mkdir -p data
-    cat > "$INPUT_FILE" << 'EOF'
+    
+    # Only create sample if we are not pointing to a directory
+    if [ ! -d "$INPUT_FILE" ]; then
+        echo "Creating a sample input file for demonstration..."
+        mkdir -p data
+        cat > "$INPUT_FILE" << 'EOF'
 The human gut microbiome plays a crucial role in maintaining overall health.
 Recent studies have identified various bacterial species such as Bacteroides fragilis,
 Faecalibacterium prausnitzii, and Akkermansia muciniphila as key players in
@@ -312,22 +358,71 @@ between the microbiome and the central nervous system, influencing conditions li
 depression and anxiety through the production of neurotransmitters and modulation
 of the immune response.
 EOF
-    echo "Sample input file created at: $INPUT_FILE"
+        echo "Sample input file created at: $INPUT_FILE"
+    fi
+fi
+
+# Check if input is valid (file or directory)
+if [ ! -f "$INPUT_FILE" ] && [ ! -d "$INPUT_FILE" ]; then
+    echo "❌ Error: Input path '$INPUT_FILE' not found or invalid."
+    exit 1
 fi
 
 echo ""
-echo "Input file: $INPUT_FILE"
-echo "File size: $(wc -c < "$INPUT_FILE") characters"
-echo "File lines: $(wc -l < "$INPUT_FILE") lines"
+echo "Input path: $INPUT_FILE"
+if [ -d "$INPUT_FILE" ]; then
+    echo "Type: Directory (Batch Processing)"
+    echo "Files to process: $(find "$INPUT_FILE" -maxdepth 1 -name "*.txt" | wc -l) .txt files"
+else
+    echo "Type: Single File"
+    echo "File size: $(wc -c < "$INPUT_FILE") characters"
+    echo "File lines: $(wc -l < "$INPUT_FILE") lines"
+fi
 echo ""
+# === OLLAMA SETUP ===
+echo "=== OLLAMA SERVICE SETUP ==="
+# Check if Ollama is already running
+if curl -s http://localhost:11434/api/tags >/dev/null; then
+    echo "✅ Ollama is already running."
+else
+    echo "🚀 Starting Ollama service..."
+    # Start Ollama in background
+    ollama serve > logs/ollama.log 2>&1 &
+    OLLAMA_PID=$!
+    echo "Ollama started with PID: $OLLAMA_PID"
+    
+    # Wait for Ollama to be ready
+    echo "Waiting for Ollama to initialize..."
+    for i in {1..30}; do
+        if curl -s http://localhost:11434/api/tags >/dev/null; then
+            echo "✅ Ollama is ready!"
+            break
+        fi
+        sleep 2
+        echo -n "."
+    done
+    echo ""
+fi
 
+# Ensure Ollama model is pulled
+echo "Checking model: qwen3:14b"
+ollama pull qwen3:14b
+
+# Cleanup function to kill Ollama on exit
+cleanup() {
+    if [ -n "$OLLAMA_PID" ]; then
+        echo "Stopping Ollama service (PID: $OLLAMA_PID)..."
+        kill $OLLAMA_PID
+    fi
+}
+trap cleanup EXIT
 # === RUN CDM ENTITY EXTRACTION PIPELINE ===
 echo "=== STARTING CDM ENTITY EXTRACTION PIPELINE ==="
 echo ""
 
 # Basic pipeline run
 echo "Running basic CDM entity extraction pipeline..."
-python standalone_pipeline.py \
+$PYTHON_CMD standalone_pipeline.py \
     --input "$INPUT_FILE" \
     --output "../output/cdm_entities.json" \
     --model qwen3:14b \
@@ -346,7 +441,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
     echo "Running enhanced pipeline with available features..."
 
     # Build command dynamically based on available API keys
-    ENHANCED_CMD="python standalone_pipeline.py \
+    ENHANCED_CMD="$PYTHON_CMD standalone_pipeline.py \
         --input \"$INPUT_FILE\" \
         --output \"../output/cdm_entities_enhanced.json\" \
         --model qwen3:14b \
@@ -444,7 +539,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
     # Generate summary report
     echo ""
     echo "=== GENERATING SUMMARY REPORT ==="
-    python << 'EOF'
+    $PYTHON_CMD << 'EOF'
 import json
 import sys
 from datetime import datetime
