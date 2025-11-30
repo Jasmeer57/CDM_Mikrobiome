@@ -4022,8 +4022,7 @@ def main():
             mapping_confidence_threshold=0.7,
             enable_correction=args.enable_correction,
             enable_llm_correction=args.enable_llm_correction,
-            enable_correction=args.enable_correction,
-            enable_llm_correction=args.enable_llm_correction,
+
             dry_run=args.dry_run,
             fast_mode=args.fast,
             api_type=args.api_type
