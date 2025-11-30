@@ -597,8 +597,17 @@ class LLMClient:
                     logger.debug(f"LLM Response Body: {response.text[:500]}...")
                     resp_json = response.json()
                     content = resp_json.get('response', '').strip()
+                    
+                    # Handle 'thinking' field (seen in qwen3:4b)
                     if not content and 'thinking' in resp_json:
+                        logger.debug("Found content in 'thinking' field")
                         content = resp_json['thinking'].strip()
+                        
+                    # Final check and debug
+                    if not content:
+                        logger.warning(f"⚠️  LLM returned empty content. Keys found: {list(resp_json.keys())}")
+                        logger.debug(f"Full Response JSON: {str(resp_json)[:1000]}...")
+                        
                     return content
                 else:
                     logger.warning(f"LLM API error (attempt {attempt+1}/{max_retries}): {response.status_code} - {response.text}")
