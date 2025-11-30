@@ -6,11 +6,42 @@ Uses Sentence Transformers for semantic similarity-based deduplication
 import logging
 import numpy as np
 from typing import List, Dict, Tuple, Optional
-from sentence_transformers import SentenceTransformer
+try:
+    from sentence_transformers import SentenceTransformer
+except ImportError:
+    SentenceTransformer = None
 from sklearn.metrics.pairwise import cosine_similarity
+
 from config.cdm_config import CDMEntityConfig
 
 logger = logging.getLogger(__name__)
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+class TfidfSemanticModel:
+    """Fallback semantic model using TF-IDF."""
+    
+    def __init__(self):
+        self.vectorizer = TfidfVectorizer(stop_words='english', analyzer='char_wb', ngram_range=(2, 4))
+        self.is_fitted = False
+        
+    def encode(self, sentences: List[str], batch_size: int = 32, show_progress_bar: bool = False, convert_to_numpy: bool = True):
+        """
+        Encode sentences using TF-IDF. 
+        """
+        if not sentences:
+            return np.array([])
+            
+        try:
+            # Fit on the current batch for internal deduplication
+            embeddings = self.vectorizer.fit_transform(sentences)
+            self.is_fitted = True
+            if convert_to_numpy:
+                return embeddings.toarray()
+            return embeddings
+        except ValueError:
+            return np.zeros((len(sentences), 1))
+
 
 class SemanticDeduplicator:
     """Advanced semantic deduplication using Sentence Transformers."""
@@ -44,9 +75,15 @@ class SemanticDeduplicator:
                 self.model = SentenceTransformer(self.model_name)
             logger.info(f"✅ Model loaded successfully")
             return True
+        except ImportError:
+            logger.warning("⚠️ sentence-transformers not installed. Using TF-IDF fallback.")
+            self.model = TfidfSemanticModel()
+            return True
         except Exception as e:
-            logger.error(f"❌ Failed to load sentence transformer model: {e}")
-            return False
+            logger.warning(f"⚠️ Failed to load sentence transformer model: {e}. Using TF-IDF fallback.")
+            self.model = TfidfSemanticModel()
+            return True
+
 
     def encode_entities(self, entities: List[Dict]) -> Optional[np.ndarray]:
         """Encode entities into semantic embeddings."""

@@ -23,6 +23,15 @@ from config.cdm_config import CDMEntityConfig, PipelineConfig
 
 logger = logging.getLogger(__name__)
 
+# ==========================================
+# UTILITIES
+# ==========================================
+
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+
 class CDMEntityPipeline:
     """Main CDM entity extraction pipeline with semantic deduplication."""
 
@@ -39,6 +48,8 @@ class CDMEntityPipeline:
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
+
+
         self.entity_filter = EntityFilter(strict_mode=True)
         self.relevance_scorer = MicrobiomeRelevanceScorer()
         self.term_corrector = MiniLMTermCorrector(semantic_model, 0.9)

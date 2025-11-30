@@ -316,6 +316,34 @@ class OptimizationConfig:
 # UTILITIES
 # ==========================================
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+class TfidfSemanticModel:
+    """Fallback semantic model using TF-IDF."""
+    
+    def __init__(self):
+        self.vectorizer = TfidfVectorizer(stop_words='english', analyzer='char_wb', ngram_range=(2, 4))
+        self.is_fitted = False
+        
+    def encode(self, sentences: List[str], batch_size: int = 32, show_progress_bar: bool = False, convert_to_numpy: bool = True):
+        """
+        Encode sentences using TF-IDF. 
+        """
+        if not sentences:
+            return np.array([])
+            
+        try:
+            # Fit on the current batch for internal deduplication
+            embeddings = self.vectorizer.fit_transform(sentences)
+            self.is_fitted = True
+            if convert_to_numpy:
+                return embeddings.toarray()
+            return embeddings
+        except ValueError:
+            return np.zeros((len(sentences), 1))
+
+
 class TextProcessor:
     """Utility class for text processing operations."""
 
@@ -826,9 +854,15 @@ class SemanticDeduplicator:
                 self.model = SentenceTransformer(self.model_name)
             logger.info(f"✅ Model loaded successfully")
             return True
+        except ImportError:
+            logger.warning("⚠️ sentence-transformers not installed. Using TF-IDF fallback.")
+            self.model = TfidfSemanticModel()
+            return True
         except Exception as e:
-            logger.error(f"❌ Failed to load sentence transformer model: {e}")
-            return False
+            logger.warning(f"⚠️ Failed to load sentence transformer model: {e}. Using TF-IDF fallback.")
+            self.model = TfidfSemanticModel()
+            return True
+
 
     def encode_entities(self, entities: List[Dict]) -> Optional[np.ndarray]:
         if not self.model:

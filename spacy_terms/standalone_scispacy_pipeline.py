@@ -400,6 +400,32 @@ class TermsExtractor:
         return sorted(terms, key=lambda x: x['score'], reverse=True)
 
 
+class TfidfSemanticModel:
+    """Fallback semantic model using TF-IDF."""
+    
+    def __init__(self):
+        self.vectorizer = TfidfVectorizer(stop_words='english', analyzer='char_wb', ngram_range=(2, 4))
+        self.is_fitted = False
+        
+    def encode(self, sentences: List[str], convert_to_tensor: bool = False):
+        """
+        Encode sentences using TF-IDF. 
+        Note: This fits the vectorizer on the provided sentences every time if not fitted, 
+        which is a simplification for this fallback.
+        """
+        if not sentences:
+            return np.array([])
+            
+        # For deduplication of a single batch, we fit on that batch.
+        # This is sufficient for finding internal duplicates.
+        try:
+            embeddings = self.vectorizer.fit_transform(sentences)
+            self.is_fitted = True
+            return embeddings
+        except ValueError:
+            # Handle empty vocabulary or other issues
+            return np.zeros((len(sentences), 1))
+
 class Deduplicator:
     """Multi-layer deduplication"""
     
@@ -408,17 +434,18 @@ class Deduplicator:
         self.semantic_model = self._load_semantic_model()
         
     def _load_semantic_model(self):
-        """Load sentence-transformers model"""
+        """Load sentence-transformers model or fallback to TF-IDF"""
         try:
             from sentence_transformers import SentenceTransformer
             logger.info(f"Loading semantic model: {self.config.semantic_model}")
             return SentenceTransformer(self.config.semantic_model)
         except ImportError:
-            logger.warning("sentence-transformers not installed. Semantic deduplication disabled.")
-            return None
+            logger.warning("sentence-transformers not installed. Using TF-IDF fallback.")
+            return TfidfSemanticModel()
         except Exception as e:
-            logger.warning(f"Failed to load semantic model: {e}")
-            return None
+            logger.warning(f"Failed to load semantic model: {e}. Using TF-IDF fallback.")
+            return TfidfSemanticModel()
+
 
     def deduplicate(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Run all deduplication layers"""
@@ -472,17 +499,32 @@ class Deduplicator:
         term_strings = [t['term'] for t in terms]
         
         # Encode terms and noise prototypes
-        term_embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
-        noise_embeddings = self.semantic_model.encode(NOISE_PROTOTYPES, convert_to_tensor=True)
+        # Note: TF-IDF fallback might struggle here if noise prototypes aren't in the fitted vocab
+        # But for the fallback, we'll try our best.
         
-        from sentence_transformers.util import cos_sim
-        # Shape: [num_terms, num_noise]
-        scores = cos_sim(term_embeddings, noise_embeddings)
+        if isinstance(self.semantic_model, TfidfSemanticModel):
+             # Fit on combined corpus to ensure shared vocabulary
+             combined = term_strings + NOISE_PROTOTYPES
+             embeddings = self.semantic_model.encode(combined)
+             term_embeddings = embeddings[:len(term_strings)]
+             noise_embeddings = embeddings[len(term_strings):]
+             
+             # Compute cosine similarity
+             scores = cosine_similarity(term_embeddings, noise_embeddings)
+        else:
+            term_embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
+            noise_embeddings = self.semantic_model.encode(NOISE_PROTOTYPES, convert_to_tensor=True)
+            from sentence_transformers.util import cos_sim
+            scores = cos_sim(term_embeddings, noise_embeddings)
         
         keep_indices = []
         for i in range(len(terms)):
             # Check max similarity to ANY noise prototype
-            max_noise_score = scores[i].max().item()
+            if isinstance(scores, np.ndarray):
+                max_noise_score = scores[i].max()
+            else:
+                max_noise_score = scores[i].max().item()
+
             
             # If too close to noise (e.g. > 0.75), discard
             if max_noise_score < 0.75:
@@ -516,12 +558,19 @@ class Deduplicator:
         
         # Pre-compute embeddings if semantic model is available
         embeddings = None
+        cosine_scores = None
+        
         if self.semantic_model:
-            embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
-            from sentence_transformers.util import cos_sim
-            cosine_scores = cos_sim(embeddings, embeddings)
+            if isinstance(self.semantic_model, TfidfSemanticModel):
+                embeddings = self.semantic_model.encode(term_strings)
+                cosine_scores = cosine_similarity(embeddings, embeddings)
+            else:
+                embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
+                from sentence_transformers.util import cos_sim
+                cosine_scores = cos_sim(embeddings, embeddings)
 
         for i in range(len(terms)):
+
             if i not in keep_indices: continue
             
             for j in range(i + 1, len(terms)):
@@ -536,10 +585,15 @@ class Deduplicator:
                     continue
                     
                 # 2. Semantic Confirmation (if model available)
-                if self.semantic_model:
+            # Semantic check
+            if cosine_scores is not None:
+                if isinstance(cosine_scores, np.ndarray):
                     semantic_score = cosine_scores[i][j]
-                    if semantic_score < 0.85: 
-                        continue
+                else:
+                    semantic_score = cosine_scores[i][j].item()
+                    
+                if semantic_score < 0.85: 
+                    continue
                 
                 # Merge s2 into s1
                 terms[i]['frequency'] = terms[i].get('frequency', 1) + terms[j].get('frequency', 1)
@@ -623,16 +677,6 @@ class Deduplicator:
         return [terms[i] for i in sorted(keep_indices)]
 
     def _semantic_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Semantic deduplication using embeddings"""
-        logger.info("Running semantic deduplication...")
-        import numpy as np
-        
-        term_strings = [t['term'] for t in terms]
-        embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
-        
-        # Compute cosine similarity matrix
-        from sentence_transformers.util import cos_sim
-        cosine_scores = cos_sim(embeddings, embeddings)
         
         keep_indices = set(range(len(terms)))
         
