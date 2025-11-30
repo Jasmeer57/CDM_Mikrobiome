@@ -25,6 +25,7 @@ module purge
 module load Miniforge3/24.1.2-0
 source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
 module load CUDA/12.3.0
+module load ollama/0.7.0
 
 # === ENVIRONMENT ISOLATION ===
 # Prevent user's local packages from interfering with the conda environment
@@ -379,33 +380,55 @@ else
 fi
 echo ""
 # === OLLAMA SETUP ===
-echo "=== OLLAMA SERVICE SETUP ==="
-# Check if Ollama is already running
-if curl -s http://localhost:11434/api/tags >/dev/null; then
-    echo "✅ Ollama is already running."
-else
-    echo "🚀 Starting Ollama service..."
-    # Start Ollama in background
-    ollama serve > logs/ollama.log 2>&1 &
-    OLLAMA_PID=$!
-    echo "Ollama started with PID: $OLLAMA_PID"
-    
-    # Wait for Ollama to be ready
-    echo "Waiting for Ollama to initialize..."
-    for i in {1..30}; do
-        if curl -s http://localhost:11434/api/tags >/dev/null; then
-            echo "✅ Ollama is ready!"
-            break
-        fi
-        sleep 2
-        echo -n "."
-    done
-    echo ""
+# Define models to run
+MODELS_TO_RUN=("qwen3:14b")
+
+# ==================================================
+#              START OLLAMA & PULL MODELS
+# ==================================================
+echo "Starting Ollama server in the background..."
+ollama serve > logs/ollama.log 2>&1 &
+OLLAMA_PID=$!
+sleep 5
+
+
+# Function to check Ollama readiness
+check_ollama() {
+   port=11434 # Default port
+   echo "Checking Ollama on port ${port}..."
+   for i in {1..10}; do
+       if curl -s "http://127.0.0.1:${port}" > /dev/null; then
+           echo "Ollama server on port ${port} is ready."
+           return 0
+       fi
+       echo "Waiting for Ollama on port ${port}... ($i/10)"
+       sleep 3
+   done
+   echo "Ollama server on port ${port} did not start properly."
+   return 1
+}
+
+
+# Check if server started
+check_ollama
+if [ $? -ne 0 ]; then
+   echo "Ollama server failed to start. Exiting."
+   kill $OLLAMA_PID
+   exit 1
 fi
 
-# Ensure Ollama model is pulled
-echo "Checking model: qwen3:14b"
-ollama pull qwen3:14b
+
+# --- Loop through the array to pull all models ---
+echo "Pulling required Ollama models..."
+for model in "${MODELS_TO_RUN[@]}"; do
+   echo "Pulling ${model}..."
+   if ! ollama pull "${model}"; then
+       echo "ERROR: Failed to pull model: ${model}."
+       kill $OLLAMA_PID
+       exit 1
+   fi
+done
+echo "Model pulling complete."
 
 # Cleanup function to kill Ollama on exit
 cleanup() {
