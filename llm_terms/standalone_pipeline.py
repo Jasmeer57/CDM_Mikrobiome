@@ -241,7 +241,7 @@ class CDMEntityConfig:
         'qwen3:14b': {
             'max_tokens': 8000,
             'temperature': 0.1,
-            'timeout': 900
+            'timeout': 1200
         },
         'biomistral-7B': {
             'max_tokens': 4000,
@@ -281,8 +281,8 @@ class PipelineConfig:
     default_base_url: str = "http://localhost:11434"
     max_workers: int = 3
     max_file_workers: int = 1
-    max_entities: int = 200
-    min_confidence: float = 0.6
+    max_entities: int = 500
+    min_confidence: float = 0.4
 
 @dataclass
 class BioMistralConfig:
@@ -532,6 +532,7 @@ class CDMEntityExtractor:
         return f"""
 Extract ALL biomedical and scientific terms from this text.
 Focus on capturing a comprehensive list of scientific concepts, biological entities, and medical terms.
+Be EXHAUSTIVE. Aim to extract at least 50-100 terms if present in the text.
 
 TEXT:
 {chunk_text}
@@ -558,7 +559,7 @@ CDM Entity Types and Examples:
 
 Requirements:
 1. Extract ALL scientific and biomedical terms found in the text.
-2. Be comprehensive - if it looks like a scientific term, extract it.
+2. Be EXHAUSTIVE - if it looks like a scientific term, extract it. Do not filter out terms.
 3. STRICTLY EXCLUDE:
    - Person names (e.g., "Smith et al.")
    - Country names or locations (e.g., "Japan", "USA", "University of X")
@@ -3102,9 +3103,10 @@ class EntityFilter:
             if entity_name.lower() in organism_blacklist:
                 return False
             # Should have at least one biological indicator
-            bio_indicators = ['bacter', 'virus', 'fung', 'cocc', 'bacill', 'entero', 'staph', 'strept']
-            if not any(indicator in entity_name.lower() for indicator in bio_indicators):
-                return len(entity_name.split()) > 1  # Allow multi-word organisms
+            # bio_indicators = ['bacter', 'virus', 'fung', 'cocc', 'bacill', 'entero', 'staph', 'strept']
+            # if not any(indicator in entity_name.lower() for indicator in bio_indicators):
+            #    return len(entity_name.split()) > 1  # Allow multi-word organisms
+            pass
 
         # GENE validation
         elif entity_type == 'GENE':
@@ -3479,21 +3481,26 @@ class CDMEntityPipeline:
         # Group entities by type
         grouped_entities = {}
         for entity in entities:
-            entity_type = entity['entity_type']
+            # Ensure entity is a dictionary
+            if not isinstance(entity, dict):
+                logger.warning(f"Skipping invalid entity format: {entity}")
+                continue
+
+            entity_type = entity.get('entity_type', 'UNKNOWN')
             if entity_type not in grouped_entities:
                 grouped_entities[entity_type] = []
 
-            # Build entity data with all fields including mappings
+            # Basic entity data
             entity_data = {
-                'entity': entity['entity'],
-                'context': entity['context'],
-                'confidence': entity['confidence'],
-                'source': entity['source'],
-                'microbiome_relevance_score': entity.get('microbiome_relevance_score', 0.0)
+                'term': entity.get('entity', ''), # Changed from 'term' to 'entity' to match existing structure
+                'confidence': entity.get('confidence', 0.0),
+                'context': entity.get('context', ''),
+                'source': entity.get('source', 'LLM'),
+                'microbiome_relevance_score': entity.get('microbiome_relevance_score', 0.0), # Added from original
+                'source_file': entity.get('source_file', '')
             }
 
-            # Add OMOP mappings if available (direct or from comprehensive mapping)
-            omop_mappings = None
+            omop_mappings = []
             has_omop_mapping = False
             best_omop_confidence = 0.0
             omop_domain_id = None
@@ -3502,15 +3509,15 @@ class CDMEntityPipeline:
             # Check for direct OMOP mappings
             if 'omop_mappings' in entity:
                 omop_mappings = entity['omop_mappings']
-                has_omop_mapping = entity['has_omop_mapping']
-                best_omop_confidence = entity['best_omop_confidence']
-                omop_domain_id = entity['omop_domain_id']
-                omop_concept_count = entity['omop_concept_count']
+                has_omop_mapping = entity.get('has_omop_mapping', False)
+                best_omop_confidence = entity.get('best_omop_confidence', 0.0)
+                omop_domain_id = entity.get('omop_domain_id')
+                omop_concept_count = entity.get('omop_concept_count', 0)
 
             # Check for OMOP mappings in comprehensive mapping
             elif 'comprehensive_mapping' in entity:
                 comp_mapping = entity['comprehensive_mapping']
-                if comp_mapping.get('omop_count', 0) > 0:
+                if isinstance(comp_mapping, dict) and comp_mapping.get('omop_count', 0) > 0:
                     omop_mappings = comp_mapping.get('omop_mappings', [])
                     has_omop_mapping = True
                     omop_concept_count = comp_mapping.get('omop_count', 0)
