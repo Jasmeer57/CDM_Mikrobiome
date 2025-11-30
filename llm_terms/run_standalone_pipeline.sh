@@ -58,8 +58,7 @@ else
     conda activate llm-terms-cdm
 fi
 
-    conda activate llm-terms-cdm
-fi
+
 
 # === FORCE PATH UPDATE ===
 # Ensure the conda environment binaries are first in the PATH
