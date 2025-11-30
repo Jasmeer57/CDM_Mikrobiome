@@ -22,11 +22,7 @@ echo ""
 
 # === ENVIRONMENT SETUP ===
 module purge
-module load Miniforge3/24.1.2-0
-source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
-module load CUDA/12.3.0
-module load GCC/12.3.0
-module load ollama/0.7.0
+
 
 # === ENVIRONMENT ISOLATION ===
 # Prevent user's local packages from interfering with the conda environment
@@ -65,6 +61,13 @@ fi
 # === FORCE PATH UPDATE ===
 # Ensure the conda environment binaries are first in the PATH
 export PATH="$CONDA_PREFIX/bin:$PATH"
+
+# === LOAD MODULES (After isolation to preserve LD_LIBRARY_PATH) ===
+module load Miniforge3/24.1.2-0
+source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
+module load CUDA/12.3.0
+module load GCC/12.3.0
+module load ollama/0.7.0
 
 # === POST-ACTIVATION DEBUG ===
 echo "=== POST-ACTIVATION DEBUG ==="
