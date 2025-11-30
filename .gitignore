@@ -93,3 +93,76 @@ spacy_terms/output_final_v5/PRJDB4360_results.json
 spacy_terms/output_full/pipeline_summary.json
 spacy_terms/output_full/PRJDB4360_results.json
 spacy_terms/output_full_v2/pipeline_summary.json
+
+# Ignore ALL PRJ project data files (these are massive generated datasets)
+**/PRJ*
+PRJ*
+
+# Ignore LLM terms generated files
+llm_terms/enhanced_*.py
+llm_terms/setup_api_keys.sh
+llm_terms/run_*_slurm.sh
+llm_terms/example_usage_commands.txt
+llm_terms/ENHANCED_PIPELINE_GUIDE.md
+llm_terms/test_data/
+llm_terms/=*
+
+# Ignore spacy terms generated files
+spacy_terms/*_complete_*.sh
+spacy_terms/*_pipeline_*.sh
+spacy_terms/test_*.sh
+
+# Ignore virtual environment files completely
+**/.venv/
+**/venv/
+**/.venv/**
+**/venv/**
+.env.example
+
+# Ignore all data files in spacy_terms directory
+spacy_terms/data/*.txt
+spacy_terms/data/*.csv
+spacy_terms/data/*.tsv
+spacy_terms/test_input.txt
+
+# Large data directories that shouldn't be in git
+spacy_terms/data/
+papers_txt/
+spacy_terms/data/vocab/
+llm_terms/data/
+llm_terms/vocab/
+llm_terms/database/
+llm_terms/test_data/
+spacy_terms/test_data/
+
+# All vocab and data directories
+**/data/
+**/vocab/
+**/Data/
+**/Vocab/
+
+# Additional virtual environments and cache directories
+spacy_terms/venv_scispacy/
+**/venv_scispacy/
+
+# Model files and large binaries
+*.model
+*.pkl
+*.h5
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Large processed output files
+**/output_final*/
+**/output_full*/
+**/enhanced_output/
+**/database/
+
+# Test data directories
+**/test_data/
+
+# Cache directories for model processing
+**/model_cache/
+**/.cache/
