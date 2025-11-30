@@ -280,6 +280,7 @@ class PipelineConfig:
     default_model: str = "qwen3:8b"
     default_base_url: str = "http://localhost:11434"
     max_workers: int = 3
+    max_file_workers: int = 1
     max_entities: int = 200
     min_confidence: float = 0.6
 
@@ -3539,7 +3540,7 @@ class CDMEntityPipeline:
         results = {
             'metadata': {
                 'timestamp': time.time(),
-                'model_used': self.llm_client.model,
+                'model_used': self.llm_client.model if self.llm_client else "dry-run",
                 'pipeline_version': '1.0.0',
                 'extraction_config': {
                     'min_confidence': self.config.min_confidence,
@@ -3659,41 +3660,61 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
         processed_dir = Path(output_file).parent / "processed"
         processed_dir.mkdir(parents=True, exist_ok=True)
 
-        for i, file_path in enumerate(tqdm(files, desc=f"Processing {stage_name} files", unit="file")):
-            logger.info(f"📄 Processing file {i+1}/{len(files)}: {file_path.name}")
-            print(f"[{datetime.now().strftime('%H:%M:%S')}] Processing: {file_path.name}")
-            
-            # Check for checkpoint
-            checkpoint_file = processed_dir / f"{file_path.stem}.json"
-            if checkpoint_file.exists():
-                logger.info(f"⏩ Skipping {file_path.name} (checkpoint found)")
-                try:
-                    with open(checkpoint_file, 'r') as f:
-                        file_entities = json.load(f)
-                    all_entities.extend(file_entities)
-                    continue
-                except json.JSONDecodeError:
-                    logger.warning(f"⚠️  Corrupt checkpoint for {file_path.name}, reprocessing...")
+        # Define worker function for parallel processing
+        def process_file_worker(file_path):
+            try:
+                # Check for checkpoint
+                checkpoint_file = processed_dir / f"{file_path.stem}.json"
+                if checkpoint_file.exists():
+                    try:
+                        with open(checkpoint_file, 'r') as f:
+                            return json.load(f), None
+                    except json.JSONDecodeError:
+                        pass # Reprocess
 
-            with open(file_path, 'r', encoding='utf-8') as f:
-                text = f.read()
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    text = f.read()
                 
-            # Update stats
-            text_stats_agg["character_count"] += len(text)
-            text_stats_agg["word_count"] += len(text.split())
-            
-            # Extract entities
-            file_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'))
-            
-            # Add source file info
-            for entity in file_entities:
-                entity['source_file'] = file_path.name
-            
-            # Save checkpoint
-            with open(checkpoint_file, 'w') as f:
-                json.dump(file_entities, f, indent=2)
+                # Calculate stats
+                stats = {
+                    "character_count": len(text),
+                    "word_count": len(text.split())
+                }
                 
-            all_entities.extend(file_entities)
+                # Extract entities
+                file_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'))
+                
+                # Add source file info
+                for entity in file_entities:
+                    entity['source_file'] = file_path.name
+                
+                # Save checkpoint
+                with open(checkpoint_file, 'w') as f:
+                    json.dump(file_entities, f, indent=2)
+                    
+                return file_entities, stats
+            except Exception as e:
+                logger.error(f"Error processing {file_path.name}: {e}")
+                return [], None
+
+        # Run parallel processing
+        max_file_workers = config.max_file_workers
+        logger.info(f"🚀 Starting parallel processing with {max_file_workers} file workers")
+        
+        with ThreadPoolExecutor(max_workers=max_file_workers) as executor:
+            future_to_file = {executor.submit(process_file_worker, f): f for f in files}
+            
+            for future in tqdm(as_completed(future_to_file), total=len(files), desc=f"Processing {stage_name} files", unit="file"):
+                file_path = future_to_file[future]
+                try:
+                    file_entities, stats = future.result()
+                    if file_entities:
+                        all_entities.extend(file_entities)
+                    if stats:
+                        text_stats_agg["character_count"] += stats["character_count"]
+                        text_stats_agg["word_count"] += stats["word_count"]
+                except Exception as e:
+                    logger.error(f"Failed to retrieve results for {file_path.name}: {e}")
 
         # Final aggregation and deduplication across all files
         if len(files) > 1:
@@ -3764,6 +3785,7 @@ def main():
     parser.add_argument('--model', '-m', default='phi3:mini', help='LLM model to use (default: phi3:mini)')
     parser.add_argument('--base-url', default='http://localhost:11434', help='LLM service URL')
     parser.add_argument('--max-workers', type=int, default=3, help='Parallel workers')
+    parser.add_argument('--max-file-workers', type=int, default=1, help='Parallel file workers')
     parser.add_argument('--enable-biomistral', action='store_true', help='Enable BioMistral validation (requires ~14GB disk space)')
     parser.add_argument('--enable-correction', action='store_true', help='Enable MiniLM term correction')
     parser.add_argument('--enable-llm-correction', action='store_true', help='Enable LLM-based type correction')
@@ -3791,7 +3813,8 @@ def main():
     pipeline_config = PipelineConfig(
         default_model=args.model,
         default_base_url=args.base_url,
-        max_workers=args.max_workers
+        max_workers=args.max_workers,
+        max_file_workers=args.max_file_workers
     )
     
     # Determine output paths

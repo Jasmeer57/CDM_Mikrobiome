@@ -45,6 +45,13 @@ echo "================================"
 mkdir -p logs
 
 # === CONDA ENVIRONMENT ===
+# === LOAD MODULES (Moved before Conda for correct initialization) ===
+module load Miniforge3/24.1.2-0
+source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
+module load CUDA/12.6.0
+module load GCC/13.2.0
+module load ollama/0.7.0
+
 # === CONDA ENVIRONMENT ===
 echo "Setting up conda environment..."
 if conda info --envs | grep -q "llm-terms-cdm"; then
@@ -62,12 +69,7 @@ fi
 # Ensure the conda environment binaries are first in the PATH
 export PATH="$CONDA_PREFIX/bin:$PATH"
 
-# === LOAD MODULES (After isolation to preserve LD_LIBRARY_PATH) ===
-module load Miniforge3/24.1.2-0
-source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
-module load CUDA/12.3.0
-module load GCC/12.3.0
-module load ollama/0.7.0
+
 
 # === POST-ACTIVATION DEBUG ===
 echo "=== POST-ACTIVATION DEBUG ==="
@@ -393,6 +395,11 @@ MODELS_TO_RUN=("qwen3:14b")
 echo "Starting Ollama server in the background..."
 echo "Ollama path: $(which ollama)"
 export OLLAMA_HOST=127.0.0.1:11434
+# Enable parallel execution for A100
+export OLLAMA_NUM_PARALLEL=8
+export OLLAMA_MAX_LOADED_MODELS=1
+echo "Configured Ollama for parallelism: OLLAMA_NUM_PARALLEL=$OLLAMA_NUM_PARALLEL"
+
 ollama serve > logs/ollama.log 2>&1 &
 OLLAMA_PID=$!
 sleep 5
@@ -459,7 +466,8 @@ $PYTHON_CMD standalone_pipeline.py \
     --model qwen3:14b \
     --base-url http://localhost:11434 \
     --semantic-model all-MiniLM-L6-v2 \
-    --max-workers 3
+    --max-workers 3 \
+    --max-file-workers 8
 
 BASIC_EXIT_CODE=$?
 
@@ -479,6 +487,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
         --base-url ${OLLAMA_BASE_URL:-http://localhost:11434} \
         --semantic-model all-MiniLM-L6-v2 \
         --max-workers 4 \
+        --max-file-workers 8 \
         --chunk-size 5000 \
         --overlap 500 \
         --enable-enhanced \
