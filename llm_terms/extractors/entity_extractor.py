@@ -226,6 +226,168 @@ Requirements:
 
         return entities
 
+    def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
+        """Generate specific prompt for each extraction pass."""
+        
+        system_context = """You are a comprehensive biomedical terminology extractor. Extract ALL concrete scientific terms from the text including bioinformatics, molecules, chemicals, organisms, species, and technical biomedical terms.
+
+CRITICAL RULES:
+1. Extract ALL biomedical terms: bioinformatics tools, molecules, chemicals, organisms, species, technical terms
+2. Include terms from ALL biomedical domains: molecular biology, biochemistry, genetics, bioinformatics, pharmacology, etc.
+3. NEVER extract your own instructions, notes, or conversational phrases
+4. ONLY extract terms that would be valid entries in a biomedical ontology
+5. Be comprehensive - extract any term that appears biomedical or technical in nature
+
+VALID CATEGORIES TO EXTRACT:
+- ALL biological entities (organisms, species, genera, phyla)
+- ALL chemical compounds, metabolites, molecules
+- ALL molecular biology terms (genes, proteins, pathways, enzymes)
+- ALL bioinformatics tools, methods, and pipelines
+- ALL sequencing technologies and omics platforms
+- ALL statistical and computational methods
+- ALL medical, clinical, and pharmaceutical terms
+- ALL laboratory methods and techniques
+- ALL anatomical and physiological terms
+- ANY technical biomedical term
+
+OUTPUT: Return ONLY a JSON array with objects containing:
+{
+  "entity": "extracted term",
+  "entity_type": "one of: ORGANISM|GENE|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|BIOINFO_TOOL|GENOMICS|CLINICAL|SCIENTIFIC_TERM",
+  "context": "brief context or description"
+}"""
+
+        if pass_num == 1:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL biological entities, organisms, species, and taxonomic terms from the text.
+
+FOCUS ON:
+- ALL bacterial, archaeal, fungal genera and species mentioned
+- ALL viral strains and types mentioned
+- ALL eukaryotic organisms mentioned (human, mouse, rat, etc.)
+- ALL taxonomic ranks and classifications mentioned
+- ANY organism names that appear in the text
+- Species names, genus names, family names, etc.
+
+IMPORTANT: Extract ALL biological entities you find, not just microbiome-related.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 2:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL chemical compounds, metabolites, molecules, and biochemical terms from the text.
+
+FOCUS ON:
+- ALL metabolites mentioned (SCFAs, bile acids, amino acids, lipids, etc.)
+- ALL drugs, pharmaceuticals, compounds mentioned
+- ALL proteins, enzymes, hormones, neurotransmitters mentioned
+- ALL genes, DNA, RNA molecules mentioned
+- ALL metabolic pathways and processes mentioned
+- ANY chemical or molecular entity that appears in the text
+- Small molecules, large molecules, organic compounds, inorganic compounds
+
+IMPORTANT: Extract ALL chemical and molecular terms you find.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 3:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL bioinformatics tools, computational methods, and technical approaches from the text.
+
+FOCUS ON:
+- ALL sequencing platforms and methods mentioned
+- ALL bioinformatics tools, software, and pipelines mentioned
+- ALL statistical and computational methods mentioned
+- ALL machine learning and AI approaches mentioned
+- ALL database and resource names mentioned
+- ANY computational or technical approach that appears in the text
+- Programming languages, algorithms, data structures mentioned
+
+IMPORTANT: Extract ALL bioinformatics and computational terms you find.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 4:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL medical, clinical, pharmaceutical, and disease-related terms from the text.
+
+FOCUS ON:
+- ALL diseases, disorders, and medical conditions mentioned
+- ALL drugs, pharmaceuticals, and treatments mentioned
+- ALL clinical procedures and diagnostic methods mentioned
+- ALL anatomical terms and body systems mentioned
+- ALL physiological processes and pathways mentioned
+- ANY medical or clinical term that appears in the text
+
+IMPORTANT: Extract ALL medical and clinical terms you find.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 5:
+            existing_str = ', '.join(existing_terms[:30]) if existing_terms else "None"
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ANY remaining biomedical terms from ALL categories that haven't been captured yet.
+
+LOOK FOR:
+- ANY scientific term related to biology, medicine, chemistry, biochemistry
+- ANY technical term mentioned in the text
+- ANY domain-specific terminology that appears biomedical
+- ANY term that could be part of a biomedical ontology
+- Laboratory techniques, experimental methods, analytical approaches
+- ANY term from biomedical research that you haven't extracted yet
+
+TERMS ALREADY EXTRACTED (examples):
+{existing_str}
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 6:
+            return f"""{system_context}
+
+EXTRACTION GOAL: AGGRESSIVELY extract ANY biomedical terms.
+BE VERY INCLUSIVE:
+- Extract ANY term that sounds scientific, technical, or biomedical
+- Include method names, technique names, approach names
+- Include any compound, molecule, or chemical mentioned
+- Include any organism, species, or biological entity
+- Include any computational, statistical, or analytical method
+- Include any medical, clinical, or pharmaceutical term
+
+TEXT:
+{chunk_text}"""
+        
+        return self.create_extraction_prompt(chunk_text)
+
+    def run_extraction_pass(self, pass_data: Tuple[str, int, List[str]]) -> List[Dict]:
+        """Execute a single extraction pass on a specific text window."""
+        text, pass_num, existing_terms = pass_data
+        logger.info(f"🚀 Starting Pass {pass_num} on {len(text)} chars")
+        
+        prompt = self._get_pass_prompt(pass_num, text, existing_terms)
+        
+        # Use lower temperature for aggressive pass
+        # We can't easily set temp per call in current LLMClient, so we rely on prompt instructions
+        response = self.llm_client.call_llm(prompt, max_tokens=4000)
+        
+        if not response:
+            logger.warning(f"⚠️ Pass {pass_num} returned no response")
+            return []
+            
+        logger.debug(f"🔍 Raw LLM Response (Pass {pass_num}):\n{response[:500]}...") # Log first 500 chars
+        entities = self.parse_llm_response(response, pass_num)
+        logger.info(f"✅ Pass {pass_num} found {len(entities)} entities")
+        return entities
+
     def extract_entities_from_chunk(self, chunk_data: Tuple[str, int]) -> Tuple[int, List[Dict]]:
         """Extract entities from a single chunk."""
         chunk_text, chunk_num = chunk_data

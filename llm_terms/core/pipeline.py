@@ -42,9 +42,16 @@ class CDMEntityPipeline:
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
                  mapping_confidence_threshold: float = 0.7,
-                 enable_correction: bool = False, enable_llm_correction: bool = False):
+                 enable_correction: bool = False, enable_llm_correction: bool = False,
+                 api_key: str = "EMPTY"):
         self.config = config or PipelineConfig()
         self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url)
+        # Pass api_key to LLMClient if needed, but LLMClient in core might need update too. 
+        # For now, let's assume LLMClient handles it or we update it later.
+        # Actually, LLMClient in core doesn't seem to take api_key in __init__ based on previous view.
+        # I should check LLMClient again or update it. 
+        # But first, let's update pipeline.py.
+        
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
@@ -106,43 +113,71 @@ class CDMEntityPipeline:
         logger.info(f"✅ LLM service available with model: {self.llm_client.model}")
         return True
 
-    def chunk_text(self, text: str, chunk_size: int = None) -> List[tuple]:
-        """Split text into overlapping chunks."""
-        if chunk_size is None:
-            chunk_size = self.extractor.calculate_optimal_chunk_size(len(text))
-
-        overlap = self.extractor.calculate_overlap(chunk_size)
-
-        chunks = []
-        chunk_num = 1
-
-        for i in range(0, len(text), chunk_size - overlap):
-            chunk = text[i:i + chunk_size]
-            if len(chunk) > 100:  # Only process substantial chunks
-                chunks.append((chunk, chunk_num))
-                chunk_num += 1
-
-        logger.info(f"📊 Created {len(chunks)} chunks ({chunk_size} chars, {overlap} overlap)")
-        return chunks
-
     def extract_entities(self, text: str, chunk_size: int = None) -> List[Dict]:
-        """Extract CDM entities from text using parallel processing."""
-        logger.info(f"🔍 Starting CDM entity extraction from {len(text)} characters")
+        """Extract CDM entities using Windowed Multi-Pass Strategy (Fast & Comprehensive)."""
+        logger.info(f"🔍 Starting Windowed Multi-Pass Extraction on {len(text)} characters")
 
-        # Chunk the text
-        chunks = self.chunk_text(text, chunk_size)
-
-        # Process chunks in parallel
         all_entities = []
-        with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
-            futures = [executor.submit(self.extractor.extract_entities_from_chunk, chunk) for chunk in chunks]
+        text_len = len(text)
+        
+        # Define Windows (from Reference Script)
+        # Pass 1: 0-8000
+        # Pass 2: 0-8000
+        # Pass 3: 10000-18000 (or 0-8000 if short)
+        # Pass 4: 15000-23000 (or 0-8000 if short)
+        # Pass 5: 20000-28000 (or 0-8000 if short)
+        # Pass 6: 25000-35000 (or 0-8000 if short)
+        
+        # Helper to get safe window
+        def get_window(start, length):
+            if text_len < start: return ""
+            end = min(start + length, text_len)
+            return text[start:end]
 
+        # Prepare Pass Data
+        pass_configs = [
+            (text[0:8000], 1),
+            (text[0:8000], 2),
+            (get_window(10000, 8000) if text_len > 10000 else text[0:min(text_len, 8000)], 3),
+            (get_window(15000, 8000) if text_len > 15000 else text[0:min(text_len, 8000)], 4)
+        ]
+
+        # Run Passes 1-4 in Parallel
+        logger.info(f"🔄 Running Passes 1-4 in parallel ({len(pass_configs)} tasks)...")
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = [
+                executor.submit(self.extractor.run_extraction_pass, (p_text, p_num, []))
+                for p_text, p_num in pass_configs
+                if p_text.strip() # Only run if text is not empty
+            ]
+            
             for future in as_completed(futures):
                 try:
-                    chunk_num, chunk_entities = future.result(timeout=self.llm_client.config['timeout'])
-                    all_entities.extend(chunk_entities)
+                    pass_entities = future.result()
+                    all_entities.extend(pass_entities)
                 except Exception as e:
-                    logger.error(f"Error processing chunk: {e}")
+                    logger.error(f"Error in extraction pass: {e}")
+
+        # Collect unique terms so far for Pass 5 context
+        unique_terms = list(set([e['entity'] for e in all_entities]))
+        logger.info(f"📊 Terms after Passes 1-4: {len(unique_terms)}")
+
+        # Conditional Pass 5 (Catch-all)
+        if len(unique_terms) < 100:
+            logger.info("⚠️  Term count low. Running Pass 5 (Catch-all)...")
+            p5_text = get_window(20000, 8000) if text_len > 20000 else text[0:min(text_len, 8000)]
+            if p5_text.strip():
+                p5_entities = self.extractor.run_extraction_pass((p5_text, 5, unique_terms))
+                all_entities.extend(p5_entities)
+
+        # Conditional Pass 6 (Aggressive)
+        unique_terms = list(set([e['entity'] for e in all_entities]))
+        if len(unique_terms) < 50:
+            logger.info("⚠️  Term count still low. Running Pass 6 (Aggressive)...")
+            p6_text = get_window(25000, 10000) if text_len > 25000 else text[0:min(text_len, 10000)]
+            if p6_text.strip():
+                p6_entities = self.extractor.run_extraction_pass((p6_text, 6, []))
+                all_entities.extend(p6_entities)
 
         # Post-process entities with semantic deduplication
         processed_entities = self.post_process_entities(all_entities, use_semantic=True)

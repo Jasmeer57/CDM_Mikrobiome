@@ -581,14 +581,25 @@ class LLMClient:
                 if self.opt_config.use_json_mode:
                     request_config["format"] = "json"
 
+                headers = {}
+                if self.opt_config.api_key and self.opt_config.api_key != "EMPTY":
+                    headers["Authorization"] = f"Bearer {self.opt_config.api_key}"
+
                 response = requests.post(
                     f"{self.base_url}/api/generate",
                     json=request_config,
+                    headers=headers,
                     timeout=self.config['timeout']
                 )
 
                 if response.status_code == 200:
-                    return response.json().get('response', '').strip()
+                    logger.debug(f"LLM Response Status: {response.status_code}")
+                    logger.debug(f"LLM Response Body: {response.text[:500]}...")
+                    resp_json = response.json()
+                    content = resp_json.get('response', '').strip()
+                    if not content and 'thinking' in resp_json:
+                        content = resp_json['thinking'].strip()
+                    return content
                 else:
                     logger.warning(f"LLM API error (attempt {attempt+1}/{max_retries}): {response.status_code} - {response.text}")
                     
@@ -966,6 +977,7 @@ TEXT:
             logger.warning(f"⚠️ Pass {pass_num} returned no response")
             return []
             
+        logger.debug(f"🔍 Raw LLM Response (Pass {pass_num}):\n{response[:500]}...") # Log first 500 chars
         entities = self.parse_llm_response(response, pass_num)
         logger.info(f"✅ Pass {pass_num} found {len(entities)} entities")
         return entities
@@ -4140,10 +4152,12 @@ def main():
     parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
 
     
+    parser.add_argument('--verbose', '-v', action='store_true', help='Enable verbose logging (DEBUG level)')
+    
     args = ConfigManager.setup_parser_with_config(parser)
     
     # Setup logging
-    setup_logging(log_format=args.log_format)
+    setup_logging(verbose=args.verbose, log_format=args.log_format)
 
     if not args.input:
         parser.error("the following arguments are required: --input/-i (or in config file)")

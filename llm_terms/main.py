@@ -113,6 +113,12 @@ Examples:
     )
 
     parser.add_argument(
+        '--api-key',
+        default='EMPTY',
+        help='API Key for OpenAI/vLLM (default: EMPTY)'
+    )
+
+    parser.add_argument(
         '--chunk-size', '-c',
         type=int,
         default=None,
@@ -314,10 +320,10 @@ Examples:
             enable_umls_mapping=args.enable_umls_mapping,
             umls_api_key=args.umls_api_key,
             enable_comprehensive_mapping=args.enable_comprehensive_mapping,
-            enable_comprehensive_mapping=args.enable_comprehensive_mapping,
             mapping_confidence_threshold=args.mapping_confidence_threshold,
             enable_correction=args.enable_correction,
-            enable_llm_correction=args.enable_llm_correction
+            enable_llm_correction=args.enable_llm_correction,
+            api_key=args.api_key
         )
     except Exception as e:
         logger.error(f"Failed to initialize pipeline: {e}")

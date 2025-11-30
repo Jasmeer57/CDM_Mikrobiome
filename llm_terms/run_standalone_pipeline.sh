@@ -476,7 +476,9 @@ MODELS_TO_RUN=("gemma3:12b" "qwen3:14b")
 # ==================================================
 echo "Starting Ollama server in the background..."
 echo "Ollama path: $(which ollama)"
-export OLLAMA_HOST=127.0.0.1:11434
+export OLLAMA_HOST="0.0.0.0:11434"
+export HUGGINGFACE_TOKEN="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"
+export BIOPORTAL_API_KEY="BIOPORTAL_API_KEY_PLACEHOLDER"
 ollama serve > logs/ollama.log 2>&1 &
 OLLAMA_PID=$!
 sleep 5
@@ -549,10 +551,11 @@ $PYTHON_CMD standalone_pipeline.py \
    --input "$INPUT_FILE" \
    --output "../output/cdm_entities.json" \
    --model qwen3:14b \
-   --base-url http://localhost:11434 \
-   --semantic-model all-MiniLM-L6-v2 \
-   --max-workers 1 \
-   --max-file-workers 1
+    --base-url http://localhost:11434 \
+    --semantic-model all-MiniLM-L6-v2 \
+    --max-workers 1 \
+    --max-file-workers 1 \
+    --api-key "${LLM_API_KEY:-EMPTY}"
 
 
 
@@ -580,6 +583,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
        --base-url ${OLLAMA_BASE_URL:-http://localhost:11434} \
        --semantic-model all-MiniLM-L6-v2 \
        --max-workers 4 \
+       --api-key "${LLM_API_KEY:-EMPTY}" \
        --chunk-size 5000 \
        --overlap 500 \
        --enable-enhanced \

@@ -13,9 +13,10 @@ logger = logging.getLogger(__name__)
 class LLMClient:
     """Client for interacting with LLM models."""
 
-    def __init__(self, model: str = "qwen3:8b", base_url: str = "http://localhost:11434"):
+    def __init__(self, model: str = "qwen3:8b", base_url: str = "http://localhost:11434", api_key: str = "EMPTY"):
         self.model = model
         self.base_url = base_url
+        self.api_key = api_key
         self.config = CDMEntityConfig.MODEL_CONFIGS.get(model, CDMEntityConfig.MODEL_CONFIGS['qwen3:8b'])
 
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
@@ -32,15 +33,26 @@ class LLMClient:
                 }
 
             }
+            
+            headers = {}
+            if self.api_key and self.api_key != "EMPTY":
+                headers["Authorization"] = f"Bearer {self.api_key}"
 
             response = requests.post(
                 f"{self.base_url}/api/generate",
                 json=request_config,
+                headers=headers,
                 timeout=self.config['timeout']
             )
 
             if response.status_code == 200:
-                return response.json().get('response', '').strip()
+                logger.debug(f"LLM Response Status: {response.status_code}")
+                # logger.debug(f"LLM Response Body: {response.text[:200]}...") 
+                resp_json = response.json()
+                content = resp_json.get('response', '').strip()
+                if not content and 'thinking' in resp_json:
+                    content = resp_json['thinking'].strip()
+                return content
             else:
                 logger.error(f"LLM API error: {response.status_code} - {response.text}")
                 return ""
