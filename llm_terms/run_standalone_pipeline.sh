@@ -555,7 +555,8 @@ $PYTHON_CMD standalone_pipeline.py \
     --semantic-model all-MiniLM-L6-v2 \
     --max-workers 1 \
     --max-file-workers 1 \
-    --api-key "${LLM_API_KEY:-EMPTY}"
+    --api-key "${LLM_API_KEY:-EMPTY}" \
+    --force
 
 
 

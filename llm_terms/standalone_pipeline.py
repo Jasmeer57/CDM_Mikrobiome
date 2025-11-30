@@ -4026,7 +4026,7 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             try:
                 # Check for checkpoint
                 checkpoint_file = processed_dir / f"{file_path.stem}.json"
-                if checkpoint_file.exists():
+                if checkpoint_file.exists() and not args.force:
                     try:
                         with open(checkpoint_file, 'r') as f:
                             return json.load(f), None
@@ -4161,6 +4161,12 @@ def main():
     # parser.add_argument('--fast', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
     parser.add_argument('--api-type', choices=['ollama', 'openai'], default='ollama', help='API type (ollama or openai/vllm)')
     parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
+    parser.add_argument('--force', action='store_true', help='Force re-processing (ignore checkpoints)')
+    
+    # Compatibility arguments (ignored or deprecated but kept for script compatibility)
+    parser.add_argument('--chunk-size', type=int, help='Chunk size (deprecated, using windowed strategy)')
+    parser.add_argument('--overlap', type=int, help='Overlap size (deprecated)')
+    parser.add_argument('--enable-omop-mapping', action='store_true', help='Enable OMOP mapping (enabled by default in enhanced mode)')
 
     
     parser.add_argument('--verbose', '-v', action='store_true', help='Enable verbose logging (DEBUG level)')
