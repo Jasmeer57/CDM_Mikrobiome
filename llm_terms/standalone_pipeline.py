@@ -213,10 +213,10 @@ class CDMEntityConfig:
 
     # Chunking strategies
     CHUNK_SIZES = {
-        'small': 2000,    # < 10k chars
-        'medium': 3500,   # < 50k chars
-        'large': 5000,    # < 100k chars
-        'xlarge': 7000    # > 100k chars
+        'small': 5000,    # < 10k chars
+        'medium': 10000,  # < 50k chars
+        'large': 20000,   # < 100k chars
+        'xlarge': 30000   # > 100k chars
     }
 
     OVERLAP_RATIOS = {
@@ -2785,7 +2785,6 @@ class MicrobiomeRelevanceScorer:
 # PIPELINE ORCHESTRATOR
 # ==============================================================================
 
-
 # ==============================================================================
 # ENTITY FILTER
 # ==============================================================================
@@ -3881,3 +3880,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
