@@ -387,6 +387,8 @@ MODELS_TO_RUN=("qwen3:14b")
 #              START OLLAMA & PULL MODELS
 # ==================================================
 echo "Starting Ollama server in the background..."
+echo "Ollama path: $(which ollama)"
+export OLLAMA_HOST=127.0.0.1:11434
 ollama serve > logs/ollama.log 2>&1 &
 OLLAMA_PID=$!
 sleep 5
@@ -412,8 +414,11 @@ check_ollama() {
 # Check if server started
 check_ollama
 if [ $? -ne 0 ]; then
-   echo "Ollama server failed to start. Exiting."
-   kill $OLLAMA_PID
+   echo "❌ Ollama server failed to start. Exiting."
+   echo "=== OLLAMA LOGS (Last 50 lines) ==="
+   tail -n 50 logs/ollama.log
+   echo "==================================="
+   kill $OLLAMA_PID 2>/dev/null
    exit 1
 fi
 
