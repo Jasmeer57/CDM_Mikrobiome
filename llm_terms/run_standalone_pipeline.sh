@@ -551,9 +551,10 @@ $PYTHON_CMD standalone_pipeline.py \
    --model gemma3:12b \
    --base-url http://localhost:11434 \
    --semantic-model all-MiniLM-L6-v2 \
-   --max-workers 4 \
-   --max-file-workers 8 \
+   --max-workers 2 \
+   --max-file-workers 2 \
    --fast
+
 
 
 
