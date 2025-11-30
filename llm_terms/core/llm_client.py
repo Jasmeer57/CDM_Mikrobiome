@@ -28,8 +28,9 @@ class LLMClient:
                 "options": {
                     "temperature": self.config['temperature'],
                     "top_p": 0.9,
-                    "max_tokens": max_tokens or self.config['max_tokens']
+                    "num_predict": max_tokens or self.config['max_tokens']
                 }
+
             }
 
             response = requests.post(

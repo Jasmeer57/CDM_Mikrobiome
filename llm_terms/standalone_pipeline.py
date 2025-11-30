@@ -567,9 +567,10 @@ class LLMClient:
                     "options": {
                         "temperature": self.config['temperature'],
                         "top_p": 0.9,
-                        "max_tokens": max_tokens or self.config['max_tokens'],
+                        "num_predict": max_tokens or self.config['max_tokens'],
                         "num_ctx": self.config.get('num_ctx', 4096)
                     }
+
                 }
                 
                 if self.opt_config.use_json_mode:
