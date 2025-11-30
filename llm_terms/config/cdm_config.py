@@ -121,8 +121,20 @@ class CDMEntityConfig:
         },
         'qwen3:4b': {
             'max_tokens': 3000,
-            'temperature': 0.2,
+            'temperature': 0.3,
             'timeout': 450
+        },
+        'qwen3:14b': {
+            'max_tokens': 8000,
+            'temperature': 0.3,
+            'timeout': 1200,
+            'num_ctx': 32768
+        },
+        'gemma3:12b': {
+            'max_tokens': 8000,
+            'temperature': 0.3,
+            'timeout': 1200,
+            'num_ctx': 16384
         }
     }
 

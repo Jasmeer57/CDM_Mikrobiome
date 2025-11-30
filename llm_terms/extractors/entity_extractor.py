@@ -21,7 +21,11 @@ class CDMEntityExtractor:
     def create_extraction_prompt(self, chunk_text: str) -> str:
         """Create structured prompt for CDM entity extraction."""
         return f"""
-Extract structured biomedical entities for Microbiome Common Data Model from this text.
+Extract EVERY SINGLE biomedical and scientific term from this text.
+Focus on capturing a comprehensive list of scientific concepts, biological entities, and medical terms.
+Be EXTREMELY EXHAUSTIVE. Aim to extract 100+ terms if present.
+Do not filter out common terms. If it is a scientific term, EXTRACT IT.
+For longer texts, do not stop until you have extracted ALL relevant entities.
 
 TEXT:
 {chunk_text}
@@ -236,7 +240,8 @@ CRITICAL RULES:
 2. Include terms from ALL biomedical domains: molecular biology, biochemistry, genetics, bioinformatics, pharmacology, etc.
 3. NEVER extract your own instructions, notes, or conversational phrases
 4. ONLY extract terms that would be valid entries in a biomedical ontology
-5. Be comprehensive - extract any term that appears biomedical or technical in nature
+5. Be EXTREMELY COMPREHENSIVE - extract any term that appears biomedical or technical in nature.
+6. Do not filter out terms because they seem "too common" or "generic". If it is scientific, extract it.
 
 VALID CATEGORIES TO EXTRACT:
 - ALL biological entities (organisms, species, genera, phyla)
