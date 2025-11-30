@@ -302,6 +302,16 @@ class BioMistralConfig:
     temperature: float = 0.1
     max_tokens: int = 500
 
+@dataclass
+class OptimizationConfig:
+    """Configuration for performance optimizations."""
+    fast_mode: bool = False
+    use_json_mode: bool = True
+    chunk_size_multiplier: float = 1.0
+    api_type: str = "ollama"  # ollama or openai (for vLLM)
+    api_key: str = "EMPTY"    # For vLLM/OpenAI
+
+
 # ==========================================
 # UTILITIES
 # ==========================================
@@ -460,13 +470,63 @@ ResultValidator = CDMResultValidator
 class LLMClient:
     """Client for interacting with LLM models."""
 
-    def __init__(self, model: str = "qwen3:8b", base_url: str = "http://localhost:11434"):
+    def __init__(self, model: str = "qwen3:8b", base_url: str = "http://localhost:11434", 
+                 optimization_config: OptimizationConfig = None):
         self.model = model
         self.base_url = base_url
         self.config = CDMEntityConfig.MODEL_CONFIGS.get(model, CDMEntityConfig.MODEL_CONFIGS['qwen3:8b'])
+        self.opt_config = optimization_config or OptimizationConfig()
 
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call LLM with structured prompt and return response."""
+        if self.opt_config.api_type == "openai":
+            return self._call_openai_compatible(prompt, max_tokens)
+        else:
+            return self._call_ollama(prompt, max_tokens)
+
+    def _call_openai_compatible(self, prompt: str, max_tokens: Optional[int] = None) -> str:
+        """Call OpenAI-compatible API (e.g., vLLM)."""
+        max_retries = 3
+        base_delay = 1
+
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self.opt_config.api_key}"
+        }
+
+        payload = {
+            "model": self.model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": self.config['temperature'],
+            "max_tokens": max_tokens or self.config['max_tokens'],
+        }
+        
+        if self.opt_config.use_json_mode:
+            payload["response_format"] = {"type": "json_object"}
+
+        for attempt in range(max_retries):
+            try:
+                response = requests.post(
+                    f"{self.base_url}/v1/chat/completions",
+                    headers=headers,
+                    json=payload,
+                    timeout=self.config['timeout']
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    return data['choices'][0]['message']['content'].strip()
+                else:
+                    logger.warning(f"vLLM API error: {response.status_code} - {response.text}")
+            except Exception as e:
+                logger.warning(f"vLLM call failed: {e}")
+            
+            time.sleep(base_delay * (2 ** attempt))
+            
+        return ""
+
+    def _call_ollama(self, prompt: str, max_tokens: Optional[int] = None) -> str:
+        """Call Ollama API."""
         max_retries = 3
         base_delay = 2
 
@@ -483,6 +543,9 @@ class LLMClient:
                         "num_ctx": self.config.get('num_ctx', 4096)
                     }
                 }
+                
+                if self.opt_config.use_json_mode:
+                    request_config["format"] = "json"
 
                 response = requests.post(
                     f"{self.base_url}/api/generate",
@@ -551,7 +614,8 @@ class CDMEntityExtractor:
         return f"""
 Extract ALL biomedical and scientific terms from this text.
 Focus on capturing a comprehensive list of scientific concepts, biological entities, and medical terms.
-Be EXHAUSTIVE. Aim to extract at least 50-100 terms if present in the text.
+Be EXHAUSTIVE. Aim to extract at least 100+ terms if present in the text.
+For longer texts, do not stop until you have extracted ALL relevant entities.
 
 TEXT:
 {chunk_text}
@@ -3228,9 +3292,17 @@ class CDMEntityPipeline:
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
                  mapping_confidence_threshold: float = 0.7,
                  enable_correction: bool = False, enable_llm_correction: bool = False,
-                 dry_run: bool = False):
+                 dry_run: bool = False, fast_mode: bool = False, api_type: str = "ollama"):
         self.config = config or PipelineConfig()
         self.dry_run = dry_run
+        
+        # Optimization Config
+        self.opt_config = OptimizationConfig(
+            fast_mode=fast_mode,
+            use_json_mode=True,
+            chunk_size_multiplier=3.0 if fast_mode else 1.0, # 3x larger chunks in fast mode
+            api_type=api_type
+        )
         
         if self.dry_run:
             logger.info("⚠️  DRY RUN MODE ENABLED: Skipping model loading and LLM calls")
@@ -3246,7 +3318,7 @@ class CDMEntityPipeline:
             self.comprehensive_mapper = None
             return
 
-        self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url)
+        self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url, self.opt_config)
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
@@ -3263,6 +3335,13 @@ class CDMEntityPipeline:
         self.mapping_confidence_threshold = mapping_confidence_threshold
         self.enable_correction = enable_correction
         self.enable_llm_correction = enable_llm_correction
+        
+        if self.opt_config.fast_mode:
+            logger.info("🚀 FAST MODE ENABLED: Using larger chunks and optimized settings")
+            # Disable expensive optional steps in fast mode unless explicitly forced?
+            # User said "reduce time", so we should be careful.
+            # But we'll respect the flags if they are passed.
+
 
         if enable_biomistral:
             biomistral_config = BioMistralConfig(model_name=biomistral_model)
@@ -3311,7 +3390,16 @@ class CDMEntityPipeline:
     def chunk_text(self, text: str, chunk_size: int = None) -> List[tuple]:
         """Split text into overlapping chunks."""
         if chunk_size is None:
-            chunk_size = self.extractor.calculate_optimal_chunk_size(len(text))
+            base_chunk_size = self.extractor.calculate_optimal_chunk_size(len(text))
+            chunk_size = int(base_chunk_size * self.opt_config.chunk_size_multiplier)
+            
+            # Cap chunk size to avoid context overflow (assuming 32k context for modern models)
+            # If fast mode, we push it.
+            if self.opt_config.fast_mode:
+                chunk_size = min(chunk_size, 12000) # Safe limit for 16k-32k context models
+            else:
+                chunk_size = min(chunk_size, 6000)
+
 
         overlap = self.extractor.calculate_overlap(chunk_size)
 
@@ -3822,6 +3910,10 @@ def main():
     parser.add_argument('--enable-enhanced', action='store_true', help='Run enhanced pipeline stage')
     parser.add_argument('--semantic-model', default='all-MiniLM-L6-v2', help='Semantic model for embeddings (default: all-MiniLM-L6-v2)')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode (skip heavy processing)')
+    parser.add_argument('--fast', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
+    parser.add_argument('--api-type', choices=['ollama', 'openai'], default='ollama', help='API type (ollama or openai/vllm)')
+    parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
+
     
     args = ConfigManager.setup_parser_with_config(parser)
     
@@ -3859,7 +3951,9 @@ def main():
         pipeline_config,
         semantic_model=args.semantic_model,
         semantic_threshold=0.8,
-        dry_run=args.dry_run
+        dry_run=args.dry_run,
+        fast_mode=args.fast,
+        api_type=args.api_type
     )
     
     if not basic_success:
@@ -3894,7 +3988,11 @@ def main():
             mapping_confidence_threshold=0.7,
             enable_correction=args.enable_correction,
             enable_llm_correction=args.enable_llm_correction,
-            dry_run=args.dry_run
+            enable_correction=args.enable_correction,
+            enable_llm_correction=args.enable_llm_correction,
+            dry_run=args.dry_run,
+            fast_mode=args.fast,
+            api_type=args.api_type
         )
         
         if enhanced_success:
