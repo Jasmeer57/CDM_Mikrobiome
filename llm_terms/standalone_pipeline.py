@@ -231,22 +231,26 @@ class CDMEntityConfig:
         'phi3:mini': {
             'max_tokens': 2000,
             'temperature': 0.1,
-            'timeout': 300
+            'timeout': 300,
+            'num_ctx': 4096
         },
         'qwen3:8b': {
             'max_tokens': 4000,
             'temperature': 0.1,
-            'timeout': 600
+            'timeout': 600,
+            'num_ctx': 8192
         },
         'qwen3:14b': {
             'max_tokens': 8000,
             'temperature': 0.1,
-            'timeout': 1200
+            'timeout': 1200,
+            'num_ctx': 32768
         },
         'biomistral-7B': {
             'max_tokens': 4000,
             'temperature': 0.1,
-            'timeout': 600
+            'timeout': 600,
+            'num_ctx': 8192
         }
     }
 
@@ -465,7 +469,8 @@ class LLMClient:
                 "options": {
                     "temperature": self.config['temperature'],
                     "top_p": 0.9,
-                    "max_tokens": max_tokens or self.config['max_tokens']
+                    "max_tokens": max_tokens or self.config['max_tokens'],
+                    "num_ctx": self.config.get('num_ctx', 4096)
                 }
             }
 
@@ -523,7 +528,7 @@ class LLMClient:
 class CDMEntityExtractor:
     """Extracts CDM-structured biomedical entities from text."""
 
-    def __init__(self, llm_client: LLMClient):
+    def __init__(self, llm_client: 'LLMClient'):
         self.llm_client = llm_client
         self.entity_config = CDMEntityConfig()
 

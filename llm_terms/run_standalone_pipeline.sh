@@ -54,6 +54,18 @@ mkdir -p logs
 # === CONDA ENVIRONMENT ===
 # === CONDA ENVIRONMENT ===
 echo "Setting up conda environment..."
+
+# Ensure clean state for Ollama
+pkill ollama || true
+sleep 2
+
+# Optimize Ollama for A100
+export OLLAMA_NUM_PARALLEL=4
+export OLLAMA_MAX_LOADED_MODELS=2
+export OLLAMA_FLASH_ATTENTION=1
+export OLLAMA_KV_CACHE_TYPE=f16
+export OLLAMA_KEEP_ALIVE=24h
+
 if conda info --envs | grep -q "llm-terms-cdm"; then
    echo "Environment llm-terms-cdm already exists. Activating..."
    conda activate llm-terms-cdm
