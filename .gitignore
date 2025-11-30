@@ -37,9 +37,35 @@ env/
 # Machine Learning / Caches
 model_cache/
 *.model_cache # Specific to the path that caused the error
+
+# Log files - comprehensive patterns
 *.log
-*.err
+*.log.*
 *.out
+*.err
+logs/
+log/
+**/logs/
+**/log/
+pipeline_log*
+*_log.txt
+*_logs/
+audit.log
+audit_trail.*
+cdm_pipeline.log
+llm_terms.log
+debug.log
+error.log
+info.log
+warn.log
+trace.log
+*.trace
+system.log
+application.log
+server.log
+access.log
+error_log
+access_log
 
 # Runtime and Output Files
 *.db
