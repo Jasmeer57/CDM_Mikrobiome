@@ -25,6 +25,7 @@ module purge
 module load Miniforge3/24.1.2-0
 source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
 module load CUDA/12.3.0
+module load GCC/12.3.0
 module load ollama/0.7.0
 
 # === ENVIRONMENT ISOLATION ===
