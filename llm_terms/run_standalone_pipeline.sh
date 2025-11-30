@@ -468,7 +468,7 @@ fi
 echo ""
 # === OLLAMA SETUP ===
 # Define models to run
-MODELS_TO_RUN=("gemma3:12b")
+MODELS_TO_RUN=("gemma3:12b" "qwen3:14b")
 
 
 # ==================================================
@@ -548,7 +548,7 @@ echo "Running basic CDM entity extraction pipeline..."
 $PYTHON_CMD standalone_pipeline.py \
    --input "$INPUT_FILE" \
    --output "../output/cdm_entities.json" \
-   --model gemma3:12b \
+   --model qwen3:14b \
    --base-url http://localhost:11434 \
    --semantic-model all-MiniLM-L6-v2 \
    --max-workers 1 \
@@ -576,7 +576,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
    ENHANCED_CMD="$PYTHON_CMD standalone_pipeline.py \
        --input \"$INPUT_FILE\" \
        --output \"../output/cdm_entities_enhanced.json\" \
-       --model gemma3:12b \
+       --model qwen3:14b \
        --base-url ${OLLAMA_BASE_URL:-http://localhost:11434} \
        --semantic-model all-MiniLM-L6-v2 \
        --max-workers 4 \
@@ -585,7 +585,6 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
        --enable-enhanced \
        --enable-biomistral \
        --enable-correction \
-       --enable-omop-mapping \
        --enable-omop-mapping"
 
 

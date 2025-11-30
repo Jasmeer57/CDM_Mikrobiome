@@ -3480,7 +3480,8 @@ class CDMEntityPipeline:
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
                  mapping_confidence_threshold: float = 0.7,
                  enable_correction: bool = False, enable_llm_correction: bool = False,
-                 dry_run: bool = False, fast_mode: bool = False, api_type: str = "ollama"):
+                 dry_run: bool = False, fast_mode: bool = False, api_type: str = "ollama",
+                 api_key: str = "EMPTY"):
         self.config = config or PipelineConfig()
         self.dry_run = dry_run
         
@@ -4215,7 +4216,8 @@ def main():
 
             dry_run=args.dry_run,
             fast_mode=False,
-            api_type=args.api_type
+            api_type=args.api_type,
+            api_key=args.api_key
         )
         
         if enhanced_success:
