@@ -3143,8 +3143,25 @@ class CDMEntityPipeline:
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
                  mapping_confidence_threshold: float = 0.7,
-                 enable_correction: bool = False, enable_llm_correction: bool = False):
+                 enable_correction: bool = False, enable_llm_correction: bool = False,
+                 dry_run: bool = False):
         self.config = config or PipelineConfig()
+        self.dry_run = dry_run
+        
+        if self.dry_run:
+            logger.info("⚠️  DRY RUN MODE ENABLED: Skipping model loading and LLM calls")
+            self.llm_client = None
+            self.extractor = None
+            self.entity_config = CDMEntityConfig()
+            self.semantic_deduplicator = None
+            self.entity_filter = None
+            self.relevance_scorer = None
+            self.term_corrector = None
+            self.biomistral_validator = None
+            self.biomistral_deduplicator = None
+            self.comprehensive_mapper = None
+            return
+
         self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url)
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
@@ -3191,6 +3208,10 @@ class CDMEntityPipeline:
 
     def validate_prerequisites(self) -> bool:
         """Validate that the pipeline can run."""
+        if self.dry_run:
+            logger.info("✅ Dry run: Prerequisites check skipped")
+            return True
+
         if not self.llm_client.is_available():
             logger.error(f"LLM service not available at {self.llm_client.base_url}")
             return False
@@ -3226,6 +3247,25 @@ class CDMEntityPipeline:
         """Extract CDM entities from text using parallel processing."""
         logger.info(f"🔍 Starting CDM entity extraction from {len(text)} characters")
 
+        if self.dry_run:
+            logger.info("⚠️  Dry run: Returning mock entities")
+            return [
+                {
+                    "entity": "Bacteroides fragilis",
+                    "entity_type": "ORGANISM",
+                    "context": "Mock context for dry run",
+                    "source": "mock",
+                    "confidence": 0.95
+                },
+                {
+                    "entity": "butyrate",
+                    "entity_type": "CHEMICAL",
+                    "context": "Mock context for dry run",
+                    "source": "mock",
+                    "confidence": 0.92
+                }
+            ]
+
         # Chunk the text
         chunks = self.chunk_text(text, chunk_size)
 
@@ -3248,6 +3288,8 @@ class CDMEntityPipeline:
         return processed_entities
 
     def post_process_entities(self, entities: List[Dict], use_semantic: bool = False) -> List[Dict]:
+        if self.dry_run:
+            return entities
         """Clean, deduplicate, and sort entities with optional semantic deduplication."""
         logger.info(f"🔄 Post-processing {len(entities)} entities")
 
@@ -3642,6 +3684,7 @@ def main():
     parser.add_argument('--enable-llm-correction', action='store_true', help='Enable LLM-based type correction')
     parser.add_argument('--enable-enhanced', action='store_true', help='Run enhanced pipeline stage')
     parser.add_argument('--semantic-model', default='all-MiniLM-L6-v2', help='Semantic model for embeddings (default: all-MiniLM-L6-v2)')
+    parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode (skip heavy processing)')
     
     args = ConfigManager.setup_parser_with_config(parser)
     
@@ -3677,7 +3720,8 @@ def main():
         basic_output,
         pipeline_config,
         semantic_model=args.semantic_model,
-        semantic_threshold=0.8
+        semantic_threshold=0.8,
+        dry_run=args.dry_run
     )
     
     if not basic_success:
@@ -3711,7 +3755,8 @@ def main():
             enable_comprehensive_mapping=enable_hf,
             mapping_confidence_threshold=0.7,
             enable_correction=args.enable_correction,
-            enable_llm_correction=args.enable_llm_correction
+            enable_llm_correction=args.enable_llm_correction,
+            dry_run=args.dry_run
         )
         
         if enhanced_success:

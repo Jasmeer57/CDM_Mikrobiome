@@ -26,6 +26,10 @@ module load Miniforge3/24.1.2-0
 source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
 module load CUDA/12.3.0
 
+# Prevent user's local packages from interfering with the conda environment
+export PYTHONPATH=""
+export PYTHONNOUSERSITE=1
+
 # Create logs directory
 mkdir -p logs
 
@@ -79,7 +83,7 @@ pip install pydantic==2.5.0
 # Install biomedical NLP
 echo "Installing biomedical NLP dependencies..."
 pip install spacy==3.7.2
-pip install scispacy==0.5.1
+pip install scispacy>=0.5.4
 
 # Install additional text processing
 pip install nltk==3.8.1
