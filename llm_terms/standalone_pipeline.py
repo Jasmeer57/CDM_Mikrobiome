@@ -144,11 +144,12 @@ class CDMEntityConfig:
     # Enhanced entity type definitions based on specification
     ENTITY_TYPES = {
         'ORGANISM': {
-            'description': 'Bacteria, archaea, fungi, viruses, microbiota, taxa',
-            'examples': ['Bacteroides fragilis', 'E. coli', 'Lactobacillus spp.', 'Firmicutes', 'Bacteroidetes', 'Archaea', 'Methanobrevibacter'],
+            'description': 'Bacteria, archaea, fungi, viruses, microbiota, taxa, eukaryotic organisms',
+            'examples': ['Bacteroides fragilis', 'E. coli', 'Firmicutes', 'Bacteroidetes', 'Archaea', 'Methanobrevibacter', 'Lactobacillus', 'Clostridium', 'Akkermansia', 'Homo sapiens', 'Mus musculus'],
             'patterns': [r'\b([A-Z][a-z]+[a-z]*\s+[a-z]+(?:\s+[a-z]+)*)\b|\b([A-Z][a-z]+\s+sp[p]?)\b'],
             'priority': 1
         },
+
         'GENE': {
             'description': 'Gene names, genetic markers, gene families, transcription factors',
             'examples': ['IL6', 'TNF-alpha', 'TLR4', 'NF-kB', 'IFN-gamma', 'p53', 'BRCA1', 'STAT3', 'NOD2'],
@@ -162,11 +163,12 @@ class CDMEntityConfig:
             'priority': 3
         },
         'CHEMICAL': {
-            'description': 'Metabolites, SCFAs, drugs, compounds, biochemical substances',
-            'examples': ['butyrate', 'propionate', 'acetate', 'lactate', 'lipopolysaccharide', 'glucose', 'amino acids', 'fatty acids', 'vitamins'],
+            'description': 'Metabolites, SCFAs, drugs, compounds, biochemical substances, nutrients, hormones',
+            'examples': ['butyrate', 'propionate', 'acetate', 'lactate', 'lipopolysaccharide', 'glucose', 'tryptophan', 'choline', 'carnitine', 'dopamine', 'serotonin', 'cortisol'],
             'patterns': [r'\b([a-z]+(?:ate|ine|ol|one|acid|lactate|butyrate|propionate|acetate|glucose))\b'],
             'priority': 4
         },
+
         'DISEASE': {
             'description': 'Diseases, conditions, disorders, syndromes, clinical terms',
             'examples': ['ulcerative colitis', 'Crohn\'s disease', 'type 2 diabetes', 'inflammation', 'obesity', 'autoimmune disease', 'cancer'],
@@ -186,17 +188,19 @@ class CDMEntityConfig:
             'priority': 7
         },
         'BIOINFO_TOOL': {
-            'description': 'Bioinformatics tools, software, databases, analytical methods',
-            'examples': ['BLAST', 'FASTA', 'GenBank', 'Qiime', 'MetaPhlAn', 'HUMAnN', 'shotgun sequencing', 'metagenomics', 'phylogenetic analysis'],
+            'description': 'Bioinformatics tools, software, databases, analytical methods, algorithms',
+            'examples': ['BLAST', 'Qiime2', 'MetaPhlAn', 'HUMAnN', 'DADA2', 'VSEARCH', 'Picrust2', 'LEfSe', 'Phyloseq', 'UniProt', 'NCBI', 'Python', 'R'],
             'patterns': [r'\b([A-Z]{3,})\b|\b([a-z]+(?:omics|sequencing|analysis|pipeline))\b'],
             'priority': 8
         },
+
         'GENOMICS': {
-            'description': 'Genomics, transcriptomics, proteomics, metabolomics, omics technologies',
-            'examples': ['genomics', 'transcriptomics', 'proteomics', 'metabolomics', 'microbiomics', 'epigenomics', 'single-cell sequencing'],
+            'description': 'Genomics, transcriptomics, proteomics, metabolomics, omics technologies, sequencing methods',
+            'examples': ['genomics', 'transcriptomics', 'proteomics', 'metabolomics', '16S rRNA sequencing', 'shotgun metagenomics', 'RNA-seq', 'ChIP-seq', 'ATAC-seq'],
             'patterns': [r'\b([a-z]+(?:omics|sequencing|genome))\b'],
             'priority': 9
         },
+
         'CLINICAL': {
             'description': 'Clinical terms, medical procedures, treatments, healthcare',
             'examples': ['diagnosis', 'therapy', 'treatment', 'clinical trial', 'patient', 'symptoms', 'medication', 'surgery'],
@@ -204,11 +208,12 @@ class CDMEntityConfig:
             'priority': 10
         },
         'SCIENTIFIC_TERM': {
-            'description': 'General scientific terms, biological concepts, methods, and other biomedical terms',
-            'examples': ['metabolism', 'homeostasis', 'apoptosis', 'signaling pathway', 'gene expression', 'immune response', 'biodiversity'],
+            'description': 'General scientific terms, biological concepts, methods, statistical methods, laboratory techniques',
+            'examples': ['metabolism', 'homeostasis', 'apoptosis', 'alpha diversity', 'beta diversity', 'PCR', 'ELISA', 'western blot', 'ANOVA', 'p-value', 'correlation'],
             'patterns': [r'\b([a-z]+(?:process|mechanism|pathway|response|cycle))\b'],
             'priority': 11
         }
+
     }
 
     # Chunking strategies
@@ -804,18 +809,166 @@ Requirements:
                             }, chunk_num, 0.6))
         return entities
 
-    def extract_entities_from_chunk(self, chunk_data: Tuple[str, int]) -> Tuple[int, List[Dict]]:
-        """Extract entities from a single chunk."""
-        chunk_text, chunk_num = chunk_data
-        logger.info(f"📄 Processing chunk {chunk_num} ({len(chunk_text)} chars)")
-        prompt = self.create_extraction_prompt(chunk_text)
+    def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
+        """Generate specific prompt for each extraction pass."""
+        
+        system_context = """You are a comprehensive biomedical terminology extractor. Extract ALL concrete scientific terms from the text including bioinformatics, molecules, chemicals, organisms, species, and technical biomedical terms.
+
+CRITICAL RULES:
+1. Extract ALL biomedical terms: bioinformatics tools, molecules, chemicals, organisms, species, technical terms
+2. Include terms from ALL biomedical domains: molecular biology, biochemistry, genetics, bioinformatics, pharmacology, etc.
+3. NEVER extract your own instructions, notes, or conversational phrases
+4. ONLY extract terms that would be valid entries in a biomedical ontology
+5. Be comprehensive - extract any term that appears biomedical or technical in nature
+
+VALID CATEGORIES TO EXTRACT:
+- ALL biological entities (organisms, species, genera, phyla)
+- ALL chemical compounds, metabolites, molecules
+- ALL molecular biology terms (genes, proteins, pathways, enzymes)
+- ALL bioinformatics tools, methods, and pipelines
+- ALL sequencing technologies and omics platforms
+- ALL statistical and computational methods
+- ALL medical, clinical, and pharmaceutical terms
+- ALL laboratory methods and techniques
+- ALL anatomical and physiological terms
+- ANY technical biomedical term
+
+OUTPUT: Return ONLY a JSON array with objects containing:
+{
+  "entity": "extracted term",
+  "entity_type": "one of: ORGANISM|GENE|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|BIOINFO_TOOL|GENOMICS|CLINICAL|SCIENTIFIC_TERM",
+  "context": "brief context or description"
+}"""
+
+        if pass_num == 1:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL biological entities, organisms, species, and taxonomic terms from the text.
+
+FOCUS ON:
+- ALL bacterial, archaeal, fungal genera and species mentioned
+- ALL viral strains and types mentioned
+- ALL eukaryotic organisms mentioned (human, mouse, rat, etc.)
+- ALL taxonomic ranks and classifications mentioned
+- ANY organism names that appear in the text
+- Species names, genus names, family names, etc.
+
+IMPORTANT: Extract ALL biological entities you find, not just microbiome-related.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 2:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL chemical compounds, metabolites, molecules, and biochemical terms from the text.
+
+FOCUS ON:
+- ALL metabolites mentioned (SCFAs, bile acids, amino acids, lipids, etc.)
+- ALL drugs, pharmaceuticals, compounds mentioned
+- ALL proteins, enzymes, hormones, neurotransmitters mentioned
+- ALL genes, DNA, RNA molecules mentioned
+- ALL metabolic pathways and processes mentioned
+- ANY chemical or molecular entity that appears in the text
+- Small molecules, large molecules, organic compounds, inorganic compounds
+
+IMPORTANT: Extract ALL chemical and molecular terms you find.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 3:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL bioinformatics tools, computational methods, and technical approaches from the text.
+
+FOCUS ON:
+- ALL sequencing platforms and methods mentioned
+- ALL bioinformatics tools, software, and pipelines mentioned
+- ALL statistical and computational methods mentioned
+- ALL machine learning and AI approaches mentioned
+- ALL database and resource names mentioned
+- ANY computational or technical approach that appears in the text
+- Programming languages, algorithms, data structures mentioned
+
+IMPORTANT: Extract ALL bioinformatics and computational terms you find.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 4:
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ALL medical, clinical, pharmaceutical, and disease-related terms from the text.
+
+FOCUS ON:
+- ALL diseases, disorders, and medical conditions mentioned
+- ALL drugs, pharmaceuticals, and treatments mentioned
+- ALL clinical procedures and diagnostic methods mentioned
+- ALL anatomical terms and body systems mentioned
+- ALL physiological processes and pathways mentioned
+- ANY medical or clinical term that appears in the text
+
+IMPORTANT: Extract ALL medical and clinical terms you find.
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 5:
+            existing_str = ', '.join(existing_terms[:30]) if existing_terms else "None"
+            return f"""{system_context}
+
+EXTRACTION GOAL: Extract ANY remaining biomedical terms from ALL categories that haven't been captured yet.
+
+LOOK FOR:
+- ANY scientific term related to biology, medicine, chemistry, biochemistry
+- ANY technical term mentioned in the text
+- ANY domain-specific terminology that appears biomedical
+- ANY term that could be part of a biomedical ontology
+- Laboratory techniques, experimental methods, analytical approaches
+- ANY term from biomedical research that you haven't extracted yet
+
+TERMS ALREADY EXTRACTED (examples):
+{existing_str}
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 6:
+            return f"""{system_context}
+
+EXTRACTION GOAL: AGGRESSIVELY extract ANY biomedical terms.
+BE VERY INCLUSIVE:
+- Extract ANY term that sounds scientific, technical, or biomedical
+- Include method names, technique names, approach names
+- Include any compound, molecule, or chemical mentioned
+- Include any organism, species, or biological entity
+- Include any computational, statistical, or analytical method
+- Include any medical, clinical, or pharmaceutical term
+
+TEXT:
+{chunk_text}"""
+        
+        return self.create_extraction_prompt(chunk_text)
+
+    def run_extraction_pass(self, pass_data: Tuple[str, int, List[str]]) -> List[Dict]:
+        """Execute a single extraction pass on a specific text window."""
+        text, pass_num, existing_terms = pass_data
+        logger.info(f"🚀 Starting Pass {pass_num} on {len(text)} chars")
+        
+        prompt = self._get_pass_prompt(pass_num, text, existing_terms)
+        
+        # Use lower temperature for aggressive pass
+        # We can't easily set temp per call in current LLMClient, so we rely on prompt instructions
         response = self.llm_client.call_llm(prompt, max_tokens=4000)
+        
         if not response:
-            logger.warning(f"No LLM response for chunk {chunk_num}")
-            return chunk_num, []
-        entities = self.parse_llm_response(response, chunk_num)
-        logger.info(f"    Chunk {chunk_num}: Found {len(entities)} entities")
-        return chunk_num, entities
+            logger.warning(f"⚠️ Pass {pass_num} returned no response")
+            return []
+            
+        entities = self.parse_llm_response(response, pass_num)
+        logger.info(f"✅ Pass {pass_num} found {len(entities)} entities")
+        return entities
 
     def calculate_optimal_chunk_size(self, text_length: int) -> int:
         return self.entity_config.get_chunk_size(text_length)
@@ -3333,9 +3486,9 @@ class CDMEntityPipeline:
         
         # Optimization Config
         self.opt_config = OptimizationConfig(
-            fast_mode=fast_mode,
-            use_json_mode=True,
-            chunk_size_multiplier=3.0 if fast_mode else 1.0, # 3x larger chunks in fast mode
+            fast_mode=False,
+            api_key=api_key,
+            chunk_size_multiplier=1.0, 
             api_type=api_type
         )
         
@@ -3451,42 +3604,78 @@ class CDMEntityPipeline:
         return chunks
 
     def extract_entities(self, text: str, chunk_size: int = None) -> List[Dict]:
-        """Extract CDM entities from text using parallel processing."""
-        logger.info(f"🔍 Starting CDM entity extraction from {len(text)} characters")
+        """Extract CDM entities using Windowed Multi-Pass Strategy (Fast & Comprehensive)."""
+        logger.info(f"🔍 Starting Windowed Multi-Pass Extraction on {len(text)} characters")
 
         if self.dry_run:
-            logger.info("⚠️  Dry run: Returning mock entities")
             return [
-                {
-                    "entity": "Bacteroides fragilis",
-                    "entity_type": "ORGANISM",
-                    "context": "Mock context for dry run",
-                    "source": "mock",
-                    "confidence": 0.95
-                },
-                {
-                    "entity": "butyrate",
-                    "entity_type": "CHEMICAL",
-                    "context": "Mock context for dry run",
-                    "source": "mock",
-                    "confidence": 0.92
-                }
+                {"entity": "Bacteroides fragilis", "entity_type": "ORGANISM", "confidence": 0.95},
+                {"entity": "butyrate", "entity_type": "CHEMICAL", "confidence": 0.92}
             ]
 
-        # Chunk the text
-        chunks = self.chunk_text(text, chunk_size)
-
-        # Process chunks in parallel
         all_entities = []
-        with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
-            futures = [executor.submit(self.extractor.extract_entities_from_chunk, chunk) for chunk in chunks]
+        text_len = len(text)
+        
+        # Define Windows (from Reference Script)
+        # Pass 1: 0-8000
+        # Pass 2: 5000-13000
+        # Pass 3: 10000-18000
+        # Pass 4: 15000-23000
+        # Pass 5: 20000-28000
+        # Pass 6: 25000-35000
+        
+        windows = [
+            (1, text[0:8000]),
+            (2, text[5000:13000] if text_len > 5000 else text[0:min(text_len, 8000)]),
+            (3, text[10000:18000] if text_len > 10000 else text[0:min(text_len, 8000)]),
+            (4, text[15000:23000] if text_len > 15000 else text[0:min(text_len, 8000)])
+        ]
+        
+        # Filter out empty windows or duplicates for very short text
+        valid_windows = []
+        seen_texts = set()
+        for p_num, w_text in windows:
+            if not w_text.strip(): continue
+            # For short texts, windows might be identical. Skip duplicates.
+            if w_text in seen_texts: continue
+            seen_texts.add(w_text)
+            valid_windows.append((p_num, w_text))
+
+        # Run Passes 1-4 in Parallel
+        logger.info(f"🔄 Running Passes 1-4 in parallel ({len(valid_windows)} tasks)...")
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = [
+                executor.submit(self.extractor.run_extraction_pass, (w_text, p_num, [])) 
+                for p_num, w_text in valid_windows
+            ]
             
-            for future in tqdm(as_completed(futures), total=len(chunks), desc="Extracting entities", unit="chunk"):
+            for future in tqdm(as_completed(futures), total=len(valid_windows), desc="Running Passes 1-4"):
                 try:
                     entities = future.result()
                     all_entities.extend(entities)
                 except Exception as e:
-                    logger.error(f"Error processing chunk: {e}")
+                    logger.error(f"Error in extraction pass: {e}")
+
+        # Check count for Pass 5 & 6
+        unique_terms = {e['entity'].lower() for e in all_entities}
+        logger.info(f"📊 Terms after Passes 1-4: {len(unique_terms)}")
+        
+        # Pass 5 (Catch-all)
+        if len(unique_terms) < 100: # Target min 50-100
+            logger.info("⚠️  Term count low. Running Pass 5 (Catch-all)...")
+            p5_text = text[20000:28000] if text_len > 20000 else text[0:min(text_len, 8000)]
+            if p5_text.strip():
+                p5_entities = self.extractor.run_extraction_pass((p5_text, 5, list(unique_terms)))
+                all_entities.extend(p5_entities)
+                unique_terms.update({e['entity'].lower() for e in p5_entities})
+
+        # Pass 6 (Aggressive)
+        if len(unique_terms) < 50:
+            logger.info("⚠️  Term count still low. Running Pass 6 (Aggressive)...")
+            p6_text = text[25000:35000] if text_len > 25000 else text[0:min(text_len, 8000)]
+            if p6_text.strip():
+                p6_entities = self.extractor.run_extraction_pass((p6_text, 6, []))
+                all_entities.extend(p6_entities)
 
         # Post-process entities with semantic deduplication
         processed_entities = self.post_process_entities(all_entities, use_semantic=True)
@@ -3945,7 +4134,7 @@ def main():
     parser.add_argument('--enable-enhanced', action='store_true', help='Run enhanced pipeline stage')
     parser.add_argument('--semantic-model', default='all-MiniLM-L6-v2', help='Semantic model for embeddings (default: all-MiniLM-L6-v2)')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode (skip heavy processing)')
-    parser.add_argument('--fast', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
+    # parser.add_argument('--fast', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
     parser.add_argument('--api-type', choices=['ollama', 'openai'], default='ollama', help='API type (ollama or openai/vllm)')
     parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
 
@@ -3987,7 +4176,7 @@ def main():
         semantic_model=args.semantic_model,
         semantic_threshold=0.8,
         dry_run=args.dry_run,
-        fast_mode=args.fast,
+        fast_mode=False,
         api_type=args.api_type
     )
     
@@ -4025,7 +4214,7 @@ def main():
             enable_llm_correction=args.enable_llm_correction,
 
             dry_run=args.dry_run,
-            fast_mode=args.fast,
+            fast_mode=False,
             api_type=args.api_type
         )
         

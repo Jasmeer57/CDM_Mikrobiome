@@ -552,8 +552,8 @@ $PYTHON_CMD standalone_pipeline.py \
    --base-url http://localhost:11434 \
    --semantic-model all-MiniLM-L6-v2 \
    --max-workers 1 \
-   --max-file-workers 1 \
-   --fast
+   --max-file-workers 1
+
 
 
 
@@ -586,7 +586,7 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
        --enable-biomistral \
        --enable-correction \
        --enable-omop-mapping \
-       --fast"
+       --enable-omop-mapping"
 
 
    # Add UMLS mapping if API key is available
