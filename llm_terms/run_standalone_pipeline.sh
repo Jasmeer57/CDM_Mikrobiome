@@ -478,7 +478,9 @@ if [ $BASIC_EXIT_CODE -eq 0 ]; then
         --model qwen3:14b \
         --base-url ${OLLAMA_BASE_URL:-http://localhost:11434} \
         --semantic-model all-MiniLM-L6-v2 \
-        --max-workers 3 \
+        --max-workers 4 \
+        --chunk-size 5000 \
+        --overlap 500 \
         --enable-enhanced \
         --enable-biomistral \
         --enable-correction \

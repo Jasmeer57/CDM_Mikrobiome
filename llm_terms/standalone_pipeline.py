@@ -238,10 +238,15 @@ class CDMEntityConfig:
             'temperature': 0.1,
             'timeout': 600
         },
-        'qwen3:4b': {
-            'max_tokens': 3000,
-            'temperature': 0.2,
-            'timeout': 450
+        'qwen3:14b': {
+            'max_tokens': 8000,
+            'temperature': 0.1,
+            'timeout': 900
+        },
+        'biomistral-7B': {
+            'max_tokens': 4000,
+            'temperature': 0.1,
+            'timeout': 600
         }
     }
 
@@ -2502,58 +2507,115 @@ class BioMistralValidator:
         self.llm_client = LLMClient(model=config.model_name, base_url=config.api_url)
 
     def validate_entity_list(self, entities: List[Dict]) -> List[Dict]:
-        """Validate a list of entities using BioMistral."""
-        # For standalone, we'll implement a simplified version or a pass-through
-        # if the model isn't actually available/heavy to run in loop.
-        # But assuming we want to try:
+        """Validate a list of entities using BioMistral with batch processing."""
         validated_entities = []
-        for entity in entities:
-            if self._validate_single_entity(entity):
-                validated_entities.append(entity)
+        batch_size = 20
+        
+        # Process in batches
+        for i in tqdm(range(0, len(entities), batch_size), desc="🧬 Validating entities", unit="batch"):
+            batch = entities[i:i + batch_size]
+            validated_batch = self._validate_batch(batch)
+            validated_entities.extend(validated_batch)
+            
         return validated_entities
 
-    def _validate_single_entity(self, entity: Dict) -> bool:
-        """Validate a single entity."""
-        # Simplified validation logic
+    def _validate_batch(self, batch: List[Dict]) -> List[Dict]:
+        """Validate a batch of entities."""
+        if not batch:
+            return []
+            
+        # Create batch prompt
+        items = "\n".join([f"{j+1}. {e['entity']} ({e['entity_type']})" for j, e in enumerate(batch)])
         prompt = f"""
-        Is "{entity['entity']}" a valid {entity['entity_type']} in the context of microbiome research?
-        Reply with YES or NO only.
-        """
-        response = self.llm_client.call_llm(prompt, max_tokens=10)
-        return "YES" in response.upper()
+Validate these biomedical entities for microbiome research context.
+Entities:
+{items}
+
+Return a JSON array of booleans [true, false, ...] corresponding to each item.
+True if the term is a valid scientific/biomedical entity, False if it is generic, a person name, location, or irrelevant.
+Return ONLY the JSON array.
+"""
+        try:
+            response = self.llm_client.call_llm(prompt, max_tokens=200)
+            # Parse response
+            # Look for JSON array
+            match = re.search(r'\[.*\]', response, re.DOTALL)
+            if match:
+                results = json.loads(match.group(0))
+                if len(results) == len(batch):
+                    return [e for e, valid in zip(batch, results) if valid]
+            
+            # Fallback: assume all valid if parsing fails to avoid data loss
+            logger.warning("Failed to parse batch validation response, keeping all entities.")
+            return batch
+        except Exception as e:
+            logger.error(f"Error in batch validation: {e}")
+            return batch
 
     def correct_entity_types(self, entities: List[Dict]) -> List[Dict]:
-        """Correct entity types using BioMistral."""
+        """Correct entity types using BioMistral with batch processing."""
         logger.info(f"🧬 Correcting entity types for {len(entities)} entities using LLM...")
         
-        # Group by type to batch process or just process suspicious ones?
-        # For standalone, let's process entities with low confidence or ambiguous types
+        # Filter for low confidence or ambiguous entities
+        candidates = [e for e in entities if e.get('confidence', 1.0) < 0.8]
+        others = [e for e in entities if e.get('confidence', 1.0) >= 0.8]
         
-        corrected_count = 0
-        for entity in entities:
-            if entity.get('confidence', 1.0) < 0.8: # Only check low confidence ones
-                prompt = f"""
-                Given the text "{entity['entity']}" and context "{entity.get('context', '')[:100]}", what is the most appropriate entity type?
-                Options: ORGANISM, GENE, PROTEIN, CHEMICAL, DISEASE, DNA_RNA, CELL_TYPE, BIOINFO_TOOL, GENOMICS, CLINICAL, SCIENTIFIC_TERM.
-                Reply with ONLY the entity type.
-                """
-                response = self.llm_client.call_llm(prompt, max_tokens=10).strip().upper()
-                
-                # Extract type from response
-                found_type = None
-                for valid_type in CDMEntityConfig.ENTITY_TYPES.keys():
-                    if valid_type in response:
-                        found_type = valid_type
-                        break
-                
-                if found_type and found_type != entity['entity_type']:
-                    entity['original_type'] = entity['entity_type']
-                    entity['entity_type'] = found_type
-                    entity['type_correction_method'] = 'LLM_Validation'
-                    corrected_count += 1
+        if not candidates:
+            return entities
 
+        corrected_candidates = []
+        batch_size = 20
+        corrected_count = 0
+        
+        for i in tqdm(range(0, len(candidates), batch_size), desc="🧬 Correcting types", unit="batch"):
+            batch = candidates[i:i + batch_size]
+            corrected_batch, count = self._correct_batch(batch)
+            corrected_candidates.extend(corrected_batch)
+            corrected_count += count
+            
         logger.info(f"✅ LLM type correction: Updated {corrected_count} entities")
-        return entities
+        return others + corrected_candidates
+
+    def _correct_batch(self, batch: List[Dict]) -> Tuple[List[Dict], int]:
+        """Correct types for a batch of entities."""
+        if not batch:
+            return [], 0
+            
+        items = "\n".join([f"{j+1}. {e['entity']} (Current: {e['entity_type']}) - Context: {e.get('context', '')[:50]}..." for j, e in enumerate(batch)])
+        prompt = f"""
+Correct the entity types for these terms.
+Valid Types: ORGANISM, GENE, PROTEIN, CHEMICAL, DISEASE, DNA_RNA, CELL_TYPE, BIOINFO_TOOL, GENOMICS, CLINICAL, SCIENTIFIC_TERM.
+
+Items:
+{items}
+
+Return a JSON array of strings ["TYPE1", "TYPE2", ...] corresponding to each item.
+Return ONLY the JSON array.
+"""
+        try:
+            response = self.llm_client.call_llm(prompt, max_tokens=300)
+            match = re.search(r'\[.*\]', response, re.DOTALL)
+            if match:
+                new_types = json.loads(match.group(0))
+                if len(new_types) == len(batch):
+                    corrected_batch = []
+                    count = 0
+                    valid_types = CDMEntityConfig.ENTITY_TYPES.keys()
+                    
+                    for entity, new_type in zip(batch, new_types):
+                        new_type = new_type.upper().strip()
+                        if new_type in valid_types and new_type != entity['entity_type']:
+                            entity['original_type'] = entity['entity_type']
+                            entity['entity_type'] = new_type
+                            entity['type_correction_method'] = 'LLM_Validation'
+                            count += 1
+                        corrected_batch.append(entity)
+                    return corrected_batch, count
+            
+            return batch, 0
+        except Exception as e:
+            logger.error(f"Error in batch correction: {e}")
+            return batch, 0
 
 class BioMistralDeduplicator:
     """Biomedical deduplication using BioMistral."""
@@ -3593,9 +3655,26 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             logger.error(f"Invalid input path: {input_path}")
             return False
 
+        # Create processed directory for checkpoints
+        processed_dir = Path(output_file).parent / "processed"
+        processed_dir.mkdir(parents=True, exist_ok=True)
+
         for i, file_path in enumerate(tqdm(files, desc=f"Processing {stage_name} files", unit="file")):
             logger.info(f"📄 Processing file {i+1}/{len(files)}: {file_path.name}")
             print(f"[{datetime.now().strftime('%H:%M:%S')}] Processing: {file_path.name}")
+            
+            # Check for checkpoint
+            checkpoint_file = processed_dir / f"{file_path.stem}.json"
+            if checkpoint_file.exists():
+                logger.info(f"⏩ Skipping {file_path.name} (checkpoint found)")
+                try:
+                    with open(checkpoint_file, 'r') as f:
+                        file_entities = json.load(f)
+                    all_entities.extend(file_entities)
+                    continue
+                except json.JSONDecodeError:
+                    logger.warning(f"⚠️  Corrupt checkpoint for {file_path.name}, reprocessing...")
+
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
                 
@@ -3609,6 +3688,10 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             # Add source file info
             for entity in file_entities:
                 entity['source_file'] = file_path.name
+            
+            # Save checkpoint
+            with open(checkpoint_file, 'w') as f:
+                json.dump(file_entities, f, indent=2)
                 
             all_entities.extend(file_entities)
 
