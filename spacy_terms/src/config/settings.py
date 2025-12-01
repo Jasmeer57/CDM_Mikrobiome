@@ -57,8 +57,8 @@ class DeduplicationConfig:
 class AIConfig:
     """Configuration for AI correction and validation"""
     enabled: bool = True
-    model_name: str = "BioMistral/BioMistral-7B-0.3-Instruct"
-    api_key: Optional[str] = None
+    model_name: str = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-full-text"
+    api_key: Optional[str] = "HF_TOKEN_PLACEHOLDER"
     use_hf_inference: bool = True
     hf_api_url: str = "https://api-inference.huggingface.co/models/BioMistral/BioMistral-7B-0.3-Instruct"
     temperature: float = 0.1

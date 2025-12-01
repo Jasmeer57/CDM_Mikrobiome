@@ -67,7 +67,7 @@ class AITermCorrector:
 
             # Use requests for HuggingFace API
             logger.info(f"Initialized HuggingFace Inference API client for model: {self.config.model_name}")
-            return "hf_inference"
+            return "hf_router"
         except Exception as e:
             logger.error(f"Failed to initialize HuggingFace client: {e}")
             return None
@@ -195,7 +195,7 @@ class AITermCorrector:
             }
 
             # Get API URL from config or construct it
-            api_url = getattr(self.config, 'hf_api_url', f"https://api-inference.huggingface.co/models/{self.config.model_name}")
+            api_url = getattr(self.config, 'hf_api_url', f"https://router.huggingface.co/models/{self.config.model_name}")
 
             response = requests.post(
                 api_url,

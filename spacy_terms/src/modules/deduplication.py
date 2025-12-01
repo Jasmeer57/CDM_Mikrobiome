@@ -46,7 +46,7 @@ class Deduplicator:
 
         try:
             model_name = self.config.semantic_models[self.config.default_semantic_model]
-            logger.info(f"Loading semantic model: {model_name}")
+            logger.info(f"Loading semantic model: {self.config.default_semantic_model}")
 
             from sentence_transformers import SentenceTransformer
             self.semantic_model = SentenceTransformer(model_name, trust_remote_code=True)

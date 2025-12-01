@@ -34,6 +34,16 @@ import concurrent.futures
 import multiprocessing
 from functools import partial
 
+try:
+    import torch
+except ImportError:
+    torch = None
+
+try:
+    import numpy as np
+except ImportError:
+    np = None
+
 # --- Configuration ---
 
 @dataclass
@@ -677,19 +687,28 @@ class Deduplicator:
         return [terms[i] for i in sorted(keep_indices)]
 
     def _semantic_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        
+        if not terms or not self.semantic_model:
+            return terms
+
+        # Get embeddings for all terms
+        term_strings = [t['term'] for t in terms]
+        embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
+
+        # Compute cosine similarity matrix
+        cosine_scores = torch.nn.functional.normalize(embeddings, dim=1).mm(torch.nn.functional.normalize(embeddings, dim=1).T)
+
         keep_indices = set(range(len(terms)))
-        
+
         # Iterate through upper triangle
         for i in range(len(terms)):
             if i not in keep_indices: continue
-            
+
             for j in range(i + 1, len(terms)):
                 if j not in keep_indices: continue
-                
+
                 if cosine_scores[i][j] >= self.config.semantic_threshold:
                     keep_indices.discard(j)
-                    
+
         return [terms[i] for i in sorted(keep_indices)]
 
     def _biomedical_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

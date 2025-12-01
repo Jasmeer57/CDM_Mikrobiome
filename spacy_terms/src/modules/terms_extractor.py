@@ -344,13 +344,20 @@ class TermsExtractor:
 
                 # Add timeout handling for model loading
                 import signal
+                import platform
 
                 def timeout_handler(signum, frame):
                     raise TimeoutError(f"Model loading timed out for {model_name}")
 
-                # Set 30 second timeout per model
-                signal.signal(signal.SIGALRM, timeout_handler)
-                signal.alarm(30)
+                # Set timeout - Windows compatible approach
+                if platform.system() == "Windows":
+                    # Windows doesn't support SIGALRM, use alternative approach
+                    # Load without timeout but with better error handling
+                    logger.debug(f"Windows detected: loading model {model_name} without SIGALRM timeout")
+                else:
+                    # Unix/Linux systems support SIGALRM
+                    signal.signal(signal.SIGALRM, timeout_handler)
+                    signal.alarm(30)
 
                 try:
                     nlp = spacy.load(model_name, disable=self.config.disabled_components)
@@ -362,7 +369,9 @@ class TermsExtractor:
                     self.models[model_name] = nlp
                     logger.info(f"✓ Successfully loaded: {model_name}")
                 finally:
-                    signal.alarm(0)  # Cancel timeout
+                    # Cancel timeout - only on Unix/Linux systems
+                    if platform.system() != "Windows":
+                        signal.alarm(0)  # Cancel timeout
 
             except TimeoutError as te:
                 logger.error(f"✗ Timeout loading model {model_name}: {te}")

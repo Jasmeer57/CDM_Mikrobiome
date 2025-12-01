@@ -141,87 +141,92 @@ class ConfigManager:
 class CDMEntityConfig:
     """Configuration for CDM entity types."""
 
-    # Enhanced entity type definitions based on specification
+    # Enhanced entity type definitions based on specification and old.py's comprehensive categories
     ENTITY_TYPES = {
         'ORGANISM': {
             'description': 'Bacteria, archaea, fungi, viruses, microbiota, taxa, eukaryotic organisms',
             'examples': ['Bacteroides fragilis', 'E. coli', 'Firmicutes', 'Bacteroidetes', 'Archaea', 'Methanobrevibacter', 'Lactobacillus', 'Clostridium', 'Akkermansia', 'Homo sapiens', 'Mus musculus'],
-            'patterns': [r'\b([A-Z][a-z]+[a-z]*\s+[a-z]+(?:\s+[a-z]+)*)\b|\b([A-Z][a-z]+\s+sp[p]?)\b'],
+            'patterns': [
+                r'\b([A-Z][a-z]+[a-z]*\s+[a-z]+(?:\s+[a-z]+)*)\b', 
+                r'\b([A-Z][a-z]+\s+sp[p]?)\b',
+                r'\b\w*bacter\w*\b', r'\b\w*coccus\b', r'\b\w*aceae\b', r'\b\w*ales\b', r'\b\w*idae\b',
+                r'\b\w*phyla\b', r'\b\w*genus\b', r'\b\w*species\b'
+            ],
             'priority': 1
         },
-
-        'GENE': {
-            'description': 'Gene names, genetic markers, gene families, transcription factors',
-            'examples': ['IL6', 'TNF-alpha', 'TLR4', 'NF-kB', 'IFN-gamma', 'p53', 'BRCA1', 'STAT3', 'NOD2'],
-            'patterns': [r'\b([A-Z]{2,}[0-9]*(?:-[a-z]+)?)\b'],
+        'CHEMICAL': {
+            'description': 'Chemical compounds, metabolites, drugs, enzymes, hormones',
+            'examples': ['butyrate', 'acetate', 'propionate', 'metformin', 'glucose', 'insulin', 'scfa', 'short-chain fatty acids'],
+            'patterns': [
+                r'\b[A-Za-z0-9\-\']+(?:acid|ate|ose|ol|one|ase|ium|ide|ine)\b',
+                r'\b(SCFA|short-chain fatty acid)s?\b',
+                r'\b\w*metabolit\w*\b', r'\b\w*compound\b'
+            ],
             'priority': 2
         },
-        'PROTEIN': {
-            'description': 'Proteins, enzymes, receptors, signaling molecules, antibodies',
-            'examples': ['butyrate kinase', 'lipopolysaccharide', 'cytokine', 'chemokine', 'immunoglobulin', 'hemoglobin', 'collagen'],
-            'patterns': [r'\b([a-z]+(?:kinase|receptor|factor|protein|enzyme|antibody))\b'],
+        'GENE': {
+            'description': 'Genes, genetic markers, DNA/RNA segments',
+            'examples': ['BRCA1', '16S rRNA', 'NOD2', 'TLR4', 'gene', 'allele'],
+            'patterns': [
+                r'\b[A-Z0-9\-]+(?:\s+gene)?\b',
+                r'\b\w*gene\b', r'\b\w*genomic\w*\b', r'\b\w*genetic\w*\b'
+            ],
             'priority': 3
         },
-        'CHEMICAL': {
-            'description': 'Metabolites, SCFAs, drugs, compounds, biochemical substances, nutrients, hormones',
-            'examples': ['butyrate', 'propionate', 'acetate', 'lactate', 'lipopolysaccharide', 'glucose', 'tryptophan', 'choline', 'carnitine', 'dopamine', 'serotonin', 'cortisol'],
-            'patterns': [r'\b([a-z]+(?:ate|ine|ol|one|acid|lactate|butyrate|propionate|acetate|glucose))\b'],
-            'priority': 4
+        'PROTEIN': {
+            'description': 'Proteins, antibodies, cytokines',
+            'examples': ['insulin', 'hemoglobin', 'TNF-alpha', 'interleukin'],
+            'patterns': [
+                r'\b[A-Z0-9\-]+(?:\s+protein)?\b',
+                r'\b\w*protein\b', r'\b\w*enzyme\b'
+            ],
+            'priority': 3
         },
-
         'DISEASE': {
-            'description': 'Diseases, conditions, disorders, syndromes, clinical terms',
-            'examples': ['ulcerative colitis', 'Crohn\'s disease', 'type 2 diabetes', 'inflammation', 'obesity', 'autoimmune disease', 'cancer'],
-            'patterns': [r'\b([A-Z][a-z]*(?:osis|itis|emia| syndrome| disease| disorder| cancer))\b'],
-            'priority': 5
-        },
-        'DNA_RNA': {
-            'description': 'Genetic material, sequences, nucleic acids, genes',
-            'examples': ['16S rRNA', 'bacterial DNA', 'microbiome sequencing', 'RNA polymerase', 'mRNA', 'tRNA', 'mitochondrial DNA', 'plasmids'],
-            'patterns': [r'\b(\d+S\s+rRNA)\b|\b([a-z]+\s+(?:DNA|RNA))\b'],
-            'priority': 6
-        },
-        'CELL_TYPE': {
-            'description': 'Cell types, immune cells, tissue types, cellular components',
-            'examples': ['macrophages', 'T-cells', 'dendritic cells', 'epithelial cells', 'stem cells', 'neurons', 'hepatocytes'],
-            'patterns': [r'\b([a-z]+\s+cells?)\b'],
-            'priority': 7
+            'description': 'Diseases, conditions, syndromes, disorders',
+            'examples': ['Type 2 Diabetes', 'Crohn\'s disease', 'Obesity', 'IBD', 'Cancer'],
+            'patterns': [
+                r'\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\s+(?:Syndrome|Disease|Disorder)\b',
+                r'\b\w*disease\b', r'\b\w*disorder\b', r'\b\w*syndrome\b', r'\b\w*cancer\b',
+                r'\b\w*infection\b', r'\b\w*inflammation\b'
+            ],
+            'priority': 2
         },
         'BIOINFO_TOOL': {
-            'description': 'Bioinformatics tools, software, databases, analytical methods, algorithms',
-            'examples': ['BLAST', 'Qiime2', 'MetaPhlAn', 'HUMAnN', 'DADA2', 'VSEARCH', 'Picrust2', 'LEfSe', 'Phyloseq', 'UniProt', 'NCBI', 'Python', 'R'],
-            'patterns': [r'\b([A-Z]{3,})\b|\b([a-z]+(?:omics|sequencing|analysis|pipeline))\b'],
-            'priority': 8
+            'description': 'Bioinformatics tools, software, databases, algorithms, statistical methods',
+            'examples': ['QIIME2', 'Mothur', 'BLAST', 'UniProt', 'KEGG', 'PCA', 'PCoA', 'Shannon index'],
+            'patterns': [
+                r'\b[A-Z][a-zA-Z0-9\-\.]+\b',
+                r'\b\w*seq\w*\b', r'\b\w*bioinformat\w*\b', r'\b\w*computational\w*\b',
+                r'\b\w*statistical\w*\b', r'\b\w*analysis\b', r'\b\w*clustering\b'
+            ],
+            'priority': 4
         },
-
-        'GENOMICS': {
-            'description': 'Genomics, transcriptomics, proteomics, metabolomics, omics technologies, sequencing methods',
-            'examples': ['genomics', 'transcriptomics', 'proteomics', 'metabolomics', '16S rRNA sequencing', 'shotgun metagenomics', 'RNA-seq', 'ChIP-seq', 'ATAC-seq'],
-            'patterns': [r'\b([a-z]+(?:omics|sequencing|genome))\b'],
-            'priority': 9
-        },
-
         'CLINICAL': {
-            'description': 'Clinical terms, medical procedures, treatments, healthcare',
-            'examples': ['diagnosis', 'therapy', 'treatment', 'clinical trial', 'patient', 'symptoms', 'medication', 'surgery'],
-            'patterns': [r'\b([a-z]+(?:therapy|treatment|clinical|medical|patient|diagnosis))\b'],
-            'priority': 10
+            'description': 'Clinical terms, procedures, anatomy, physiology',
+            'examples': ['diagnosis', 'prognosis', 'treatment', 'gut', 'intestine', 'liver'],
+            'patterns': [
+                r'\b\w*clinica\w*\b', r'\b\w*diagnos\w*\b', r'\b\w*therap\w*\b',
+                r'\b\w*anatomy\w*\b', r'\b\w*physiology\w*\b'
+            ],
+            'priority': 4
         },
         'SCIENTIFIC_TERM': {
-            'description': 'General scientific terms, biological concepts, methods, statistical methods, laboratory techniques',
-            'examples': ['metabolism', 'homeostasis', 'apoptosis', 'alpha diversity', 'beta diversity', 'PCR', 'ELISA', 'western blot', 'ANOVA', 'p-value', 'correlation'],
-            'patterns': [r'\b([a-z]+(?:process|mechanism|pathway|response|cycle))\b'],
-            'priority': 11
+            'description': 'General scientific and biomedical terms, lab methods',
+            'examples': ['PCR', 'microscopy', 'chromatography', 'experiment', 'hypothesis'],
+            'patterns': [
+                r'\b\w*laboratory\w*\b', r'\b\w*experimental\w*\b', r'\b\w*method\w*\b'
+            ],
+            'priority': 5
         }
-
     }
 
     # Chunking strategies
     CHUNK_SIZES = {
-        'small': 3000,    # < 10k chars
-        'medium': 6000,   # < 50k chars
-        'large': 10000,   # < 100k chars
-        'xlarge': 15000   # > 100k chars
+        'small': 1500,    # Very granular
+        'medium': 3000,   # Standard
+        'large': 5000,    # Large context
+        'xlarge': 8000    # Maximum
     }
 
     OVERLAP_RATIOS = {
@@ -262,6 +267,12 @@ class CDMEntityConfig:
             'temperature': 0.1,
             'timeout': 600,
             'num_ctx': 8192
+        },
+        'deepseek-r1:8b': {
+            'max_tokens': 8000,
+            'temperature': 0.1,
+            'timeout': 1200,
+            'num_ctx': 8192
         }
     }
 
@@ -294,7 +305,7 @@ class PipelineConfig:
     """Main pipeline configuration."""
     default_model: str = "gemma3:12b"
     default_base_url: str = "http://localhost:11434"
-    max_workers: int = 3
+    max_workers: int = 5
     max_file_workers: int = 1
     max_entities: int = 500
     min_confidence: float = 0.4
@@ -371,14 +382,136 @@ class TextProcessor:
         return chunks
 
     @staticmethod
-    def clean_text(text: str) -> str:
-        """Clean and normalize text."""
-        if not text:
-            return ""
+    def enhanced_preprocess_text(text: str) -> str:
+        """Advanced text preprocessing with noise reduction."""
+        if not text: return ""
+
+        # Remove boilerplate sections
+        patterns = [
+            r"(\n\s*(?:References|Bibliography|Acknowledgments?|Author[s]? Contribution[s]?|Funding|Competing [Ii]nterest[s]?)\s*.*?)(?=\n\s*\w|\Z)",
+            r"(\n\s*(?:Supplementary [Mm]aterial|Additional [Ff]ile[s]?|Supporting [Ii]nformation)\s*.*?)(?=\n\s*\w|\Z)",
+            r"(\n\s*(?:Ethics [Ss]tatement|Consent|IRB [Aa]pproval)\s*.*?)(?=\n\s*\w|\Z)",
+            r"(\n\s*(?:Abbreviations|Data [Aa]vailability)\s*.*?)(?=\n\s*\w|\Z)"
+        ]
+
+        for pattern in patterns:
+            text = re.sub(pattern, "\n", text, flags=re.DOTALL | re.IGNORECASE)
+
+        # Remove citations and references
+        text = re.sub(r'\[\d+\]', '', text)
+        text = re.sub(r'\([^)]*?\d{4}[^)]*?\)', '', text)
+
+        # Remove page numbers and headers
+        text = re.sub(r'\n\s*\d+\s*\n', '\n', text)
+
+        # Clean whitespace
+        text = re.sub(r'\n\s*\n\s*\n', '\n\n', text)
         text = re.sub(r'\s+', ' ', text)
-        text = re.sub(r'[^\x20-\x7E\n\t\r]', '', text)
-        text = re.sub(r'\r\n|\r', '\n', text)
+
         return text.strip()
+
+    @staticmethod
+    def strict_term_cleaning(term: str) -> Optional[str]:
+        """Term cleaning that filters out artifacts but keeps biomedical terms."""
+        if not isinstance(term, str) or len(term) < 2:
+            return None
+
+        # Initial cleaning
+        cleaned = term.lower().strip()
+
+        # Enhanced normalization
+        greek_replacements = {
+            'α': 'alpha', 'β': 'beta', 'γ': 'gamma', 'δ': 'delta',
+            'ε': 'epsilon', 'ζ': 'zeta', 'η': 'eta', 'θ': 'theta',
+            'ι': 'iota', 'κ': 'kappa', 'λ': 'lambda', 'μ': 'mu',
+            'ν': 'nu', 'ξ': 'xi', 'ο': 'omicron', 'π': 'pi',
+            'ρ': 'rho', 'σ': 'sigma', 'τ': 'tau', 'υ': 'upsilon',
+            'φ': 'phi', 'χ': 'chi', 'ψ': 'psi', 'ω': 'omega'
+        }
+
+        for greek_char, replacement in greek_replacements.items():
+            cleaned = cleaned.replace(greek_char, replacement)
+
+        # Auto-expand known abbreviations
+        abbreviation_expansions = {
+            'fmt': 'fecal_microbiota_transplantation',
+            'scfa': 'short_chain_fatty_acids',
+            'otu': 'operational_taxonomic_unit',
+            'asv': 'amplicon_sequence_variant',
+            'pcoa': 'principal_coordinate_analysis',
+            'nmds': 'non_metric_multidimensional_scaling',
+            'pcr': 'polymerase_chain_reaction',
+            'dna': 'deoxyribonucleic_acid',
+            'rna': 'ribonucleic_acid',
+            'mrna': 'messenger_rna',
+            'trna': 'transfer_rna',
+            'rrna': 'ribosomal_rna',
+            'pdb': 'protein_data_bank',
+            'ncbi': 'national_center_for_biotechnology_information',
+            'blast': 'basic_local_alignment_search_tool'
+        }
+
+        if cleaned in abbreviation_expansions:
+            cleaned = abbreviation_expansions[cleaned]
+
+        # Remove problematic prefixes/suffixes
+        prefix_patterns = [
+            r'^(such_as|e_g|eg|for_example|including|like)[\s_]+',
+            r'^(the|a|an|this|these|that|those)[\s_]+',
+            r'^(and|or|but|however|therefore|thus)[\s_]+',
+            r'[\s_]+(etc|et_al|and_so_on|respectively)$'
+        ]
+
+        for pattern in prefix_patterns:
+            cleaned = re.sub(pattern, '', cleaned)
+
+        # Convert to snake_case
+        cleaned = re.sub(r'[\s\-\.]+', '_', cleaned)
+        cleaned = re.sub(r'[^\w_]', '', cleaned)
+        cleaned = re.sub(r'_+', '_', cleaned).strip('_')
+
+        if not cleaned or len(cleaned) < 2:
+            return None
+
+        # Reject problematic patterns
+        reject_patterns = [
+            r'^\d+$',                      # pure numbers
+            r'^(figure|table|fig|tab)_?\d*$', # figure references
+            r'^[a-z]{1}$',                 # single letters
+            r'.*conversational.*',         # conversational terms
+            r'.*instructional.*',          # instructional terms
+            r'.*procedural.*',             # procedural terms
+            r'.*note.*',                   # note terms
+            r'.*maybe.*',                  # uncertain terms
+            r'.*seems.*',                  # uncertain terms
+            r'.*might.*',                  # uncertain terms
+            r'.*probably.*',               # uncertain terms
+        ]
+
+        for pattern in reject_patterns:
+            if re.match(pattern, cleaned):
+                return None
+
+        # Reject conversational patterns
+        conversational_indicators = [
+            'so_', 'user_', 'mentioned_', 'if_', 'avoided_', 'note_', 'conversational_',
+            'looking_', 'rules_', 'avoid_', 'sample_', 'text_', 'given_', 'actual_',
+            'focusing_', 'prioritizing_', 'compiling_', 'categories_', 'requested_'
+        ]
+
+        if any(cleaned.startswith(indicator) for indicator in conversational_indicators):
+            return None
+
+        # Must contain at least one letter
+        if not re.search(r'[a-z]', cleaned):
+            return None
+
+        return cleaned
+
+    @staticmethod
+    def clean_text(text: str) -> str:
+        """Legacy clean_text wrapper calling enhanced_preprocess_text."""
+        return TextProcessor.enhanced_preprocess_text(text)
 
     @staticmethod
     def extract_sentences(text: str) -> List[str]:
@@ -509,6 +642,7 @@ class LLMClient:
         self.base_url = base_url
         self.config = CDMEntityConfig.MODEL_CONFIGS.get(model, CDMEntityConfig.MODEL_CONFIGS['qwen3:8b'])
         self.opt_config = optimization_config or OptimizationConfig()
+        logger.info(f"🤖 LLM Client initialized with model: {self.model}")
 
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call LLM with structured prompt and return response."""
@@ -538,21 +672,6 @@ class LLMClient:
             payload["response_format"] = {"type": "json_object"}
 
         for attempt in range(max_retries):
-            try:
-                response = requests.post(
-                    f"{self.base_url}/v1/chat/completions",
-                    headers=headers,
-                    json=payload,
-                    timeout=self.config['timeout']
-                )
-                
-                if response.status_code == 200:
-                    data = response.json()
-                    return data['choices'][0]['message']['content'].strip()
-                else:
-                    logger.warning(f"vLLM API error: {response.status_code} - {response.text}")
-            except Exception as e:
-                logger.warning(f"vLLM call failed: {e}")
             
             time.sleep(base_delay * (2 ** attempt))
             
@@ -573,13 +692,8 @@ class LLMClient:
                         "temperature": self.config['temperature'],
                         "top_p": 0.9,
                         "num_predict": max_tokens or self.config['max_tokens'],
-                        "num_ctx": self.config.get('num_ctx', 4096)
                     }
-
                 }
-                
-                if self.opt_config.use_json_mode:
-                    request_config["format"] = "json"
 
                 headers = {}
                 if self.opt_config.api_key and self.opt_config.api_key != "EMPTY":
@@ -666,44 +780,43 @@ class CDMEntityExtractor:
     def create_extraction_prompt(self, chunk_text: str) -> str:
         """Create structured prompt for CDM entity extraction."""
         return f"""
-Extract EVERY SINGLE biomedical and scientific term from this text.
-Focus on capturing a comprehensive list of scientific concepts, biological entities, and medical terms.
-Be EXTREMELY EXHAUSTIVE. Aim to extract 100+ terms if present.
-Do not filter out common terms. If it is a scientific term, EXTRACT IT.
-For longer texts, do not stop until you have extracted ALL relevant entities.
+You are an expert biomedical entity extractor. Your goal is to extract a comprehensive, EXHAUSTIVE list of scientific terms from the text below.
 
-TEXT:
+INSTRUCTIONS:
+1. Extract EVERY SINGLE scientific, biomedical, or clinical term found in the text.
+2. Aim for MAXIMUM RECALL. If it looks like a scientific term, extract it.
+3. Do not filter out common terms.
+4. Break down complex phrases into their constituent entities if appropriate, but also keep the full phrase.
+5. Target 30+ entities per chunk if possible.
+
+TEXT TO ANALYZE:
 {chunk_text}
 
-Return ONLY a JSON array with objects containing:
-{{
-  "entity": "extracted term",
-  "entity_type": "one of: ORGANISM|GENE|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|BIOINFO_TOOL|GENOMICS|CLINICAL|SCIENTIFIC_TERM",
-  "context": "brief context or description"
-}}
+REQUIRED OUTPUT FORMAT:
+Return a comprehensive list of terms, one per line. Use this format:
+- Term (TYPE)
 
-CDM Entity Types and Examples:
-- ORGANISM: Bacteria, archaea, fungi, viruses, taxa (e.g., "Bacteroides fragilis", "E. coli", "Firmicutes")
-- GENE: Gene names, genetic markers, transcription factors (e.g., "IL6", "TNF-alpha", "p53")
-- PROTEIN: Proteins, enzymes, receptors, antibodies (e.g., "butyrate kinase", "cytokine", "immunoglobulin")
-- CHEMICAL: Metabolites, drugs, compounds, biochemical substances (e.g., "butyrate", "glucose", "amino acids")
-- DISEASE: Diseases, conditions, disorders, syndromes (e.g., "ulcerative colitis", "diabetes", "cancer")
-- DNA_RNA: Genetic material, sequences, nucleic acids (e.g., "16S rRNA", "mRNA", "mitochondrial DNA")
-- CELL_TYPE: Cell types, immune cells, tissue types (e.g., "macrophages", "T-cells", "epithelial cells")
-- BIOINFO_TOOL: Bioinformatics tools, software, databases (e.g., "BLAST", "Qiime", "MetaPhlAn")
-- GENOMICS: Genomics, omics technologies (e.g., "genomics", "transcriptomics", "metabolomics")
-- CLINICAL: Clinical terms, medical procedures, treatments (e.g., "therapy", "diagnosis", "clinical trial")
-- SCIENTIFIC_TERM: General scientific concepts, biological processes, mechanisms (e.g., "metabolism", "apoptosis", "immune response")
+Example:
+- Escherichia coli (ORGANISM)
+- Metformin (CHEMICAL)
+- 16S rRNA sequencing (BIOINFO_TOOL)
+- Diabetes Mellitus (DISEASE)
 
-Requirements:
-1. Extract ALL scientific and biomedical terms found in the text.
-2. Be EXHAUSTIVE - if it looks like a scientific term, extract it. Do not filter out terms.
-3. STRICTLY EXCLUDE:
-   - Person names (e.g., "Smith et al.")
-   - Country names or locations (e.g., "Japan", "USA", "University of X")
-   - URLs, DOIs, or reference links
-   - General English words that are not scientific terms
-4. Use the most appropriate entity_type from the list. Use SCIENTIFIC_TERM if unsure.
+CDM Entity Types:
+- ORGANISM: Bacteria, viruses, fungi, taxa
+- GENE: Genes, markers
+- PROTEIN: Proteins, enzymes
+- CHEMICAL: Metabolites, drugs
+- DISEASE: Diseases, conditions
+- DNA_RNA: Genetic material
+- CELL_TYPE: Cells, tissues
+- BIOINFO_TOOL: Tools, software
+- GENOMICS: Omics terms
+- CLINICAL: Clinical terms
+- SCIENTIFIC_TERM: General scientific concepts
+
+STRICTLY EXCLUDE: Person names, Locations (Countries/Cities), URLs, DOIs.
+Do not use JSON. Just provide the list.
 """
 
     def parse_llm_response(self, response: str, chunk_num: int) -> List[Dict]:
@@ -711,42 +824,77 @@ Requirements:
         entities = []
         try:
             cleaned_response = response.strip()
+            # Log raw response for debugging low yield
+            logger.debug(f"🔍 Raw LLM Response (Chunk {chunk_num}):\n{cleaned_response[:500]}...") 
+            
             json_entities = self._try_json_parsing(cleaned_response)
             if json_entities:
                 entities = json_entities
             else:
+                logger.warning(f"⚠️  JSON parsing failed for chunk {chunk_num}. Falling back to unstructured extraction.")
+                logger.debug(f"Failed JSON content: {cleaned_response}")
                 entities.extend(self._extract_from_unstructured_text(cleaned_response, chunk_num))
         except Exception as e:
             logger.error(f"Error parsing LLM response for chunk {chunk_num}: {e}")
+            logger.debug(f"Full response that caused error: {response}")
             entities.extend(self._fallback_regex_extraction(response, chunk_num))
         return entities
 
     def _try_json_parsing(self, response: str) -> List[Dict]:
         """Try multiple JSON parsing strategies."""
         entities = []
-        # Strategy 1: Direct JSON array parsing
+        
+        # Remove <think>...</think> blocks common in reasoning models
+        # Handle both closed and unclosed think blocks
+        response = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL).strip()
+        response = re.sub(r'<think>.*', '', response, flags=re.DOTALL).strip()
+        response = re.sub(r'^.*?<think>', '', response, flags=re.DOTALL).strip() # In case of prefix text
+
+        
+        # Helper to validate and format
+        def process_parsed(parsed_data):
+            valid_items = []
+            if isinstance(parsed_data, list):
+                for item in parsed_data:
+                    if self._validate_entity(item):
+                        valid_items.append(self._format_entity(item, 0, 0.9))
+            elif isinstance(parsed_data, dict) and self._validate_entity(parsed_data):
+                valid_items.append(self._format_entity(parsed_data, 0, 0.9))
+            return valid_items
+
+        # Strategy 1: Direct JSON parsing (if clean)
         try:
-            if response.startswith('[') and response.endswith(']'):
-                parsed = json.loads(response)
-                if isinstance(parsed, list):
-                    for item in parsed:
-                        if self._validate_entity(item):
-                            entities.append(self._format_entity(item, 0, 0.9))
-                    return entities
+            parsed = json.loads(response)
+            items = process_parsed(parsed)
+            if items: return items
         except json.JSONDecodeError:
             pass
 
-        # Strategy 2: Extract JSON from text
+        # Strategy 2: Regex to find JSON array [...]
+        # Matches [...] including nested braces, roughly
         try:
-            json_blocks = self._extract_json_blocks(response)
-            for json_block in json_blocks:
+            # Look for the largest outer bracket pair
+            match = re.search(r'\[\s*\{.*\}\s*\]', response, re.DOTALL)
+            if match:
+                json_str = match.group(0)
                 try:
-                    parsed = json.loads(json_block)
-                    if isinstance(parsed, list):
-                        for item in parsed:
-                            if self._validate_entity(item):
-                                entities.append(self._format_entity(item, 0, 0.9))
-                    elif isinstance(parsed, dict) and self._validate_entity(parsed):
+                    parsed = json.loads(json_str)
+                    items = process_parsed(parsed)
+                    if items: return items
+                except json.JSONDecodeError:
+                    pass
+        except Exception:
+            pass
+
+        # Strategy 3: Regex to find individual JSON objects {...}
+        # Useful if the model forgot the outer list or used markdown for each item
+        try:
+            matches = re.finditer(r'\{[^{}]*\}', response)
+            for match in matches:
+                try:
+                    json_str = match.group(0)
+                    parsed = json.loads(json_str)
+                    if self._validate_entity(parsed):
                         entities.append(self._format_entity(parsed, 0, 0.9))
                 except json.JSONDecodeError:
                     continue
@@ -754,6 +902,7 @@ Requirements:
                 return entities
         except Exception:
             pass
+            
         return []
 
     def _extract_json_blocks(self, text: str) -> List[str]:
@@ -774,12 +923,18 @@ Requirements:
         return json_blocks
 
     def _validate_entity(self, entity: Dict) -> bool:
-        """Validate entity structure and content."""
+        """Validate entity structure and content using strict cleaning."""
         if not isinstance(entity, dict): return False
         if not all(field in entity for field in ['entity', 'entity_type']): return False
         if entity['entity_type'] not in self.entity_config.ENTITY_TYPES: return False
-        entity_name = entity['entity'].strip()
-        if len(entity_name) < 2 or len(entity_name) > 100: return False
+        
+        # Use strict cleaning
+        cleaned_entity = TextProcessor.strict_term_cleaning(entity['entity'])
+        if not cleaned_entity:
+            return False
+            
+        # Update the entity with the cleaned version
+        entity['entity'] = cleaned_entity
         return True
 
     def _format_entity(self, entity: Dict, chunk_num: int, confidence: float) -> Dict:
@@ -793,23 +948,62 @@ Requirements:
         }
 
     def _extract_from_unstructured_text(self, text: str, chunk_num: int) -> List[Dict]:
-        """Extract entities from unstructured LLM response."""
+        """Extract entities from unstructured LLM response (list format)."""
         entities = []
         lines = text.split('\n')
         for line in lines:
             line = line.strip()
-            if not line or line.startswith(('#', '//', '-', '*')): continue
+            if not line: continue
+            
+            # Skip only obvious non-content lines (comments, etc.) but KEEP list items
+            if line.startswith(('#', '//')): continue
+            
+            # Pattern 1: - Term (TYPE)
+            match1 = re.match(r'^[\-\*]?\s*(.+?)\s*\(([^)]+)\)', line)
+            if match1:
+                term = match1.group(1).strip()
+                etype = match1.group(2).strip().upper()
+                
+                # Validate type
+                if etype in self.entity_config.ENTITY_TYPES:
+                    if self._validate_entity({'entity': term, 'entity_type': etype}):
+                        entities.append(self._format_entity({
+                            'entity': term,
+                            'entity_type': etype,
+                            'context': line[:100]
+                        }, chunk_num, 0.8))
+                    continue
+
+            # Pattern 2: "Term" is TYPE
+            match2 = re.match(r'^[\-\*]?\s*["\'](.+?)["\']\s+is\s+([A-Z_]+)', line, re.IGNORECASE)
+            if match2:
+                term = match2.group(1).strip()
+                etype = match2.group(2).strip().upper()
+                
+                if etype in self.entity_config.ENTITY_TYPES:
+                    if self._validate_entity({'entity': term, 'entity_type': etype}):
+                        entities.append(self._format_entity({
+                            'entity': term,
+                            'entity_type': etype,
+                            'context': line[:100]
+                        }, chunk_num, 0.8))
+                    continue
+
+            # Fallback: Check if line contains a known entity type
             for entity_type in self.entity_config.ENTITY_TYPES:
                 if entity_type in line.upper():
-                    entity_match = re.search(r'([A-Za-z0-9\s\-_\.]+)', line)
-                    if entity_match:
-                        entity = entity_match.group(1).strip()
-                        if len(entity) > 2 and len(entity) < 100:
+                    # Try to extract the term part (heuristic)
+                    # Assume term is at the start
+                    clean_line = re.sub(r'^[\-\*]\s*', '', line)
+                    parts = re.split(r'\s+is\s+|\s*\(' + entity_type, clean_line, flags=re.IGNORECASE)
+                    if parts:
+                        term = parts[0].strip()
+                        if self._validate_entity({'entity': term, 'entity_type': entity_type}):
                             entities.append(self._format_entity({
-                                'entity': entity,
+                                'entity': term,
                                 'entity_type': entity_type,
                                 'context': line[:100]
-                            }, chunk_num, 0.7))
+                            }, chunk_num, 0.6))
                     break
         return entities
 
@@ -855,12 +1049,17 @@ VALID CATEGORIES TO EXTRACT:
 - ALL anatomical and physiological terms
 - ANY technical biomedical term
 
-OUTPUT: Return ONLY a JSON array with objects containing:
-{
-  "entity": "extracted term",
-  "entity_type": "one of: ORGANISM|GENE|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|BIOINFO_TOOL|GENOMICS|CLINICAL|SCIENTIFIC_TERM",
-  "context": "brief context or description"
-}"""
+OUTPUT: Return a comprehensive list of terms, one per line. Use this format:
+- Term (TYPE)
+
+Example:
+- Escherichia coli (ORGANISM)
+- Metformin (CHEMICAL)
+- 16S rRNA sequencing (BIOINFO_TOOL)
+- Diabetes Mellitus (DISEASE)
+
+Do not use JSON. Just provide the list.
+"""
 
         if pass_num == 1:
             return f"""{system_context}
@@ -3044,29 +3243,50 @@ class MicrobiomeRelevanceScorer:
         self.high_relevance_types = {'ORGANISM', 'CHEMICAL', 'DISEASE', 'GENE'}
 
     def calculate_score(self, entity: Dict) -> float:
-        """Calculate relevance score (0.0 - 1.0)."""
-        score = 0.0
-        text = entity.get('entity', '').lower()
+        """Calculate relevance score (0.0 - 1.0) using enhanced logic."""
+        score = 0.5
+        term = entity.get('entity', '').strip()
+        term_lower = term.lower()
         context = entity.get('context', '').lower()
         entity_type = entity.get('entity_type', '')
 
-        # Keyword match in entity name
-        if any(kw in text for kw in self.microbiome_keywords):
-            score += 0.4
-        
-        # Keyword match in context
+        # Core vocabulary bonus
+        if any(kw in term_lower for kw in self.microbiome_keywords):
+            score += 0.3
+
+        # Context relevance
         if any(kw in context for kw in self.microbiome_keywords):
-            score += 0.2
+            score += 0.1
 
         # Type relevance
         if entity_type in self.high_relevance_types:
-            score += 0.2
-            
-        # Specific organism bonus
-        if entity_type == 'ORGANISM' and ('bacter' in text or 'cocc' in text or 'bacill' in text):
-            score += 0.2
+            score += 0.1
 
-        return min(score, 1.0)
+        # Multi-word compound bonus
+        parts = term.split()
+        if len(parts) in [2, 3, 4]:
+            score += 0.1
+
+        # Length optimization
+        if 4 <= len(term) <= 25:
+            score += 0.05
+
+        # Pattern bonuses (from old.py)
+        biomedical_patterns = [
+            ('aceae', 0.15), ('ales', 0.1), ('idae', 0.1), ('bacter', 0.15),
+            ('coccus', 0.15), ('myces', 0.1), ('virus', 0.1), ('protein', 0.1),
+            ('enzyme', 0.1), ('gene', 0.1), ('pathway', 0.1), ('metabolit', 0.1),
+            ('sequencing', 0.1), ('analysis', 0.05), ('diversity', 0.1),
+            ('bioinformat', 0.1), ('computational', 0.1), ('statistical', 0.1),
+            ('clinical', 0.1), ('medical', 0.1), ('pharmaceutical', 0.1)
+        ]
+
+        for pattern, bonus in biomedical_patterns:
+            if pattern in term_lower:
+                score += bonus
+                break
+
+        return min(max(score, 0.1), 1.0)
 
     def score_entities(self, entities: List[Dict]) -> List[Dict]:
         """Add relevance scores to a list of entities."""
@@ -3424,8 +3644,10 @@ class EntityFilter:
         return True
 
     def _calculate_quality_score(self, entity: Dict) -> float:
-        """Calculate a quality score for the entity (0.0-1.0)."""
+        """Calculate a quality score for the entity (0.0-1.0) with pattern bonuses."""
         score = 0.0
+        term = entity.get('entity', '')
+        entity_type = entity.get('entity_type', '')
 
         # Base score from confidence
         score += entity.get('confidence', 0.0) * 0.4
@@ -3435,21 +3657,57 @@ class EntityFilter:
             score += 0.2
 
         # Entity length score (prefer moderate length)
-        entity_length = len(entity.get('entity', ''))
+        entity_length = len(term)
         if 5 <= entity_length <= 30:
             score += 0.2
         elif 3 <= entity_length <= 50:
             score += 0.1
 
         # Multi-word entity bonus (often more specific)
-        if len(entity.get('entity', '').split()) > 1:
+        if len(term.split()) > 1:
             score += 0.1
 
         # Type appropriateness bonus
-        if self._is_appropriate_type(entity.get('entity', ''), entity.get('entity_type', '')):
+        if self._is_appropriate_type(term, entity_type):
             score += 0.1
+            
+        # Pattern-based bonuses (Biomedical suffixes)
+        lower_term = term.lower()
+        biomedical_suffixes = ['ase', 'osis', 'itis', 'emia', 'ome', 'omics', 'aceae', 'bacter', 'coccus', 'bacillus']
+        if any(lower_term.endswith(suffix) for suffix in biomedical_suffixes):
+            score += 0.1
+            
+        # Penalty for very short terms or all digits
+        if len(term) < 3 or term.isdigit():
+            score -= 0.3
 
-        return min(score, 1.0)
+        return max(0.0, min(score, 1.0))
+
+    def clean_term(self, term: str) -> str:
+        """
+        Strict term cleaning to remove artifacts, greek letters, and noise.
+        """
+        if not term:
+            return ""
+            
+        # Remove surrounding whitespace and quotes
+        term = term.strip().strip('"\'')
+        
+        # Replace common greek letters if needed (basic mapping)
+        greek_map = {
+            'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ'
+        }
+        # Note: We might want to keep text representation for consistency, 
+        # but removing artifacts is key.
+        
+        # Remove trailing punctuation
+        term = re.sub(r'[.,;:!]+$', '', term)
+        
+        # Remove "extracted term" or placeholder text if it sneaks in
+        if term.lower() in ['extracted term', 'entity', 'term']:
+            return ""
+            
+        return term
 
     def _is_appropriate_type(self, entity_name: str, entity_type: str) -> bool:
         """Check if the entity type is appropriate for the entity name."""
@@ -3600,7 +3858,10 @@ class CDMEntityPipeline:
         return True
 
     def chunk_text(self, text: str, chunk_size: int = None) -> List[tuple]:
-        """Split text into overlapping chunks."""
+        """Split text into overlapping chunks after enhanced preprocessing."""
+        # Apply enhanced preprocessing
+        text = TextProcessor.enhanced_preprocess_text(text)
+        
         if chunk_size is None:
             base_chunk_size = self.extractor.calculate_optimal_chunk_size(len(text))
             chunk_size = int(base_chunk_size * self.opt_config.chunk_size_multiplier)
@@ -3628,8 +3889,8 @@ class CDMEntityPipeline:
         return chunks
 
     def extract_entities(self, text: str, chunk_size: int = None) -> List[Dict]:
-        """Extract CDM entities using Windowed Multi-Pass Strategy (Fast & Comprehensive)."""
-        logger.info(f"🔍 Starting Windowed Multi-Pass Extraction on {len(text)} characters")
+        """Extract CDM entities using Dynamic Chunking & Parallel Processing."""
+        logger.info(f"🔍 Starting Extraction on {len(text)} characters")
 
         if self.dry_run:
             return [
@@ -3638,68 +3899,40 @@ class CDMEntityPipeline:
             ]
 
         all_entities = []
-        text_len = len(text)
         
-        # Define Windows (from Reference Script)
-        # Pass 1: 0-8000
-        # Pass 2: 5000-13000
-        # Pass 3: 10000-18000
-        # Pass 4: 15000-23000
-        # Pass 5: 20000-28000
-        # Pass 6: 25000-35000
-        
-        windows = [
-            (1, text[0:8000]),
-            (2, text[5000:13000] if text_len > 5000 else text[0:min(text_len, 8000)]),
-            (3, text[10000:18000] if text_len > 10000 else text[0:min(text_len, 8000)]),
-            (4, text[15000:23000] if text_len > 15000 else text[0:min(text_len, 8000)])
-        ]
-        
-        # Filter out empty windows or duplicates for very short text
-        valid_windows = []
-        seen_texts = set()
-        for p_num, w_text in windows:
-            if not w_text.strip(): continue
-            # For short texts, windows might be identical. Skip duplicates.
-            if w_text in seen_texts: continue
-            seen_texts.add(w_text)
-            valid_windows.append((p_num, w_text))
+        # 1. Chunk the text dynamically
+        chunks = self.chunk_text(text, chunk_size)
+        logger.info(f"🧩 Processing {len(chunks)} chunks with {self.config.max_workers} workers")
 
-        # Run Passes 1-4 in Parallel
-        logger.info(f"🔄 Running Passes 1-4 in parallel ({len(valid_windows)} tasks)...")
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        # 2. Process chunks in parallel
+        # 2. Process chunks in parallel with MULTIPLE PASSES per chunk
+        # We want to ensure we get Organisms, Chemicals, Tools, and Clinical terms from EVERY chunk.
+        passes_to_run = [1, 2, 3, 4, 11] # 1=Org, 2=Chem, 3=Tool, 4=Clin, 11=Aggressive
+        
+        tasks = []
+        for chunk_text, chunk_num in chunks:
+            for pass_num in passes_to_run:
+                tasks.append((chunk_text, pass_num, []))
+
+        with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
             futures = [
-                executor.submit(self.extractor.run_extraction_pass, (w_text, p_num, [])) 
-                for p_num, w_text in valid_windows
+                executor.submit(self.extractor.run_extraction_pass, task) 
+                for task in tasks
             ]
             
-            for future in tqdm(as_completed(futures), total=len(valid_windows), desc="Running Passes 1-4"):
+            for future in tqdm(as_completed(futures), total=len(tasks), desc="Extracting entities (Multi-pass)"):
                 try:
                     entities = future.result()
                     all_entities.extend(entities)
                 except Exception as e:
-                    logger.error(f"Error in extraction pass: {e}")
+                    logger.error(f"Error in extraction task: {e}")
 
-        # Check count for Pass 5 & 6
-        unique_terms = {e['entity'].lower() for e in all_entities}
-        logger.info(f"📊 Terms after Passes 1-4: {len(unique_terms)}")
+        # 3. Optional: Multi-pass for dense texts (if needed)
+        # If we want to do the "Pass 5/6" catch-all logic, we can do it on the whole text or specific sections.
+        # But with small chunks (1500 chars) and aggressive prompting, we should get high yield already.
         
-        # Pass 5 (Catch-all)
-        if len(unique_terms) < 100: # Target min 50-100
-            logger.info("⚠️  Term count low. Running Pass 5 (Catch-all)...")
-            p5_text = text[20000:28000] if text_len > 20000 else text[0:min(text_len, 8000)]
-            if p5_text.strip():
-                p5_entities = self.extractor.run_extraction_pass((p5_text, 5, list(unique_terms)))
-                all_entities.extend(p5_entities)
-                unique_terms.update({e['entity'].lower() for e in p5_entities})
-
-        # Pass 6 (Aggressive)
-        if len(unique_terms) < 50:
-            logger.info("⚠️  Term count still low. Running Pass 6 (Aggressive)...")
-            p6_text = text[25000:35000] if text_len > 25000 else text[0:min(text_len, 8000)]
-            if p6_text.strip():
-                p6_entities = self.extractor.run_extraction_pass((p6_text, 6, []))
-                all_entities.extend(p6_entities)
+        unique_terms = {e['entity'].lower() for e in all_entities}
+        logger.info(f"📊 Extracted {len(all_entities)} raw entities ({len(unique_terms)} unique)")
 
         # Post-process entities with semantic deduplication
         processed_entities = self.post_process_entities(all_entities, use_semantic=True)
@@ -3716,8 +3949,8 @@ class CDMEntityPipeline:
         # Basic cleaning and validation
         cleaned_entities = []
         for entity_data in entities:
-            # Clean entity name
-            cleaned_entity = re.sub(r'[^a-zA-Z0-9\s\-\._]', '', entity_data['entity']).strip()
+            # Clean entity name using strict cleaning
+            cleaned_entity = self.entity_filter.clean_term(entity_data['entity'])
 
             # Validation checks
             if (not cleaned_entity or
@@ -3832,72 +4065,92 @@ class CDMEntityPipeline:
         }
 
     def save_results(self, entities: List[Dict], output_path: str, text_stats: Dict = None):
-        """Save extraction results to JSON file."""
-        # Group entities by type
-        grouped_entities = {}
+        """Save extraction results to JSON file in the requested flat format."""
+        
+        flat_results = []
+        
         for entity in entities:
-            # Ensure entity is a dictionary
             if not isinstance(entity, dict):
-                logger.warning(f"Skipping invalid entity format: {entity}")
                 continue
+                
+            # Extract comprehensive mapping data if available
+            comp_mapping = entity.get('comprehensive_mapping', {})
+            omop_mappings = comp_mapping.get('omop_mappings', []) if comp_mapping else entity.get('omop_mappings', [])
+            
+            # Helper to safely get list item
+            def get_item(lst, idx, key=None, default=None):
+                try:
+                    item = lst[idx]
+                    return item.get(key, default) if key else item
+                except IndexError:
+                    return default
 
-            entity_type = entity.get('entity_type', 'UNKNOWN')
-            if entity_type not in grouped_entities:
-                grouped_entities[entity_type] = []
-
-            # Basic entity data
-            entity_data = {
-                'term': entity.get('entity', ''), # Changed from 'term' to 'entity' to match existing structure
-                'confidence': entity.get('confidence', 0.0),
-                'context': entity.get('context', ''),
-                'source': entity.get('source', 'LLM'),
-                'microbiome_relevance_score': entity.get('microbiome_relevance_score', 0.0), # Added from original
-                'source_file': entity.get('source_file', '')
+            # Construct the flat record
+            record = {
+                "term": entity.get('entity', ''),
+                "contextual_definition": entity.get('context', ''),
+                "confidence_score": entity.get('confidence', 0.0),
+                "avg_confidence_score": entity.get('confidence', 0.0), # Placeholder
+                "max_confidence_score": entity.get('confidence', 0.0), # Placeholder
+                "frequency": 1, # Placeholder, should be calculated if aggregating
+                "categories": entity.get('entity_type', ''),
+                "aliases": "", # Placeholder
+                "examples": "", # Placeholder
+                "files_found_in": entity.get('source_file', ''),
+                "is_core_term": False, # Placeholder
+                "relevance_classification": "High" if entity.get('microbiome_relevance_score', 0) > 0.7 else "Medium",
+                
+                # IDs
+                "UMLS_ID": comp_mapping.get('umls_cui', ''),
+                "UMLS_ID_Others": "",
+                "BioPortal_ID": "", # Placeholder
+                "BioPortal_ID_Others": "",
+                "OLS_ID": "", # Placeholder
+                "OLS_ID_Others": "",
+                "NCBO_ID": "", # Placeholder
+                "NCBO_ID_Others": "",
+                "source_code": "", # Placeholder
+                
+                # Auto Concept IDs (OMOP)
+                "auto_concept_id_1": get_item(omop_mappings, 0, 'concept_id', ''),
+                "Auto_Score_1": get_item(omop_mappings, 0, 'confidence', 0.0),
+                "auto_concept_id_2": get_item(omop_mappings, 1, 'concept_id', ''),
+                "Auto_Score_2": get_item(omop_mappings, 1, 'confidence', 0.0),
+                "auto_concept_id_3": get_item(omop_mappings, 2, 'concept_id', ''),
+                "Auto_Score_3": get_item(omop_mappings, 2, 'confidence', 0.0),
+                "auto_concept_id_4": get_item(omop_mappings, 3, 'concept_id', ''),
+                "Auto_Score_4": get_item(omop_mappings, 3, 'confidence', 0.0),
+                "auto_concept_id_5": get_item(omop_mappings, 4, 'concept_id', ''),
+                "Auto_Score_5": get_item(omop_mappings, 4, 'confidence', 0.0),
+                
+                # Concept Details
+                "concept_name_1": get_item(omop_mappings, 0, 'concept_name', ''),
+                "domain_id_1": get_item(omop_mappings, 0, 'domain_id', ''),
+                "vocabulary_id_1": get_item(omop_mappings, 0, 'vocabulary_id', ''),
+                
+                "concept_name_2": get_item(omop_mappings, 1, 'concept_name', ''),
+                "domain_id_2": get_item(omop_mappings, 1, 'domain_id', ''),
+                "vocabulary_id_2": get_item(omop_mappings, 1, 'vocabulary_id', ''),
+                
+                "concept_name_3": get_item(omop_mappings, 2, 'concept_name', ''),
+                "domain_id_3": get_item(omop_mappings, 2, 'domain_id', ''),
+                "vocabulary_id_3": get_item(omop_mappings, 2, 'vocabulary_id', ''),
+                
+                "concept_name_4": get_item(omop_mappings, 3, 'concept_name', ''),
+                "domain_id_4": get_item(omop_mappings, 3, 'domain_id', ''),
+                "vocabulary_id_4": get_item(omop_mappings, 3, 'vocabulary_id', ''),
+                
+                "concept_name_5": get_item(omop_mappings, 4, 'concept_name', ''),
+                "domain_id_5": get_item(omop_mappings, 4, 'domain_id', ''),
+                "vocabulary_id_5": get_item(omop_mappings, 4, 'vocabulary_id', '')
             }
+            flat_results.append(record)
 
-            omop_mappings = []
-            has_omop_mapping = False
-            best_omop_confidence = 0.0
-            omop_domain_id = None
-            omop_concept_count = 0
-
-            # Check for direct OMOP mappings
-            if 'omop_mappings' in entity:
-                omop_mappings = entity['omop_mappings']
-                has_omop_mapping = entity.get('has_omop_mapping', False)
-                best_omop_confidence = entity.get('best_omop_confidence', 0.0)
-                omop_domain_id = entity.get('omop_domain_id')
-                omop_concept_count = entity.get('omop_concept_count', 0)
-
-            # Check for OMOP mappings in comprehensive mapping
-            elif 'comprehensive_mapping' in entity:
-                comp_mapping = entity['comprehensive_mapping']
-                if isinstance(comp_mapping, dict) and comp_mapping.get('omop_count', 0) > 0:
-                    omop_mappings = comp_mapping.get('omop_mappings', [])
-                    has_omop_mapping = True
-                    omop_concept_count = comp_mapping.get('omop_count', 0)
-                    if omop_mappings:
-                        best_omop_confidence = comp_mapping.get('best_confidence', 0.0)
-                        omop_domain_id = omop_mappings[0].get('domain_id') if omop_mappings else None
-
-            # Add OMOP mapping data to entity if available
-            if omop_mappings:
-                entity_data['omop_mappings'] = omop_mappings
-                entity_data['has_omop_mapping'] = has_omop_mapping
-                entity_data['best_omop_confidence'] = best_omop_confidence
-                entity_data['omop_domain_id'] = omop_domain_id
-                entity_data['omop_concept_count'] = omop_concept_count
-
-            # Add comprehensive mapping if available
-            if 'comprehensive_mapping' in entity:
-                entity_data['comprehensive_mapping'] = entity['comprehensive_mapping']
-
-            grouped_entities[entity_type].append(entity_data)
-
+    
         # Generate statistics
         stats = self.generate_statistics(entities)
 
-        # Create results structure
+        # Create results structure (keeping wrapper for metadata, but results is now flat list)
         results = {
             'metadata': {
                 'timestamp': time.time(),
@@ -3911,10 +4164,7 @@ class CDMEntityPipeline:
             },
             'text_statistics': text_stats or {},
             'extraction_statistics': stats,
-            'results': {
-                'entity_type_counts': {k: len(v) for k, v in grouped_entities.items()},
-                'cdm_entities': grouped_entities
-            }
+            'results': flat_results # Now a flat list
         }
 
         # Write to file
@@ -3977,8 +4227,8 @@ def setup_environment():
     # Check API keys
     api_keys = {
         'UMLS_API_KEY': os.getenv('UMLS_API_KEY'),
-        'BIOPORTAL_API_KEY': os.getenv('BIOPORTAL_API_KEY'),
-        'HUGGINGFACE_TOKEN': os.getenv('HUGGINGFACE_TOKEN')
+        'BIOPORTAL_API_KEY': os.getenv('BIOPORTAL_API_KEY', 'BIOPORTAL_API_KEY_PLACEHOLDER'),
+        'HUGGINGFACE_TOKEN': os.getenv('HUGGINGFACE_TOKEN', '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')
     }
     
     missing_keys = [k for k, v in api_keys.items() if not v or v.startswith('your_')]
@@ -3996,6 +4246,9 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
     logger.info(f"\n=== RUNNING {stage_name.upper()} PIPELINE ===")
     
     try:
+        # Extract force argument to prevent passing it to pipeline init
+        force = kwargs.pop('force', False)
+
         # Initialize pipeline
         pipeline = CDMEntityPipeline(
             model=config.default_model,
@@ -4026,7 +4279,7 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             try:
                 # Check for checkpoint
                 checkpoint_file = processed_dir / f"{file_path.stem}.json"
-                if checkpoint_file.exists() and not args.force:
+                if checkpoint_file.exists() and not force:
                     try:
                         with open(checkpoint_file, 'r') as f:
                             return json.load(f), None
@@ -4122,9 +4375,25 @@ def _analyze_file(filepath):
         return None
         
     try:
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)
             
+        # Handle new flat list format
+        if isinstance(data.get('results'), list):
+            entities = data['results']
+            # Group by type for statistics
+            type_counts = {}
+            for e in entities:
+                etype = e.get('categories', 'UNKNOWN')
+                type_counts[etype] = type_counts.get(etype, 0) + 1
+                
+            return {
+                'total_entities': len(entities),
+                'entity_types': type_counts,
+                'has_mappings': any(e.get('auto_concept_id_1') or e.get('UMLS_ID') for e in entities)
+            }
+        
+        # Legacy format support
         entities = data.get('results', {}).get('cdm_entities', {})
         total_entities = sum(len(v) for v in entities.values())
         
@@ -4176,9 +4445,16 @@ def main():
     # Setup logging
     setup_logging(verbose=args.verbose, log_format=args.log_format)
 
+
+
     if not args.input:
         parser.error("the following arguments are required: --input/-i (or in config file)")
     
+    # Set API keys from environment or hardcoded (as per user request)
+    # We do this BEFORE setup_environment so they are available
+    os.environ["HUGGING_FACE_HUB_TOKEN"] = os.environ.get("HUGGING_FACE_HUB_TOKEN", "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")
+    os.environ["BIOPORTAL_API_KEY"] = os.environ.get("BIOPORTAL_API_KEY", "BIOPORTAL_API_KEY_PLACEHOLDER")
+
     # Setup
     api_keys = setup_environment()
     input_path = Path(args.input)
@@ -4209,7 +4485,8 @@ def main():
         semantic_threshold=0.8,
         dry_run=args.dry_run,
         fast_mode=False,
-        api_type=args.api_type
+        api_type=args.api_type,
+        force=args.force
     )
     
     if not basic_success:
@@ -4228,7 +4505,6 @@ def main():
         # Determine enabled features based on API keys and flags
         enable_umls = bool(api_keys['UMLS_API_KEY'] and not api_keys['UMLS_API_KEY'].startswith('your_'))
         enable_hf = bool(api_keys['HUGGINGFACE_TOKEN'] and not api_keys['HUGGINGFACE_TOKEN'].startswith('your_'))
-        
         enhanced_success = run_pipeline_stage(
             "Enhanced",
             args.input,
@@ -4237,14 +4513,13 @@ def main():
             semantic_model=args.semantic_model,
             semantic_threshold=0.8,
             enable_biomistral=args.enable_biomistral,
-            enable_omop_mapping=True,
+            enable_omop_mapping=args.enable_omop_mapping,
             enable_umls_mapping=enable_umls,
             umls_api_key=api_keys['UMLS_API_KEY'],
             enable_comprehensive_mapping=enable_hf,
             mapping_confidence_threshold=0.7,
             enable_correction=args.enable_correction,
             enable_llm_correction=args.enable_llm_correction,
-
             dry_run=args.dry_run,
             fast_mode=False,
             api_type=args.api_type,
