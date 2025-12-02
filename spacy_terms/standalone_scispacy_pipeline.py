@@ -65,6 +65,17 @@ class PipelineConfig:
     bioportal_api_key: Optional[str] = os.getenv("BIOPORTAL_API_KEY")
     umls_api_key: Optional[str] = os.getenv("UMLS_API_KEY")
 
+    # Advanced Features
+    generate_definitions: bool = False
+    correct_terms: bool = False
+    map_umls: bool = False
+    map_omop: bool = False
+    map_bioportal: bool = False
+    
+    # Models
+    definition_model: str = "BioMistral/BioMistral-7B" # Can be BioBERT if user insists (but won't work well for gen)
+    correction_model: str = "BioMistral/BioMistral-7B"
+
     # Validation
     validate_biomistral: bool = False
     biomistral_model: str = "BioMistral/BioMistral-7B"
@@ -204,6 +215,291 @@ INVALID_PATTERNS = [
     re.compile(r'^\W*(and|or|the|but|for|with|from)\W*$', re.I)
 ]
 
+class ContextualCleaner:
+    """Cleans terms based on context (Fixing OCR errors like newlines/hyphens)"""
+    
+    @staticmethod
+    def clean_terms(terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        cleaned = []
+        for t in terms:
+            term = t['term']
+            context = t.get('context', '')
+            
+            # 1. Fix broken newlines/hyphens
+            # If term has \n or - inside, check if removing it makes sense in context
+            # Actually, spacy might have already split it.
+            # But if we have "bac\nteria", let's fix it.
+            
+            # 1. Unicode Normalization (Fix curly quotes, dashes, etc.)
+            term = term.replace('\u2019', "'").replace('\u2018', "'").replace('\u2013', "-").replace('\u2014', "-")
+            
+            if '\n' in term or '- ' in term:
+                # 2. Handle Hyphenation (word-\nword -> wordword)
+                fixed = term.replace('-\n', '').replace('- ', '')
+                
+                # 3. Handle Line Breaks (word\nword -> word word)
+                fixed = fixed.replace('\n', ' ')
+                
+                # 4. Collapse multiple spaces
+                fixed = re.sub(r'\s+', ' ', fixed).strip()
+                
+                t['term'] = fixed
+                t['original'] = term
+            else:
+                # Update term if only unicode changed
+                t['term'] = term
+            
+            cleaned.append(t)
+        return cleaned
+
+# --- Domain Logic (Ported from old.py) ---
+
+class MicrobiomeGoldStandardScorer:
+    """Gold standard scoring for microbiome terms (Ported from old.py)"""
+
+    def __init__(self):
+        self.gold_terms = self._load_gold_standard_terms()
+        self.flat_terms = {
+            term.lower(): (category, confidence)
+            for category, terms in self.gold_terms.items()
+            for term, confidence in terms.items()
+        }
+        self.gold_term_keys = list(self.flat_terms.keys())
+
+    def _load_gold_standard_terms(self) -> Dict[str, Dict[str, float]]:
+        """Load curated microbiome terms with confidence scores."""
+        return {
+            "Key_Organisms": {
+                "Akkermansia muciniphila": 0.95,
+                "Faecalibacterium prausnitzii": 0.95,
+                "Bacteroides fragilis": 0.90,
+                "Lactobacillus acidophilus": 0.90,
+                "Bifidobacterium longum": 0.90,
+                "Clostridium butyricum": 0.85,
+                "Enterococcus faecium": 0.80,
+                "Escherichia coli": 0.75,
+                "Firmicutes": 0.85,
+                "Bacteroidetes": 0.85,
+                "Actinobacteria": 0.80,
+                "Proteobacteria": 0.75
+            },
+            "Metabolites": {
+                "short-chain fatty acids": 0.95,
+                "SCFA": 0.95,
+                "butyrate": 0.90,
+                "propionate": 0.90,
+                "acetate": 0.90,
+                "lactate": 0.85,
+                "succinate": 0.80,
+                "bile acids": 0.85,
+                "tryptophan": 0.80,
+                "indole": 0.75
+            },
+            "Functional_Terms": {
+                "microbiome": 0.95,
+                "microbiota": 0.95,
+                "gut flora": 0.90,
+                "intestinal bacteria": 0.90,
+                "microbial community": 0.90,
+                "bacterial diversity": 0.85,
+                "dysbiosis": 0.90,
+                "eubiosis": 0.85,
+                "probiotic": 0.90,
+                "prebiotic": 0.90,
+                "synbiotic": 0.85,
+                "postbiotic": 0.80
+            },
+            "Diseases_Conditions": {
+                "inflammatory bowel disease": 0.85,
+                "IBD": 0.85,
+                "Crohn's disease": 0.85,
+                "ulcerative colitis": 0.85,
+                "irritable bowel syndrome": 0.80,
+                "IBS": 0.80,
+                "small intestinal bacterial overgrowth": 0.80,
+                "SIBO": 0.80,
+                "C. difficile infection": 0.85,
+                "antibiotic-associated diarrhea": 0.80
+            },
+            "Methods_Techniques": {
+                "16S rRNA sequencing": 0.85,
+                "16S rRNA": 0.85,
+                "metagenomics": 0.85,
+                "metagenomic sequencing": 0.85,
+                "metabolomics": 0.80,
+                "metatranscriptomics": 0.80,
+                "qPCR": 0.75,
+                "FISH": 0.70,
+                "flow cytometry": 0.70
+            },
+            "Anatomical_Terms": {
+                "gut-brain axis": 0.85,
+                "intestinal permeability": 0.85,
+                "leaky gut": 0.80,
+                "mucus layer": 0.80,
+                "intestinal barrier": 0.85,
+                "cecum": 0.75,
+                "colon": 0.75,
+                "small intestine": 0.75,
+                "large intestine": 0.75
+            }
+        }
+
+    def get_gold_score(self, term: str) -> Tuple[bool, Optional[str], float]:
+        """Get gold standard score for a term, with fuzzy matching fallback."""
+        term_lower = term.lower().strip()
+
+        # Exact match first
+        if term_lower in self.flat_terms:
+            category, base_confidence = self.flat_terms[term_lower]
+            return True, category, base_confidence
+
+        # Fuzzy matching fallback
+        try:
+            from rapidfuzz import process, fuzz
+            if self.gold_term_keys:
+                match = process.extractOne(term_lower, self.gold_term_keys, scorer=fuzz.token_sort_ratio)
+                if match:
+                    best_match, score, _ = match
+                    if score >= 95:  # High threshold
+                        category, base_confidence = self.flat_terms[best_match]
+                        adjusted_confidence = base_confidence * (score / 100.0)
+                        return True, category, adjusted_confidence
+        except ImportError:
+            pass
+
+        return False, None, 0.0
+
+class MicrobiomeSemanticFilter:
+    """Semantic filtering optimized for microbiome terms (Better Implementation using SentenceTransformer)"""
+
+    def __init__(self, semantic_model=None, seed_terms: List[str] = None):
+        self.model = semantic_model
+        # Use default seeds if none provided
+        self.seed_terms = seed_terms or [
+           "microbiome", "microbiota", "gut flora", "intestinal bacteria",
+           "microbial community", "bacterial diversity", "dysbiosis",
+           "probiotic", "prebiotic", "synbiotic", "postbiotic",
+           "short-chain fatty acids", "SCFA", "butyrate", "propionate", "acetate",
+           "Firmicutes", "Bacteroidetes", "Actinobacteria", "Proteobacteria",
+           "Lactobacillus", "Bifidobacterium", "Clostridium", "Bacteroides",
+           "gut-brain axis", "intestinal permeability", "leaky gut"
+        ]
+        self.seed_embeddings = None
+        self._precompute_embeddings()
+
+        self.microbiome_keywords = {
+            'microb', 'bacteri', 'gut', 'intestin', 'flora', 'probiotic',
+            'prebiotic', 'dysbiosis', 'metabolit', 'scfa', 'butyrate',
+            'lactobacillus', 'bifidobacterium', 'clostridium', 'bacteroides',
+            'firmicutes', 'bacteroidetes', 'actinobacteria'
+        }
+
+    def _precompute_embeddings(self):
+        if not self.model: return
+        try:
+            # Check if model is SentenceTransformer or TF-IDF
+            if hasattr(self.model, 'encode'):
+                self.seed_embeddings = self.model.encode(self.seed_terms)
+        except Exception as e:
+            logger.warning(f"Failed to precompute seed embeddings: {e}")
+
+    def get_relevance_score(self, term_text: str) -> float:
+        """Calculate relevance score using embeddings or keywords."""
+        keyword_score = self._keyword_score(term_text)
+        
+        if self.seed_embeddings is None or not hasattr(self.model, 'encode'):
+            return keyword_score
+
+        try:
+            # Encode term
+            term_vec = self.model.encode([term_text])[0]
+            
+            # Calculate max similarity to seeds (Cosine Similarity)
+            # Manual cosine sim for speed/independence from heavy libs if needed, 
+            # but we likely have sklearn or torch if we have the model.
+            # Let's use numpy for portability.
+            
+            norm_term = np.linalg.norm(term_vec)
+            if norm_term == 0: return keyword_score
+            
+            # Vectorized cosine similarity
+            # seed_embeddings is (N, D), term_vec is (D,)
+            # dot product -> (N,)
+            dots = np.dot(self.seed_embeddings, term_vec)
+            norms = np.linalg.norm(self.seed_embeddings, axis=1) * norm_term
+            
+            # Avoid divide by zero
+            sims = np.divide(dots, norms, out=np.zeros_like(dots), where=norms!=0)
+            max_sim = np.max(sims) if len(sims) > 0 else 0.0
+            
+            return max(float(max_sim), keyword_score * 0.7)
+            
+        except Exception:
+            return keyword_score
+
+    def _keyword_score(self, term_text: str) -> float:
+        term_lower = term_text.lower()
+        for keyword in self.microbiome_keywords:
+            if keyword in term_lower:
+                return 0.8
+        return 0.0
+
+class TermRanker:
+    """Ranks terms using Gold Standard, Semantic Similarity, and Frequency"""
+    
+    def __init__(self, config: PipelineConfig, semantic_model=None):
+        self.config = config
+        self.gold_scorer = MicrobiomeGoldStandardScorer()
+        self.semantic_filter = MicrobiomeSemanticFilter(semantic_model)
+        
+    def rank_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        import math
+        
+        for term in terms:
+            t_text = term['term']
+            
+            # 1. Gold Standard Score
+            is_gold, category, gold_conf = self.gold_scorer.get_gold_score(t_text)
+            term['is_gold_standard'] = is_gold
+            term['gold_category'] = category if category else ""
+            
+            # 2. Semantic Score
+            semantic_score = self.semantic_filter.get_relevance_score(t_text)
+            term['semantic_score'] = round(semantic_score, 4)
+            
+            # 3. Calculate Composite Score (Logic from old.py)
+            # Relevance (Base)
+            relevance = 0.3 # Base
+            if term.get('label') in ['ORGANISM', 'TAXON']: relevance += 0.2
+            if term.get('label') in ['CHEMICAL', 'DISEASE']: relevance += 0.1
+            
+            # Mapped Bonus (Standalone feature)
+            if term.get('mappings'): relevance += 0.2
+            
+            # Validation Bonus (Standalone feature)
+            if term.get('validation', {}).get('is_valid'): relevance += 0.2
+            
+            relevance = min(1.0, relevance)
+            
+            frequency = term.get('frequency', 1)
+            file_count = len(term.get('source_file', [])) if isinstance(term.get('source_file'), list) else 1
+            
+            # Formula:
+            # Score = (Relevance * 0.3) + (Semantic * 0.2) + (log(Freq) * 0.25) + (log(FileCount) * 0.2) + (GoldBonus)
+            
+            score = (
+                relevance * 0.30 +
+                semantic_score * 0.20 +
+                math.log1p(frequency) * 0.25 +
+                math.log1p(file_count) * 0.20 +
+                (0.5 if is_gold else 0.0)
+            )
+            
+            term['score'] = round(score, 4)
+            
+        return sorted(terms, key=lambda x: x['score'], reverse=True)
+
 # --- Components ---
 
 class TermsExtractor:
@@ -232,24 +528,78 @@ class TermsExtractor:
 
     def extract(self, text: str) -> List[Dict[str, Any]]:
         """Extract terms from text"""
-        doc = self.nlp(text)
-        terms = []
+        # Chunking Strategy (User Request: 4 chunks)
+        # We split text into 4 overlapping chunks to improve recall
         
-        for ent in doc.ents:
-            term = ent.text.strip()
-            label = ent.label_
-            
-            # Apply strict filters
-            if self._apply_filters(term):
-                normalized = self._normalize(term)
-                terms.append({
+        chunk_size = len(text) // 4
+        if chunk_size < 1000: # Don't chunk small files
+            chunks = [text]
+        else:
+            # Create 4 chunks with overlap
+            overlap = 200 # characters
+            chunks = []
+            for i in range(4):
+                start = i * chunk_size
+                # Adjust start to avoid breaking words (simple heuristic: find space)
+                if i > 0:
+                    start = max(0, start - overlap)
+                    while start < len(text) and text[start] not in ' \n':
+                        start -= 1
+                
+                end = (i + 1) * chunk_size
+                if i < 3:
+                    end = min(len(text), end + overlap)
+                    while end < len(text) and text[end] not in ' \n':
+                        end += 1
+                else:
+                    end = len(text)
+                    
+                chunks.append(text[start:end])
+        
+        all_terms = []
+        seen_terms = set()
+        
+        for i, chunk in enumerate(chunks):
+            logger.info(f"Processing chunk {i+1}/{len(chunks)} ({len(chunk)} chars)...")
+            try:
+                doc = self.nlp(chunk)
+            except Exception as e:
+                logger.warning(f"Spacy failed on chunk {i+1}: {e}")
+                continue
+                
+            for ent in doc.ents:
+                term = ent.text.strip()
+                if not term: continue
+                
+                # Basic filtering
+                if len(term) < 3: continue
+                
+                # Clean and normalize
+                normalized = term.lower()
+                
+                # Check filters
+                if not self._apply_filters(term):
+                    continue
+                    
+                # Deduplicate within file (simple set check)
+                if normalized in seen_terms:
+                    continue
+                seen_terms.add(normalized)
+                
+                label = ent.label_
+                
+                all_terms.append({
                     "term": normalized,
                     "original": term,
                     "label": label,
-                    "source": "scispacy"
+                    "source": "scispacy",
+                    "context": ent.sent.text.strip().replace("\n", " ") if ent.sent else ""
                 })
                 
-        return terms
+        # Apply Contextual Cleaning (OCR fix)
+        all_terms = ContextualCleaner.clean_terms(all_terms)
+                
+        return all_terms
 
     def _apply_filters(self, term: str) -> bool:
         """Apply comprehensive P1-P28 filters and advanced checks"""
@@ -283,13 +633,13 @@ class TermsExtractor:
         if not self._advanced_quality_check(term):
             return False
 
-        # 7. Strict Biomedical Filter
-        if not self._is_biomedical_term(term):
-            return False
+        # 7. Strict Biomedical Filter (Disabled for higher recall)
+        # if not self._is_biomedical_term(term):
+        #     return False
 
-        # 8. CDM Relevance
-        if not self._is_cdm_relevant(term):
-            return False
+        # 8. CDM Relevance (Disabled for higher recall)
+        # if not self._is_cdm_relevant(term):
+        #     return False
 
         return True
 
@@ -310,7 +660,83 @@ class TermsExtractor:
         if any(x in term_lower for x in ['kit', 'reagent', 'system', 'technology', 'solution']):
             return False
 
+        # --- NEW: Author/Citation Filters ---
+        
+        # 1. Check for citation numbers attached to words (e.g., "Konishi3,7")
+        # Regex: Word ending with digit(s) or digit-comma-digit
+        if re.search(r'[a-zA-Z]+\d+(,\d+)*$', term):
+            return False
+            
+        # 2. Check for "Surname, Name" pattern (common in author lists)
+        # But be careful not to kill "Disease, Parkinson's" (though usually "Parkinson's Disease")
+        # Author lists often have multiple commas: "Smith J, Doe A, ..."
+        if term.count(',') >= 1:
+            # If it looks like a list of names (Capitalized words separated by commas)
+            parts = [p.strip() for p in term.split(',')]
+            if all(p[0].isupper() for p in parts if p):
+                # Likely a name list
+                return False
+                
+        # 3. Check for common author/affiliation keywords
+        author_keywords = ['et al', 'university', 'department', 'correspondence', 'received', 'accepted', 'published']
+        if any(kw in term_lower for kw in author_keywords):
+            return False
+
+        # 9. Generic/Non-Scientific Term Filter
+        if self._is_generic_term(term):
+            return False
+
         return True
+
+    def _is_generic_term(self, term: str) -> bool:
+        """Filter out generic academic and non-scientific terms"""
+        term_lower = term.lower()
+        
+        # 1. Blocked Generics (Expanded)
+        blocked_generics = {
+            'new', 'old', 'big', 'small', 'high', 'low', 'used', 'found',
+            'study', 'analysis', 'experiment', 'result', 'data', 'method',
+            'conclusion', 'discussion', 'background', 'introduction',
+            'figure', 'table', 'fig', 'tab', 'section', 'chapter',
+            'page', 'volume', 'issue', 'doi', 'url', 'http', 'https',
+            'copyright', 'license', 'waiver', 'rights', 'reserved',
+            'creative commons', 'public domain', 'dedication',
+            'publisher', 'note', 'editor', 'author', 'contribution',
+            'conflict of interest', 'funding', 'acknowledgement',
+            'supplementary', 'material', 'file', 'available',
+            'significant', 'difference', 'increase', 'decrease',
+            'effect', 'role', 'impact', 'association', 'correlation',
+            'group', 'population', 'cohort', 'sample', 'patient',
+            'subject', 'participant', 'individual', 'human', 'people',
+            'year', 'month', 'day', 'time', 'period', 'duration'
+        }
+        
+        # Exact match check
+        if term_lower in blocked_generics:
+            return False
+            
+        # Check if term ends with a generic word (e.g. "this study")
+        # But be careful: "gut microbiome study" -> maybe keep "gut microbiome"? 
+        # The extractor usually grabs the whole noun phrase.
+        # If the term is JUST "study" or "the study", it's blocked above or by stopword regex.
+        
+        # 2. License/Legal/Meta Text (Phrase matching)
+        meta_phrases = [
+            'creative commons', 'public domain', 'rights reserved', 'open access',
+            'supplementary material', 'supplementary information', 'online version',
+            'additional file', 'table s', 'figure s', 'fig s', 'available at',
+            'http', 'doi.org', 'www.', 'et al', 'primer sequence'
+        ]
+        
+        for phrase in meta_phrases:
+            if phrase in term_lower:
+                return True
+                
+        # 3. Primer sequences (long strings of ACTG)
+        if re.search(r'^[actg\-\s]{10,}$', term_lower):
+            return True
+            
+        return False
 
     def _is_biomedical_term(self, term: str) -> bool:
         """Strict filtering to keep only high-value biomedical terms"""
@@ -436,12 +862,114 @@ class TfidfSemanticModel:
             # Handle empty vocabulary or other issues
             return np.zeros((len(sentences), 1))
 
+class SemanticCorrector:
+    """Corrects and canonicalizes terms using Semantic Embeddings (MiniLM)"""
+    
+    def __init__(self, model):
+        self.model = model
+        
+    def correct_terms(self, terms: List[Dict[str, Any]], threshold: float = 0.90) -> List[Dict[str, Any]]:
+        """Cluster terms by semantic similarity and pick a canonical representative"""
+        if not self.model or not terms:
+            return terms
+            
+        logger.info(f"Running semantic correction on {len(terms)} terms...")
+        
+        # 1. Get embeddings
+        term_texts = [t['term'] for t in terms]
+        try:
+            embeddings = self.model.encode(term_texts)
+        except Exception as e:
+            logger.warning(f"Semantic encoding failed: {e}")
+            return terms
+            
+        # 2. Cluster (Greedy clustering)
+        # Sort by length (prefer shorter as canonical? or frequency?)
+        # Let's prefer higher frequency, then shorter length
+        # But we don't have global frequency here easily unless we aggregated.
+        # Let's just use the order provided, assuming sorted by quality/freq if possible.
+        # Actually, let's sort indices by length for stability
+        
+        indices = sorted(range(len(terms)), key=lambda i: len(terms[i]['term']))
+        
+        clusters = []
+        visited = set()
+        
+        import numpy as np
+        
+        # Normalize embeddings
+        norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+        embeddings = embeddings / (norms + 1e-9)
+        
+        for i in indices:
+            if i in visited: continue
+            
+            cluster = [i]
+            visited.add(i)
+            
+            # Find neighbors
+            # Dot product with all others
+            # Optimization: only check unvisited? No, check all to find best match?
+            # Greedy: check unvisited.
+            
+            # Vectorized check against all unvisited is faster but complex to index.
+            # Simple loop for now (len(terms) usually < 1000 per file)
+            
+            vec_i = embeddings[i]
+            
+            # Calculate sims for all
+            sims = np.dot(embeddings, vec_i)
+            
+            # Find matches > threshold
+            matches = np.where(sims > threshold)[0]
+            
+            for match_idx in matches:
+                if match_idx not in visited:
+                    cluster.append(match_idx)
+                    visited.add(match_idx)
+            
+            clusters.append(cluster)
+            
+        # 3. Canonicalize
+        corrected_terms = []
+        for cluster in clusters:
+            # Pick representative: Shortest term? Most frequent?
+            # We'll pick the shortest term as canonical for now
+            cluster_terms = [terms[i] for i in cluster]
+            canonical = min(cluster_terms, key=lambda t: len(t['term']))
+            
+            # Merge metadata
+            merged_examples = set()
+            merged_files = set()
+            total_freq = 0
+            
+            for t in cluster_terms:
+                if t.get('examples'):
+                    if isinstance(t['examples'], list): merged_examples.update(t['examples'])
+                    elif isinstance(t['examples'], set): merged_examples.update(t['examples'])
+                
+                if t.get('source_file'):
+                    if isinstance(t['source_file'], list): merged_files.update(t['source_file'])
+                    else: merged_files.add(t['source_file'])
+                    
+                total_freq += t.get('frequency', 1)
+                
+            canonical['examples'] = list(merged_examples)[:5]
+            canonical['source_file'] = list(merged_files)
+            canonical['frequency'] = total_freq
+            
+            corrected_terms.append(canonical)
+            
+        logger.info(f"Semantic correction: {len(terms)} -> {len(corrected_terms)}")
+        return corrected_terms
+
 class Deduplicator:
     """Multi-layer deduplication"""
     
     def __init__(self, config: PipelineConfig):
         self.config = config
         self.semantic_model = self._load_semantic_model()
+        self.corrector = SemanticCorrector(self.semantic_model)
         
     def _load_semantic_model(self):
         """Load sentence-transformers model or fallback to TF-IDF"""
@@ -456,94 +984,135 @@ class Deduplicator:
             logger.warning(f"Failed to load semantic model: {e}. Using TF-IDF fallback.")
             return TfidfSemanticModel()
 
-
     def deduplicate(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Run all deduplication layers"""
         initial_count = len(terms)
         
         # 1. Exact Deduplication
-        unique_terms = {t['term']: t for t in terms}.values()
-        terms = list(unique_terms)
+        unique_terms = {}
+        for t in terms:
+            term_key = t['term']
+            if term_key not in unique_terms:
+                unique_terms[term_key] = t
+                unique_terms[term_key]['examples'] = {t.get('context')} if t.get('context') else set()
+            else:
+                # Merge examples
+                if t.get('context'):
+                    unique_terms[term_key]['examples'].add(t['context'])
+                # Keep other metadata if needed (e.g. frequency)
+                unique_terms[term_key]['frequency'] = unique_terms[term_key].get('frequency', 1) + t.get('frequency', 1)
+
+        terms = []
+        for t in unique_terms.values():
+            t['examples'] = list(t['examples'])[:5] # Keep top 5 unique examples
+            terms.append(t)
         logger.info(f"Exact deduplication: {initial_count} -> {len(terms)}")
         
         # 2. Fuzzy Deduplication (Rapidfuzz)
         terms = self._fuzzy_dedup(terms)
         
-        # 3. Semantic Deduplication
+        # 3. Semantic Correction (MiniLM) - NEW
         if self.semantic_model:
-            terms = self._semantic_dedup(terms)
+            terms = self.corrector.correct_terms(terms, threshold=self.config.semantic_threshold)
             
-        # 4. Biomedical Deduplication (BioMistral)
+        # 4. Semantic Deduplication (Legacy/Fallback logic if needed, but Corrector covers most)
+        # We can keep _semantic_dedup if it does something different (e.g. cross-encoder)
+        # But for now, Corrector is the "MiniLM check" requested.
+            
+        # 5. Biomedical Deduplication (BioMistral)
         terms = self._biomedical_dedup(terms)
 
-        # 5. Semantic Quality Filter (New)
+        # 6. Semantic Quality Filter (New)
         terms = self._semantic_quality_filter(terms)
 
-        # 6. Typo Correction
+        # 7. Typo Correction
         terms = self._correct_typos(terms)
 
-        # 7. Aggressive Final Pass (No Duplicates!)
+        # 8. Aggressive Final Pass (No Duplicates!)
         terms = self._aggressive_dedup(terms)
             
         return terms
 
     def _semantic_quality_filter(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
-        Filter out terms that are semantically similar to generic research concepts.
-        Uses MiniLM embeddings.
+        Filter out terms that are semantically similar to generic research concepts or non-scientific noise.
+        Uses MiniLM embeddings in a contrastive manner (Scientific vs Noise).
         """
         if not self.semantic_model or not terms:
             return terms
             
-        logger.info("Running Semantic Quality Filter...")
+        logger.info("Running Semantic Quality Filter (Contrastive)...")
         
-        # Prototypes of generic/noise concepts
+        # Prototypes
+        SCIENTIFIC_PROTOTYPES = [
+            "bacterium", "microbiome", "gene expression", "protein", "enzyme", 
+            "disease", "pathogen", "metabolite", "chemical compound", "clinical symptom", 
+            "anatomy", "physiology", "molecular biology", "genetics", "pharmacology"
+        ]
+        
         NOISE_PROTOTYPES = [
             "scientific study", "research analysis", "statistical method", "data collection",
             "experimental result", "clinical trial", "literature review", "author contribution",
             "funding source", "conflict of interest", "copyright statement", "figure legend",
             "table caption", "supplementary material", "university department", "correspondence address",
-            "p-value", "confidence interval", "standard deviation", "sample size"
+            "p-value", "confidence interval", "standard deviation", "sample size",
+            "significant difference", "observed effect", "increased level", "decreased value",
+            "et al", "published by", "received on", "available online", "http url", "doi link",
+            "primer sequence", "dna sequence string", "nucleotide sequence", "gene amplification method"
         ]
         
         term_strings = [t['term'] for t in terms]
         
-        # Encode terms and noise prototypes
-        # Note: TF-IDF fallback might struggle here if noise prototypes aren't in the fitted vocab
-        # But for the fallback, we'll try our best.
-        
+        # Encode everything
         if isinstance(self.semantic_model, TfidfSemanticModel):
-             # Fit on combined corpus to ensure shared vocabulary
+             # Fallback: Simple noise check if no embeddings
              combined = term_strings + NOISE_PROTOTYPES
              embeddings = self.semantic_model.encode(combined)
              term_embeddings = embeddings[:len(term_strings)]
              noise_embeddings = embeddings[len(term_strings):]
-             
-             # Compute cosine similarity
              scores = cosine_similarity(term_embeddings, noise_embeddings)
+             
+             keep_indices = []
+             for i in range(len(terms)):
+                 if scores[i].max() < 0.7: # Stricter fallback
+                     keep_indices.append(i)
         else:
+            # Encode terms, scientific, and noise
             term_embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
+            sci_embeddings = self.semantic_model.encode(SCIENTIFIC_PROTOTYPES, convert_to_tensor=True)
             noise_embeddings = self.semantic_model.encode(NOISE_PROTOTYPES, convert_to_tensor=True)
-            from sentence_transformers.util import cos_sim
-            scores = cos_sim(term_embeddings, noise_embeddings)
-        
-        keep_indices = []
-        for i in range(len(terms)):
-            # Check max similarity to ANY noise prototype
-            if isinstance(scores, np.ndarray):
-                max_noise_score = scores[i].max()
-            else:
-                max_noise_score = scores[i].max().item()
-
             
-            # If too close to noise (e.g. > 0.75), discard
-            if max_noise_score < 0.75:
-                keep_indices.append(i)
-            else:
-                # Optional: Log what was filtered for debugging
-                # logger.debug(f"Filtered generic term: {terms[i]['term']} (Score: {max_noise_score:.2f})")
-                pass
+            from sentence_transformers.util import cos_sim
+            
+            # Sim to Scientific
+            sci_scores = cos_sim(term_embeddings, sci_embeddings) # (N_terms, N_sci)
+            max_sci_score, _ = sci_scores.max(dim=1)
+            
+            # Sim to Noise
+            noise_scores = cos_sim(term_embeddings, noise_embeddings) # (N_terms, N_noise)
+            max_noise_score, _ = noise_scores.max(dim=1)
+            
+            keep_indices = []
+            for i in range(len(terms)):
+                # Logic: 
+                # 1. Must have some scientific relevance (max_sci > 0.25)
+                # 2. Must be more scientific than noise (max_sci > max_noise)
+                # 3. Or if it's very close to noise (max_noise > 0.8), discard regardless
                 
+                s_score = max_sci_score[i].item()
+                n_score = max_noise_score[i].item()
+                
+                if n_score > 0.8:
+                    continue # Definitely noise
+                    
+                if s_score > n_score:
+                    keep_indices.append(i)
+                elif s_score > 0.4: # Keep if reasonably scientific even if noise score is high-ish (ambiguous)
+                     # But if n_score is higher, it's risky. Let's stick to s_score > n_score for "bullshit" removal.
+                     # Maybe add a margin? s_score > n_score - 0.1
+                     if s_score > n_score - 0.05:
+                         keep_indices.append(i)
+        
         logger.info(f"Semantic Filter: {len(terms)} -> {len(keep_indices)} terms")
         return [terms[i] for i in keep_indices]
 
@@ -791,6 +1360,288 @@ class Deduplicator:
 
         return [terms[i] for i in sorted(keep_indices)]
 
+
+class DefinitionGenerator:
+    """Generates definitions for terms using BioMistral or BioBERT"""
+    
+    def __init__(self, config: PipelineConfig):
+        self.config = config
+        self.pipeline = None
+        self._load_model()
+        
+    def _load_model(self):
+        """Load the model for definition generation"""
+        if not self.config.generate_definitions:
+            return
+
+        try:
+            from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
+            import torch
+            
+            model_name = self.config.biomistral_model
+            logger.info(f"Loading definition model: {model_name}")
+            
+            if self.config.load_4bit:
+                from transformers import BitsAndBytesConfig
+                bnb_config = BitsAndBytesConfig(
+                    load_in_4bit=True,
+                    bnb_4bit_compute_dtype=torch.float16,
+                    bnb_4bit_quant_type="nf4"
+                )
+                model = AutoModelForCausalLM.from_pretrained(
+                    model_name,
+                    quantization_config=bnb_config,
+                    device_map="auto",
+                    trust_remote_code=True
+                )
+            else:
+                model = AutoModelForCausalLM.from_pretrained(
+                    model_name,
+                    device_map="auto",
+                    torch_dtype=torch.float16,
+                    trust_remote_code=True
+                )
+                
+            tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+            tokenizer.pad_token = tokenizer.eos_token
+            
+            self.pipeline = pipeline(
+                "text-generation",
+                model=model,
+                tokenizer=tokenizer,
+                max_new_tokens=100,
+                repetition_penalty=1.2
+            )
+            
+        except Exception as e:
+            logger.error(f"Failed to load definition model: {e}")
+            self.pipeline = None
+
+    def generate_definitions(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Generate definitions for a list of terms"""
+        if not self.pipeline or not terms:
+            return terms
+            
+        logger.info(f"Generating definitions for {len(terms)} terms...")
+        
+        # Prepare prompts
+        prompts = [
+            f"Define the biomedical term '{t['term']}' concisely in one sentence:" 
+            for t in terms
+        ]
+        
+        batch_size = self.config.batch_size
+        definitions = []
+        
+        try:
+            from tqdm import tqdm
+            for i in tqdm(range(0, len(prompts), batch_size), desc="Generating Definitions"):
+                batch_prompts = prompts[i:i + batch_size]
+                
+                batch_outputs = self.pipeline(
+                    batch_prompts,
+                    do_sample=True,
+                    temperature=0.7,
+                    return_full_text=False,
+                    batch_size=batch_size
+                )
+                
+                for output in batch_outputs:
+                    if isinstance(output, list):
+                        output = output[0]
+                    text = output['generated_text'].strip()
+                    # Clean up: remove quotes, newlines
+                    text = text.replace('\n', ' ').strip('"').strip("'")
+                    definitions.append(text)
+                    
+        except Exception as e:
+            logger.error(f"Definition generation failed: {e}")
+            remaining = len(prompts) - len(definitions)
+            definitions.extend(["Error generating definition"] * remaining)
+            
+        # Assign back to terms
+        for term, definition in zip(terms, definitions):
+            term['definition'] = definition
+            
+        return terms
+
+
+class LLMTermCorrector:
+    """Corrects terms using BioMistral/LLM"""
+    
+    def __init__(self, config: PipelineConfig):
+        self.config = config
+        self.pipeline = None
+        self._load_model()
+        
+    def _load_model(self):
+        if not self.config.correct_terms:
+            return
+
+        try:
+            from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
+            import torch
+            
+            model_name = self.config.biomistral_model
+            logger.info(f"Loading correction model: {model_name}")
+            
+            if self.config.load_4bit:
+                from transformers import BitsAndBytesConfig
+                bnb_config = BitsAndBytesConfig(
+                    load_in_4bit=True,
+                    bnb_4bit_compute_dtype=torch.float16,
+                    bnb_4bit_quant_type="nf4"
+                )
+                model = AutoModelForCausalLM.from_pretrained(
+                    model_name,
+                    quantization_config=bnb_config,
+                    device_map="auto",
+                    trust_remote_code=True
+                )
+            else:
+                model = AutoModelForCausalLM.from_pretrained(
+                    model_name,
+                    device_map="auto",
+                    torch_dtype=torch.float16,
+                    trust_remote_code=True
+                )
+                
+            tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+            tokenizer.pad_token = tokenizer.eos_token
+            
+            self.pipeline = pipeline(
+                "text-generation",
+                model=model,
+                tokenizer=tokenizer,
+                max_new_tokens=50,
+                repetition_penalty=1.2
+            )
+            
+        except Exception as e:
+            logger.error(f"Failed to load correction model: {e}")
+            self.pipeline = None
+
+    def correct_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        if not self.pipeline or not terms:
+            return terms
+            
+        logger.info(f"Correcting {len(terms)} terms with LLM...")
+        
+        prompts = [
+            f"Correct the following biomedical term to its standard canonical form. If it is already correct, output it as is.\nTerm: {t['term']}\nCorrected Term:"
+            for t in terms
+        ]
+        
+        batch_size = self.config.batch_size
+        corrections = []
+        
+        try:
+            from tqdm import tqdm
+            for i in tqdm(range(0, len(prompts), batch_size), desc="Correcting Terms"):
+                batch_prompts = prompts[i:i + batch_size]
+                
+                batch_outputs = self.pipeline(
+                    batch_prompts,
+                    do_sample=False, # Deterministic for correction
+                    temperature=0.1,
+                    return_full_text=False,
+                    batch_size=batch_size
+                )
+                
+                for output in batch_outputs:
+                    if isinstance(output, list):
+                        output = output[0]
+                    text = output['generated_text'].strip().split('\n')[0] # Take first line
+                    corrections.append(text)
+                    
+        except Exception as e:
+            logger.error(f"LLM correction failed: {e}")
+            remaining = len(prompts) - len(corrections)
+            corrections.extend(["Error"] * remaining)
+            
+        # Apply corrections
+        for term, correction in zip(terms, corrections):
+            if correction and correction != "Error" and correction.lower() != term['term'].lower():
+                term['llm_correction'] = correction
+                # Optionally update the main term, but safer to keep as metadata first
+                # term['term'] = correction 
+            
+        return terms
+
+class UMLSMapper:
+    """Maps terms to UMLS using SciSpaCy Linker"""
+    
+    def __init__(self, config: PipelineConfig):
+        self.config = config
+        self.linker = None
+        self._load_linker()
+        
+    def _load_linker(self):
+        if not self.config.map_umls:
+            return
+            
+        try:
+            import spacy
+            from scispacy.linking import EntityLinker
+            
+            logger.info("Loading SciSpaCy UMLS Linker...")
+            # We need a base model to add the linker to, or just use the linker class directly
+            # But EntityLinker is a pipe. 
+            # Let's load a small model just for linking context if needed, 
+            # or use the CandidateGenerator directly if we want speed.
+            # Using the pipe is easier.
+            
+            self.nlp = spacy.load("en_core_sci_sm")
+            self.nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "umls"})
+            self.linker = self.nlp.get_pipe("scispacy_linker")
+            
+        except Exception as e:
+            logger.error(f"Failed to load UMLS Linker: {e}")
+            self.linker = None
+
+    def map_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        if not self.linker or not terms:
+            return terms
+            
+        logger.info(f"Mapping {len(terms)} terms to UMLS...")
+        
+        # Batch processing with nlp.pipe
+        term_texts = [t['term'] for t in terms]
+        
+        try:
+            docs = list(self.nlp.pipe(term_texts, batch_size=50))
+            
+            for term, doc in zip(terms, docs):
+                # The doc contains the term as text. 
+                # The linker links entities found in the doc.
+                # Since the doc IS the term, we look at doc.ents
+                
+                mappings = []
+                if doc.ents:
+                    # Usually just one entity if the term is short
+                    ent = doc.ents[0]
+                    for umls_ent in ent._.kb_ents:
+                        cui = umls_ent[0]
+                        score = umls_ent[1]
+                        # Get details from KB
+                        entity_details = self.linker.kb.cui_to_entity[cui]
+                        
+                        mappings.append({
+                            "cui": cui,
+                            "name": entity_details.canonical_name,
+                            "score": score,
+                            "types": entity_details.types,
+                            "source": "UMLS"
+                        })
+                        
+                if mappings:
+                    term['mappings'] = term.get('mappings', {})
+                    term['mappings']['umls'] = mappings[:3] # Top 3
+                    
+        except Exception as e:
+            logger.error(f"UMLS mapping failed: {e}")
+            
+        return terms
 
 class OMOPMapper:
     """High-performance OMOP vocabulary mapper"""
@@ -1452,13 +2303,16 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
         logger.info("No new files to process. Exiting.")
         return
 
-    # Initialize Central Components (Deduplicator, Mapper, Validator)
-    # These run on the main process (or GPU)
+    # Initialize Central Components
     logger.info("Initializing central components...")
     try:
         deduplicator = Deduplicator(config)
         mapper = ComprehensiveMapper(config) if not skip_mapping else None
         validator = BioMistralValidator(config) if config.validate_biomistral else None
+        
+        # Initialize Ranker with the semantic model from deduplicator
+        ranker = TermRanker(config, deduplicator.semantic_model)
+        
     except Exception as e:
         logger.error(f"Failed to initialize central components: {e}")
         return
@@ -1518,18 +2372,9 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
             # Mapping & Ranking
             if not skip_mapping and mapper:
                 mapped_terms = mapper.map_terms(dedup_terms)
-                # We need a temporary extractor just for ranking logic if we don't have one
-                # Or make rank_terms static. It uses config, so let's instantiate a lightweight one or move logic.
-                # For now, let's just instantiate one, it's cheap if model load is cached or we mock it.
-                # Actually, TermsExtractor loads the model in __init__. That's expensive.
-                # Let's refactor rank_terms to be static or standalone.
-                # For now, I'll just skip ranking or accept the overhead? 
-                # Wait, TermsExtractor.__init__ loads spacy. We DON'T want that here.
-                # FIX: Move rank_terms out of TermsExtractor or make it not load model.
-                # I will assume rank_terms is moved or I'll hack it to use the one in worker? No.
-                # I'll just skip ranking for this iteration or implement a simple ranker here.
-                # Let's use a helper function for ranking.
-                final_terms = rank_terms_static(mapped_terms) 
+                final_terms = ranker.rank_terms(mapped_terms)
+            else:
+                final_terms = ranker.rank_terms(final_terms) 
 
             # Validation (Batched per file, or we could batch across files but that's complex for tracking)
             if validator:
@@ -1559,19 +2404,7 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
         import gc
         gc.collect()
 
-def rank_terms_static(terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Static version of ranking logic"""
-    import math
-    # ... (Copy of rank_terms logic, simplified) ...
-    # For brevity, just returning terms sorted by length/score if present
-    # In a real refactor, we'd move the logic to a utility function.
-    # Let's just do a simple sort here to keep it working.
-    for term in terms:
-        score = 1.0
-        if term.get('mappings'): score += 2.0
-        if term.get('validation', {}).get('is_valid'): score += 2.0
-        term['score'] = score
-    return sorted(terms, key=lambda x: x['score'], reverse=True)
+# Removed rank_terms_static as it is replaced by TermRanker
 
 def consolidate_results(input_dir: str, output_dir: str):
     """Consolidate all ensemble results into a single comprehensive output"""
@@ -1662,6 +2495,9 @@ def consolidate_results(input_dir: str, output_dir: str):
 
     # Sort by score descending
     consolidated_terms.sort(key=lambda x: x.get("score", 0), reverse=True)
+    
+    # Limit removed to allow for 5-10k total terms
+    # consolidated_terms = consolidated_terms[:100]
 
     consolidated_data["terms"] = consolidated_terms
     consolidated_data["metadata"]["total_unique_terms"] = len(consolidated_terms)
@@ -1677,13 +2513,22 @@ def consolidate_results(input_dir: str, output_dir: str):
     # Create flattened DataFrame for CSV export
     flat_terms = []
     for term in consolidated_terms:
+        # Calculate file count and frequency
+        file_count = len(term.get("source_file", [])) if isinstance(term.get("source_file"), list) else 1
+        
         row = {
-            "term": term["term"],
-            "original": term.get("original", term["term"]),
-            "label": term.get("label", "ENTITY"),
-            "source": term.get("source", "ensemble"),
-            "score": term.get("score", 0.0),
-            "source_files": term.get("source_file", "")
+            "canonical_term": term["term"],
+            "primary_form": term.get("original", term["term"]),
+            "entity_label": term.get("label", "ENTITY"),
+            "gold_category": term.get("gold_category", ""),
+            "frequency": term.get("frequency", 1),
+            "file_count": file_count,
+            "relevance_score": term.get("score", 0.0),
+            "semantic_score": term.get("semantic_score", 0.0),
+            "is_gold_standard": term.get("is_gold_standard", False),
+            "model_sources": term.get("source", "ensemble"),
+            "examples": " | ".join(term.get("examples", [])[:3]),
+            "source_filenames": ";".join(term.get("source_file", [])) if isinstance(term.get("source_file"), list) else term.get("source_file", "")
         }
 
         # Add validation info if available
@@ -1749,6 +2594,15 @@ def main():
     parser.add_argument("--load_4bit", action="store_true", help="Load BioMistral in 4-bit quantization")
     parser.add_argument("--use_spacy_models", action="store_true", help="Use standard SpaCy models instead of SciSpaCy")
 
+    # Advanced Features
+    parser.add_argument("--generate_definitions", action="store_true", help="Generate definitions using LLM")
+    parser.add_argument("--correct_terms", action="store_true", help="Correct terms using LLM")
+    parser.add_argument("--map_umls", action="store_true", help="Map terms to UMLS")
+    parser.add_argument("--map_omop", action="store_true", help="Map terms to OMOP")
+    parser.add_argument("--map_bioportal", action="store_true", help="Map terms to BioPortal/OLS")
+    parser.add_argument("--definition_model", default="BioMistral/BioMistral-7B", help="Model for definitions/correction (e.g. BioMistral, BioBERT)")
+    parser.add_argument("--bioportal_api_key", default=os.getenv("BIOPORTAL_API_KEY"), help="BioPortal API Key")
+
     # ⭐ NEW arguments you requested ⭐
     parser.add_argument("--max_files", type=int, default=None, help="Maximum number of files to process")
     parser.add_argument("--fuzzy_threshold", type=float, default=0.85, help="Fuzzy matching threshold")
@@ -1774,10 +2628,28 @@ def main():
             spacy_model="en_core_web_lg" if args.use_spacy_models else "en_core_sci_lg",
             validate_biomistral=args.validate_biomistral,
             biomistral_model=args.biomistral_model,
-            load_4bit=args.load_4bit
+            load_4bit=args.load_4bit,
+            # Advanced Features
+            generate_definitions=args.generate_definitions,
+            correct_terms=args.correct_terms,
+            map_umls=args.map_umls,
+            map_omop=args.map_omop,
+            map_bioportal=args.map_bioportal,
+            definition_model=args.definition_model,
+            correction_model=args.definition_model, # Use same model for now
+            bioportal_api_key=args.bioportal_api_key
         )
+        
         deduplicator = Deduplicator(base_config)
-        mapper = ComprehensiveMapper(base_config) if not args.skip_mapping else None
+        
+        # Mappers
+        mapper = ComprehensiveMapper(base_config) if (args.map_omop or args.map_bioportal) else None
+        umls_mapper = UMLSMapper(base_config) if args.map_umls else None
+        
+        # Generators/Correctors
+        def_generator = DefinitionGenerator(base_config) if args.generate_definitions else None
+        term_corrector = LLMTermCorrector(base_config) if args.correct_terms else None
+        
         validator = BioMistralValidator(base_config) if args.validate_biomistral else None
         
         input_path = Path(args.input_dir)
@@ -1825,12 +2697,26 @@ def main():
             
             final_terms = dedup_terms
             
-            # 3. Mapping & Ranking
-            if not args.skip_mapping and mapper:
-                mapped_terms = mapper.map_terms(dedup_terms)
-                final_terms = TermsExtractor(base_config).rank_terms(mapped_terms) # Use base config for ranking
+            # 3. Advanced Processing (Correction, Mapping, Definitions)
             
-            # 4. Validation
+            # Correction first (to map canonical forms)
+            if term_corrector:
+                final_terms = term_corrector.correct_terms(final_terms)
+            
+            # Mapping
+            if mapper:
+                final_terms = mapper.map_terms(final_terms)
+            if umls_mapper:
+                final_terms = umls_mapper.map_terms(final_terms)
+                
+            # Definitions
+            if def_generator:
+                final_terms = def_generator.generate_definitions(final_terms)
+            
+            # Ranking
+            final_terms = TermsExtractor(base_config).rank_terms(final_terms) # Use base config for ranking
+            
+            # 4. Validationalidation
             if validator:
                 final_terms = validator.validate_terms(final_terms)
 
@@ -1867,7 +2753,8 @@ def main():
                         "source_model": t.get('source_model', 'unknown'),
                         "score": t.get('score', 0.0),
                         "validation_valid": t.get("validation", {}).get("is_valid"),
-                        "validation_response": t.get("validation", {}).get("raw_response")
+                        "validation_response": t.get("validation", {}).get("raw_response"),
+                        "examples": " | ".join(t.get("examples", [])[:3])
                     }
                     # Add mappings if available
                     if "mappings" in t:
@@ -1875,10 +2762,9 @@ def main():
                             if matches:
                                 row[f"mapping_{source}_id"] = matches[0].get("id")
                                 row[f"mapping_{source}_label"] = matches[0].get("label")
-                    flat_terms.append(row)
+                    formatted_terms.append(row)
                 
-                df = pd.read_json(json.dumps(flat_terms)) # Quick way to normalize if needed, or just DataFrame(flat_terms)
-                df = pd.DataFrame(flat_terms)
+                df = pd.DataFrame(formatted_terms)
                 df.to_csv(csv_file, index=False)
                 logger.info(f"Saved CSV results to {csv_file}")
             except Exception as e:
