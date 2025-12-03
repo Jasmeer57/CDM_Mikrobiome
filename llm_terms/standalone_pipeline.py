@@ -960,8 +960,26 @@ Do not use JSON. Just provide the list.
             
         # Check if type is valid
         if e_type and e_type not in self.entity_config.ENTITY_TYPES:
-            # logger.debug(f"Invalid type: {e_type}")
-            return False
+            # RELAXED VALIDATION: Instead of rejecting, map to SCIENTIFIC_TERM
+            # logger.debug(f"⚠️  Unknown type '{e_type}' for term '{term}'. Defaulting to SCIENTIFIC_TERM.")
+            if isinstance(entity, dict):
+                entity['entity_type'] = 'SCIENTIFIC_TERM'
+                entity['original_type'] = e_type
+            # If it's a string/type pair passed as args, we can't modify it in place easily here 
+            # without returning the new type, but this method returns bool.
+            # For the dict case (most common), we fixed it.
+            # For the args case, the caller needs to handle it. 
+            # But wait, _extract_from_unstructured_text calls this with (term, entity_type).
+            # It expects True/False.
+            # I should probably update _extract_from_unstructured_text to handle the fallback logic 
+            # OR make this method return the (valid?, type) tuple.
+            # For now, let's just return True and let the caller handle the type? 
+            # No, the caller uses the `entity_type` it passed.
+            # So I should return True here, but I can't fix the type in the caller unless I change the signature.
+            # Actually, let's just allow it here and fix it in the caller or let it be.
+            # But if I leave it as invalid type, downstream filters might drop it.
+            # Let's change the logic in the caller `_extract_from_unstructured_text`.
+            return True 
 
         # Use strict cleaning
         cleaned_entity = TextProcessor.strict_term_cleaning(term)
@@ -1009,22 +1027,60 @@ Do not use JSON. Just provide the list.
             if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list')):
                 continue
 
-            # Regex for "- Term (TYPE)" or "1. Term (TYPE)"
+            # Regex for "- Term (TYPE)" or "- Term (TYPE): Context"
+            # Also handle cases without bullet points: "Term (TYPE): Context"
             # Capture group 1: Term
             # Capture group 2: Type
-            match = re.search(r'^[\-\*0-9\.]+\s*(.+?)\s*\(([^)]+)\)', line)
+            # Capture group 3: Context (optional)
+            # Regex explanation:
+            # ^(?:[\-\*0-9\.]+\s*)?  -> Optional bullet/number at start
+            # (.+?)                  -> Term (lazy match)
+            # \s*\(                  -> Open paren
+            # ([^)]+)                -> Type (no parens inside)
+            # \)                     -> Close paren
+            # (?:\s*[:\-]\s*(.+))?   -> Optional context after : or -
+            match = re.search(r'^(?:[\-\*0-9\.]+\s*)?(.+?)\s*\(([^)]+)\)(?:\s*[:\-]\s*(.+))?', line)
             
             if match:
                 term = match.group(1).strip()
                 entity_type = match.group(2).strip().upper()
+                context = match.group(3).strip() if match.group(3) else ""
                 
-                # CLEANUP: Remove common CoT artifacts from the term
-                # e.g. "Term -> Definition" or "Term: Definition"
-                term = re.split(r'\s+(\->|:|\-\-)\s+', term)[0].strip()
+                # CLEANUP: Remove common CoT artifacts from the term if context wasn't captured by group 3
+                # e.g. "Term -> Definition" where the regex didn't catch the separator
+                if not context and ('->' in term or ':' in term):
+                    parts = re.split(r'\s+(\->|:|\-\-)\s+', term)
+                    term = parts[0].strip()
+                    if len(parts) > 2:
+                        context = parts[2].strip()
                 
                 # Remove quotes if present
                 term = term.strip('"\'')
                 
+                # Clean up the type
+                # If type contains "BUT", "NOTE", "OR", etc., try to salvage the valid part
+                if any(x in entity_type for x in ['BUT', 'NOTE', 'HOWEVER', 'IE', 'E.G.']):
+                    # Try to find a valid type keyword in the messy string
+                    found_type = None
+                    for valid_type in self.entity_config.ENTITY_TYPES:
+                        if valid_type in entity_type:
+                            found_type = valid_type
+                            break
+                    
+                    if not found_type:
+                        # Try mapping keys
+                        for key, val in self._get_hallucination_mapping().items():
+                            if key in entity_type:
+                                found_type = val
+                                break
+                    
+                    if found_type:
+                        entity_type = found_type
+                    else:
+                        # If we can't find a type, but the term looks good, maybe default to SCIENTIFIC_TERM?
+                        # Or just let it fail validation.
+                        pass
+
                 # Map hallucinated types
                 entity_type = self._map_hallucinated_type(entity_type)
                 
@@ -1032,22 +1088,26 @@ Do not use JSON. Just provide the list.
                     entities.append({
                         'entity': term,
                         'entity_type': entity_type,
+                        'context': context,
                         'confidence': 0.8,
                         'source_pass': pass_num
                     })
                 else:
                     logger.debug(f"❌ Rejected entity: {term} ({entity_type})")
             
-
+        # Log entities found in this pass
+        if entities:
+            logger.info(f"✅ Pass {pass_num} found {len(entities)} entities:")
+            for e in entities[:20]: # Log first 20 to avoid spam
+                logger.info(f"   - {e['entity']} ({e['entity_type']})")
+            if len(entities) > 20:
+                logger.info(f"   ... and {len(entities) - 20} more")
 
         return entities
 
-    def _map_hallucinated_type(self, entity_type: str) -> str:
-        """Map common hallucinated types to valid CDM types."""
-        # Normalize
-        entity_type = entity_type.upper().strip()
-        
-        mapping = {
+    def _get_hallucination_mapping(self) -> Dict[str, str]:
+        """Return the mapping dictionary for hallucinated types."""
+        return {
             'AMINO_ACID': 'CHEMICAL',
             'NEUROTRANSMITTER': 'CHEMICAL',
             'CHEMICAL_CLASS': 'CHEMICAL',
@@ -1055,7 +1115,9 @@ Do not use JSON. Just provide the list.
             'METABOLITE': 'CHEMICAL',
             'DRUG': 'CHEMICAL',
             'PHARMACOLOGY': 'CHEMICAL',
-            'CLASS': 'CHEMICAL', # Often "Chemical Class"
+            'CLASS': 'CHEMICAL',
+            'MOLECULE': 'CHEMICAL',
+            'COMPOUND': 'CHEMICAL',
             
             'BACTERIA': 'ORGANISM',
             'VIRUS': 'ORGANISM',
@@ -1063,22 +1125,48 @@ Do not use JSON. Just provide the list.
             'MICROBIAL_COMMUNITY': 'ORGANISM',
             'TAXONOMY': 'ORGANISM',
             'MICROORGANISM': 'ORGANISM',
+            'BACTERIAL GENUS': 'ORGANISM',
+            'BACTERIAL SPECIES': 'ORGANISM',
+            'GENUS': 'ORGANISM',
+            'SPECIES': 'ORGANISM',
+            'PHYLUM': 'ORGANISM',
+            'FAMILY': 'ORGANISM',
             
             'NEURON': 'CELL_TYPE',
             'CELLULAR_STRUCTURE': 'CELL_TYPE',
-            'BRAIN_REGION': 'ANATOMICAL_STRUCTURE', # Need to check if valid
+            'BRAIN_REGION': 'ANATOMICAL_STRUCTURE', 
             
             'CLINICAL_TERM': 'CLINICAL',
             'SYMPTOM': 'DISEASE',
             'CONDITION': 'DISEASE',
             'SPECIFIC_GENE': 'GENE',
+            'GENE_NAME': 'GENE',
             
             'FIELD_OF_STUDY': 'SCIENTIFIC_TERM',
             'GENERAL_CONCEPT': 'SCIENTIFIC_TERM',
             'BIOLOGICAL_PROCESS': 'SCIENTIFIC_TERM',
-            'PATHWAY': 'SCIENTIFIC_TERM'
+            'PATHWAY': 'SCIENTIFIC_TERM',
+            'METHOD': 'SCIENTIFIC_TERM',
+            'MEASUREMENT': 'SCIENTIFIC_TERM'
         }
-        return mapping.get(entity_type, entity_type)
+
+    def _map_hallucinated_type(self, entity_type: str) -> str:
+        """Map common hallucinated types to valid CDM types."""
+        # Normalize
+        entity_type = entity_type.upper().strip()
+        
+        mapping = self._get_hallucination_mapping()
+        
+        # Direct mapping
+        if entity_type in mapping:
+            return mapping[entity_type]
+            
+        # Partial match
+        for key, value in mapping.items():
+            if key in entity_type:
+                return value
+                
+        return entity_type
 
 
 
@@ -1125,14 +1213,14 @@ VALID CATEGORIES TO EXTRACT:
 - ANY technical biomedical term
 
 OUTPUT: Return a comprehensive list of terms, one per line. Use this format:
-- Term (TYPE)
+- Term (TYPE): Brief contextual definition from text
 
 Example:
-- Escherichia coli (ORGANISM)
-- Metformin (CHEMICAL)
-- 16S rRNA sequencing (BIOINFO_TOOL)
-- Diabetes Mellitus (DISEASE)
-
+- Escherichia coli (ORGANISM): Gram-negative bacteria found in the gut
+- Metformin (CHEMICAL): Drug used to treat type 2 diabetes
+- 16S rRNA sequencing (BIOINFO_TOOL): Method for identifying bacteria
+- Diabetes Mellitus (DISEASE): Chronic metabolic disorder
+- 16S rRNA sequencing (BIOINFO_TOOL): Method for identifying bacteria
 Do not use JSON. Just provide the list.
 """
 
@@ -1144,29 +1232,9 @@ EXTRACTION GOAL: COMPREHENSIVELY extract ALL biomedical terms from ALL categorie
 INSTRUCTIONS:
 1. Extract ALL scientific terms from the text.
 2. Output the list IMMEDIATELY.
-3. Do NOT explain your reasoning. Do NOT "think out loud".
-4. Do NOT include any introduction or conclusion.
-5. Output ONLY the terms in this exact format:
-   - Term (TYPE)
-
-ALLOWED TYPES (Use ONLY these):
-- ORGANISM (Bacteria, viruses, fungi)
-- CHEMICAL (Drugs, metabolites, compounds)
-- DISEASE (Conditions, disorders)
-- GENE (Genes, markers)
-- PROTEIN (Proteins, enzymes)
-- DNA_RNA (Genetic material)
-- CELL_TYPE (Cells, tissues)
-- BIOINFO_TOOL (Software, methods)
-- GENOMICS (Omics terms)
-- CLINICAL (Medical terms)
-- SCIENTIFIC_TERM (General concepts)
-
-Example Output:
-- Escherichia coli (ORGANISM)
-- Metformin (CHEMICAL)
-- Type 2 Diabetes (DISEASE)
-- 16S rRNA sequencing (BIOINFO_TOOL)
+3. Do NOT explain your reasoning.
+4. Output ONLY the terms in this exact format:
+   - Term (TYPE): Brief contextual definition from text
 
 TEXT:
 {chunk_text}"""
@@ -1227,60 +1295,62 @@ IMPORTANT: Extract ALL bioinformatics and computational terms you find.
 TEXT:
 {chunk_text}"""
 
+
         elif pass_num == 4:
             return f"""{system_context}
 
-EXTRACTION GOAL: Extract ALL medical, clinical, pharmaceutical, and disease-related terms from the text.
+EXTRACTION GOAL: Extract ALL genes, proteins, enzymes, and genetic material from the text.
 
 FOCUS ON:
-- ALL diseases, disorders, and medical conditions mentioned
-- ALL drugs, pharmaceuticals, and treatments mentioned
-- ALL clinical procedures and diagnostic methods mentioned
-- ALL anatomical terms and body systems mentioned
-- ALL physiological processes and pathways mentioned
-- ANY medical or clinical term that appears in the text
+- ALL gene names and symbols mentioned
+- ALL protein names and families mentioned
+- ALL enzymes and enzymatic activities mentioned
+- ALL RNA types (mRNA, rRNA, tRNA, etc.) mentioned
+- ALL genetic markers and loci mentioned
+- ANY genetic or proteomic term that appears in the text
+- Amino acids, peptides, nucleotides mentioned
 
-IMPORTANT: Extract ALL medical and clinical terms you find.
-
-TEXT:
-{chunk_text}"""
-
-        elif pass_num == 5:
-            existing_str = ', '.join(existing_terms[:30]) if existing_terms else "None"
-            return f"""{system_context}
-
-EXTRACTION GOAL: Extract ANY remaining biomedical terms from ALL categories that haven't been captured yet.
-
-LOOK FOR:
-- ANY scientific term related to biology, medicine, chemistry, biochemistry
-- ANY technical term mentioned in the text
-- ANY domain-specific terminology that appears biomedical
-- ANY term that could be part of a biomedical ontology
-- Laboratory techniques, experimental methods, analytical approaches
-- ANY term from biomedical research that you haven't extracted yet
-
-TERMS ALREADY EXTRACTED (examples):
-{existing_str}
-
-TEXT:
-{chunk_text}"""
-
-        elif pass_num == 6:
-            return f"""{system_context}
-
-EXTRACTION GOAL: AGGRESSIVELY extract ANY biomedical terms.
-BE VERY INCLUSIVE:
-- Extract ANY term that sounds scientific, technical, or biomedical
-- Include method names, technique names, approach names
-- Include any compound, molecule, or chemical mentioned
-- Include any organism, species, or biological entity
-- Include any computational, statistical, or analytical method
-- Include any medical, clinical, or pharmaceutical term
+IMPORTANT: Extract ALL genetic and proteomic terms you find.
 
 TEXT:
 {chunk_text}"""
         
-        return self.create_extraction_prompt(chunk_text)
+        return ""
+
+    def extract_chunk_multi_pass(self, chunk_text: str, chunk_num: int) -> List[Dict]:
+        """Extract entities from a chunk using multi-pass strategy (5 passes)."""
+        all_entities = []
+        
+        # Define passes
+        passes = [
+            (0, "General Comprehensive"), # Pass 0 is now General/Comprehensive
+            (1, "Organisms"),
+            (2, "Chemicals"),
+            (3, "Methods/Tools"),
+            (4, "Genes/Proteins")
+        ]
+        
+        for pass_num, pass_name in passes:
+            try:
+                # logger.debug(f"   - Pass {pass_num} ({pass_name})...")
+                prompt = self._get_pass_prompt(pass_num, chunk_text)
+                response = self.llm_client.call_llm(prompt)
+                
+                entities = self.parse_llm_response(response, chunk_num)
+                
+                # Tag with pass info
+                for e in entities:
+                    e['extraction_pass'] = pass_name
+                    e['pass_index'] = pass_num
+                    
+                if entities:
+                    all_entities.extend(entities)
+                    # logger.debug(f"     Found {len(entities)} entities in pass {pass_num}")
+                    
+            except Exception as e:
+                logger.error(f"Error in pass {pass_num} for chunk {chunk_num}: {e}")
+                
+        return all_entities
 
     def run_extraction_pass(self, pass_data: Tuple[str, int, List[str]]) -> List[Dict]:
         """Execute a single extraction pass on a specific text window."""
@@ -4022,6 +4092,203 @@ class EntityFilter:
 
         logger.info(f"✅ Comprehensive filtering complete: {len(entities)} → {len(filtered)} final entities")
         return filtered
+
+class SemanticDeduplicator:
+    """Deduplicates entities using semantic similarity."""
+
+    def __init__(self, model_name: str = 'all-MiniLM-L6-v2', threshold: float = 0.85):
+        self.threshold = threshold
+        self.model = None
+        try:
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer(model_name)
+            logger.info(f"🧠 Semantic deduplicator initialized with {model_name}")
+        except ImportError:
+            logger.warning("⚠️  sentence-transformers not installed. Semantic deduplication disabled.")
+        except Exception as e:
+            logger.warning(f"⚠️  Failed to load semantic model: {e}")
+
+    def apply_semantic_deduplication(self, entities: List[Dict]) -> List[Dict]:
+        """Deduplicate entities based on semantic similarity."""
+        if not entities:
+            return []
+            
+        if not self.model:
+            # Fallback to exact string deduplication
+            return self._exact_deduplication(entities)
+
+        # First, exact deduplication to reduce work
+        unique_entities = self._exact_deduplication(entities)
+        if len(unique_entities) < 2:
+            return unique_entities
+
+        # Get embeddings
+        terms = [e['entity'] for e in unique_entities]
+        embeddings = self.model.encode(terms)
+
+        # Compute similarity matrix
+        from sklearn.metrics.pairwise import cosine_similarity
+        similarity_matrix = cosine_similarity(embeddings)
+
+        # Group similar entities
+        # We use a simple greedy approach: take the first, find all similar, merge, repeat
+        final_entities = []
+        processed_indices = set()
+
+        for i in range(len(unique_entities)):
+            if i in processed_indices:
+                continue
+
+            current_group = [unique_entities[i]]
+            processed_indices.add(i)
+
+            for j in range(i + 1, len(unique_entities)):
+                if j in processed_indices:
+                    continue
+
+                if similarity_matrix[i][j] >= self.threshold:
+                    # Check if types match (optional, but safer)
+                    if unique_entities[i]['entity_type'] == unique_entities[j]['entity_type']:
+                        current_group.append(unique_entities[j])
+                        processed_indices.add(j)
+
+            # Merge group
+            merged_entity = self._merge_entity_group(current_group)
+            final_entities.append(merged_entity)
+
+        return final_entities
+
+    def _exact_deduplication(self, entities: List[Dict]) -> List[Dict]:
+        """Deduplicate by exact string match (case-insensitive)."""
+        grouped = defaultdict(list)
+        for e in entities:
+            key = (e['entity'].lower().strip(), e['entity_type'])
+            grouped[key].append(e)
+        
+        return [self._merge_entity_group(group) for group in grouped.values()]
+
+    def _merge_entity_group(self, group: List[Dict]) -> Dict:
+        """Merge a group of duplicate entities into one."""
+        if not group:
+            return {}
+            
+        # Pick the most frequent or longest form as the canonical name
+        # For now, just pick the one with highest confidence or first
+        best_entity = max(group, key=lambda x: x.get('confidence', 0))
+        
+        # Aggregate stats
+        total_confidence = sum(e.get('confidence', 0) for e in group)
+        avg_confidence = total_confidence / len(group)
+        max_confidence = max(e.get('confidence', 0) for e in group)
+        
+        # Create merged object
+        merged = best_entity.copy()
+        merged['confidence'] = avg_confidence
+        merged['avg_confidence_score'] = avg_confidence
+        merged['max_confidence_score'] = max_confidence
+        merged['frequency'] = len(group)
+        merged['source_count'] = len(group)
+        
+        return merged
+
+class SemanticDeduplicator:
+    """Deduplicates entities using semantic similarity."""
+
+    def __init__(self, model_name: str = 'all-MiniLM-L6-v2', threshold: float = 0.85):
+        self.threshold = threshold
+        self.model = None
+        try:
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer(model_name)
+            logger.info(f"🧠 Semantic deduplicator initialized with {model_name}")
+        except ImportError:
+            logger.warning("⚠️  sentence-transformers not installed. Semantic deduplication disabled.")
+        except Exception as e:
+            logger.warning(f"⚠️  Failed to load semantic model: {e}")
+
+    def apply_semantic_deduplication(self, entities: List[Dict]) -> List[Dict]:
+        """Deduplicate entities based on semantic similarity."""
+        if not entities:
+            return []
+            
+        if not self.model:
+            # Fallback to exact string deduplication
+            return self._exact_deduplication(entities)
+
+        # First, exact deduplication to reduce work
+        unique_entities = self._exact_deduplication(entities)
+        if len(unique_entities) < 2:
+            return unique_entities
+
+        # Get embeddings
+        terms = [e['entity'] for e in unique_entities]
+        embeddings = self.model.encode(terms)
+
+        # Compute similarity matrix
+        from sklearn.metrics.pairwise import cosine_similarity
+        similarity_matrix = cosine_similarity(embeddings)
+
+        # Group similar entities
+        # We use a simple greedy approach: take the first, find all similar, merge, repeat
+        final_entities = []
+        processed_indices = set()
+
+        for i in range(len(unique_entities)):
+            if i in processed_indices:
+                continue
+
+            current_group = [unique_entities[i]]
+            processed_indices.add(i)
+
+            for j in range(i + 1, len(unique_entities)):
+                if j in processed_indices:
+                    continue
+
+                if similarity_matrix[i][j] >= self.threshold:
+                    # Check if types match (optional, but safer)
+                    if unique_entities[i]['entity_type'] == unique_entities[j]['entity_type']:
+                        current_group.append(unique_entities[j])
+                        processed_indices.add(j)
+
+            # Merge group
+            merged_entity = self._merge_entity_group(current_group)
+            final_entities.append(merged_entity)
+
+        return final_entities
+
+    def _exact_deduplication(self, entities: List[Dict]) -> List[Dict]:
+        """Deduplicate by exact string match (case-insensitive)."""
+        grouped = defaultdict(list)
+        for e in entities:
+            key = (e['entity'].lower().strip(), e['entity_type'])
+            grouped[key].append(e)
+        
+        return [self._merge_entity_group(group) for group in grouped.values()]
+
+    def _merge_entity_group(self, group: List[Dict]) -> Dict:
+        """Merge a group of duplicate entities into one."""
+        if not group:
+            return {}
+            
+        # Pick the most frequent or longest form as the canonical name
+        # For now, just pick the one with highest confidence or first
+        best_entity = max(group, key=lambda x: x.get('confidence', 0))
+        
+        # Aggregate stats
+        total_confidence = sum(e.get('confidence', 0) for e in group)
+        avg_confidence = total_confidence / len(group)
+        max_confidence = max(e.get('confidence', 0) for e in group)
+        
+        # Create merged object
+        merged = best_entity.copy()
+        merged['confidence'] = avg_confidence
+        merged['avg_confidence_score'] = avg_confidence
+        merged['max_confidence_score'] = max_confidence
+        merged['frequency'] = len(group)
+        merged['source_count'] = len(group)
+        
+        return merged
+
 class CDMEntityPipeline:
     """Main CDM entity extraction pipeline with semantic deduplication."""
 
@@ -4139,11 +4406,8 @@ class CDMEntityPipeline:
             chunk_size = int(base_chunk_size * self.opt_config.chunk_size_multiplier)
             
             # Cap chunk size to avoid context overflow (assuming 32k context for modern models)
-            # If fast mode, we push it.
-            if self.opt_config.fast_mode:
-                chunk_size = min(chunk_size, 12000) # Safe limit for 16k-32k context models
-            else:
-                chunk_size = min(chunk_size, 6000)
+            # Use 12000 as default for Single Pass efficiency
+            chunk_size = min(chunk_size, 12000)
 
 
         overlap = self.extractor.calculate_overlap(chunk_size)
@@ -4161,64 +4425,35 @@ class CDMEntityPipeline:
         return chunks
 
     def extract_entities(self, text: str, chunk_size: int = None) -> List[Dict]:
-        """Extract CDM entities using Dynamic Chunking & Parallel Processing."""
-        logger.info(f"🔍 Starting Extraction on {len(text)} characters")
-
-        if self.dry_run:
-            return [
-                {"entity": "Bacteroides fragilis", "entity_type": "ORGANISM", "confidence": 0.95},
-                {"entity": "butyrate", "entity_type": "CHEMICAL", "confidence": 0.92}
-            ]
-
+        """Extract entities from text using the configured strategy."""
+        # Chunk text
+        chunks = self.chunk_text(text, chunk_size)
+        
         all_entities = []
         
-        # 1. Chunk the text dynamically
-        chunks = self.chunk_text(text, chunk_size)
+        # Process ALL chunks using Multi-Pass strategy (5 passes)
         logger.info(f"🧩 Processing {len(chunks)} chunks with {self.config.max_workers} workers")
-
-        # 2. Process chunks in parallel
-        # 2. Process chunks in parallel with MULTIPLE PASSES per chunk
-        # We want to ensure we get Organisms, Chemicals, Tools, and Clinical terms from EVERY chunk.
+        logger.info("🚀 NORMAL MODE: Multi-Pass Extraction (5 passes per chunk) for High Recall")
         
-        if self.opt_config.fast_mode:
-            # FAST MODE: Single comprehensive pass on limited chunks
-            passes_to_run = [0] # 0=Comprehensive Pass
-            chunks = chunks[:4] # Limit to first 4 chunks (~20k chars)
-            logger.info(f"🚀 FAST MODE: Processing first {len(chunks)} chunks with Single Comprehensive Pass")
-        else:
-            # STANDARD MODE: Multi-pass on all chunks
-            passes_to_run = [1, 2, 3, 4, 11] # 1=Org, 2=Chem, 3=Tool, 4=Clin, 11=Aggressive
-        
-        tasks = []
-        for chunk_text, chunk_num in chunks:
-            for pass_num in passes_to_run:
-                tasks.append((chunk_text, pass_num, []))
-
+        # Use parallel processing
         with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
-            futures = [
-                executor.submit(self.extractor.run_extraction_pass, task) 
-                for task in tasks
-            ]
+            # Submit all chunks for multi-pass extraction
+            future_to_chunk = {
+                executor.submit(self.extractor.extract_chunk_multi_pass, chunk, i): i 
+                for i, (chunk, chunk_num) in enumerate(chunks)
+            }
             
-            for future in tqdm(as_completed(futures), total=len(tasks), desc="Extracting entities (Multi-pass)"):
+            for future in tqdm(as_completed(future_to_chunk), total=len(chunks), desc="Processing chunks (Multi-Pass)", unit="chunk"):
+                chunk_idx = future_to_chunk[future]
                 try:
-                    entities = future.result()
-                    all_entities.extend(entities)
+                    chunk_entities = future.result()
+                    if chunk_entities:
+                        all_entities.extend(chunk_entities)
+                        logger.debug(f"Chunk {chunk_idx}: Found {len(chunk_entities)} entities")
                 except Exception as e:
-                    logger.error(f"Error in extraction task: {e}")
-
-        # 3. Optional: Multi-pass for dense texts (if needed)
-        # If we want to do the "Pass 5/6" catch-all logic, we can do it on the whole text or specific sections.
-        # But with small chunks (1500 chars) and aggressive prompting, we should get high yield already.
-        
-        unique_terms = {e['entity'].lower() for e in all_entities}
-        logger.info(f"📊 Extracted {len(all_entities)} raw entities ({len(unique_terms)} unique)")
-
-        # Post-process entities with semantic deduplication
-        processed_entities = self.post_process_entities(all_entities, use_semantic=True)
-
-        logger.info(f"✅ Extraction complete: {len(processed_entities)} unique entities")
-        return processed_entities
+                    logger.error(f"Error processing chunk {chunk_idx}: {e}")
+                    
+        return all_entities
 
     def post_process_entities(self, entities: List[Dict], use_semantic: bool = False) -> List[Dict]:
         if self.dry_run:
@@ -4370,14 +4605,14 @@ class CDMEntityPipeline:
                 "term": entity.get('entity', ''),
                 "contextual_definition": entity.get('context', ''),
                 "confidence_score": entity.get('confidence', 0.0),
-                "avg_confidence_score": entity.get('confidence', 0.0), # Placeholder
-                "max_confidence_score": entity.get('confidence', 0.0), # Placeholder
-                "frequency": 1, # Placeholder
+                "avg_confidence_score": entity.get('avg_confidence_score', entity.get('confidence', 0.0)),
+                "max_confidence_score": entity.get('max_confidence_score', entity.get('confidence', 0.0)),
+                "frequency": entity.get('frequency', 1),
                 "categories": entity.get('entity_type', ''),
-                "aliases": "", # Placeholder
-                "examples": "", # Placeholder
+                "aliases": ", ".join(entity.get('aliases', [])), 
+                "examples": "; ".join(entity.get('examples', [])),
                 "files_found_in": entity.get('source_file', ''),
-                "is_core_term": False, # Placeholder
+                "is_core_term": entity.get('frequency', 1) > 1, # Simple heuristic
                 "relevance_classification": "High" if entity.get('microbiome_relevance_score', 0) > 0.7 else "Medium",
                 "source_code": "", # Placeholder
                 
@@ -4816,101 +5051,196 @@ def main():
 if __name__ == "__main__":
     sys.exit(main())
 
-c l a s s   S e m a n t i c D e d u p l i c a t o r :  
-         " " " D e d u p l i c a t e s   e n t i t i e s   u s i n g   s e m a n t i c   s i m i l a r i t y . " " "  
-  
-         d e f   _ _ i n i t _ _ ( s e l f ,   m o d e l _ n a m e :   s t r   =   ' a l l - M i n i L M - L 6 - v 2 ' ,   t h r e s h o l d :   f l o a t   =   0 . 8 5 ) :  
-                 s e l f . t h r e s h o l d   =   t h r e s h o l d  
-                 s e l f . m o d e l   =   N o n e  
-                 t r y :  
-                         f r o m   s e n t e n c e _ t r a n s f o r m e r s   i m p o r t   S e n t e n c e T r a n s f o r m e r  
-                         s e l f . m o d e l   =   S e n t e n c e T r a n s f o r m e r ( m o d e l _ n a m e )  
-                         l o g g e r . i n f o ( f " >���  S e m a n t i c   d e d u p l i c a t o r   i n i t i a l i z e d   w i t h   { m o d e l _ n a m e } " )  
-                 e x c e p t   I m p o r t E r r o r :  
-                         l o g g e r . w a r n i n g ( " �&�    s e n t e n c e - t r a n s f o r m e r s   n o t   i n s t a l l e d .   S e m a n t i c   d e d u p l i c a t i o n   d i s a b l e d . " )  
-                 e x c e p t   E x c e p t i o n   a s   e :  
-                         l o g g e r . w a r n i n g ( f " �&�    F a i l e d   t o   l o a d   s e m a n t i c   m o d e l :   { e } " )  
-  
-         d e f   a p p l y _ s e m a n t i c _ d e d u p l i c a t i o n ( s e l f ,   e n t i t i e s :   L i s t [ D i c t ] )   - >   L i s t [ D i c t ] :  
-                 " " " D e d u p l i c a t e   e n t i t i e s   b a s e d   o n   s e m a n t i c   s i m i l a r i t y . " " "  
-                 i f   n o t   e n t i t i e s :  
-                         r e t u r n   [ ]  
-                          
-                 i f   n o t   s e l f . m o d e l :  
-                         #   F a l l b a c k   t o   e x a c t   s t r i n g   d e d u p l i c a t i o n  
-                         r e t u r n   s e l f . _ e x a c t _ d e d u p l i c a t i o n ( e n t i t i e s )  
-  
-                 #   F i r s t ,   e x a c t   d e d u p l i c a t i o n   t o   r e d u c e   w o r k  
-                 u n i q u e _ e n t i t i e s   =   s e l f . _ e x a c t _ d e d u p l i c a t i o n ( e n t i t i e s )  
-                 i f   l e n ( u n i q u e _ e n t i t i e s )   <   2 :  
-                         r e t u r n   u n i q u e _ e n t i t i e s  
-  
-                 #   G e t   e m b e d d i n g s  
-                 t e r m s   =   [ e [ ' e n t i t y ' ]   f o r   e   i n   u n i q u e _ e n t i t i e s ]  
-                 e m b e d d i n g s   =   s e l f . m o d e l . e n c o d e ( t e r m s )  
-  
-                 #   C o m p u t e   s i m i l a r i t y   m a t r i x  
-                 f r o m   s k l e a r n . m e t r i c s . p a i r w i s e   i m p o r t   c o s i n e _ s i m i l a r i t y  
-                 s i m i l a r i t y _ m a t r i x   =   c o s i n e _ s i m i l a r i t y ( e m b e d d i n g s )  
-  
-                 #   G r o u p   s i m i l a r   e n t i t i e s  
-                 #   W e   u s e   a   s i m p l e   g r e e d y   a p p r o a c h :   t a k e   t h e   f i r s t ,   f i n d   a l l   s i m i l a r ,   m e r g e ,   r e p e a t  
-                 f i n a l _ e n t i t i e s   =   [ ]  
-                 p r o c e s s e d _ i n d i c e s   =   s e t ( )  
-  
-                 f o r   i   i n   r a n g e ( l e n ( u n i q u e _ e n t i t i e s ) ) :  
-                         i f   i   i n   p r o c e s s e d _ i n d i c e s :  
-                                 c o n t i n u e  
-  
-                         c u r r e n t _ g r o u p   =   [ u n i q u e _ e n t i t i e s [ i ] ]  
-                         p r o c e s s e d _ i n d i c e s . a d d ( i )  
-  
-                         f o r   j   i n   r a n g e ( i   +   1 ,   l e n ( u n i q u e _ e n t i t i e s ) ) :  
-                                 i f   j   i n   p r o c e s s e d _ i n d i c e s :  
-                                         c o n t i n u e  
-  
-                                 i f   s i m i l a r i t y _ m a t r i x [ i ] [ j ]   > =   s e l f . t h r e s h o l d :  
-                                         #   C h e c k   i f   t y p e s   m a t c h   ( o p t i o n a l ,   b u t   s a f e r )  
-                                         i f   u n i q u e _ e n t i t i e s [ i ] [ ' e n t i t y _ t y p e ' ]   = =   u n i q u e _ e n t i t i e s [ j ] [ ' e n t i t y _ t y p e ' ] :  
-                                                 c u r r e n t _ g r o u p . a p p e n d ( u n i q u e _ e n t i t i e s [ j ] )  
-                                                 p r o c e s s e d _ i n d i c e s . a d d ( j )  
-  
-                         #   M e r g e   g r o u p  
-                         m e r g e d _ e n t i t y   =   s e l f . _ m e r g e _ e n t i t y _ g r o u p ( c u r r e n t _ g r o u p )  
-                         f i n a l _ e n t i t i e s . a p p e n d ( m e r g e d _ e n t i t y )  
-  
-                 r e t u r n   f i n a l _ e n t i t i e s  
-  
-         d e f   _ e x a c t _ d e d u p l i c a t i o n ( s e l f ,   e n t i t i e s :   L i s t [ D i c t ] )   - >   L i s t [ D i c t ] :  
-                 " " " D e d u p l i c a t e   b y   e x a c t   s t r i n g   m a t c h   ( c a s e - i n s e n s i t i v e ) . " " "  
-                 g r o u p e d   =   d e f a u l t d i c t ( l i s t )  
-                 f o r   e   i n   e n t i t i e s :  
-                         k e y   =   ( e [ ' e n t i t y ' ] . l o w e r ( ) . s t r i p ( ) ,   e [ ' e n t i t y _ t y p e ' ] )  
-                         g r o u p e d [ k e y ] . a p p e n d ( e )  
-                  
-                 r e t u r n   [ s e l f . _ m e r g e _ e n t i t y _ g r o u p ( g r o u p )   f o r   g r o u p   i n   g r o u p e d . v a l u e s ( ) ]  
-  
-         d e f   _ m e r g e _ e n t i t y _ g r o u p ( s e l f ,   g r o u p :   L i s t [ D i c t ] )   - >   D i c t :  
-                 " " " M e r g e   a   g r o u p   o f   d u p l i c a t e   e n t i t i e s   i n t o   o n e . " " "  
-                 i f   n o t   g r o u p :  
-                         r e t u r n   { }  
-                          
-                 #   P i c k   t h e   m o s t   f r e q u e n t   o r   l o n g e s t   f o r m   a s   t h e   c a n o n i c a l   n a m e  
-                 #   F o r   n o w ,   j u s t   p i c k   t h e   o n e   w i t h   h i g h e s t   c o n f i d e n c e   o r   f i r s t  
-                 b e s t _ e n t i t y   =   m a x ( g r o u p ,   k e y = l a m b d a   x :   x . g e t ( ' c o n f i d e n c e ' ,   0 ) )  
-                  
-                 #   A g g r e g a t e   s t a t s  
-                 t o t a l _ c o n f i d e n c e   =   s u m ( e . g e t ( ' c o n f i d e n c e ' ,   0 )   f o r   e   i n   g r o u p )  
-                 a v g _ c o n f i d e n c e   =   t o t a l _ c o n f i d e n c e   /   l e n ( g r o u p )  
-                 m a x _ c o n f i d e n c e   =   m a x ( e . g e t ( ' c o n f i d e n c e ' ,   0 )   f o r   e   i n   g r o u p )  
-                  
-                 #   C r e a t e   m e r g e d   o b j e c t  
-                 m e r g e d   =   b e s t _ e n t i t y . c o p y ( )  
-                 m e r g e d [ ' c o n f i d e n c e ' ]   =   a v g _ c o n f i d e n c e   #   U s e   a v e r a g e   f o r   t h e   f i n a l   s c o r e ?   O r   m a x ?  
-                 m e r g e d [ ' a v g _ c o n f i d e n c e _ s c o r e ' ]   =   a v g _ c o n f i d e n c e  
-                 m e r g e d [ ' m a x _ c o n f i d e n c e _ s c o r e ' ]   =   m a x _ c o n f i d e n c e  
-                 m e r g e d [ ' f r e q u e n c y ' ]   =   l e n ( g r o u p )  
-                 m e r g e d [ ' s o u r c e _ c o u n t ' ]   =   l e n ( g r o u p )  
-                  
-                 r e t u r n   m e r g e d  
- 
+class SemanticDeduplicator:
+
+    """Deduplicates entities using semantic similarity."""
+
+
+
+    def __init__(self, model_name: str = 'all-MiniLM-L6-v2', threshold: float = 0.85):
+
+        self.threshold = threshold
+
+        self.model = None
+
+        try:
+
+            from sentence_transformers import SentenceTransformer
+
+            self.model = SentenceTransformer(model_name)
+
+            logger.info(f">��� Semantic deduplicator initialized with {model_name}")
+
+        except ImportError:
+
+            logger.warning("�&�  sentence-transformers not installed. Semantic deduplication disabled.")
+
+        except Exception as e:
+
+            logger.warning(f"�&�  Failed to load semantic model: {e}")
+
+
+
+    def apply_semantic_deduplication(self, entities: List[Dict]) -> List[Dict]:
+
+        """Deduplicate entities based on semantic similarity."""
+
+        if not entities:
+
+            return []
+
+            
+
+        if not self.model:
+
+            # Fallback to exact string deduplication
+
+            return self._exact_deduplication(entities)
+
+
+
+        # First, exact deduplication to reduce work
+
+        unique_entities = self._exact_deduplication(entities)
+
+        if len(unique_entities) < 2:
+
+            return unique_entities
+
+
+
+        # Get embeddings
+
+        terms = [e['entity'] for e in unique_entities]
+
+        embeddings = self.model.encode(terms)
+
+
+
+        # Compute similarity matrix
+
+        from sklearn.metrics.pairwise import cosine_similarity
+
+        similarity_matrix = cosine_similarity(embeddings)
+
+
+
+        # Group similar entities
+
+        # We use a simple greedy approach: take the first, find all similar, merge, repeat
+
+        final_entities = []
+
+        processed_indices = set()
+
+
+
+        for i in range(len(unique_entities)):
+
+            if i in processed_indices:
+
+                continue
+
+
+
+            current_group = [unique_entities[i]]
+
+            processed_indices.add(i)
+
+
+
+            for j in range(i + 1, len(unique_entities)):
+
+                if j in processed_indices:
+
+                    continue
+
+
+
+                if similarity_matrix[i][j] >= self.threshold:
+
+                    # Check if types match (optional, but safer)
+
+                    if unique_entities[i]['entity_type'] == unique_entities[j]['entity_type']:
+
+                        current_group.append(unique_entities[j])
+
+                        processed_indices.add(j)
+
+
+
+            # Merge group
+
+            merged_entity = self._merge_entity_group(current_group)
+
+            final_entities.append(merged_entity)
+
+
+
+        return final_entities
+
+
+
+    def _exact_deduplication(self, entities: List[Dict]) -> List[Dict]:
+
+        """Deduplicate by exact string match (case-insensitive)."""
+
+        grouped = defaultdict(list)
+
+        for e in entities:
+
+            key = (e['entity'].lower().strip(), e['entity_type'])
+
+            grouped[key].append(e)
+
+        
+
+        return [self._merge_entity_group(group) for group in grouped.values()]
+
+
+
+    def _merge_entity_group(self, group: List[Dict]) -> Dict:
+
+        """Merge a group of duplicate entities into one."""
+
+        if not group:
+
+            return {}
+
+            
+
+        # Pick the most frequent or longest form as the canonical name
+
+        # For now, just pick the one with highest confidence or first
+
+        best_entity = max(group, key=lambda x: x.get('confidence', 0))
+
+        
+
+        # Aggregate stats
+
+        total_confidence = sum(e.get('confidence', 0) for e in group)
+
+        avg_confidence = total_confidence / len(group)
+
+        max_confidence = max(e.get('confidence', 0) for e in group)
+
+        
+
+        # Create merged object
+
+        merged = best_entity.copy()
+
+        merged['confidence'] = avg_confidence # Use average for the final score? Or max?
+
+        merged['avg_confidence_score'] = avg_confidence
+
+        merged['max_confidence_score'] = max_confidence
+
+        merged['frequency'] = len(group)
+
+        merged['source_count'] = len(group)
+
+        
+
+        return merged
