@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=sci_term_extraction_complete
+#SBATCH --job-name=sci_term_extraction_mistral
 #SBATCH --output=logs/sci_term_complete_%j.out
 #SBATCH --error=logs/sci_term_complete_%j.err
 #SBATCH --partition=gpu-mix
@@ -11,7 +11,7 @@
 
 # === METADATA ===
 export SLURM_JOB_START_TIME="$(date)"
-echo "=== COMPLETE SCIENTIFIC TERM EXTRACTION PIPELINE ==="
+echo "=== COMPLETE SCIENTIFIC TERM EXTRACTION PIPELINE WITH MISTRAL ==="
 echo "Job started at: $(date)"
 echo "Node: $HOSTNAME"
 echo "Job ID: $SLURM_JOB_ID"
@@ -36,7 +36,7 @@ conda activate sci-term-extraction
 # === INSTALL DEPENDENCIES ===
 echo "Installing dependencies..."
 pip install --upgrade pip
-pip install spacy==3.7.2 scispacy==0.5.1 sentence-transformers==2.2.2 pandas==2.1.3 rapidfuzz==3.5.2 transformers==4.35.0 accelerate==0.24.1 bitsandbytes==0.41.2
+pip install spacy==3.7.2 scispacy==0.5.1 sentence-transformers==2.2.2 pandas==2.1.3 rapidfuzz==3.5.2 transformers==4.35.0 accelerate==0.24.1 bitsandbytes==0.41.2 requests==2.31.0
 
 # === INSTALL SCIPACY MODELS ===
 echo "Installing sciSpaCy models..."
@@ -46,14 +46,33 @@ pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz
 
-<<<<<<< HEAD
 # === SET ENVIRONMENT VARIABLES FOR OMOP ===
 export OMOP_VOCAB_PATH="/home/jkalra/thesis/omop_vocab"
 export BIOPORTAL_API_KEY="$BIOPORTAL_API_KEY"  # Set if available
 export UMLS_API_KEY="$UMLS_API_KEY"  # Set if available
 
+# === CHECK OLLAMA AVAILABILITY ===
+echo "Checking Ollama availability..."
+if command -v ollama &> /dev/null; then
+    echo "✅ Ollama is installed"
+    # Start Ollama server if not running
+    if ! pgrep -x "ollama" > /dev/null; then
+        echo "Starting Ollama server..."
+        ollama serve &
+        sleep 5  # Give server time to start
+    fi
+
+    # Pull Mistral model if not available
+    if ! ollama list | grep -q "mistral"; then
+        echo "Pulling Mistral model..."
+        ollama pull mistral:latest
+    fi
+else
+    echo "⚠️ Ollama not found, will fall back to HuggingFace models"
+fi
+
 # === RUN PIPELINE ===
-echo "Starting pipeline execution on CLUSTER with BioMistral..."
+echo "Starting pipeline execution with Ollama Mistral..."
 echo "Input directory: /home/jkalra/my_node_tools/Microbiome-CDM/papers_txt"
 echo "Output directory: /home/jkalra/my_node_tools/Microbiome-CDM/spacy_terms/papers_output"
 echo "OMOP vocabulary: $OMOP_VOCAB_PATH"
@@ -62,30 +81,19 @@ echo ""
 python standalone_scispacy_pipeline.py \
     --input_dir "/home/jkalra/my_node_tools/Microbiome-CDM/papers_txt" \
     --output_dir "/home/jkalra/my_node_tools/Microbiome-CDM/spacy_terms/papers_output" \
-    --target_terms 10000
-
-    --workers 16 \
-    --max_files 500 \
-=======
-# === RUN PIPELINE ===
-echo "Starting pipeline execution on CLUSTER with BioMistral..."
-python standalone_scispacy_pipeline.py \
-    --input_dir "data" \
-    --output_dir "output_cluster" \
+    --target_terms 10000 \
     --ensemble \
     --workers 16 \
->>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
+    --max_files 500 \
+    --use_ollama \
+    --ollama_model "mistral:latest" \
+    --ollama_base_url "http://localhost:11434" \
     --generate_definitions \
     --correct_terms \
-    --definition_model "BioMistral/BioMistral-7B" \
     --map_umls \
     --map_omop \
     --map_bioportal \
-<<<<<<< HEAD
-    --validate_biomistral
-=======
->>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
-    --batch_size 32 \
-    --load_4bit
+    --batch_size 16
 
 echo "=== PIPELINE EXECUTION COMPLETE ==="
+echo "Job completed at: $(date)"

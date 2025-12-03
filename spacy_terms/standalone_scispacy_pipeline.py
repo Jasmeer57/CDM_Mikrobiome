@@ -85,6 +85,11 @@ class PipelineConfig:
     definition_model: str = "BioMistral/BioMistral-7B" # Can be BioBERT if user insists (but won't work well for gen)
     correction_model: str = "BioMistral/BioMistral-7B"
 
+    # Ollama Settings
+    use_ollama: bool = False  # Use Ollama instead of HuggingFace models
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_model: str = "mistral:latest"  # Default Mistral model in Ollama
+
     # Validation
     validate_biomistral: bool = False
     biomistral_model: str = "BioMistral/BioMistral-7B"
@@ -103,6 +108,56 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()]
 )
 logger = logging.getLogger("SciTermPipeline")
+
+# --- Ollama Client ---
+
+class OllamaClient:
+    """Simple Ollama client for LLM inference"""
+
+    def __init__(self, base_url: str = "http://localhost:11434", model: str = "mistral:latest"):
+        self.base_url = base_url.rstrip('/')
+        self.model = model
+
+    def _call_ollama(self, prompt: str, temperature: float = 0.1, max_tokens: int = 512) -> Optional[str]:
+        """Call Ollama API"""
+        try:
+            import requests
+
+            url = f"{self.base_url}/api/generate"
+            payload = {
+                "model": self.model,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "temperature": temperature,
+                    "num_predict": max_tokens
+                }
+            }
+
+            response = requests.post(url, json=payload, timeout=60)
+            if response.status_code == 200:
+                result = response.json()
+                return result.get('response', '')
+            else:
+                logger.error(f"Ollama API error: {response.status_code} - {response.text}")
+                return None
+
+        except Exception as e:
+            logger.error(f"Ollama call failed: {e}")
+            return None
+
+    def generate_text(self, prompt: str, temperature: float = 0.1, max_tokens: int = 512) -> Optional[str]:
+        """Generate text using Ollama"""
+        return self._call_ollama(prompt, temperature, max_tokens)
+
+    def check_connection(self) -> bool:
+        """Check if Ollama is accessible"""
+        try:
+            import requests
+            response = requests.get(f"{self.base_url}/api/tags", timeout=5)
+            return response.status_code == 200
+        except:
+            return False
 
 # --- Constants & Filters ---
 
@@ -1422,12 +1477,26 @@ class DefinitionGenerator:
             return
 
         try:
+            if self.config.use_ollama:
+                # Use Ollama
+                self.ollama_client = OllamaClient(
+                    base_url=self.config.ollama_base_url,
+                    model=self.config.ollama_model
+                )
+                if self.ollama_client.check_connection():
+                    logger.info(f"✅ Connected to Ollama using model: {self.config.ollama_model}")
+                else:
+                    logger.warning(f"⚠️ Could not connect to Ollama at {self.config.ollama_base_url}")
+                    self.ollama_client = None
+                return
+
+            # Use HuggingFace transformers
             from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
             import torch
-            
+
             model_name = self.config.biomistral_model
             logger.info(f"Loading definition model: {model_name}")
-            
+
             if self.config.load_4bit:
                 from transformers import BitsAndBytesConfig
                 bnb_config = BitsAndBytesConfig(
@@ -1448,10 +1517,10 @@ class DefinitionGenerator:
                     torch_dtype=torch.float16,
                     trust_remote_code=True
                 )
-                
+
             tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
             tokenizer.pad_token = tokenizer.eos_token
-            
+
             self.pipeline = pipeline(
                 "text-generation",
                 model=model,
@@ -1459,48 +1528,71 @@ class DefinitionGenerator:
                 max_new_tokens=100,
                 repetition_penalty=1.2
             )
-            
+
         except Exception as e:
             logger.error(f"Failed to load definition model: {e}")
             self.pipeline = None
 
     def generate_definitions(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Generate definitions for a list of terms"""
-        if not self.pipeline or not terms:
+        # Check if we have a valid model (either Ollama or HuggingFace)
+        if not terms:
             return terms
-            
+
+        if self.config.use_ollama and not hasattr(self, 'ollama_client'):
+            logger.warning("Ollama configured but client not available")
+            return terms
+        elif not self.config.use_ollama and not self.pipeline:
+            return terms
+
         logger.info(f"Generating definitions for {len(terms)} terms...")
-        
+
         # Prepare prompts
         prompts = [
-            f"Define the biomedical term '{t['term']}' concisely in one sentence:" 
+            f"Define the biomedical term '{t['term']}' concisely in one sentence:"
             for t in terms
         ]
-        
-        batch_size = self.config.batch_size
+
         definitions = []
-        
+
         try:
             from tqdm import tqdm
-            for i in tqdm(range(0, len(prompts), batch_size), desc="Generating Definitions"):
-                batch_prompts = prompts[i:i + batch_size]
-                
-                batch_outputs = self.pipeline(
-                    batch_prompts,
-                    do_sample=True,
-                    temperature=0.7,
-                    return_full_text=False,
-                    batch_size=batch_size
-                )
-                
-                for output in batch_outputs:
-                    if isinstance(output, list):
-                        output = output[0]
-                    text = output['generated_text'].strip()
-                    # Clean up: remove quotes, newlines
-                    text = text.replace('\n', ' ').strip('"').strip("'")
-                    definitions.append(text)
-                    
+
+            if self.config.use_ollama and hasattr(self, 'ollama_client'):
+                # Use Ollama for generation
+                for i, prompt in enumerate(tqdm(prompts, desc="Generating Definitions (Ollama)")):
+                    response = self.ollama_client.generate_text(
+                        prompt,
+                        temperature=0.7,
+                        max_tokens=100
+                    )
+                    if response:
+                        text = response.strip().replace('\n', ' ').strip('"').strip("'")
+                        definitions.append(text)
+                    else:
+                        definitions.append("")  # Empty definition on failure
+            else:
+                # Use HuggingFace pipeline
+                batch_size = self.config.batch_size
+                for i in tqdm(range(0, len(prompts), batch_size), desc="Generating Definitions (HF)"):
+                    batch_prompts = prompts[i:i + batch_size]
+
+                    batch_outputs = self.pipeline(
+                        batch_prompts,
+                        do_sample=True,
+                        temperature=0.7,
+                        return_full_text=False,
+                        batch_size=batch_size
+                    )
+
+                    for output in batch_outputs:
+                        if isinstance(output, list):
+                            output = output[0]
+                        text = output['generated_text'].strip()
+                        # Clean up: remove quotes, newlines
+                        text = text.replace('\n', ' ').strip('"').strip("'")
+                        definitions.append(text)
+
         except Exception as e:
             logger.error(f"Definition generation failed: {e}")
             remaining = len(prompts) - len(definitions)
@@ -1526,12 +1618,26 @@ class LLMTermCorrector:
             return
 
         try:
+            if self.config.use_ollama:
+                # Use Ollama
+                self.ollama_client = OllamaClient(
+                    base_url=self.config.ollama_base_url,
+                    model=self.config.ollama_model
+                )
+                if self.ollama_client.check_connection():
+                    logger.info(f"✅ Connected to Ollama using model: {self.config.ollama_model}")
+                else:
+                    logger.warning(f"⚠️ Could not connect to Ollama at {self.config.ollama_base_url}")
+                    self.ollama_client = None
+                return
+
+            # Use HuggingFace transformers
             from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
             import torch
-            
+
             model_name = self.config.biomistral_model
             logger.info(f"Loading correction model: {model_name}")
-            
+
             if self.config.load_4bit:
                 from transformers import BitsAndBytesConfig
                 bnb_config = BitsAndBytesConfig(
@@ -1552,10 +1658,10 @@ class LLMTermCorrector:
                     torch_dtype=torch.float16,
                     trust_remote_code=True
                 )
-                
+
             tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
             tokenizer.pad_token = tokenizer.eos_token
-            
+
             self.pipeline = pipeline(
                 "text-generation",
                 model=model,
@@ -1563,44 +1669,67 @@ class LLMTermCorrector:
                 max_new_tokens=50,
                 repetition_penalty=1.2
             )
-            
+
         except Exception as e:
             logger.error(f"Failed to load correction model: {e}")
             self.pipeline = None
 
     def correct_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        if not self.pipeline or not terms:
+        # Check if we have a valid model (either Ollama or HuggingFace)
+        if not terms:
             return terms
-            
+
+        if self.config.use_ollama and not hasattr(self, 'ollama_client'):
+            logger.warning("Ollama configured but client not available")
+            return terms
+        elif not self.config.use_ollama and not self.pipeline:
+            return terms
+
         logger.info(f"Correcting {len(terms)} terms with LLM...")
-        
+
         prompts = [
             f"Correct the following biomedical term to its standard canonical form. If it is already correct, output it as is.\nTerm: {t['term']}\nCorrected Term:"
             for t in terms
         ]
-        
-        batch_size = self.config.batch_size
+
         corrections = []
-        
+
         try:
             from tqdm import tqdm
-            for i in tqdm(range(0, len(prompts), batch_size), desc="Correcting Terms"):
-                batch_prompts = prompts[i:i + batch_size]
-                
-                batch_outputs = self.pipeline(
-                    batch_prompts,
-                    do_sample=False, # Deterministic for correction
-                    temperature=0.1,
-                    return_full_text=False,
-                    batch_size=batch_size
-                )
-                
-                for output in batch_outputs:
-                    if isinstance(output, list):
-                        output = output[0]
-                    text = output['generated_text'].strip().split('\n')[0] # Take first line
-                    corrections.append(text)
-                    
+
+            if self.config.use_ollama and hasattr(self, 'ollama_client'):
+                # Use Ollama for correction
+                for prompt in tqdm(prompts, desc="Correcting Terms (Ollama)"):
+                    response = self.ollama_client.generate_text(
+                        prompt,
+                        temperature=0.1,
+                        max_tokens=50
+                    )
+                    if response:
+                        text = response.strip().split('\n')[0]  # Take first line
+                        corrections.append(text)
+                    else:
+                        corrections.append("")  # Empty correction on failure
+            else:
+                # Use HuggingFace pipeline
+                batch_size = self.config.batch_size
+                for i in tqdm(range(0, len(prompts), batch_size), desc="Correcting Terms (HF)"):
+                    batch_prompts = prompts[i:i + batch_size]
+
+                    batch_outputs = self.pipeline(
+                        batch_prompts,
+                        do_sample=False,  # Deterministic for correction
+                        temperature=0.1,
+                        return_full_text=False,
+                        batch_size=batch_size
+                    )
+
+                    for output in batch_outputs:
+                        if isinstance(output, list):
+                            output = output[0]
+                        text = output['generated_text'].strip().split('\n')[0]  # Take first line
+                        corrections.append(text)
+
         except Exception as e:
             logger.error(f"LLM correction failed: {e}")
             remaining = len(prompts) - len(corrections)
@@ -2234,10 +2363,28 @@ class GlobalPipelineProcessor:
 
     def __init__(self, config: PipelineConfig):
         self.config = config
-        
+
         # Create output directory
         self.output_path = Path(config.output_dir)
         self.output_path.mkdir(parents=True, exist_ok=True)
+
+        # PRELOAD ALL MODELS ONCE (MASSIVE SPEEDUP!)
+        logger.info("🚀 Preloading all spaCy models once...")
+        self.model_cache = {}
+        for model_name in self.config.models_to_use:
+            try:
+                logger.info(f"   Loading {model_name}...")
+                model_config = PipelineConfig(
+                    input_dir=config.input_dir,
+                    output_dir=config.output_dir,
+                    spacy_model=model_name
+                )
+                extractor = TermsExtractor(model_config)
+                self.model_cache[model_name] = extractor
+                logger.info(f"   ✅ {model_name} loaded")
+            except Exception as e:
+                logger.error(f"   ❌ Failed to load {model_name}: {e}")
+                self.model_cache[model_name] = None
 
         # Initialize components once
         self.deduplicator = Deduplicator(config)
@@ -2277,20 +2424,17 @@ class GlobalPipelineProcessor:
                 logger.error(f"❌ Error reading {file_path}: {e}")
                 continue
 
-            # Extract with ALL models for this file
+            # Extract with ALL models for this file (using cached models for MASSIVE speedup!)
             file_terms = []
             for model_name in self.config.models_to_use:
                 logger.info(f"   🤖 Extracting with {model_name}...")
                 try:
-                    # Create config for this specific model
-                    # We create a temporary config to pass to TermsExtractor if it relies on self.config.spacy_model
-                    # But TermsExtractor takes config in init.
-                    model_config = PipelineConfig(
-                        input_dir=self.config.input_dir,
-                        output_dir=self.config.output_dir,
-                        spacy_model=model_name
-                    )
-                    extractor = TermsExtractor(model_config)
+                    # Use cached extractor (no loading time!)
+                    extractor = self.model_cache.get(model_name)
+                    if extractor is None:
+                        logger.warning(f"   ⚠️ Model {model_name} not available, skipping")
+                        continue
+
                     terms = extractor.extract(text)
 
                     logger.info(f"      ✅ Found {len(terms)} terms")
@@ -2432,31 +2576,83 @@ class GlobalPipelineProcessor:
             logger.info("   🔧 Running term correction...")
             terms = self.term_corrector.correct_terms(terms)
             logger.info(f"      ✅ Correction complete: {len(terms)} terms")
+            self.save_terms_to_files(terms, "step6_corrected")
 
         # Mapping
         if self.mapper:
             logger.info("   🗺️  Running OMOP/BioPortal mapping...")
             terms = self.mapper.map_terms(terms)
             logger.info(f"      ✅ OMOP/BioPortal mapping complete")
+            self.save_terms_to_files(terms, "step6_mapped_omop_bioportal")
 
         if self.umls_mapper:
             logger.info("   🏥 Running UMLS mapping...")
             terms = self.umls_mapper.map_terms(terms)
             logger.info(f"      ✅ UMLS mapping complete")
+            self.save_terms_to_files(terms, "step6_mapped_umls")
 
         # Definitions
         if self.def_generator:
             logger.info("   📚 Generating definitions...")
             terms = self.def_generator.generate_definitions(terms)
             logger.info(f"      ✅ Definitions generated")
+            self.save_terms_to_files(terms, "step6_definitions")
 
         # Validation
         if self.validator:
             logger.info("   ✅ Running validation...")
             terms = self.validator.validate_terms(terms)
             logger.info(f"      ✅ Validation complete")
+            self.save_terms_to_files(terms, "step6_validated")
 
         return terms
+
+    def save_terms_to_files(self, terms: List[Dict[str, Any]], step_name: str) -> None:
+        """Save terms to both JSON and CSV files with step-specific naming"""
+        logger.info(f"💾 Saving {len(terms)} terms for step: {step_name}")
+
+        # Save JSON
+        json_file = self.output_path / f"{step_name}_terms.json"
+        with open(json_file, 'w', encoding='utf-8') as f:
+            json.dump(terms, f, indent=2, ensure_ascii=False)
+        logger.info(f"   ✅ Saved JSON to {json_file}")
+
+        # Save CSV
+        try:
+            import pandas as pd
+            csv_data = []
+            for term in terms:
+                row = {
+                    "term": term.get('term', ''),
+                    "label": term.get('label', 'ENTITY'),
+                    "score": term.get('score', 0.0),
+                    "source_model": term.get('source_model', ''),
+                    "source_file": term.get('source_file', ''),
+                    "examples": " | ".join(term.get('examples', [])[:3])
+                }
+                # Add mappings if available
+                if "mappings" in term:
+                    for source, matches in term["mappings"].items():
+                        if matches:
+                            row[f"mapping_{source}_id"] = matches[0].get("id")
+                            row[f"mapping_{source}_label"] = matches[0].get("label")
+                # Add definition if available
+                if "definition" in term:
+                    row["definition"] = term["definition"]
+                # Add validation if available
+                if "validation" in term:
+                    row["validation_valid"] = term["validation"].get("is_valid")
+                    row["validation_response"] = term["validation"].get("raw_response")
+
+                csv_data.append(row)
+
+            df = pd.DataFrame(csv_data)
+            csv_file = self.output_path / f"{step_name}_terms.csv"
+            df.to_csv(csv_file, index=False, encoding='utf-8')
+            logger.info(f"   ✅ Saved CSV to {csv_file}")
+
+        except Exception as e:
+            logger.warning(f"Failed to save CSV for {step_name}: {e}")
 
     def run_global_pipeline(self) -> Dict[str, Any]:
         """Run the complete correct global pipeline"""
@@ -2467,6 +2663,9 @@ class GlobalPipelineProcessor:
         # STEP 1: Extract ALL terms from ALL models across ALL files
         all_raw_terms = self.extract_all_terms_from_all_files()
 
+        # Save raw terms after extraction
+        self.save_terms_to_files(all_raw_terms, "step1_raw_extraction")
+
         # STEP 2: Gather ALL terms into single collection (already done in step 1)
         logger.info(f"📦 STEP 2: Gathered ALL {len(all_raw_terms):,} terms into single collection")
 
@@ -2475,11 +2674,20 @@ class GlobalPipelineProcessor:
         dedup_terms = self.deduplicator.deduplicate(all_raw_terms)
         logger.info(f"   ✅ Global deduplication: {len(all_raw_terms):,} → {len(dedup_terms):,} terms")
 
+        # Save deduplicated terms
+        self.save_terms_to_files(dedup_terms, "step3_deduplicated")
+
         # STEP 4: Filter bullshit terms
         filtered_terms = self.filter_bullshit_terms(dedup_terms)
 
+        # Save filtered terms
+        self.save_terms_to_files(filtered_terms, "step4_filtered")
+
         # STEP 5: Final selection to target count
         final_terms = self.select_final_terms(filtered_terms)
+
+        # Save final selection before advanced processing
+        self.save_terms_to_files(final_terms, "step5_final_selection")
 
         # STEP 6: Advanced processing (optional)
         if any([self.term_corrector, self.mapper, self.umls_mapper, self.def_generator, self.validator]):
@@ -2510,7 +2718,10 @@ class GlobalPipelineProcessor:
             "terms": final_terms
         }
 
-        # Save results
+        # Save final results with our helper method
+        self.save_terms_to_files(final_terms, "step7_final_results")
+
+        # Save results in the original format for compatibility
         output_file = self.output_path / "correct_global_results.json"
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=2, ensure_ascii=False)
@@ -3178,6 +3389,11 @@ def main():
     parser.add_argument("--biomistral_model", default="BioMistral/BioMistral-7B", help="BioMistral model name")
     parser.add_argument("--load_4bit", action="store_true", help="Load BioMistral in 4-bit quantization")
 
+    # Ollama arguments
+    parser.add_argument("--use_ollama", action="store_true", help="Use Ollama instead of HuggingFace models")
+    parser.add_argument("--ollama_base_url", default="http://localhost:11434", help="Ollama base URL")
+    parser.add_argument("--ollama_model", default="mistral:latest", help="Ollama model to use (e.g., mistral:latest, llama2:7b)")
+
     # Advanced Features
     parser.add_argument("--generate_definitions", action="store_true", help="Generate definitions using LLM")
     parser.add_argument("--correct_terms", action="store_true", help="Correct terms using LLM")
@@ -3233,7 +3449,13 @@ def main():
         correction_model=args.definition_model,
         bioportal_api_key=args.bioportal_api_key,
         load_4bit=args.load_4bit,
-        spacy_model=models_to_use[0] # Default for base components
+        spacy_model=models_to_use[0], # Default for base components
+
+        # Ollama configuration
+        use_ollama=args.use_ollama,
+        ollama_base_url=args.ollama_base_url,
+        ollama_model=args.ollama_model,
+        biomistral_model=args.biomistral_model
     )
     # Run Global Pipeline
     processor = GlobalPipelineProcessor(config)
