@@ -46,6 +46,7 @@ pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz
 
+<<<<<<< HEAD
 # === SET ENVIRONMENT VARIABLES FOR OMOP ===
 export OMOP_VOCAB_PATH="/home/jkalra/thesis/omop_vocab"
 export BIOPORTAL_API_KEY="$BIOPORTAL_API_KEY"  # Set if available
@@ -65,13 +66,25 @@ python standalone_scispacy_pipeline.py \
 
     --workers 16 \
     --max_files 500 \
+=======
+# === RUN PIPELINE ===
+echo "Starting pipeline execution on CLUSTER with BioMistral..."
+python standalone_scispacy_pipeline.py \
+    --input_dir "data" \
+    --output_dir "output_cluster" \
+    --ensemble \
+    --workers 16 \
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
     --generate_definitions \
     --correct_terms \
     --definition_model "BioMistral/BioMistral-7B" \
     --map_umls \
     --map_omop \
     --map_bioportal \
+<<<<<<< HEAD
     --validate_biomistral
+=======
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
     --batch_size 32 \
     --load_4bit
 

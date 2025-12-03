@@ -924,7 +924,11 @@ class SemanticCorrector:
             # Greedy: check unvisited.
             
             # Vectorized check against all unvisited is faster but complex to index.
+<<<<<<< HEAD
             # Simple loop implementation (sufficient for typical file sizes < 1000 terms)
+=======
+            # Simple loop for now (len(terms) usually < 1000 per file)
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
             
             vec_i = embeddings[i]
             
@@ -944,6 +948,7 @@ class SemanticCorrector:
         # 3. Canonicalize
         corrected_terms = []
         for cluster in clusters:
+<<<<<<< HEAD
             # Pick representative term: Choose most frequent term, fallback to shortest
             cluster_terms = [terms[i] for i in cluster]
             # First try to find the term with highest frequency
@@ -951,6 +956,12 @@ class SemanticCorrector:
             # If all have same frequency (0), fallback to shortest term
             if canonical.get('frequency', 0) == 0:
                 canonical = min(cluster_terms, key=lambda t: len(t['term']))
+=======
+            # Pick representative: Shortest term? Most frequent?
+            # We'll pick the shortest term as canonical for now
+            cluster_terms = [terms[i] for i in cluster]
+            canonical = min(cluster_terms, key=lambda t: len(t['term']))
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
             
             # Merge metadata
             merged_examples = set()
@@ -1031,7 +1042,11 @@ class Deduplicator:
             
         # 4. Semantic Deduplication (Legacy/Fallback logic if needed, but Corrector covers most)
         # We can keep _semantic_dedup if it does something different (e.g. cross-encoder)
+<<<<<<< HEAD
         # Current implementation uses semantic correction with MiniLM embeddings
+=======
+        # But for now, Corrector is the "MiniLM check" requested.
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
             
         # 5. Biomedical Deduplication (BioMistral)
         terms = self._biomedical_dedup(terms)
@@ -1117,16 +1132,27 @@ class Deduplicator:
                 n_score = max_noise_score[i].item()
                 
                 if n_score > 0.8:
+<<<<<<< HEAD
                     logger.info(f"   Dropping '{term_strings[i]}' (Noise Score: {n_score:.4f})")
+=======
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
                     continue # Definitely noise
                     
                 if s_score > n_score:
                     keep_indices.append(i)
+<<<<<<< HEAD
                 elif s_score > 0.4: 
                      if s_score > n_score - 0.05:
                          keep_indices.append(i)
                 else:
                     logger.info(f"   Dropping '{term_strings[i]}' (Sci: {s_score:.4f}, Noise: {n_score:.4f})")
+=======
+                elif s_score > 0.4: # Keep if reasonably scientific even if noise score is high-ish (ambiguous)
+                     # But if n_score is higher, it's risky. Let's stick to s_score > n_score for "bullshit" removal.
+                     # Maybe add a margin? s_score > n_score - 0.1
+                     if s_score > n_score - 0.05:
+                         keep_indices.append(i)
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
         
         logger.info(f"Semantic Filter: {len(terms)} -> {len(keep_indices)} terms")
         return [terms[i] for i in keep_indices]
@@ -2766,6 +2792,7 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
         import gc
         gc.collect()
 
+<<<<<<< HEAD
     # After processing all files, create consolidated results
     logger.info("All files processed. Creating consolidated results...")
     try:
@@ -2953,6 +2980,9 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
         json.dump(stats, f, indent=2)
 
     logger.info(f"Final consolidation completed. Processed {len(result_files)} files, generated {len(top_terms)} top terms")
+=======
+# Removed rank_terms_static as it is replaced by TermRanker
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
 
 def consolidate_results(input_dir: str, output_dir: str):
     """Consolidate all ensemble results into a single comprehensive output"""
@@ -3044,9 +3074,14 @@ def consolidate_results(input_dir: str, output_dir: str):
     # Sort by score descending
     consolidated_terms.sort(key=lambda x: x.get("score", 0), reverse=True)
     
+<<<<<<< HEAD
     # Limit to top 5K-10K terms as requested
     MAX_CONSOLIDATED_TERMS = 10000  # Configurable limit
     consolidated_terms = consolidated_terms[:MAX_CONSOLIDATED_TERMS]
+=======
+    # Limit removed to allow for 5-10k total terms
+    # consolidated_terms = consolidated_terms[:100]
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
 
     consolidated_data["terms"] = consolidated_terms
     consolidated_data["metadata"]["total_unique_terms"] = len(consolidated_terms)
@@ -3162,6 +3197,7 @@ def main():
 
     args = parser.parse_args()
 
+<<<<<<< HEAD
     # Select models
     models_to_use = SPACY_MODELS if args.use_spacy_models else SCISPACY_MODELS
     if args.model and not args.run_all_models and not args.ensemble:
@@ -3205,6 +3241,201 @@ def main():
     processor.run_global_pipeline()
 
     logger.info("✅ Pipeline execution completed!")
+=======
+    
+    if args.ensemble:
+        models_to_run = SPACY_MODELS if args.use_spacy_models else SCISPACY_MODELS
+        logger.info(f"Running ENSEMBLE pipeline with models: {models_to_run}")
+        
+        # Ensure output directory exists
+        output_path = Path(args.output_dir)
+        output_path.mkdir(parents=True, exist_ok=True)
+        
+        # Initialize Deduplicator, Mapper, and Validator (once)
+        base_config = PipelineConfig(
+            input_dir=args.input_dir, 
+            output_dir=args.output_dir, 
+            spacy_model="en_core_web_lg" if args.use_spacy_models else "en_core_sci_lg",
+            validate_biomistral=args.validate_biomistral,
+            biomistral_model=args.biomistral_model,
+            load_4bit=args.load_4bit,
+            # Advanced Features
+            generate_definitions=args.generate_definitions,
+            correct_terms=args.correct_terms,
+            map_umls=args.map_umls,
+            map_omop=args.map_omop,
+            map_bioportal=args.map_bioportal,
+            definition_model=args.definition_model,
+            correction_model=args.definition_model, # Use same model for now
+            bioportal_api_key=args.bioportal_api_key
+        )
+        
+        deduplicator = Deduplicator(base_config)
+        
+        # Mappers
+        mapper = ComprehensiveMapper(base_config) if (args.map_omop or args.map_bioportal) else None
+        umls_mapper = UMLSMapper(base_config) if args.map_umls else None
+        
+        # Generators/Correctors
+        def_generator = DefinitionGenerator(base_config) if args.generate_definitions else None
+        term_corrector = LLMTermCorrector(base_config) if args.correct_terms else None
+        
+        validator = BioMistralValidator(base_config) if args.validate_biomistral else None
+        
+        input_path = Path(args.input_dir)
+        files = list(input_path.glob("*.txt"))
+        
+        for file_path in files:
+            logger.info(f"Processing {file_path.name} in ENSEMBLE mode...")
+            try:
+                text = file_path.read_text(encoding='utf-8')
+            except Exception as e:
+                logger.error(f"Error reading {file_path}: {e}")
+                continue
+                
+            all_raw_terms = []
+            
+            # 1. Extraction from ALL models
+            for model_name in models_to_run:
+                logger.info(f"  Extracting with {model_name}...")
+                try:
+                    # Create config for this specific model
+                    model_config = PipelineConfig(input_dir=args.input_dir, output_dir=args.output_dir, spacy_model=model_name)
+                    extractor = TermsExtractor(model_config)
+                    terms = extractor.extract(text)
+                    logger.info(f"    -> Found {len(terms)} terms")
+                    
+                    # Tag terms with their source model for traceability
+                    for t in terms:
+                        t['source_model'] = model_name
+                        
+                    all_raw_terms.extend(terms)
+                    
+                    # Cleanup to save memory
+                    del extractor
+                    import gc
+                    gc.collect()
+                    
+                except Exception as e:
+                    logger.error(f"    Failed to run {model_name}: {e}")
+            
+            logger.info(f"  Total raw terms collected: {len(all_raw_terms)}")
+            
+            # 2. Deduplication (Global)
+            dedup_terms = deduplicator.deduplicate(all_raw_terms)
+            logger.info(f"  Globally deduplicated to {len(dedup_terms)} terms")
+            
+            final_terms = dedup_terms
+            
+            # 3. Advanced Processing (Correction, Mapping, Definitions)
+            
+            # Correction first (to map canonical forms)
+            if term_corrector:
+                final_terms = term_corrector.correct_terms(final_terms)
+            
+            # Mapping
+            if mapper:
+                final_terms = mapper.map_terms(final_terms)
+            if umls_mapper:
+                final_terms = umls_mapper.map_terms(final_terms)
+                
+            # Definitions
+            if def_generator:
+                final_terms = def_generator.generate_definitions(final_terms)
+            
+            # Ranking
+            final_terms = TermsExtractor(base_config).rank_terms(final_terms) # Use base config for ranking
+            
+            # 4. Validationalidation
+            if validator:
+                final_terms = validator.validate_terms(final_terms)
+
+            result = {
+                "file": file_path.name,
+                "mode": "ensemble",
+                "models_used": models_to_run,
+                "timestamp": datetime.now().isoformat(),
+                "stats": {
+                    "raw_count": len(all_raw_terms),
+                    "final_count": len(final_terms)
+                },
+                "terms": final_terms
+            }
+            
+            # Save JSON
+            out_file = output_path / f"{file_path.stem}_ensemble_results.json"
+            with open(out_file, 'w') as f:
+                json.dump(result, f, indent=2)
+            
+            # Save CSV
+            csv_file = output_path / f"{file_path.stem}_ensemble_results.csv"
+            try:
+                import pandas as pd
+                # 5. Format Output
+                source_label = "spacy" if args.use_spacy_models else "scispacy"
+                formatted_terms = []
+                for t in final_terms:
+                    row = {
+                        "term": t['term'],
+                        "original": t.get('primary_form', t['term']),
+                        "label": t.get('label', 'ENTITY'),
+                        "source": source_label,
+                        "source_model": t.get('source_model', 'unknown'),
+                        "score": t.get('score', 0.0),
+                        "validation_valid": t.get("validation", {}).get("is_valid"),
+                        "validation_response": t.get("validation", {}).get("raw_response"),
+                        "examples": " | ".join(t.get("examples", [])[:3])
+                    }
+                    # Add mappings if available
+                    if "mappings" in t:
+                        for source, matches in t["mappings"].items():
+                            if matches:
+                                row[f"mapping_{source}_id"] = matches[0].get("id")
+                                row[f"mapping_{source}_label"] = matches[0].get("label")
+                    formatted_terms.append(row)
+                
+                df = pd.DataFrame(formatted_terms)
+                df.to_csv(csv_file, index=False)
+                logger.info(f"Saved CSV results to {csv_file}")
+            except Exception as e:
+                logger.warning(f"Failed to save CSV: {e}")
+                
+        # 5. Consolidate Results
+        logger.info("Consolidating all ensemble results...")
+        try:
+            consolidate_results(args.output_dir, os.path.join(args.output_dir, "consolidated_results"))
+        except Exception as e:
+            logger.error(f"Failed to consolidate results: {e}")
+            
+        logger.info("Ensemble execution completed!")
+        
+    elif args.run_all_models:
+        logger.info(f"Running pipeline on ALL models: {SCISPACY_MODELS}")
+        for model_name in SCISPACY_MODELS:
+            logger.info(f"=== Starting run for model: {model_name} ===")
+            config = PipelineConfig(
+                input_dir=args.input_dir,
+                output_dir=os.path.join(args.output_dir, model_name), # Subdir for each model
+                spacy_model=model_name,
+                validate_biomistral=args.validate_biomistral,
+                biomistral_model=args.biomistral_model,
+                load_4bit=args.load_4bit
+            )
+            run_pipeline(config, args.skip_mapping)
+            logger.info(f"=== Completed run for model: {model_name} ===")
+    else:
+        config = PipelineConfig(
+            input_dir=args.input_dir,
+            output_dir=args.output_dir,
+            spacy_model=args.model,
+            validate_biomistral=args.validate_biomistral,
+            biomistral_model=args.biomistral_model,
+            load_4bit=args.load_4bit,
+            workers=args.workers,
+            batch_size=args.batch_size
+        )
+        run_pipeline(config, args.skip_mapping)
+>>>>>>> e1676ba2ce52c2832434ffc249206f6f44b1e4f3
 
 if __name__ == "__main__":
     main()
