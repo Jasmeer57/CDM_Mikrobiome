@@ -342,8 +342,9 @@ class OptimizationConfig:
     fast_mode: bool = False
     use_json_mode: bool = True
     chunk_size_multiplier: float = 1.0
-    api_type: str = "ollama"  # ollama or openai (for vLLM)
+    api_type: str = "ollama"  # ollama, openai (for vLLM), or huggingface
     api_key: str = "EMPTY"    # For vLLM/OpenAI
+    hf_token: str = None      # For HuggingFace
 
 
 # ==========================================
@@ -660,12 +661,16 @@ class LLMClient:
         self.base_url = base_url
         self.config = CDMEntityConfig.MODEL_CONFIGS.get(model, CDMEntityConfig.MODEL_CONFIGS['qwen3:8b'])
         self.opt_config = optimization_config or OptimizationConfig()
-        logger.info(f"🤖 LLM Client initialized with model: {self.model}")
+        self.hf_pipeline = None
+        self.hf_tokenizer = None
+        logger.info(f"🤖 LLM Client initialized with model: {self.model} (API: {self.opt_config.api_type})")
 
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call LLM with structured prompt and return response."""
         if self.opt_config.api_type == "openai":
             return self._call_openai_compatible(prompt, max_tokens)
+        elif self.opt_config.api_type == "huggingface":
+            return self._call_huggingface_local(prompt, max_tokens)
         else:
             return self._call_ollama(prompt, max_tokens)
 
@@ -752,6 +757,67 @@ class LLMClient:
 
         logger.error("LLM call failed after all retries.")
         return ""
+
+    def _call_huggingface_local(self, prompt: str, max_tokens: Optional[int] = None) -> str:
+        """Call HuggingFace model locally."""
+        try:
+            if not self.hf_pipeline:
+                logger.info(f"🤗 Loading HuggingFace model: {self.model}...")
+                
+                # Check for GPU
+                device = "cuda" if torch.cuda.is_available() else "cpu"
+                logger.info(f"   Device: {device}")
+                
+                try:
+                    self.hf_tokenizer = AutoTokenizer.from_pretrained(
+                        self.model, 
+                        token=self.opt_config.hf_token,
+                        trust_remote_code=True
+                    )
+                    
+                    # Load model with 4-bit quantization if possible to save memory
+                    # Requires bitsandbytes
+                    try:
+                        from transformers import BitsAndBytesConfig
+                        quantization_config = BitsAndBytesConfig(
+                            load_in_4bit=True,
+                            bnb_4bit_compute_dtype=torch.float16
+                        )
+                        logger.info("   Using 4-bit quantization")
+                    except ImportError:
+                        quantization_config = None
+                        logger.warning("   bitsandbytes not found, loading full precision (might OOM)")
+
+                    self.hf_pipeline = AutoModelForCausalLM.from_pretrained(
+                        self.model,
+                        token=self.opt_config.hf_token,
+                        device_map="auto" if device == "cuda" else None,
+                        quantization_config=quantization_config,
+                        trust_remote_code=True,
+                        torch_dtype=torch.float16 if device == "cuda" else torch.float32
+                    )
+                except Exception as e:
+                    logger.error(f"Failed to load HF model: {e}")
+                    return ""
+
+            # Generate
+            inputs = self.hf_tokenizer(prompt, return_tensors="pt").to(self.hf_pipeline.device)
+            
+            with torch.no_grad():
+                outputs = self.hf_pipeline.generate(
+                    **inputs,
+                    max_new_tokens=max_tokens or self.config['max_tokens'],
+                    temperature=self.config['temperature'],
+                    do_sample=True,
+                    pad_token_id=self.hf_tokenizer.eos_token_id
+                )
+                
+            response = self.hf_tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
+            return response.strip()
+
+        except Exception as e:
+            logger.error(f"HuggingFace local generation failed: {e}")
+            return ""
 
     def is_available(self) -> bool:
         """Check if the LLM service is available."""
@@ -963,44 +1029,26 @@ Do not use JSON. Just provide the list.
             # RELAXED VALIDATION: Instead of rejecting, map to SCIENTIFIC_TERM
             # logger.debug(f"⚠️  Unknown type '{e_type}' for term '{term}'. Defaulting to SCIENTIFIC_TERM.")
             if isinstance(entity, dict):
-                entity['entity_type'] = 'SCIENTIFIC_TERM'
-                entity['original_type'] = e_type
-            # If it's a string/type pair passed as args, we can't modify it in place easily here 
-            # without returning the new type, but this method returns bool.
-            # For the dict case (most common), we fixed it.
-            # For the args case, the caller needs to handle it. 
-            # But wait, _extract_from_unstructured_text calls this with (term, entity_type).
-            # It expects True/False.
-            # I should probably update _extract_from_unstructured_text to handle the fallback logic 
-            # OR make this method return the (valid?, type) tuple.
-            # For now, let's just return True and let the caller handle the type? 
-            # No, the caller uses the `entity_type` it passed.
-            # So I should return True here, but I can't fix the type in the caller unless I change the signature.
-            # Actually, let's just allow it here and fix it in the caller or let it be.
-            # But if I leave it as invalid type, downstream filters might drop it.
-            # Let's change the logic in the caller `_extract_from_unstructured_text`.
-            return True 
-
-        # Use strict cleaning
-        cleaned_entity = TextProcessor.strict_term_cleaning(term)
-        if not cleaned_entity:
-            return False
+                if self._validate_entity(term, entity_type):
+                    entities.append({
+                        'entity': term,
+                        'entity_type': entity_type,
+                        'context': context,
+                        'confidence': 0.8,
+                        'source_pass': pass_num
+                    })
+                else:
+                    logger.debug(f"❌ Rejected entity: {term} ({entity_type})")
             
-        # Update the entity dict if it was a dict
-        if isinstance(entity, dict):
-            entity['entity'] = cleaned_entity
-            
-        return True
+        # Log entities found in this pass
+        if entities:
+            logger.info(f"✅ Pass {pass_num} found {len(entities)} entities:")
+            for e in entities[:20]: # Log first 20 to avoid spam
+                logger.info(f"   - {e['entity']} ({e['entity_type']})")
+            if len(entities) > 20:
+                logger.info(f"   ... and {len(entities) - 20} more")
 
-    def _format_entity(self, entity: Dict, chunk_num: int, confidence: float) -> Dict:
-        """Format entity into standard structure."""
-        return {
-            'entity': entity['entity'].strip(),
-            'entity_type': entity['entity_type'],
-            'context': entity.get('context', '').strip()[:200],
-            'source': f'chunk_{chunk_num}',
-            'confidence': confidence
-        }
+        return entities
 
     def _extract_from_unstructured_text(self, response: str, pass_num: int) -> List[Dict]:
         """Robustly parse entities from unstructured LLM output, handling CoT reasoning."""
@@ -1024,21 +1072,11 @@ Do not use JSON. Just provide the list.
             if not line: continue
             
             # Skip conversational lines
-            if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list')):
+            if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list', 'but', 'also', 'the text', 'actually', 'for example', 'in this text')):
                 continue
 
             # Regex for "- Term (TYPE)" or "- Term (TYPE): Context"
             # Also handle cases without bullet points: "Term (TYPE): Context"
-            # Capture group 1: Term
-            # Capture group 2: Type
-            # Capture group 3: Context (optional)
-            # Regex explanation:
-            # ^(?:[\-\*0-9\.]+\s*)?  -> Optional bullet/number at start
-            # (.+?)                  -> Term (lazy match)
-            # \s*\(                  -> Open paren
-            # ([^)]+)                -> Type (no parens inside)
-            # \)                     -> Close paren
-            # (?:\s*[:\-]\s*(.+))?   -> Optional context after : or -
             match = re.search(r'^(?:[\-\*0-9\.]+\s*)?(.+?)\s*\(([^)]+)\)(?:\s*[:\-]\s*(.+))?', line)
             
             if match:
@@ -1047,7 +1085,6 @@ Do not use JSON. Just provide the list.
                 context = match.group(3).strip() if match.group(3) else ""
                 
                 # CLEANUP: Remove common CoT artifacts from the term if context wasn't captured by group 3
-                # e.g. "Term -> Definition" where the regex didn't catch the separator
                 if not context and ('->' in term or ':' in term):
                     parts = re.split(r'\s+(\->|:|\-\-)\s+', term)
                     term = parts[0].strip()
@@ -1057,6 +1094,10 @@ Do not use JSON. Just provide the list.
                 # Remove quotes if present
                 term = term.strip('"\'')
                 
+                # VALIDATION: Skip if term looks like a sentence or is too long
+                if len(term.split()) > 10 or any(x in term.lower() for x in ['the text says', 'note that', 'we write']):
+                    continue
+
                 # Clean up the type
                 # If type contains "BUT", "NOTE", "OR", etc., try to salvage the valid part
                 if any(x in entity_type for x in ['BUT', 'NOTE', 'HOWEVER', 'IE', 'E.G.']):
@@ -1077,8 +1118,6 @@ Do not use JSON. Just provide the list.
                     if found_type:
                         entity_type = found_type
                     else:
-                        # If we can't find a type, but the term looks good, maybe default to SCIENTIFIC_TERM?
-                        # Or just let it fail validation.
                         pass
 
                 # Map hallucinated types
@@ -1227,14 +1266,23 @@ Do not use JSON. Just provide the list.
         if pass_num == 0:
             return f"""{system_context}
 
-EXTRACTION GOAL: COMPREHENSIVELY extract ALL biomedical terms from ALL categories in a single pass.
+EXTRACTION GOAL: COMPREHENSIVELY extract ALL biomedical terms relevant to a Microbiome Common Data Model (CDM).
 
 INSTRUCTIONS:
-1. Extract ALL scientific terms from the text.
+1. Extract ALL scientific terms from the text, prioritizing those relevant to microbiome research.
 2. Output the list IMMEDIATELY.
 3. Do NOT explain your reasoning.
-4. Output ONLY the terms in this exact format:
+4. Do NOT include any conversational text (e.g. "Here are the terms", "Note that...").
+5. Output ONLY the terms in this exact format:
    - Term (TYPE): Brief contextual definition from text
+
+FOCUS ON THESE CDM CATEGORIES:
+- ORGANISMS: Bacteria, Fungi, Viruses, Archaea (Species, Genus, Family, etc.)
+- ANATOMY: Body sites (e.g., Gut, Skin, Oral cavity)
+- CHEMICALS: Metabolites (SCFAs, Bile acids), Antibiotics, Prebiotics, Probiotics
+- PHENOTYPES: Diseases, Symptoms, Conditions associated with microbiome
+- GENETICS: Genes, Proteins, Enzymes relevant to microbial function
+- METHODS: Sequencing types (16S, Shotgun), Bioinformatics tools
 
 TEXT:
 {chunk_text}"""
@@ -1318,16 +1366,13 @@ TEXT:
         return ""
 
     def extract_chunk_multi_pass(self, chunk_text: str, chunk_num: int) -> List[Dict]:
-        """Extract entities from a chunk using multi-pass strategy (5 passes)."""
+        """Extract entities from a chunk using multi-pass strategy (Single Comprehensive Pass)."""
         all_entities = []
         
         # Define passes
+        # Reduced to single comprehensive pass for efficiency as per user request
         passes = [
-            (0, "General Comprehensive"), # Pass 0 is now General/Comprehensive
-            (1, "Organisms"),
-            (2, "Chemicals"),
-            (3, "Methods/Tools"),
-            (4, "Genes/Proteins")
+            (0, "General Comprehensive"), 
         ]
         
         for pass_num, pass_name in passes:
@@ -1345,7 +1390,6 @@ TEXT:
                     
                 if entities:
                     all_entities.extend(entities)
-                    # logger.debug(f"     Found {len(entities)} entities in pass {pass_num}")
                     
             except Exception as e:
                 logger.error(f"Error in pass {pass_num} for chunk {chunk_num}: {e}")
@@ -2195,11 +2239,51 @@ class UMLSMapping:
 class UMLSMapper:
     """Maps entities to UMLS concepts."""
 
-    def __init__(self, api_key: str = None, cache_size: int = 1000):
+    def __init__(self, api_key: str = None, cache_size: int = 1000, use_scispacy: bool = False):
         self.api_key = api_key
         self.cache = {}
         self.cache_size = cache_size
+        self.use_scispacy = use_scispacy
+        self.nlp = None
+        self.linker = None
         self.semantic_type_mappings = self._initialize_semantic_mappings()
+        
+        if self.use_scispacy:
+            self._initialize_scispacy()
+
+    def _initialize_scispacy(self):
+        """Initialize SciSpaCy model and linker."""
+        try:
+            import spacy
+            import scispacy
+            from scispacy.linking import EntityLinker
+            
+            # Load model (try sm then md)
+            model_name = "en_core_sci_sm"
+            try:
+                if not spacy.util.is_package(model_name):
+                    model_name = "en_core_sci_md"
+                    if not spacy.util.is_package(model_name):
+                        raise OSError("No SciSpaCy model found")
+                
+                self.nlp = spacy.load(model_name)
+                logger.info(f"✅ Loaded SciSpaCy model: {model_name}")
+                
+                # Add linker
+                self.nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "umls"})
+                self.linker = self.nlp.get_pipe("scispacy_linker")
+                logger.info("✅ SciSpaCy UMLS linker initialized")
+                
+            except Exception as e:
+                logger.warning(f"⚠️  Failed to load SciSpaCy model: {e}")
+                self.use_scispacy = False
+                
+        except ImportError:
+            logger.warning("⚠️  scispacy not installed. Falling back to API.")
+            self.use_scispacy = False
+        except Exception as e:
+            logger.warning(f"⚠️  Failed to initialize SciSpaCy: {e}")
+            self.use_scispacy = False
 
     def _initialize_semantic_mappings(self) -> Dict[str, List[str]]:
         """Initialize entity type to UMLS semantic type mappings."""
@@ -2224,6 +2308,9 @@ class UMLSMapper:
             return self.cache[cache_key]
 
         mappings = []
+
+        if self.use_scispacy and self.nlp:
+            return self._map_with_scispacy(entity_name, entity_type)
 
         try:
             # Get expected semantic types for entity type
@@ -2255,6 +2342,62 @@ class UMLSMapper:
         if len(self.cache) < self.cache_size:
             self.cache[cache_key] = mappings
 
+        return mappings
+
+    def _map_with_scispacy(self, entity_name: str, entity_type: str) -> List[UMLSMapping]:
+        """Map entity using SciSpaCy linker."""
+        mappings = []
+        try:
+            doc = self.nlp(entity_name)
+            
+            # Collect all linked entities
+            seen_cuis = set()
+            
+            for ent in doc.ents:
+                for umls_ent in ent._.kb_ents:
+                    cui, score = umls_ent
+                    
+                    if cui in seen_cuis:
+                        continue
+                    seen_cuis.add(cui)
+                    
+                    # Get details from KB
+                    try:
+                        kb_entity = self.linker.kb.cui_to_entity[cui]
+                        canonical_name = kb_entity.canonical_name
+                        types = kb_entity.types
+                        definition = kb_entity.definition
+                    except:
+                        canonical_name = ent.text
+                        types = []
+                        definition = ""
+                    
+                    # Filter by score
+                    if score > 0.7:  # SciSpaCy scores are cosine similarity
+                        mapping = UMLSMapping(
+                            entity_name=entity_name,
+                            entity_type=entity_type,
+                            umls_concept=UMLSConcept(
+                                cui=cui,
+                                name=canonical_name,
+                                semantic_types=types,
+                                definition=definition
+                            ),
+                            mapping_confidence=float(score),
+                            mapping_method="SciSpaCy"
+                        )
+                        mappings.append(mapping)
+            
+            mappings.sort(key=lambda x: x.mapping_confidence, reverse=True)
+            
+        except Exception as e:
+            logger.error(f"SciSpaCy mapping failed for {entity_name}: {e}")
+            
+        # Cache result
+        cache_key = f"{entity_name.lower()}_{entity_type}"
+        if len(self.cache) < self.cache_size:
+            self.cache[cache_key] = mappings
+            
         return mappings
 
     def _search_umls(self, entity_name: str, expected_semantic_types: List[str]) -> List[UMLSConcept]:
@@ -2605,7 +2748,8 @@ class ComprehensiveMapper:
 
     def __init__(self, umls_api_key: str = None, bioportal_api_key: str = None, athena_api_url: str = None,
                  cache_mappings: bool = True, use_local_omop: bool = True,
-                 omop_vocab_dir: str = None, fuzzy_threshold: int = 95, max_matches: int = 3):
+                 omop_vocab_dir: str = None, fuzzy_threshold: int = 95, max_matches: int = 3,
+                 use_scispacy: bool = False):
 
         # Use local OMOP mapper by default, fallback to API mapper
         if use_local_omop:
@@ -2620,11 +2764,11 @@ class ComprehensiveMapper:
             logger.info("🌐 Using API-based OMOP mapper")
 
         # UMLS mapper
-        self.umls_mapper = UMLSMapper(api_key=umls_api_key, cache_size=2000) if umls_api_key else None
+        self.umls_mapper = UMLSMapper(api_key=umls_api_key, cache_size=2000, use_scispacy=use_scispacy) if (umls_api_key or use_scispacy) else None
         if self.umls_mapper:
-            logger.info("🏥 UMLS mapper initialized")
+            logger.info(f"🏥 UMLS mapper initialized (SciSpaCy: {use_scispacy})")
         else:
-            logger.info("⚠️  UMLS mapper disabled (no API key)")
+            logger.info("⚠️  UMLS mapper disabled (no API key and SciSpaCy disabled)")
             
         # BioPortal mapper
         self.bioportal_mapper = BioPortalMapper(api_key=bioportal_api_key) if bioportal_api_key else None
@@ -4298,10 +4442,11 @@ class CDMEntityPipeline:
                  enable_biomistral_deduplication: bool = False, biomistral_dedup_model: str = "biomistral:7b",
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
+                 enable_scispacy_linking: bool = False,
                  mapping_confidence_threshold: float = 0.7,
                  enable_correction: bool = False, enable_llm_correction: bool = False,
                  dry_run: bool = False, fast_mode: bool = False, api_type: str = "ollama",
-                 api_key: str = "EMPTY"):
+                 api_key: str = "EMPTY", hf_token: str = None):
         self.config = config or PipelineConfig()
         self.dry_run = dry_run
         
@@ -4310,7 +4455,8 @@ class CDMEntityPipeline:
             fast_mode=fast_mode,
             api_key=api_key,
             chunk_size_multiplier=1.0, 
-            api_type=api_type
+            api_type=api_type,
+            hf_token=hf_token
         )
         
         if self.dry_run:
@@ -4331,19 +4477,6 @@ class CDMEntityPipeline:
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
-        self.entity_filter = EntityFilter(strict_mode=True)
-        self.relevance_scorer = MicrobiomeRelevanceScorer()
-        self.term_corrector = MiniLMTermCorrector(semantic_model, 0.9)
-
-        # Initialize biomedical and mapping components
-        self.enable_biomistral = enable_biomistral
-        self.enable_biomistral_deduplication = enable_biomistral_deduplication
-        self.enable_omop_mapping = enable_omop_mapping
-        self.enable_umls_mapping = enable_umls_mapping
-        self.enable_comprehensive_mapping = enable_comprehensive_mapping
-        self.mapping_confidence_threshold = mapping_confidence_threshold
-        self.enable_correction = enable_correction
-        self.enable_llm_correction = enable_llm_correction
         
         if self.opt_config.fast_mode:
             logger.info("🚀 FAST MODE ENABLED: Using larger chunks and optimized settings")
@@ -4374,7 +4507,8 @@ class CDMEntityPipeline:
                 omop_vocab_dir=omop_vocab_dir,
                 fuzzy_threshold=95,
                 max_matches=3,
-                cache_mappings=True
+                cache_mappings=True,
+                use_scispacy=enable_scispacy_linking
             )
             logger.info(f"🗂️  Comprehensive mapping initialized with OMOP vocab: {omop_vocab_dir}")
 
@@ -4935,11 +5069,14 @@ def main():
     parser.add_argument('--enable-correction', action='store_true', help='Enable MiniLM term correction')
     parser.add_argument('--enable-llm-correction', action='store_true', help='Enable LLM-based type correction')
     parser.add_argument('--enable-enhanced', action='store_true', help='Run enhanced pipeline stage')
+    parser.add_argument('--enable-comprehensive-mapping', action='store_true', help='Enable comprehensive mapping (UMLS, OMOP, etc.)')
+    parser.add_argument('--enable-scispacy-linking', action='store_true', help='Enable SciSpaCy-based UMLS linking')
     parser.add_argument('--semantic-model', default='all-MiniLM-L6-v2', help='Semantic model for embeddings (default: all-MiniLM-L6-v2)')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode (skip heavy processing)')
     parser.add_argument('--fast-mode', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
-    parser.add_argument('--api-type', choices=['ollama', 'openai'], default='ollama', help='API type (ollama or openai/vllm)')
+    parser.add_argument('--api-type', choices=['ollama', 'openai', 'huggingface'], default='ollama', help='API type (ollama, openai/vllm, or huggingface)')
     parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
+    parser.add_argument('--hf-token', help='HuggingFace Token (optional if logged in)')
     parser.add_argument('--force', action='store_true', help='Force re-processing (ignore checkpoints)')
     
     # Compatibility arguments (ignored or deprecated but kept for script compatibility)
@@ -4996,6 +5133,10 @@ def main():
         dry_run=args.dry_run,
         fast_mode=args.fast_mode,
         api_type=args.api_type,
+        api_key=args.api_key,
+        hf_token=args.hf_token,
+        enable_comprehensive_mapping=args.enable_comprehensive_mapping,
+        enable_scispacy_linking=args.enable_scispacy_linking,
         force=args.force
     )
     
@@ -5033,7 +5174,8 @@ def main():
             dry_run=args.dry_run,
             fast_mode=args.fast_mode,
             api_type=args.api_type,
-            api_key=args.api_key
+            api_key=args.api_key,
+            hf_token=args.hf_token
         )
         
         if enhanced_success:
