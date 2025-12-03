@@ -182,6 +182,24 @@ class CDMEntityConfig:
             ],
             'priority': 3
         },
+        'DNA_RNA': {
+            'description': 'DNA, RNA, plasmids, vectors, genetic material',
+            'examples': ['16S rRNA', 'plasmid', 'mRNA', 'cDNA'],
+            'patterns': [r'\b\w*RNA\b', r'\b\w*DNA\b', r'\b\w*plasmid\b'],
+            'priority': 3
+        },
+        'CELL_TYPE': {
+            'description': 'Cells, cell lines, tissues, cellular structures',
+            'examples': ['macrophage', 'epithelial cell', 'neuron', 'tissue'],
+            'patterns': [r'\b\w*cell\b', r'\b\w*tissue\b', r'\b\w*neuron\b'],
+            'priority': 3
+        },
+        'GENOMICS': {
+            'description': 'Genomics, metagenomics, omics terms',
+            'examples': ['metagenomics', 'transcriptomics', 'sequencing'],
+            'patterns': [r'\b\w*omics\b', r'\b\w*sequencing\b'],
+            'priority': 4
+        },
         'DISEASE': {
             'description': 'Diseases, conditions, syndromes, disorders',
             'examples': ['Type 2 Diabetes', 'Crohn\'s disease', 'Obesity', 'IBD', 'Cancer'],
@@ -824,6 +842,11 @@ Do not use JSON. Just provide the list.
         entities = []
         try:
             cleaned_response = response.strip()
+            
+            # Remove <think>...</think> blocks common in reasoning models
+            cleaned_response = re.sub(r'<think>.*?</think>', '', cleaned_response, flags=re.DOTALL).strip()
+            cleaned_response = re.sub(r'<think>.*', '', cleaned_response, flags=re.DOTALL).strip() # In case of unclosed
+            
             # Log raw response for debugging low yield
             logger.debug(f"🔍 Raw LLM Response (Chunk {chunk_num}):\n{cleaned_response[:500]}...") 
             
@@ -831,13 +854,14 @@ Do not use JSON. Just provide the list.
             if json_entities:
                 entities = json_entities
             else:
-                logger.warning(f"⚠️  JSON parsing failed for chunk {chunk_num}. Falling back to unstructured extraction.")
-                logger.debug(f"Failed JSON content: {cleaned_response}")
+                # logger.warning(f"⚠️  JSON parsing failed for chunk {chunk_num}. Falling back to unstructured extraction.")
                 entities.extend(self._extract_from_unstructured_text(cleaned_response, chunk_num))
         except Exception as e:
             logger.error(f"Error parsing LLM response for chunk {chunk_num}: {e}")
             logger.debug(f"Full response that caused error: {response}")
-            entities.extend(self._fallback_regex_extraction(response, chunk_num))
+            # Only use fallback if NOT in fast mode (pass 0), as fast mode expects structured list
+            if chunk_num != 0: 
+                 entities.extend(self._fallback_regex_extraction(response, chunk_num))
         return entities
 
     def _try_json_parsing(self, response: str) -> List[Dict]:
@@ -922,19 +946,32 @@ Do not use JSON. Just provide the list.
                         start_idx = None
         return json_blocks
 
-    def _validate_entity(self, entity: Dict) -> bool:
+    def _validate_entity(self, entity: Union[Dict, str], entity_type: Optional[str] = None) -> bool:
         """Validate entity structure and content using strict cleaning."""
-        if not isinstance(entity, dict): return False
-        if not all(field in entity for field in ['entity', 'entity_type']): return False
-        if entity['entity_type'] not in self.entity_config.ENTITY_TYPES: return False
-        
+        if isinstance(entity, dict):
+            term = entity.get('entity', '')
+            e_type = entity.get('entity_type', '')
+        else:
+            term = entity
+            e_type = entity_type
+
+        if not term or not isinstance(term, str):
+            return False
+            
+        # Check if type is valid
+        if e_type and e_type not in self.entity_config.ENTITY_TYPES:
+            # logger.debug(f"Invalid type: {e_type}")
+            return False
+
         # Use strict cleaning
-        cleaned_entity = TextProcessor.strict_term_cleaning(entity['entity'])
+        cleaned_entity = TextProcessor.strict_term_cleaning(term)
         if not cleaned_entity:
             return False
             
-        # Update the entity with the cleaned version
-        entity['entity'] = cleaned_entity
+        # Update the entity dict if it was a dict
+        if isinstance(entity, dict):
+            entity['entity'] = cleaned_entity
+            
         return True
 
     def _format_entity(self, entity: Dict, chunk_num: int, confidence: float) -> Dict:
@@ -947,65 +984,103 @@ Do not use JSON. Just provide the list.
             'confidence': confidence
         }
 
-    def _extract_from_unstructured_text(self, text: str, chunk_num: int) -> List[Dict]:
-        """Extract entities from unstructured LLM response (list format)."""
+    def _extract_from_unstructured_text(self, response: str, pass_num: int) -> List[Dict]:
+        """Robustly parse entities from unstructured LLM output, handling CoT reasoning."""
         entities = []
-        lines = text.split('\n')
-        for line in lines:
+        
+        # 1. Look for a "FINAL LIST" section if present (common in CoT prompts)
+        final_list_markers = ["FINAL LIST", "EXTRACTED TERMS", "TERMS LIST"]
+        lines = response.split('\n')
+        
+        start_index = 0
+        for i, line in enumerate(lines):
+            if any(marker in line.upper() for marker in final_list_markers):
+                start_index = i + 1
+                break
+        
+        # If we found a marker, only process lines after it
+        processing_lines = lines[start_index:]
+        
+        for line in processing_lines:
             line = line.strip()
             if not line: continue
             
-            # Skip only obvious non-content lines (comments, etc.) but KEEP list items
-            if line.startswith(('#', '//')): continue
+            # Skip conversational lines
+            if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list')):
+                continue
+
+            # Regex for "- Term (TYPE)" or "1. Term (TYPE)"
+            # Capture group 1: Term
+            # Capture group 2: Type
+            match = re.search(r'^[\-\*0-9\.]+\s*(.+?)\s*\(([^)]+)\)', line)
             
-            # Pattern 1: - Term (TYPE)
-            match1 = re.match(r'^[\-\*]?\s*(.+?)\s*\(([^)]+)\)', line)
-            if match1:
-                term = match1.group(1).strip()
-                etype = match1.group(2).strip().upper()
+            if match:
+                term = match.group(1).strip()
+                entity_type = match.group(2).strip().upper()
                 
-                # Validate type
-                if etype in self.entity_config.ENTITY_TYPES:
-                    if self._validate_entity({'entity': term, 'entity_type': etype}):
-                        entities.append(self._format_entity({
-                            'entity': term,
-                            'entity_type': etype,
-                            'context': line[:100]
-                        }, chunk_num, 0.8))
-                    continue
-
-            # Pattern 2: "Term" is TYPE
-            match2 = re.match(r'^[\-\*]?\s*["\'](.+?)["\']\s+is\s+([A-Z_]+)', line, re.IGNORECASE)
-            if match2:
-                term = match2.group(1).strip()
-                etype = match2.group(2).strip().upper()
+                # CLEANUP: Remove common CoT artifacts from the term
+                # e.g. "Term -> Definition" or "Term: Definition"
+                term = re.split(r'\s+(\->|:|\-\-)\s+', term)[0].strip()
                 
-                if etype in self.entity_config.ENTITY_TYPES:
-                    if self._validate_entity({'entity': term, 'entity_type': etype}):
-                        entities.append(self._format_entity({
-                            'entity': term,
-                            'entity_type': etype,
-                            'context': line[:100]
-                        }, chunk_num, 0.8))
-                    continue
+                # Remove quotes if present
+                term = term.strip('"\'')
+                
+                # Map hallucinated types
+                entity_type = self._map_hallucinated_type(entity_type)
+                
+                if self._validate_entity(term, entity_type):
+                    entities.append({
+                        'entity': term,
+                        'entity_type': entity_type,
+                        'confidence': 0.8,
+                        'source_pass': pass_num
+                    })
+                else:
+                    logger.debug(f"❌ Rejected entity: {term} ({entity_type})")
+            
 
-            # Fallback: Check if line contains a known entity type
-            for entity_type in self.entity_config.ENTITY_TYPES:
-                if entity_type in line.upper():
-                    # Try to extract the term part (heuristic)
-                    # Assume term is at the start
-                    clean_line = re.sub(r'^[\-\*]\s*', '', line)
-                    parts = re.split(r'\s+is\s+|\s*\(' + entity_type, clean_line, flags=re.IGNORECASE)
-                    if parts:
-                        term = parts[0].strip()
-                        if self._validate_entity({'entity': term, 'entity_type': entity_type}):
-                            entities.append(self._format_entity({
-                                'entity': term,
-                                'entity_type': entity_type,
-                                'context': line[:100]
-                            }, chunk_num, 0.6))
-                    break
+
         return entities
+
+    def _map_hallucinated_type(self, entity_type: str) -> str:
+        """Map common hallucinated types to valid CDM types."""
+        # Normalize
+        entity_type = entity_type.upper().strip()
+        
+        mapping = {
+            'AMINO_ACID': 'CHEMICAL',
+            'NEUROTRANSMITTER': 'CHEMICAL',
+            'CHEMICAL_CLASS': 'CHEMICAL',
+            'FATTY_ACID': 'CHEMICAL',
+            'METABOLITE': 'CHEMICAL',
+            'DRUG': 'CHEMICAL',
+            'PHARMACOLOGY': 'CHEMICAL',
+            'CLASS': 'CHEMICAL', # Often "Chemical Class"
+            
+            'BACTERIA': 'ORGANISM',
+            'VIRUS': 'ORGANISM',
+            'FUNGI': 'ORGANISM',
+            'MICROBIAL_COMMUNITY': 'ORGANISM',
+            'TAXONOMY': 'ORGANISM',
+            'MICROORGANISM': 'ORGANISM',
+            
+            'NEURON': 'CELL_TYPE',
+            'CELLULAR_STRUCTURE': 'CELL_TYPE',
+            'BRAIN_REGION': 'ANATOMICAL_STRUCTURE', # Need to check if valid
+            
+            'CLINICAL_TERM': 'CLINICAL',
+            'SYMPTOM': 'DISEASE',
+            'CONDITION': 'DISEASE',
+            'SPECIFIC_GENE': 'GENE',
+            
+            'FIELD_OF_STUDY': 'SCIENTIFIC_TERM',
+            'GENERAL_CONCEPT': 'SCIENTIFIC_TERM',
+            'BIOLOGICAL_PROCESS': 'SCIENTIFIC_TERM',
+            'PATHWAY': 'SCIENTIFIC_TERM'
+        }
+        return mapping.get(entity_type, entity_type)
+
+
 
     def _fallback_regex_extraction(self, text: str, chunk_num: int) -> List[Dict]:
         """Fallback extraction using regex patterns."""
@@ -1061,7 +1136,42 @@ Example:
 Do not use JSON. Just provide the list.
 """
 
-        if pass_num == 1:
+        if pass_num == 0:
+            return f"""{system_context}
+
+EXTRACTION GOAL: COMPREHENSIVELY extract ALL biomedical terms from ALL categories in a single pass.
+
+INSTRUCTIONS:
+1. Extract ALL scientific terms from the text.
+2. Output the list IMMEDIATELY.
+3. Do NOT explain your reasoning. Do NOT "think out loud".
+4. Do NOT include any introduction or conclusion.
+5. Output ONLY the terms in this exact format:
+   - Term (TYPE)
+
+ALLOWED TYPES (Use ONLY these):
+- ORGANISM (Bacteria, viruses, fungi)
+- CHEMICAL (Drugs, metabolites, compounds)
+- DISEASE (Conditions, disorders)
+- GENE (Genes, markers)
+- PROTEIN (Proteins, enzymes)
+- DNA_RNA (Genetic material)
+- CELL_TYPE (Cells, tissues)
+- BIOINFO_TOOL (Software, methods)
+- GENOMICS (Omics terms)
+- CLINICAL (Medical terms)
+- SCIENTIFIC_TERM (General concepts)
+
+Example Output:
+- Escherichia coli (ORGANISM)
+- Metformin (CHEMICAL)
+- Type 2 Diabetes (DISEASE)
+- 16S rRNA sequencing (BIOINFO_TOOL)
+
+TEXT:
+{chunk_text}"""
+
+        elif pass_num == 1:
             return f"""{system_context}
 
 EXTRACTION GOAL: Extract ALL biological entities, organisms, species, and taxonomic terms from the text.
@@ -2281,10 +2391,149 @@ class UMLSMapper:
             "average_confidence": sum([e.get('best_umls_confidence', 0) for e in entities]) / len(entities) if entities else 0
         }
 
+@dataclass
+class BioPortalMapping:
+    """BioPortal mapping result."""
+    entity_name: str
+    entity_type: str
+    concept_id: str
+    ontology_name: str
+    mapping_confidence: float
+    mapping_method: str
+
+class BioPortalMapper:
+    """Maps entities to BioPortal ontologies."""
+
+    def __init__(self, api_key: str = None, cache_size: int = 1000):
+        self.api_key = api_key
+        self.cache = {}
+        self.cache_size = cache_size
+        self.base_url = "http://data.bioontology.org/search"
+
+    def map_entity(self, entity_name: str, entity_type: str) -> List[BioPortalMapping]:
+        """Map entity using BioPortal API."""
+        if not self.api_key:
+            return []
+            
+        cache_key = f"{entity_name.lower()}_{entity_type}"
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+
+        mappings = []
+        try:
+            params = {
+                "q": entity_name,
+                "apikey": self.api_key,
+                "pagesize": 5,
+                "include": "prefLabel,cui,semanticType"
+            }
+            
+            response = requests.get(self.base_url, params=params, timeout=10)
+            if response.status_code == 200:
+                results = response.json().get('collection', [])
+                for result in results:
+                    confidence = self._calculate_confidence(entity_name, result)
+                    if confidence > 0.4:
+                        mappings.append(BioPortalMapping(
+                            entity_name=entity_name,
+                            entity_type=entity_type,
+                            concept_id=result.get('@id', ''),
+                            ontology_name=result.get('links', {}).get('ontology', '').split('/')[-1],
+                            mapping_confidence=confidence,
+                            mapping_method="BioPortal_API"
+                        ))
+            
+            mappings.sort(key=lambda x: x.mapping_confidence, reverse=True)
+            
+        except Exception as e:
+            logger.debug(f"BioPortal mapping failed for {entity_name}: {e}")
+
+        if len(self.cache) < self.cache_size:
+            self.cache[cache_key] = mappings
+            
+        return mappings
+
+    def _calculate_confidence(self, entity_name: str, result: Dict) -> float:
+        confidence = 0.5
+        pref_label = result.get('prefLabel', '').lower()
+        if pref_label == entity_name.lower():
+            confidence += 0.4
+        elif entity_name.lower() in pref_label:
+            confidence += 0.2
+        return min(confidence, 1.0)
+
+@dataclass
+class OLSMapping:
+    """OLS mapping result."""
+    entity_name: str
+    entity_type: str
+    iri: str
+    ontology_name: str
+    label: str
+    mapping_confidence: float
+    mapping_method: str
+
+class OLSMapper:
+    """Maps entities using EBI OLS API (Free)."""
+
+    def __init__(self, cache_size: int = 1000):
+        self.cache = {}
+        self.cache_size = cache_size
+        self.base_url = "https://www.ebi.ac.uk/ols/api/search"
+
+    def map_entity(self, entity_name: str, entity_type: str) -> List[OLSMapping]:
+        """Map entity using OLS API."""
+        cache_key = f"{entity_name.lower()}_{entity_type}"
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+
+        mappings = []
+        try:
+            params = {
+                "q": entity_name,
+                "rows": 5,
+                "exact": "false"
+            }
+            
+            response = requests.get(self.base_url, params=params, timeout=10)
+            if response.status_code == 200:
+                results = response.json().get('response', {}).get('docs', [])
+                for result in results:
+                    confidence = self._calculate_confidence(entity_name, result)
+                    if confidence > 0.4:
+                        mappings.append(OLSMapping(
+                            entity_name=entity_name,
+                            entity_type=entity_type,
+                            iri=result.get('iri', ''),
+                            ontology_name=result.get('ontology_name', ''),
+                            label=result.get('label', ''),
+                            mapping_confidence=confidence,
+                            mapping_method="OLS_API"
+                        ))
+            
+            mappings.sort(key=lambda x: x.mapping_confidence, reverse=True)
+            
+        except Exception as e:
+            logger.debug(f"OLS mapping failed for {entity_name}: {e}")
+
+        if len(self.cache) < self.cache_size:
+            self.cache[cache_key] = mappings
+            
+        return mappings
+
+    def _calculate_confidence(self, entity_name: str, result: Dict) -> float:
+        confidence = 0.5
+        label = result.get('label', '').lower()
+        if label == entity_name.lower():
+            confidence += 0.4
+        elif entity_name.lower() in label:
+            confidence += 0.2
+        return min(confidence, 1.0)
+
 class ComprehensiveMapper:
     """Comprehensive mapping coordinator for all biomedical ontologies."""
 
-    def __init__(self, umls_api_key: str = None, athena_api_url: str = None,
+    def __init__(self, umls_api_key: str = None, bioportal_api_key: str = None, athena_api_url: str = None,
                  cache_mappings: bool = True, use_local_omop: bool = True,
                  omop_vocab_dir: str = None, fuzzy_threshold: int = 95, max_matches: int = 3):
 
@@ -2300,12 +2549,23 @@ class ComprehensiveMapper:
             self.omop_mapper = OMOPMapper(athena_api_url=athena_api_url, cache_mappings=cache_mappings)
             logger.info("🌐 Using API-based OMOP mapper")
 
-        # UMLS mapper (can be disabled if no API key)
+        # UMLS mapper
         self.umls_mapper = UMLSMapper(api_key=umls_api_key, cache_size=2000) if umls_api_key else None
         if self.umls_mapper:
             logger.info("🏥 UMLS mapper initialized")
         else:
             logger.info("⚠️  UMLS mapper disabled (no API key)")
+            
+        # BioPortal mapper
+        self.bioportal_mapper = BioPortalMapper(api_key=bioportal_api_key) if bioportal_api_key else None
+        if self.bioportal_mapper:
+            logger.info("🏥 BioPortal mapper initialized")
+        else:
+            logger.info("⚠️  BioPortal mapper disabled (no API key)")
+            
+        # OLS mapper (Free)
+        self.ols_mapper = OLSMapper()
+        logger.info("🏥 OLS mapper initialized")
 
     def map_entity_comprehensive(self, entity_name: str, entity_type: str) -> Dict:
         """Perform comprehensive mapping using all available sources."""
@@ -2315,20 +2575,32 @@ class ComprehensiveMapper:
             umls_mappings = self.umls_mapper.map_entity_to_umls(entity_name, entity_type)
 
         omop_mappings = self.omop_mapper.map_entity_to_omop(entity_name, entity_type)
+        
+        bioportal_mappings = []
+        if self.bioportal_mapper:
+            bioportal_mappings = self.bioportal_mapper.map_entity(entity_name, entity_type)
+            
+        ols_mappings = self.ols_mapper.map_entity(entity_name, entity_type)
 
         # Calculate confidences
         umls_confidences = [m.mapping_confidence for m in umls_mappings] if umls_mappings else []
         omop_confidences = [m.mapping_confidence for m in omop_mappings] if omop_mappings else []
+        bioportal_confidences = [m.mapping_confidence for m in bioportal_mappings] if bioportal_mappings else []
+        ols_confidences = [m.mapping_confidence for m in ols_mappings] if ols_mappings else []
 
         return {
             'entity_name': entity_name,
             'entity_type': entity_type,
             'umls_mappings': [self.umls_mapper._mapping_to_dict(m) for m in umls_mappings] if self.umls_mapper else [],
             'omop_mappings': [vars(m) for m in omop_mappings],
-            'has_any_mapping': len(umls_mappings) > 0 or len(omop_mappings) > 0,
+            'bioportal_mappings': [vars(m) for m in bioportal_mappings],
+            'ols_mappings': [vars(m) for m in ols_mappings],
+            'has_any_mapping': any([umls_mappings, omop_mappings, bioportal_mappings, ols_mappings]),
             'umls_count': len(umls_mappings),
             'omop_count': len(omop_mappings),
-            'best_confidence': max(umls_confidences + omop_confidences, default=0.0)
+            'bioportal_count': len(bioportal_mappings),
+            'ols_count': len(ols_mappings),
+            'best_confidence': max(umls_confidences + omop_confidences + bioportal_confidences + ols_confidences, default=0.0)
         }
 
     def map_entity_list_comprehensive(self, entities: List[Dict]) -> List[Dict]:
@@ -3768,7 +4040,7 @@ class CDMEntityPipeline:
         
         # Optimization Config
         self.opt_config = OptimizationConfig(
-            fast_mode=False,
+            fast_mode=fast_mode,
             api_key=api_key,
             chunk_size_multiplier=1.0, 
             api_type=api_type
@@ -3907,7 +4179,15 @@ class CDMEntityPipeline:
         # 2. Process chunks in parallel
         # 2. Process chunks in parallel with MULTIPLE PASSES per chunk
         # We want to ensure we get Organisms, Chemicals, Tools, and Clinical terms from EVERY chunk.
-        passes_to_run = [1, 2, 3, 4, 11] # 1=Org, 2=Chem, 3=Tool, 4=Clin, 11=Aggressive
+        
+        if self.opt_config.fast_mode:
+            # FAST MODE: Single comprehensive pass on limited chunks
+            passes_to_run = [0] # 0=Comprehensive Pass
+            chunks = chunks[:4] # Limit to first 4 chunks (~20k chars)
+            logger.info(f"🚀 FAST MODE: Processing first {len(chunks)} chunks with Single Comprehensive Pass")
+        else:
+            # STANDARD MODE: Multi-pass on all chunks
+            passes_to_run = [1, 2, 3, 4, 11] # 1=Org, 2=Chem, 3=Tool, 4=Clin, 11=Aggressive
         
         tasks = []
         for chunk_text, chunk_num in chunks:
@@ -4092,57 +4372,26 @@ class CDMEntityPipeline:
                 "confidence_score": entity.get('confidence', 0.0),
                 "avg_confidence_score": entity.get('confidence', 0.0), # Placeholder
                 "max_confidence_score": entity.get('confidence', 0.0), # Placeholder
-                "frequency": 1, # Placeholder, should be calculated if aggregating
+                "frequency": 1, # Placeholder
                 "categories": entity.get('entity_type', ''),
                 "aliases": "", # Placeholder
                 "examples": "", # Placeholder
                 "files_found_in": entity.get('source_file', ''),
                 "is_core_term": False, # Placeholder
                 "relevance_classification": "High" if entity.get('microbiome_relevance_score', 0) > 0.7 else "Medium",
-                
-                # IDs
-                "UMLS_ID": comp_mapping.get('umls_cui', ''),
-                "UMLS_ID_Others": "",
-                "BioPortal_ID": "", # Placeholder
-                "BioPortal_ID_Others": "",
-                "OLS_ID": "", # Placeholder
-                "OLS_ID_Others": "",
-                "NCBO_ID": "", # Placeholder
-                "NCBO_ID_Others": "",
                 "source_code": "", # Placeholder
                 
-                # Auto Concept IDs (OMOP)
-                "auto_concept_id_1": get_item(omop_mappings, 0, 'concept_id', ''),
-                "Auto_Score_1": get_item(omop_mappings, 0, 'confidence', 0.0),
-                "auto_concept_id_2": get_item(omop_mappings, 1, 'concept_id', ''),
-                "Auto_Score_2": get_item(omop_mappings, 1, 'confidence', 0.0),
-                "auto_concept_id_3": get_item(omop_mappings, 2, 'concept_id', ''),
-                "Auto_Score_3": get_item(omop_mappings, 2, 'confidence', 0.0),
-                "auto_concept_id_4": get_item(omop_mappings, 3, 'concept_id', ''),
-                "Auto_Score_4": get_item(omop_mappings, 3, 'confidence', 0.0),
-                "auto_concept_id_5": get_item(omop_mappings, 4, 'concept_id', ''),
-                "Auto_Score_5": get_item(omop_mappings, 4, 'confidence', 0.0),
+                # Requested IDs
+                "UMLS_ID": comp_mapping.get('umls_mappings', [{}])[0].get('umls_cui', '') if comp_mapping.get('umls_mappings') else '',
+                "OMOP": get_item(omop_mappings, 0, 'concept_id', ''),
+                "OLS": comp_mapping.get('ols_mappings', [{}])[0].get('iri', '') if comp_mapping.get('ols_mappings') else '',
+                "Bioportal": comp_mapping.get('bioportal_mappings', [{}])[0].get('concept_id', '') if comp_mapping.get('bioportal_mappings') else '',
                 
-                # Concept Details
+                # Extra details (kept for completeness but can be ignored)
+                "auto_concept_id_1": get_item(omop_mappings, 0, 'concept_id', ''),
                 "concept_name_1": get_item(omop_mappings, 0, 'concept_name', ''),
                 "domain_id_1": get_item(omop_mappings, 0, 'domain_id', ''),
-                "vocabulary_id_1": get_item(omop_mappings, 0, 'vocabulary_id', ''),
-                
-                "concept_name_2": get_item(omop_mappings, 1, 'concept_name', ''),
-                "domain_id_2": get_item(omop_mappings, 1, 'domain_id', ''),
-                "vocabulary_id_2": get_item(omop_mappings, 1, 'vocabulary_id', ''),
-                
-                "concept_name_3": get_item(omop_mappings, 2, 'concept_name', ''),
-                "domain_id_3": get_item(omop_mappings, 2, 'domain_id', ''),
-                "vocabulary_id_3": get_item(omop_mappings, 2, 'vocabulary_id', ''),
-                
-                "concept_name_4": get_item(omop_mappings, 3, 'concept_name', ''),
-                "domain_id_4": get_item(omop_mappings, 3, 'domain_id', ''),
-                "vocabulary_id_4": get_item(omop_mappings, 3, 'vocabulary_id', ''),
-                
-                "concept_name_5": get_item(omop_mappings, 4, 'concept_name', ''),
-                "domain_id_5": get_item(omop_mappings, 4, 'domain_id', ''),
-                "vocabulary_id_5": get_item(omop_mappings, 4, 'vocabulary_id', '')
+                "vocabulary_id_1": get_item(omop_mappings, 0, 'vocabulary_id', '')
             }
             flat_results.append(record)
 
@@ -4178,6 +4427,32 @@ class CDMEntityPipeline:
         for entity_type, count in stats['entity_type_distribution'].items():
             logger.info(f"   {entity_type}: {count} entities")
         logger.info(f"   Average confidence: {stats['average_confidence']:.3f}")
+
+    def generate_statistics(self, entities: List[Dict]) -> Dict:
+        """Generate statistics from extracted entities."""
+        stats = {
+            'total_entities': len(entities),
+            'unique_entities': len({e['entity'].lower() for e in entities}),
+            'entity_type_distribution': {},
+            'average_confidence': 0.0
+        }
+        
+        if not entities:
+            return stats
+            
+        # Type distribution
+        type_counts = {}
+        total_confidence = 0
+        
+        for entity in entities:
+            e_type = entity.get('entity_type', 'UNKNOWN')
+            type_counts[e_type] = type_counts.get(e_type, 0) + 1
+            total_confidence += entity.get('confidence', 0.0)
+            
+        stats['entity_type_distribution'] = type_counts
+        stats['average_confidence'] = total_confidence / len(entities)
+        
+        return stats
 
     def run(self, text: str, output_path: str, chunk_size: int = None) -> bool:
         """Run the complete CDM entity extraction pipeline."""
@@ -4427,7 +4702,7 @@ def main():
     parser.add_argument('--enable-enhanced', action='store_true', help='Run enhanced pipeline stage')
     parser.add_argument('--semantic-model', default='all-MiniLM-L6-v2', help='Semantic model for embeddings (default: all-MiniLM-L6-v2)')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode (skip heavy processing)')
-    # parser.add_argument('--fast', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
+    parser.add_argument('--fast-mode', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
     parser.add_argument('--api-type', choices=['ollama', 'openai'], default='ollama', help='API type (ollama or openai/vllm)')
     parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
     parser.add_argument('--force', action='store_true', help='Force re-processing (ignore checkpoints)')
@@ -4484,7 +4759,7 @@ def main():
         semantic_model=args.semantic_model,
         semantic_threshold=0.8,
         dry_run=args.dry_run,
-        fast_mode=False,
+        fast_mode=args.fast_mode,
         api_type=args.api_type,
         force=args.force
     )
@@ -4521,7 +4796,7 @@ def main():
             enable_correction=args.enable_correction,
             enable_llm_correction=args.enable_llm_correction,
             dry_run=args.dry_run,
-            fast_mode=False,
+            fast_mode=args.fast_mode,
             api_type=args.api_type,
             api_key=args.api_key
         )
@@ -4541,3 +4816,101 @@ def main():
 if __name__ == "__main__":
     sys.exit(main())
 
+c l a s s   S e m a n t i c D e d u p l i c a t o r :  
+         " " " D e d u p l i c a t e s   e n t i t i e s   u s i n g   s e m a n t i c   s i m i l a r i t y . " " "  
+  
+         d e f   _ _ i n i t _ _ ( s e l f ,   m o d e l _ n a m e :   s t r   =   ' a l l - M i n i L M - L 6 - v 2 ' ,   t h r e s h o l d :   f l o a t   =   0 . 8 5 ) :  
+                 s e l f . t h r e s h o l d   =   t h r e s h o l d  
+                 s e l f . m o d e l   =   N o n e  
+                 t r y :  
+                         f r o m   s e n t e n c e _ t r a n s f o r m e r s   i m p o r t   S e n t e n c e T r a n s f o r m e r  
+                         s e l f . m o d e l   =   S e n t e n c e T r a n s f o r m e r ( m o d e l _ n a m e )  
+                         l o g g e r . i n f o ( f " >���  S e m a n t i c   d e d u p l i c a t o r   i n i t i a l i z e d   w i t h   { m o d e l _ n a m e } " )  
+                 e x c e p t   I m p o r t E r r o r :  
+                         l o g g e r . w a r n i n g ( " �&�    s e n t e n c e - t r a n s f o r m e r s   n o t   i n s t a l l e d .   S e m a n t i c   d e d u p l i c a t i o n   d i s a b l e d . " )  
+                 e x c e p t   E x c e p t i o n   a s   e :  
+                         l o g g e r . w a r n i n g ( f " �&�    F a i l e d   t o   l o a d   s e m a n t i c   m o d e l :   { e } " )  
+  
+         d e f   a p p l y _ s e m a n t i c _ d e d u p l i c a t i o n ( s e l f ,   e n t i t i e s :   L i s t [ D i c t ] )   - >   L i s t [ D i c t ] :  
+                 " " " D e d u p l i c a t e   e n t i t i e s   b a s e d   o n   s e m a n t i c   s i m i l a r i t y . " " "  
+                 i f   n o t   e n t i t i e s :  
+                         r e t u r n   [ ]  
+                          
+                 i f   n o t   s e l f . m o d e l :  
+                         #   F a l l b a c k   t o   e x a c t   s t r i n g   d e d u p l i c a t i o n  
+                         r e t u r n   s e l f . _ e x a c t _ d e d u p l i c a t i o n ( e n t i t i e s )  
+  
+                 #   F i r s t ,   e x a c t   d e d u p l i c a t i o n   t o   r e d u c e   w o r k  
+                 u n i q u e _ e n t i t i e s   =   s e l f . _ e x a c t _ d e d u p l i c a t i o n ( e n t i t i e s )  
+                 i f   l e n ( u n i q u e _ e n t i t i e s )   <   2 :  
+                         r e t u r n   u n i q u e _ e n t i t i e s  
+  
+                 #   G e t   e m b e d d i n g s  
+                 t e r m s   =   [ e [ ' e n t i t y ' ]   f o r   e   i n   u n i q u e _ e n t i t i e s ]  
+                 e m b e d d i n g s   =   s e l f . m o d e l . e n c o d e ( t e r m s )  
+  
+                 #   C o m p u t e   s i m i l a r i t y   m a t r i x  
+                 f r o m   s k l e a r n . m e t r i c s . p a i r w i s e   i m p o r t   c o s i n e _ s i m i l a r i t y  
+                 s i m i l a r i t y _ m a t r i x   =   c o s i n e _ s i m i l a r i t y ( e m b e d d i n g s )  
+  
+                 #   G r o u p   s i m i l a r   e n t i t i e s  
+                 #   W e   u s e   a   s i m p l e   g r e e d y   a p p r o a c h :   t a k e   t h e   f i r s t ,   f i n d   a l l   s i m i l a r ,   m e r g e ,   r e p e a t  
+                 f i n a l _ e n t i t i e s   =   [ ]  
+                 p r o c e s s e d _ i n d i c e s   =   s e t ( )  
+  
+                 f o r   i   i n   r a n g e ( l e n ( u n i q u e _ e n t i t i e s ) ) :  
+                         i f   i   i n   p r o c e s s e d _ i n d i c e s :  
+                                 c o n t i n u e  
+  
+                         c u r r e n t _ g r o u p   =   [ u n i q u e _ e n t i t i e s [ i ] ]  
+                         p r o c e s s e d _ i n d i c e s . a d d ( i )  
+  
+                         f o r   j   i n   r a n g e ( i   +   1 ,   l e n ( u n i q u e _ e n t i t i e s ) ) :  
+                                 i f   j   i n   p r o c e s s e d _ i n d i c e s :  
+                                         c o n t i n u e  
+  
+                                 i f   s i m i l a r i t y _ m a t r i x [ i ] [ j ]   > =   s e l f . t h r e s h o l d :  
+                                         #   C h e c k   i f   t y p e s   m a t c h   ( o p t i o n a l ,   b u t   s a f e r )  
+                                         i f   u n i q u e _ e n t i t i e s [ i ] [ ' e n t i t y _ t y p e ' ]   = =   u n i q u e _ e n t i t i e s [ j ] [ ' e n t i t y _ t y p e ' ] :  
+                                                 c u r r e n t _ g r o u p . a p p e n d ( u n i q u e _ e n t i t i e s [ j ] )  
+                                                 p r o c e s s e d _ i n d i c e s . a d d ( j )  
+  
+                         #   M e r g e   g r o u p  
+                         m e r g e d _ e n t i t y   =   s e l f . _ m e r g e _ e n t i t y _ g r o u p ( c u r r e n t _ g r o u p )  
+                         f i n a l _ e n t i t i e s . a p p e n d ( m e r g e d _ e n t i t y )  
+  
+                 r e t u r n   f i n a l _ e n t i t i e s  
+  
+         d e f   _ e x a c t _ d e d u p l i c a t i o n ( s e l f ,   e n t i t i e s :   L i s t [ D i c t ] )   - >   L i s t [ D i c t ] :  
+                 " " " D e d u p l i c a t e   b y   e x a c t   s t r i n g   m a t c h   ( c a s e - i n s e n s i t i v e ) . " " "  
+                 g r o u p e d   =   d e f a u l t d i c t ( l i s t )  
+                 f o r   e   i n   e n t i t i e s :  
+                         k e y   =   ( e [ ' e n t i t y ' ] . l o w e r ( ) . s t r i p ( ) ,   e [ ' e n t i t y _ t y p e ' ] )  
+                         g r o u p e d [ k e y ] . a p p e n d ( e )  
+                  
+                 r e t u r n   [ s e l f . _ m e r g e _ e n t i t y _ g r o u p ( g r o u p )   f o r   g r o u p   i n   g r o u p e d . v a l u e s ( ) ]  
+  
+         d e f   _ m e r g e _ e n t i t y _ g r o u p ( s e l f ,   g r o u p :   L i s t [ D i c t ] )   - >   D i c t :  
+                 " " " M e r g e   a   g r o u p   o f   d u p l i c a t e   e n t i t i e s   i n t o   o n e . " " "  
+                 i f   n o t   g r o u p :  
+                         r e t u r n   { }  
+                          
+                 #   P i c k   t h e   m o s t   f r e q u e n t   o r   l o n g e s t   f o r m   a s   t h e   c a n o n i c a l   n a m e  
+                 #   F o r   n o w ,   j u s t   p i c k   t h e   o n e   w i t h   h i g h e s t   c o n f i d e n c e   o r   f i r s t  
+                 b e s t _ e n t i t y   =   m a x ( g r o u p ,   k e y = l a m b d a   x :   x . g e t ( ' c o n f i d e n c e ' ,   0 ) )  
+                  
+                 #   A g g r e g a t e   s t a t s  
+                 t o t a l _ c o n f i d e n c e   =   s u m ( e . g e t ( ' c o n f i d e n c e ' ,   0 )   f o r   e   i n   g r o u p )  
+                 a v g _ c o n f i d e n c e   =   t o t a l _ c o n f i d e n c e   /   l e n ( g r o u p )  
+                 m a x _ c o n f i d e n c e   =   m a x ( e . g e t ( ' c o n f i d e n c e ' ,   0 )   f o r   e   i n   g r o u p )  
+                  
+                 #   C r e a t e   m e r g e d   o b j e c t  
+                 m e r g e d   =   b e s t _ e n t i t y . c o p y ( )  
+                 m e r g e d [ ' c o n f i d e n c e ' ]   =   a v g _ c o n f i d e n c e   #   U s e   a v e r a g e   f o r   t h e   f i n a l   s c o r e ?   O r   m a x ?  
+                 m e r g e d [ ' a v g _ c o n f i d e n c e _ s c o r e ' ]   =   a v g _ c o n f i d e n c e  
+                 m e r g e d [ ' m a x _ c o n f i d e n c e _ s c o r e ' ]   =   m a x _ c o n f i d e n c e  
+                 m e r g e d [ ' f r e q u e n c y ' ]   =   l e n ( g r o u p )  
+                 m e r g e d [ ' s o u r c e _ c o u n t ' ]   =   l e n ( g r o u p )  
+                  
+                 r e t u r n   m e r g e d  
+ 

@@ -2,58 +2,20 @@
 """
 Advanced Scientific Term Extraction Pipeline
 Comprehensive modular pipeline with AI correction, UMLS/OMOP mapping, and semantic deduplication.
-
-Features:
-- Multi-sciSpaCy model NER extraction
-- 3-layer deduplication (Exact → Fuzzy → Semantic)
-- AI-powered term correction (BioMistral/OpenAI)
-- UMLS mapping with BioPortal/OLS/NCBO integration
-- OMOP vocabulary mapping
-- Multi-format output (JSON, CSV, SQLite)
 """
 
 import os
 import sys
 import argparse
 import logging
-import json
 from pathlib import Path
-from typing import Dict, List, Any
-from datetime import datetime
 
 # Add src to path for imports
 sys.path.append(str(Path(__file__).parent / "src"))
 
 from src.config.settings import get_config, validate_config
-from src.modules.terms_extractor import TermsExtractor, create_terms_extractor
-from src.modules.deduplication import Deduplicator, create_deduplicator
-from src.modules.ai_correction import AITermCorrector, create_ai_corrector
+from src.pipeline import GlobalPipelineProcessor
 from src.utils.model_detector import get_available_model_info
-
-# Conditional imports for optional modules
-try:
-    from src.modules.umls_mapping import UMLSMapper, create_umls_mapper
-except ImportError:
-    UMLSMapper = None
-    def create_umls_mapper(config):
-        return None
-
-try:
-    from src.modules.omop_mapping import OMOPMapper, create_omop_mapper
-except ImportError:
-    OMOPMapper = None
-    def create_omop_mapper(config):
-        return None
-
-try:
-    from src.modules.entity_linkers import ComprehensiveEntityLinker, create_comprehensive_entity_linker
-except ImportError:
-    ComprehensiveEntityLinker = None
-    def create_comprehensive_entity_linker(umls_config, bioportal_config):
-        return None
-
-from src.utils.output_writer import OutputWriter, create_output_writer
-
 
 def setup_logging(log_level: str = "INFO", log_file: str = None):
     """Setup logging configuration"""
@@ -69,237 +31,6 @@ def setup_logging(log_level: str = "INFO", log_file: str = None):
         handlers=handlers
     )
 
-
-def load_input_files(input_dir: str, patterns: List[str], max_files: int = None) -> List[str]:
-    """Load input files from directory"""
-    input_files = []
-    input_path = Path(input_dir)
-
-    if not input_path.exists():
-        raise FileNotFoundError(f"Input directory does not exist: {input_dir}")
-
-    for pattern in patterns:
-        files = list(input_path.glob(pattern))
-        input_files.extend([str(f) for f in files if f.is_file()])
-
-    # Remove duplicates and sort
-    input_files = sorted(list(set(input_files)))
-
-    if max_files:
-        input_files = input_files[:max_files]
-
-    return input_files
-
-
-def process_documents(
-    input_files: List[str],
-    terms_extractor: TermsExtractor,
-    deduplicator: Deduplicator,
-    ai_corrector: AITermCorrector,
-    umls_mapper: UMLSMapper,
-    omop_mapper: OMOPMapper,
-    entity_linker: ComprehensiveEntityLinker,
-    config
-) -> Dict[str, Any]:
-    """Process all documents through the complete pipeline"""
-    logger = logging.getLogger(__name__)
-
-    results = {
-        "metadata": {
-            "timestamp": datetime.now().isoformat(),
-            "input_files": input_files,
-            "config": {
-                "models": config.scispacy.models,
-                "semantic_model": config.deduplication.default_semantic_model,
-                "fuzzy_threshold": config.deduplication.fuzzy_threshold,
-                "semantic_threshold": config.deduplication.semantic_threshold,
-                "ai_correction_enabled": config.ai_correction.enabled,
-                "umls_enabled": config.umls.enabled,
-                "omop_enabled": config.omop.enabled
-            }
-        },
-        "extraction_results": [],
-        "deduplicated_terms": [],
-        "ai_corrected_terms": [],
-        "entity_linking_results": {},
-        "umls_mappings": {},
-        "omop_mappings": {},
-        "statistics": {}
-    }
-
-    logger.info(f"Processing {len(input_files)} files...")
-
-    # Step 1: Extract terms using sciSpaCy models
-    logger.info("=" * 50)
-    logger.info("STEP 1: SCISPACY TERM EXTRACTION")
-    logger.info("=" * 50)
-
-    all_extracted_terms = []
-    extraction_stats = {"raw_entities": 0, "filtered_entities": 0}
-
-    for file_path in input_files:
-        logger.info(f"Processing: {file_path}")
-
-        try:
-            file_terms = terms_extractor.extract_from_file(file_path)
-            all_extracted_terms.extend(file_terms)
-
-            extraction_stats["raw_entities"] += sum(
-                len(t.get("raw_entities", [])) for t in file_terms
-            )
-            extraction_stats["filtered_entities"] += len(file_terms)
-
-            results["extraction_results"].extend(file_terms)
-
-        except Exception as e:
-            logger.error(f"Error processing {file_path}: {e}")
-            continue
-
-    logger.info(f"Extraction complete: {extraction_stats['raw_entities']} raw entities → {extraction_stats['filtered_entities']} filtered terms")
-    results["statistics"]["extraction"] = extraction_stats
-
-    # Step 2: Deduplication
-    logger.info("=" * 50)
-    logger.info("STEP 2: MULTI-LAYER DEDUPLICATION")
-    logger.info("=" * 50)
-
-    dedup_result = deduplicator.deduplicate_terms(all_extracted_terms)
-    deduplicated_terms = dedup_result.deduplicated_terms
-
-    logger.info(f"Deduplication complete: {len(all_extracted_terms)} → {len(deduplicated_terms)} terms")
-    results["deduplicated_terms"] = deduplicated_terms
-    results["statistics"]["deduplication"] = {
-        "original_count": len(all_extracted_terms),
-        "exact_removed": dedup_result.exact_removed,
-        "fuzzy_removed": dedup_result.fuzzy_removed,
-        "semantic_removed": dedup_result.semantic_removed,
-        "biomedical_removed": dedup_result.biomedical_removed,
-        "final_count": len(deduplicated_terms)
-    }
-
-    # Store biomedical duplicates for parsing
-    results["biomedical_duplicates"] = getattr(dedup_result, 'biomedical_duplicates', [])
-
-    # Step 3: AI Correction (if enabled)
-    if config.ai_correction.enabled:
-        logger.info("=" * 50)
-        logger.info("STEP 3: AI-POWERED TERM CORRECTION")
-        logger.info("=" * 50)
-
-        ai_corrected_terms = ai_corrector.correct_terms_batch(deduplicated_terms)
-        results["ai_corrected_terms"] = ai_corrected_terms
-
-        ai_stats = {
-            "original_count": len(deduplicated_terms),
-            "final_count": len(ai_corrected_terms),
-            "corrected": sum(1 for t in ai_corrected_terms if t.get("ai_classification") == "CORRECT"),
-            "removed": sum(1 for t in ai_corrected_terms if t.get("ai_classification") == "REMOVE"),
-            "kept": sum(1 for t in ai_corrected_terms if t.get("ai_classification") == "KEEP")
-        }
-        results["statistics"]["ai_correction"] = ai_stats
-
-        logger.info(f"AI correction complete: {ai_stats['corrected']} corrected, {ai_stats['removed']} removed, {ai_stats['kept']} kept")
-    else:
-        results["ai_corrected_terms"] = deduplicated_terms
-        logger.info("AI correction disabled, skipping...")
-
-    # Step 4: Comprehensive Entity Linking (if available)
-    if entity_linker is not None:
-        logger.info("=" * 50)
-        logger.info("STEP 4: COMPREHENSIVE ENTITY LINKING")
-        logger.info("=" * 50)
-
-        terms_to_link = [t.get("term", "") for t in results["ai_corrected_terms"]]
-        entity_linking_results = entity_linker.link_entities_comprehensive(terms_to_link)
-        results["entity_linking_results"] = {term: result.to_dict() for term, result in entity_linking_results.items()}
-
-        entity_stats = {
-            "total_terms": len(terms_to_link),
-            "supported_ontologies": entity_linker.get_supported_ontologies(),
-            "total_entities": sum(
-                len(result.umls_entities) + len(result.hpo_entities) + len(result.go_entities) +
-                len(result.chebi_entities) + len(result.drugbank_entities) +
-                sum(len(entities) for entities in result.other_ontologies.values())
-                for result in entity_linking_results.values()
-            )
-        }
-        results["statistics"]["entity_linking"] = entity_stats
-
-        logger.info(f"Entity linking complete: {entity_stats['total_entities']} total entities found across {len(entity_stats['supported_ontologies'])} ontologies")
-    else:
-        logger.info("Comprehensive entity linking not available, skipping...")
-
-    # Step 5: UMLS Mapping (if enabled)
-    if config.umls.enabled:
-        logger.info("=" * 50)
-        logger.info("STEP 5: UMLS & ONTOLOGY MAPPING")
-        logger.info("=" * 50)
-
-        terms_to_map = [t.get("term", "") for t in results["ai_corrected_terms"]]
-        umls_mappings = umls_mapper.map_terms_comprehensive(terms_to_map)
-        results["umls_mappings"] = {term: mapping.to_dict() for term, mapping in umls_mappings.items()}
-
-        umls_stats = {
-            "total_terms": len(terms_to_map),
-            "umls_exact_matches": sum(1 for m in umls_mappings.values() if m.umls_exact),
-            "bioportal_exact_matches": sum(1 for m in umls_mappings.values() if m.bioportal_exact),
-            "ols_exact_matches": sum(1 for m in umls_mappings.values() if m.ols_exact)
-        }
-        results["statistics"]["umls_mapping"] = umls_stats
-
-        logger.info(f"UMLS mapping complete: {umls_stats['umls_exact_matches']} exact UMLS matches")
-    else:
-        logger.info("UMLS mapping disabled, skipping...")
-
-    # Step 6: OMOP Mapping (if enabled)
-    if config.omop.enabled and hasattr(config.omop, 'vocab_dir'):
-        logger.info("=" * 50)
-        logger.info("STEP 6: OMOP VOCABULARY MAPPING")
-        logger.info("=" * 50)
-
-        try:
-            omop_mapper.initialize()
-            terms_to_map = [t.get("term", "") for t in results["ai_corrected_terms"]]
-            omop_results = omop_mapper.map_terms(terms_to_map)
-            results["omop_mappings"] = {r.original_term: r.to_dict() for r in omop_results}
-
-            omop_stats = {
-                "total_terms": len(terms_to_map),
-                "exact_matches": sum(1 for r in omop_results if r.best_match and r.best_match.match_type == "EXACT"),
-                "fuzzy_matches": sum(1 for r in omop_results if r.best_match and r.best_match.match_type == "FUZZY"),
-                "no_matches": sum(1 for r in omop_results if not r.matches)
-            }
-            results["statistics"]["omop_mapping"] = omop_stats
-
-            logger.info(f"OMOP mapping complete: {omop_stats['exact_matches']} exact, {omop_stats['fuzzy_matches']} fuzzy matches")
-
-        except Exception as e:
-            logger.error(f"OMOP mapping failed: {e}")
-            logger.info("Continuing without OMOP mapping...")
-    else:
-        logger.info("OMOP mapping disabled or not configured, skipping...")
-
-    # Final statistics
-    final_terms_count = len(results["ai_corrected_terms"])
-    results["statistics"]["overall"] = {
-        "final_unique_terms": final_terms_count,
-        "total_reduction_percent": round((1 - final_terms_count / max(extraction_stats["raw_entities"], 1)) * 100, 2),
-        "pipeline_stages_completed": [
-            "extraction",
-            "deduplication",
-            "ai_correction" if config.ai_correction.enabled else None,
-            "entity_linking" if entity_linker is not None else None,
-            "umls_mapping" if config.umls.enabled else None,
-            "omop_mapping" if (config.omop.enabled and hasattr(config.omop, 'vocab_dir')) else None
-        ]
-    }
-    results["statistics"]["overall"]["pipeline_stages_completed"] = [
-        stage for stage in results["statistics"]["overall"]["pipeline_stages_completed"] if stage
-    ]
-
-    return results
-
-
 def main():
     """Main pipeline execution"""
     parser = argparse.ArgumentParser(
@@ -312,6 +43,10 @@ def main():
     parser.add_argument("--max_files", type=int, default=100, help="Maximum number of files to process")
     parser.add_argument("--file_patterns", nargs="+", default=["*.txt", "*.md", "*.csv"], help="File patterns to process")
 
+    # Global Pipeline Settings
+    parser.add_argument("--target_terms", type=int, default=2000, help="Target number of final terms")
+    parser.add_argument("--run_all_models", action="store_true", help="Run all available sciSpaCy models")
+
     # Deduplication arguments
     parser.add_argument("--semantic_model", type=str, default="mini-lm", choices=["mini-lm", "nomic", "mpnet"], help="Semantic model for deduplication")
     parser.add_argument("--fuzzy_threshold", type=float, default=0.85, help="Fuzzy matching threshold")
@@ -321,26 +56,33 @@ def main():
     parser.add_argument("--disable_biomedical_dedup", action="store_true", help="Disable BioMistral biomedical deduplication")
     parser.add_argument("--biomedical_context", type=str, default="microbiome", choices=["microbiome", "biomedical", "clinical", "genomics"], help="Biomedical context for deduplication")
 
-    # SpaCy model arguments
-    parser.add_argument("--models", nargs="+", help="Specific spaCy models to use (e.g., en_core_sci_lg en_ner_bc5cdr_md)")
-    parser.add_argument("--use_all_available_models", action="store_true", help="Use all available scientific models")
-    parser.add_argument("--disable_auto_detect_models", action="store_true", help="Disable automatic model detection")
-    parser.add_argument("--list_available_models", action="store_true", help="List all available scientific spaCy models and exit")
-
-    # Feature toggles
-    parser.add_argument("--disable_ai_correction", action="store_true", help="Disable AI term correction")
-    parser.add_argument("--disable_umls", action="store_true", help="Disable UMLS mapping")
-    parser.add_argument("--disable_omop", action="store_true", help="Disable OMOP mapping")
-
-    # OMOP specific
-    parser.add_argument("--omop_vocab_dir", type=str, help="OMOP vocabulary directory")
-
-    # Output formats
-    parser.add_argument("--output_formats", nargs="+", default=["json", "csv"], choices=["json", "csv", "sqlite"], help="Output formats")
+    # Advanced Features
+    parser.add_argument("--validate_biomistral", action="store_true", help="Validate terms with BioMistral")
+    parser.add_argument("--generate_definitions", action="store_true", help="Generate definitions")
+    parser.add_argument("--correct_terms", action="store_true", help="Correct terms with LLM")
+    
+    # Mapping Features
+    parser.add_argument("--map_umls", action="store_true", help="Map to UMLS")
+    parser.add_argument("--map_omop", action="store_true", help="Map to OMOP")
+    parser.add_argument("--map_bioportal", action="store_true", help="Map to BioPortal")
+    
+    # BioMistral Settings
+    parser.add_argument("--biomistral_model", type=str, default="BioMistral/BioMistral-7B", help="BioMistral model path")
+    parser.add_argument("--load_4bit", action="store_true", help="Load BioMistral in 4-bit mode")
+    parser.add_argument("--batch_size", type=int, default=32, help="Batch size for inference")
 
     # Logging
     parser.add_argument("--log_level", type=str, default="INFO", choices=["DEBUG", "INFO", "WARNING", "ERROR"])
     parser.add_argument("--log_file", type=str, help="Log file path")
+    
+    # Model Listing
+    parser.add_argument("--list_available_models", action="store_true", help="List all available scientific spaCy models and exit")
+    parser.add_argument("--models", nargs="+", help="Specific spaCy models to use (e.g., en_core_sci_lg en_ner_bc5cdr_md)")
+    parser.add_argument("--use_all_available_models", action="store_true", help="Use all available scientific models")
+    parser.add_argument("--disable_auto_detect_models", action="store_true", help="Disable automatic model detection")
+    
+    # Output formats
+    parser.add_argument("--output_formats", nargs="+", default=["json", "csv"], choices=["json", "csv", "sqlite"], help="Output formats")
 
     args = parser.parse_args()
 
@@ -373,93 +115,49 @@ def main():
     config.output_dir = args.output_dir
     config.max_files = args.max_files
     config.input_patterns = args.file_patterns
+    config.target_final_terms = args.target_terms
+    
+    # Deduplication
     config.deduplication.default_semantic_model = args.semantic_model
     config.deduplication.fuzzy_threshold = args.fuzzy_threshold
     config.deduplication.semantic_threshold = args.semantic_threshold
     config.deduplication.biomedical_enabled = not args.disable_biomedical_dedup
     config.deduplication.biomedical_context = args.biomedical_context
+    
+    # Advanced Features
+    config.validate_biomistral = args.validate_biomistral
+    config.generate_definitions = args.generate_definitions
+    config.correct_terms = args.correct_terms
+    config.map_umls = args.map_umls
+    config.map_omop = args.map_omop
+    config.map_bioportal = args.map_bioportal
+    
+    # BioMistral
+    config.biomistral_model = args.biomistral_model
+    config.load_4bit = args.load_4bit
+    config.batch_size = args.batch_size
+    
+    # Output formats
     config.output_formats = args.output_formats
 
     # SpaCy model configuration
     if args.models:
         config.scispacy.preferred_models = args.models
         logger.info(f"Using user-specified models: {args.models}")
-
-    config.scispacy.use_all_available = args.use_all_available_models
-    config.scispacy.auto_detect_models = not args.disable_auto_detect_models
-
-    if args.use_all_available_models:
+        
+    if args.run_all_models or args.use_all_available_models:
+        config.scispacy.use_all_available = True
         logger.info("Will use all available scientific models")
 
-    if args.disable_auto_detect_models:
-        logger.info("Automatic model detection disabled - using configured models only")
-
-    config.ai_correction.enabled = not args.disable_ai_correction
-    config.umls.enabled = not args.disable_umls
-    config.omop.enabled = not args.disable_omop
-
-    if args.omop_vocab_dir:
-        config.omop.vocab_dir = args.omop_vocab_dir
-
-    # Validate configuration
-    warnings = validate_config(config)
-    if warnings:
-        logger.warning("Configuration warnings:")
-        for warning in warnings:
-            logger.warning(f"  - {warning}")
+    config.scispacy.auto_detect_models = not args.disable_auto_detect_models
 
     # Create output directory
     os.makedirs(config.output_dir, exist_ok=True)
 
     try:
-        # Initialize pipeline components
-        logger.info("Initializing pipeline components...")
-
-        terms_extractor = create_terms_extractor(config.scispacy)
-        deduplicator = create_deduplicator(config.deduplication)
-        ai_corrector = create_ai_corrector(config.ai_correction)
-        umls_mapper = create_umls_mapper(config.umls, config.bioportal)
-        omop_mapper = create_omop_mapper(config.omop.vocab_dir, config.omop) if config.omop.enabled and config.omop.vocab_dir else None
-        entity_linker = create_comprehensive_entity_linker(config.umls, config.bioportal)
-
-        # Load input files
-        input_files = load_input_files(config.input_dir, config.input_patterns, config.max_files)
-        logger.info(f"Found {len(input_files)} files to process")
-
-        if not input_files:
-            logger.error("No input files found!")
-            return 1
-
-        # Process documents
-        results = process_documents(
-            input_files=input_files,
-            terms_extractor=terms_extractor,
-            deduplicator=deduplicator,
-            ai_corrector=ai_corrector,
-            umls_mapper=umls_mapper,
-            omop_mapper=omop_mapper,
-            entity_linker=entity_linker,
-            config=config
-        )
-
-        # Save results
-        output_writer = create_output_writer(config.output_dir)
-        saved_files = output_writer.save_results(results, config.output_formats)
-
-        logger.info("=" * 50)
-        logger.info("PIPELINE COMPLETED SUCCESSFULLY")
-        logger.info("=" * 50)
-
-        # Print summary
-        stats = results["statistics"]["overall"]
-        logger.info(f"Final unique terms: {stats['final_unique_terms']}")
-        logger.info(f"Total reduction: {stats['total_reduction_percent']}%")
-        logger.info(f"Pipeline stages: {', '.join(stats['pipeline_stages_completed'])}")
-
-        logger.info("Results saved to:")
-        for format_type, file_path in saved_files.items():
-            logger.info(f"  {format_type.upper()}: {file_path}")
-
+        # Initialize and run Global Pipeline
+        pipeline = GlobalPipelineProcessor(config)
+        pipeline.run()
         return 0
 
     except KeyboardInterrupt:

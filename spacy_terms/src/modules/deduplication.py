@@ -483,6 +483,8 @@ class Deduplicator:
         total_reduction = (original_count - len(after_aggressive)) / original_count * 100 if original_count > 0 else 0
         logger.info(f"Deduplication complete: {original_count} → {len(after_aggressive)} ({total_reduction:.1f}% reduction)")
 
+        return result
+
     def _semantic_quality_filter(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
         Filter out terms that are semantically similar to generic research concepts.
@@ -523,8 +525,6 @@ class Deduplicator:
                 
         logger.info(f"Semantic Filter: {len(terms)} -> {len(keep_indices)} terms")
         return [terms[i] for i in keep_indices]
-
-        return result
 
 
 def create_deduplicator(config: DeduplicationConfig) -> Deduplicator:

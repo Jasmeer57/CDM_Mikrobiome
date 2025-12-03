@@ -480,3 +480,133 @@ class OMOPMapper:
 def create_omop_mapper(vocab_dir: str, config: OMOPConfig) -> OMOPMapper:
     """Factory function to create OMOP mapper"""
     return OMOPMapper(vocab_dir, config)
+
+
+class ComprehensiveMapper:
+    """Unified Mapper for UMLS, BioPortal, and OMOP"""
+    
+    # API Endpoints
+    BIOPORTAL_API = "https://data.bioontology.org/search"
+    OLS_API = "https://www.ebi.ac.uk/ols/api/search"
+    
+    def __init__(self, config):
+        self.config = config
+        self.omop_mapper = OMOPMapper(config.omop.vocab_dir, config.omop)
+        if config.omop.enabled:
+            try:
+                self.omop_mapper.initialize()
+            except Exception as e:
+                logger.warning(f"Failed to initialize OMOP mapper: {e}")
+        
+    def map_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Run all mapping strategies"""
+        
+        # 1. OMOP Mapping
+        if self.config.map_omop:
+            term_strings = [t['term'] for t in terms]
+            omop_results = self.omop_mapper.map_terms(term_strings)
+            
+            # Attach results back to terms
+            omop_map = {r.original_term: r for r in omop_results}
+            for t in terms:
+                if t['term'] in omop_map:
+                    res = omop_map[t['term']]
+                    if res.matches:
+                        t['mappings'] = t.get('mappings', {})
+                        t['mappings']['omop'] = [m.to_dict() for m in res.matches[:3]]
+        
+        # 2. BioPortal/OLS API Mapping
+        if self.config.map_bioportal:
+            if self.config.bioportal.api_key:
+                terms = self._map_bioportal(terms)
+            else:
+                # Fallback to OLS if no BioPortal key
+                terms = self._map_ols(terms)
+            
+        return terms
+        
+    def _map_bioportal(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Map to BioPortal using real API"""
+        import requests
+        import time
+        
+        logger.info(f"Mapping {len(terms)} terms to BioPortal...")
+        
+        # Use session for connection pooling
+        session = requests.Session()
+        headers = {"Authorization": f"apikey token={self.config.bioportal.api_key}"}
+        
+        for term_data in terms:
+            term = term_data['term']
+            try:
+                params = {
+                    "q": term,
+                    "ontologies": "SNOMEDCT,LOINC,RXNORM,MESH,ICD10",
+                    "require_exact_match": "true",
+                    "pagesize": 3,
+                    "apikey": self.config.bioportal.api_key
+                }
+                
+                response = session.get(self.BIOPORTAL_API, params=params, timeout=5)
+                if response.status_code == 200:
+                    data = response.json()
+                    matches = []
+                    for item in data.get("collection", []):
+                        matches.append({
+                            "id": item.get("@id"),
+                            "label": item.get("prefLabel"),
+                            "ontology": item.get("links", {}).get("ontology", "").split("/")[-1],
+                            "source": "BioPortal"
+                        })
+                    
+                    if matches:
+                        term_data['mappings'] = term_data.get('mappings', {})
+                        term_data['mappings']['bioportal'] = matches
+                
+                # Rate limiting niceness
+                time.sleep(0.1)
+                
+            except Exception as e:
+                logger.warning(f"BioPortal error for {term}: {e}")
+                
+        return terms
+
+    def _map_ols(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Map to OLS (Free, no key required)"""
+        import requests
+        import time
+        
+        logger.info(f"Mapping {len(terms)} terms to OLS...")
+        session = requests.Session()
+        
+        for term_data in terms:
+            term = term_data['term']
+            try:
+                params = {
+                    "q": term,
+                    "ontology": "ncit,mondo,doid,hp,go",
+                    "rows": 3
+                }
+                
+                response = session.get(self.OLS_API, params=params, timeout=5)
+                if response.status_code == 200:
+                    data = response.json()
+                    matches = []
+                    for doc in data.get("response", {}).get("docs", []):
+                        matches.append({
+                            "id": doc.get("obo_id") or doc.get("iri"),
+                            "label": doc.get("label"),
+                            "ontology": doc.get("ontology_name"),
+                            "source": "OLS"
+                        })
+                        
+                    if matches:
+                        term_data['mappings'] = term_data.get('mappings', {})
+                        term_data['mappings']['ols'] = matches
+                        
+                time.sleep(0.05)
+                
+            except Exception as e:
+                logger.warning(f"OLS error for {term}: {e}")
+                
+        return terms

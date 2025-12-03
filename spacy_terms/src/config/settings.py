@@ -132,6 +132,24 @@ class PipelineConfig:
     max_files: int = 100
     top_k: int = 200
     min_frequency: int = 1
+    
+    # Global Pipeline Settings
+    target_final_terms: int = 2000
+    
+    # BioMistral / LLM Settings
+    biomistral_model: str = "BioMistral/BioMistral-7B"
+    load_4bit: bool = False
+    batch_size: int = 32
+    
+    # Feature Toggles
+    validate_biomistral: bool = False
+    generate_definitions: bool = False
+    correct_terms: bool = False
+    
+    # Mapping Toggles
+    map_umls: bool = False
+    map_omop: bool = False
+    map_bioportal: bool = False
     include_definitions: bool = True
     include_ai_correction: bool = True
     include_umls_mapping: bool = True

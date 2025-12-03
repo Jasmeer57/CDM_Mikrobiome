@@ -31,27 +31,12 @@ mkdir -p logs
 
 # === CONDA ENVIRONMENT ===
 echo "Setting up conda environment..."
-conda create -n sci-term-extraction python=3.9 -y
 conda activate sci-term-extraction
 
 # === INSTALL DEPENDENCIES ===
 echo "Installing dependencies..."
 pip install --upgrade pip
-pip install spacy==3.7.2
-pip install scispacy==0.5.1
-pip install sentence-transformers==2.2.2
-pip install pandas==2.1.3
-pip install numpy==1.24.3
-pip install tqdm==4.66.1
-pip install python-Levenshtein==0.23.0
-pip install fastapi==0.104.1
-pip install uvicorn==0.24.0
-pip install python-multipart==0.0.6
-pip install pydantic==2.5.0
-pip install rapidfuzz==3.5.2
-pip install python-docx==0.8.11
-pip install PyPDF2==3.0.1
-pip install Pillow==10.1.0
+pip install spacy==3.7.2 scispacy==0.5.1 sentence-transformers==2.2.2 pandas==2.1.3 rapidfuzz==3.5.2 transformers==4.35.0 accelerate==0.24.1 bitsandbytes==0.41.2
 
 # === INSTALL SCIPACY MODELS ===
 echo "Installing sciSpaCy models..."
@@ -59,120 +44,35 @@ pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_core
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_craft_md-0.5.1.tar.gz
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_bc5cdr_md-0.5.1.tar.gz
 pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_jnlpba_md-0.5.1.tar.gz
+pip install https://github.com/allenai/scispacy/releases/download/v0.5.1/en_ner_bionlp13cg_md-0.5.1.tar.gz
 
-# === HUGGING FACE SETUP (if needed) ===
-echo "Setting up Hugging Face..."
-# Uncomment and add your token if needed
-# huggingface-cli login --token YOUR_HF_TOKEN
+# === SET ENVIRONMENT VARIABLES FOR OMOP ===
+export OMOP_VOCAB_PATH="/home/jkalra/thesis/omop_vocab"
+export BIOPORTAL_API_KEY="$BIOPORTAL_API_KEY"  # Set if available
+export UMLS_API_KEY="$UMLS_API_KEY"  # Set if available
 
-# === CREATE OUTPUT DIRECTORIES ===
-echo "Setting up output directories..."
-mkdir -p output
-mkdir -p logs
-mkdir -p checkpoints
-
-# === COMPLETE PIPELINE EXECUTION ===
-echo ""
-echo "=== STARTING COMPLETE PIPELINE EXECUTION ==="
-echo "Pipeline configuration:"
-echo "  - Input directory: ./data"
-echo "  - Semantic model: nomic (upgraded v1.5)"
-echo "  - Fuzzy threshold: 0.85"
-echo "  - Semantic threshold: 0.90"
-echo "  - BioMistral Biomedical Deduplication: ENABLED"
-echo "  - Biomedical Context: microbiome"
-echo "  - AI Correction: ENABLED"
-echo "  - UMLS Mapping: ENABLED"
-echo "  - OMOP Mapping: ENABLED"
-echo "  - Output formats: json csv sqlite"
-echo "  - Max files: 1 (trial run)"
+# === RUN PIPELINE ===
+echo "Starting pipeline execution on CLUSTER with BioMistral..."
+echo "Input directory: /home/jkalra/my_node_tools/Microbiome-CDM/papers_txt"
+echo "Output directory: /home/jkalra/my_node_tools/Microbiome-CDM/spacy_terms/papers_output"
+echo "OMOP vocabulary: $OMOP_VOCAB_PATH"
 echo ""
 
-# Check input data
-if [ ! -d "data" ]; then
-    echo "ERROR: data directory not found!"
-    exit 1
-fi
+python standalone_scispacy_pipeline.py \
+    --input_dir "/home/jkalra/my_node_tools/Microbiome-CDM/papers_txt" \
+    --output_dir "/home/jkalra/my_node_tools/Microbiome-CDM/spacy_terms/papers_output" \
+    --target_terms 10000
 
-echo "Available files in data directory:"
-ls -la data/
-echo ""
-
-# === RUN COMPLETE PIPELINE ===
-echo "Starting complete scientific term extraction pipeline..."
-python main.py \
-    --input_dir ./data \
-    --semantic_model nomic \
-    --fuzzy_threshold 0.85 \
-    --semantic_threshold 0.90 \
-    --biomedical_context microbiome \
-    --max_files 1 \
-    --output_formats json csv sqlite
-
-PIPELINE_EXIT_CODE=$?
-
-# === PIPELINE COMPLETION ANALYSIS ===
-echo ""
-echo "=== PIPELINE COMPLETION ANALYSIS ==="
-echo "Pipeline completed with exit code: $PIPELINE_EXIT_CODE"
-
-if [ $PIPELINE_EXIT_CODE -eq 0 ]; then
-    echo "✅ SUCCESS: Pipeline completed successfully!"
-
-    # Analyze results
-    echo ""
-    echo "=== RESULTS ANALYSIS ==="
-
-    # Find latest output files
-    LATEST_JSON=$(ls -t output/pipeline_results_*.json 2>/dev/null | head -1)
-    LATEST_CSV=$(ls -t output/pipeline_results_*.csv 2>/dev/null | head -1)
-    LATEST_DB=$(ls -t output/pipeline_results_*.db 2>/dev/null | head -1)
-
-    if [ -n "$LATEST_JSON" ]; then
-        echo "📄 JSON Output: $LATEST_JSON"
-        TERM_COUNT=$(grep -c '"term":' "$LATEST_JSON" 2>/dev/null || echo "N/A")
-        echo "   - Total terms extracted: $TERM_COUNT"
-    fi
-
-    if [ -n "$LATEST_CSV" ]; then
-        echo "📊 CSV Output: $LATEST_CSV"
-        LINE_COUNT=$(tail -n +2 "$LATEST_CSV" | wc -l 2>/dev/null || echo "N/A")
-        echo "   - Total rows: $LINE_COUNT"
-    fi
-
-    if [ -n "$LATEST_DB" ]; then
-        echo "💾 SQLite Database: $LATEST_DB"
-
-        # Quick SQLite analysis if available
-        if command -v sqlite3 &> /dev/null; then
-            echo "   - Database tables:"
-            sqlite3 "$LATEST_DB" ".tables" 2>/dev/null | head -10
-            echo ""
-            echo "   - Total terms in database:"
-            sqlite3 "$LATEST_DB" "SELECT COUNT(*) FROM terms;" 2>/dev/null || echo "N/A"
-            echo "   - CDM-ready terms:"
-            sqlite3 "$LATEST_DB" "SELECT COUNT(*) FROM terms WHERE cdm_relevance IN ('HIGH', 'MEDIUM');" 2>/dev/null || echo "N/A"
-        fi
-    fi
-
-else
-    echo "❌ FAILED: Pipeline failed with exit code $PIPELINE_EXIT_CODE"
-    echo "Check error log: logs/sci_term_complete_${SLURM_JOB_ID}.err"
-fi
-
-# === FINAL METADATA ===
-echo ""
-echo "=== JOB COMPLETION METADATA ==="
-echo "Job started at: $SLURM_JOB_START_TIME"
-echo "Job completed at: $(date)"
-echo "Total runtime: $(date -d "$SLURM_JOB_START_TIME" +%s 2>/dev/null)"
-echo "Node used: $HOSTNAME"
-echo "Job ID: $SLURM_JOB_ID"
-echo ""
-
-# === CLEANUP ===
-echo "Cleaning up temporary files..."
-conda deactivate
+    --workers 16 \
+    --max_files 500 \
+    --generate_definitions \
+    --correct_terms \
+    --definition_model "BioMistral/BioMistral-7B" \
+    --map_umls \
+    --map_omop \
+    --map_bioportal \
+    --validate_biomistral
+    --batch_size 32 \
+    --load_4bit
 
 echo "=== PIPELINE EXECUTION COMPLETE ==="
-exit $PIPELINE_EXIT_CODE
