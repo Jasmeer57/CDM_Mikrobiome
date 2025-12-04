@@ -331,6 +331,57 @@ class EntityFilter:
             if entity_name.lower().endswith('tion') or entity_name.lower().endswith('ment'):
                 return False
 
+        # 5. Check for Author names and Affiliations (Junk filtering)
+        if 'et al' in entity_name.lower():
+            return False
+            
+        affiliation_keywords = {
+            'university', 'institute', 'department', 'center', 'centre', 'college', 'school',
+            'hospital', 'laboratory', 'foundation', 'group', 'consortium', 'ministry',
+            'academy', 'division', 'unit', 'program', 'programme', 'council', 'bureau',
+            'author', 'correspondence', 'email', 'address', 'tel', 'fax', 'phd', 'md',
+            'professor', 'prof', 'dr', 'scientist', 'researcher'
+        }
+        
+        # Check if any affiliation keyword is in the term
+        term_lower = entity_name.lower()
+        if any(keyword in term_lower.split() for keyword in affiliation_keywords):
+            return False
+            
+        # Check for citation patterns like (Smith 2020) or [1]
+        if re.search(r'\(\w+\s+\d{4}\)', entity_name) or re.search(r'\[\d+\]', entity_name):
+            return False
+
+        # 6. Check for Grant Numbers (e.g., R01HD078912)
+        # Pattern: 1-3 letters, 2 digits, 1-3 letters, 5-6 digits
+        if re.match(r'^[A-Z]{1,4}\d{2,5}[A-Z]{0,3}\d{4,8}$', entity_name, re.IGNORECASE):
+            return False
+        if re.search(r'\b(grant|award|contract)\s+(no\.?|number)?\s*[A-Z0-9-]+\b', term_lower):
+            return False
+
+        # 7. Check for Journal Names and Publishers
+        journal_blocklist = {
+            'frontiers in', 'bmj open', 'nature', 'science', 'cell host', 'plos one',
+            'scientific reports', 'journal of', 'annals of', 'proceedings of',
+            'nucleic acids res', 'genome biol', 'nat methods', 'sci transl med'
+        }
+        if any(j in term_lower for j in journal_blocklist):
+            return False
+
+        # 8. Check for Broad/Generic Terms
+        broad_terms = {
+            'microbiome', 'viral', 'amino acids', 'bacteria', 'fungi', 'archaea',
+            'microbiota', 'gut microbiota', 'bacterial', 'microbial', 'pathogen',
+            'probiotic', 'prebiotic', 'antibiotic', 'metabolome', 'genome',
+            'metagenome', 'transcriptome', 'proteome', 'lipidome'
+        }
+        if term_lower in broad_terms:
+            return False
+
+        # Reject if term is in artifacts
+        if entity_name.lower() in ['none', 'n/a', 'null', 'unknown']:
+            return False
+
         return True
 
     def _calculate_quality_score(self, entity: Dict) -> float:

@@ -58,177 +58,173 @@ Requirements:
 """
 
     def parse_llm_response(self, response: str, chunk_num: int) -> List[Dict]:
-        """Parse LLM response and extract entities."""
+        """Parse LLM response and extract entities with robust cleaning."""
         entities = []
-
         try:
-            # Clean the response - remove common LLM artifacts
-            cleaned_response = response.strip()
+            # 1. Aggressive Cleanup of Chain-of-Thought (<think>...</think>)
+            cleaned_response = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL)
+            if '<think>' in cleaned_response:
+                 cleaned_response = re.sub(r'<think>.*', '', cleaned_response, flags=re.DOTALL)
+            
+            cleaned_response = re.sub(r'^Here is the list.*?:', '', cleaned_response, flags=re.IGNORECASE | re.MULTILINE)
+            cleaned_response = cleaned_response.strip()
 
-            # Try multiple JSON parsing strategies
-            json_entities = self._try_json_parsing(cleaned_response)
-            if json_entities:
-                entities = json_entities
-            else:
-                # Fallback: extract entities from unstructured text
-                entities.extend(self._extract_from_unstructured_text(cleaned_response, chunk_num))
+            # 2. Strict Line-by-Line Parsing
+            lines = cleaned_response.split('\n')
+            for line in lines:
+                line = line.strip()
+                if not line: continue
+                
+                # Skip conversational lines
+                if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list', 'but', 'also', 'the text', 'actually', 'for example', 'in this text', 'output:', 'extracted terms:')):
+                    continue
+
+                # Split by pipe to separate main term info from extra details
+                parts = line.split('|')
+                main_part = parts[0].strip()
+                
+                # Regex to capture: Optional bullet, Term, (TYPE), Optional Context
+                match = re.match(r'^(?:[\-\*0-9\.]+\s*)?(.+?)\s*\(([^)]+)\)(?:\s*[:\-]\s*(.+))?$', main_part)
+                
+                if match:
+                    term = match.group(1).strip()
+                    entity_type = match.group(2).strip().upper()
+                    context = match.group(3).strip() if match.group(3) else ""
+                    
+                    # Cleanup term
+                    term = term.strip('"\'')
+                    
+                    # Map hallucinated types
+                    entity_type = self._map_hallucinated_type(entity_type)
+                
+                    # Parse extra fields
+                    definition = ""
+                    aliases = []
+                    examples = []
+                    
+                    for part in parts[1:]:
+                        part = part.strip()
+                        if part.lower().startswith("definition:"):
+                            definition = part[11:].strip()
+                        elif part.lower().startswith("aliases:"):
+                            aliases_str = part[8:].strip()
+                            if aliases_str and aliases_str.lower() != "none":
+                                aliases = [a.strip() for a in aliases_str.split(',')]
+                        elif part.lower().startswith("examples:"):
+                            examples_str = part[9:].strip()
+                            if examples_str and examples_str.lower() != "none":
+                                examples = [e.strip() for e in examples_str.split(',')]
+
+                    if self._validate_entity(term, entity_type):
+                        entities.append({
+                            'entity': term,
+                            'entity_type': entity_type,
+                            'context': context,
+                            'definition': definition,
+                            'aliases': aliases,
+                            'examples': examples,
+                            'confidence': 0.8,
+                            'source': f'chunk_{chunk_num}'
+                        })
 
         except Exception as e:
             logger.error(f"Error parsing LLM response for chunk {chunk_num}: {e}")
-            entities.extend(self._fallback_regex_extraction(response, chunk_num))
-
+            
         return entities
 
-    def _try_json_parsing(self, response: str) -> List[Dict]:
-        """Try multiple JSON parsing strategies."""
-        entities = []
+    def _map_hallucinated_type(self, entity_type: str) -> str:
+        """Map hallucinated or non-standard types to valid CDM types."""
+        entity_type = entity_type.upper()
+        
+        # Direct mapping
+        if entity_type in self.entity_config.ENTITY_TYPES:
+            return entity_type
+            
+        # Common hallucinations
+        mappings = {
+            'BACTERIA': 'ORGANISM',
+            'SPECIES': 'ORGANISM',
+            'MICROBE': 'ORGANISM',
+            'GENES': 'GENE',
+            'PROTEINS': 'PROTEIN',
+            'METABOLITE': 'CHEMICAL',
+            'COMPOUND': 'CHEMICAL',
+            'DRUG': 'CHEMICAL',
+            'CONDITION': 'DISEASE',
+            'DISORDER': 'DISEASE',
+            'PATHWAY': 'BIOINFO_TOOL',
+            'METHOD': 'GENOMICS',
+            'SEQUENCING': 'GENOMICS'
+        }
+        
+        return mappings.get(entity_type, entity_type)
 
-        # Strategy 1: Direct JSON array parsing
-        try:
-            if response.startswith('[') and response.endswith(']'):
-                parsed = json.loads(response)
-                if isinstance(parsed, list):
-                    for item in parsed:
-                        if self._validate_entity(item):
-                            entities.append(self._format_entity(item, 0, 0.9))
-                    return entities
-        except json.JSONDecodeError:
-            pass
-
-        # Strategy 2: Extract JSON from text (find JSON blocks)
-        try:
-            json_blocks = self._extract_json_blocks(response)
-            for json_block in json_blocks:
-                try:
-                    parsed = json.loads(json_block)
-                    if isinstance(parsed, list):
-                        for item in parsed:
-                            if self._validate_entity(item):
-                                entities.append(self._format_entity(item, 0, 0.9))
-                    elif isinstance(parsed, dict) and self._validate_entity(parsed):
-                        entities.append(self._format_entity(parsed, 0, 0.9))
-                except json.JSONDecodeError:
-                    continue
-            if entities:
-                return entities
-        except Exception:
-            pass
-
-        # Strategy 3: Parse line-by-line JSON objects
-        try:
-            lines = response.split('\n')
-            for line in lines:
-                line = line.strip()
-                if line.startswith('{') and line.endswith('}'):
-                    try:
-                        parsed = json.loads(line)
-                        if self._validate_entity(parsed):
-                            entities.append(self._format_entity(parsed, 0, 0.9))
-                    except json.JSONDecodeError:
-                        continue
-            if entities:
-                return entities
-        except Exception:
-            pass
-
-        return []
-
-    def _extract_json_blocks(self, text: str) -> List[str]:
-        """Extract JSON blocks from mixed text."""
-        json_blocks = []
-        stack = []
-        start_idx = None
-
-        for i, char in enumerate(text):
-            if char == '{':
-                if not stack:
-                    start_idx = i
-                stack.append(char)
-            elif char == '}':
-                if stack:
-                    stack.pop()
-                    if not stack and start_idx is not None:
-                        # Found complete JSON object
-                        json_block = text[start_idx:i+1]
-                        json_blocks.append(json_block)
-                        start_idx = None
-
-        return json_blocks
-
-    def _validate_entity(self, entity: Dict) -> bool:
+    def _validate_entity(self, term: str, entity_type: str) -> bool:
         """Validate entity structure and content."""
-        if not isinstance(entity, dict):
+        if not term or not isinstance(term, str) or len(term) < 2:
+            return False
+            
+        # Check if type is valid
+        if entity_type not in self.entity_config.ENTITY_TYPES:
             return False
 
-        required_fields = ['entity', 'entity_type']
-        if not all(field in entity for field in required_fields):
+        # Check for pure numbers or simple units
+        if re.match(r'^[\d\.,\s%±<>≤≥=°]+$', term):
             return False
-
-        if entity['entity_type'] not in self.entity_config.ENTITY_TYPES:
+            
+        # Check specifically for temperature-like terms
+        if '°' in term:
+             return False
+            
+        # Check for generic words (stop words)
+        stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
+        if term.lower() in stop_words:
             return False
-
-        entity_name = entity['entity'].strip()
-        if len(entity_name) < 2 or len(entity_name) > 100:
+            
+        # Check for Author names and Affiliations (Junk filtering)
+        if 'et al' in term.lower():
             return False
-
+            
+        # Reject if term is in artifacts
+        if term.lower() in ['none', 'n/a', 'null', 'unknown']:
+            return False
+            
         return True
 
-    def _format_entity(self, entity: Dict, chunk_num: int, confidence: float) -> Dict:
-        """Format entity into standard structure."""
-        return {
-            'entity': entity['entity'].strip(),
-            'entity_type': entity['entity_type'],
-            'context': entity.get('context', '').strip()[:200],
-            'source': f'chunk_{chunk_num}',
-            'confidence': confidence
-        }
+    def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
+        """Generate specific prompt for extraction."""
+        
+        return f"""You are a specialized biomedical terminology extractor. Your goal is to extract **ONLY high-value, specific terms relevant to a Microbiome Common Data Model (CDM)**.
 
-    def _extract_from_unstructured_text(self, text: str, chunk_num: int) -> List[Dict]:
-        """Extract entities from unstructured LLM response."""
-        entities = []
-        lines = text.split('\n')
+CRITICAL RULES:
+1. Extract ONLY specific biomedical terms: specific organisms (species/genus), specific metabolites/chemicals, specific genes/proteins, and specific bioinformatics tools.
+2. IGNORE generic scientific terms (e.g., "study", "analysis", "data", "results", "significant", "correlation", "p-value", "table", "figure").
+3. Aim for HIGH PRECISION. Target the top 15-25 most important entities per chunk. Do NOT list every possible noun.
+4. NEVER extract your own instructions, notes, or conversational phrases.
+5. IGNORE all reasoning or "thinking" processes. Output ONLY the final list.
+6. FORMAT: One term per line.
+   Format: - Term (TYPE): Brief Context | Definition: Brief definition | Aliases: Alias1, Alias2 | Examples: Ex1, Ex2
 
-        for line in lines:
-            line = line.strip()
-            if not line or line.startswith(('#', '//', '-', '*')):
-                continue
+VALID CATEGORIES:
+- ORGANISM: Specific bacteria, viruses, fungi, taxa
+- GENE: Specific genes, markers
+- PROTEIN: Specific proteins, enzymes
+- CHEMICAL: Specific metabolites, drugs, compounds
+- DISEASE: Specific diseases, conditions
+- DNA_RNA: Specific genetic material types
+- CELL_TYPE: Specific cells, tissues
+- BIOINFO_TOOL: Specific tools, software, databases
+- GENOMICS: Specific omics methods
+- CLINICAL: Specific clinical parameters
 
-            # Look for entity type indicators
-            for entity_type in self.entity_config.ENTITY_TYPES:
-                if entity_type in line.upper():
-                    # Extract entity before or after the type
-                    entity_match = re.search(r'([A-Za-z0-9\s\-_\.]+)', line)
-                    if entity_match:
-                        entity = entity_match.group(1).strip()
-                        if len(entity) > 2 and len(entity) < 100:
-                            entities.append(self._format_entity({
-                                'entity': entity,
-                                'entity_type': entity_type,
-                                'context': line[:100]
-                            }, chunk_num, 0.7))
-                    break
+TEXT TO ANALYZE:
+{chunk_text}
 
-        return entities
+OUTPUT FORMAT (STRICT):
+- [Extracted Term] (TYPE): [Context found in text] | Definition: [Brief definition] | Aliases: [Alias1, Alias2] | Examples: [Ex1, Ex2]
 
-    def _fallback_regex_extraction(self, text: str, chunk_num: int) -> List[Dict]:
-        """Fallback extraction using regex patterns."""
-        entities = []
-
-        for entity_type, config in self.entity_config.ENTITY_TYPES.items():
-            if 'patterns' in config:
-                for pattern in config['patterns']:
-                    matches = re.findall(pattern, text, re.IGNORECASE)
-                    for match in matches:
-                        if isinstance(match, tuple):
-                            match = [m for m in match if m][0] if match else ""
-                        if match and len(match) > 2:
-                            entities.append(self._format_entity({
-                                'entity': match.strip(),
-                                'entity_type': entity_type,
-                                'context': f"Regex extraction from chunk {chunk_num}"
-                            }, chunk_num, 0.6))
-
-        return entities
+Start output immediately:
+"""
 
     def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
         """Generate specific prompt for each extraction pass."""

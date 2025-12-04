@@ -239,12 +239,12 @@ class CDMEntityConfig:
         }
     }
 
-    # Chunking strategies
+    # Chunking strategies - Optimized for Yield (Balanced context)
     CHUNK_SIZES = {
-        'small': 1500,    # Very granular
-        'medium': 3000,   # Standard
-        'large': 5000,    # Large context
-        'xlarge': 8000    # Maximum
+        'small': 5000,    # Was 10000
+        'medium': 12500,  # Was 25000
+        'large': 20000,   # Was 40000
+        'xlarge': 30000   # Was 60000
     }
 
     OVERLAP_RATIOS = {
@@ -768,6 +768,13 @@ class LLMClient:
                 
                 if response.status_code == 200:
                     resp_json = response.json()
+                    
+                    # Track usage
+                    if 'usage' in resp_json:
+                        usage = resp_json['usage']
+                        self.token_usage['input_tokens'] += usage.get('input_tokens', 0)
+                        self.token_usage['output_tokens'] += usage.get('output_tokens', 0)
+                        
                     try:
                         content = resp_json['content'][0]['text'].strip()
                         return content
@@ -997,12 +1004,12 @@ class CDMEntityExtractor:
                 if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list', 'but', 'also', 'the text', 'actually', 'for example', 'in this text', 'output:', 'extracted terms:')):
                     continue
 
+                # Split by pipe to separate main term info from extra details
+                parts = line.split('|')
+                main_part = parts[0].strip()
+                
                 # Regex to capture: Optional bullet, Term, (TYPE), Optional Context
-                # Matches:
-                # - E. coli (ORGANISM): context
-                # E. coli (ORGANISM)
-                # - E. coli (ORGANISM)
-                match = re.match(r'^(?:[\-\*0-9\.]+\s*)?(.+?)\s*\(([^)]+)\)(?:\s*[:\-]\s*(.+))?$', line)
+                match = re.match(r'^(?:[\-\*0-9\.]+\s*)?(.+?)\s*\(([^)]+)\)(?:\s*[:\-]\s*(.+))?$', main_part)
                 
                 if match:
                     term = match.group(1).strip()
@@ -1015,12 +1022,33 @@ class CDMEntityExtractor:
                     # Map hallucinated types
                     entity_type = self._map_hallucinated_type(entity_type)
                     
+                    # Parse extra fields
+                    definition = ""
+                    aliases = []
+                    examples = []
+                    
+                    for part in parts[1:]:
+                        part = part.strip()
+                        if part.lower().startswith("definition:"):
+                            definition = part[11:].strip()
+                        elif part.lower().startswith("aliases:"):
+                            aliases_str = part[8:].strip()
+                            if aliases_str and aliases_str.lower() != "none":
+                                aliases = [a.strip() for a in aliases_str.split(',')]
+                        elif part.lower().startswith("examples:"):
+                            examples_str = part[9:].strip()
+                            if examples_str and examples_str.lower() != "none":
+                                examples = [e.strip() for e in examples_str.split(',')]
+
                     # Validate
                     if self._validate_entity(term, entity_type):
                         entities.append({
                             'entity': term,
                             'entity_type': entity_type,
                             'context': context,
+                            'definition': definition,
+                            'aliases': aliases,
+                            'examples': examples,
                             'confidence': 0.8, # Default confidence for explicit extraction
                             'source_pass': 0
                         })
@@ -1089,8 +1117,12 @@ class CDMEntityExtractor:
                 return False
 
         # 2. Check for pure numbers or simple units
-        if re.match(r'^[\d\.,\s%±<>≤≥=]+$', term):
+        if re.match(r'^[\d\.,\s%±<>≤≥=°]+$', term):
             return False
+            
+        # Check specifically for temperature-like terms (e.g. 60°C)
+        if '°' in term:
+             return False
             
         # 3. Check for statistical terms and common noise
         noise_terms = {
@@ -1115,6 +1147,53 @@ class CDMEntityExtractor:
         # 4. Check for generic words (stop words)
         stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
         if term.lower() in stop_words:
+            return False
+            
+        # 5. Check for Author names and Affiliations (Junk filtering)
+        if 'et al' in term.lower():
+            return False
+            
+        affiliation_keywords = {
+            'university', 'institute', 'department', 'center', 'centre', 'college', 'school',
+            'hospital', 'laboratory', 'foundation', 'group', 'consortium', 'ministry',
+            'academy', 'division', 'unit', 'program', 'programme', 'council', 'bureau',
+            'author', 'correspondence', 'email', 'address', 'tel', 'fax', 'phd', 'md',
+            'professor', 'prof', 'dr', 'scientist', 'researcher'
+        }
+        
+        # Check if any affiliation keyword is in the term
+        term_lower = term.lower()
+        if any(keyword in term_lower.split() for keyword in affiliation_keywords):
+            return False
+            
+        # Check for citation patterns like (Smith 2020) or [1]
+        if re.search(r'\(\w+\s+\d{4}\)', term) or re.search(r'\[\d+\]', term):
+            return False
+
+        # 6. Check for Grant Numbers (e.g., R01HD078912)
+        # Pattern: 1-3 letters, 2 digits, 1-3 letters, 5-6 digits
+        if re.match(r'^[A-Z]{1,4}\d{2,5}[A-Z]{0,3}\d{4,8}$', term, re.IGNORECASE):
+            return False
+        if re.search(r'\b(grant|award|contract)\s+(no\.?|number)?\s*[A-Z0-9-]+\b', term_lower):
+            return False
+
+        # 7. Check for Journal Names and Publishers
+        journal_blocklist = {
+            'frontiers in', 'bmj open', 'nature', 'science', 'cell host', 'plos one',
+            'scientific reports', 'journal of', 'annals of', 'proceedings of',
+            'nucleic acids res', 'genome biol', 'nat methods', 'sci transl med'
+        }
+        if any(j in term_lower for j in journal_blocklist):
+            return False
+
+        # 8. Check for Broad/Generic Terms
+        broad_terms = {
+            'microbiome', 'viral', 'amino acids', 'bacteria', 'fungi', 'archaea',
+            'microbiota', 'gut microbiota', 'bacterial', 'microbial', 'pathogen',
+            'probiotic', 'prebiotic', 'antibiotic', 'metabolome', 'genome',
+            'metagenome', 'transcriptome', 'proteome', 'lipidome'
+        }
+        if term_lower in broad_terms:
             return False
 
         # Reject if term is in artifacts
@@ -1154,35 +1233,34 @@ class CDMEntityExtractor:
     def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
         """Generate specific prompt for extraction."""
         
-        return f"""You are a comprehensive biomedical terminology extractor. Your goal is to extract **ALL possible terms that should or can be in a Common Data Model (CDM) of the Microbiome**.
+        return f"""You are a specialized biomedical terminology extractor. Your goal is to extract **ONLY high-value, specific terms relevant to a Microbiome Common Data Model (CDM)**.
 
 CRITICAL RULES:
-1. Extract ALL biomedical terms related to the microbiome, including: bioinformatics tools, molecules, chemicals, organisms, species, technical terms.
-2. Aim for MAXIMUM RECALL. Target at least 50+ entities per chunk.
-3. NEVER extract your own instructions, notes, or conversational phrases.
-4. IGNORE all reasoning or "thinking" processes. Output ONLY the final list.
-5. FORMAT: One term per line.
-   Format: - Term (TYPE): Brief Context
+1. Extract ONLY specific biomedical terms: specific organisms (species/genus), specific metabolites/chemicals, specific genes/proteins, and specific bioinformatics tools.
+2. IGNORE generic scientific terms (e.g., "study", "analysis", "data", "results", "significant", "correlation", "p-value", "table", "figure").
+3. Aim for HIGH PRECISION. Target the top 15-25 most important entities per chunk. Do NOT list every possible noun.
+4. NEVER extract your own instructions, notes, or conversational phrases.
+5. IGNORE all reasoning or "thinking" processes. Output ONLY the final list.
+6. FORMAT: One term per line.
+   Format: - Term (TYPE): Brief Context | Definition: Brief definition | Aliases: Alias1, Alias2 | Examples: Ex1, Ex2
 
 VALID CATEGORIES:
-- ORGANISM: Bacteria, viruses, fungi, taxa
-- GENE: Genes, markers
-- PROTEIN: Proteins, enzymes
-- CHEMICAL: Metabolites, drugs
-- DISEASE: Diseases, conditions
-- DNA_RNA: Genetic material
-- CELL_TYPE: Cells, tissues
-- BIOINFO_TOOL: Tools, software
-- GENOMICS: Omics terms
-- CLINICAL: Clinical terms
-- SCIENTIFIC_TERM: General scientific concepts
+- ORGANISM: Specific bacteria, viruses, fungi, taxa
+- GENE: Specific genes, markers
+- PROTEIN: Specific proteins, enzymes
+- CHEMICAL: Specific metabolites, drugs, compounds
+- DISEASE: Specific diseases, conditions
+- DNA_RNA: Specific genetic material types
+- CELL_TYPE: Specific cells, tissues
+- BIOINFO_TOOL: Specific tools, software, databases
+- GENOMICS: Specific omics methods
+- CLINICAL: Specific clinical parameters
 
 TEXT TO ANALYZE:
 {chunk_text}
 
 OUTPUT FORMAT (STRICT):
-- [Extracted Term] (TYPE): [Context found in text]
-- [Another Term] (TYPE): [Context found in text]
+- [Extracted Term] (TYPE): [Context found in text] | Definition: [Brief definition] | Aliases: [Alias1, Alias2] | Examples: [Ex1, Ex2]
 
 Start output immediately:
 """
@@ -2475,6 +2553,7 @@ class BioPortalMapper:
             response = requests.get(self.base_url, params=params, timeout=10)
             if response.status_code == 200:
                 results = response.json().get('collection', [])
+                # print(f"DEBUG: BioPortal found {len(results)} results for {entity_name}")
                 for result in results:
                     confidence = self._calculate_confidence(entity_name, result)
                     if confidence > 0.4:
@@ -2486,6 +2565,8 @@ class BioPortalMapper:
                             mapping_confidence=confidence,
                             mapping_method="BioPortal_API"
                         ))
+            else:
+                 logger.warning(f"BioPortal API error: {response.status_code} - {response.text[:100]}")
             
             mappings.sort(key=lambda x: x.mapping_confidence, reverse=True)
             
@@ -4272,7 +4353,7 @@ class CDMEntityPipeline:
                  enable_biomistral: bool = False, biomistral_model: str = "biomistral-7B",
                  enable_biomistral_deduplication: bool = False, biomistral_dedup_model: str = "biomistral:7b",
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
-                 umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
+                 umls_api_key: str = None, bioportal_api_key: str = None, enable_comprehensive_mapping: bool = False,
                  enable_scispacy_linking: bool = False,
                  mapping_confidence_threshold: float = 0.7,
                  enable_correction: bool = False, enable_llm_correction: bool = False,
@@ -4344,6 +4425,7 @@ class CDMEntityPipeline:
 
             self.comprehensive_mapper = ComprehensiveMapper(
                 umls_api_key=umls_api_key,
+                bioportal_api_key=bioportal_api_key,
                 use_local_omop=True,  # Use local mapper by default
                 omop_vocab_dir=omop_vocab_dir,
                 fuzzy_threshold=95,
@@ -4637,6 +4719,7 @@ class CDMEntityPipeline:
             record = {
                 "term": entity.get('entity', ''),
                 "contextual_definition": entity.get('context', ''),
+                "definition": entity.get('definition', ''),
                 "confidence_score": entity.get('confidence', 0.0),
                 "avg_confidence_score": entity.get('avg_confidence_score', entity.get('confidence', 0.0)),
                 "max_confidence_score": entity.get('max_confidence_score', entity.get('confidence', 0.0)),
@@ -4654,12 +4737,6 @@ class CDMEntityPipeline:
                 "OMOP": get_item(omop_mappings, 0, 'concept_id', ''),
                 "OLS": comp_mapping.get('ols_mappings', [{}])[0].get('iri', '') if comp_mapping.get('ols_mappings') else '',
                 "Bioportal": comp_mapping.get('bioportal_mappings', [{}])[0].get('concept_id', '') if comp_mapping.get('bioportal_mappings') else '',
-                
-                # Extra details (kept for completeness but can be ignored)
-                "auto_concept_id_1": get_item(omop_mappings, 0, 'concept_id', ''),
-                "concept_name_1": get_item(omop_mappings, 0, 'concept_name', ''),
-                "domain_id_1": get_item(omop_mappings, 0, 'domain_id', ''),
-                "vocabulary_id_1": get_item(omop_mappings, 0, 'vocabulary_id', '')
             }
             flat_results.append(record)
 
@@ -4756,6 +4833,384 @@ class CDMEntityPipeline:
             logger.error(f"Pipeline execution failed: {e}")
             return False
 
+    def consolidate_results(self, processed_dir: str, output_file: str):
+        """Consolidate processed JSON files into a single output."""
+        processed_path = Path(processed_dir)
+        output_path = Path(output_file)
+        
+        logger.info(f"📂 Reading processed files from {processed_path}")
+        
+        all_entities = []
+        files_processed = 0
+        
+        for file_path in processed_path.glob("*.json"):
+            try:
+                with open(file_path, 'r') as f:
+                    data = json.load(f)
+                    
+                if isinstance(data, list):
+                    entities = data
+                elif isinstance(data, dict) and 'entities' in data:
+                    entities = data['entities']
+                elif isinstance(data, dict) and 'results' in data:
+                     # Handle already flattened results if needed, but usually we consolidate raw entities
+                     # For now, assume we are consolidating raw entities from checkpoints/processed files
+                     entities = data['results'] if isinstance(data['results'], list) else []
+                else:
+                    logger.warning(f"⚠️ Unknown format in {file_path.name}")
+                    continue
+                    
+                for entity in entities:
+                    if 'source_file' not in entity:
+                        entity['source_file'] = file_path.stem + ".txt"
+                        
+                all_entities.extend(entities)
+                files_processed += 1
+                
+            except Exception as e:
+                logger.error(f"❌ Failed to read {file_path.name}: {e}")
+
+        logger.info(f"✅ Loaded {len(all_entities)} entities from {files_processed} files")
+
+        # Deduplicate
+        logger.info("🔄 Running semantic deduplication...")
+        deduplicated_entities = self.semantic_deduplicator.apply_semantic_deduplication(all_entities)
+        
+        # Save
+        logger.info(f"💾 Saving consolidated results to {output_path}")
+        self.save_results(deduplicated_entities, str(output_path))
+        logger.info("🎉 Consolidation complete!")
+
+    def apply_mappings_to_file(self, input_file: str):
+        """Apply mappings to an existing JSON file."""
+        input_path = Path(input_file)
+        logger.info(f"📂 Reading entities from {input_path}")
+        
+        with open(input_path, 'r') as f:
+            data = json.load(f)
+            
+        if isinstance(data, dict) and 'results' in data:
+            entities = data['results']
+            is_flat = True
+        elif isinstance(data, list):
+            entities = data
+            is_flat = False
+        else:
+            logger.error("❌ Unknown file format")
+            return
+
+        logger.info(f"🚀 Starting mapping for {len(entities)} entities...")
+        
+        updated_entities = []
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = []
+            for entity in entities:
+                futures.append(executor.submit(self._process_mapping_entity, entity, is_flat))
+                
+            for future in tqdm(as_completed(futures), total=len(entities)):
+                updated_entities.append(future.result())
+        
+        if is_flat:
+            data['results'] = updated_entities
+            output_data = data
+        else:
+            output_data = updated_entities
+            
+        with open(input_path, 'w', encoding='utf-8') as f:
+            json.dump(output_data, f, indent=2)
+            
+        logger.info(f"💾 Updated mappings saved to {input_path}")
+
+    def _process_mapping_entity(self, entity: Dict, is_flat: bool) -> Dict:
+        """Process a single entity for mapping."""
+        term = entity.get('term') if is_flat else entity.get('entity')
+        entity_type = entity.get('categories') if is_flat else entity.get('entity_type')
+        
+        if not term:
+            return entity
+            
+        # Check if mapping is missing
+        needs_mapping = False
+        if is_flat:
+            if not entity.get('Bioportal') or not entity.get('OLS'):
+                needs_mapping = True
+        else:
+            if 'comprehensive_mapping' not in entity:
+                needs_mapping = True
+                
+        if needs_mapping and self.comprehensive_mapper:
+            try:
+                # Map using comprehensive mapper
+                mapping_result = self.comprehensive_mapper.map_entity_comprehensive(term, entity_type)
+                
+                if is_flat:
+                    bioportal_list = mapping_result.get('bioportal_mappings', [])
+                    bioportal = bioportal_list[0].get('concept_id', '') if bioportal_list else ''
+                    
+                    ols_list = mapping_result.get('ols_mappings', [])
+                    ols = ols_list[0].get('iri', '') if ols_list else ''
+                    
+                    if bioportal: entity['Bioportal'] = bioportal
+                    if ols: entity['OLS'] = ols
+                    
+                    # Also update UMLS/OMOP if missing
+                    umls_list = mapping_result.get('umls_mappings', [])
+                    umls = umls_list[0].get('umls_cui', '') if umls_list else ''
+                    if umls and not entity.get('UMLS_ID'): entity['UMLS_ID'] = umls
+                    
+                else:
+                    entity['comprehensive_mapping'] = mapping_result
+                    
+            except Exception:
+                pass
+                
+        return entity
+
+    def enrich_definitions(self, input_file: str):
+        """Enrich existing entities with Definitions, Aliases, and Examples using LLM."""
+        input_path = Path(input_file)
+        logger.info(f"📂 Reading entities for enrichment from {input_path}")
+        
+        with open(input_path, 'r') as f:
+            data = json.load(f)
+            
+        if isinstance(data, dict) and 'results' in data:
+            entities = data['results']
+            is_flat = True
+        else:
+            logger.error("❌ Enrichment currently only supports flat format (results.json)")
+            return
+
+        logger.info(f"🚀 Starting enrichment for {len(entities)} entities...")
+        
+        # Filter entities that need enrichment
+        to_enrich = [e for e in entities if not e.get('definition') or not e.get('aliases')]
+        logger.info(f"ℹ️  {len(to_enrich)} entities need enrichment")
+        
+        # Batch process
+        batch_size = 20
+        for i in tqdm(range(0, len(to_enrich), batch_size)):
+            batch = to_enrich[i:i+batch_size]
+            self._enrich_batch(batch)
+            
+            # Save periodically
+            if i % 100 == 0:
+                 with open(input_path, 'w', encoding='utf-8') as f:
+                    json.dump(data, f, indent=2)
+
+        # Final save
+        with open(input_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+            
+        logger.info(f"💾 Enriched results saved to {input_path}")
+
+    def _enrich_batch(self, batch: List[Dict]):
+        """Enrich a batch of entities using LLM."""
+        if not batch: return
+        
+        terms = [e.get('term') for e in batch]
+        terms_str = "\n".join([f"- {t} ({e.get('categories', 'UNKNOWN')})" for t, e in zip(terms, batch)])
+        
+        prompt = f"""You are a biomedical expert. Provide Definition, Aliases, and Examples for the following terms.
+        
+TERMS:
+{terms_str}
+
+OUTPUT FORMAT:
+- [Term] | Definition: [Brief definition] | Aliases: [Alias1, Alias2] | Examples: [Ex1, Ex2]
+
+Provide one line per term. Start immediately.
+"""
+        try:
+            response = self.llm_client.call_llm(prompt)
+            lines = response.strip().split('\\n')
+            
+            # Parse response and update entities
+            results_map = {}
+            for line in lines:
+                parts = line.split('|')
+                if len(parts) < 2: continue
+                
+                term_part = parts[0].strip()
+                # Remove bullet and type if present
+                term_match = re.match(r'^(?:[\-\*0-9\.]+\s*)?(.+?)(?:\s*\(.*\))?$', term_part)
+                if term_match:
+                    term_clean = term_match.group(1).strip()
+                    
+                    definition = ""
+                    aliases = []
+                    examples = []
+                    
+                    for part in parts[1:]:
+                        part = part.strip()
+                        if part.lower().startswith("definition:"):
+                            definition = part[11:].strip()
+                        elif part.lower().startswith("aliases:"):
+                            aliases_str = part[8:].strip()
+                            if aliases_str and aliases_str.lower() != "none":
+                                aliases = [a.strip() for a in aliases_str.split(',')]
+                        elif part.lower().startswith("examples:"):
+                            examples_str = part[9:].strip()
+                            if examples_str and examples_str.lower() != "none":
+                                examples = [e.strip() for e in examples_str.split(',')]
+                                
+                    results_map[term_clean.lower()] = {
+                        'definition': definition,
+                        'aliases': aliases,
+                        'examples': examples
+                    }
+            
+            # Update batch objects
+            for entity in batch:
+                term = entity.get('term', '').strip()
+                if term.lower() in results_map:
+                    res = results_map[term.lower()]
+                    if not entity.get('definition'): entity['definition'] = res['definition']
+                    if not entity.get('aliases'): entity['aliases'] = ", ".join(res['aliases'])
+                    if not entity.get('examples'): entity['examples'] = "; ".join(res['examples'])
+                    
+        except Exception as e:
+            logger.error(f"Enrichment batch failed: {e}")
+
+    def run_batch(self, input_path: str, output_file: str, chunk_size: int = None, force: bool = False):
+        """Run the full pipeline on a directory or file."""
+        start_time = time.time()
+        logger.info(f"🚀 Starting CDM Entity Extraction Pipeline")
+        logger.info(f"📂 Input: {input_path}")
+        logger.info(f"💾 Output: {output_file}")
+        
+        if not self.validate_prerequisites():
+            logger.error("❌ Prerequisites check failed. Aborting.")
+            return False
+
+        # Determine input files
+        path_obj = Path(input_path)
+        if path_obj.is_file():
+            files = [path_obj]
+        elif path_obj.is_dir():
+            files = list(path_obj.glob("*.txt"))
+            logger.info(f"Found {len(files)} text files in directory")
+        else:
+            logger.error(f"Invalid input path: {input_path}")
+            return False
+
+        if not files:
+            logger.error("No input files found")
+            return False
+
+        # Create output directory
+        output_path = Path(output_file)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Create processed directory for checkpoints
+        processed_dir = output_path.parent / "processed"
+        processed_dir.mkdir(exist_ok=True)
+
+        # Run pipeline
+        success = self.run_pipeline_stage(files, processed_dir, output_file, "extraction", force=force, chunk_size=chunk_size)
+        
+        elapsed_time = time.time() - start_time
+        logger.info(f"⏱️  Total execution time: {elapsed_time:.2f} seconds")
+        
+        return success
+
+    def run_pipeline_stage(self, files: List[Path], processed_dir: Path, output_file: str, stage_name: str, **kwargs):
+        """Run a specific pipeline stage."""
+        all_entities = []
+        text_stats_agg = {"character_count": 0, "word_count": 0}
+        
+        # Define worker function for parallel processing
+        def process_file_worker(file_path):
+            try:
+                # Check for checkpoint
+                checkpoint_file = processed_dir / f"{file_path.stem}.json"
+                
+                # If force is False, we might want to resume or skip
+                if checkpoint_file.exists():
+                    if force:
+                        # Delete checkpoint to force fresh start
+                        try:
+                            checkpoint_file.unlink()
+                            logger.info(f"🗑️  Deleted checkpoint for {file_path.name} (force=True)")
+                        except Exception as e:
+                            logger.warning(f"⚠️  Failed to delete checkpoint: {e}")
+                    else:
+                        try:
+                            with open(checkpoint_file, 'r') as f:
+                                data = json.load(f)
+                                
+                            # Check if it's a completed run (all chunks done) or legacy format
+                            if isinstance(data, list):
+                                return data, None # Legacy format, assume complete
+                            elif isinstance(data, dict) and 'completed_chunks' in data:
+                                # Check if all chunks are done? 
+                                # Actually, extract_entities will handle resumption.
+                                # But if we want to skip reading the file if strictly DONE...
+                                # For now, let's just let extract_entities handle it.
+                                pass 
+                        except json.JSONDecodeError:
+                            pass # Reprocess
+
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    text = f.read()
+                
+                # Calculate stats
+                stats = {
+                    "character_count": len(text),
+                    "word_count": len(text.split())
+                }
+                
+                # Extract entities (RESUMABLE)
+                # Pass checkpoint_path so it can load/save progress
+                raw_entities = self.extract_entities(text, kwargs.get('chunk_size'), checkpoint_path=checkpoint_file)
+                
+                # Filter out invalid entities (e.g. error codes or malformed data)
+                file_entities = [e for e in raw_entities if isinstance(e, dict)]
+                if len(file_entities) < len(raw_entities):
+                    logger.warning(f"⚠️  Filtered out {len(raw_entities) - len(file_entities)} invalid entities from {file_path.name}")
+
+                # Add source file info
+                for entity in file_entities:
+                    entity['source_file'] = file_path.name
+                
+                return file_entities, stats
+            except Exception as e:
+                logger.error(f"Error processing {file_path.name}: {e}")
+                return [], None
+
+        # Run parallel processing
+        max_file_workers = self.config.max_file_workers
+        logger.info(f"🚀 Starting parallel processing with {max_file_workers} file workers")
+        
+        with ThreadPoolExecutor(max_workers=max_file_workers) as executor:
+            future_to_file = {executor.submit(process_file_worker, f): f for f in files}
+            
+            for future in tqdm(as_completed(future_to_file), total=len(files), desc=f"Processing {stage_name} files", unit="file"):
+                file_path = future_to_file[future]
+                try:
+                    file_entities, stats = future.result()
+                    if file_entities:
+                        all_entities.extend(file_entities)
+                    if stats:
+                        text_stats_agg["character_count"] += stats["character_count"]
+                        text_stats_agg["word_count"] += stats["word_count"]
+                except Exception as e:
+                    logger.error(f"Failed to retrieve results for {file_path.name}: {e}")
+
+        # Final aggregation and deduplication across all files
+        if all_entities:
+            logger.info(f"🔄 Aggregating and deduplicating {len(all_entities)} entities from {len(files)} files...")
+            # Re-run post-processing on aggregated list
+            # We skip extraction but run the rest of the pipeline logic
+            # Use semantic deduplication again on the full set
+            all_entities = self.post_process_entities(all_entities, use_semantic=True)
+
+        # Save aggregated results
+        self.save_results(all_entities, output_file, text_stats_agg)
+        
+        logger.info(f"✅ Pipeline completed. Total unique entities: {len(all_entities)}")
+        return True
+
 # ==============================================================================
 # MAIN EXECUTION
 # ==============================================================================
@@ -4815,102 +5270,14 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             return False
 
         # Create processed directory for checkpoints
+        # Use a 'processed' subdirectory relative to the output file's parent
+        # If output_file is 'output_v2/cdm_entities.json', processed_dir is 'output_v2/processed'
         processed_dir = Path(output_file).parent / "processed"
         processed_dir.mkdir(parents=True, exist_ok=True)
 
-        # Define worker function for parallel processing
-        def process_file_worker(file_path):
-            try:
-                # Check for checkpoint
-                checkpoint_file = processed_dir / f"{file_path.stem}.json"
-                
-                # If force is False, we might want to resume or skip
-                if checkpoint_file.exists() and not force:
-                    try:
-                        with open(checkpoint_file, 'r') as f:
-                            data = json.load(f)
-                            
-                        # Check if it's a completed run (all chunks done) or legacy format
-                        if isinstance(data, list):
-                            return data, None # Legacy format, assume complete
-                        elif isinstance(data, dict) and 'completed_chunks' in data:
-                            # Check if all chunks are done? 
-                            # Actually, extract_entities will handle resumption.
-                            # But if we want to skip reading the file if strictly DONE...
-                            # For now, let's just let extract_entities handle it.
-                            pass 
-                    except json.JSONDecodeError:
-                        pass # Reprocess
+        # Run pipeline stage
+        return pipeline.run_pipeline_stage(files, processed_dir, output_file, stage_name, **kwargs)
 
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    text = f.read()
-                
-                # Calculate stats
-                stats = {
-                    "character_count": len(text),
-                    "word_count": len(text.split())
-                }
-                
-                # Extract entities (RESUMABLE)
-                # Pass checkpoint_path so it can load/save progress
-                raw_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'), checkpoint_path=checkpoint_file)
-                
-                # Filter out invalid entities (e.g. error codes or malformed data)
-                file_entities = [e for e in raw_entities if isinstance(e, dict)]
-                if len(file_entities) < len(raw_entities):
-                    logger.warning(f"⚠️  Filtered out {len(raw_entities) - len(file_entities)} invalid entities from {file_path.name}")
-
-                # Add source file info
-                for entity in file_entities:
-                    entity['source_file'] = file_path.name
-                
-                # Save FINAL checkpoint (or just keep the granular one? Granular one is fine, but maybe we want to clean it up to just list?)
-                # Actually, for compatibility with the rest of the pipeline which expects a list of entities from this worker...
-                # The granular checkpoint is {"entities": ..., "completed_chunks": ...}
-                # But we return `file_entities` which is a list.
-                # The checkpoint on disk will remain in granular format until we overwrite it or maybe we should convert it?
-                # Let's leave it as granular format on disk so we can always resume if needed.
-                # But wait, if we return, the pipeline continues.
-                
-                return file_entities, stats
-            except Exception as e:
-                logger.error(f"Error processing {file_path.name}: {e}")
-                return [], None
-
-        # Run parallel processing
-        max_file_workers = config.max_file_workers
-        logger.info(f"🚀 Starting parallel processing with {max_file_workers} file workers")
-        
-        with ThreadPoolExecutor(max_workers=max_file_workers) as executor:
-            future_to_file = {executor.submit(process_file_worker, f): f for f in files}
-            
-            for future in tqdm(as_completed(future_to_file), total=len(files), desc=f"Processing {stage_name} files", unit="file"):
-                file_path = future_to_file[future]
-                try:
-                    file_entities, stats = future.result()
-                    if file_entities:
-                        all_entities.extend(file_entities)
-                    if stats:
-                        text_stats_agg["character_count"] += stats["character_count"]
-                        text_stats_agg["word_count"] += stats["word_count"]
-                except Exception as e:
-                    logger.error(f"Failed to retrieve results for {file_path.name}: {e}")
-
-        # Final aggregation and deduplication across all files
-        # Final aggregation and deduplication across all files
-        if all_entities:
-            logger.info(f"🔄 Aggregating and deduplicating {len(all_entities)} entities from {len(files)} files...")
-            # Re-run post-processing on aggregated list
-            # We skip extraction but run the rest of the pipeline logic
-            # Use semantic deduplication again on the full set
-            all_entities = pipeline.post_process_entities(all_entities, use_semantic=True)
-
-        # Save aggregated results
-        pipeline.save_results(all_entities, output_file, text_stats_agg)
-        
-        logger.info(f"✅ Pipeline completed. Total unique entities: {len(all_entities)}")
-        return True
-        
     except Exception as e:
         logger.error(f"❌ {stage_name} pipeline failed: {e}")
         return False
@@ -4973,6 +5340,9 @@ def _analyze_file(filepath):
         logger.error(f"Error analyzing {filepath}: {e}")
         return None
 
+
+
+
 def main():
     parser = argparse.ArgumentParser(description="CDM Entity Extraction Pipeline (Standalone)")
     parser.add_argument('--config', help='Path to JSON configuration file')
@@ -4994,8 +5364,12 @@ def main():
     parser.add_argument('--fast-mode', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
     parser.add_argument('--api-type', choices=['ollama', 'openai', 'huggingface', 'anthropic', 'glm'], default='ollama', help='API type (ollama, openai/vllm, huggingface, anthropic, or glm)')
     parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
+    parser.add_argument('--bioportal-api-key', help='BioPortal API Key')
     parser.add_argument('--hf-token', help='HuggingFace Token (optional if logged in)')
     parser.add_argument('--force', action='store_true', help='Force re-processing (ignore checkpoints)')
+    parser.add_argument('--consolidate', action='store_true', help='Consolidate processed files')
+    parser.add_argument('--map', action='store_true', help='Apply mappings to existing file')
+    parser.add_argument('--enrich', action='store_true', help='Enrich definitions using LLM')
     
     # Compatibility arguments (ignored or deprecated but kept for script compatibility)
     parser.add_argument('--chunk-size', type=int, help='Chunk size (deprecated, using windowed strategy)')
@@ -5035,6 +5409,32 @@ def main():
         max_workers=args.max_workers,
         max_file_workers=args.max_file_workers
     )
+
+    # Handle Special Modes
+    if args.consolidate or args.map or args.enrich:
+        # Initialize pipeline
+        pipeline = CDMEntityPipeline(
+            model=args.model,
+            base_url=args.base_url,
+            config=pipeline_config,
+            api_type=args.api_type,
+            api_key=args.api_key,
+            hf_token=args.hf_token,
+            enable_comprehensive_mapping=args.enable_comprehensive_mapping,
+            bioportal_api_key=args.bioportal_api_key or api_keys['BIOPORTAL_API_KEY']
+        )
+        
+        if args.consolidate:
+            pipeline.consolidate_results(args.input, args.output)
+            return 0
+            
+        if args.map:
+            pipeline.apply_mappings_to_file(args.input)
+            return 0
+            
+        if args.enrich:
+            pipeline.enrich_definitions(args.input)
+            return 0
     
     # Determine output paths
     base_output = Path(args.output)
@@ -5055,6 +5455,7 @@ def main():
         hf_token=args.hf_token,
         enable_comprehensive_mapping=args.enable_comprehensive_mapping,
         enable_scispacy_linking=args.enable_scispacy_linking,
+        bioportal_api_key=args.bioportal_api_key or api_keys['BIOPORTAL_API_KEY'],
         force=args.force
     )
     
@@ -5074,6 +5475,10 @@ def main():
         # Determine enabled features based on API keys and flags
         enable_umls = bool(api_keys['UMLS_API_KEY'] and not api_keys['UMLS_API_KEY'].startswith('your_'))
         enable_hf = bool(api_keys['HUGGINGFACE_TOKEN'] and not api_keys['HUGGINGFACE_TOKEN'].startswith('your_'))
+        
+        bp_key = args.bioportal_api_key or api_keys['BIOPORTAL_API_KEY']
+        logger.info(f"DEBUG: BioPortal Key in main: {bp_key}")
+        
         enhanced_success = run_pipeline_stage(
             "Enhanced",
             args.input,
@@ -5085,6 +5490,7 @@ def main():
             enable_omop_mapping=args.enable_omop_mapping,
             enable_umls_mapping=enable_umls,
             umls_api_key=api_keys['UMLS_API_KEY'],
+            bioportal_api_key=bp_key,
             enable_comprehensive_mapping=enable_hf,
             mapping_confidence_threshold=0.7,
             enable_correction=args.enable_correction,

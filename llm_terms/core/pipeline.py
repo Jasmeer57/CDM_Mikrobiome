@@ -6,6 +6,9 @@ import os
 import logging
 import re
 import time
+import json
+from pathlib import Path
+from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Dict, Optional
 from core.llm_client import LLMClient
@@ -16,19 +19,10 @@ from core.biomedical_deduplicator import BioMistralDeduplicator
 from core.term_corrector import MiniLMTermCorrector
 from core.relevance_scorer import MicrobiomeRelevanceScorer
 from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
-from mappers.omop_mapper import OMOPMapper
-from mappers.umls import UMLSMapper
 from mappers.mapping import ComprehensiveMapper
 from config.cdm_config import CDMEntityConfig, PipelineConfig
 
 logger = logging.getLogger(__name__)
-
-# ==========================================
-# UTILITIES
-# ==========================================
-
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 
 
 
@@ -48,9 +42,6 @@ class CDMEntityPipeline:
         self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url)
         # Pass api_key to LLMClient if needed, but LLMClient in core might need update too. 
         # For now, let's assume LLMClient handles it or we update it later.
-        # Actually, LLMClient in core doesn't seem to take api_key in __init__ based on previous view.
-        # I should check LLMClient again or update it. 
-        # But first, let's update pipeline.py.
         
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
@@ -320,6 +311,9 @@ class CDMEntityPipeline:
             entity_data = {
                 'entity': entity['entity'],
                 'context': entity['context'],
+                'definition': entity.get('definition', ''),
+                'aliases': entity.get('aliases', []),
+                'examples': entity.get('examples', []),
                 'confidence': entity['confidence'],
                 'source': entity['source'],
                 'microbiome_relevance_score': entity.get('microbiome_relevance_score', 0.0)
@@ -433,3 +427,250 @@ class CDMEntityPipeline:
         except Exception as e:
             logger.error(f"Pipeline execution failed: {e}")
             return False
+
+    def consolidate_results(self, processed_dir: str, output_file: str):
+        """Consolidate processed JSON files into a single output."""
+        processed_path = Path(processed_dir)
+        output_path = Path(output_file)
+        
+        logger.info(f"📂 Reading processed files from {processed_path}")
+        
+        all_entities = []
+        files_processed = 0
+        
+        for file_path in processed_path.glob("*.json"):
+            try:
+                with open(file_path, 'r') as f:
+                    data = json.load(f)
+                    
+                if isinstance(data, list):
+                    entities = data
+                elif isinstance(data, dict) and 'entities' in data:
+                    entities = data['entities']
+                elif isinstance(data, dict) and 'results' in data:
+                     # Handle already flattened results if needed, but usually we consolidate raw entities
+                     # For now, assume we are consolidating raw entities from checkpoints/processed files
+                     entities = data['results'] if isinstance(data['results'], list) else []
+                else:
+                    logger.warning(f"⚠️ Unknown format in {file_path.name}")
+                    continue
+                    
+                for entity in entities:
+                    if 'source_file' not in entity:
+                        entity['source_file'] = file_path.stem + ".txt"
+                        
+                all_entities.extend(entities)
+                files_processed += 1
+                
+            except Exception as e:
+                logger.error(f"❌ Failed to read {file_path.name}: {e}")
+
+        logger.info(f"✅ Loaded {len(all_entities)} entities from {files_processed} files")
+
+        # Deduplicate
+        logger.info("🔄 Running semantic deduplication...")
+        deduplicated_entities = self.semantic_deduplicator.apply_semantic_deduplication(all_entities)
+        
+        # Save
+        logger.info(f"💾 Saving consolidated results to {output_path}")
+        self.save_results(deduplicated_entities, str(output_path))
+        logger.info("🎉 Consolidation complete!")
+
+    def apply_mappings_to_file(self, input_file: str):
+        """Apply mappings to an existing JSON file."""
+        input_path = Path(input_file)
+        logger.info(f"📂 Reading entities from {input_path}")
+        
+        with open(input_path, 'r') as f:
+            data = json.load(f)
+            
+        if isinstance(data, dict) and 'results' in data:
+            entities = data['results']['cdm_entities']
+            # Flatten for mapping if it's the structured format
+            flat_entities = []
+            for etype, elist in entities.items():
+                for e in elist:
+                    e['entity_type'] = etype # Ensure type is preserved
+                    flat_entities.append(e)
+            entities = flat_entities
+            is_flat = True 
+            is_structured = True
+        elif isinstance(data, list):
+            entities = data
+            is_flat = False
+            is_structured = False
+        else:
+            logger.error("❌ Unknown file format")
+            return
+
+        logger.info(f"🚀 Starting mapping for {len(entities)} entities...")
+        
+        updated_entities = []
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            futures = []
+            for entity in entities:
+                futures.append(executor.submit(self._process_mapping_entity, entity, is_flat))
+                
+            for future in tqdm(as_completed(futures), total=len(entities)):
+                updated_entities.append(future.result())
+        
+        # Save results
+        # If structured, we can just use save_results which re-groups them
+        # But save_results expects a list of entities with 'entity_type'
+        self.save_results(updated_entities, str(input_path))
+        logger.info(f"💾 Mapped results saved to {input_path}")
+
+    def _process_mapping_entity(self, entity: Dict, is_flat: bool) -> Dict:
+        """Process a single entity for mapping."""
+        term = entity.get('term') if is_flat else entity.get('entity')
+        entity_type = entity.get('entity_type') or entity.get('categories')
+        
+        if not term:
+            return entity
+            
+        # Check if mapping is missing
+        needs_mapping = False
+        if is_flat:
+            if not entity.get('Bioportal') or not entity.get('OLS'):
+                needs_mapping = True
+        else:
+            if 'comprehensive_mapping' not in entity:
+                needs_mapping = True
+                
+        if needs_mapping and self.comprehensive_mapper:
+            try:
+                # Map using comprehensive mapper
+                mapping_result = self.comprehensive_mapper.map_entity_comprehensive(term, entity_type)
+                
+                if is_flat:
+                    bioportal_list = mapping_result.get('bioportal_mappings', [])
+                    bioportal = bioportal_list[0].get('concept_id', '') if bioportal_list else ''
+                    
+                    ols_list = mapping_result.get('ols_mappings', [])
+                    ols = ols_list[0].get('iri', '') if ols_list else ''
+                    
+                    if bioportal: entity['Bioportal'] = bioportal
+                    if ols: entity['OLS'] = ols
+                    
+                    # Also update UMLS/OMOP if missing
+                    umls_list = mapping_result.get('umls_mappings', [])
+                    umls = umls_list[0].get('umls_cui', '') if umls_list else ''
+                    if umls and not entity.get('UMLS_ID'): entity['UMLS_ID'] = umls
+                    
+                else:
+                    entity['comprehensive_mapping'] = mapping_result
+                    
+            except Exception:
+                pass
+                
+        return entity
+
+    def enrich_definitions(self, input_file: str):
+        """Enrich existing entities with Definitions, Aliases, and Examples using LLM."""
+        input_path = Path(input_file)
+        logger.info(f"📂 Reading entities for enrichment from {input_path}")
+        
+        with open(input_path, 'r') as f:
+            data = json.load(f)
+            
+        # Handle structure
+        if isinstance(data, dict) and 'results' in data and 'cdm_entities' in data['results']:
+            # Structured format
+            entities_map = data['results']['cdm_entities']
+            all_entities = []
+            for etype, elist in entities_map.items():
+                for e in elist:
+                    e['entity_type'] = etype # Ensure type is present
+                    all_entities.append(e)
+            entities = all_entities
+            is_structured = True
+        elif isinstance(data, list):
+            entities = data
+            is_structured = False
+        else:
+            logger.error("❌ Unknown format")
+            return
+
+        logger.info(f"🚀 Starting enrichment for {len(entities)} entities...")
+        
+        # Filter entities that need enrichment
+        to_enrich = [e for e in entities if not e.get('definition') or not e.get('aliases')]
+        logger.info(f"ℹ️  {len(to_enrich)} entities need enrichment")
+        
+        # Batch process
+        batch_size = 20
+        for i in tqdm(range(0, len(to_enrich), batch_size)):
+            batch = to_enrich[i:i+batch_size]
+            self._enrich_batch(batch)
+            
+        # Save results
+        self.save_results(entities, str(input_path))
+        logger.info(f"💾 Enriched results saved to {input_path}")
+
+    def _enrich_batch(self, batch: List[Dict]):
+        """Enrich a batch of entities using LLM."""
+        if not batch: return
+        
+        terms = [e.get('entity', e.get('term')) for e in batch]
+        terms_str = "\n".join([f"- {t} ({e.get('entity_type', 'UNKNOWN')})" for t, e in zip(terms, batch)])
+        
+        prompt = f"""You are a biomedical expert. Provide Definition, Aliases, and Examples for the following terms.
+        
+TERMS:
+{terms_str}
+
+OUTPUT FORMAT:
+- [Term] | Definition: [Brief definition] | Aliases: [Alias1, Alias2] | Examples: [Ex1, Ex2]
+
+Provide one line per term. Start immediately.
+"""
+        try:
+            response = self.llm_client.call_llm(prompt)
+            lines = response.strip().split('\n')
+            
+            # Parse response and update entities
+            results_map = {}
+            for line in lines:
+                parts = line.split('|')
+                if len(parts) < 2: continue
+                
+                term_part = parts[0].strip()
+                # Remove bullet and type if present
+                term_match = re.match(r'^(?:[\-\*0-9\.]+\s*)?(.+?)(?:\s*\(.*\))?$', term_part)
+                if term_match:
+                    term_clean = term_match.group(1).strip()
+                    
+                    definition = ""
+                    aliases = []
+                    examples = []
+                    
+                    for part in parts[1:]:
+                        part = part.strip()
+                        if part.lower().startswith("definition:"):
+                            definition = part[11:].strip()
+                        elif part.lower().startswith("aliases:"):
+                            aliases_str = part[8:].strip()
+                            if aliases_str and aliases_str.lower() != "none":
+                                aliases = [a.strip() for a in aliases_str.split(',')]
+                        elif part.lower().startswith("examples:"):
+                            examples_str = part[9:].strip()
+                            if examples_str and examples_str.lower() != "none":
+                                examples = [e.strip() for e in examples_str.split(',')]
+                                
+                    results_map[term_clean.lower()] = {
+                        'definition': definition,
+                        'aliases': aliases,
+                        'examples': examples
+                    }
+            
+            # Update batch objects
+            for entity in batch:
+                term = entity.get('entity', entity.get('term', '')).strip()
+                if term.lower() in results_map:
+                    res = results_map[term.lower()]
+                    if not entity.get('definition'): entity['definition'] = res['definition']
+                    if not entity.get('aliases'): entity['aliases'] = ", ".join(res['aliases'])
+                    if not entity.get('examples'): entity['examples'] = "; ".join(res['examples'])
+                    
+        except Exception as e:
+            logger.error(f"Enrichment batch failed: {e}")

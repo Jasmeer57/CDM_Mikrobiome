@@ -249,15 +249,47 @@ Examples:
         help='List available models and exit'
     )
 
+    parser.add_argument(
+        '--bioportal-api-key',
+        help='BioPortal API key for ontology search'
+    )
+
+    parser.add_argument(
+        '--provider',
+        choices=['ollama', 'openai', 'huggingface', 'zlm'],
+        default='ollama',
+        help='LLM provider type (default: ollama)'
+    )
+
+    parser.add_argument(
+        '--enable-scispacy-linking',
+        action='store_true',
+        help='Enable SciSpaCy for UMLS linking (requires scispacy installed)'
+    )
+
+    parser.add_argument(
+        '--consolidate',
+        action='store_true',
+        help='Consolidate processed files from input directory to output file'
+    )
+
+    parser.add_argument(
+        '--map',
+        action='store_true',
+        help='Apply mappings to input file'
+    )
+
+    parser.add_argument(
+        '--enrich',
+        action='store_true',
+        help='Enrich definitions for input file'
+    )
+
     # Parse args with config support
     args = ConfigManager.setup_parser_with_config(parser)
 
     # Setup logging
     setup_logging(args.verbose, args.log_format)
-
-    # Validate input file (must be checked after config merge)
-    if not args.input_file:
-        parser.error("the following arguments are required: --input-file/-i (or in config file)")
 
     # Handle list models
     if args.list_models:
@@ -273,29 +305,9 @@ Examples:
             logger.error(f"Failed to list models: {e}")
             return 1
 
-    # Validate input file
-    input_path = Path(args.input_file)
-    if not input_path.exists():
-        logger.error(f"Input path not found: {input_path}")
-        return 1
-
-    # Determine input files
-    input_files = []
-    if input_path.is_file():
-        input_files = [input_path]
-    elif input_path.is_dir():
-        input_files = list(input_path.glob("*.txt"))
-        logger.info(f"📂 Found {len(input_files)} text files in {input_path}")
-        if not input_files:
-            logger.error(f"No .txt files found in directory: {input_path}")
-            return 1
-    else:
-        logger.error(f"Invalid input path: {input_path}")
-        return 1
-
-    # Create output directory if needed
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    # Validate input file (must be checked after config merge)
+    if not args.input_file:
+        parser.error("the following arguments are required: --input-file/-i (or in config file)")
 
     # Configure pipeline
     config = PipelineConfig(
@@ -319,7 +331,9 @@ Examples:
             enable_omop_mapping=args.enable_omop_mapping,
             enable_umls_mapping=args.enable_umls_mapping,
             umls_api_key=args.umls_api_key,
+            bioportal_api_key=args.bioportal_api_key,
             enable_comprehensive_mapping=args.enable_comprehensive_mapping,
+            enable_scispacy_linking=args.enable_scispacy_linking,
             mapping_confidence_threshold=args.mapping_confidence_threshold,
             enable_correction=args.enable_correction,
             enable_llm_correction=args.enable_llm_correction,
@@ -328,6 +342,44 @@ Examples:
     except Exception as e:
         logger.error(f"Failed to initialize pipeline: {e}")
         return 1
+
+    # Handle Modes
+    if args.consolidate:
+        pipeline.consolidate_results(args.input_file, args.output)
+        return 0
+
+    if args.map:
+        pipeline.apply_mappings_to_file(args.input_file)
+        return 0
+
+    if args.enrich:
+        pipeline.enrich_definitions(args.input_file)
+        return 0
+
+    # Default: Run Extraction
+    # Validate input file
+    input_path = Path(args.input_file)
+    if not input_path.exists():
+        logger.error(f"Input path not found: {input_path}")
+        return 1
+
+    # Determine input files
+    input_files = []
+    if input_path.is_file():
+        input_files = [input_path]
+    elif input_path.is_dir():
+        input_files = list(input_path.glob("*.txt"))
+        logger.info(f"📂 Found {len(input_files)} text files in {input_path}")
+        if not input_files:
+            logger.error(f"No .txt files found in directory: {input_path}")
+            return 1
+    else:
+        logger.error(f"Invalid input path: {input_path}")
+        return 1
+
+    # Create output directory if needed
+    output_path = Path(args.output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Process files
     all_entities = []

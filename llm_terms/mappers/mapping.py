@@ -14,66 +14,118 @@ logger = logging.getLogger(__name__)
 class ComprehensiveMapper:
     """Comprehensive mapping coordinator for all biomedical ontologies."""
 
-    def __init__(self, umls_api_key: str = None, athena_api_url: str = None,
-                 cache_mappings: bool = True, use_local_omop: bool = True,
-                 omop_vocab_dir: str = None, fuzzy_threshold: int = 95, max_matches: int = 3):
 
-        # Use local OMOP mapper by default, fallback to API mapper
-        if use_local_omop:
-            self.omop_mapper = OMOPLocalMapper(
-                vocab_dir=omop_vocab_dir,
-                fuzzy_threshold=fuzzy_threshold,
-                max_matches=max_matches
-            )
-            logger.info("📁 Using local OMOP mapper")
+    def __init__(self, umls_api_key: str = None, bioportal_api_key: str = None,
+                 use_local_omop: bool = True, omop_vocab_dir: str = None,
+                 fuzzy_threshold: int = 90, max_matches: int = 5,
+                 cache_mappings: bool = True, use_scispacy: bool = False):
+        self.umls_mapper = UMLSMapper(api_key=umls_api_key) if umls_api_key else None
+        if use_local_omop and omop_vocab_dir:
+            self.omop_mapper = OMOPLocalMapper(vocab_dir=omop_vocab_dir)
         else:
-            self.omop_mapper = OMOPMapper(athena_api_url=athena_api_url, cache_mappings=cache_mappings)
-            logger.info("🌐 Using API-based OMOP mapper")
+            self.omop_mapper = OMOPMapper()
+        
+        # Initialize BioPortal Mapper
+        self.bioportal_mapper = None
+        if bioportal_api_key:
+            from .bioportal_mapper import BioPortalMapper
+            self.bioportal_mapper = BioPortalMapper(api_key=bioportal_api_key)
+            
+        # Initialize OLS Mapper (No API key needed usually)
+        from .ols_mapper import OLSMapper
+        self.ols_mapper = OLSMapper()
 
-        # UMLS mapper (can be disabled if no API key)
-        self.umls_mapper = UMLSMapper(api_key=umls_api_key, cache_size=2000) if umls_api_key else None
-        if self.umls_mapper:
-            logger.info("🏥 UMLS mapper initialized")
-        else:
-            logger.info("⚠️  UMLS mapper disabled (no API key)")
+        self.fuzzy_threshold = fuzzy_threshold
+        self.max_matches = max_matches
+        self.cache_mappings = cache_mappings
+        self.mapping_cache = {}
+        
+        # SciSpaCy (Optional)
+        self.nlp = None
+        if use_scispacy:
+            try:
+                import spacy
+                import scispacy
+                from scispacy.linking import EntityLinker
+                self.nlp = spacy.load("en_core_sci_sm")
+                self.nlp.add_pipe("scispacy_linker", config={"resolve_abbreviations": True, "linker_name": "umls"})
+                logger.info("✅ SciSpaCy initialized for UMLS linking")
+            except Exception as e:
+                logger.warning(f"⚠️ Failed to initialize SciSpaCy: {e}")
 
-    def map_entity_comprehensive(self, entity_name: str, entity_type: str) -> Dict:
-        """Perform comprehensive mapping using all available sources."""
-        # Get mappings from all available sources
-        umls_mappings = []
-        if self.umls_mapper:
-            umls_mappings = self.umls_mapper.map_entity_to_umls(entity_name, entity_type)
-
-        omop_mappings = self.omop_mapper.map_entity_to_omop(entity_name, entity_type)
-
-        # Calculate confidences
-        umls_confidences = [m.mapping_confidence for m in umls_mappings] if umls_mappings else []
-        omop_confidences = [m.mapping_confidence for m in omop_mappings] if omop_mappings else []
-
-        return {
-            'entity_name': entity_name,
+    def map_entity_comprehensive(self, term: str, entity_type: str) -> Dict:
+        """Map a single entity using all available mappers."""
+        results = {
+            'term': term,
             'entity_type': entity_type,
-            'umls_mappings': [self.umls_mapper._mapping_to_dict(m) for m in umls_mappings] if self.umls_mapper else [],
-            'omop_mappings': [vars(m) for m in omop_mappings],
-            'has_any_mapping': len(umls_mappings) > 0 or len(omop_mappings) > 0,
-            'umls_count': len(umls_mappings),
-            'omop_count': len(omop_mappings),
-            'best_confidence': max(umls_confidences + omop_confidences, default=0.0)
+            'bioportal_mappings': [],
+            'ols_mappings': [],
+            'umls_mappings': [],
+            'omop_mappings': [],
+            'has_any_mapping': False
         }
+        
+        # 1. BioPortal Mapping
+        if self.bioportal_mapper:
+            try:
+                bp_results = self.bioportal_mapper.search(term)
+                if bp_results:
+                    results['bioportal_mappings'] = bp_results[:self.max_matches]
+                    results['has_any_mapping'] = True
+            except Exception as e:
+                logger.warning(f"BioPortal mapping failed for {term}: {e}")
+                
+        # 2. OLS Mapping
+        if self.ols_mapper:
+            try:
+                ols_results = self.ols_mapper.map_entity(term, entity_type)
+                if ols_results:
+                    results['ols_mappings'] = [r.to_dict() for r in ols_results[:self.max_matches]]
+                    results['has_any_mapping'] = True
+            except Exception as e:
+                logger.warning(f"OLS mapping failed for {term}: {e}")
+                
+        # 3. UMLS Mapping
+        if self.umls_mapper:
+            try:
+                umls_results = self.umls_mapper.map_term(term)
+                if umls_results:
+                    results['umls_mappings'] = [r.to_dict() for r in umls_results[:self.max_matches]]
+                    results['has_any_mapping'] = True
+            except Exception as e:
+                logger.warning(f"UMLS mapping failed for {term}: {e}")
+
+        # 4. OMOP Mapping
+        if self.omop_mapper:
+            try:
+                omop_result = self.omop_mapper.map_entity_to_omop(term, entity_type)
+                if omop_result:
+                     # OMOP mapper returns a list of OMOPMapping objects
+                     if isinstance(omop_result, list):
+                         results['omop_mappings'] = [vars(r) for r in omop_result]
+                     else:
+                         # Should not happen based on signature, but just in case
+                         results['omop_mappings'] = [vars(omop_result)]
+                     results['has_any_mapping'] = True
+            except Exception as e:
+                logger.warning(f"OMOP mapping failed for {term}: {e}")
+                
+        return results
 
     def map_entity_list_comprehensive(self, entities: List[Dict]) -> List[Dict]:
-        """Map a list of entities comprehensively."""
+        """Map a list of entities using all available mappers."""
         mapped_entities = []
 
         for entity in entities:
-            entity_name = entity.get('entity', '')
-            entity_type = entity.get('entity_type', '')
-
-            if not entity_name or not entity_type:
+            term = entity.get('entity') or entity.get('term')
+            entity_type = entity.get('entity_type') or entity.get('categories')
+            
+            if not term:
+                mapped_entities.append(entity)
                 continue
-
-            # Get comprehensive mapping
-            comprehensive_mapping = self.map_entity_comprehensive(entity_name, entity_type)
+                
+            # Perform mapping
+            comprehensive_mapping = self.map_entity_comprehensive(term, entity_type)
 
             # Enhance entity
             enhanced_entity = {

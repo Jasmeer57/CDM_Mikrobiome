@@ -22,24 +22,41 @@ class LLMClient:
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call LLM with structured prompt and return response."""
         try:
-            request_config = {
-                "model": self.model,
-                "prompt": prompt,
-                "stream": False,
-                "options": {
+            # Determine provider and endpoint
+            is_ollama = "/api/generate" in self.base_url or "localhost:11434" in self.base_url
+            
+            if is_ollama:
+                # Ollama API
+                endpoint = f"{self.base_url}/api/generate"
+                request_config = {
+                    "model": self.model,
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {
+                        "temperature": self.config['temperature'],
+                        "top_p": 0.9,
+                        "num_predict": max_tokens or self.config['max_tokens']
+                    }
+                }
+            else:
+                # OpenAI-compatible API (vLLM, ZLM, HuggingFace, OpenAI)
+                endpoint = f"{self.base_url}/v1/chat/completions"
+                request_config = {
+                    "model": self.model,
+                    "messages": [{"role": "user", "content": prompt}],
                     "temperature": self.config['temperature'],
-                    "top_p": 0.9,
-                    "num_predict": max_tokens or self.config['max_tokens']
+                    "max_tokens": max_tokens or self.config['max_tokens'],
+                    "stream": False
                 }
 
+            headers = {
+                "Content-Type": "application/json"
             }
-            
-            headers = {}
             if self.api_key and self.api_key != "EMPTY":
                 headers["Authorization"] = f"Bearer {self.api_key}"
 
             response = requests.post(
-                f"{self.base_url}/api/generate",
+                endpoint,
                 json=request_config,
                 headers=headers,
                 timeout=self.config['timeout']
@@ -47,11 +64,20 @@ class LLMClient:
 
             if response.status_code == 200:
                 logger.debug(f"LLM Response Status: {response.status_code}")
-                # logger.debug(f"LLM Response Body: {response.text[:200]}...") 
                 resp_json = response.json()
-                content = resp_json.get('response', '').strip()
-                if not content and 'thinking' in resp_json:
-                    content = resp_json['thinking'].strip()
+                
+                if is_ollama:
+                    content = resp_json.get('response', '').strip()
+                    if not content and 'thinking' in resp_json:
+                        content = resp_json['thinking'].strip()
+                else:
+                    # OpenAI format
+                    choices = resp_json.get('choices', [])
+                    if choices:
+                        content = choices[0].get('message', {}).get('content', '').strip()
+                    else:
+                        content = ""
+                        
                 return content
             else:
                 logger.error(f"LLM API error: {response.status_code} - {response.text}")
