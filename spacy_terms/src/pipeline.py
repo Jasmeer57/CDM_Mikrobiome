@@ -26,6 +26,15 @@ from src.modules.ai_correction import AITermCorrector
 from src.modules.biomistral import BioMistralValidator, DefinitionGenerator, LLMTermCorrector
 from src.modules.umls_mapping import UMLSMapper
 from src.modules.omop_mapping import OMOPMapper, ComprehensiveMapper
+from src.modules.microbiome_components import (
+    MicrobiomeGoldStandardScorer,
+    MicrobiomeSemanticFilter,
+    ContextualCleaner
+)
+from src.modules.ranking_components import (
+    TermRanker,
+    TfidfSemanticModel
+)
 
 logger = logging.getLogger(__name__)
 
@@ -61,21 +70,35 @@ def process_file_worker(file_path: Path) -> Tuple[Path, List[Dict[str, Any]]]:
 
 class GlobalPipelineProcessor:
     """
+    Enhanced Global Pipeline Processor with microbiome-specific components
     Manages the global 6-step pipeline:
     1. Extract all terms from all files (Parallel)
-    2. Global Deduplication (Exact -> Fuzzy -> Semantic -> Biomedical)
-    3. Semantic Quality Filter (Bullshit detection)
-    4. Select Top N Terms (Scoring)
+    2. Contextual Cleaning & Global Deduplication (Exact -> Fuzzy -> Semantic -> Biomedical)
+    3. Microbiome Semantic Filtering
+    4. Advanced Term Ranking (Gold Standard + Scoring)
     5. Advanced Processing (Correction, Definitions, Validation, Mapping)
-    6. Output Generation
+    6. Output Generation with Step-by-Step Saving
     """
-    
+
     def __init__(self, config: PipelineConfig):
         self.config = config
-        
-        # Initialize components
+
+        # Initialize core components
         self.deduplicator = Deduplicator(config.deduplication)
-        
+
+        # Microbiome-specific components
+        self.contextual_cleaner = ContextualCleaner()
+        self.gold_scorer = MicrobiomeGoldStandardScorer()
+        self.semantic_filter = MicrobiomeSemanticFilter()
+        self.term_ranker = TermRanker(config)
+
+        # Fallback semantic model
+        try:
+            self.tfidf_model = TfidfSemanticModel()
+        except Exception as e:
+            logger.warning(f"TF-IDF model not available: {e}")
+            self.tfidf_model = None
+
         # Advanced components (lazy loaded or initialized here)
         self.definition_generator = DefinitionGenerator(config)
         self.term_corrector = LLMTermCorrector(config)
@@ -83,36 +106,48 @@ class GlobalPipelineProcessor:
         self.mapper = ComprehensiveMapper(config)
         
     def run(self):
-        """Run the complete global pipeline"""
+        """Run the complete enhanced global pipeline with microbiome-specific components"""
         start_time = time.time()
-        logger.info("🚀 STARTING CORRECT GLOBAL PIPELINE")
+        logger.info("🚀 STARTING ENHANCED GLOBAL PIPELINE WITH MICROBIOME COMPONENTS")
         logger.info(f"   Target Final Terms: {self.config.target_final_terms}")
         logger.info(f"   Input Directory: {self.config.input_dir}")
-        
+        logger.info("   Features: Gold Standard Scoring, Contextual Cleaning, Advanced Ranking")
+
         # STEP 1: Extract All Terms
         raw_terms = self.extract_all_terms_from_all_files()
         if not raw_terms:
             logger.error("No terms extracted. Exiting.")
             return
-            
-        # STEP 2: Global Deduplication
-        deduplicated_terms = self.run_global_deduplication(raw_terms)
-        
-        # STEP 3: Semantic Quality Filter
-        filtered_terms = self.filter_bullshit_terms(deduplicated_terms)
-        
-        # STEP 4: Select Final Terms
-        final_selection = self.select_final_terms(filtered_terms)
-        
+
+        # Save raw terms after extraction
+        self.save_terms_to_files(raw_terms, "step1_raw_extraction")
+
+        # STEP 2: Contextual Cleaning & Global Deduplication
+        cleaned_terms = self.apply_contextual_cleaning(raw_terms)
+        self.save_terms_to_files(cleaned_terms, "step2_cleaned_terms")
+
+        deduplicated_terms = self.run_global_deduplication(cleaned_terms)
+        self.save_terms_to_files(deduplicated_terms, "step3_deduplicated_terms")
+
+        # STEP 3: Microbiome Semantic Filtering
+        filtered_terms = self.apply_microbiome_semantic_filtering(deduplicated_terms)
+        self.save_terms_to_files(filtered_terms, "step4_semantic_filtered_terms")
+
+        # STEP 4: Advanced Term Ranking (Gold Standard + Comprehensive Scoring)
+        ranked_terms = self.apply_advanced_term_ranking(filtered_terms)
+        final_selection = ranked_terms[:self.config.target_final_terms]
+        self.save_terms_to_files(final_selection, "step5_final_selection")
+
         # STEP 5: Advanced Processing
         processed_terms = self.run_advanced_processing(final_selection)
-        
+
         # STEP 6: Save Results
         self.save_results(processed_terms)
-        
+
         elapsed = (time.time() - start_time) / 60
-        logger.info(f"🎉 CORRECT GLOBAL PIPELINE COMPLETE!")
+        logger.info(f"🎉 ENHANCED GLOBAL PIPELINE COMPLETE!")
         logger.info(f"⏱️  Total processing time: {elapsed:.1f} minutes")
+        logger.info(f"📊 Final term count: {len(processed_terms)}")
         
     def extract_all_terms_from_all_files(self) -> List[Dict[str, Any]]:
         """Step 1: Parallel extraction from all files"""
@@ -281,36 +316,169 @@ class GlobalPipelineProcessor:
             
         return terms
 
+    def apply_contextual_cleaning(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Apply contextual cleaning to extracted terms"""
+        logger.info("="*50)
+        logger.info("STEP 2A: CONTEXTUAL CLEANING")
+        logger.info("="*50)
+
+        cleaned_terms = self.contextual_cleaner.clean_terms(terms)
+        logger.info(f"✅ Contextual cleaning: {len(terms)} → {len(cleaned_terms)} terms")
+        return cleaned_terms
+
+    def apply_microbiome_semantic_filtering(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Apply microbiome-specific semantic filtering"""
+        logger.info("="*50)
+        logger.info("STEP 4: MICROBIOME SEMANTIC FILTERING")
+        logger.info("="*50)
+
+        filtered_terms = []
+        rejected_count = 0
+
+        for term in terms:
+            term_text = term.get('term', '')
+            relevance_score = self.semantic_filter.get_relevance_score(term_text)
+
+            # Add relevance score to term data
+            term['microbiome_relevance'] = relevance_score
+
+            # Keep terms with reasonable relevance score
+            if relevance_score >= 0.3:  # Threshold can be adjusted
+                filtered_terms.append(term)
+            else:
+                rejected_count += 1
+
+        logger.info(f"   🧬 Semantic filtering: {len(terms)} → {len(filtered_terms)} terms")
+        logger.info(f"   ❌ Rejected {rejected_count} terms with low microbiome relevance")
+
+        return filtered_terms
+
+    def apply_advanced_term_ranking(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Apply advanced term ranking with gold standard scoring"""
+        logger.info("="*50)
+        logger.info("STEP 5: ADVANCED TERM RANKING (GOLD STANDARD + COMPREHENSIVE SCORING)")
+        logger.info("="*50)
+
+        ranked_terms = self.term_ranker.rank_terms(terms)
+
+        # Log statistics about gold standard terms
+        gold_standard_count = sum(1 for term in ranked_terms if term.get('is_gold_standard', False))
+        high_relevance_count = sum(1 for term in ranked_terms if term.get('microbiome_relevance', 0) >= 0.8)
+
+        logger.info(f"   🏆 Gold standard terms: {gold_standard_count}")
+        logger.info(f"   🎯 High relevance terms: {high_relevance_count}")
+
+        return ranked_terms
+
+    def save_terms_to_files(self, terms: List[Dict[str, Any]], step_name: str) -> None:
+        """Save intermediate results to files (matching standalone pipeline behavior)"""
+        try:
+            output_dir = Path(self.config.output_dir)
+            output_dir.mkdir(parents=True, exist_ok=True)
+
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+            # Save CSV
+            csv_file = output_dir / f"{step_name}_{timestamp}.csv"
+            if terms:
+                df = pd.DataFrame(terms)
+                df.to_csv(csv_file, index=False)
+                logger.info(f"   💾 Saved {len(terms)} terms to {csv_file}")
+            else:
+                # Create empty CSV with headers
+                empty_df = pd.DataFrame(columns=['term', 'score', 'frequency', 'label'])
+                empty_df.to_csv(csv_file, index=False)
+                logger.info(f"   💾 Created empty file {csv_file}")
+
+        except Exception as e:
+            logger.warning(f"Failed to save intermediate files for {step_name}: {e}")
+
     def save_results(self, terms: List[Dict[str, Any]]):
-        """Step 6: Save results"""
+        """Step 6: Save final results with enhanced metadata"""
         logger.info("="*50)
-        logger.info("STEP 6: SAVING RESULTS")
+        logger.info("STEP 6: SAVING FINAL RESULTS")
         logger.info("="*50)
-        
+
         output_dir = Path(self.config.output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
-        
+
+        # Create summary statistics
+        gold_standard_count = sum(1 for term in terms if term.get('is_gold_standard', False))
+        avg_score = sum(term.get('score', 0) for term in terms) / len(terms) if terms else 0
+        avg_relevance = sum(term.get('microbiome_relevance', 0) for term in terms) / len(terms) if terms else 0
+
+        # Enhanced metadata
+        metadata = {
+            'pipeline_version': '7.0-enhanced',
+            'processing_date': datetime.now().isoformat(),
+            'total_terms': len(terms),
+            'gold_standard_terms': gold_standard_count,
+            'target_final_terms': self.config.target_final_terms,
+            'average_score': round(avg_score, 4),
+            'average_microbiome_relevance': round(avg_relevance, 4),
+            'features_enabled': {
+                'contextual_cleaning': True,
+                'gold_standard_scoring': True,
+                'microbiome_semantic_filtering': True,
+                'advanced_ranking': True,
+                'ai_correction': self.config.correct_terms,
+                'generate_definitions': self.config.generate_definitions,
+                'biomistral_validation': self.config.validate_biomistral,
+                'umls_mapping': self.config.map_umls,
+                'omop_mapping': self.config.map_omop,
+                'bioportal_mapping': self.config.map_bioportal
+            }
+        }
+
         # Convert to DataFrame for CSV
         df = pd.DataFrame(terms)
-        
-        # Flatten some fields for CSV
+
+        # Flatten fields for CSV
         if not df.empty:
             # Flatten mappings
             if 'mappings' in df.columns:
-                df['mappings_str'] = df['mappings'].apply(lambda x: json.dumps(x) if isinstance(x, dict) else str(x))
-            
+                df['mappings_str'] = df['mappings'].apply(
+                    lambda x: json.dumps(x) if isinstance(x, dict) else str(x)
+                )
+
             # Flatten validation
             if 'validation' in df.columns:
-                df['is_valid'] = df['validation'].apply(lambda x: x.get('is_valid') if isinstance(x, dict) else None)
-                
-        # Save CSV
-        csv_path = output_dir / "correct_global_results.csv"
+                df['is_valid'] = df['validation'].apply(
+                    lambda x: x.get('is_valid') if isinstance(x, dict) else None
+                )
+
+            # Flatten ranking factors
+            if 'ranking_factors' in df.columns:
+                df['ranking_factors_str'] = df['ranking_factors'].apply(
+                    lambda x: json.dumps(x) if isinstance(x, dict) else str(x)
+                )
+
+        # Save enhanced CSV
+        csv_path = output_dir / "enhanced_pipeline_results.csv"
         df.to_csv(csv_path, index=False)
-        logger.info(f"   💾 Saved CSV to {csv_path}")
-        
-        # Save JSON
-        json_path = output_dir / "correct_global_results.json"
+        logger.info(f"   💾 Saved enhanced CSV to {csv_path}")
+
+        # Save enhanced JSON with metadata
+        results = {
+            'metadata': metadata,
+            'terms': terms
+        }
+
+        json_path = output_dir / "enhanced_pipeline_results.json"
         with open(json_path, 'w', encoding='utf-8') as f:
-            json.dump(terms, f, indent=2, default=str)
-        logger.info(f"   💾 Saved JSON to {json_path}")
+            json.dump(results, f, indent=2, default=str)
+        logger.info(f"   💾 Saved enhanced JSON to {json_path}")
+
+        # Save metadata separately
+        metadata_path = output_dir / "pipeline_metadata.json"
+        with open(metadata_path, 'w', encoding='utf-8') as f:
+            json.dump(metadata, f, indent=2, default=str)
+        logger.info(f"   💾 Saved metadata to {metadata_path}")
+
+        # Log summary statistics
+        logger.info(f"📊 FINAL RESULTS SUMMARY:")
+        logger.info(f"   Total terms processed: {len(terms)}")
+        logger.info(f"   Gold standard terms: {gold_standard_count}")
+        logger.info(f"   Average score: {avg_score:.4f}")
+        logger.info(f"   Average microbiome relevance: {avg_relevance:.4f}")
 
