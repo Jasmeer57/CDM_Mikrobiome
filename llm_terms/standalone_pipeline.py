@@ -663,42 +663,146 @@ class LLMClient:
         self.opt_config = optimization_config or OptimizationConfig()
         self.hf_pipeline = None
         self.hf_tokenizer = None
+        self.token_usage = {"input_tokens": 0, "output_tokens": 0}
         logger.info(f"🤖 LLM Client initialized with model: {self.model} (API: {self.opt_config.api_type})")
+
+    def get_token_usage(self) -> Dict[str, int]:
+        """Get total token usage."""
+        return self.token_usage
 
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call LLM with structured prompt and return response."""
         if self.opt_config.api_type == "openai":
             return self._call_openai_compatible(prompt, max_tokens)
+        elif self.opt_config.api_type == "anthropic":
+            return self._call_anthropic(prompt, max_tokens)
+        elif self.opt_config.api_type == "glm":
+            return self._call_glm(prompt, max_tokens)
         elif self.opt_config.api_type == "huggingface":
             return self._call_huggingface_local(prompt, max_tokens)
         else:
             return self._call_ollama(prompt, max_tokens)
 
-    def _call_openai_compatible(self, prompt: str, max_tokens: Optional[int] = None) -> str:
-        """Call OpenAI-compatible API (e.g., vLLM)."""
-        max_retries = 3
-        base_delay = 1
-
+    def _call_openai_compatible(self, prompt: str, max_tokens: Optional[int] = None, extra_body: Optional[Dict] = None) -> str:
+        """Call OpenAI-compatible API."""
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.opt_config.api_key}"
         }
-
+        
         payload = {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
-            "temperature": self.config['temperature'],
-            "max_tokens": max_tokens or self.config['max_tokens'],
+            "temperature": 0.0,
         }
+        
+        if max_tokens:
+            payload["max_tokens"] = max_tokens
+            
+        if extra_body:
+            payload.update(extra_body)
+            
+        max_retries = 3
+        base_delay = 1
         
         if self.opt_config.use_json_mode:
             payload["response_format"] = {"type": "json_object"}
 
         for attempt in range(max_retries):
+            try:
+                response = requests.post(
+                    f"{self.base_url}/chat/completions",
+                    headers=headers,
+                    json=payload,
+                    timeout=self.config.get('timeout', 60)
+                )
+                
+                if response.status_code == 200:
+                    resp_json = response.json()
+                    
+                    # Track usage
+                    if 'usage' in resp_json:
+                        usage = resp_json['usage']
+                        self.token_usage['input_tokens'] += usage.get('prompt_tokens', usage.get('input_tokens', 0))
+                        self.token_usage['output_tokens'] += usage.get('completion_tokens', usage.get('output_tokens', 0))
+                        
+                    return resp_json['choices'][0]['message']['content'].strip()
+                else:
+                    logger.warning(f"OpenAI API error (attempt {attempt+1}): {response.status_code} - {response.text}")
+            except Exception as e:
+                logger.warning(f"OpenAI API call failed (attempt {attempt+1}): {e}")
             
             time.sleep(base_delay * (2 ** attempt))
             
+        logger.error("OpenAI API call failed after all retries.")
         return ""
+
+    def _call_anthropic(self, prompt: str, max_tokens: Optional[int] = None) -> str:
+        """Call Anthropic API (Claude)."""
+        max_retries = 3
+        base_delay = 1
+        
+        # Anthropic requires specific headers
+        headers = {
+            "x-api-key": self.opt_config.api_key,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json"
+        }
+        
+        payload = {
+            "model": self.model,
+            "max_tokens": max_tokens or self.config.get('max_tokens', 4096),
+            "messages": [{"role": "user", "content": prompt}]
+        }
+        
+        url = "https://api.anthropic.com/v1/messages"
+        
+        # Use custom base_url if provided and not the default Ollama one
+        if self.base_url and "localhost:11434" not in self.base_url:
+            url = f"{self.base_url}/messages" if not self.base_url.endswith("/messages") else self.base_url
+            logger.info(f"Using custom Anthropic URL: {url}")
+        
+        for attempt in range(max_retries):
+            try:
+                response = requests.post(url, headers=headers, json=payload, timeout=self.config.get('timeout', 60))
+                
+                if response.status_code == 200:
+                    resp_json = response.json()
+                    try:
+                        content = resp_json['content'][0]['text'].strip()
+                        return content
+                    except (KeyError, IndexError, TypeError) as e:
+                        logger.error(f"Failed to parse Anthropic response: {e}")
+                        logger.error(f"Raw Response: {response.text}")
+                        # Try fallback for potential proxy formats (e.g. OpenAI format from an 'anthropic' endpoint?)
+                        if 'choices' in resp_json:
+                            return resp_json['choices'][0]['message']['content'].strip()
+                        return ""
+                else:
+                    logger.warning(f"Anthropic API error (attempt {attempt+1}): {response.status_code} - {response.text}")
+            except Exception as e:
+                logger.warning(f"Anthropic API call failed (attempt {attempt+1}): {e}")
+                
+            time.sleep(base_delay * (2 ** attempt))
+            
+        logger.error("Anthropic API call failed after all retries.")
+        return ""
+
+    def _call_glm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
+        """Call GLM-4 API (OpenAI-compatible)."""
+        # GLM-4 uses OpenAI-compatible endpoint
+        # Official endpoint from docs: https://api.z.ai/api/paas/v4/chat/completions
+        
+        # If base_url is default localhost, switch to official Z.AI endpoint
+        if "localhost" in self.base_url:
+            self.base_url = "https://api.z.ai/api/paas/v4"
+            
+        # Add 'thinking' parameter for GLM-4.6 as per docs
+        extra_body = None
+        if "glm-4.6" in self.model:
+            extra_body = {"thinking": {"type": "enabled"}}
+            
+        return self._call_openai_compatible(prompt, max_tokens, extra_body=extra_body)
 
     def _call_ollama(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call Ollama API."""
@@ -863,30 +967,204 @@ class CDMEntityExtractor:
 
     def create_extraction_prompt(self, chunk_text: str) -> str:
         """Create structured prompt for CDM entity extraction."""
-        return f"""
-You are an expert biomedical entity extractor. Your goal is to extract a comprehensive, EXHAUSTIVE list of scientific terms from the text below.
+        return self._get_pass_prompt(0, chunk_text)
 
-INSTRUCTIONS:
-1. Extract EVERY SINGLE scientific, biomedical, or clinical term found in the text.
-2. Aim for MAXIMUM RECALL. If it looks like a scientific term, extract it.
-3. Do not filter out common terms.
-4. Break down complex phrases into their constituent entities if appropriate, but also keep the full phrase.
-5. Target 30+ entities per chunk if possible.
+    def parse_llm_response(self, response: str, chunk_num: int) -> List[Dict]:
+        """Parse LLM response and extract entities with robust cleaning."""
+        entities = []
+        try:
+            # 1. Aggressive Cleanup of Chain-of-Thought (<think>...</think>)
+            # Handle standard tags
+            cleaned_response = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL)
+            # Handle unclosed tags (rest of text is thought) - rare but happens
+            if '<think>' in cleaned_response:
+                 cleaned_response = re.sub(r'<think>.*', '', cleaned_response, flags=re.DOTALL)
+            
+            # Remove other common reasoning markers if they appear at the start
+            cleaned_response = re.sub(r'^Here is the list.*?:', '', cleaned_response, flags=re.IGNORECASE | re.MULTILINE)
+            cleaned_response = cleaned_response.strip()
 
-TEXT TO ANALYZE:
-{chunk_text}
+            logger.debug(f"🔍 Processed LLM Response (Chunk {chunk_num}):\n{cleaned_response[:500]}...") 
+            
+            # 2. Strict Line-by-Line Parsing
+            # We expect: "- Term (TYPE): Context"
+            lines = cleaned_response.split('\n')
+            for line in lines:
+                line = line.strip()
+                if not line: continue
+                
+                # Skip conversational lines
+                if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list', 'but', 'also', 'the text', 'actually', 'for example', 'in this text', 'output:', 'extracted terms:')):
+                    continue
 
-REQUIRED OUTPUT FORMAT:
-Return a comprehensive list of terms, one per line. Use this format:
-- Term (TYPE)
+                # Regex to capture: Optional bullet, Term, (TYPE), Optional Context
+                # Matches:
+                # - E. coli (ORGANISM): context
+                # E. coli (ORGANISM)
+                # - E. coli (ORGANISM)
+                match = re.match(r'^(?:[\-\*0-9\.]+\s*)?(.+?)\s*\(([^)]+)\)(?:\s*[:\-]\s*(.+))?$', line)
+                
+                if match:
+                    term = match.group(1).strip()
+                    entity_type = match.group(2).strip().upper()
+                    context = match.group(3).strip() if match.group(3) else ""
+                    
+                    # Cleanup term
+                    term = term.strip('"\'')
+                    
+                    # Map hallucinated types
+                    entity_type = self._map_hallucinated_type(entity_type)
+                    
+                    # Validate
+                    if self._validate_entity(term, entity_type):
+                        entities.append({
+                            'entity': term,
+                            'entity_type': entity_type,
+                            'context': context,
+                            'confidence': 0.8, # Default confidence for explicit extraction
+                            'source_pass': 0
+                        })
 
-Example:
-- Escherichia coli (ORGANISM)
-- Metformin (CHEMICAL)
-- 16S rRNA sequencing (BIOINFO_TOOL)
-- Diabetes Mellitus (DISEASE)
+        except Exception as e:
+            logger.error(f"Error parsing LLM response for chunk {chunk_num}: {e}")
+            logger.debug(f"Full response that caused error: {response}")
+            
+        return entities
 
-CDM Entity Types:
+    def _find_sentence_context(self, term: str, text: str) -> str:
+        """Find the full sentence containing the term in the text."""
+        if not term or not text:
+            return ""
+            
+        # Normalize for search
+        term_lower = term.lower()
+        text_lower = text.lower()
+        
+        try:
+            start_idx = text_lower.find(term_lower)
+            if start_idx == -1:
+                return ""
+                
+            # Find sentence boundaries
+            # Look backward for sentence start
+            sent_start = max(
+                text.rfind('.', 0, start_idx),
+                text.rfind('!', 0, start_idx),
+                text.rfind('?', 0, start_idx),
+                text.rfind('\n', 0, start_idx)
+            )
+            sent_start = sent_start + 1 if sent_start != -1 else 0
+            
+            # Look forward for sentence end
+            sent_end = min(
+                text.find('.', start_idx),
+                text.find('!', start_idx),
+                text.find('?', start_idx),
+                text.find('\n', start_idx)
+            )
+            if sent_end == -1: # Not found, take rest of text
+                sent_end = len(text)
+            else:
+                sent_end += 1 # Include the punctuation
+                
+            return text[sent_start:sent_end].strip()
+        except Exception:
+            return ""
+
+    def _validate_entity(self, term: str, entity_type: str) -> bool:
+        """Validate entity structure and content."""
+        if not term or not isinstance(term, str) or len(term) < 2:
+            return False
+            
+        # Check if type is valid
+        if entity_type not in self.entity_config.ENTITY_TYPES:
+            # Try to map it again or check if it's a sub-string of a valid type
+            found = False
+            for valid_type in self.entity_config.ENTITY_TYPES:
+                if valid_type in entity_type:
+                    entity_type = valid_type
+                    found = True
+                    break
+            if not found:
+                return False
+
+        # 2. Check for pure numbers or simple units
+        if re.match(r'^[\d\.,\s%±<>≤≥=]+$', term):
+            return False
+            
+        # 3. Check for statistical terms and common noise
+        noise_terms = {
+            'p-value', 'confidence interval', 'odds ratio', 'relative risk',
+            'standard deviation', 'mean', 'median', 'mode', 'range',
+            'significant', 'significance', 'correlation', 'regression',
+            'analysis', 'study', 'data', 'result', 'conclusion',
+            'table', 'figure', 'fig', 'section', 'method',
+            'g/ml', 'mg/ml', 'ug/ml', 'mm', 'cm', 'kg', 'mg', 'ug', 'ng',
+            'min', 'sec', 'hour', 'day', 'week', 'month', 'year',
+            'fdr', 'anova', 't-test', 'chi-square', 'wilcoxon',
+            'statistical', 'statistically', 'value', 'score'
+        }
+        
+        if term.lower() in noise_terms:
+            return False
+            
+        # Check if term is just a number with a unit (e.g. "5 mg")
+        if re.match(r'^[\d\.]+\s*[a-zA-Z/%]+$', term):
+            return False
+
+        # 4. Check for generic words (stop words)
+        stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
+        if term.lower() in stop_words:
+            return False
+
+        # Reject if term is in artifacts
+        if term.lower() in ['none', 'n/a', 'null', 'unknown']:
+            return False
+            
+        return True
+
+    def _map_hallucinated_type(self, entity_type: str) -> str:
+        """Map common hallucinated types to valid CDM types."""
+        entity_type = entity_type.upper().strip()
+        
+        # Common mappings based on observation
+        mapping = {
+            'BACTERIA': 'ORGANISM', 'VIRUS': 'ORGANISM', 'FUNGI': 'ORGANISM', 'ARCHAEA': 'ORGANISM',
+            'SPECIES': 'ORGANISM', 'GENUS': 'ORGANISM', 'MICROORGANISM': 'ORGANISM',
+            'METABOLITE': 'CHEMICAL', 'DRUG': 'CHEMICAL', 'ANTIBIOTIC': 'CHEMICAL', 'COMPOUND': 'CHEMICAL',
+            'MOLECULE': 'CHEMICAL', 'FATTY_ACID': 'CHEMICAL', 'SCFA': 'CHEMICAL',
+            'GENE_NAME': 'GENE', 'GENETIC': 'GENE',
+            'ENZYME': 'PROTEIN', 'PEPTIDE': 'PROTEIN',
+            'METHOD': 'SCIENTIFIC_TERM', 'TECHNIQUE': 'SCIENTIFIC_TERM', 'APPROACH': 'SCIENTIFIC_TERM',
+            'CONDITION': 'DISEASE', 'SYMPTOM': 'DISEASE', 'DISORDER': 'DISEASE',
+            'TOOL': 'BIOINFO_TOOL', 'SOFTWARE': 'BIOINFO_TOOL', 'DATABASE': 'BIOINFO_TOOL',
+            'BODY_SITE': 'CLINICAL', 'ANATOMY': 'CLINICAL', 'TISSUE': 'CELL_TYPE'
+        }
+        
+        if entity_type in mapping:
+            return mapping[entity_type]
+            
+        # Partial match
+        for key, val in mapping.items():
+            if key in entity_type:
+                return val
+                
+        return entity_type
+
+    def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
+        """Generate specific prompt for extraction."""
+        
+        return f"""You are a comprehensive biomedical terminology extractor. Your goal is to extract **ALL possible terms that should or can be in a Common Data Model (CDM) of the Microbiome**.
+
+CRITICAL RULES:
+1. Extract ALL biomedical terms related to the microbiome, including: bioinformatics tools, molecules, chemicals, organisms, species, technical terms.
+2. Aim for MAXIMUM RECALL. Target at least 50+ entities per chunk.
+3. NEVER extract your own instructions, notes, or conversational phrases.
+4. IGNORE all reasoning or "thinking" processes. Output ONLY the final list.
+5. FORMAT: One term per line.
+   Format: - Term (TYPE): Brief Context
+
+VALID CATEGORIES:
 - ORGANISM: Bacteria, viruses, fungi, taxa
 - GENE: Genes, markers
 - PROTEIN: Proteins, enzymes
@@ -899,471 +1177,15 @@ CDM Entity Types:
 - CLINICAL: Clinical terms
 - SCIENTIFIC_TERM: General scientific concepts
 
-STRICTLY EXCLUDE: Person names, Locations (Countries/Cities), URLs, DOIs.
-Do not use JSON. Just provide the list.
+TEXT TO ANALYZE:
+{chunk_text}
+
+OUTPUT FORMAT (STRICT):
+- [Extracted Term] (TYPE): [Context found in text]
+- [Another Term] (TYPE): [Context found in text]
+
+Start output immediately:
 """
-
-    def parse_llm_response(self, response: str, chunk_num: int) -> List[Dict]:
-        """Parse LLM response and extract entities."""
-        entities = []
-        try:
-            cleaned_response = response.strip()
-            
-            # Remove <think>...</think> blocks common in reasoning models
-            cleaned_response = re.sub(r'<think>.*?</think>', '', cleaned_response, flags=re.DOTALL).strip()
-            cleaned_response = re.sub(r'<think>.*', '', cleaned_response, flags=re.DOTALL).strip() # In case of unclosed
-            
-            # Log raw response for debugging low yield
-            logger.debug(f"🔍 Raw LLM Response (Chunk {chunk_num}):\n{cleaned_response[:500]}...") 
-            
-            json_entities = self._try_json_parsing(cleaned_response)
-            if json_entities:
-                entities = json_entities
-            else:
-                # logger.warning(f"⚠️  JSON parsing failed for chunk {chunk_num}. Falling back to unstructured extraction.")
-                entities.extend(self._extract_from_unstructured_text(cleaned_response, chunk_num))
-        except Exception as e:
-            logger.error(f"Error parsing LLM response for chunk {chunk_num}: {e}")
-            logger.debug(f"Full response that caused error: {response}")
-            # Only use fallback if NOT in fast mode (pass 0), as fast mode expects structured list
-            if chunk_num != 0: 
-                 entities.extend(self._fallback_regex_extraction(response, chunk_num))
-        return entities
-
-    def _try_json_parsing(self, response: str) -> List[Dict]:
-        """Try multiple JSON parsing strategies."""
-        entities = []
-        
-        # Remove <think>...</think> blocks common in reasoning models
-        # Handle both closed and unclosed think blocks
-        response = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL).strip()
-        response = re.sub(r'<think>.*', '', response, flags=re.DOTALL).strip()
-        response = re.sub(r'^.*?<think>', '', response, flags=re.DOTALL).strip() # In case of prefix text
-
-        
-        # Helper to validate and format
-        def process_parsed(parsed_data):
-            valid_items = []
-            if isinstance(parsed_data, list):
-                for item in parsed_data:
-                    if self._validate_entity(item):
-                        valid_items.append(self._format_entity(item, 0, 0.9))
-            elif isinstance(parsed_data, dict) and self._validate_entity(parsed_data):
-                valid_items.append(self._format_entity(parsed_data, 0, 0.9))
-            return valid_items
-
-        # Strategy 1: Direct JSON parsing (if clean)
-        try:
-            parsed = json.loads(response)
-            items = process_parsed(parsed)
-            if items: return items
-        except json.JSONDecodeError:
-            pass
-
-        # Strategy 2: Regex to find JSON array [...]
-        # Matches [...] including nested braces, roughly
-        try:
-            # Look for the largest outer bracket pair
-            match = re.search(r'\[\s*\{.*\}\s*\]', response, re.DOTALL)
-            if match:
-                json_str = match.group(0)
-                try:
-                    parsed = json.loads(json_str)
-                    items = process_parsed(parsed)
-                    if items: return items
-                except json.JSONDecodeError:
-                    pass
-        except Exception:
-            pass
-
-        # Strategy 3: Regex to find individual JSON objects {...}
-        # Useful if the model forgot the outer list or used markdown for each item
-        try:
-            matches = re.finditer(r'\{[^{}]*\}', response)
-            for match in matches:
-                try:
-                    json_str = match.group(0)
-                    parsed = json.loads(json_str)
-                    if self._validate_entity(parsed):
-                        entities.append(self._format_entity(parsed, 0, 0.9))
-                except json.JSONDecodeError:
-                    continue
-            if entities:
-                return entities
-        except Exception:
-            pass
-            
-        return []
-
-    def _extract_json_blocks(self, text: str) -> List[str]:
-        """Extract JSON blocks from mixed text."""
-        json_blocks = []
-        stack = []
-        start_idx = None
-        for i, char in enumerate(text):
-            if char == '{':
-                if not stack: start_idx = i
-                stack.append(char)
-            elif char == '}':
-                if stack:
-                    stack.pop()
-                    if not stack and start_idx is not None:
-                        json_blocks.append(text[start_idx:i+1])
-                        start_idx = None
-        return json_blocks
-
-    def _validate_entity(self, entity: Union[Dict, str], entity_type: Optional[str] = None) -> bool:
-        """Validate entity structure and content using strict cleaning."""
-        if isinstance(entity, dict):
-            term = entity.get('entity', '')
-            e_type = entity.get('entity_type', '')
-        else:
-            term = entity
-            e_type = entity_type
-
-        if not term or not isinstance(term, str):
-            return False
-            
-        # Check if type is valid
-        if e_type and e_type not in self.entity_config.ENTITY_TYPES:
-            # RELAXED VALIDATION: Instead of rejecting, map to SCIENTIFIC_TERM
-            # logger.debug(f"⚠️  Unknown type '{e_type}' for term '{term}'. Defaulting to SCIENTIFIC_TERM.")
-            if isinstance(entity, dict):
-                if self._validate_entity(term, entity_type):
-                    entities.append({
-                        'entity': term,
-                        'entity_type': entity_type,
-                        'context': context,
-                        'confidence': 0.8,
-                        'source_pass': pass_num
-                    })
-                else:
-                    logger.debug(f"❌ Rejected entity: {term} ({entity_type})")
-            
-        # Log entities found in this pass
-        if entities:
-            logger.info(f"✅ Pass {pass_num} found {len(entities)} entities:")
-            for e in entities[:20]: # Log first 20 to avoid spam
-                logger.info(f"   - {e['entity']} ({e['entity_type']})")
-            if len(entities) > 20:
-                logger.info(f"   ... and {len(entities) - 20} more")
-
-        return entities
-
-    def _extract_from_unstructured_text(self, response: str, pass_num: int) -> List[Dict]:
-        """Robustly parse entities from unstructured LLM output, handling CoT reasoning."""
-        entities = []
-        
-        # 1. Look for a "FINAL LIST" section if present (common in CoT prompts)
-        final_list_markers = ["FINAL LIST", "EXTRACTED TERMS", "TERMS LIST"]
-        lines = response.split('\n')
-        
-        start_index = 0
-        for i, line in enumerate(lines):
-            if any(marker in line.upper() for marker in final_list_markers):
-                start_index = i + 1
-                break
-        
-        # If we found a marker, only process lines after it
-        processing_lines = lines[start_index:]
-        
-        for line in processing_lines:
-            line = line.strip()
-            if not line: continue
-            
-            # Skip conversational lines
-            if line.lower().startswith(('here are', 'sure', 'i have', 'note:', 'however', 'let\'s list', 'but', 'also', 'the text', 'actually', 'for example', 'in this text')):
-                continue
-
-            # Regex for "- Term (TYPE)" or "- Term (TYPE): Context"
-            # Also handle cases without bullet points: "Term (TYPE): Context"
-            match = re.search(r'^(?:[\-\*0-9\.]+\s*)?(.+?)\s*\(([^)]+)\)(?:\s*[:\-]\s*(.+))?', line)
-            
-            if match:
-                term = match.group(1).strip()
-                entity_type = match.group(2).strip().upper()
-                context = match.group(3).strip() if match.group(3) else ""
-                
-                # CLEANUP: Remove common CoT artifacts from the term if context wasn't captured by group 3
-                if not context and ('->' in term or ':' in term):
-                    parts = re.split(r'\s+(\->|:|\-\-)\s+', term)
-                    term = parts[0].strip()
-                    if len(parts) > 2:
-                        context = parts[2].strip()
-                
-                # Remove quotes if present
-                term = term.strip('"\'')
-                
-                # VALIDATION: Skip if term looks like a sentence or is too long
-                if len(term.split()) > 10 or any(x in term.lower() for x in ['the text says', 'note that', 'we write']):
-                    continue
-
-                # Clean up the type
-                # If type contains "BUT", "NOTE", "OR", etc., try to salvage the valid part
-                if any(x in entity_type for x in ['BUT', 'NOTE', 'HOWEVER', 'IE', 'E.G.']):
-                    # Try to find a valid type keyword in the messy string
-                    found_type = None
-                    for valid_type in self.entity_config.ENTITY_TYPES:
-                        if valid_type in entity_type:
-                            found_type = valid_type
-                            break
-                    
-                    if not found_type:
-                        # Try mapping keys
-                        for key, val in self._get_hallucination_mapping().items():
-                            if key in entity_type:
-                                found_type = val
-                                break
-                    
-                    if found_type:
-                        entity_type = found_type
-                    else:
-                        pass
-
-                # Map hallucinated types
-                entity_type = self._map_hallucinated_type(entity_type)
-                
-                if self._validate_entity(term, entity_type):
-                    entities.append({
-                        'entity': term,
-                        'entity_type': entity_type,
-                        'context': context,
-                        'confidence': 0.8,
-                        'source_pass': pass_num
-                    })
-                else:
-                    logger.debug(f"❌ Rejected entity: {term} ({entity_type})")
-            
-        # Log entities found in this pass
-        if entities:
-            logger.info(f"✅ Pass {pass_num} found {len(entities)} entities:")
-            for e in entities[:20]: # Log first 20 to avoid spam
-                logger.info(f"   - {e['entity']} ({e['entity_type']})")
-            if len(entities) > 20:
-                logger.info(f"   ... and {len(entities) - 20} more")
-
-        return entities
-
-    def _get_hallucination_mapping(self) -> Dict[str, str]:
-        """Return the mapping dictionary for hallucinated types."""
-        return {
-            'AMINO_ACID': 'CHEMICAL',
-            'NEUROTRANSMITTER': 'CHEMICAL',
-            'CHEMICAL_CLASS': 'CHEMICAL',
-            'FATTY_ACID': 'CHEMICAL',
-            'METABOLITE': 'CHEMICAL',
-            'DRUG': 'CHEMICAL',
-            'PHARMACOLOGY': 'CHEMICAL',
-            'CLASS': 'CHEMICAL',
-            'MOLECULE': 'CHEMICAL',
-            'COMPOUND': 'CHEMICAL',
-            
-            'BACTERIA': 'ORGANISM',
-            'VIRUS': 'ORGANISM',
-            'FUNGI': 'ORGANISM',
-            'MICROBIAL_COMMUNITY': 'ORGANISM',
-            'TAXONOMY': 'ORGANISM',
-            'MICROORGANISM': 'ORGANISM',
-            'BACTERIAL GENUS': 'ORGANISM',
-            'BACTERIAL SPECIES': 'ORGANISM',
-            'GENUS': 'ORGANISM',
-            'SPECIES': 'ORGANISM',
-            'PHYLUM': 'ORGANISM',
-            'FAMILY': 'ORGANISM',
-            
-            'NEURON': 'CELL_TYPE',
-            'CELLULAR_STRUCTURE': 'CELL_TYPE',
-            'BRAIN_REGION': 'ANATOMICAL_STRUCTURE', 
-            
-            'CLINICAL_TERM': 'CLINICAL',
-            'SYMPTOM': 'DISEASE',
-            'CONDITION': 'DISEASE',
-            'SPECIFIC_GENE': 'GENE',
-            'GENE_NAME': 'GENE',
-            
-            'FIELD_OF_STUDY': 'SCIENTIFIC_TERM',
-            'GENERAL_CONCEPT': 'SCIENTIFIC_TERM',
-            'BIOLOGICAL_PROCESS': 'SCIENTIFIC_TERM',
-            'PATHWAY': 'SCIENTIFIC_TERM',
-            'METHOD': 'SCIENTIFIC_TERM',
-            'MEASUREMENT': 'SCIENTIFIC_TERM'
-        }
-
-    def _map_hallucinated_type(self, entity_type: str) -> str:
-        """Map common hallucinated types to valid CDM types."""
-        # Normalize
-        entity_type = entity_type.upper().strip()
-        
-        mapping = self._get_hallucination_mapping()
-        
-        # Direct mapping
-        if entity_type in mapping:
-            return mapping[entity_type]
-            
-        # Partial match
-        for key, value in mapping.items():
-            if key in entity_type:
-                return value
-                
-        return entity_type
-
-
-
-    def _fallback_regex_extraction(self, text: str, chunk_num: int) -> List[Dict]:
-        """Fallback extraction using regex patterns."""
-        entities = []
-        for entity_type, config in self.entity_config.ENTITY_TYPES.items():
-            if 'patterns' in config:
-                for pattern in config['patterns']:
-                    matches = re.findall(pattern, text, re.IGNORECASE)
-                    for match in matches:
-                        if isinstance(match, tuple): match = [m for m in match if m][0] if match else ""
-                        if match and len(match) > 2:
-                            entities.append(self._format_entity({
-                                'entity': match.strip(),
-                                'entity_type': entity_type,
-                                'context': f"Regex extraction from chunk {chunk_num}"
-                            }, chunk_num, 0.6))
-        return entities
-
-    def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
-        """Generate specific prompt for each extraction pass."""
-        
-        system_context = """You are a comprehensive biomedical terminology extractor. Extract ALL concrete scientific terms from the text including bioinformatics, molecules, chemicals, organisms, species, and technical biomedical terms.
-
-CRITICAL RULES:
-1. Extract ALL biomedical terms: bioinformatics tools, molecules, chemicals, organisms, species, technical terms
-2. Include terms from ALL biomedical domains: molecular biology, biochemistry, genetics, bioinformatics, pharmacology, etc.
-3. NEVER extract your own instructions, notes, or conversational phrases
-4. ONLY extract terms that would be valid entries in a biomedical ontology
-5. Be EXTREMELY COMPREHENSIVE - extract any term that appears biomedical or technical in nature.
-6. Do not filter out terms because they seem "too common" or "generic". If it is scientific, extract it.
-
-VALID CATEGORIES TO EXTRACT:
-- ALL biological entities (organisms, species, genera, phyla)
-- ALL chemical compounds, metabolites, molecules
-- ALL molecular biology terms (genes, proteins, pathways, enzymes)
-- ALL bioinformatics tools, methods, and pipelines
-- ALL sequencing technologies and omics platforms
-- ALL statistical and computational methods
-- ALL medical, clinical, and pharmaceutical terms
-- ALL laboratory methods and techniques
-- ALL anatomical and physiological terms
-- ANY technical biomedical term
-
-OUTPUT: Return a comprehensive list of terms, one per line. Use this format:
-- Term (TYPE): Brief contextual definition from text
-
-Example:
-- Escherichia coli (ORGANISM): Gram-negative bacteria found in the gut
-- Metformin (CHEMICAL): Drug used to treat type 2 diabetes
-- 16S rRNA sequencing (BIOINFO_TOOL): Method for identifying bacteria
-- Diabetes Mellitus (DISEASE): Chronic metabolic disorder
-- 16S rRNA sequencing (BIOINFO_TOOL): Method for identifying bacteria
-Do not use JSON. Just provide the list.
-"""
-
-        if pass_num == 0:
-            return f"""{system_context}
-
-EXTRACTION GOAL: COMPREHENSIVELY extract ALL biomedical terms relevant to a Microbiome Common Data Model (CDM).
-
-INSTRUCTIONS:
-1. Extract ALL scientific terms from the text, prioritizing those relevant to microbiome research.
-2. Output the list IMMEDIATELY.
-3. Do NOT explain your reasoning.
-4. Do NOT include any conversational text (e.g. "Here are the terms", "Note that...").
-5. Output ONLY the terms in this exact format:
-   - Term (TYPE): Brief contextual definition from text
-
-FOCUS ON THESE CDM CATEGORIES:
-- ORGANISMS: Bacteria, Fungi, Viruses, Archaea (Species, Genus, Family, etc.)
-- ANATOMY: Body sites (e.g., Gut, Skin, Oral cavity)
-- CHEMICALS: Metabolites (SCFAs, Bile acids), Antibiotics, Prebiotics, Probiotics
-- PHENOTYPES: Diseases, Symptoms, Conditions associated with microbiome
-- GENETICS: Genes, Proteins, Enzymes relevant to microbial function
-- METHODS: Sequencing types (16S, Shotgun), Bioinformatics tools
-
-TEXT:
-{chunk_text}"""
-
-        elif pass_num == 1:
-            return f"""{system_context}
-
-EXTRACTION GOAL: Extract ALL biological entities, organisms, species, and taxonomic terms from the text.
-
-FOCUS ON:
-- ALL bacterial, archaeal, fungal genera and species mentioned
-- ALL viral strains and types mentioned
-- ALL eukaryotic organisms mentioned (human, mouse, rat, etc.)
-- ALL taxonomic ranks and classifications mentioned
-- ANY organism names that appear in the text
-- Species names, genus names, family names, etc.
-
-IMPORTANT: Extract ALL biological entities you find, not just microbiome-related.
-
-TEXT:
-{chunk_text}"""
-
-        elif pass_num == 2:
-            return f"""{system_context}
-
-EXTRACTION GOAL: Extract ALL chemical compounds, metabolites, molecules, and biochemical terms from the text.
-
-FOCUS ON:
-- ALL metabolites mentioned (SCFAs, bile acids, amino acids, lipids, etc.)
-- ALL drugs, pharmaceuticals, compounds mentioned
-- ALL proteins, enzymes, hormones, neurotransmitters mentioned
-- ALL genes, DNA, RNA molecules mentioned
-- ALL metabolic pathways and processes mentioned
-- ANY chemical or molecular entity that appears in the text
-- Small molecules, large molecules, organic compounds, inorganic compounds
-
-IMPORTANT: Extract ALL chemical and molecular terms you find.
-
-TEXT:
-{chunk_text}"""
-
-        elif pass_num == 3:
-            return f"""{system_context}
-
-EXTRACTION GOAL: Extract ALL bioinformatics tools, computational methods, and technical approaches from the text.
-
-FOCUS ON:
-- ALL sequencing platforms and methods mentioned
-- ALL bioinformatics tools, software, and pipelines mentioned
-- ALL statistical and computational methods mentioned
-- ALL machine learning and AI approaches mentioned
-- ALL database and resource names mentioned
-- ANY computational or technical approach that appears in the text
-- Programming languages, algorithms, data structures mentioned
-
-IMPORTANT: Extract ALL bioinformatics and computational terms you find.
-
-TEXT:
-{chunk_text}"""
-
-
-        elif pass_num == 4:
-            return f"""{system_context}
-
-EXTRACTION GOAL: Extract ALL genes, proteins, enzymes, and genetic material from the text.
-
-FOCUS ON:
-- ALL gene names and symbols mentioned
-- ALL protein names and families mentioned
-- ALL enzymes and enzymatic activities mentioned
-- ALL RNA types (mRNA, rRNA, tRNA, etc.) mentioned
-- ALL genetic markers and loci mentioned
-- ANY genetic or proteomic term that appears in the text
-- Amino acids, peptides, nucleotides mentioned
-
-IMPORTANT: Extract ALL genetic and proteomic terms you find.
-
-TEXT:
-{chunk_text}"""
-        
-        return ""
 
     def extract_chunk_multi_pass(self, chunk_text: str, chunk_num: int) -> List[Dict]:
         """Extract entities from a chunk using multi-pass strategy (Single Comprehensive Pass)."""
@@ -1383,10 +1205,19 @@ TEXT:
                 
                 entities = self.parse_llm_response(response, chunk_num)
                 
-                # Tag with pass info
+                # Tag with pass info and enhance context
                 for e in entities:
                     e['extraction_pass'] = pass_name
                     e['pass_index'] = pass_num
+                    
+                    # Find full sentence context from source text
+                    sentence_context = self._find_sentence_context(e['entity'], chunk_text)
+                    if sentence_context:
+                        # If we found a sentence, use it. Append original LLM context if useful?
+                        # User specifically asked for "the sentence it was listed in"
+                        # So we prioritize the sentence.
+                        if len(sentence_context) > len(e.get('context', '')):
+                             e['context'] = sentence_context
                     
                 if entities:
                     all_entities.extend(entities)
@@ -4437,7 +4268,7 @@ class CDMEntityPipeline:
     """Main CDM entity extraction pipeline with semantic deduplication."""
 
     def __init__(self, model: str = None, base_url: str = None, config: PipelineConfig = None,
-                 semantic_model: str = "all-MiniLM-L6-v2", semantic_threshold: float = 0.8,
+                 semantic_model: str = "all-MiniLM-L6-v2", semantic_threshold: float = 0.95,
                  enable_biomistral: bool = False, biomistral_model: str = "biomistral-7B",
                  enable_biomistral_deduplication: bool = False, biomistral_dedup_model: str = "biomistral:7b",
                  enable_omop_mapping: bool = False, enable_umls_mapping: bool = False,
@@ -4458,6 +4289,14 @@ class CDMEntityPipeline:
             api_type=api_type,
             hf_token=hf_token
         )
+        self.enable_biomistral = enable_biomistral
+        self.enable_biomistral_deduplication = enable_biomistral_deduplication
+        self.enable_correction = enable_correction
+        self.enable_llm_correction = enable_llm_correction
+        self.enable_omop_mapping = enable_omop_mapping
+        self.enable_umls_mapping = enable_umls_mapping
+        self.enable_comprehensive_mapping = enable_comprehensive_mapping
+        self.enable_scispacy_linking = enable_scispacy_linking
         
         if self.dry_run:
             logger.info("⚠️  DRY RUN MODE ENABLED: Skipping model loading and LLM calls")
@@ -4477,6 +4316,8 @@ class CDMEntityPipeline:
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
+        self.entity_filter = EntityFilter()
+        self.relevance_scorer = MicrobiomeRelevanceScorer()
         
         if self.opt_config.fast_mode:
             logger.info("🚀 FAST MODE ENABLED: Using larger chunks and optimized settings")
@@ -4536,15 +4377,22 @@ class CDMEntityPipeline:
         text = TextProcessor.enhanced_preprocess_text(text)
         
         if chunk_size is None:
-            base_chunk_size = self.extractor.calculate_optimal_chunk_size(len(text))
+            if self.extractor:
+                base_chunk_size = self.extractor.calculate_optimal_chunk_size(len(text))
+            else:
+                base_chunk_size = 5000 # Default for dry run
+                
             chunk_size = int(base_chunk_size * self.opt_config.chunk_size_multiplier)
             
-            # Cap chunk size to avoid context overflow (assuming 32k context for modern models)
-            # Use 12000 as default for Single Pass efficiency
-            chunk_size = min(chunk_size, 12000)
+            # Cap chunk size to avoid context overflow (assuming 128k context for modern models like GLM-4/GPT-4)
+            # Use 50000 for high efficiency
+            chunk_size = min(chunk_size, 50000)
 
 
-        overlap = self.extractor.calculate_overlap(chunk_size)
+        if self.extractor:
+            overlap = self.extractor.calculate_overlap(chunk_size)
+        else:
+            overlap = 150 # Default for dry run
 
         chunks = []
         chunk_num = 1
@@ -4558,32 +4406,83 @@ class CDMEntityPipeline:
         logger.info(f"📊 Created {len(chunks)} chunks ({chunk_size} chars, {overlap} overlap)")
         return chunks
 
-    def extract_entities(self, text: str, chunk_size: int = None) -> List[Dict]:
-        """Extract entities from text using the configured strategy."""
+    def extract_entities(self, text: str, chunk_size: int = None, checkpoint_path: Path = None) -> List[Dict]:
+        """Extract entities from text using the configured strategy with granular checkpointing."""
         # Chunk text
         chunks = self.chunk_text(text, chunk_size)
         
         all_entities = []
+        completed_chunks = set()
         
-        # Process ALL chunks using Multi-Pass strategy (5 passes)
-        logger.info(f"🧩 Processing {len(chunks)} chunks with {self.config.max_workers} workers")
-        logger.info("🚀 NORMAL MODE: Multi-Pass Extraction (5 passes per chunk) for High Recall")
+        # Load checkpoint if exists
+        if checkpoint_path and checkpoint_path.exists():
+            try:
+                with open(checkpoint_path, 'r') as f:
+                    data = json.load(f)
+                    # Check if it's the new format with 'completed_chunks'
+                    if isinstance(data, dict) and 'completed_chunks' in data:
+                        all_entities = data.get('entities', [])
+                        completed_chunks = set(data.get('completed_chunks', []))
+                        logger.info(f"🔄 Resuming from checkpoint: {len(completed_chunks)} chunks already processed, {len(all_entities)} entities loaded")
+                    elif isinstance(data, list):
+                        # Legacy format (just list of entities), assume finished or restart?
+                        # If we are here, it means we might want to resume, but we don't know which chunks are done.
+                        # Safest is to treat as entities found so far but maybe re-process if we can't map them to chunks.
+                        # Actually, if it's a list, it's likely the old full-file checkpoint.
+                        # Let's assume we start over if it's not the granular format, OR we could try to use it.
+                        # For now, let's just log and start over to be safe, or maybe the user wants to keep them.
+                        logger.warning("⚠️  Found legacy checkpoint format. Starting fresh for granular tracking.")
+            except Exception as e:
+                logger.warning(f"⚠️  Failed to load checkpoint: {e}")
+
+        # Filter chunks
+        chunks_to_process = [(chunk, i) for chunk, i in chunks if i not in completed_chunks]
+        
+        if not chunks_to_process:
+            logger.info("✅ All chunks already processed.")
+            return all_entities
+
+        logger.info(f"🧩 Processing {len(chunks_to_process)}/{len(chunks)} chunks with {self.config.max_workers} workers")
+        logger.info("🚀 NORMAL MODE: Single Comprehensive Pass for High Efficiency")
         
         # Use parallel processing
         with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
-            # Submit all chunks for multi-pass extraction
-            future_to_chunk = {
-                executor.submit(self.extractor.extract_chunk_multi_pass, chunk, i): i 
-                for i, (chunk, chunk_num) in enumerate(chunks)
-            }
+            # Submit only remaining chunks
+            if self.extractor:
+                future_to_chunk = {
+                    executor.submit(self.extractor.extract_chunk_multi_pass, chunk, i): i 
+                    for chunk, i in chunks_to_process
+                }
+            else:
+                # Dry run: mock futures
+                logger.info("⚠️  Dry run: Skipping actual extraction")
+                return all_entities
             
-            for future in tqdm(as_completed(future_to_chunk), total=len(chunks), desc="Processing chunks (Multi-Pass)", unit="chunk"):
+            for future in tqdm(as_completed(future_to_chunk), total=len(chunks_to_process), desc="Processing chunks (Multi-Pass)", unit="chunk"):
                 chunk_idx = future_to_chunk[future]
                 try:
                     chunk_entities = future.result()
                     if chunk_entities:
                         all_entities.extend(chunk_entities)
                         logger.debug(f"Chunk {chunk_idx}: Found {len(chunk_entities)} entities")
+                    
+                    # Mark chunk as completed
+                    completed_chunks.add(chunk_idx)
+                    
+                    # Save incremental checkpoint
+                    if checkpoint_path:
+                        try:
+                            checkpoint_data = {
+                                "entities": all_entities,
+                                "completed_chunks": list(completed_chunks),
+                                "total_chunks": len(chunks),
+                                "last_updated": datetime.now().isoformat()
+                            }
+                            with open(checkpoint_path, 'w') as f:
+                                json.dump(checkpoint_data, f, indent=2)
+                        except Exception as e:
+                            logger.error(f"Failed to save checkpoint for chunk {chunk_idx}: {e}")
+                            
                 except Exception as e:
                     logger.error(f"Error processing chunk {chunk_idx}: {e}")
                     
@@ -4774,6 +4673,7 @@ class CDMEntityPipeline:
                 'timestamp': time.time(),
                 'model_used': self.llm_client.model if self.llm_client else "dry-run",
                 'pipeline_version': '1.0.0',
+                'token_usage': self.llm_client.get_token_usage() if self.llm_client else {},
                 'extraction_config': {
                     'min_confidence': self.config.min_confidence,
                     'max_entities': self.config.max_entities,
@@ -4923,10 +4823,22 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             try:
                 # Check for checkpoint
                 checkpoint_file = processed_dir / f"{file_path.stem}.json"
+                
+                # If force is False, we might want to resume or skip
                 if checkpoint_file.exists() and not force:
                     try:
                         with open(checkpoint_file, 'r') as f:
-                            return json.load(f), None
+                            data = json.load(f)
+                            
+                        # Check if it's a completed run (all chunks done) or legacy format
+                        if isinstance(data, list):
+                            return data, None # Legacy format, assume complete
+                        elif isinstance(data, dict) and 'completed_chunks' in data:
+                            # Check if all chunks are done? 
+                            # Actually, extract_entities will handle resumption.
+                            # But if we want to skip reading the file if strictly DONE...
+                            # For now, let's just let extract_entities handle it.
+                            pass 
                     except json.JSONDecodeError:
                         pass # Reprocess
 
@@ -4939,8 +4851,9 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
                     "word_count": len(text.split())
                 }
                 
-                # Extract entities
-                raw_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'))
+                # Extract entities (RESUMABLE)
+                # Pass checkpoint_path so it can load/save progress
+                raw_entities = pipeline.extract_entities(text, kwargs.get('chunk_size'), checkpoint_path=checkpoint_file)
                 
                 # Filter out invalid entities (e.g. error codes or malformed data)
                 file_entities = [e for e in raw_entities if isinstance(e, dict)]
@@ -4951,10 +4864,14 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
                 for entity in file_entities:
                     entity['source_file'] = file_path.name
                 
-                # Save checkpoint
-                with open(checkpoint_file, 'w') as f:
-                    json.dump(file_entities, f, indent=2)
-                    
+                # Save FINAL checkpoint (or just keep the granular one? Granular one is fine, but maybe we want to clean it up to just list?)
+                # Actually, for compatibility with the rest of the pipeline which expects a list of entities from this worker...
+                # The granular checkpoint is {"entities": ..., "completed_chunks": ...}
+                # But we return `file_entities` which is a list.
+                # The checkpoint on disk will remain in granular format until we overwrite it or maybe we should convert it?
+                # Let's leave it as granular format on disk so we can always resume if needed.
+                # But wait, if we return, the pipeline continues.
+                
                 return file_entities, stats
             except Exception as e:
                 logger.error(f"Error processing {file_path.name}: {e}")
@@ -4980,7 +4897,8 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
                     logger.error(f"Failed to retrieve results for {file_path.name}: {e}")
 
         # Final aggregation and deduplication across all files
-        if len(files) > 1:
+        # Final aggregation and deduplication across all files
+        if all_entities:
             logger.info(f"🔄 Aggregating and deduplicating {len(all_entities)} entities from {len(files)} files...")
             # Re-run post-processing on aggregated list
             # We skip extraction but run the rest of the pipeline logic
@@ -5074,7 +4992,7 @@ def main():
     parser.add_argument('--semantic-model', default='all-MiniLM-L6-v2', help='Semantic model for embeddings (default: all-MiniLM-L6-v2)')
     parser.add_argument('--dry-run', action='store_true', help='Run in dry-run mode (skip heavy processing)')
     parser.add_argument('--fast-mode', action='store_true', help='Enable FAST mode (larger chunks, optimized settings)')
-    parser.add_argument('--api-type', choices=['ollama', 'openai', 'huggingface'], default='ollama', help='API type (ollama, openai/vllm, or huggingface)')
+    parser.add_argument('--api-type', choices=['ollama', 'openai', 'huggingface', 'anthropic', 'glm'], default='ollama', help='API type (ollama, openai/vllm, huggingface, anthropic, or glm)')
     parser.add_argument('--api-key', default='EMPTY', help='API Key for OpenAI/vLLM')
     parser.add_argument('--hf-token', help='HuggingFace Token (optional if logged in)')
     parser.add_argument('--force', action='store_true', help='Force re-processing (ignore checkpoints)')
