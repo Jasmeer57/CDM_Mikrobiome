@@ -46,7 +46,7 @@ class BioMistralValidator:
             
             if self.llm_client:
                 # Use API client
-                response = self.llm_client.generate(prompt, max_tokens=self.config.max_tokens)
+                response = self.llm_client.call_llm(prompt, max_tokens=self.config.max_tokens)
             else:
                 # Use local model
                 response = self._call_biomistral(prompt)

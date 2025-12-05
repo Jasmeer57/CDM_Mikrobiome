@@ -322,18 +322,29 @@ TEXT:
         elif pass_num == 3:
             return f"""{system_context}
 
-EXTRACTION GOAL: Extract ALL bioinformatics tools, computational methods, and technical approaches from the text.
+EXTRACTION GOAL: Extract ALL methodological and technical terms, classifying them into these 3 categories:
+
+1. SAMPLE_METHOD:
+   - Sample collection (e.g., "fecal sampling", "swabs")
+   - Transport & Storage (e.g., "frozen at -80C", "RNAlater")
+   - DNA/RNA Extraction (e.g., "PowerSoil Kit", "bead beating")
+
+2. LAB_METHOD:
+   - Library Preparation (e.g., "Nextera XT", "V4 region PCR")
+   - Sequencing Platforms (e.g., "Illumina MiSeq", "Nanopore")
+   - Wet-lab techniques (e.g., "qPCR", "flow cytometry")
+
+3. DATA_ANALYSIS:
+   - Bioinformatics Tools (e.g., "QIIME2", "Mothur", "DADA2")
+   - Databases (e.g., "SILVA", "GreenGenes", "KEGG")
+   - Statistical Methods (e.g., "Bray-Curtis", "PERMANOVA", "Random Forest")
 
 FOCUS ON:
-- ALL sequencing platforms and methods mentioned
-- ALL bioinformatics tools, software, and pipelines mentioned
-- ALL statistical and computational methods mentioned
-- ALL machine learning and AI approaches mentioned
-- ALL database and resource names mentioned
-- ANY computational or technical approach that appears in the text
-- Programming languages, algorithms, data structures mentioned
+- Capturing the specific commercial names of kits and tools (e.g., "QIAamp DNA Stool Mini Kit").
+- Capturing specific sequencing regions (e.g., "V3-V4").
+- Capturing software versions if mentioned.
 
-IMPORTANT: Extract ALL bioinformatics and computational terms you find.
+IMPORTANT: You MUST classify each term into one of these 3 types (`SAMPLE_METHOD`, `LAB_METHOD`, `DATA_ANALYSIS`).
 
 TEXT:
 {chunk_text}"""

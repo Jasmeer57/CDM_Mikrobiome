@@ -384,8 +384,28 @@ Examples:
     # Process files
     all_entities = []
     text_stats_agg = {"character_count": 0, "word_count": 0}
+
+    # Check for checkpoint
+    checkpoint_file = output_path.parent / "checkpoint_entities.json"
+    processed_files_set = set()
     
+    if checkpoint_file.exists():
+        try:
+            import json
+            with open(checkpoint_file, 'r') as f:
+                checkpoint_data = json.load(f)
+                all_entities = checkpoint_data.get('entities', [])
+                processed_files_set = set(checkpoint_data.get('processed_files', []))
+                text_stats_agg = checkpoint_data.get('stats', text_stats_agg)
+                logger.info(f"🔄 Resuming from checkpoint: {len(processed_files_set)} files processed, {len(all_entities)} entities loaded.")
+        except Exception as e:
+            logger.error(f"Failed to load checkpoint: {e}")
+
     for i, file_path in enumerate(input_files):
+        if file_path.name in processed_files_set:
+            logger.info(f"⏭️ Skipping already processed file {i+1}/{len(input_files)}: {file_path.name}")
+            continue
+
         logger.info(f"📄 Processing file {i+1}/{len(input_files)}: {file_path.name}")
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -403,6 +423,22 @@ Examples:
                 entity['source_file'] = file_path.name
                 
             all_entities.extend(file_entities)
+            processed_files_set.add(file_path.name)
+            
+            # Save checkpoint every 5 files
+            if len(processed_files_set) % 5 == 0:
+                try:
+                    import json
+                    checkpoint_data = {
+                        'entities': all_entities,
+                        'processed_files': list(processed_files_set),
+                        'stats': text_stats_agg
+                    }
+                    with open(checkpoint_file, 'w') as f:
+                        json.dump(checkpoint_data, f, indent=2)
+                    logger.info(f"💾 Checkpoint saved: {len(processed_files_set)} files processed.")
+                except Exception as e:
+                    logger.error(f"Failed to save checkpoint: {e}")
             
         except Exception as e:
             logger.error(f"Error processing file {file_path}: {e}")

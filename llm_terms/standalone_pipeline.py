@@ -210,15 +210,26 @@ class CDMEntityConfig:
             ],
             'priority': 2
         },
-        'BIOINFO_TOOL': {
-            'description': 'Bioinformatics tools, software, databases, algorithms, statistical methods',
-            'examples': ['QIIME2', 'Mothur', 'BLAST', 'UniProt', 'KEGG', 'PCA', 'PCoA', 'Shannon index'],
-            'patterns': [
-                r'\b[A-Z][a-zA-Z0-9\-\.]+\b',
-                r'\b\w*seq\w*\b', r'\b\w*bioinformat\w*\b', r'\b\w*computational\w*\b',
-                r'\b\w*statistical\w*\b', r'\b\w*analysis\b', r'\b\w*clustering\b'
-            ],
-            'priority': 4
+        # Sample Collection, Transport, Storage (Wet Lab - Pre-processing)
+        'SAMPLE_METHOD': {
+            'description': 'Methods for sample collection, transport, storage, and DNA extraction',
+            'examples': ['fecal sampling', 'swab collection', 'frozen at -80C', 'RNAlater', 'PowerSoil DNA Kit', 'bead beating', 'DNA extraction'],
+            'patterns': [r'\b([a-z]+\s+(?:kit|extraction|collection|storage))\b'],
+            'priority': 8
+        },
+        # Laboratory Methods & Sequencing (Wet Lab - Sequencing)
+        'LAB_METHOD': {
+            'description': 'Library preparation, PCR, sequencing platforms, and wet-lab techniques',
+            'examples': ['Illumina MiSeq', '16S rRNA PCR', 'V4 region', 'library preparation', 'Nextera XT', 'Nanopore', 'shotgun sequencing', 'PCR amplification'],
+            'patterns': [r'\b(Illumina\s+[A-Za-z0-9]+)\b|\b([A-Z][a-z]+\s+(?:sequencing|PCR))\b'],
+            'priority': 9
+        },
+        # Data Analysis & Bioinformatics (Dry Lab)
+        'DATA_ANALYSIS': {
+            'description': 'Bioinformatics tools, software, databases, statistical methods, and QC',
+            'examples': ['QIIME2', 'Mothur', 'DADA2', 'Silva database', 'GreenGenes', 'UniFrac', 'Bray-Curtis', 'PCA', 'random forest', 'quality control'],
+            'patterns': [r'\b([A-Z]{3,})\b|\b([a-z]+(?:omics|pipeline|analysis))\b'],
+            'priority': 10
         },
         'CLINICAL': {
             'description': 'Clinical terms, procedures, anatomy, physiology',
@@ -1335,7 +1346,9 @@ VALID CATEGORIES:
 - DISEASE: Specific diseases, conditions
 - DNA_RNA: Specific genetic material types
 - CELL_TYPE: Specific cells, tissues
-- BIOINFO_TOOL: Specific tools, software, databases
+- SAMPLE_METHOD: Sample collection, transport, storage, DNA extraction
+- LAB_METHOD: Library prep, sequencing platforms, wet-lab
+- DATA_ANALYSIS: Bioinformatics tools, databases, statistics
 - GENOMICS: Specific omics methods
 - CLINICAL: Specific clinical parameters
 
