@@ -37,16 +37,14 @@ class CDMEntityPipeline:
                  umls_api_key: str = None, enable_comprehensive_mapping: bool = False,
                  mapping_confidence_threshold: float = 0.7,
                  enable_correction: bool = False, enable_llm_correction: bool = False,
-                 api_key: str = "EMPTY"):
+                 api_key: str = "EMPTY", bioportal_api_key: str = None,
+                 enable_scispacy_linking: bool = False):
         self.config = config or PipelineConfig()
-        self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url)
-        # Pass api_key to LLMClient if needed, but LLMClient in core might need update too. 
-        # For now, let's assume LLMClient handles it or we update it later.
+        self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url, api_key=api_key)
         
         self.extractor = CDMEntityExtractor(self.llm_client)
         self.entity_config = CDMEntityConfig()
         self.semantic_deduplicator = SemanticDeduplicator(semantic_model, semantic_threshold)
-
 
         self.entity_filter = EntityFilter(strict_mode=True)
         self.relevance_scorer = MicrobiomeRelevanceScorer()
@@ -65,7 +63,7 @@ class CDMEntityPipeline:
         if enable_biomistral:
             from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
             biomistral_config = BioMistralConfig(model_name=biomistral_model)
-            self.biomistral_validator = BioMistralValidator(biomistral_config)
+            self.biomistral_validator = BioMistralValidator(biomistral_config, llm_client=self.llm_client)
 
         if enable_biomistral_deduplication:
             self.biomistral_deduplicator = BioMistralDeduplicator(
@@ -82,6 +80,7 @@ class CDMEntityPipeline:
 
             self.comprehensive_mapper = ComprehensiveMapper(
                 umls_api_key=umls_api_key,
+                bioportal_api_key=bioportal_api_key,
                 use_local_omop=True,  # Use local mapper by default
                 omop_vocab_dir=omop_vocab_dir,
                 fuzzy_threshold=95,

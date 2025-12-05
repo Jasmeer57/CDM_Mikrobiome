@@ -67,9 +67,63 @@ Requirements:
                  cleaned_response = re.sub(r'<think>.*', '', cleaned_response, flags=re.DOTALL)
             
             cleaned_response = re.sub(r'^Here is the list.*?:', '', cleaned_response, flags=re.IGNORECASE | re.MULTILINE)
+            
+            # Remove Markdown code blocks if present
+            cleaned_response = re.sub(r'```[a-zA-Z]*\n', '', cleaned_response)
+            cleaned_response = re.sub(r'```', '', cleaned_response)
+            
             cleaned_response = cleaned_response.strip()
 
-            # 2. Strict Line-by-Line Parsing
+            # 2. Try to parse as JSON first (List of objects)
+            if (cleaned_response.startswith('[') and cleaned_response.endswith(']')) or \
+               (cleaned_response.startswith('{') and cleaned_response.endswith('}')):
+                try:
+                    import json
+                    data = json.loads(cleaned_response)
+                    
+                    # If it's a dictionary wrapping the list (e.g. {"entities": [...]})
+                    if isinstance(data, dict):
+                        for key in ['entities', 'terms', 'results', 'output']:
+                            if key in data and isinstance(data[key], list):
+                                data = data[key]
+                                break
+                    
+                    if isinstance(data, list):
+                        for item in data:
+                            if not isinstance(item, dict): continue
+                            
+                            term = item.get('entity', item.get('term', '')).strip()
+                            entity_type = item.get('entity_type', item.get('type', '')).upper()
+                            context = item.get('context', '')
+                            definition = item.get('definition', '')
+                            aliases = item.get('aliases', [])
+                            if isinstance(aliases, str): aliases = [a.strip() for a in aliases.split(',')]
+                            examples = item.get('examples', [])
+                            if isinstance(examples, str): examples = [e.strip() for e in examples.split(',')]
+                            
+                            # Map type
+                            entity_type = self._map_hallucinated_type(entity_type)
+                            
+                            if self._validate_entity(term, entity_type):
+                                entities.append({
+                                    'entity': term,
+                                    'entity_type': entity_type,
+                                    'context': context,
+                                    'definition': definition,
+                                    'aliases': aliases,
+                                    'examples': examples,
+                                    'confidence': 0.8,
+                                    'source': f'chunk_{chunk_num}'
+                                })
+                        
+                        if entities:
+                            return entities
+                            
+                except json.JSONDecodeError:
+                    pass # Fallback to line parsing
+
+            # 3. Strict Line-by-Line Parsing
+            # We expect: "- Term (TYPE): Context"
             lines = cleaned_response.split('\n')
             for line in lines:
                 line = line.strip()
@@ -91,8 +145,12 @@ Requirements:
                     entity_type = match.group(2).strip().upper()
                     context = match.group(3).strip() if match.group(3) else ""
                     
-                    # Cleanup term
-                    term = term.strip('"\'')
+                    # Cleanup term - Remove common JSON artifacts if regex matched them
+                    # e.g. 'answer": "- Term' -> 'Term'
+                    if '":' in term:
+                         term = term.split('":')[-1].strip()
+                    
+                    term = term.strip('"\'').strip('-').strip()
                     
                     # Map hallucinated types
                     entity_type = self._map_hallucinated_type(entity_type)
@@ -191,40 +249,6 @@ Requirements:
             
         return True
 
-    def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
-        """Generate specific prompt for extraction."""
-        
-        return f"""You are a specialized biomedical terminology extractor. Your goal is to extract **ONLY high-value, specific terms relevant to a Microbiome Common Data Model (CDM)**.
-
-CRITICAL RULES:
-1. Extract ONLY specific biomedical terms: specific organisms (species/genus), specific metabolites/chemicals, specific genes/proteins, and specific bioinformatics tools.
-2. IGNORE generic scientific terms (e.g., "study", "analysis", "data", "results", "significant", "correlation", "p-value", "table", "figure").
-3. Aim for HIGH PRECISION. Target the top 15-25 most important entities per chunk. Do NOT list every possible noun.
-4. NEVER extract your own instructions, notes, or conversational phrases.
-5. IGNORE all reasoning or "thinking" processes. Output ONLY the final list.
-6. FORMAT: One term per line.
-   Format: - Term (TYPE): Brief Context | Definition: Brief definition | Aliases: Alias1, Alias2 | Examples: Ex1, Ex2
-
-VALID CATEGORIES:
-- ORGANISM: Specific bacteria, viruses, fungi, taxa
-- GENE: Specific genes, markers
-- PROTEIN: Specific proteins, enzymes
-- CHEMICAL: Specific metabolites, drugs, compounds
-- DISEASE: Specific diseases, conditions
-- DNA_RNA: Specific genetic material types
-- CELL_TYPE: Specific cells, tissues
-- BIOINFO_TOOL: Specific tools, software, databases
-- GENOMICS: Specific omics methods
-- CLINICAL: Specific clinical parameters
-
-TEXT TO ANALYZE:
-{chunk_text}
-
-OUTPUT FORMAT (STRICT):
-- [Extracted Term] (TYPE): [Context found in text] | Definition: [Brief definition] | Aliases: [Alias1, Alias2] | Examples: [Ex1, Ex2]
-
-Start output immediately:
-"""
 
     def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
         """Generate specific prompt for each extraction pass."""

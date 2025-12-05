@@ -291,7 +291,37 @@ class CDMEntityConfig:
             'temperature': 0.1,
             'timeout': 1200,
             'num_ctx': 8192
-        }
+        },
+        'glm-4': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
+        },
+        'glm-4-6': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
+        },
+        'glm-4-flash': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 128000
+        },
+        'glm-4-air': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 128000
+        },
+        'glm-4.6': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 3000,
+            'num_ctx': 128000
+        },
     }
 
     @classmethod
@@ -684,83 +714,103 @@ class LLMClient:
             return self._call_ollama(prompt, max_tokens)
 
     def _call_openai_compatible(self, prompt: str, max_tokens: Optional[int] = None, extra_body: Optional[Dict] = None) -> str:
-        """Call OpenAI-compatible API."""
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.opt_config.api_key}"
-        }
+        """Call OpenAI-compatible API using the official SDK."""
+        try:
+            from openai import OpenAI
+        except ImportError:
+            logger.error("OpenAI SDK not installed. Please run: pip install openai")
+            return ""
+
+        # Initialize client if not already done (or recreate if base_url changes)
+        # Note: In a persistent class we might want to cache this, but for now we create it per call 
+        # or we could add it to __init__. Let's create it here for safety with dynamic base_urls.
         
-        payload = {
+        client = OpenAI(
+            api_key=self.opt_config.api_key,
+            base_url=self.base_url
+        )
+        
+        messages = [{"role": "user", "content": prompt}]
+        
+        # Prepare arguments
+        kwargs = {
             "model": self.model,
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0.0,
+            "messages": messages,
+            "temperature": 0.1, # Default low temp
+            "timeout": self.config.get('timeout', 60)
         }
         
         if max_tokens:
-            payload["max_tokens"] = max_tokens
+            kwargs["max_tokens"] = max_tokens
             
         if extra_body:
-            payload.update(extra_body)
+            kwargs["extra_body"] = extra_body
             
+        if self.opt_config.use_json_mode:
+            kwargs["response_format"] = {"type": "json_object"}
+
         max_retries = 3
         base_delay = 1
-        
-        if self.opt_config.use_json_mode:
-            payload["response_format"] = {"type": "json_object"}
 
         for attempt in range(max_retries):
             try:
-                response = requests.post(
-                    f"{self.base_url}/chat/completions",
-                    headers=headers,
-                    json=payload,
-                    timeout=self.config.get('timeout', 60)
-                )
+                completion = client.chat.completions.create(**kwargs)
                 
-                if response.status_code == 200:
-                    resp_json = response.json()
-                    
-                    # Track usage
-                    if 'usage' in resp_json:
-                        usage = resp_json['usage']
-                        self.token_usage['input_tokens'] += usage.get('prompt_tokens', usage.get('input_tokens', 0))
-                        self.token_usage['output_tokens'] += usage.get('completion_tokens', usage.get('output_tokens', 0))
-                        
-                    return resp_json['choices'][0]['message']['content'].strip()
-                else:
-                    logger.warning(f"OpenAI API error (attempt {attempt+1}): {response.status_code} - {response.text}")
+                # Track usage
+                if completion.usage:
+                    self.token_usage['input_tokens'] += completion.usage.prompt_tokens
+                    self.token_usage['output_tokens'] += completion.usage.completion_tokens
+                
+                return completion.choices[0].message.content.strip()
+                
             except Exception as e:
                 logger.warning(f"OpenAI API call failed (attempt {attempt+1}): {e}")
-            
-            time.sleep(base_delay * (2 ** attempt))
-            
+                time.sleep(base_delay * (2 ** attempt))
+        
         logger.error("OpenAI API call failed after all retries.")
         return ""
 
     def _call_anthropic(self, prompt: str, max_tokens: Optional[int] = None) -> str:
-        """Call Anthropic API (Claude)."""
+        """Call Anthropic API (Claude) or ZhipuAI (Anthropic-compatible)."""
         max_retries = 3
         base_delay = 1
         
-        # Anthropic requires specific headers
-        headers = {
-            "x-api-key": self.opt_config.api_key,
-            "anthropic-version": "2023-06-01",
-            "content-type": "application/json"
-        }
+        # Check if we are using ZhipuAI (based on URL or key format)
+        is_zhipu = "bigmodel.cn" in (self.base_url or "") or "api.z.ai" in (self.base_url or "")
         
+        if is_zhipu:
+            # ZhipuAI uses Bearer token
+            headers = {
+                "Authorization": f"Bearer {self.opt_config.api_key}",
+                "Content-Type": "application/json"
+            }
+        else:
+            # Standard Anthropic headers
+            headers = {
+                "x-api-key": self.opt_config.api_key,
+                "anthropic-version": "2023-06-01",
+                "content-type": "application/json"
+            }
+    
         payload = {
             "model": self.model,
             "max_tokens": max_tokens or self.config.get('max_tokens', 4096),
             "messages": [{"role": "user", "content": prompt}]
         }
         
-        url = "https://api.anthropic.com/v1/messages"
-        
-        # Use custom base_url if provided and not the default Ollama one
-        if self.base_url and "localhost:11434" not in self.base_url:
-            url = f"{self.base_url}/messages" if not self.base_url.endswith("/messages") else self.base_url
-            logger.info(f"Using custom Anthropic URL: {url}")
+        # Determine URL
+        if is_zhipu:
+             # Zhipu URL usually ends in /messages, but let's be safe
+             if self.base_url:
+                 url = f"{self.base_url}/messages" if not self.base_url.endswith("/messages") else self.base_url
+             else:
+                 url = "https://open.bigmodel.cn/api/paas/v4/messages"
+        else:
+            url = "https://api.anthropic.com/v1/messages"
+            # Use custom base_url if provided and not the default Ollama one
+            if self.base_url and "localhost:11434" not in self.base_url:
+                url = f"{self.base_url}/messages" if not self.base_url.endswith("/messages") else self.base_url
+                logger.info(f"Using custom Anthropic URL: {url}")
         
         for attempt in range(max_retries):
             try:
@@ -798,17 +848,21 @@ class LLMClient:
     def _call_glm(self, prompt: str, max_tokens: Optional[int] = None) -> str:
         """Call GLM-4 API (OpenAI-compatible)."""
         # GLM-4 uses OpenAI-compatible endpoint
-        # Official endpoint from docs: https://api.z.ai/api/paas/v4/chat/completions
+        # Official endpoint from docs: https://api.z.ai/api/paas/v4/
         
         # If base_url is default localhost, switch to official Z.AI endpoint
-        if "localhost" in self.base_url:
-            self.base_url = "https://api.z.ai/api/paas/v4"
+        if "localhost" in self.base_url or "open.bigmodel.cn" in self.base_url:
+             # User requested Z.AI endpoint specifically in the prompt
+            self.base_url = "https://api.z.ai/api/paas/v4/"
             
         # Add 'thinking' parameter for GLM-4.6 as per docs
         extra_body = None
-        if "glm-4.6" in self.model:
-            extra_body = {"thinking": {"type": "enabled"}}
-            
+        # Always enable thinking for glm-4.6 or if explicitly requested
+        if "glm-4.6" in self.model or self.model == "glm-4" or "glm-4-6" in self.model:
+             # Note: The user provided docs show "thinking": {"type": "enabled"} for glm-4.6
+             if "glm-4.6" in self.model:
+                extra_body = {"thinking": {"type": "enabled"}}
+        
         return self._call_openai_compatible(prompt, max_tokens, extra_body=extra_body)
 
     def _call_ollama(self, prompt: str, max_tokens: Optional[int] = None) -> str:
@@ -989,9 +1043,34 @@ class CDMEntityExtractor:
             
             # Remove other common reasoning markers if they appear at the start
             cleaned_response = re.sub(r'^Here is the list.*?:', '', cleaned_response, flags=re.IGNORECASE | re.MULTILINE)
+            
+            # Remove Markdown code blocks if present (e.g. ```json ... ```)
+            cleaned_response = re.sub(r'```[a-zA-Z]*\n', '', cleaned_response)
+            cleaned_response = re.sub(r'```', '', cleaned_response)
+            
             cleaned_response = cleaned_response.strip()
 
             logger.debug(f"🔍 Processed LLM Response (Chunk {chunk_num}):\n{cleaned_response[:500]}...") 
+            
+            # 2. Handle JSON-wrapped responses (common with some models/prompts)
+            # Try to parse as JSON first if it looks like it
+            if '{' in cleaned_response and '}' in cleaned_response:
+                try:
+                    # Find first { and last }
+                    start = cleaned_response.find('{')
+                    end = cleaned_response.rfind('}') + 1
+                    json_str = cleaned_response[start:end]
+                    
+                    data = json.loads(json_str)
+                    if isinstance(data, dict):
+                        # Try common keys where the actual text might be hidden
+                        for key in ['answer', 'content', 'response', 'result', 'output']:
+                            if key in data and isinstance(data[key], str):
+                                cleaned_response = data[key]
+                                logger.debug(f"🧩 Extracted text from JSON key '{key}'")
+                                break
+                except json.JSONDecodeError:
+                    pass # Not valid JSON, treat as raw text 
             
             # 2. Strict Line-by-Line Parsing
             # We expect: "- Term (TYPE): Context"
@@ -1016,8 +1095,12 @@ class CDMEntityExtractor:
                     entity_type = match.group(2).strip().upper()
                     context = match.group(3).strip() if match.group(3) else ""
                     
-                    # Cleanup term
-                    term = term.strip('"\'')
+                    # Cleanup term - Remove common JSON artifacts if regex matched them
+                    # e.g. 'answer": "- Term' -> 'Term'
+                    if '":' in term:
+                         term = term.split('":')[-1].strip()
+                    
+                    term = term.strip('"\'').strip('-').strip()
                     
                     # Map hallucinated types
                     entity_type = self._map_hallucinated_type(entity_type)
@@ -5116,6 +5199,7 @@ Provide one line per term. Start immediately.
 
     def run_pipeline_stage(self, files: List[Path], processed_dir: Path, output_file: str, stage_name: str, **kwargs):
         """Run a specific pipeline stage."""
+        force = kwargs.get('force', False)
         all_entities = []
         text_stats_agg = {"character_count": 0, "word_count": 0}
         
@@ -5276,7 +5360,7 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
         processed_dir.mkdir(parents=True, exist_ok=True)
 
         # Run pipeline stage
-        return pipeline.run_pipeline_stage(files, processed_dir, output_file, stage_name, **kwargs)
+        return pipeline.run_pipeline_stage(files, processed_dir, output_file, stage_name, force=force, **kwargs)
 
     except Exception as e:
         logger.error(f"❌ {stage_name} pipeline failed: {e}")
@@ -5489,7 +5573,6 @@ def main():
             enable_biomistral=args.enable_biomistral,
             enable_omop_mapping=args.enable_omop_mapping,
             enable_umls_mapping=enable_umls,
-            umls_api_key=api_keys['UMLS_API_KEY'],
             bioportal_api_key=bp_key,
             enable_comprehensive_mapping=enable_hf,
             mapping_confidence_threshold=0.7,
@@ -5499,7 +5582,8 @@ def main():
             fast_mode=args.fast_mode,
             api_type=args.api_type,
             api_key=args.api_key,
-            hf_token=args.hf_token
+            hf_token=args.hf_token,
+            force=args.force
         )
         
         if enhanced_success:

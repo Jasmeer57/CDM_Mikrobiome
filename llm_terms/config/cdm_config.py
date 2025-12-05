@@ -112,17 +112,14 @@ class CDMEntityConfig:
         'phi3:mini': {
             'max_tokens': 2000,
             'temperature': 0.1,
-            'timeout': 300
+            'timeout': 300,
+            'num_ctx': 4096
         },
         'qwen3:8b': {
             'max_tokens': 4000,
             'temperature': 0.1,
-            'timeout': 600
-        },
-        'qwen3:4b': {
-            'max_tokens': 3000,
-            'temperature': 0.3,
-            'timeout': 450
+            'timeout': 600,
+            'num_ctx': 8192
         },
         'qwen3:14b': {
             'max_tokens': 8000,
@@ -135,6 +132,54 @@ class CDMEntityConfig:
             'temperature': 0.3,
             'timeout': 1200,
             'num_ctx': 16384
+        },
+        'biomistral-7B': {
+            'max_tokens': 4000,
+            'temperature': 0.1,
+            'timeout': 600,
+            'num_ctx': 8192
+        },
+        'deepseek-r1:8b': {
+            'max_tokens': 8000,
+            'temperature': 0.1,
+            'timeout': 1200,
+            'num_ctx': 8192
+        },
+        'glm-4': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
+        },
+        'glm-4-6': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
+        },
+        'glm-4-flash': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 128000
+        },
+        'glm-4-air': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 128000
+        },
+        'glm-4.6': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 3000,
+            'num_ctx': 128000
+        },
+        'claude-3-5-sonnet-20240620': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 200000
         }
     }
 

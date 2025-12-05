@@ -23,12 +23,17 @@ class BioMistralConfig:
 class BioMistralValidator:
     """Biomedical entity validation using BioMistral model."""
 
-    def __init__(self, config: BioMistralConfig = None):
+    def __init__(self, config: BioMistralConfig = None, llm_client=None):
         self.config = config or BioMistralConfig()
         self.validation_cache = {}
         self.model = None
         self.tokenizer = None
-        self._load_model()
+        self.llm_client = llm_client
+        
+        if not self.llm_client:
+            self._load_model()
+        else:
+            logger.info("✅ Using LLM Client for biomedical validation (Skipping local model load)")
 
     def validate_biomedical_entity(self, entity_name: str, entity_type: str) -> Dict:
         """Validate entity using BioMistral biomedical knowledge."""
@@ -38,7 +43,14 @@ class BioMistralValidator:
 
         try:
             prompt = self._create_validation_prompt(entity_name, entity_type)
-            response = self._call_biomistral(prompt)
+            
+            if self.llm_client:
+                # Use API client
+                response = self.llm_client.generate(prompt, max_tokens=self.config.max_tokens)
+            else:
+                # Use local model
+                response = self._call_biomistral(prompt)
+                
             validation_result = self._parse_validation_response(response)
 
             # Cache the result
