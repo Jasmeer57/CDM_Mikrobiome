@@ -5310,8 +5310,8 @@ def setup_environment():
     # Check API keys
     api_keys = {
         'UMLS_API_KEY': os.getenv('UMLS_API_KEY'),
-        'BIOPORTAL_API_KEY': os.getenv('BIOPORTAL_API_KEY', 'BIOPORTAL_API_KEY_PLACEHOLDER'),
-        'HUGGINGFACE_TOKEN': os.getenv('HUGGINGFACE_TOKEN', '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')
+        'BIOPORTAL_API_KEY': os.getenv('BioPortal_API_KEY'),
+        'HUGGINGFACE_TOKEN': os.getenv('HuggingFace_API_KEY'),
     }
     
     missing_keys = [k for k, v in api_keys.items() if not v or v.startswith('your_')]
