@@ -5473,11 +5473,6 @@ def main():
     if not args.input:
         parser.error("the following arguments are required: --input/-i (or in config file)")
     
-    # Set API keys from environment or hardcoded (as per user request)
-    # We do this BEFORE setup_environment so they are available
-    os.environ["HUGGING_FACE_HUB_TOKEN"] = os.environ.get("HUGGING_FACE_HUB_TOKEN", "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")
-    os.environ["BIOPORTAL_API_KEY"] = os.environ.get("BIOPORTAL_API_KEY", "BIOPORTAL_API_KEY_PLACEHOLDER")
-
     # Setup
     api_keys = setup_environment()
     input_path = Path(args.input)
