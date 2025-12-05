@@ -44,7 +44,16 @@ class MicrobiomeGoldStandardScorer:
                 "Firmicutes": 0.85,
                 "Bacteroidetes": 0.85,
                 "Actinobacteria": 0.80,
-                "Proteobacteria": 0.75
+                "Proteobacteria": 0.75,
+                "Verrucomicrobia": 0.85,
+                "Fusobacterium nucleatum": 0.85,
+                "Ruminococcus gnavus": 0.85,
+                "Roseburia intestinalis": 0.90,
+                "Eubacterium rectale": 0.90,
+                "Prevotella copri": 0.85,
+                "Helicobacter pylori": 0.80,
+                "Lactobacillus rhamnosus": 0.85,
+                "Bifidobacterium animalis": 0.85
             },
             "Metabolites": {
                 "short-chain fatty acids": 0.95,
@@ -56,7 +65,14 @@ class MicrobiomeGoldStandardScorer:
                 "succinate": 0.80,
                 "bile acids": 0.85,
                 "tryptophan": 0.80,
-                "indole": 0.75
+                "indole": 0.75,
+                "trimethylamine N-oxide": 0.85,
+                "TMAO": 0.85,
+                "lipopolysaccharide": 0.90,
+                "LPS": 0.90,
+                "secondary bile acids": 0.85,
+                "polyphenols": 0.80,
+                "vitamins": 0.75
             },
             "Functional_Terms": {
                 "microbiome": 0.95,
@@ -70,7 +86,11 @@ class MicrobiomeGoldStandardScorer:
                 "probiotic": 0.90,
                 "prebiotic": 0.90,
                 "synbiotic": 0.85,
-                "postbiotic": 0.80
+                "postbiotic": 0.80,
+                "fecal microbiota transplantation": 0.90,
+                "FMT": 0.90,
+                "colonization resistance": 0.85,
+                "metabolic capacity": 0.80
             },
             "Diseases_Conditions": {
                 "inflammatory bowel disease": 0.85,
@@ -82,7 +102,12 @@ class MicrobiomeGoldStandardScorer:
                 "small intestinal bacterial overgrowth": 0.80,
                 "SIBO": 0.80,
                 "C. difficile infection": 0.85,
-                "antibiotic-associated diarrhea": 0.80
+                "antibiotic-associated diarrhea": 0.80,
+                "obesity": 0.75,
+                "diabetes": 0.75,
+                "colorectal cancer": 0.80,
+                "autism spectrum disorder": 0.70,
+                "depression": 0.70
             },
             "Methods_Techniques": {
                 "16S rRNA sequencing": 0.85,
@@ -93,7 +118,26 @@ class MicrobiomeGoldStandardScorer:
                 "metatranscriptomics": 0.80,
                 "qPCR": 0.75,
                 "FISH": 0.70,
-                "flow cytometry": 0.70
+                "flow cytometry": 0.70,
+                "shotgun sequencing": 0.85,
+                "alpha diversity": 0.80,
+                "beta diversity": 0.80,
+                "PCoA": 0.75,
+                "rarefaction": 0.75
+            },
+            "Bioinformatics_Tools": {
+                "QIIME2": 0.90,
+                "QIIME 2": 0.90,
+                "DADA2": 0.90,
+                "Mothur": 0.85,
+                "Phyloseq": 0.85,
+                "MicrobiomeAnalyst": 0.85,
+                "UniFrac": 0.85,
+                "SILVA": 0.80,
+                "Greengenes": 0.80,
+                "MetaPhlAn": 0.85,
+                "HUMAnN": 0.85,
+                "PICRUSt": 0.85
             },
             "Anatomical_Terms": {
                 "gut-brain axis": 0.85,
@@ -104,7 +148,9 @@ class MicrobiomeGoldStandardScorer:
                 "cecum": 0.75,
                 "colon": 0.75,
                 "small intestine": 0.75,
-                "large intestine": 0.75
+                "large intestine": 0.75,
+                "epithelium": 0.75,
+                "lumen": 0.70
             }
         }
 

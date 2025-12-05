@@ -219,10 +219,10 @@ class GlobalPipelineProcessor:
         
         return result.deduplicated_terms
 
-    def filter_bullshit_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def filter_noise_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Step 3: Filter out generic/noise terms"""
         logger.info("="*50)
-        logger.info("STEP 3: FILTERING BULLSHIT TERMS")
+        logger.info("STEP 3: FILTERING NOISE TERMS")
         logger.info("="*50)
         
         # The deduplicator module has _semantic_quality_filter, but it's internal.
@@ -238,7 +238,7 @@ class GlobalPipelineProcessor:
         # That's fine, as long as it's done.
         
         # However, to match standalone EXACTLY, I might want to run it again or ensure it's doing the same thing.
-        # Standalone `filter_bullshit_terms` in `GlobalPipelineProcessor` (Step 677 context) 
+        # Standalone `filter_noise_terms` in `GlobalPipelineProcessor` (Step 677 context) 
         # might have been calling `deduplicator._semantic_quality_filter` explicitly if it wasn't in the main `deduplicate_terms` flow.
         
         # In standalone `standalone_scispacy_pipeline.py`:
@@ -256,36 +256,14 @@ class GlobalPipelineProcessor:
         logger.info("="*50)
         
         # Calculate scores
-        for term in terms:
-            # Score = Frequency * (1 + Length_Bonus) * (1 + Source_Bonus)
-            freq = term.get('frequency', 1)
-            length = len(term['term'])
-            
-            # Length bonus: prefer 10-30 chars
-            len_bonus = 0.0
-            if 10 <= length <= 30:
-                len_bonus = 0.5
-            elif length > 30:
-                len_bonus = 0.2
-                
-            # Source bonus (if multiple models found it)
-            # 'raw_entities' might contain list of entities from different models
-            # But here we might just have 'frequency'.
-            # If 'sources' or 'models' is tracked, use it.
-            # In standalone, we tracked 'source_models'.
-            source_bonus = 0.0
-            if 'source_models' in term:
-                source_bonus = len(term['source_models']) * 0.2
-            
-            term['final_score'] = freq * (1 + len_bonus) * (1 + source_bonus)
-            
-        # Sort by score
-        sorted_terms = sorted(terms, key=lambda x: x.get('final_score', 0), reverse=True)
+        # Advanced Ranking using TermRanker (Gold Standard + Semantic + Frequency)
+        logger.info("   🌟 Applying Advanced Term Ranking...")
+        ranked_terms = self.term_ranker.rank_terms(terms)
         
-        # Cutoff
-        final_terms = sorted_terms[:self.config.target_final_terms]
-        
-        logger.info(f"   ✅ Selected {len(final_terms)} final terms")
+        # Select top N
+        final_terms = ranked_terms[:self.config.target_final_terms]
+
+        logger.info(f"   ✅ Selected {len(final_terms):,} final terms")
         return final_terms
 
     def run_advanced_processing(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

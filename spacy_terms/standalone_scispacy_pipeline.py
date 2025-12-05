@@ -371,7 +371,16 @@ class MicrobiomeGoldStandardScorer:
                 "Firmicutes": 0.85,
                 "Bacteroidetes": 0.85,
                 "Actinobacteria": 0.80,
-                "Proteobacteria": 0.75
+                "Proteobacteria": 0.75,
+                "Verrucomicrobia": 0.85,
+                "Fusobacterium nucleatum": 0.85,
+                "Ruminococcus gnavus": 0.85,
+                "Roseburia intestinalis": 0.90,
+                "Eubacterium rectale": 0.90,
+                "Prevotella copri": 0.85,
+                "Helicobacter pylori": 0.80,
+                "Lactobacillus rhamnosus": 0.85,
+                "Bifidobacterium animalis": 0.85
             },
             "Metabolites": {
                 "short-chain fatty acids": 0.95,
@@ -383,7 +392,14 @@ class MicrobiomeGoldStandardScorer:
                 "succinate": 0.80,
                 "bile acids": 0.85,
                 "tryptophan": 0.80,
-                "indole": 0.75
+                "indole": 0.75,
+                "trimethylamine N-oxide": 0.85,
+                "TMAO": 0.85,
+                "lipopolysaccharide": 0.90,
+                "LPS": 0.90,
+                "secondary bile acids": 0.85,
+                "polyphenols": 0.80,
+                "vitamins": 0.75
             },
             "Functional_Terms": {
                 "microbiome": 0.95,
@@ -397,7 +413,11 @@ class MicrobiomeGoldStandardScorer:
                 "probiotic": 0.90,
                 "prebiotic": 0.90,
                 "synbiotic": 0.85,
-                "postbiotic": 0.80
+                "postbiotic": 0.80,
+                "fecal microbiota transplantation": 0.90,
+                "FMT": 0.90,
+                "colonization resistance": 0.85,
+                "metabolic capacity": 0.80
             },
             "Diseases_Conditions": {
                 "inflammatory bowel disease": 0.85,
@@ -409,7 +429,12 @@ class MicrobiomeGoldStandardScorer:
                 "small intestinal bacterial overgrowth": 0.80,
                 "SIBO": 0.80,
                 "C. difficile infection": 0.85,
-                "antibiotic-associated diarrhea": 0.80
+                "antibiotic-associated diarrhea": 0.80,
+                "obesity": 0.75,
+                "diabetes": 0.75,
+                "colorectal cancer": 0.80,
+                "autism spectrum disorder": 0.70,
+                "depression": 0.70
             },
             "Methods_Techniques": {
                 "16S rRNA sequencing": 0.85,
@@ -420,7 +445,26 @@ class MicrobiomeGoldStandardScorer:
                 "metatranscriptomics": 0.80,
                 "qPCR": 0.75,
                 "FISH": 0.70,
-                "flow cytometry": 0.70
+                "flow cytometry": 0.70,
+                "shotgun sequencing": 0.85,
+                "alpha diversity": 0.80,
+                "beta diversity": 0.80,
+                "PCoA": 0.75,
+                "rarefaction": 0.75
+            },
+            "Bioinformatics_Tools": {
+                "QIIME2": 0.90,
+                "QIIME 2": 0.90,
+                "DADA2": 0.90,
+                "Mothur": 0.85,
+                "Phyloseq": 0.85,
+                "MicrobiomeAnalyst": 0.85,
+                "UniFrac": 0.85,
+                "SILVA": 0.80,
+                "Greengenes": 0.80,
+                "MetaPhlAn": 0.85,
+                "HUMAnN": 0.85,
+                "PICRUSt": 0.85
             },
             "Anatomical_Terms": {
                 "gut-brain axis": 0.85,
@@ -431,7 +475,9 @@ class MicrobiomeGoldStandardScorer:
                 "cecum": 0.75,
                 "colon": 0.75,
                 "small intestine": 0.75,
-                "large intestine": 0.75
+                "large intestine": 0.75,
+                "epithelium": 0.75,
+                "lumen": 0.70
             }
         }
 
@@ -2356,7 +2402,7 @@ class GlobalPipelineProcessor:
     1. Extract ALL terms from ALL models across ALL files
     2. Gather ALL terms into single collection
     3. Global deduplication (exact + fuzzy + semantic)
-    4. Filter bullshit terms
+    4. Filter noise terms
     5. Final selection to 5-10k high-quality terms
     6. Then apply mapping, definitions, validation
     """
@@ -2395,6 +2441,9 @@ class GlobalPipelineProcessor:
         self.umls_mapper = UMLSMapper(config) if config.map_umls else None
         self.def_generator = DefinitionGenerator(config) if config.generate_definitions else None
         self.validator = BioMistralValidator(config) if config.validate_biomistral else None
+
+        # Initialize TermRanker for advanced scoring
+        self.term_ranker = TermRanker(config, self.deduplicator.semantic_model)
 
     def extract_all_terms_from_all_files(self) -> List[Dict[str, Any]]:
         """STEP 1: Extract ALL terms from ALL models across ALL files"""
@@ -2460,12 +2509,12 @@ class GlobalPipelineProcessor:
         logger.info(f"🎯 STEP 1 COMPLETE: Total raw terms from ALL files: {len(all_raw_terms):,}")
         return all_raw_terms
 
-    def filter_bullshit_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """STEP 4: Filter out bullshit terms"""
-        logger.info("🧹 STEP 4: Filtering bullshit terms...")
+    def filter_noise_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """STEP 4: Filter out noise terms"""
+        logger.info("🧹 STEP 4: Filtering noise terms...")
 
-        # Common bullshit patterns
-        bullshit_patterns = [
+        # Common noise patterns
+        noise_patterns = [
             r'^[a-z]$',  # Single letters
             r'^[0-9]+$',  # Just numbers
             r'^[^a-zA-Z0-9]+$',  # Just special chars
@@ -2480,8 +2529,8 @@ class GlobalPipelineProcessor:
             r'^[ivxlm]+\.$',  # Roman numerals with period
         ]
 
-        # Common bullshit words
-        bullshit_words = {
+        # Common noise words
+        noise_words = {
             'et', 'al', 'and', 'or', 'the', 'in', 'on', 'at', 'to', 'for', 'of', 'with',
             'by', 'from', 'as', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has',
             'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might',
@@ -2501,26 +2550,26 @@ class GlobalPipelineProcessor:
             if not term_text or len(term_text) < 3:
                 continue
 
-            # Check bullshit patterns
-            is_bullshit = False
-            for pattern in bullshit_patterns:
+            # Check noise patterns
+            is_noise = False
+            for pattern in noise_patterns:
                 if re.match(pattern, term_text):
-                    is_bullshit = True
+                    is_noise = True
                     break
 
-            # Check bullshit words
-            if term_text in bullshit_words:
-                is_bullshit = True
+            # Check noise words
+            if term_text in noise_words:
+                is_noise = True
 
             # Check if it's all lowercase (likely not a scientific term)
             if term_text.islower() and len(term_text.split()) == 1:
-                is_bullshit = True
+                is_noise = True
 
-            if not is_bullshit:
+            if not is_noise:
                 filtered_terms.append(term)
 
         filtered_count = len(filtered_terms)
-        logger.info(f"   🗑️  Filtered {original_count - filtered_count:,} bullshit terms")
+        logger.info(f"   🗑️  Filtered {original_count - filtered_count:,} noise terms")
         logger.info(f"   ✅ Remaining terms: {filtered_count:,}")
 
         return filtered_terms
@@ -2536,33 +2585,12 @@ class GlobalPipelineProcessor:
             logger.info(f"   ✅ Already have {current_count:,} terms (≤ target {target_count:,})")
             return terms
 
-        # Simple ranking approach - prioritize terms with higher scores and more sources
-        scored_terms = []
-        for term in terms:
-            score = 0.0
-
-            # Base score from model confidence
-            if 'score' in term:
-                score += float(term['score']) * 0.4
-
-            # Bonus for being found by multiple models
-            sources = set()
-            if 'source_model' in term:
-                sources.add(term['source_model'])
-            if 'source_models' in term:  # Some terms might have multiple sources
-                sources.update(term['source_models'])
-            score += len(sources) * 0.2
-
-            # Bonus for longer, more specific terms
-            term_length = len(term.get('term', '').split())
-            if term_length >= 2:
-                score += min(term_length * 0.1, 0.3)
-
-            scored_terms.append((score, term))
-
-        # Sort by score and take top terms
-        scored_terms.sort(key=lambda x: x[0], reverse=True)
-        final_terms = [term for _, term in scored_terms[:target_count]]
+        # Advanced Ranking using TermRanker (Gold Standard + Semantic + Frequency)
+        logger.info("   🌟 Applying Advanced Term Ranking...")
+        ranked_terms = self.term_ranker.rank_terms(terms)
+        
+        # Select top N
+        final_terms = ranked_terms[:target_count]
 
         logger.info(f"   ✅ Selected {len(final_terms):,} final terms")
         return final_terms
@@ -2677,8 +2705,8 @@ class GlobalPipelineProcessor:
         # Save deduplicated terms
         self.save_terms_to_files(dedup_terms, "step3_deduplicated")
 
-        # STEP 4: Filter bullshit terms
-        filtered_terms = self.filter_bullshit_terms(dedup_terms)
+        # STEP 4: Filter noise terms
+        filtered_terms = self.filter_noise_terms(dedup_terms)
 
         # Save filtered terms
         self.save_terms_to_files(filtered_terms, "step4_filtered")
@@ -2711,7 +2739,7 @@ class GlobalPipelineProcessor:
                 "step1_raw_extraction": len(all_raw_terms),
                 "step2_collection": len(all_raw_terms),
                 "step3_deduplication": len(dedup_terms),
-                "step4_bullshit_filtering": len(filtered_terms),
+                "step4_noise_filtering": len(filtered_terms),
                 "step5_final_selection": len(final_terms),
                 "step6_advanced_processing": len(final_terms)
             },
