@@ -149,6 +149,8 @@ Requirements:
                     # e.g. 'answer": "- Term' -> 'Term'
                     if '":' in term:
                          term = term.split('":')[-1].strip()
+                    if '":"' in term:
+                         term = term.split('":"')[-1].strip()
                     
                     term = term.strip('"\'').strip('-').strip()
                     

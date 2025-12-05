@@ -1046,16 +1046,13 @@ class CDMEntityExtractor:
         entities = []
         try:
             # 1. Aggressive Cleanup of Chain-of-Thought (<think>...</think>)
-            # Handle standard tags
             cleaned_response = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL)
-            # Handle unclosed tags (rest of text is thought) - rare but happens
             if '<think>' in cleaned_response:
                  cleaned_response = re.sub(r'<think>.*', '', cleaned_response, flags=re.DOTALL)
             
-            # Remove other common reasoning markers if they appear at the start
             cleaned_response = re.sub(r'^Here is the list.*?:', '', cleaned_response, flags=re.IGNORECASE | re.MULTILINE)
             
-            # Remove Markdown code blocks if present (e.g. ```json ... ```)
+            # Remove Markdown code blocks if present
             cleaned_response = re.sub(r'```[a-zA-Z]*\n', '', cleaned_response)
             cleaned_response = re.sub(r'```', '', cleaned_response)
             
@@ -1063,27 +1060,60 @@ class CDMEntityExtractor:
 
             logger.debug(f"🔍 Processed LLM Response (Chunk {chunk_num}):\n{cleaned_response[:500]}...") 
             
-            # 2. Handle JSON-wrapped responses (common with some models/prompts)
-            # Try to parse as JSON first if it looks like it
-            if '{' in cleaned_response and '}' in cleaned_response:
+            # 2. Try to parse as JSON first (List of objects)
+            if (cleaned_response.startswith('[') and cleaned_response.endswith(']')) or \
+               (cleaned_response.startswith('{') and cleaned_response.endswith('}')):
                 try:
-                    # Find first { and last }
-                    start = cleaned_response.find('{')
-                    end = cleaned_response.rfind('}') + 1
-                    json_str = cleaned_response[start:end]
+                    data = json.loads(cleaned_response)
                     
-                    data = json.loads(json_str)
+                    # If it's a dictionary wrapping the list (e.g. {"entities": [...]})
                     if isinstance(data, dict):
-                        # Try common keys where the actual text might be hidden
-                        for key in ['answer', 'content', 'response', 'result', 'output']:
-                            if key in data and isinstance(data[key], str):
-                                cleaned_response = data[key]
-                                logger.debug(f"🧩 Extracted text from JSON key '{key}'")
-                                break
+                        for key in ['entities', 'terms', 'results', 'output', 'answer', 'content']:
+                            if key in data:
+                                if isinstance(data[key], list):
+                                    data = data[key]
+                                    break
+                                elif isinstance(data[key], str):
+                                    # If the key contains a string, it might be the text block
+                                    cleaned_response = data[key]
+                                    # Fall through to line parsing with this new text
+                                    raise json.JSONDecodeError("Found text block in JSON", cleaned_response, 0)
+                    
+                    if isinstance(data, list):
+                        for item in data:
+                            if not isinstance(item, dict): continue
+                            
+                            term = item.get('entity', item.get('term', '')).strip()
+                            entity_type = item.get('entity_type', item.get('type', '')).upper()
+                            context = item.get('context', '')
+                            definition = item.get('definition', '')
+                            aliases = item.get('aliases', [])
+                            if isinstance(aliases, str): aliases = [a.strip() for a in aliases.split(',')]
+                            examples = item.get('examples', [])
+                            if isinstance(examples, str): examples = [e.strip() for e in examples.split(',')]
+                            
+                            # Map type
+                            entity_type = self._map_hallucinated_type(entity_type)
+                            
+                            if self._validate_entity(term, entity_type):
+                                entities.append({
+                                    'entity': term,
+                                    'entity_type': entity_type,
+                                    'context': context,
+                                    'definition': definition,
+                                    'aliases': aliases,
+                                    'examples': examples,
+                                    'confidence': 0.8,
+                                    'source_pass': 0
+                                })
+                        
+                        if entities:
+                            return entities
+                            
                 except json.JSONDecodeError:
-                    pass # Not valid JSON, treat as raw text 
-            
-            # 2. Strict Line-by-Line Parsing
+                    pass # Fallback to line parsing
+
+            # 3. Strict Line-by-Line Parsing
             # We expect: "- Term (TYPE): Context"
             lines = cleaned_response.split('\n')
             for line in lines:
@@ -1110,6 +1140,8 @@ class CDMEntityExtractor:
                     # e.g. 'answer": "- Term' -> 'Term'
                     if '":' in term:
                          term = term.split('":')[-1].strip()
+                    if '":"' in term:
+                         term = term.split('":"')[-1].strip()
                     
                     term = term.strip('"\'').strip('-').strip()
                     
