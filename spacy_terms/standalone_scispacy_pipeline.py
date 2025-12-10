@@ -58,12 +58,13 @@ class PipelineConfig:
     output_dir: str = "./output"
     max_files: int = 100
     
-    # Global Pipeline Settings
-    models_to_use: List[str] = field(default_factory=lambda: ["en_core_sci_lg"])
-    target_final_terms: int = 10000
+    # Global Pipeline Settings - OPTIMIZED: Use 3 best models
+    models_to_use: List[str] = field(default_factory=lambda: ["en_core_sci_md", "en_ner_bc5cdr_md", "en_core_sci_lg"])
+    target_final_terms: int = 6000  # Smart target based on 100k raw terms
+    max_raw_terms_limit: int = 100000  # Maximum raw terms for efficient processing (1 lakh)
 
     # Extraction
-    spacy_model: str = "en_core_sci_lg"
+    spacy_model: str = "en_core_sci_md"  # Faster default model
     
     # Deduplication
     fuzzy_threshold: float = 0.85
@@ -96,9 +97,11 @@ class PipelineConfig:
     load_4bit: bool = False
     batch_size: int = 32  # Batch size for GPU inference
 
-    # Execution
-    workers: int = 1
+    # Execution - OPTIMIZED: Better memory management
+    workers: int = 2  # Increased to 2 for better parallelism
     checkpoint_file: str = "processed_files_checkpoint.json"
+    memory_cleanup_interval: int = 5  # Cleanup every 5 files
+    max_memory_gb: int = 10  # Memory limit
 
 # --- Logging Setup ---
 
@@ -161,10 +164,11 @@ class OllamaClient:
 
 # --- Constants & Filters ---
 
-# Available Models
+# Available Models - OPTIMIZED: Use only 3 most effective models for speed
 SCISPACY_MODELS = [
-    "en_core_sci_lg", "en_core_sci_md", "en_core_sci_scibert", "en_core_sci_sm",
-    "en_ner_bc5cdr_md", "en_ner_bionlp13cg_md", "en_ner_craft_md", "en_ner_jnlpba_md"
+    "en_core_sci_md",        # Best general scientific terms
+    "en_ner_bc5cdr_md",      # Best biomedical entities
+    "en_core_sci_lg"         # High accuracy for verification
 ]
 
 # Safe synonyms that don't lose clinical specificity
@@ -1132,53 +1136,93 @@ class Deduplicator:
             return TfidfSemanticModel()
 
     def deduplicate(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Run all deduplication layers"""
+        """CONSERVATIVE deduplication - preserve maximum terms"""
         initial_count = len(terms)
-        
-        # 1. Exact Deduplication
+
+        # STEP 1: ONLY Exact Deduplication - PRESERVE ALL VARIANTS
+        logger.info("🔄 CONSERVATIVE DEDUPLICATION - PRESERVING MAXIMUM TERMS")
+
         unique_terms = {}
         for t in terms:
-            term_key = t['term']
+            # More conservative exact matching - case sensitive
+            term_key = t['term'].strip()
             if term_key not in unique_terms:
-                unique_terms[term_key] = t
-                unique_terms[term_key]['examples'] = {t.get('context')} if t.get('context') else set()
+                unique_terms[term_key] = t.copy()
+                unique_terms[term_key]['frequency'] = 1
+                unique_terms[term_key]['sources'] = [t.get('source_model', 'unknown')]
+                unique_terms[term_key]['contexts'] = [t.get('context', '')] if t.get('context') else []
             else:
-                # Merge examples
-                if t.get('context'):
-                    unique_terms[term_key]['examples'].add(t['context'])
-                # Keep other metadata if needed (e.g. frequency)
-                unique_terms[term_key]['frequency'] = unique_terms[term_key].get('frequency', 1) + t.get('frequency', 1)
+                # Merge metadata but keep original term
+                existing = unique_terms[term_key]
+                existing['frequency'] += 1
+                if t.get('source_model') and t['source_model'] not in existing.get('sources', []):
+                    existing.setdefault('sources', []).append(t['source_model'])
+                if t.get('context') and t['context'] not in existing.get('contexts', []):
+                    existing.setdefault('contexts', []).append(t['context'])
 
-        terms = []
-        for t in unique_terms.values():
-            t['examples'] = list(t['examples'])[:5] # Keep top 5 unique examples
-            terms.append(t)
-        logger.info(f"Exact deduplication: {initial_count} -> {len(terms)}")
-        
-        # 2. Fuzzy Deduplication (Rapidfuzz)
-        terms = self._fuzzy_dedup(terms)
-        
-        # 3. Semantic Correction (MiniLM) - NEW
-        if self.semantic_model:
+        terms = list(unique_terms.values())
+        logger.info(f"Exact deduplication: {initial_count} -> {len(terms)} terms ({len(terms)/initial_count*100:.1f}% preserved)")
+
+        # STEP 2: ONLY VERY CONSERVATIVE FUZZY DEDUPLICATION (high threshold)
+        if self.config.fuzzy_threshold and len(terms) > 1:
+            logger.info("Running very conservative fuzzy deduplication...")
+            terms = self._conservative_fuzzy_dedup(terms)
+
+        # STEP 3: OPTIONAL SEMANTIC PROCESSING (only if explicitly enabled)
+        # Skip aggressive semantic deduplication to preserve more terms
+        if self.semantic_model and self.config.semantic_threshold >= 0.95:  # Only if very high threshold
+            logger.info("Running conservative semantic correction (high threshold)...")
             terms = self.corrector.correct_terms(terms, threshold=self.config.semantic_threshold)
-            
-        # 4. Semantic Deduplication (Legacy/Fallback logic if needed, but Corrector covers most)
-        # We can keep _semantic_dedup if it does something different (e.g. cross-encoder)
-        # Current implementation uses semantic correction with MiniLM embeddings
-            
-        # 5. Biomedical Deduplication (BioMistral)
-        terms = self._biomedical_dedup(terms)
+        else:
+            logger.info("Skipping semantic deduplication to preserve maximum terms")
 
-        # 6. Semantic Quality Filter (New)
-        terms = self._semantic_quality_filter(terms)
-
-        # 7. Typo Correction
-        terms = self._correct_typos(terms)
-
-        # 8. Aggressive Final Pass (No Duplicates!)
-        terms = self._aggressive_dedup(terms)
-            
+        logger.info(f"🎯 FINAL: {len(terms)} terms preserved ({len(terms)/initial_count*100:.1f}% of original)")
         return terms
+
+    def _conservative_fuzzy_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Very conservative fuzzy deduplication with high threshold"""
+        try:
+            from rapidfuzz import fuzz
+        except ImportError:
+            logger.warning("rapidfuzz not installed, skipping fuzzy deduplication")
+            return terms
+
+        if len(terms) < 2:
+            return terms
+
+        # Use very high threshold - only merge near-identical terms
+        threshold = max(0.90, self.config.fuzzy_threshold)  # Never below 0.90
+        keep_indices = set(range(len(terms)))
+        term_texts = [t['term'] for t in terms]
+
+        logger.info(f"   Using fuzzy threshold: {threshold}")
+
+        for i in range(len(terms)):
+            if i not in keep_indices:
+                continue
+
+            for j in range(i + 1, len(terms)):
+                if j not in keep_indices:
+                    continue
+
+                # Check fuzzy similarity - only for very similar terms
+                similarity = fuzz.ratio(term_texts[i], term_texts[j]) / 100
+
+                if similarity >= threshold:
+                    # Very conservative merging logic
+                    term_i_freq = terms[i].get('frequency', 1)
+                    term_j_freq = terms[j].get('frequency', 1)
+
+                    # Only merge if they're nearly identical and one has much higher frequency
+                    if similarity >= 0.95 and max(term_i_freq, term_j_freq) > min(term_i_freq, term_j_freq) * 3:
+                        if term_j_freq > term_i_freq:
+                            keep_indices.discard(i)
+                        else:
+                            keep_indices.discard(j)
+
+        preserved = [terms[i] for i in sorted(keep_indices)]
+        logger.info(f"   Conservative fuzzy deduplication: {len(terms)} → {len(preserved)} terms")
+        return preserved
 
     def _semantic_quality_filter(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -1428,85 +1472,90 @@ class Deduplicator:
 
         return [terms[i] for i in sorted(keep_indices)]
 
+    # def _biomedical_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    #     """Biomedical context-aware deduplication (Cross-Encoder)"""
+    #     try:
+    #         from sentence_transformers import CrossEncoder
+    #     except ImportError:
+    #         logger.warning("sentence-transformers not installed. Biomedical deduplication disabled.")
+    #         return terms
+
+    #     if len(terms) < 2:
+    #         return terms
+
+    #     logger.info("Running biomedical deduplication (Cross-Encoder)...")
+
+    #     # Load Cross-Encoder model
+    #     try:
+    #         model_name = "cross-encoder/stsb-roberta-base"
+    #         logger.info(f"Loading Cross-Encoder: {model_name}")
+    #         model = CrossEncoder(model_name)
+    #     except Exception as e:
+    #         logger.warning(f"Failed to load Cross-Encoder model: {e}")
+    #         return terms
+
+    #     keep_indices = set(range(len(terms)))
+    #     term_strings = [t['term'] for t in terms]
+
+    #     # 1. Identify candidate pairs to check
+    #     potential_pairs = []
+
+    #     if self.semantic_model:
+    #         # Use embeddings to find candidates efficiently
+    #         embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
+    #         from sentence_transformers.util import cos_sim
+    #         scores = cos_sim(embeddings, embeddings)
+
+    #         for i in range(len(terms)):
+    #             if i not in keep_indices: continue
+    #             for j in range(i + 1, len(terms)):
+    #                 if j not in keep_indices: continue
+    #                 # Check if semantically somewhat close (e.g. > 0.75)
+    #                 if scores[i][j] > 0.75:
+    #                     potential_pairs.append((i, j))
+    #     else:
+    #         # Fallback: Check for word overlap
+    #         for i in range(len(terms)):
+    #             if i not in keep_indices: continue
+    #             for j in range(i + 1, len(terms)):
+    #                 if j not in keep_indices: continue
+    #                 words_i = set(term_strings[i].split())
+    #                 words_j = set(term_strings[j].split())
+    #                 if words_i.intersection(words_j):
+    #                     potential_pairs.append((i, j))
+
+    #     if not potential_pairs:
+    #         return terms
+
+    #     # 2. Score pairs with Cross-Encoder
+    #     logger.info(f"Checking {len(potential_pairs)} candidate pairs with Cross-Encoder...")
+
+    #     # Prepare pairs for batch processing
+    #     sentence_pairs = [[term_strings[i], term_strings[j]] for i, j in potential_pairs]
+
+    #     try:
+    #         similarity_scores = model.predict(sentence_pairs)
+
+    #         for k, score in enumerate(similarity_scores):
+    #             i, j = potential_pairs[k]
+
+    #             # Threshold for "Duplicate" in biomedical context
+    #             if score > 0.85:
+    #                 # Keep the one that looks "better" (longer or more frequent)
+    #                 if len(term_strings[i]) < len(term_strings[j]):
+    #                     keep_indices.discard(j)
+    #                 else:
+    #                     keep_indices.discard(i)
+
+    #     except Exception as e:
+    #         logger.warning(f"Cross-Encoder check failed: {e}")
+
+    #     return [terms[i] for i in sorted(keep_indices)]
+
+    # Temporary replacement to skip biomedical deduplication
     def _biomedical_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Biomedical context-aware deduplication (Cross-Encoder)"""
-        try:
-            from sentence_transformers import CrossEncoder
-        except ImportError:
-            logger.warning("sentence-transformers not installed. Biomedical deduplication disabled.")
-            return terms
-
-        if len(terms) < 2:
-            return terms
-
-        logger.info("Running biomedical deduplication (Cross-Encoder)...")
-        
-        # Load Cross-Encoder model
-        try:
-            model_name = "cross-encoder/stsb-roberta-base"
-            logger.info(f"Loading Cross-Encoder: {model_name}")
-            model = CrossEncoder(model_name)
-        except Exception as e:
-            logger.warning(f"Failed to load Cross-Encoder model: {e}")
-            return terms
-
-        keep_indices = set(range(len(terms)))
-        term_strings = [t['term'] for t in terms]
-        
-        # 1. Identify candidate pairs to check
-        potential_pairs = []
-        
-        if self.semantic_model:
-            # Use embeddings to find candidates efficiently
-            embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
-            from sentence_transformers.util import cos_sim
-            scores = cos_sim(embeddings, embeddings)
-            
-            for i in range(len(terms)):
-                if i not in keep_indices: continue
-                for j in range(i + 1, len(terms)):
-                    if j not in keep_indices: continue
-                    # Check if semantically somewhat close (e.g. > 0.75)
-                    if scores[i][j] > 0.75: 
-                        potential_pairs.append((i, j))
-        else:
-            # Fallback: Check for word overlap
-            for i in range(len(terms)):
-                if i not in keep_indices: continue
-                for j in range(i + 1, len(terms)):
-                    if j not in keep_indices: continue
-                    words_i = set(term_strings[i].split())
-                    words_j = set(term_strings[j].split())
-                    if words_i.intersection(words_j):
-                        potential_pairs.append((i, j))
-
-        if not potential_pairs:
-            return terms
-
-        # 2. Score pairs with Cross-Encoder
-        logger.info(f"Checking {len(potential_pairs)} candidate pairs with Cross-Encoder...")
-        
-        # Prepare pairs for batch processing
-        sentence_pairs = [[term_strings[i], term_strings[j]] for i, j in potential_pairs]
-        
-        try:
-            similarity_scores = model.predict(sentence_pairs)
-            
-            for k, score in enumerate(similarity_scores):
-                i, j = potential_pairs[k]
-                
-                # Threshold for "Duplicate" in biomedical context
-                if score > 0.85:
-                    # Keep the one that looks "better" (longer or more frequent)
-                    if len(term_strings[i]) < len(term_strings[j]):
-                        keep_indices.discard(j)
-                    else:
-                        keep_indices.discard(i)
-                        
-        except Exception as e:
-            logger.warning(f"Cross-Encoder check failed: {e}")
-
-        return [terms[i] for i in sorted(keep_indices)]
+        """Biomedical deduplication disabled"""
+        return terms
 
 
 class DefinitionGenerator:
@@ -1595,7 +1644,19 @@ class DefinitionGenerator:
 
         # Prepare prompts
         prompts = [
-            f"Define the biomedical term '{t['term']}' concisely in one sentence:"
+            f"""You are a specialized biomedical scientist and microbiome expert. Provide a precise, scientific definition for the following term.
+
+TERM TO DEFINE: "{t['term']}"
+
+DEFINITION REQUIREMENTS:
+- Use proper biomedical terminology
+- Be concise but comprehensive (15-30 words)
+- Include the biological/medical context
+- Focus on microbiome/biomedical relevance when applicable
+- Use formal scientific language
+- Specify if it's a gene, protein, metabolite, organism, etc.
+
+Definition:"""
             for t in terms
         ]
 
@@ -1734,7 +1795,22 @@ class LLMTermCorrector:
         logger.info(f"Correcting {len(terms)} terms with LLM...")
 
         prompts = [
-            f"Correct the following biomedical term to its standard canonical form. If it is already correct, output it as is.\nTerm: {t['term']}\nCorrected Term:"
+            f"""You are a specialized biomedical terminology expert. Your goal is to extract and correct ONLY high-value, specific terms relevant to a Microbiome Common Data Model (CDM).
+
+TERM TO CORRECT: "{t['term']}"
+
+CORRECTION RULES:
+1. Extract ONLY specific biomedical terms: specific organisms (species/genus), specific metabolites/chemicals, specific genes/proteins
+2. Fix typos, spacing, and formatting issues
+3. Standardize medical/biological terminology
+4. Expand abbreviations to full form when appropriate
+5. Remove junk text, numbers, symbols that aren't part of the term
+6. Separate multiple distinct terms with semicolons if they're incorrectly combined
+7. IGNORE generic scientific terms (e.g., "study", "analysis", "data", "results", "significant", "correlation")
+
+Valid Categories: ORGANISM, GENE, PROTEIN, CHEMICAL, DISEASE, DNA_RNA, CELL_TYPE, BIOINFO_TOOL, GENOMICS, CLINICAL, SCIENTIFIC_TERM
+
+Corrected Term:"""
             for t in terms
         ]
 
@@ -1788,6 +1864,58 @@ class LLMTermCorrector:
                 # Optionally update the main term, but safer to keep as metadata first
                 # term['term'] = correction 
             
+        return terms
+
+    def correct_entity_types(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Correct entity types using Mistral 7B with specialized microbiome prompts"""
+        if not terms:
+            return terms
+
+        # Prepare batch of items for entity type correction
+        items = [t['term'] for t in terms]
+
+        prompt = f"""You are a specialized biomedical terminology expert for a Microbiome Common Data Model (CDM).
+
+Correct the entity types for these terms according to microbiome/biomedical standards.
+
+Valid Types: ORGANISM, GENE, PROTEIN, CHEMICAL, DISEASE, DNA_RNA, CELL_TYPE, BIOINFO_TOOL, GENOMICS, CLINICAL, SCIENTIFIC_TERM
+
+Items to classify:
+{chr(10).join(f"{i+1}. {item}" for i, item in enumerate(items))}
+
+Return a JSON array of strings ["TYPE1", "TYPE2", ...] corresponding to each item.
+Return ONLY the JSON array."""
+
+        try:
+            if self.config.use_ollama and hasattr(self, 'ollama_client'):
+                response = self.ollama_client.generate_text(
+                    prompt,
+                    temperature=0.1,
+                    max_tokens=200
+                )
+
+                if response:
+                    import json
+                    try:
+                        # Parse JSON response
+                        types_array = json.loads(response.strip())
+                        if isinstance(types_array, list) and len(types_array) == len(terms):
+                            # Update entity types
+                            for term, new_type in zip(terms, types_array):
+                                if new_type in ['ORGANISM', 'GENE', 'PROTEIN', 'CHEMICAL', 'DISEASE', 'DNA_RNA', 'CELL_TYPE', 'BIOINFO_TOOL', 'GENOMICS', 'CLINICAL', 'SCIENTIFIC_TERM']:
+                                    term['corrected_label'] = new_type
+                                else:
+                                    term['corrected_label'] = term.get('label', 'ENTITY')
+                        else:
+                            logger.warning(f"Invalid response format for entity types: {response}")
+                    except json.JSONDecodeError:
+                        logger.warning(f"Failed to parse entity types JSON: {response}")
+                else:
+                    logger.warning("No response for entity type correction")
+
+        except Exception as e:
+            logger.error(f"Entity type correction failed: {e}")
+
         return terms
 
 class UMLSMapper:
@@ -1871,7 +1999,7 @@ class OMOPMapper:
     def __init__(self, config: PipelineConfig):
         self.config = config
         # Assume vocab is in a 'vocab' sibling directory to input or data/vocab
-        self.vocab_dir = Path(config.input_dir).parent / "vocab" 
+        self.vocab_dir = Path(config.input_dir).parent / "vocab"
         if not self.vocab_dir.exists():
              self.vocab_dir = Path("data/vocab")
 
@@ -1879,45 +2007,66 @@ class OMOPMapper:
         self.synonyms_df = None
         self.lookup_df = None
         self.concept_cache = {}
+        self.lookup_dict = {}  # Use dict for faster lookup
 
     def load_vocab(self):
-        """Load OMOP vocabulary files and build lookup table"""
+        """Load OMOP vocabulary files and build optimized lookup table"""
         from pathlib import Path
         concept_file = Path("/home/jkalra/thesis/omop_vocab/CONCEPT.csv")
         synonym_file = Path("/home/jkalra/thesis/omop_vocab/CONCEPT_SYNONYM.csv")
-        
+
         if not concept_file.exists():
             logger.warning(f"OMOP CONCEPT.csv not found at {concept_file}. OMOP mapping disabled.")
             return
 
-        logger.info("Loading OMOP vocabulary...")
+        logger.info("Loading OMOP vocabulary (optimized)...")
         try:
             import pandas as pd
-            
-            # Load Concepts
-            self.concepts_df = pd.read_csv(
-                concept_file, sep='\t', 
+
+            # Load and filter concepts in chunks to avoid memory issues
+            logger.info("Loading standard concepts...")
+            chunks = []
+            chunk_size = 50000
+            for chunk in pd.read_csv(
+                concept_file, sep='\t',
                 usecols=['concept_id', 'concept_name', 'domain_id', 'vocabulary_id', 'standard_concept', 'concept_code'],
-                dtype=str, na_filter=False
-            )
-            # Filter for standard concepts only
-            self.concepts_df = self.concepts_df[self.concepts_df['standard_concept'] == 'S']
+                dtype=str, na_filter=False, chunksize=chunk_size
+            ):
+                # Filter for standard concepts only
+                standard_chunk = chunk[chunk['standard_concept'] == 'S']
+                if not standard_chunk.empty:
+                    chunks.append(standard_chunk)
+
+            self.concepts_df = pd.concat(chunks, ignore_index=True)
             logger.info(f"Loaded {len(self.concepts_df)} standard concepts")
 
-            # Load Synonyms if available
+            # Load synonyms in chunks and filter efficiently
             if synonym_file.exists():
-                self.synonyms_df = pd.read_csv(
+                logger.info("Loading synonyms...")
+                valid_concept_ids = set(self.concepts_df['concept_id'])
+                synonym_chunks = []
+
+                for chunk in pd.read_csv(
                     synonym_file, sep='\t',
                     usecols=['concept_id', 'concept_synonym_name'],
-                    dtype=str, na_filter=False
-                )
-                logger.info(f"Loaded {len(self.synonyms_df)} synonyms")
+                    dtype=str, na_filter=False, chunksize=chunk_size
+                ):
+                    # Filter for valid concept IDs only
+                    valid_chunk = chunk[chunk['concept_id'].isin(valid_concept_ids)]
+                    if not valid_chunk.empty:
+                        synonym_chunks.append(valid_chunk)
+
+                if synonym_chunks:
+                    self.synonyms_df = pd.concat(synonym_chunks, ignore_index=True)
+                    logger.info(f"Loaded {len(self.synonyms_df)} valid synonyms")
+                else:
+                    self.synonyms_df = pd.DataFrame(columns=['concept_id', 'concept_synonym_name'])
             else:
                 self.synonyms_df = pd.DataFrame(columns=['concept_id', 'concept_synonym_name'])
 
-            self._build_lookup_table()
-            self._build_concept_cache()
-            
+            # Build optimized lookup
+            self._build_optimized_lookup()
+
         except ImportError:
             logger.warning("pandas not installed. OMOP mapping disabled.")
         except Exception as e:
@@ -1931,29 +2080,65 @@ class OMOPMapper:
         term = re.sub(r'\s+', ' ', term).strip()
         return term
 
-    def _build_lookup_table(self):
-        """Build lookup table for fast matching"""
+    def _build_optimized_lookup(self):
+        """Build optimized lookup dictionary for fast matching"""
         import pandas as pd
-        logger.info("Building OMOP lookup table...")
-        
-        # Concepts
-        concepts = self.concepts_df[['concept_id', 'concept_name']].copy()
-        concepts['term_clean'] = concepts['concept_name'].apply(self._preprocess_term)
-        
-        # Synonyms (filter to standard concepts)
-        valid_ids = set(self.concepts_df['concept_id'])
-        synonyms = self.synonyms_df[self.synonyms_df['concept_id'].isin(valid_ids)].copy()
-        synonyms['term_clean'] = synonyms['concept_synonym_name'].apply(self._preprocess_term)
-        
-        # Combine
-        self.lookup_df = pd.concat([
-            concepts[['concept_id', 'term_clean']],
-            synonyms[['concept_id', 'term_clean']]
-        ], ignore_index=True)
-        
-        self.lookup_df = self.lookup_df[self.lookup_df['term_clean'] != '']
-        self.lookup_df.drop_duplicates(['term_clean', 'concept_id'], inplace=True)
-        logger.info(f"Lookup table built with {len(self.lookup_df)} entries")
+        logger.info("Building optimized OMOP lookup dictionary...")
+
+        # Clear existing lookup
+        self.lookup_dict = {}
+
+        # Process concepts
+        logger.info("Processing concept names...")
+        for idx, row in self.concepts_df.iterrows():
+            concept_id = row['concept_id']
+            concept_name = row['concept_name']
+
+            # Add original concept name
+            clean_name = self._preprocess_term(concept_name)
+            if clean_name and len(clean_name) > 2:  # Skip very short terms
+                if clean_name not in self.lookup_dict:
+                    self.lookup_dict[clean_name] = []
+                self.lookup_dict[clean_name].append({
+                    'concept_id': concept_id,
+                    'concept_name': concept_name,
+                    'domain_id': row.get('domain_id', ''),
+                    'vocabulary_id': row.get('vocabulary_id', ''),
+                    'concept_code': row.get('concept_code', ''),
+                    'match_type': 'exact'
+                })
+
+        # Process synonyms efficiently
+        if not self.synonyms_df.empty:
+            logger.info("Processing synonyms...")
+            valid_concept_ids = set(self.concepts_df['concept_id'])
+
+            for idx, row in self.synonyms_df.iterrows():
+                concept_id = row['concept_id']
+                synonym_name = row['concept_synonym_name']
+
+                if concept_id in valid_concept_ids:
+                    clean_synonym = self._preprocess_term(synonym_name)
+                    if clean_synonym and len(clean_synonym) > 2:
+                        if clean_synonym not in self.lookup_dict:
+                            self.lookup_dict[clean_synonym] = []
+
+                        # Get concept details from concepts_df
+                        concept_info = self.concepts_df[self.concepts_df['concept_id'] == concept_id].iloc[0]
+                        self.lookup_dict[clean_synonym].append({
+                            'concept_id': concept_id,
+                            'concept_name': concept_info['concept_name'],
+                            'domain_id': concept_info.get('domain_id', ''),
+                            'vocabulary_id': concept_info.get('vocabulary_id', ''),
+                            'concept_code': concept_info.get('concept_code', ''),
+                            'match_type': 'synonym'
+                        })
+
+        logger.info(f"Optimized lookup built with {len(self.lookup_dict)} terms")
+
+    def _build_lookup_table(self):
+        """Legacy method - redirect to optimized version"""
+        self._build_optimized_lookup()
 
     def _build_concept_cache(self):
         """Cache concept details for quick access"""
@@ -1961,12 +2146,13 @@ class OMOPMapper:
             self.concept_cache[row['concept_id']] = row.to_dict()
 
     def map_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Map terms using exact and fuzzy matching"""
-        if self.lookup_df is None:
+        """Map terms using optimized exact and fuzzy matching"""
+        if not self.lookup_dict:
+            logger.warning("OMOP lookup not loaded. Skipping OMOP mapping.")
             return terms
-            
-        logger.info(f"Mapping {len(terms)} terms to OMOP...")
-        
+
+        logger.info(f"Mapping {len(terms)} terms to OMOP (optimized)...")
+
         try:
             from rapidfuzz import process, fuzz
             HAS_RAPIDFUZZ = True
@@ -1974,134 +2160,151 @@ class OMOPMapper:
             HAS_RAPIDFUZZ = False
             logger.warning("rapidfuzz not installed. Fuzzy OMOP matching disabled.")
 
-        # Prepare terms
+        # Prepare terms for batch processing
         term_map = {t['term']: t for t in terms}
         unique_terms = list(term_map.keys())
-        
-        for term_str in unique_terms:
+        mapped_count = 0
+
+        # Create lookup keys list for fuzzy matching
+        lookup_keys = list(self.lookup_dict.keys())
+
+        for i, term_str in enumerate(unique_terms):
+            if i % 100 == 0:
+                logger.info(f"  Progress: {i}/{len(unique_terms)} terms processed ({mapped_count} mapped)")
+
             clean_term = self._preprocess_term(term_str)
-            if not clean_term: continue
-            
+            if not clean_term or len(clean_term) < 3:
+                continue
+
             matches = []
-            
-            # 1. Exact Match
-            exact_matches = self.lookup_df[self.lookup_df['term_clean'] == clean_term]
-            for _, row in exact_matches.iterrows():
-                cid = row['concept_id']
-                concept = self.concept_cache.get(cid)
-                if concept:
+
+            # 1. Exact Match (optimized dictionary lookup)
+            if clean_term in self.lookup_dict:
+                for match_info in self.lookup_dict[clean_term]:
                     matches.append({
-                        'concept_id': cid,
-                        'name': concept['concept_name'],
-                        'domain': concept['domain_id'],
+                        'concept_id': match_info['concept_id'],
+                        'name': match_info['concept_name'],
+                        'domain': match_info.get('domain_id', ''),
+                        'vocabulary_id': match_info.get('vocabulary_id', ''),
+                        'concept_code': match_info.get('concept_code', ''),
                         'score': 100.0,
-                        'type': 'EXACT'
+                        'type': 'EXACT',
+                        'match_type': match_info.get('match_type', 'exact')
                     })
-            
+
             # 2. Fuzzy Match (if no exact match and rapidfuzz available)
-            if not matches and HAS_RAPIDFUZZ:
-                # Get candidates with similar length
-                # Optimization: Filter lookup_df by length first? 
-                # For standalone, we might skip full table scan if it's huge.
-                # Let's use a simplified approach: extract from unique clean terms in lookup
-                
-                # Note: This can be slow for huge vocabs. 
-                # We'll limit to top 10 candidates
-                candidates = process.extract(
-                    clean_term, 
-                    self.lookup_df['term_clean'].unique(), 
-                    scorer=fuzz.ratio, 
-                    limit=10, # Get more candidates for re-ranking
-                    score_cutoff=70 # Lower cutoff to catch semantic variants that might be fuzzy-distant
+            if not matches and HAS_RAPIDFUZZ and len(clean_term) >= 4:
+                # Use rapidfuzz for efficient fuzzy matching
+                result = process.extractOne(
+                    clean_term,
+                    lookup_keys,
+                    scorer=fuzz.WRatio,
+                    score_cutoff=85  # High threshold for quality
                 )
-                
-                candidate_matches = []
-                for match_term, score, _ in candidates:
-                    # Get IDs for this term
-                    rows = self.lookup_df[self.lookup_df['term_clean'] == match_term]
-                    for _, row in rows.iterrows():
-                        cid = row['concept_id']
-                        concept = self.concept_cache.get(cid)
-                        if concept:
-                            candidate_matches.append({
-                                'concept_id': cid,
-                                'name': concept['concept_name'],
-                                'domain': concept['domain_id'],
-                                'score': score, # Fuzzy score
-                                'type': 'FUZZY',
-                                'term_clean': match_term
-                            })
 
-                # 3. Semantic Re-ranking (The "Better" Implementation)
-                # If we have candidates, let's re-rank them using Cross-Encoder if available
-                # This ensures "heart attack" matches "myocardial infarction" better than "heat attack"
-                try:
-                    from sentence_transformers import CrossEncoder
-                    # We load it here on demand or reuse if possible. 
-                    # For standalone simplicity, we'll try to load it (cached by library usually)
-                    # or check if it's already loaded in config/global.
-                    # Ideally, we'd pass it in, but let's load it safely.
-                    model_name = "cross-encoder/stsb-roberta-base"
-                    model = CrossEncoder(model_name)
-                    
-                    pairs = [[clean_term, m['name']] for m in candidate_matches]
-                    semantic_scores = model.predict(pairs)
-                    
-                    for i, m in enumerate(candidate_matches):
-                        # Combine fuzzy score (0-100) and semantic score (0-1)
-                        # Weighted average: 70% Semantic, 30% Fuzzy
-                        sem_score = semantic_scores[i] * 100
-                        combined_score = (sem_score * 0.7) + (m['score'] * 0.3)
-                        m['score'] = combined_score
-                        m['type'] = 'SEMANTIC_FUZZY'
-                        
-                    # Re-sort by new combined score
-                    candidate_matches.sort(key=lambda x: x['score'], reverse=True)
-                    
-                except ImportError:
-                    # No sentence-transformers, stick to fuzzy sort
-                    candidate_matches.sort(key=lambda x: x['score'], reverse=True)
-                except Exception as e:
-                    logger.warning(f"Semantic re-ranking failed: {e}")
-                    candidate_matches.sort(key=lambda x: x['score'], reverse=True)
+                if result:
+                    match_term, score, _ = result
+                    if score >= 85 and match_term in self.lookup_dict:
+                        # Take the first (best) match from fuzzy search
+                        match_info = self.lookup_dict[match_term][0]
+                        matches.append({
+                            'concept_id': match_info['concept_id'],
+                            'name': match_info['concept_name'],
+                            'domain': match_info.get('domain_id', ''),
+                            'vocabulary_id': match_info.get('vocabulary_id', ''),
+                            'concept_code': match_info.get('concept_code', ''),
+                            'score': score,
+                            'type': 'FUZZY',
+                            'match_type': match_info.get('match_type', 'fuzzy')
+                        })
 
-                matches = candidate_matches
-
-            # Attach best matches to term
+            # Update term with matches
             if matches:
-                # Sort by score
-                matches.sort(key=lambda x: x['score'], reverse=True)
-                term_map[term_str]['mappings'] = term_map[term_str].get('mappings', {})
-                term_map[term_str]['mappings']['omop'] = matches[:3] # Top 3
+                term_obj = term_map[term_str]
+                term_obj['omop_mappings'] = matches[:3]  # Keep top 3 matches
+                mapped_count += 1
 
-        return list(term_map.values())
+        logger.info(f"OMOP mapping complete: {mapped_count}/{len(unique_terms)} terms mapped")
+        return terms
 
 
 class ComprehensiveMapper:
-    """Unified Mapper for UMLS, BioPortal, and OMOP"""
-    
+    """Unified Mapper for UMLS, BioPortal, and OMOP (optional)"""
+
     # API Endpoints
     BIOPORTAL_API = "https://data.bioontology.org/search"
     OLS_API = "https://www.ebi.ac.uk/ols/api/search"
-    
+
     def __init__(self, config: PipelineConfig):
         self.config = config
-        self.omop_mapper = OMOPMapper(config)
-        self.omop_mapper.load_vocab()
+        self.omop_mapper = None
+        self.umls_mapper = None
+
+        # Only load OMOP if explicitly requested and not problematic
+        if config.map_omop:
+            try:
+                self.omop_mapper = OMOPMapper(config)
+                self.omop_mapper.load_vocab()
+                logger.info("OMOP mapper loaded successfully")
+            except Exception as e:
+                logger.warning(f"Failed to load OMOP mapper (skipping): {e}")
+                self.omop_mapper = None
+
+        # Load UMLS mapper
+        if config.map_umls:
+            try:
+                self.umls_mapper = UMLSMapper(config)
+                logger.info("UMLS mapper loaded successfully")
+            except Exception as e:
+                logger.warning(f"Failed to load UMLS mapper (skipping): {e}")
+                self.umls_mapper = None
         
     def map_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Run all mapping strategies"""
-        
-        # 1. OMOP Mapping
-        terms = self.omop_mapper.map_terms(terms)
-        
-        # 2. BioPortal/OLS API Mapping
+        """Run all mapping strategies (excluding OMOP by default)"""
+
+        logger.info("Starting comprehensive mapping (UMLS + BioPortal/OLS)...")
+
+        # 1. OMOP Mapping (only if successfully loaded)
+        if self.omop_mapper:
+            try:
+                terms = self.omop_mapper.map_terms(terms)
+            except Exception as e:
+                logger.warning(f"OMOP mapping failed (skipping): {e}")
+        else:
+            logger.info("Skipping OMOP mapping (disabled or failed to load)")
+
+        # 2. UMLS Mapping (use UMLSMapper)
+        if self.umls_mapper:
+            try:
+                terms = self.umls_mapper.map_terms(terms)
+                # Convert UMLS mappings to expected format
+                for term in terms:
+                    if 'mappings' in term and 'umls' in term['mappings']:
+                        term['umls_mappings'] = term['mappings']['umls']
+                        # Convert to expected format
+                        for umls_map in term['umls_mappings']:
+                            umls_map['concept_id'] = umls_map.pop('cui', '')
+                            umls_map['concept_name'] = umls_map.pop('name', '')
+                            umls_map['semantic_types'] = umls_map.pop('types', [])
+                            umls_map['score'] = float(umls_map.get('score', 0)) * 100  # Convert to percentage
+            except Exception as e:
+                logger.warning(f"UMLS mapping failed: {e}")
+        else:
+            logger.info("Skipping UMLS mapping (disabled or failed to load)")
+
+        # 3. BioPortal/OLS API Mapping
         if self.config.bioportal_api_key:
-            terms = self._map_bioportal(terms)
+            try:
+                terms = self._map_bioportal(terms)
+            except Exception as e:
+                logger.warning(f"BioPortal mapping failed: {e}")
         else:
             # Fallback to OLS if no BioPortal key
-            terms = self._map_ols(terms)
-            
+            try:
+                terms = self._map_ols(terms)
+            except Exception as e:
+                logger.warning(f"OLS mapping failed: {e}")
+
         return terms
         
     def _map_bioportal(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -2305,20 +2508,27 @@ class BioMistralValidator:
         prompts = []
         for t in terms_to_validate:
             term = t['term']
-            prompt = f"""
-            Task: Verify if the following term is a valid, specific scientific concept relevant to microbiome, biomedical, or clinical research.
-            Term: "{term}"
-            
-            Criteria:
-            - Must be a specific biological entity, chemical, disease, method, or concept.
-            - REJECT authors, researchers, or people's names (e.g., "Smith J", "Brown PO").
-            - REJECT citations, references, or bibliographical info (e.g., "et al", "2015;12:1656").
-            - REJECT affiliations, universities, or locations (e.g., "Department of Biology").
-            - Reject generic words (e.g., "study", "result", "high").
-            - Reject incoherent fragments.
-            
-            Answer (Yes/No):
-            """
+            prompt = f"""You are a specialized biomedical research curator. Evaluate if this term should be kept in a high-quality microbiome/biomedical dataset for a Microbiome Common Data Model (CDM).
+
+TERM TO EVALUATE: "{term}"
+
+EVALUATION CRITERIA:
+✅ KEEP: Valid biological entities (genes, proteins, bacteria, metabolites, diseases)
+✅ KEEP: Medical procedures, tests, treatments, methodologies
+✅ KEEP: Anatomical terms, biological processes, pathways
+✅ KEEP: Chemical compounds, drugs, supplements
+✅ KEEP: Specific organisms (species/genus level), taxonomic groups
+
+❌ REJECT: Author names, citations, references (e.g., "Smith J", "et al 2015")
+❌ REJECT: University names, departments, institutions, locations
+❌ REJECT: Generic scientific words (e.g., "study", "result", "significant", "control", "correlation")
+❌ REJECT: File names, sequences, random characters, measurement units alone
+❌ REJECT: Incomplete phrases, sentence fragments, formatting artifacts
+
+CRITICAL: Aim for HIGH PRECISION. Target only the most valuable, specific entities.
+
+DECISION (Yes/No):
+REASON (brief):"""
             prompts.append(prompt)
 
         # Run batch inference
@@ -2414,15 +2624,60 @@ class GlobalPipelineProcessor:
         self.output_path = Path(config.output_dir)
         self.output_path.mkdir(parents=True, exist_ok=True)
 
-        # PRELOAD ALL MODELS ONCE (MASSIVE SPEEDUP!)
-        logger.info("🚀 Preloading all spaCy models once...")
+        # OPTIMIZED: Lazy loading + memory management
+        logger.info("🚀 Setting up optimized pipeline with lazy model loading...")
         self.model_cache = {}
-        for model_name in self.config.models_to_use:
+        self.files_processed = 0
+
+        # Import for memory management
+        try:
+            import gc
+            import psutil
+            self.gc = gc
+            self.psutil = psutil
+        except ImportError:
+            logger.warning("⚠️ Memory management modules not available")
+            self.gc = None
+            self.psutil = None
+
+        # Initialize components once (no models loaded yet)
+        self.deduplicator = None
+        self.term_corrector = None
+        self.mapper = None
+        self.umls_mapper = None
+        self.def_generator = None
+        self.validator = None
+        self.term_ranker = None
+
+    def _cleanup_memory(self):
+        """OPTIMIZED: Aggressive memory cleanup"""
+        if self.gc:
+            self.gc.collect()
+
+        # Clear GPU cache if available
+        try:
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+        except:
+            pass
+
+    def _check_memory_usage(self):
+        """OPTIMIZED: Check memory and cleanup if needed"""
+        if self.psutil:
+            memory_gb = self.psutil.Process().memory_info().rss / 1024 / 1024 / 1024
+            if memory_gb > self.config.max_memory_gb:
+                logger.warning(f"⚠️ High memory usage: {memory_gb:.1f}GB - Running cleanup")
+                self._cleanup_memory()
+
+    def _load_model_lazy(self, model_name: str):
+        """OPTIMIZED: Load model only when needed"""
+        if model_name not in self.model_cache:
+            logger.info(f"   Loading {model_name} (lazy)...")
             try:
-                logger.info(f"   Loading {model_name}...")
                 model_config = PipelineConfig(
-                    input_dir=config.input_dir,
-                    output_dir=config.output_dir,
+                    input_dir=self.config.input_dir,
+                    output_dir=self.config.output_dir,
                     spacy_model=model_name
                 )
                 extractor = TermsExtractor(model_config)
@@ -2431,19 +2686,18 @@ class GlobalPipelineProcessor:
             except Exception as e:
                 logger.error(f"   ❌ Failed to load {model_name}: {e}")
                 self.model_cache[model_name] = None
+        return self.model_cache.get(model_name)
 
-        # Initialize components once
-        self.deduplicator = Deduplicator(config)
-
-        # Optional components for later stages
-        self.term_corrector = LLMTermCorrector(config) if config.correct_terms else None
-        self.mapper = ComprehensiveMapper(config) if (config.map_omop or config.map_bioportal) else None
-        self.umls_mapper = UMLSMapper(config) if config.map_umls else None
-        self.def_generator = DefinitionGenerator(config) if config.generate_definitions else None
-        self.validator = BioMistralValidator(config) if config.validate_biomistral else None
-
-        # Initialize TermRanker for advanced scoring
-        self.term_ranker = TermRanker(config, self.deduplicator.semantic_model)
+    def _initialize_components(self):
+        """OPTIMIZED: Initialize components only when needed"""
+        if self.deduplicator is None:
+            self.deduplicator = Deduplicator(self.config)
+            self.term_corrector = LLMTermCorrector(self.config) if self.config.correct_terms else None
+            self.mapper = ComprehensiveMapper(self.config) if (self.config.map_omop or self.config.map_bioportal) else None
+            self.umls_mapper = UMLSMapper(self.config) if self.config.map_umls else None
+            self.def_generator = DefinitionGenerator(self.config) if self.config.generate_definitions else None
+            self.validator = BioMistralValidator(self.config) if self.config.validate_biomistral else None
+            self.term_ranker = TermRanker(self.config, self.deduplicator.semantic_model)
 
     def extract_all_terms_from_all_files(self) -> List[Dict[str, Any]]:
         """STEP 1: Extract ALL terms from ALL models across ALL files"""
@@ -2473,13 +2727,13 @@ class GlobalPipelineProcessor:
                 logger.error(f"❌ Error reading {file_path}: {e}")
                 continue
 
-            # Extract with ALL models for this file (using cached models for MASSIVE speedup!)
+            # OPTIMIZED: Extract with lazy loading and memory management
             file_terms = []
             for model_name in self.config.models_to_use:
                 logger.info(f"   🤖 Extracting with {model_name}...")
                 try:
-                    # Use cached extractor (no loading time!)
-                    extractor = self.model_cache.get(model_name)
+                    # OPTIMIZED: Lazy load model only when needed
+                    extractor = self._load_model_lazy(model_name)
                     if extractor is None:
                         logger.warning(f"   ⚠️ Model {model_name} not available, skipping")
                         continue
@@ -2495,16 +2749,23 @@ class GlobalPipelineProcessor:
 
                     file_terms.extend(terms)
 
-                    # Cleanup to save memory
-                    del extractor
-                    import gc
-                    gc.collect()
-
                 except Exception as e:
                     logger.error(f"      ❌ Failed to run {model_name}: {e}")
 
             logger.info(f"   📊 Total terms from {file_path.name}: {len(file_terms):,}")
             all_raw_terms.extend(file_terms)
+
+            # OPTIMIZED: Memory cleanup and monitoring
+            self.files_processed += 1
+            if self.files_processed % self.config.memory_cleanup_interval == 0:
+                logger.info(f"   🧹 Running memory cleanup (file {self.files_processed})")
+                self._cleanup_memory()
+                self._check_memory_usage()
+
+            # OPTIMIZED: Smart raw terms limit for efficient processing
+            if len(all_raw_terms) >= self.config.max_raw_terms_limit:
+                logger.info(f"🎯 Smart limit reached! {len(all_raw_terms):,} raw terms - time for deduplication")
+                break
 
         logger.info(f"🎯 STEP 1 COMPLETE: Total raw terms from ALL files: {len(all_raw_terms):,}")
         return all_raw_terms
@@ -2699,8 +2960,15 @@ class GlobalPipelineProcessor:
 
         # STEP 3: Global deduplication (exact + fuzzy + semantic)
         logger.info("🔄 STEP 3: Global deduplication (exact + fuzzy + semantic)...")
+
+        # OPTIMIZED: Initialize deduplicator only when needed
+        self._initialize_components()
+
         dedup_terms = self.deduplicator.deduplicate(all_raw_terms)
         logger.info(f"   ✅ Global deduplication: {len(all_raw_terms):,} → {len(dedup_terms):,} terms")
+
+        # OPTIMIZED: Cleanup after deduplication (memory intensive)
+        self._cleanup_memory()
 
         # Save deduplicated terms
         self.save_terms_to_files(dedup_terms, "step3_deduplicated")
@@ -2957,7 +3225,7 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
     # Phase 1: Parallel Extraction (CPU Bound)
     # Phase 2: Sequential/Batched Processing (GPU/Memory Bound)
     
-    batch_size_files = 10 # Process files in chunks to manage memory and save checkpoints frequently
+    batch_size_files = 5 # OPTIMIZED: Smaller chunks for better memory management
     
     total_processed = 0
     
@@ -3443,15 +3711,18 @@ def main():
 
 
     # Select models
-    models_to_use = SCISPACY_MODELS
+    # Start with optimized models from config
+    models_to_use = ["en_core_sci_md", "en_ner_bc5cdr_md", "en_core_sci_lg"]  # Optimized 3 models
+
     if args.model and not args.run_all_models and not args.ensemble:
-        # If specific model requested (and not running all/ensemble), just use that one
-        # But for global pipeline, we usually want multiple models.
-        # If user just runs "python standalone.py", we default to en_core_sci_lg
+        # If specific model requested, just use that one
         models_to_use = [args.model]
 
-    if args.run_all_models or args.ensemble:
-         models_to_use = SCISPACY_MODELS
+    # OPTIMIZED: --ensemble now uses optimized 3 models instead of all 8
+    # Only use ALL 8 models if specifically requested with --run_all_models
+    if args.run_all_models:
+        models_to_use = SCISPACY_MODELS
+    # --ensemble will use the optimized 3 models by default
 
     logger.info(f"🚀 Starting Standalone Pipeline with Global Workflow")
     logger.info(f"Models: {models_to_use}")

@@ -25,7 +25,7 @@ module purge
 module load Miniforge3/24.1.2-0
 source "$EBROOTMINIFORGE3/etc/profile.d/conda.sh"
 module load CUDA/12.3.0
-module load ollama
+module load ollama/0.7.0
 
 # Set CUDA library paths
 export LD_LIBRARY_PATH="/opt/software/easybuild/software/CUDA/12.3.0/targets/x86_64-linux/lib:$LD_LIBRARY_PATH"
@@ -86,13 +86,13 @@ echo "LLM Model: Ollama Mistral (LOCAL - much faster!)"
 echo "GPU Memory Management: Enabled"
 echo ""
 
-# Run the pipeline with Ollama Mistral
-echo "Starting pipeline execution on CLUSTER with Ollama Mistral..."
+# OPTIMIZED: Run pipeline with optimized settings for better performance
+echo "Starting OPTIMIZED pipeline execution on CLUSTER with Ollama Mistral..."
 /home/jkalra/.conda/envs/spacy_scispacy_env/bin/python standalone_scispacy_pipeline.py \
     --input_dir "/home/jkalra/my_node_tools/Microbiome-CDM/papers_txt" \
-    --output_dir "output_full" \
+    --output_dir "output_optimized" \
     --ensemble \
-    --workers 8 \
+    --workers 2 \
     --use_ollama \
     --ollama_model "mistral:latest" \
     --ollama_base_url "http://localhost:11434" \
@@ -101,8 +101,8 @@ echo "Starting pipeline execution on CLUSTER with Ollama Mistral..."
     --map_umls \
     --map_omop \
     --map_bioportal \
-    --batch_size 8 \
-    --target_terms 10000 \
+    --batch_size 16 \
+    --target_terms 15000 \
     --fuzzy_threshold 0.85 \
     --semantic_threshold 0.90 
 
