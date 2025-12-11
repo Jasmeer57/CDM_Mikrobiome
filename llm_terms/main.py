@@ -343,27 +343,23 @@ Examples:
         logger.error(f"Failed to initialize pipeline: {e}")
         return 1
 
-    # Handle Modes
-    if args.consolidate:
-        pipeline.consolidate_results(args.input_file, args.output)
-        return 0
-
-    if args.map:
-        pipeline.apply_mappings_to_file(args.input_file)
-        return 0
-
-    if args.enrich:
-        pipeline.enrich_definitions(args.input_file)
-        return 0
-
-    # Default: Run Extraction
     # Validate input file
     input_path = Path(args.input_file)
     if not input_path.exists():
         logger.error(f"Input path not found: {input_path}")
         return 1
 
-    # Determine input files
+    # Handle Post-Processing Only Mode (JSON Input)
+    if input_path.suffix == '.json' and (args.map or args.enrich or args.consolidate):
+        if args.consolidate:
+            pipeline.consolidate_results(args.input_file, args.output)
+        if args.map:
+            pipeline.apply_mappings_to_file(args.input_file)
+        if args.enrich:
+            pipeline.enrich_definitions(args.input_file)
+        return 0
+
+    # Determine input files (Text Processing Mode)
     input_files = []
     if input_path.is_file():
         input_files = [input_path]
@@ -453,6 +449,15 @@ Examples:
     # Save aggregated results
     pipeline.save_results(all_entities, args.output, text_stats_agg)
     
+    # Post-Processing Chain (Map/Enrich on Output)
+    if args.map:
+        logger.info(f"🗺️ Applying mappings to output: {args.output}")
+        pipeline.apply_mappings_to_file(args.output)
+    
+    if args.enrich:
+        logger.info(f"📚 Enriching definitions in output: {args.output}")
+        pipeline.enrich_definitions(args.output)
+
     logger.info(f"✅ Pipeline completed. Total unique entities: {len(all_entities)}")
     return 0
 

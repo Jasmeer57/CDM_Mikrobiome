@@ -19,6 +19,7 @@ class ComprehensiveMapper:
                  use_local_omop: bool = True, omop_vocab_dir: str = None,
                  fuzzy_threshold: int = 90, max_matches: int = 5,
                  cache_mappings: bool = True, use_scispacy: bool = False):
+        logger.info("🔧 Initializing ComprehensiveMapper (FIXED VERSION)")
         self.umls_mapper = UMLSMapper(api_key=umls_api_key) if umls_api_key else None
         if use_local_omop and omop_vocab_dir:
             self.omop_mapper = OMOPLocalMapper(vocab_dir=omop_vocab_dir)
@@ -68,9 +69,9 @@ class ComprehensiveMapper:
         # 1. BioPortal Mapping
         if self.bioportal_mapper:
             try:
-                bp_results = self.bioportal_mapper.search(term)
+                bp_results = self.bioportal_mapper.map_entity(term, entity_type)
                 if bp_results:
-                    results['bioportal_mappings'] = bp_results[:self.max_matches]
+                    results['bioportal_mappings'] = [r.to_dict() for r in bp_results[:self.max_matches]]
                     results['has_any_mapping'] = True
             except Exception as e:
                 logger.warning(f"BioPortal mapping failed for {term}: {e}")
@@ -88,9 +89,9 @@ class ComprehensiveMapper:
         # 3. UMLS Mapping
         if self.umls_mapper:
             try:
-                umls_results = self.umls_mapper.map_term(term)
+                umls_results = self.umls_mapper.map_entity_to_umls(term, entity_type)
                 if umls_results:
-                    results['umls_mappings'] = [r.to_dict() for r in umls_results[:self.max_matches]]
+                    results['umls_mappings'] = [self.umls_mapper._mapping_to_dict(r) for r in umls_results[:self.max_matches]]
                     results['has_any_mapping'] = True
             except Exception as e:
                 logger.warning(f"UMLS mapping failed for {term}: {e}")
