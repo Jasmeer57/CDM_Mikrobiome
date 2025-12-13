@@ -149,7 +149,8 @@ class LLMClient:
         # Enable thinking for supported models
         if self.model in ['glm-4-flash', 'glm-4-6', 'glm-4.6']:
              # Use the object format required by ZhipuAI coding endpoint
-             kwargs['extra_body'] = {"thinking": {"type": "enabled"}}
+             # kwargs['extra_body'] = {"thinking": {"type": "enabled"}} # DISABLED to save time/tokens
+             pass
              
         return self._call_openai_compatible(prompt, max_tokens, **kwargs)
 
