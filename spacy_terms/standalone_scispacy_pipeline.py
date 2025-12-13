@@ -3,8 +3,10 @@
 Standalone Scientific Term Extraction Pipeline (SciSpaCy Version)
 =================================================================
 
+
 A single-file, portable implementation of the advanced scientific term extraction pipeline.
 Combines extraction, deduplication, and mapping into one robust script.
+
 
 Features:
 - **Extraction**: Uses sciSpaCy models (default: en_core_sci_lg)
@@ -13,9 +15,11 @@ Features:
 - **Mapping**: UMLS/BioPortal API integration (graceful fallback)
 - **Robustness**: Handles missing keys/models without crashing
 
+
 Usage:
     python standalone_scispacy_pipeline.py --input_dir data --output_dir output
 """
+
 
 import os
 import sys
@@ -34,22 +38,27 @@ import concurrent.futures
 import multiprocessing
 from functools import partial
 
+
 try:
     import torch
 except ImportError:
     torch = None
+
 
 try:
     import numpy as np
 except ImportError:
     np = None
 
+
 try:
     from sklearn.feature_extraction.text import TfidfVectorizer
 except ImportError:
     TfidfVectorizer = None
 
+
 # --- Configuration ---
+
 
 @dataclass
 class PipelineConfig:
@@ -58,10 +67,11 @@ class PipelineConfig:
     output_dir: str = "./output"
     max_files: int = 100
     
-    # Global Pipeline Settings - OPTIMIZED: Use 3 best models
-    models_to_use: List[str] = field(default_factory=lambda: ["en_core_sci_md", "en_ner_bc5cdr_md", "en_core_sci_lg"])
+    # Global Pipeline Settings - ALL AVAILABLE SCISPACY MODELS
+    models_to_use: List[str] = field(default_factory=lambda: ["en_core_sci_sm", "en_core_sci_md", "en_core_sci_lg", "en_ner_bc5cdr_md", "en_ner_bionlp13cg_md", "en_ner_jnlpba_md", "en_ner_craft_md"])
     target_final_terms: int = 6000  # Smart target based on 100k raw terms
     max_raw_terms_limit: int = 100000  # Maximum raw terms for efficient processing (1 lakh)
+
 
     # Extraction
     spacy_model: str = "en_core_sci_md"  # Faster default model
@@ -75,6 +85,7 @@ class PipelineConfig:
     bioportal_api_key: Optional[str] = os.getenv("BIOPORTAL_API_KEY")
     umls_api_key: Optional[str] = os.getenv("UMLS_API_KEY")
 
+
     # Advanced Features
     generate_definitions: bool = False
     correct_terms: bool = False
@@ -86,10 +97,12 @@ class PipelineConfig:
     definition_model: str = "BioMistral/BioMistral-7B" # Can be BioBERT if user insists (but won't work well for gen)
     correction_model: str = "BioMistral/BioMistral-7B"
 
+
     # Ollama Settings
     use_ollama: bool = False  # Use Ollama instead of HuggingFace models
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "mistral:latest"  # Default Mistral model in Ollama
+
 
     # Validation
     validate_biomistral: bool = False
@@ -97,13 +110,16 @@ class PipelineConfig:
     load_4bit: bool = False
     batch_size: int = 32  # Batch size for GPU inference
 
+
     # Execution - OPTIMIZED: Better memory management
     workers: int = 2  # Increased to 2 for better parallelism
     checkpoint_file: str = "processed_files_checkpoint.json"
     memory_cleanup_interval: int = 5  # Cleanup every 5 files
     max_memory_gb: int = 10  # Memory limit
 
+
 # --- Logging Setup ---
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -112,19 +128,24 @@ logging.basicConfig(
 )
 logger = logging.getLogger("SciTermPipeline")
 
+
 # --- Ollama Client ---
+
 
 class OllamaClient:
     """Simple Ollama client for LLM inference"""
+
 
     def __init__(self, base_url: str = "http://localhost:11434", model: str = "mistral:latest"):
         self.base_url = base_url.rstrip('/')
         self.model = model
 
+
     def _call_ollama(self, prompt: str, temperature: float = 0.1, max_tokens: int = 512) -> Optional[str]:
         """Call Ollama API"""
         try:
             import requests
+
 
             url = f"{self.base_url}/api/generate"
             payload = {
@@ -137,6 +158,7 @@ class OllamaClient:
                 }
             }
 
+
             response = requests.post(url, json=payload, timeout=60)
             if response.status_code == 200:
                 result = response.json()
@@ -145,13 +167,16 @@ class OllamaClient:
                 logger.error(f"Ollama API error: {response.status_code} - {response.text}")
                 return None
 
+
         except Exception as e:
             logger.error(f"Ollama call failed: {e}")
             return None
 
+
     def generate_text(self, prompt: str, temperature: float = 0.1, max_tokens: int = 512) -> Optional[str]:
         """Generate text using Ollama"""
         return self._call_ollama(prompt, temperature, max_tokens)
+
 
     def check_connection(self) -> bool:
         """Check if Ollama is accessible"""
@@ -162,7 +187,9 @@ class OllamaClient:
         except:
             return False
 
+
 # --- Constants & Filters ---
+
 
 # Available Models - OPTIMIZED: Use only 3 most effective models for speed
 SCISPACY_MODELS = [
@@ -170,6 +197,7 @@ SCISPACY_MODELS = [
     "en_ner_bc5cdr_md",      # Best biomedical entities
     "en_core_sci_lg"         # High accuracy for verification
 ]
+
 
 # Safe synonyms that don't lose clinical specificity
 SAFE_SYNONYM_MAP = {
@@ -182,7 +210,9 @@ SAFE_SYNONYM_MAP = {
     "c. difficile": "clostridioides difficile",
 }
 
+
 # --- Robust Filtering Constants (Ported from terms_extractor.py) ---
+
 
 # P1-P28 Filters
 FILTER_PATTERNS = {
@@ -223,6 +253,7 @@ FILTER_PATTERNS = {
     'P35': r'\b(?:eds|ed)\.\b'  # Editors
 }
 
+
 # Enhanced Noise Blocklist
 NOISE_TERMS = {
     "lorem", "ipsum", "introduction", "methods", "results", "discussion",
@@ -253,6 +284,7 @@ NOISE_TERMS = {
     "http", "https", "www", "com", "org", "net", "gov", "edu"
 }
 
+
 # Geographic Blocklist
 GEO_BLOCKLIST = {
     "usa", "uk", "united states", "united kingdom", "china", "japan", "germany",
@@ -264,17 +296,46 @@ GEO_BLOCKLIST = {
     "division", "laboratory", "foundation", "association", "society"
 }
 
+
+# High-value biomedical keywords (must contain at least one)
 # High-value biomedical keywords (must contain at least one)
 BIOMEDICAL_KEYWORDS = {
-    'microbi', 'bacteri', 'gene', 'dna', 'rna', 'protein', 'enzyme', 'cell',
-    'disease', 'infect', 'immun', 'metabol', 'pathogen', 'clinic', 'medic',
-    'therap', 'antibiot', 'resistan', 'sequenc', 
-    'acid', 'fatty', 'chain', 'synthesis', 'receptor', 'pathway',
-    'genome', 'genom', 'transcript', 'express', 'mutat', 'amplif',
-    'phylum', 'class', 'order', 'family', 'genus', 'species', 'strain',
-    'diversity', 'abundance', 'community', 'population', 'phylogen',
-    '16s', 'rrna', 'otu', 'asv', 'pcr'
+    # Microbiology/Bacteria
+    'microbi', 'microbe', 'bacter', 'microbiota', 'microbiome',
+    'pathogen', 'commensal', 'symbio', 'probiot', 'prebiot',
+    'coccus', 'bacillus', 'bacterium', 'virus', 'viral', 'phage',
+
+
+    # Microbial Groups/Genera (CRITICAL for recall)
+    'actinobacteri', 'proteobacteri', 'bacteroidet', 'firmicut',
+    'firmicutes', 'bacteroidetes', 'proteobacteria', 'actinobacteria',
+    'enterobacteri', 'bifidobacteri', 'lactobacillus', 'eubacteri',
+    'clostridi', 'streptococc', 'escherichi', 'salmonell',
+    'bacteroides', 'alistipes', 'blautia', 'faecalibacterium',
+    'ruminococcus', 'prevotella', 'akkermansia', 'roseburia',
+
+
+    # Genetics/Molecular Biology
+    'gene', 'dna', 'rna', 'protein', 'enzyme', 'genome', 'genom',
+    'transcript', 'express', 'mutat', 'sequenc', 'amplif',
+    'polymeras', 'primer', 'nucleotid', 'peptide', 'lipid',
+
+
+    # Health/Medical Context
+    'clinical', 'medical', 'health', 'disease', 'therapeut',
+    'antibiot', 'antimicrobial', 'resistance', 'susceptibilit',
+    'infection', 'inflammation', 'immune', 'immunolog',
+    'metabol', 'catabol', 'anabol', 'ferment', 'oxidation',
+    
+    # Taxonomy
+    'phylum', 'class', 'order', 'family', 'genus', 'species',
+    'strain', 'isolat', 'culture', 'colony', 
+
+
+    # Analysis
+    '16s', 'rrna', 'otu', 'asv', 'pcr', 'sample', 'specimen'
 }
+
 
 # CDM Essential Domains
 CDM_KEYWORDS = {
@@ -283,12 +344,14 @@ CDM_KEYWORDS = {
     'clinical', 'medical', 'health', 'study', 'research'
 }
 
+
 # Entity Refinement Rules
 ENTITY_REFINEMENT_RULES = {
     'ORGANISM': [r'\b(bacter|coccus|sp\.|spp\.|phage|virus)\b', r'[A-Z][a-z]+ [a-z]+'],
     'DISEASE': [r'\b(disease|syndrome|infection|itis|osis)\b'],
     'CHEMICAL': [r'\b(acid|peptide|protein|enzyme|lipid|ol|ate)\b'],
 }
+
 
 # Invalid Regex Patterns (Advanced)
 INVALID_PATTERNS = [
@@ -306,8 +369,21 @@ INVALID_PATTERNS = [
     re.compile(r'.*et\s+al\.\W*$', re.I),
     re.compile(r'^[A-Z][a-z]+,\s*[A-Z]\.\W*'),
     re.compile(r'.*[,:;]\W*$'),
-    re.compile(r'^\W*(and|or|the|but|for|with|from)\W*$', re.I)
+    re.compile(r'^\W*(and|or|the|but|for|with|from)\W*$', re.I),
+    re.compile(r'.*[©®™].*'), # Copyright/Trademark symbols
+    re.compile(r'^\\d+[a-z]+.*'), # Starts with digit then letter (e.g. 5experimental)
+    re.compile(r'.*open forum.*', re.I),
+    re.compile(r'.*experimental therapeutics.*', re.I),
+    # [NEW] Citation/Year noise (e.g., "microbiol 2018", "et al 2016")
+    re.compile(r'.*\s(19|20)\d{2}[a-z]?[\W]*$', re.I),
+    # [NEW] Dangling punctuation/brackets (e.g., "disease [", "] bacteria")
+    re.compile(r'.*[\[\]\(\)].*'), 
+    # [NEW] Leading numbers (e.g., "1infectious") - simplified
+    re.compile(r'^\d+.*'),
+    # [NEW] Author names (simple heuristic: "name initial")
+    re.compile(r'^[a-z]+ [a-z]{1,2}$', re.I)
 ]
+
 
 class ContextualCleaner:
     """Cleans terms based on context (Fixing OCR errors like newlines/hyphens)"""
@@ -346,10 +422,13 @@ class ContextualCleaner:
             cleaned.append(t)
         return cleaned
 
+
 # --- Domain Logic (Ported from old.py) ---
+
 
 class MicrobiomeGoldStandardScorer:
     """Gold standard scoring for microbiome terms (Ported from old.py)"""
+
 
     def __init__(self):
         self.gold_terms = self._load_gold_standard_terms()
@@ -359,6 +438,7 @@ class MicrobiomeGoldStandardScorer:
             for term, confidence in terms.items()
         }
         self.gold_term_keys = list(self.flat_terms.keys())
+
 
     def _load_gold_standard_terms(self) -> Dict[str, Dict[str, float]]:
         """Load curated microbiome terms with confidence scores."""
@@ -485,14 +565,17 @@ class MicrobiomeGoldStandardScorer:
             }
         }
 
+
     def get_gold_score(self, term: str) -> Tuple[bool, Optional[str], float]:
         """Get gold standard score for a term, with fuzzy matching fallback."""
         term_lower = term.lower().strip()
+
 
         # Exact match first
         if term_lower in self.flat_terms:
             category, base_confidence = self.flat_terms[term_lower]
             return True, category, base_confidence
+
 
         # Fuzzy matching fallback
         try:
@@ -508,10 +591,13 @@ class MicrobiomeGoldStandardScorer:
         except ImportError:
             pass
 
+
         return False, None, 0.0
+
 
 class MicrobiomeSemanticFilter:
     """Semantic filtering optimized for microbiome terms (Better Implementation using SentenceTransformer)"""
+
 
     def __init__(self, semantic_model=None, seed_terms: List[str] = None):
         self.model = semantic_model
@@ -528,12 +614,14 @@ class MicrobiomeSemanticFilter:
         self.seed_embeddings = None
         self._precompute_embeddings()
 
+
         self.microbiome_keywords = {
             'microb', 'bacteri', 'gut', 'intestin', 'flora', 'probiotic',
             'prebiotic', 'dysbiosis', 'metabolit', 'scfa', 'butyrate',
             'lactobacillus', 'bifidobacterium', 'clostridium', 'bacteroides',
             'firmicutes', 'bacteroidetes', 'actinobacteria'
         }
+
 
     def _precompute_embeddings(self):
         if not self.model: return
@@ -544,12 +632,14 @@ class MicrobiomeSemanticFilter:
         except Exception as e:
             logger.warning(f"Failed to precompute seed embeddings: {e}")
 
+
     def get_relevance_score(self, term_text: str) -> float:
         """Calculate relevance score using embeddings or keywords."""
         keyword_score = self._keyword_score(term_text)
         
         if self.seed_embeddings is None or not hasattr(self.model, 'encode'):
             return keyword_score
+
 
         try:
             # Encode term
@@ -578,12 +668,14 @@ class MicrobiomeSemanticFilter:
         except Exception:
             return keyword_score
 
+
     def _keyword_score(self, term_text: str) -> float:
         term_lower = term_text.lower()
         for keyword in self.microbiome_keywords:
             if keyword in term_lower:
                 return 0.8
         return 0.0
+
 
 class TermRanker:
     """Ranks terms using Gold Standard, Semantic Similarity, and Frequency"""
@@ -625,29 +717,42 @@ class TermRanker:
             frequency = term.get('frequency', 1)
             file_count = len(term.get('source_file', [])) if isinstance(term.get('source_file'), list) else 1
             
-            # Formula:
-            # Score = (Relevance * 0.3) + (Semantic * 0.2) + (log(Freq) * 0.25) + (log(FileCount) * 0.2) + (GoldBonus)
+            # Formula (Optimized for Quality):
+            # Semantic Score is KING (0.45) - ensures it's actually about microbiome/conditions
+            # Relevance (0.20) - basic boosters
+            # Frequency (0.10) - drastically reduced to prevent boosting common noise
+            # FileCount (0.15) - consensus across papers is better than local frequency
+            # GoldBonus (0.5) - keeps known good terms
+            
+            # Penalty for low semantic relevance (Kill noise)
+            semantic_penalty = 0.0
+            if semantic_score < 0.3:
+                semantic_penalty = -0.5
             
             score = (
-                relevance * 0.30 +
-                semantic_score * 0.20 +
-                math.log1p(frequency) * 0.25 +
-                math.log1p(file_count) * 0.20 +
-                (0.5 if is_gold else 0.0)
+                relevance * 0.20 +
+                semantic_score * 0.45 +
+                math.log1p(frequency) * 0.10 +
+                math.log1p(file_count) * 0.15 +
+                (0.5 if is_gold else 0.0) +
+                semantic_penalty
             )
             
             term['score'] = round(score, 4)
             
         return sorted(terms, key=lambda x: x['score'], reverse=True)
 
+
 # --- Components ---
+
 
 class TermsExtractor:
     """Extracts terms using sciSpaCy with strict filtering"""
     
     def __init__(self, config: PipelineConfig):
         self.config = config
-        self.nlp = self._load_model()
+        self.nlp = None  # Will be set by the optimized pipeline
+        # Don't load model here - it will be preloaded by the pipeline
         
     def _load_model(self):
         """Load spaCy model with graceful fallback"""
@@ -671,6 +776,7 @@ class TermsExtractor:
             except OSError:
                 logger.error("Fallback model 'en_core_web_sm' also not found. Please install a spacy model.")
                 sys.exit(1)
+
 
     def extract(self, text: str) -> List[Dict[str, Any]]:
         """Extract terms from text"""
@@ -713,6 +819,9 @@ class TermsExtractor:
                 logger.warning(f"Spacy failed on chunk {i+1}: {e}")
                 continue
                 
+            if not doc.ents:
+                logger.warning(f"Chunk {i+1}: No entities found by spacy model!")
+            
             for ent in doc.ents:
                 term = ent.text.strip()
                 if not term: continue
@@ -723,17 +832,18 @@ class TermsExtractor:
                 # Clean and normalize
                 normalized = term.lower()
                 
+                label = ent.label_
+
+
                 # Check filters
-                if not self._apply_filters(term):
+                if not self._apply_filters(term, label):
                     continue
                     
                 # Deduplicate within file (simple set check)
                 if normalized in seen_terms:
                     continue
                 seen_terms.add(normalized)
-                
-                label = ent.label_
-                
+                                
                 all_terms.append({
                     "term": normalized,
                     "original": term,
@@ -747,14 +857,17 @@ class TermsExtractor:
                 
         return all_terms
 
-    def _apply_filters(self, term: str) -> bool:
+
+    def _apply_filters(self, term: str, label: str = "ENTITY") -> bool:
         """Apply comprehensive P1-P28 filters and advanced checks"""
         term_lower = term.lower().strip()
+
 
         # 1. P1-P28 Pattern Filters
         for pattern in FILTER_PATTERNS.values():
             if re.search(pattern, term):
                 return False
+
 
         # 2. Noise Blocklist
         if term_lower in NOISE_TERMS:
@@ -764,10 +877,12 @@ class TermsExtractor:
         if any(geo in term_lower for geo in GEO_BLOCKLIST):
             return False
 
+
         # 4. Advanced Invalid Patterns
         for pattern in INVALID_PATTERNS:
             if pattern.match(term):
                 return False
+
 
         # 5. Length & Content
         if len(term) < 3 or len(term) > 100:
@@ -775,36 +890,49 @@ class TermsExtractor:
         if not any(c.isalpha() for c in term):
             return False
 
+
         # 6. Advanced Quality Check
         if not self._advanced_quality_check(term):
             return False
 
-        # 7. Strict Biomedical Filter (Disabled for higher recall)
-        # if not self._is_biomedical_term(term):
-        #     return False
 
-        # 8. CDM Relevance (Disabled for higher recall)
+        # 7. Smart Biomedical Filter (Hybrid: Trust Model + Trust Keywords)
+        if not self._is_biomedical_term(term, label):
+             return False
+
+
+        # 8. CDM Relevance (Disabled -> allow broader terms, ranking will handle priority)
         # if not self._is_cdm_relevant(term):
         #     return False
 
+
         return True
+
 
     def _advanced_quality_check(self, term: str) -> bool:
         """Advanced quality checks for sophisticated filtering"""
         term_lower = term.lower()
 
-        # Skip terms with few unique chars (e.g., "aaaa")
+
         if len(set(term_lower)) <= 2 and len(term) > 3:
             return False
+            
+        # Skip OCR errors (cut off words)
+        # e.g. "odic bacteria" (anaerobic), "pressive medications", "obic bacteria"
+        if term_lower.startswith(('odic ', 'pressive ', 'obic ', '1-time ')):
+            return False
+
 
         # Skip terms with no vowels (random strings)
         vowel_count = sum(1 for c in term_lower if c in 'aeiou')
         if len(term) > 5 and vowel_count == 0:
             return False
 
+
         # Skip product names/manufacturers
         if any(x in term_lower for x in ['kit', 'reagent', 'system', 'technology', 'solution']):
             return False
+
 
         # --- NEW: Author/Citation Filters ---
         
@@ -828,11 +956,14 @@ class TermsExtractor:
         if any(kw in term_lower for kw in author_keywords):
             return False
 
+
         # 9. Generic/Non-Scientific Term Filter
         if self._is_generic_term(term):
             return False
 
+
         return True
+
 
     def _is_generic_term(self, term: str) -> bool:
         """Filter out generic academic and non-scientific terms"""
@@ -884,23 +1015,48 @@ class TermsExtractor:
             
         return False
 
-    def _is_biomedical_term(self, term: str) -> bool:
-        """Strict filtering to keep only high-value biomedical terms"""
+
+    def _is_biomedical_term(self, term: str, label: str = "ENTITY") -> bool:
+        """Smart filtering: Keep high-value entity types OR keyword matches"""
         term_lower = term.lower()
         
-        # Must contain at least one biomedical keyword
-        if not any(kw in term_lower for kw in BIOMEDICAL_KEYWORDS):
-            return False
-            
-        # Block generic terms even if they have keywords
+        # Always block generic academic terms (Strict blocklist)
         blocked_generics = {
             'new', 'old', 'big', 'small', 'high', 'low', 'used', 'found',
-            'study', 'analysis', 'experiment', 'result', 'data'
+            'study', 'analysis', 'experiment', 'result', 'data', 'method',
+            'conclusion', 'discussion', 'background', 'introduction',
+            'abstract', 'title', 'year', 'month', 'day', 'date'
         }
         if term_lower in blocked_generics:
             return False
+
+
+        # TRUSTED ENTITY LABELS
+        # If the model says it is a Taxon, Chemical, or Disease -> Keep it
+        trusted_labels = {
+            'TAXON', 'GEOGRAPHICAL_LOCATION', # Geo might be blocked by blocklist, but if explicit, check
+            'CHEMICAL', 'DISEASE', 'CELL_TYPE', 'CELL_LINE', 'DNA', 'RNA', 'PROTEIN',
+            'GENE_OR_GENE_PRODUCT', 'SIMPLE_CHEMICAL', 'ORGANISM_SUBSTANCE'
+        }
+        
+        # Map some SciSpaCy generic labels if needed, but usually specific models have specific labels
+        if label in trusted_labels:
+            return True
+
+
+        # IF LABEL IS GENERIC ('ENTITY', 'OTHER'), FALLBACK TO KEYWORDS
+        # Must contain at least one biomedical keyword if label is weak
+        if any(kw in term_lower for kw in BIOMEDICAL_KEYWORDS):
+            return True
             
-        return True
+        # Also check CDM keywords as a backup
+        if any(kw in term_lower for kw in CDM_KEYWORDS):
+            return True
+
+
+        # If it's a generic ENTITY and no keywords match -> Filter out (Noise reduction)
+        return False
+
 
     def _is_cdm_relevant(self, term: str) -> bool:
         """CDM-specific filtering"""
@@ -920,6 +1076,7 @@ class TermsExtractor:
             
         return True
 
+
     def _normalize(self, term: str) -> str:
         """Normalize term (lowercase, synonym map)"""
         term_lower = term.lower()
@@ -927,15 +1084,16 @@ class TermsExtractor:
             return SAFE_SYNONYM_MAP[term_lower]
         return term_lower
 
+
     def rank_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
         Rank terms using a weighted scoring system:
-        - Microbiome Core: +5.0
-        - CDM Core: +3.0
-        - Biomedical: +1.0
-        - Mapped: +2.0
+        - Mapped (BioPortal/UMLS): +3.0 (Highest Trust)
+        - Microbiome Core: +1.5 (Moderate Trust)
+        - CDM Core: +1.0
+        - Biomedical: +0.5
         - Validated: +2.0
-        - Frequency: + log(freq) * 0.5
+        - Frequency: + log(freq) * 1.0 (Higher weight for consensus)
         """
         import math
         
@@ -943,23 +1101,22 @@ class TermsExtractor:
             score = 1.0
             t_lower = term['term'].lower()
             
-            # 1. Microbiome Core (Highest Priority)
+            # 1. Microbiome Core (Moderate Boost, not dominating)
             microbiome_core = ['microbi', 'bacter', 'gut', 'flora', 'pathogen', 'dysbiosis', 'probiotic', 'antibiotic', 'resistome']
             if any(x in t_lower for x in microbiome_core):
-                score += 5.0
+                score += 1.5
                 
-            # 2. CDM Core (Study Design & Clinical)
-            # Ensure CDM_KEYWORDS are used effectively
+            # 2. CDM Core 
             if any(kw in t_lower for kw in CDM_KEYWORDS):
-                score += 3.0
-                
-            # 3. Biomedical Keywords (General)
-            if any(kw in t_lower for kw in BIOMEDICAL_KEYWORDS):
                 score += 1.0
                 
-            # 4. Mapped Boost (High Confidence)
+            # 3. Biomedical Keywords (Small Boost)
+            if any(kw in t_lower for kw in BIOMEDICAL_KEYWORDS):
+                score += 0.5
+                
+            # 4. Mapped Boost (HIGHEST PRIORITY - Proof of Reality)
             if term.get('mappings'):
-                score += 2.0
+                score += 3.0
                 
             # 5. Validation Boost
             if term.get('validation', {}).get('is_valid') == 'Yes':
@@ -982,8 +1139,11 @@ class TermsExtractor:
         return sorted(terms, key=lambda x: x['score'], reverse=True)
 
 
+
+
 class TfidfSemanticModel:
     """Fallback semantic model using TF-IDF."""
+
 
     def __init__(self):
         if TfidfVectorizer is None:
@@ -1009,6 +1169,7 @@ class TfidfSemanticModel:
         except ValueError:
             # Handle empty vocabulary or other issues
             return np.zeros((len(sentences), 1))
+
 
 class SemanticCorrector:
     """Corrects and canonicalizes terms using Semantic Embeddings (MiniLM)"""
@@ -1114,6 +1275,7 @@ class SemanticCorrector:
         logger.info(f"Semantic correction: {len(terms)} -> {len(corrected_terms)}")
         return corrected_terms
 
+
 class Deduplicator:
     """Multi-layer deduplication"""
     
@@ -1123,11 +1285,25 @@ class Deduplicator:
         self.corrector = SemanticCorrector(self.semantic_model)
         
     def _load_semantic_model(self):
-        """Load sentence-transformers model or fallback to TF-IDF"""
+        """Load sentence-transformers model with GPU acceleration or fallback to TF-IDF"""
         try:
             from sentence_transformers import SentenceTransformer
-            logger.info(f"Loading semantic model: {self.config.semantic_model}")
-            return SentenceTransformer(self.config.semantic_model)
+            import torch
+
+            # Check for GPU availability and use it
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+            if torch.cuda.is_available():
+                logger.info(f"🚀 GPU DETECTED: Loading semantic model on {device}")
+                logger.info(f"   GPU: {torch.cuda.get_device_name(0)}")
+            else:
+                logger.info(f"📊 Loading semantic model on {device}")
+
+            model = SentenceTransformer(self.config.semantic_model, device=device)
+
+            if torch.cuda.is_available():
+                logger.info(f"✅ Semantic model loaded on GPU - 40%+ speedup for deduplication")
+
+            return model
         except ImportError:
             logger.warning("sentence-transformers not installed. Using TF-IDF fallback.")
             return TfidfSemanticModel()
@@ -1135,12 +1311,15 @@ class Deduplicator:
             logger.warning(f"Failed to load semantic model: {e}. Using TF-IDF fallback.")
             return TfidfSemanticModel()
 
+
     def deduplicate(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """CONSERVATIVE deduplication - preserve maximum terms"""
         initial_count = len(terms)
 
+
         # STEP 1: ONLY Exact Deduplication - PRESERVE ALL VARIANTS
         logger.info("🔄 CONSERVATIVE DEDUPLICATION - PRESERVING MAXIMUM TERMS")
+
 
         unique_terms = {}
         for t in terms:
@@ -1160,24 +1339,35 @@ class Deduplicator:
                 if t.get('context') and t['context'] not in existing.get('contexts', []):
                     existing.setdefault('contexts', []).append(t['context'])
 
+
         terms = list(unique_terms.values())
-        logger.info(f"Exact deduplication: {initial_count} -> {len(terms)} terms ({len(terms)/initial_count*100:.1f}% preserved)")
+        if initial_count > 0:
+            logger.info(f"Exact deduplication: {initial_count} -> {len(terms)} terms ({len(terms)/initial_count*100:.1f}% preserved)")
+        else:
+            logger.info("Exact deduplication: 0 -> 0 terms")
+
 
         # STEP 2: ONLY VERY CONSERVATIVE FUZZY DEDUPLICATION (high threshold)
         if self.config.fuzzy_threshold and len(terms) > 1:
             logger.info("Running very conservative fuzzy deduplication...")
             terms = self._conservative_fuzzy_dedup(terms)
 
+
         # STEP 3: OPTIONAL SEMANTIC PROCESSING (only if explicitly enabled)
-        # Skip aggressive semantic deduplication to preserve more terms
-        if self.semantic_model and self.config.semantic_threshold >= 0.95:  # Only if very high threshold
-            logger.info("Running conservative semantic correction (high threshold)...")
+        # Enable semantic deduplication to remove semantic duplicates
+        if self.semantic_model:
+            logger.info(f"Running semantic correction (threshold={self.config.semantic_threshold})...")
             terms = self.corrector.correct_terms(terms, threshold=self.config.semantic_threshold)
         else:
-            logger.info("Skipping semantic deduplication to preserve maximum terms")
+            logger.info("Skipping semantic deduplication - No model loaded")
 
-        logger.info(f"🎯 FINAL: {len(terms)} terms preserved ({len(terms)/initial_count*100:.1f}% of original)")
+
+        if initial_count > 0:
+            logger.info(f"🎯 FINAL: {len(terms)} terms preserved ({len(terms)/initial_count*100:.1f}% of original)")
+        else:
+            logger.info(f"🎯 FINAL: {len(terms)} terms preserved (0% of original)")
         return terms
+
 
     def _conservative_fuzzy_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Very conservative fuzzy deduplication with high threshold"""
@@ -1187,31 +1377,39 @@ class Deduplicator:
             logger.warning("rapidfuzz not installed, skipping fuzzy deduplication")
             return terms
 
+
         if len(terms) < 2:
             return terms
+
 
         # Use very high threshold - only merge near-identical terms
         threshold = max(0.90, self.config.fuzzy_threshold)  # Never below 0.90
         keep_indices = set(range(len(terms)))
         term_texts = [t['term'] for t in terms]
 
+
         logger.info(f"   Using fuzzy threshold: {threshold}")
+
 
         for i in range(len(terms)):
             if i not in keep_indices:
                 continue
 
+
             for j in range(i + 1, len(terms)):
                 if j not in keep_indices:
                     continue
 
+
                 # Check fuzzy similarity - only for very similar terms
                 similarity = fuzz.ratio(term_texts[i], term_texts[j]) / 100
+
 
                 if similarity >= threshold:
                     # Very conservative merging logic
                     term_i_freq = terms[i].get('frequency', 1)
                     term_j_freq = terms[j].get('frequency', 1)
+
 
                     # Only merge if they're nearly identical and one has much higher frequency
                     if similarity >= 0.95 and max(term_i_freq, term_j_freq) > min(term_i_freq, term_j_freq) * 3:
@@ -1220,9 +1418,11 @@ class Deduplicator:
                         else:
                             keep_indices.discard(j)
 
+
         preserved = [terms[i] for i in sorted(keep_indices)]
         logger.info(f"   Conservative fuzzy deduplication: {len(terms)} → {len(preserved)} terms")
         return preserved
+
 
     def _semantic_quality_filter(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -1308,6 +1508,7 @@ class Deduplicator:
         logger.info(f"Semantic Filter: {len(terms)} -> {len(keep_indices)} terms")
         return [terms[i] for i in keep_indices]
 
+
     def _correct_typos(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
         Correct typos by merging terms that are lexically and semantically very similar.
@@ -1320,6 +1521,7 @@ class Deduplicator:
             from rapidfuzz import fuzz
         except ImportError:
             return terms
+
 
         # Sort by frequency (descending) then length (descending)
         terms.sort(key=lambda x: (x.get('frequency', 0), len(x.get('term', ''))), reverse=True)
@@ -1340,7 +1542,9 @@ class Deduplicator:
                 from sentence_transformers.util import cos_sim
                 cosine_scores = cos_sim(embeddings, embeddings)
 
+
         for i in range(len(terms)):
+
 
             if i not in keep_indices: continue
             
@@ -1374,6 +1578,7 @@ class Deduplicator:
                 keep_indices.discard(j)
                     
         return [terms[i] for i in sorted(keep_indices)]
+
 
     def _aggressive_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Final aggressive pass to remove any remaining near-duplicates"""
@@ -1415,6 +1620,7 @@ class Deduplicator:
                     
         return [terms[i] for i in sorted(keep_indices)]
 
+
     def _fuzzy_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Fuzzy deduplication using Rapidfuzz"""
         try:
@@ -1422,6 +1628,7 @@ class Deduplicator:
         except ImportError:
             logger.warning("rapidfuzz not installed. Fuzzy deduplication disabled.")
             return terms
+
 
         logger.info("Running fuzzy deduplication...")
         term_strings = [t['term'] for t in terms]
@@ -1447,30 +1654,39 @@ class Deduplicator:
                     
         return [terms[i] for i in sorted(keep_indices)]
 
+
     def _semantic_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if not terms or not self.semantic_model:
             return terms
+
 
         # Get embeddings for all terms
         term_strings = [t['term'] for t in terms]
         embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
 
+
         # Compute cosine similarity matrix
         cosine_scores = torch.nn.functional.normalize(embeddings, dim=1).mm(torch.nn.functional.normalize(embeddings, dim=1).T)
 
+
         keep_indices = set(range(len(terms)))
+
 
         # Iterate through upper triangle
         for i in range(len(terms)):
             if i not in keep_indices: continue
 
+
             for j in range(i + 1, len(terms)):
                 if j not in keep_indices: continue
+
 
                 if cosine_scores[i][j] >= self.config.semantic_threshold:
                     keep_indices.discard(j)
 
+
         return [terms[i] for i in sorted(keep_indices)]
+
 
     # def _biomedical_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     #     """Biomedical context-aware deduplication (Cross-Encoder)"""
@@ -1480,10 +1696,13 @@ class Deduplicator:
     #         logger.warning("sentence-transformers not installed. Biomedical deduplication disabled.")
     #         return terms
 
+
     #     if len(terms) < 2:
     #         return terms
 
+
     #     logger.info("Running biomedical deduplication (Cross-Encoder)...")
+
 
     #     # Load Cross-Encoder model
     #     try:
@@ -1494,17 +1713,21 @@ class Deduplicator:
     #         logger.warning(f"Failed to load Cross-Encoder model: {e}")
     #         return terms
 
+
     #     keep_indices = set(range(len(terms)))
     #     term_strings = [t['term'] for t in terms]
 
+
     #     # 1. Identify candidate pairs to check
     #     potential_pairs = []
+
 
     #     if self.semantic_model:
     #         # Use embeddings to find candidates efficiently
     #         embeddings = self.semantic_model.encode(term_strings, convert_to_tensor=True)
     #         from sentence_transformers.util import cos_sim
     #         scores = cos_sim(embeddings, embeddings)
+
 
     #         for i in range(len(terms)):
     #             if i not in keep_indices: continue
@@ -1524,20 +1747,26 @@ class Deduplicator:
     #                 if words_i.intersection(words_j):
     #                     potential_pairs.append((i, j))
 
+
     #     if not potential_pairs:
     #         return terms
+
 
     #     # 2. Score pairs with Cross-Encoder
     #     logger.info(f"Checking {len(potential_pairs)} candidate pairs with Cross-Encoder...")
 
+
     #     # Prepare pairs for batch processing
     #     sentence_pairs = [[term_strings[i], term_strings[j]] for i, j in potential_pairs]
+
 
     #     try:
     #         similarity_scores = model.predict(sentence_pairs)
 
+
     #         for k, score in enumerate(similarity_scores):
     #             i, j = potential_pairs[k]
+
 
     #             # Threshold for "Duplicate" in biomedical context
     #             if score > 0.85:
@@ -1547,15 +1776,20 @@ class Deduplicator:
     #                 else:
     #                     keep_indices.discard(i)
 
+
     #     except Exception as e:
     #         logger.warning(f"Cross-Encoder check failed: {e}")
 
+
     #     return [terms[i] for i in sorted(keep_indices)]
+
 
     # Temporary replacement to skip biomedical deduplication
     def _biomedical_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Biomedical deduplication disabled"""
         return terms
+
+
 
 
 class DefinitionGenerator:
@@ -1571,6 +1805,7 @@ class DefinitionGenerator:
         if not self.config.generate_definitions:
             return
 
+
         try:
             if self.config.use_ollama:
                 # Use Ollama
@@ -1585,12 +1820,15 @@ class DefinitionGenerator:
                     self.ollama_client = None
                 return
 
+
             # Use HuggingFace transformers
             from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
             import torch
 
+
             model_name = self.config.biomistral_model
             logger.info(f"Loading definition model: {model_name}")
+
 
             if self.config.load_4bit:
                 from transformers import BitsAndBytesConfig
@@ -1613,8 +1851,10 @@ class DefinitionGenerator:
                     trust_remote_code=True
                 )
 
+
             tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
             tokenizer.pad_token = tokenizer.eos_token
+
 
             self.pipeline = pipeline(
                 "text-generation",
@@ -1624,9 +1864,11 @@ class DefinitionGenerator:
                 repetition_penalty=1.2
             )
 
+
         except Exception as e:
             logger.error(f"Failed to load definition model: {e}")
             self.pipeline = None
+
 
     def generate_definitions(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Generate definitions for a list of terms"""
@@ -1634,19 +1876,24 @@ class DefinitionGenerator:
         if not terms:
             return terms
 
+
         if self.config.use_ollama and not hasattr(self, 'ollama_client'):
             logger.warning("Ollama configured but client not available")
             return terms
         elif not self.config.use_ollama and not self.pipeline:
             return terms
 
+
         logger.info(f"Generating definitions for {len(terms)} terms...")
+
 
         # Prepare prompts
         prompts = [
             f"""You are a specialized biomedical scientist and microbiome expert. Provide a precise, scientific definition for the following term.
 
+
 TERM TO DEFINE: "{t['term']}"
+
 
 DEFINITION REQUIREMENTS:
 - Use proper biomedical terminology
@@ -1656,14 +1903,18 @@ DEFINITION REQUIREMENTS:
 - Use formal scientific language
 - Specify if it's a gene, protein, metabolite, organism, etc.
 
+
 Definition:"""
             for t in terms
         ]
 
+
         definitions = []
+
 
         try:
             from tqdm import tqdm
+
 
             if self.config.use_ollama and hasattr(self, 'ollama_client'):
                 # Use Ollama for generation
@@ -1684,6 +1935,7 @@ Definition:"""
                 for i in tqdm(range(0, len(prompts), batch_size), desc="Generating Definitions (HF)"):
                     batch_prompts = prompts[i:i + batch_size]
 
+
                     batch_outputs = self.pipeline(
                         batch_prompts,
                         do_sample=True,
@@ -1692,6 +1944,7 @@ Definition:"""
                         batch_size=batch_size
                     )
 
+
                     for output in batch_outputs:
                         if isinstance(output, list):
                             output = output[0]
@@ -1699,6 +1952,7 @@ Definition:"""
                         # Clean up: remove quotes, newlines
                         text = text.replace('\n', ' ').strip('"').strip("'")
                         definitions.append(text)
+
 
         except Exception as e:
             logger.error(f"Definition generation failed: {e}")
@@ -1712,6 +1966,8 @@ Definition:"""
         return terms
 
 
+
+
 class LLMTermCorrector:
     """Corrects terms using BioMistral/LLM"""
     
@@ -1723,6 +1979,7 @@ class LLMTermCorrector:
     def _load_model(self):
         if not self.config.correct_terms:
             return
+
 
         try:
             if self.config.use_ollama:
@@ -1738,12 +1995,15 @@ class LLMTermCorrector:
                     self.ollama_client = None
                 return
 
+
             # Use HuggingFace transformers
             from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
             import torch
 
+
             model_name = self.config.biomistral_model
             logger.info(f"Loading correction model: {model_name}")
+
 
             if self.config.load_4bit:
                 from transformers import BitsAndBytesConfig
@@ -1766,8 +2026,10 @@ class LLMTermCorrector:
                     trust_remote_code=True
                 )
 
+
             tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
             tokenizer.pad_token = tokenizer.eos_token
+
 
             self.pipeline = pipeline(
                 "text-generation",
@@ -1777,14 +2039,17 @@ class LLMTermCorrector:
                 repetition_penalty=1.2
             )
 
+
         except Exception as e:
             logger.error(f"Failed to load correction model: {e}")
             self.pipeline = None
+
 
     def correct_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         # Check if we have a valid model (either Ollama or HuggingFace)
         if not terms:
             return terms
+
 
         if self.config.use_ollama and not hasattr(self, 'ollama_client'):
             logger.warning("Ollama configured but client not available")
@@ -1792,12 +2057,16 @@ class LLMTermCorrector:
         elif not self.config.use_ollama and not self.pipeline:
             return terms
 
+
         logger.info(f"Correcting {len(terms)} terms with LLM...")
+
 
         prompts = [
             f"""You are a specialized biomedical terminology expert. Your goal is to extract and correct ONLY high-value, specific terms relevant to a Microbiome Common Data Model (CDM).
 
+
 TERM TO CORRECT: "{t['term']}"
+
 
 CORRECTION RULES:
 1. Extract ONLY specific biomedical terms: specific organisms (species/genus), specific metabolites/chemicals, specific genes/proteins
@@ -1808,16 +2077,21 @@ CORRECTION RULES:
 6. Separate multiple distinct terms with semicolons if they're incorrectly combined
 7. IGNORE generic scientific terms (e.g., "study", "analysis", "data", "results", "significant", "correlation")
 
+
 Valid Categories: ORGANISM, GENE, PROTEIN, CHEMICAL, DISEASE, DNA_RNA, CELL_TYPE, BIOINFO_TOOL, GENOMICS, CLINICAL, SCIENTIFIC_TERM
+
 
 Corrected Term:"""
             for t in terms
         ]
 
+
         corrections = []
+
 
         try:
             from tqdm import tqdm
+
 
             if self.config.use_ollama and hasattr(self, 'ollama_client'):
                 # Use Ollama for correction
@@ -1838,6 +2112,7 @@ Corrected Term:"""
                 for i in tqdm(range(0, len(prompts), batch_size), desc="Correcting Terms (HF)"):
                     batch_prompts = prompts[i:i + batch_size]
 
+
                     batch_outputs = self.pipeline(
                         batch_prompts,
                         do_sample=False,  # Deterministic for correction
@@ -1846,11 +2121,13 @@ Corrected Term:"""
                         batch_size=batch_size
                     )
 
+
                     for output in batch_outputs:
                         if isinstance(output, list):
                             output = output[0]
                         text = output['generated_text'].strip().split('\n')[0]  # Take first line
                         corrections.append(text)
+
 
         except Exception as e:
             logger.error(f"LLM correction failed: {e}")
@@ -1866,25 +2143,33 @@ Corrected Term:"""
             
         return terms
 
+
     def correct_entity_types(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Correct entity types using Mistral 7B with specialized microbiome prompts"""
         if not terms:
             return terms
 
+
         # Prepare batch of items for entity type correction
         items = [t['term'] for t in terms]
 
+
         prompt = f"""You are a specialized biomedical terminology expert for a Microbiome Common Data Model (CDM).
+
 
 Correct the entity types for these terms according to microbiome/biomedical standards.
 
+
 Valid Types: ORGANISM, GENE, PROTEIN, CHEMICAL, DISEASE, DNA_RNA, CELL_TYPE, BIOINFO_TOOL, GENOMICS, CLINICAL, SCIENTIFIC_TERM
+
 
 Items to classify:
 {chr(10).join(f"{i+1}. {item}" for i, item in enumerate(items))}
 
+
 Return a JSON array of strings ["TYPE1", "TYPE2", ...] corresponding to each item.
 Return ONLY the JSON array."""
+
 
         try:
             if self.config.use_ollama and hasattr(self, 'ollama_client'):
@@ -1893,6 +2178,7 @@ Return ONLY the JSON array."""
                     temperature=0.1,
                     max_tokens=200
                 )
+
 
                 if response:
                     import json
@@ -1913,10 +2199,13 @@ Return ONLY the JSON array."""
                 else:
                     logger.warning("No response for entity type correction")
 
+
         except Exception as e:
             logger.error(f"Entity type correction failed: {e}")
 
+
         return terms
+
 
 class UMLSMapper:
     """Maps terms to UMLS using SciSpaCy Linker"""
@@ -1948,6 +2237,7 @@ class UMLSMapper:
         except Exception as e:
             logger.error(f"Failed to load UMLS Linker: {e}")
             self.linker = None
+
 
     def map_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if not self.linker or not terms:
@@ -1993,8 +2283,10 @@ class UMLSMapper:
             
         return terms
 
+
 class OMOPMapper:
     """High-performance OMOP vocabulary mapper"""
+
 
     def __init__(self, config: PipelineConfig):
         self.config = config
@@ -2003,11 +2295,13 @@ class OMOPMapper:
         if not self.vocab_dir.exists():
              self.vocab_dir = Path("data/vocab")
 
+
         self.concepts_df = None
         self.synonyms_df = None
         self.lookup_df = None
         self.concept_cache = {}
         self.lookup_dict = {}  # Use dict for faster lookup
+
 
     def load_vocab(self):
         """Load OMOP vocabulary files and build optimized lookup table"""
@@ -2015,13 +2309,16 @@ class OMOPMapper:
         concept_file = Path("/home/jkalra/thesis/omop_vocab/CONCEPT.csv")
         synonym_file = Path("/home/jkalra/thesis/omop_vocab/CONCEPT_SYNONYM.csv")
 
+
         if not concept_file.exists():
             logger.warning(f"OMOP CONCEPT.csv not found at {concept_file}. OMOP mapping disabled.")
             return
 
+
         logger.info("Loading OMOP vocabulary (optimized)...")
         try:
             import pandas as pd
+
 
             # Load and filter concepts in chunks to avoid memory issues
             logger.info("Loading standard concepts...")
@@ -2037,14 +2334,17 @@ class OMOPMapper:
                 if not standard_chunk.empty:
                     chunks.append(standard_chunk)
 
+
             self.concepts_df = pd.concat(chunks, ignore_index=True)
             logger.info(f"Loaded {len(self.concepts_df)} standard concepts")
+
 
             # Load synonyms in chunks and filter efficiently
             if synonym_file.exists():
                 logger.info("Loading synonyms...")
                 valid_concept_ids = set(self.concepts_df['concept_id'])
                 synonym_chunks = []
+
 
                 for chunk in pd.read_csv(
                     synonym_file, sep='\t',
@@ -2056,6 +2356,7 @@ class OMOPMapper:
                     if not valid_chunk.empty:
                         synonym_chunks.append(valid_chunk)
 
+
                 if synonym_chunks:
                     self.synonyms_df = pd.concat(synonym_chunks, ignore_index=True)
                     logger.info(f"Loaded {len(self.synonyms_df)} valid synonyms")
@@ -2064,13 +2365,16 @@ class OMOPMapper:
             else:
                 self.synonyms_df = pd.DataFrame(columns=['concept_id', 'concept_synonym_name'])
 
+
             # Build optimized lookup
             self._build_optimized_lookup()
+
 
         except ImportError:
             logger.warning("pandas not installed. OMOP mapping disabled.")
         except Exception as e:
             logger.error(f"Failed to load OMOP vocab: {e}")
+
 
     def _preprocess_term(self, term: str) -> str:
         """Preprocess term for matching"""
@@ -2080,19 +2384,23 @@ class OMOPMapper:
         term = re.sub(r'\s+', ' ', term).strip()
         return term
 
+
     def _build_optimized_lookup(self):
         """Build optimized lookup dictionary for fast matching"""
         import pandas as pd
         logger.info("Building optimized OMOP lookup dictionary...")
 
+
         # Clear existing lookup
         self.lookup_dict = {}
+
 
         # Process concepts
         logger.info("Processing concept names...")
         for idx, row in self.concepts_df.iterrows():
             concept_id = row['concept_id']
             concept_name = row['concept_name']
+
 
             # Add original concept name
             clean_name = self._preprocess_term(concept_name)
@@ -2108,20 +2416,24 @@ class OMOPMapper:
                     'match_type': 'exact'
                 })
 
+
         # Process synonyms efficiently
         if not self.synonyms_df.empty:
             logger.info("Processing synonyms...")
             valid_concept_ids = set(self.concepts_df['concept_id'])
 
+
             for idx, row in self.synonyms_df.iterrows():
                 concept_id = row['concept_id']
                 synonym_name = row['concept_synonym_name']
+
 
                 if concept_id in valid_concept_ids:
                     clean_synonym = self._preprocess_term(synonym_name)
                     if clean_synonym and len(clean_synonym) > 2:
                         if clean_synonym not in self.lookup_dict:
                             self.lookup_dict[clean_synonym] = []
+
 
                         # Get concept details from concepts_df
                         concept_info = self.concepts_df[self.concepts_df['concept_id'] == concept_id].iloc[0]
@@ -2134,16 +2446,20 @@ class OMOPMapper:
                             'match_type': 'synonym'
                         })
 
+
         logger.info(f"Optimized lookup built with {len(self.lookup_dict)} terms")
+
 
     def _build_lookup_table(self):
         """Legacy method - redirect to optimized version"""
         self._build_optimized_lookup()
 
+
     def _build_concept_cache(self):
         """Cache concept details for quick access"""
         for _, row in self.concepts_df.iterrows():
             self.concept_cache[row['concept_id']] = row.to_dict()
+
 
     def map_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Map terms using optimized exact and fuzzy matching"""
@@ -2151,7 +2467,9 @@ class OMOPMapper:
             logger.warning("OMOP lookup not loaded. Skipping OMOP mapping.")
             return terms
 
+
         logger.info(f"Mapping {len(terms)} terms to OMOP (optimized)...")
+
 
         try:
             from rapidfuzz import process, fuzz
@@ -2160,23 +2478,29 @@ class OMOPMapper:
             HAS_RAPIDFUZZ = False
             logger.warning("rapidfuzz not installed. Fuzzy OMOP matching disabled.")
 
+
         # Prepare terms for batch processing
         term_map = {t['term']: t for t in terms}
         unique_terms = list(term_map.keys())
         mapped_count = 0
 
+
         # Create lookup keys list for fuzzy matching
         lookup_keys = list(self.lookup_dict.keys())
+
 
         for i, term_str in enumerate(unique_terms):
             if i % 100 == 0:
                 logger.info(f"  Progress: {i}/{len(unique_terms)} terms processed ({mapped_count} mapped)")
 
+
             clean_term = self._preprocess_term(term_str)
             if not clean_term or len(clean_term) < 3:
                 continue
 
+
             matches = []
+
 
             # 1. Exact Match (optimized dictionary lookup)
             if clean_term in self.lookup_dict:
@@ -2192,6 +2516,7 @@ class OMOPMapper:
                         'match_type': match_info.get('match_type', 'exact')
                     })
 
+
             # 2. Fuzzy Match (if no exact match and rapidfuzz available)
             if not matches and HAS_RAPIDFUZZ and len(clean_term) >= 4:
                 # Use rapidfuzz for efficient fuzzy matching
@@ -2201,6 +2526,7 @@ class OMOPMapper:
                     scorer=fuzz.WRatio,
                     score_cutoff=85  # High threshold for quality
                 )
+
 
                 if result:
                     match_term, score, _ = result
@@ -2218,27 +2544,34 @@ class OMOPMapper:
                             'match_type': match_info.get('match_type', 'fuzzy')
                         })
 
+
             # Update term with matches
             if matches:
                 term_obj = term_map[term_str]
                 term_obj['omop_mappings'] = matches[:3]  # Keep top 3 matches
                 mapped_count += 1
 
+
         logger.info(f"OMOP mapping complete: {mapped_count}/{len(unique_terms)} terms mapped")
         return terms
+
+
 
 
 class ComprehensiveMapper:
     """Unified Mapper for UMLS, BioPortal, and OMOP (optional)"""
 
+
     # API Endpoints
     BIOPORTAL_API = "https://data.bioontology.org/search"
     OLS_API = "https://www.ebi.ac.uk/ols/api/search"
+
 
     def __init__(self, config: PipelineConfig):
         self.config = config
         self.omop_mapper = None
         self.umls_mapper = None
+
 
         # Only load OMOP if explicitly requested and not problematic
         if config.map_omop:
@@ -2249,6 +2582,7 @@ class ComprehensiveMapper:
             except Exception as e:
                 logger.warning(f"Failed to load OMOP mapper (skipping): {e}")
                 self.omop_mapper = None
+
 
         # Load UMLS mapper
         if config.map_umls:
@@ -2262,7 +2596,9 @@ class ComprehensiveMapper:
     def map_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Run all mapping strategies (excluding OMOP by default)"""
 
+
         logger.info("Starting comprehensive mapping (UMLS + BioPortal/OLS)...")
+
 
         # 1. OMOP Mapping (only if successfully loaded)
         if self.omop_mapper:
@@ -2272,6 +2608,7 @@ class ComprehensiveMapper:
                 logger.warning(f"OMOP mapping failed (skipping): {e}")
         else:
             logger.info("Skipping OMOP mapping (disabled or failed to load)")
+
 
         # 2. UMLS Mapping (use UMLSMapper)
         if self.umls_mapper:
@@ -2292,6 +2629,7 @@ class ComprehensiveMapper:
         else:
             logger.info("Skipping UMLS mapping (disabled or failed to load)")
 
+
         # 3. BioPortal/OLS API Mapping
         if self.config.bioportal_api_key:
             try:
@@ -2304,6 +2642,7 @@ class ComprehensiveMapper:
                 terms = self._map_ols(terms)
             except Exception as e:
                 logger.warning(f"OLS mapping failed: {e}")
+
 
         return terms
         
@@ -2352,6 +2691,7 @@ class ComprehensiveMapper:
                 
         return terms
 
+
     def _map_ols(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Map to OLS (Free, no key required)"""
         import requests
@@ -2390,6 +2730,7 @@ class ComprehensiveMapper:
                 logger.warning(f"OLS error for {term}: {e}")
                 
         return terms
+
 
     def _map_ncbo(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Map using NCBO Annotator"""
@@ -2436,6 +2777,8 @@ class ComprehensiveMapper:
         return terms
 
 
+
+
 class BioMistralValidator:
     """Validator using BioMistral-7B"""
     def __init__(self, config: PipelineConfig):
@@ -2443,6 +2786,7 @@ class BioMistralValidator:
         self.pipeline = None
         self.tokenizer = None
         self.model = None
+
 
     def load_model(self):
         """Load the BioMistral model"""
@@ -2488,6 +2832,7 @@ class BioMistralValidator:
             logger.error(f"Failed to load BioMistral model: {e}")
             return False
 
+
     def validate_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Validate terms using BioMistral with batch processing"""
         if not self.config.validate_biomistral:
@@ -2497,6 +2842,7 @@ class BioMistralValidator:
             if not self.load_model():
                 return terms
 
+
         logger.info(f"Validating {len(terms)} terms with BioMistral (Batch Size: {self.config.batch_size})...")
         
         # Filter terms that need validation
@@ -2504,13 +2850,16 @@ class BioMistralValidator:
         if not terms_to_validate:
             return terms
 
+
         # Prepare prompts
         prompts = []
         for t in terms_to_validate:
             term = t['term']
             prompt = f"""You are a specialized biomedical research curator. Evaluate if this term should be kept in a high-quality microbiome/biomedical dataset for a Microbiome Common Data Model (CDM).
 
+
 TERM TO EVALUATE: "{term}"
+
 
 EVALUATION CRITERIA:
 ✅ KEEP: Valid biological entities (genes, proteins, bacteria, metabolites, diseases)
@@ -2519,17 +2868,21 @@ EVALUATION CRITERIA:
 ✅ KEEP: Chemical compounds, drugs, supplements
 ✅ KEEP: Specific organisms (species/genus level), taxonomic groups
 
+
 ❌ REJECT: Author names, citations, references (e.g., "Smith J", "et al 2015")
 ❌ REJECT: University names, departments, institutions, locations
 ❌ REJECT: Generic scientific words (e.g., "study", "result", "significant", "control", "correlation")
 ❌ REJECT: File names, sequences, random characters, measurement units alone
 ❌ REJECT: Incomplete phrases, sentence fragments, formatting artifacts
 
+
 CRITICAL: Aim for HIGH PRECISION. Target only the most valuable, specific entities.
+
 
 DECISION (Yes/No):
 REASON (brief):"""
             prompts.append(prompt)
+
 
         # Run batch inference
         batch_size = self.config.batch_size
@@ -2561,6 +2914,7 @@ REASON (brief):"""
             remaining = len(prompts) - len(results)
             results.extend(["error"] * remaining)
 
+
         # Assign results back to terms
         for i, t in enumerate(terms_to_validate):
             response = results[i] if i < len(results) else "error"
@@ -2575,6 +2929,8 @@ REASON (brief):"""
                  t['validation']['error'] = "Batch inference failed"
                 
         return terms
+
+
 
 
 class Mapper:
@@ -2602,7 +2958,10 @@ class Mapper:
         return terms
 
 
+
+
 # --- Global Pipeline Logic ---
+
 
 class GlobalPipelineProcessor:
     """
@@ -2617,17 +2976,24 @@ class GlobalPipelineProcessor:
     6. Then apply mapping, definitions, validation
     """
 
+
     def __init__(self, config: PipelineConfig):
         self.config = config
+
 
         # Create output directory
         self.output_path = Path(config.output_dir)
         self.output_path.mkdir(parents=True, exist_ok=True)
 
-        # OPTIMIZED: Lazy loading + memory management
-        logger.info("🚀 Setting up optimized pipeline with lazy model loading...")
+
+        # OPTIMIZED: Load all models at once + memory management
+        logger.info("🚀 Setting up optimized pipeline with batch model loading...")
         self.model_cache = {}
         self.files_processed = 0
+
+        # OPTIMIZATION: Pre-load ALL models at once
+        self._preload_all_models()
+
 
         # Import for memory management
         try:
@@ -2640,6 +3006,7 @@ class GlobalPipelineProcessor:
             self.gc = None
             self.psutil = None
 
+
         # Initialize components once (no models loaded yet)
         self.deduplicator = None
         self.term_corrector = None
@@ -2649,18 +3016,24 @@ class GlobalPipelineProcessor:
         self.validator = None
         self.term_ranker = None
 
+
     def _cleanup_memory(self):
-        """OPTIMIZED: Aggressive memory cleanup"""
+        """OPTIMIZED: Aggressive memory cleanup with GPU support"""
         if self.gc:
             self.gc.collect()
+
 
         # Clear GPU cache if available
         try:
             import torch
             if torch.cuda.is_available():
+                allocated = torch.cuda.memory_allocated(0) / 1024**3
+                cached = torch.cuda.memory_reserved(0) / 1024**3
                 torch.cuda.empty_cache()
-        except:
-            pass
+                logger.debug(f"🧹 GPU cleanup: freed {cached:.1f}GB (allocated: {allocated:.1f}GB)")
+        except Exception as e:
+            logger.debug(f"GPU cleanup failed: {e}")
+
 
     def _check_memory_usage(self):
         """OPTIMIZED: Check memory and cleanup if needed"""
@@ -2670,23 +3043,70 @@ class GlobalPipelineProcessor:
                 logger.warning(f"⚠️ High memory usage: {memory_gb:.1f}GB - Running cleanup")
                 self._cleanup_memory()
 
-    def _load_model_lazy(self, model_name: str):
-        """OPTIMIZED: Load model only when needed"""
-        if model_name not in self.model_cache:
-            logger.info(f"   Loading {model_name} (lazy)...")
+
+    def _preload_all_models(self):
+        """OPTIMIZATION: Load ALL scispacy models at once for maximum efficiency"""
+        import spacy
+        import concurrent.futures
+        from functools import partial
+
+        logger.info("🚀 OPTIMIZATION: Pre-loading all scispacy models at once...")
+
+        models_to_load = self.config.models_to_use
+        logger.info(f"Models to load: {models_to_load}")
+
+        def load_single_model(model_name):
+            """Load a single model"""
             try:
+                logger.info(f"   Loading {model_name}...")
+                nlp = spacy.load(model_name)
+                # Add sentencizer if missing for better performance
+                if "sentencizer" not in nlp.pipe_names:
+                    nlp.add_pipe("sentencizer")
+
+                # Create extractor with loaded model
                 model_config = PipelineConfig(
                     input_dir=self.config.input_dir,
                     output_dir=self.config.output_dir,
                     spacy_model=model_name
                 )
                 extractor = TermsExtractor(model_config)
-                self.model_cache[model_name] = extractor
-                logger.info(f"   ✅ {model_name} loaded")
+                extractor.nlp = nlp  # Direct assignment to avoid re-loading
+
+                logger.info(f"   ✅ {model_name} loaded and cached")
+                return model_name, extractor, None
             except Exception as e:
                 logger.error(f"   ❌ Failed to load {model_name}: {e}")
-                self.model_cache[model_name] = None
-        return self.model_cache.get(model_name)
+                return model_name, None, str(e)
+
+        # Load models in parallel (limited to prevent memory issues)
+        max_workers = min(4, len(models_to_load))  # Limit concurrent loads
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(load_single_model, model): model for model in models_to_load}
+
+            for future in concurrent.futures.as_completed(futures):
+                model_name, extractor, error = future.result()
+                if extractor:
+                    self.model_cache[model_name] = extractor
+                else:
+                    logger.warning(f"⚠️ Model {model_name} not available, skipping")
+
+        loaded_count = len(self.model_cache)
+        total_count = len(models_to_load)
+        logger.info(f"🎯 OPTIMIZATION: Successfully loaded {loaded_count}/{total_count} models")
+
+        if loaded_count == 0:
+            raise RuntimeError("❌ NO MODELS LOADED - Pipeline cannot continue")
+
+    def _load_model_lazy(self, model_name: str):
+        """OPTIMIZED: Get preloaded model - no loading needed!"""
+        if model_name in self.model_cache:
+            return self.model_cache[model_name]
+        else:
+            logger.warning(f"⚠️ Model {model_name} not found in cache, skipping")
+            return None
+
 
     def _initialize_components(self):
         """OPTIMIZED: Initialize components only when needed"""
@@ -2699,26 +3119,45 @@ class GlobalPipelineProcessor:
             self.validator = BioMistralValidator(self.config) if self.config.validate_biomistral else None
             self.term_ranker = TermRanker(self.config, self.deduplicator.semantic_model)
 
+
     def extract_all_terms_from_all_files(self) -> List[Dict[str, Any]]:
         """STEP 1: Extract ALL terms from ALL models across ALL files"""
         logger.info("🔥 STEP 1: Extracting ALL terms from ALL models across ALL files...")
 
+
         input_path = Path(self.config.input_dir)
         files = list(input_path.glob("*.txt"))
+
 
         if self.config.max_files:
             files = files[:self.config.max_files]
 
+
         logger.info(f"Found {len(files)} files to process")
         logger.info(f"Using models: {self.config.models_to_use}")
 
-        all_raw_terms = []
 
-        # We can parallelize this if needed, but let's stick to the logic from correct_global_pipeline.py
-        # which iterates files and models.
+        all_raw_terms = []
+        
+        # Checkpoint directory
+        checkpoint_dir = self.output_path / "temp_raw_terms"
+        checkpoint_dir.mkdir(parents=True, exist_ok=True)
         
         for file_idx, file_path in enumerate(files, 1):
             logger.info(f"📄 Processing file {file_idx}/{len(files)}: {file_path.name}")
+            
+            # CHECKPOINT: Check if we already processed this file
+            checkpoint_file = checkpoint_dir / f"{file_path.stem}.json"
+            if checkpoint_file.exists():
+                try:
+                    with open(checkpoint_file, 'r') as f:
+                        saved_terms = json.load(f)
+                    logger.info(f"   ⏩ Loaded {len(saved_terms)} terms from checkpoint")
+                    all_raw_terms.extend(saved_terms)
+                    continue
+                except Exception as e:
+                    logger.warning(f"   ⚠️ Failed to load checkpoint for {file_path.name}, re-processing: {e}")
+
 
             try:
                 text = file_path.read_text(encoding='utf-8')
@@ -2726,6 +3165,7 @@ class GlobalPipelineProcessor:
             except Exception as e:
                 logger.error(f"❌ Error reading {file_path}: {e}")
                 continue
+
 
             # OPTIMIZED: Extract with lazy loading and memory management
             file_terms = []
@@ -2738,41 +3178,53 @@ class GlobalPipelineProcessor:
                         logger.warning(f"   ⚠️ Model {model_name} not available, skipping")
                         continue
 
+
                     terms = extractor.extract(text)
 
+
                     logger.info(f"      ✅ Found {len(terms)} terms")
+
 
                     # Tag terms with their source model and file for traceability
                     for t in terms:
                         t['source_model'] = model_name
                         t['source_file'] = file_path.name
 
+
                     file_terms.extend(terms)
 
-                except Exception as e:
-                    logger.error(f"      ❌ Failed to run {model_name}: {e}")
 
-            logger.info(f"   📊 Total terms from {file_path.name}: {len(file_terms):,}")
+                except Exception as e:
+                    logger.error(f"   ❌ Extraction failed for {model_name} on {file_path.name}: {e}")
+            
+            # Save to checkpoint
+            if file_terms:
+                with open(checkpoint_file, 'w', encoding='utf-8') as f:
+                    json.dump(file_terms, f, ensure_ascii=False)
+            
             all_raw_terms.extend(file_terms)
 
-            # OPTIMIZED: Memory cleanup and monitoring
-            self.files_processed += 1
-            if self.files_processed % self.config.memory_cleanup_interval == 0:
-                logger.info(f"   🧹 Running memory cleanup (file {self.files_processed})")
+
+            # Periodic cleanup
+            if file_idx % 10 == 0:
                 self._cleanup_memory()
                 self._check_memory_usage()
+
 
             # OPTIMIZED: Smart raw terms limit for efficient processing
             if len(all_raw_terms) >= self.config.max_raw_terms_limit:
                 logger.info(f"🎯 Smart limit reached! {len(all_raw_terms):,} raw terms - time for deduplication")
                 break
 
+
         logger.info(f"🎯 STEP 1 COMPLETE: Total raw terms from ALL files: {len(all_raw_terms):,}")
         return all_raw_terms
+
 
     def filter_noise_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """STEP 4: Filter out noise terms"""
         logger.info("🧹 STEP 4: Filtering noise terms...")
+
 
         # Common noise patterns
         noise_patterns = [
@@ -2781,14 +3233,18 @@ class GlobalPipelineProcessor:
             r'^[^a-zA-Z0-9]+$',  # Just special chars
             r'^\w+$',  # Single word only
             r'.{1,2}$',  # Very short terms
-            r'(fig|figure|table|tab)\.? ?\d+$',  # Figure/table references
+            r'(fig|figure|table|tab)\.? ?(s|supp)?\d+[a-z]?',  # Figure/table references like Fig. S2a
             r'^https?://',  # URLs
             r'^www\.',  # URLs
             r'@\w+',  # Emails/mentions
             r'^\d+%$',  # Percentages
             r'^\d+/\d+$',  # Fractions
             r'^[ivxlm]+\.$',  # Roman numerals with period
+            r'.*[\[\(\]].*', # Terms with dangling brackets or parentheses
+            r'.*-$', # Terms ending in hyphen (incomplete)
+            r'^-.*', # Terms starting with hyphen
         ]
+
 
         # Common noise words
         noise_words = {
@@ -2797,19 +3253,34 @@ class GlobalPipelineProcessor:
             'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might',
             'can', 'must', 'shall', 'fig', 'figure', 'table', 'ref', 'reference',
             'see', 'also', 'note', 'notes', 'above', 'below', 'previous', 'following',
-            'respectively', 'respectively,', 'respectively.', 'ie', 'eg', 'id', 'ids',
-            'mm', 'cm', 'nm', 'μm', '°c', '°f', 'mg', 'g', 'kg', 'ml', 'l', 'ul'
+            'ie', 'eg', 'id', 'ids', 'mm', 'cm', 'nm', 'μm', '°c', '°f', 'mg', 'g', 'kg', 'ml', 'l', 'ul',
+            # [NEW] Persistent Journal/Author Noise Blocklist
+            'microbiol', 'fems', 'frank', 'genome', 'med', 'rev', 'lett', 'dn', 'poster', 'presentation',
+            'abstract', 'introduction', 'discussion', 'conclusion', 'results', 'background', 'doi', 'pmid'
         }
+
+
+        # Initialize Semantic Filter for Dynamic Filtering
+        semantic_filter = None
+        if self.deduplicator and self.deduplicator.semantic_model:
+             logger.info("   🧠 Initializing Dynamic Semantic Filter for noise reduction...")
+             semantic_filter = MicrobiomeSemanticFilter(self.deduplicator.semantic_model)
+
 
         original_count = len(terms)
         filtered_terms = []
+        
+        semantic_dropped_count = 0
+
 
         for term in terms:
             term_text = term.get('term', '').lower().strip()
 
+
             # Skip empty terms
             if not term_text or len(term_text) < 3:
                 continue
+
 
             # Check noise patterns
             is_noise = False
@@ -2817,34 +3288,62 @@ class GlobalPipelineProcessor:
                 if re.match(pattern, term_text):
                     is_noise = True
                     break
+            
+            if is_noise: continue
 
-            # Check noise words
-            if term_text in noise_words:
+
+            # Dynamic Semantic Filtering (User Request)
+            if semantic_filter:
+                score = semantic_filter.get_relevance_score(term_text)
+                if score < 0.3: # Strict threshold for noise
+                     semantic_dropped_count += 1
+                     continue
+                term['semantic_score'] = score # Save score for later
+
+
+
+
+            # Check noise words (Token-based check)
+            term_tokens = set(term_text.split())
+            if not term_tokens.isdisjoint(noise_words):
+                 is_noise = True
+
+
+            # Check if it's all lowercase single word (likely not a scientific term)
+            if term_text.islower() and len(term_tokens) == 1:
                 is_noise = True
 
-            # Check if it's all lowercase (likely not a scientific term)
-            if term_text.islower() and len(term_text.split()) == 1:
-                is_noise = True
 
             if not is_noise:
                 filtered_terms.append(term)
 
+
         filtered_count = len(filtered_terms)
+        if semantic_filter:
+            logger.info(f"   🧠 Dynamic Semantic Filter dropped {semantic_dropped_count:,} irrelevant terms (Score < 0.3)")
         logger.info(f"   🗑️  Filtered {original_count - filtered_count:,} noise terms")
         logger.info(f"   ✅ Remaining terms: {filtered_count:,}")
 
+
         return filtered_terms
+
 
     def select_final_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """STEP 5: Select final terms to reach target count"""
         logger.info(f"🎯 STEP 5: Selecting final {self.config.target_final_terms:,} terms...")
 
+
         current_count = len(terms)
         target_count = self.config.target_final_terms
 
+
         if current_count <= target_count:
             logger.info(f"   ✅ Already have {current_count:,} terms (≤ target {target_count:,})")
-            return terms
+            # Force ranking anyway to get scores
+            logger.info("   🌟 Applying Advanced Term Ranking to calculate scores...")
+            ranked_terms = self.term_ranker.rank_terms(terms)
+            return ranked_terms
+
 
         # Advanced Ranking using TermRanker (Gold Standard + Semantic + Frequency)
         logger.info("   🌟 Applying Advanced Term Ranking...")
@@ -2853,12 +3352,15 @@ class GlobalPipelineProcessor:
         # Select top N
         final_terms = ranked_terms[:target_count]
 
+
         logger.info(f"   ✅ Selected {len(final_terms):,} final terms")
         return final_terms
+
 
     def run_advanced_processing(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Apply correction, mapping, definitions, validation"""
         logger.info("🔬 STEP 6: Advanced processing (correction, mapping, definitions, validation)...")
+
 
         # Correction
         if self.term_corrector:
@@ -2867,6 +3369,7 @@ class GlobalPipelineProcessor:
             logger.info(f"      ✅ Correction complete: {len(terms)} terms")
             self.save_terms_to_files(terms, "step6_corrected")
 
+
         # Mapping
         if self.mapper:
             logger.info("   🗺️  Running OMOP/BioPortal mapping...")
@@ -2874,11 +3377,13 @@ class GlobalPipelineProcessor:
             logger.info(f"      ✅ OMOP/BioPortal mapping complete")
             self.save_terms_to_files(terms, "step6_mapped_omop_bioportal")
 
+
         if self.umls_mapper:
             logger.info("   🏥 Running UMLS mapping...")
             terms = self.umls_mapper.map_terms(terms)
             logger.info(f"      ✅ UMLS mapping complete")
             self.save_terms_to_files(terms, "step6_mapped_umls")
+
 
         # Definitions
         if self.def_generator:
@@ -2887,6 +3392,7 @@ class GlobalPipelineProcessor:
             logger.info(f"      ✅ Definitions generated")
             self.save_terms_to_files(terms, "step6_definitions")
 
+
         # Validation
         if self.validator:
             logger.info("   ✅ Running validation...")
@@ -2894,17 +3400,21 @@ class GlobalPipelineProcessor:
             logger.info(f"      ✅ Validation complete")
             self.save_terms_to_files(terms, "step6_validated")
 
+
         return terms
+
 
     def save_terms_to_files(self, terms: List[Dict[str, Any]], step_name: str) -> None:
         """Save terms to both JSON and CSV files with step-specific naming"""
         logger.info(f"💾 Saving {len(terms)} terms for step: {step_name}")
+
 
         # Save JSON
         json_file = self.output_path / f"{step_name}_terms.json"
         with open(json_file, 'w', encoding='utf-8') as f:
             json.dump(terms, f, indent=2, ensure_ascii=False)
         logger.info(f"   ✅ Saved JSON to {json_file}")
+
 
         # Save CSV
         try:
@@ -2933,65 +3443,85 @@ class GlobalPipelineProcessor:
                     row["validation_valid"] = term["validation"].get("is_valid")
                     row["validation_response"] = term["validation"].get("raw_response")
 
+
                 csv_data.append(row)
+
 
             df = pd.DataFrame(csv_data)
             csv_file = self.output_path / f"{step_name}_terms.csv"
             df.to_csv(csv_file, index=False, encoding='utf-8')
             logger.info(f"   ✅ Saved CSV to {csv_file}")
 
+
         except Exception as e:
             logger.warning(f"Failed to save CSV for {step_name}: {e}")
+
 
     def run_global_pipeline(self) -> Dict[str, Any]:
         """Run the complete correct global pipeline"""
         logger.info("🚀 Starting CORRECT GLOBAL Scientific Term Extraction Pipeline")
 
+
         start_time = time.time()
+
 
         # STEP 1: Extract ALL terms from ALL models across ALL files
         all_raw_terms = self.extract_all_terms_from_all_files()
 
+
         # Save raw terms after extraction
         self.save_terms_to_files(all_raw_terms, "step1_raw_extraction")
+
 
         # STEP 2: Gather ALL terms into single collection (already done in step 1)
         logger.info(f"📦 STEP 2: Gathered ALL {len(all_raw_terms):,} terms into single collection")
 
+
         # STEP 3: Global deduplication (exact + fuzzy + semantic)
         logger.info("🔄 STEP 3: Global deduplication (exact + fuzzy + semantic)...")
+
 
         # OPTIMIZED: Initialize deduplicator only when needed
         self._initialize_components()
 
+
         dedup_terms = self.deduplicator.deduplicate(all_raw_terms)
         logger.info(f"   ✅ Global deduplication: {len(all_raw_terms):,} → {len(dedup_terms):,} terms")
+
 
         # OPTIMIZED: Cleanup after deduplication (memory intensive)
         self._cleanup_memory()
 
+
         # Save deduplicated terms
         self.save_terms_to_files(dedup_terms, "step3_deduplicated")
+
 
         # STEP 4: Filter noise terms
         filtered_terms = self.filter_noise_terms(dedup_terms)
 
+
         # Save filtered terms
         self.save_terms_to_files(filtered_terms, "step4_filtered")
+
 
         # STEP 5: Final selection to target count
         final_terms = self.select_final_terms(filtered_terms)
 
+
         # Save final selection before advanced processing
         self.save_terms_to_files(final_terms, "step5_final_selection")
+
 
         # STEP 6: Advanced processing (optional)
         if any([self.term_corrector, self.mapper, self.umls_mapper, self.def_generator, self.validator]):
             final_terms = self.run_advanced_processing(final_terms)
 
+
         # Calculate stats
         end_time = time.time()
         processing_time = end_time - start_time
+
 
         result = {
             "pipeline_metadata": {
@@ -3014,13 +3544,16 @@ class GlobalPipelineProcessor:
             "terms": final_terms
         }
 
+
         # Save final results with our helper method
         self.save_terms_to_files(final_terms, "step7_final_results")
+
 
         # Save results in the original format for compatibility
         output_file = self.output_path / "correct_global_results.json"
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=2, ensure_ascii=False)
+
 
         # Save CSV
         try:
@@ -3049,15 +3582,19 @@ class GlobalPipelineProcessor:
                     row["validation_valid"] = term["validation"].get("is_valid")
                     row["validation_response"] = term["validation"].get("raw_response")
 
+
                 csv_data.append(row)
+
 
             df = pd.DataFrame(csv_data)
             csv_file = self.output_path / "correct_global_results.csv"
             df.to_csv(csv_file, index=False, encoding='utf-8')
             logger.info(f"💾 Saved CSV results to {csv_file}")
 
+
         except Exception as e:
             logger.warning(f"Failed to save CSV: {e}")
+
 
         # Final summary
         logger.info("🎉 CORRECT GLOBAL PIPELINE COMPLETE!")
@@ -3065,9 +3602,12 @@ class GlobalPipelineProcessor:
         logger.info(f"📊 Final results: {len(final_terms):,} high-quality terms")
         logger.info(f"💾 Results saved to: {output_file}")
 
+
         return result
 
+
 # --- Main Execution ---
+
 
 def process_file(file_path: Path, extractor: TermsExtractor, deduplicator: Deduplicator, mapper: ComprehensiveMapper) -> Dict[str, Any]:
     """Process a single file"""
@@ -3091,6 +3631,7 @@ def process_file(file_path: Path, extractor: TermsExtractor, deduplicator: Dedup
     mapped_terms = mapper.map_terms(dedup_terms)
     logger.info(f"  Mapped {len(mapped_terms)} terms")
 
+
     # 4. Ranking
     final_terms = extractor.rank_terms(mapped_terms)
     logger.info(f"  Ranked {len(final_terms)} terms")
@@ -3105,8 +3646,10 @@ def process_file(file_path: Path, extractor: TermsExtractor, deduplicator: Dedup
         "terms": final_terms
     }
 
+
 # --- Global Worker State ---
 _worker_extractor = None
+
 
 def init_worker(config: PipelineConfig):
     """Initialize worker process with its own extractor"""
@@ -3116,6 +3659,7 @@ def init_worker(config: PipelineConfig):
         logger.info(f"Worker initialized with model {config.spacy_model}")
     except Exception as e:
         logger.error(f"Worker initialization failed: {e}")
+
 
 def process_file_worker(file_path: Path) -> Tuple[Path, List[Dict[str, Any]]]:
     """Worker function to extract terms from a file"""
@@ -3131,7 +3675,9 @@ def process_file_worker(file_path: Path) -> Tuple[Path, List[Dict[str, Any]]]:
         logger.error(f"Worker failed on {file_path}: {e}")
         return file_path, []
 
+
 # --- Checkpointing ---
+
 
 def load_checkpoint(checkpoint_path: Path) -> Set[str]:
     """Load set of processed filenames from checkpoint"""
@@ -3144,6 +3690,7 @@ def load_checkpoint(checkpoint_path: Path) -> Set[str]:
     except Exception as e:
         logger.warning(f"Failed to load checkpoint: {e}")
         return set()
+
 
 def update_checkpoint(checkpoint_path: Path, filename: str):
     """Append a filename to the checkpoint"""
@@ -3159,16 +3706,17 @@ def update_checkpoint(checkpoint_path: Path, filename: str):
     except Exception as e:
         logger.warning(f"Failed to update checkpoint: {e}")
 
+
 SCISPACY_MODELS = [
     "en_core_sci_sm",
     "en_core_sci_md",
     "en_core_sci_lg",
-    "en_core_sci_scibert",
     "en_ner_craft_md",
     "en_ner_jnlpba_md",
     "en_ner_bc5cdr_md",
     "en_ner_bionlp13cg_md"
 ]
+
 
 SPACY_MODELS = [
     "en_core_web_sm",
@@ -3176,6 +3724,7 @@ SPACY_MODELS = [
     "en_core_web_lg",
     "en_core_web_trf"
 ]
+
 
 def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
     """Run the pipeline with the given configuration"""
@@ -3194,6 +3743,7 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
     processed_files = load_checkpoint(checkpoint_path)
     logger.info(f"Loaded checkpoint: {len(processed_files)} files already processed.")
 
+
     # Identify files to process
     all_files = list(input_path.glob("*.txt"))
     files_to_process = [f for f in all_files if f.name not in processed_files]
@@ -3206,6 +3756,7 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
     if not files_to_process:
         logger.info("No new files to process. Exiting.")
         return
+
 
     # Initialize Central Components
     logger.info("Initializing central components...")
@@ -3220,6 +3771,7 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
     except Exception as e:
         logger.error(f"Failed to initialize central components: {e}")
         return
+
 
     # Process Loop
     # Phase 1: Parallel Extraction (CPU Bound)
@@ -3260,6 +3812,7 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
                     logger.error(f"Error reading {f}: {e}")
             del local_extractor
 
+
         # 2. Post-Processing (Deduplication, Mapping, Validation)
         for file_path, raw_terms in chunk_results:
             if not raw_terms:
@@ -3280,9 +3833,11 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
             else:
                 final_terms = ranker.rank_terms(final_terms) 
 
+
             # Validation (Batched per file, or we could batch across files but that's complex for tracking)
             if validator:
                 final_terms = validator.validate_terms(final_terms)
+
 
             # Save Result
             result = {
@@ -3309,6 +3864,8 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
         gc.collect()
 
 
+
+
     # After processing all files, create consolidated results
     logger.info("All files processed. Creating consolidated results...")
     try:
@@ -3316,22 +3873,29 @@ def run_pipeline(config: PipelineConfig, skip_mapping: bool = False):
     except Exception as e:
         logger.error(f"Failed to create final consolidated results: {e}")
 
+
 # Removed rank_terms_static as it is replaced by TermRanker
+
 
 def create_final_consolidated_results(output_path: Path, config: PipelineConfig):
     """Create final consolidated results from all processed files with top 5K-10K terms"""
     import pandas as pd
 
+
     logger.info("Creating final consolidated results from all processed files...")
+
 
     # Find all result files
     result_files = list(output_path.glob(f"*_{config.spacy_model}_results.json"))
+
 
     if not result_files:
         logger.warning("No result files found for consolidation")
         return
 
+
     logger.info(f"Found {len(result_files)} result files to consolidate")
+
 
     all_terms = []
     consolidation_metadata = {
@@ -3345,12 +3909,14 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
         "files_consolidated": []
     }
 
+
     # Process each result file
     for result_file in result_files:
         logger.info(f"Processing {result_file.name}")
         try:
             with open(result_file, 'r') as f:
                 data = json.load(f)
+
 
             # Add file metadata
             consolidation_metadata["files_consolidated"].append({
@@ -3360,20 +3926,25 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
                 "final_count": data.get("stats", {}).get("final_count", 0)
             })
 
+
             # Add terms with file source
             for term in data.get("terms", []):
                 term["source_file"] = data.get("file")
                 term["source_model"] = config.spacy_model
                 all_terms.append(term)
 
+
         except Exception as e:
             logger.error(f"Error processing {result_file}: {e}")
             continue
 
+
     logger.info(f"Collected {len(all_terms)} total terms from all files")
+
 
     # Global deduplication across all files
     unique_terms = {}
+
 
     for term in all_terms:
         term_key = term["term"].lower().strip()
@@ -3383,35 +3954,44 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
             # Merge information from duplicates
             existing = unique_terms[term_key]
 
+
             # Combine source files
             if "source_file" not in existing:
                 existing["source_file"] = []
             elif isinstance(existing["source_file"], str):
                 existing["source_file"] = [existing["source_file"]]
 
+
             if term["source_file"] not in existing["source_file"]:
                 existing["source_file"].append(term["source_file"])
 
+
             # Update frequency
             existing["frequency"] = existing.get("frequency", 1) + term.get("frequency", 1)
+
 
             # Keep highest score
             if term.get("score", 0) > existing.get("score", 0):
                 existing["score"] = term["score"]
 
+
             # Merge other fields if needed
             if term.get("examples") and existing.get("examples"):
                 existing["examples"] = list(set(existing["examples"] + term["examples"]))
 
+
     consolidated_terms = list(unique_terms.values())
+
 
     # Sort by score descending and limit to top 5K-10K
     consolidated_terms.sort(key=lambda x: (x.get("score", 0), x.get("frequency", 0)), reverse=True)
+
 
     MAX_TERMS = 10000  # Configurable limit for top terms
     MIN_TERMS = 5000   # Minimum terms to keep
     target_terms = min(max(len(consolidated_terms), MIN_TERMS), MAX_TERMS)
     top_terms = consolidated_terms[:target_terms]
+
 
     # Create final consolidated data structure
     final_consolidated_data = {
@@ -3428,12 +4008,15 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
         "terms": top_terms
     }
 
+
     # Save consolidated JSON
     json_output = output_path / f"final_consolidated_{config.spacy_model}_results.json"
     with open(json_output, 'w') as f:
         json.dump(final_consolidated_data, f, indent=2)
 
+
     logger.info(f"Saved final consolidated JSON with {len(top_terms)} top terms to {json_output}")
+
 
     # Create CSV with top terms
     csv_output = output_path / f"final_consolidated_{config.spacy_model}_results.csv"
@@ -3444,6 +4027,7 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
             file_count = 1
             if isinstance(term.get("source_file"), list):
                 file_count = len(term["source_file"])
+
 
             row = {
                 "term": term["term"],
@@ -3459,6 +4043,7 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
                 "examples": " | ".join(term.get("examples", [])[:3])
             }
 
+
             # Add mappings if available
             if "mappings" in term:
                 for source, matches in term["mappings"].items():
@@ -3467,20 +4052,25 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
                         row[f"mapping_{source}_label"] = matches[0].get("label", "")
                         row[f"mapping_{source}_score"] = matches[0].get("score", 0)
 
+
             # Add validation if available
             if "validation" in term:
                 validation = term["validation"]
                 row["validation_valid"] = validation.get("is_valid")
                 row["validation_response"] = validation.get("raw_response")
 
+
             flat_terms.append(row)
+
 
         df = pd.DataFrame(flat_terms)
         df.to_csv(csv_output, index=False)
         logger.info(f"Saved final consolidated CSV with {len(flat_terms)} rows to {csv_output}")
 
+
     except Exception as e:
         logger.error(f"Failed to create CSV: {e}")
+
 
     # Save summary statistics
     stats_output = output_path / f"final_consolidation_{config.spacy_model}_stats.json"
@@ -3495,29 +4085,38 @@ def create_final_consolidated_results(output_path: Path, config: PipelineConfig)
     with open(stats_output, 'w') as f:
         json.dump(stats, f, indent=2)
 
+
     logger.info(f"Final consolidation completed. Processed {len(result_files)} files, generated {len(top_terms)} top terms")
+
 
 def consolidate_results(input_dir: str, output_dir: str):
     """Consolidate all ensemble results into a single comprehensive output"""
     import pandas as pd
     from pathlib import Path
 
+
     logger.info(f"Consolidating results from {input_dir} to {output_dir}")
+
 
     input_path = Path(input_dir)
     output_path = Path(output_dir)
 
+
     # Ensure output directory exists
     output_path.mkdir(parents=True, exist_ok=True)
 
+
     # Find all ensemble result files
     ensemble_files = list(input_path.glob("*_ensemble_results.json"))
+
 
     if not ensemble_files:
         logger.warning("No ensemble result files found to consolidate")
         return
 
+
     logger.info(f"Found {len(ensemble_files)} ensemble files")
+
 
     all_terms = []
     consolidated_data = {
@@ -3529,12 +4128,14 @@ def consolidate_results(input_dir: str, output_dir: str):
         "terms": []
     }
 
+
     # Process each ensemble file
     for file_path in ensemble_files:
         logger.info(f"Processing {file_path.name}")
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)
+
 
             # Add file metadata
             consolidated_data["metadata"]["files_processed"].append({
@@ -3545,18 +4146,22 @@ def consolidate_results(input_dir: str, output_dir: str):
                 "final_count": data.get("stats", {}).get("final_count", 0)
             })
 
+
             # Add terms with file source
             for term in data.get("terms", []):
                 term["source_file"] = file_path.name
                 all_terms.append(term)
 
+
         except Exception as e:
             logger.error(f"Error processing {file_path}: {e}")
             continue
 
+
     # Global deduplication across all files
     logger.info(f"Performing global deduplication on {len(all_terms)} terms")
     unique_terms = {}
+
 
     for term in all_terms:
         term_key = term["term"].lower().strip()
@@ -3570,6 +4175,7 @@ def consolidate_results(input_dir: str, output_dir: str):
             elif isinstance(existing["source_file"], str):
                 existing["source_file"] = [existing["source_file"]]
 
+
             if isinstance(term["source_file"], str):
                 if term["source_file"] not in existing["source_file"]:
                     existing["source_file"].append(term["source_file"])
@@ -3578,11 +4184,14 @@ def consolidate_results(input_dir: str, output_dir: str):
                     if sf not in existing["source_file"]:
                         existing["source_file"].append(sf)
 
+
             # Keep highest score
             if term.get("score", 0) > existing.get("score", 0):
                 existing["score"] = term["score"]
 
+
     consolidated_terms = list(unique_terms.values())
+
 
     # Sort by score descending
     consolidated_terms.sort(key=lambda x: x.get("score", 0), reverse=True)
@@ -3591,16 +4200,20 @@ def consolidate_results(input_dir: str, output_dir: str):
     MAX_CONSOLIDATED_TERMS = 10000  # Configurable limit
     consolidated_terms = consolidated_terms[:MAX_CONSOLIDATED_TERMS]
 
+
     consolidated_data["terms"] = consolidated_terms
     consolidated_data["metadata"]["total_unique_terms"] = len(consolidated_terms)
     consolidated_data["metadata"]["total_raw_terms"] = len(all_terms)
+
 
     # Save consolidated JSON
     json_output = output_path / "consolidated_ensemble_results.json"
     with open(json_output, 'w') as f:
         json.dump(consolidated_data, f, indent=2)
 
+
     logger.info(f"Saved consolidated JSON with {len(consolidated_terms)} unique terms")
+
 
     # Create flattened DataFrame for CSV export
     flat_terms = []
@@ -3623,12 +4236,14 @@ def consolidate_results(input_dir: str, output_dir: str):
             "source_filenames": ";".join(term.get("source_file", [])) if isinstance(term.get("source_file"), list) else term.get("source_file", "")
         }
 
+
         # Add validation info if available
         if "validation" in term:
             validation = term["validation"]
             row["validation_valid"] = validation.get("is_valid")
             row["validation_response"] = validation.get("raw_response")
             row["validation_model"] = validation.get("model")
+
 
         # Add mappings if available
         if "mappings" in term:
@@ -3638,7 +4253,9 @@ def consolidate_results(input_dir: str, output_dir: str):
                     row[f"mapping_{source}_label"] = matches[0].get("label", "")
                     row[f"mapping_{source}_score"] = matches[0].get("score", 0)
 
+
         flat_terms.append(row)
+
 
     # Save consolidated CSV
     csv_output = output_path / "consolidated_ensemble_results.csv"
@@ -3648,6 +4265,7 @@ def consolidate_results(input_dir: str, output_dir: str):
         logger.info(f"Saved consolidated CSV with {len(flat_terms)} rows")
     else:
         logger.warning("No terms to save to CSV")
+
 
     # Generate summary statistics
     stats = {
@@ -3661,17 +4279,22 @@ def consolidate_results(input_dir: str, output_dir: str):
         }
     }
 
+
     # Save summary stats
     stats_output = output_path / "consolidation_stats.json"
     with open(stats_output, 'w') as f:
         json.dump(stats, f, indent=2)
 
+
     logger.info(f"Consolidation complete. Processed {len(all_terms)} raw terms into {len(consolidated_terms)} unique terms")
     logger.info(f"Results saved to {output_path}")
 
 
+
+
 def main():
     parser = argparse.ArgumentParser(description="Standalone SciSpaCy Pipeline")
+
 
     parser.add_argument("--input_dir", default="./data", help="Input directory")
     parser.add_argument("--output_dir", default="./output", help="Output directory")
@@ -3680,15 +4303,18 @@ def main():
     parser.add_argument("--run_all_models", action="store_true", help="Run pipeline with ALL available scispacy models")
     parser.add_argument("--ensemble", action="store_true", help="Run ALL models and combine/deduplicate results into one file")
 
+
     # Validation arguments
     parser.add_argument("--validate_biomistral", action="store_true", help="Enable BioMistral-7B validation")
     parser.add_argument("--biomistral_model", default="BioMistral/BioMistral-7B", help="BioMistral model name")
     parser.add_argument("--load_4bit", action="store_true", help="Load BioMistral in 4-bit quantization")
 
+
     # Ollama arguments
     parser.add_argument("--use_ollama", action="store_true", help="Use Ollama instead of HuggingFace models")
     parser.add_argument("--ollama_base_url", default="http://localhost:11434", help="Ollama base URL")
     parser.add_argument("--ollama_model", default="mistral:latest", help="Ollama model to use (e.g., mistral:latest, llama2:7b)")
+
 
     # Advanced Features
     parser.add_argument("--generate_definitions", action="store_true", help="Generate definitions using LLM")
@@ -3699,6 +4325,7 @@ def main():
     parser.add_argument("--definition_model", default="BioMistral/BioMistral-7B", help="Model for definitions/correction (e.g. BioMistral, BioBERT)")
     parser.add_argument("--bioportal_api_key", default=os.getenv("BIOPORTAL_API_KEY"), help="BioPortal API Key")
 
+
     # ⭐ NEW arguments you requested ⭐
     parser.add_argument("--max_files", type=int, default=None, help="Maximum number of files to process")
     parser.add_argument("--target_terms", type=int, default=10000, help="Target final number of terms")
@@ -3707,16 +4334,21 @@ def main():
     parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers for extraction")
     parser.add_argument("--batch_size", type=int, default=32, help="Batch size for GPU inference")
 
+
     args = parser.parse_args()
+
+
 
 
     # Select models
     # Start with optimized models from config
     models_to_use = ["en_core_sci_md", "en_ner_bc5cdr_md", "en_core_sci_lg"]  # Optimized 3 models
 
+
     if args.model and not args.run_all_models and not args.ensemble:
         # If specific model requested, just use that one
         models_to_use = [args.model]
+
 
     # OPTIMIZED: --ensemble now uses optimized 3 models instead of all 8
     # Only use ALL 8 models if specifically requested with --run_all_models
@@ -3724,8 +4356,10 @@ def main():
         models_to_use = SCISPACY_MODELS
     # --ensemble will use the optimized 3 models by default
 
+
     logger.info(f"🚀 Starting Standalone Pipeline with Global Workflow")
     logger.info(f"Models: {models_to_use}")
+
 
     # Create config
     config = PipelineConfig(
@@ -3750,6 +4384,7 @@ def main():
         load_4bit=args.load_4bit,
         spacy_model=models_to_use[0], # Default for base components
 
+
         # Ollama configuration
         use_ollama=args.use_ollama,
         ollama_base_url=args.ollama_base_url,
@@ -3760,9 +4395,17 @@ def main():
     processor = GlobalPipelineProcessor(config)
     processor.run_global_pipeline()
 
+
     logger.info("✅ Pipeline execution completed!")
+
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
 
 
