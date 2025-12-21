@@ -74,8 +74,9 @@ class PipelineConfig:
     preferred_models: Optional[List[str]] = None  # User-specified preferred models
     auto_detect_models: bool = True  # Whether to auto-detect available models
     use_all_available: bool = False  # Whether to use all available models
-    target_final_terms: int = 10000  # Increased for comprehensive microbiome CDM coverage
-    max_raw_terms_limit: int = 100000  # Maximum raw terms for efficient processing (1 lakh)
+    target_final_terms: int = 20000  # Matched to modular pipeline global target
+    min_terms_per_file: int = 150     # Matched to modular pipeline
+    max_raw_terms_limit: int = 100000
 
     # sciSpaCy Configuration (matching modular pipeline)
     disabled_components: List[str] = field(default_factory=lambda: ["parser"])
@@ -136,7 +137,10 @@ class PipelineConfig:
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "mistral:latest"  # Default Mistral model in Ollama
 
-    # UMLS Configuration (from modular pipeline)
+    # API Keys and Data Directories
+    umls_api_key: Optional[str] = None
+    bioportal_api_key: Optional[str] = None
+    omop_vocab_dir: Optional[str] = None
     umls_enabled: bool = True
     umls_timeout: int = 30
     umls_retry_attempts: int = 3
@@ -462,9 +466,9 @@ FILTER_PATTERNS = {
 }
 
 
-# Enhanced Noise Blocklist
 NOISE_TERMS = {
-    "lorem", "ipsum", "introduction", "methods", "results", "discussion",
+    # Noise terms to filter out
+    "introduction", "methods", "results", "discussion",
     "conclusion", "references", "acknowledgments", "author", "figure", "table", 
     "et al", "copyright", "rights", "reserved", "doi", "http", "www", "com", 
     "org", "edu", "journal", "press", "volume", "issue", "page", "editor",
@@ -473,7 +477,8 @@ NOISE_TERMS = {
     "abstract", "background", "objective", "design", "setting", "participants",
     "interventions", "measurements", "limitations", "conclusions", "funding",
     "competing", "interests", "disclosure", "keywords", "abbreviations",
-    "study", "analysis", "bacterial", "microbial", "result", "results",
+    "study", "analysis", "result", "results"
+}
     "significant", "high", "low", "increase", "decrease", "effect", "effects",
     "shown", "see", "view", "large", "small", "new", "old", "different",
     "similar", "observed", "detected", "measured", "calculated",
@@ -737,9 +742,52 @@ CDM_KEYWORDS = {
 
 # Entity Refinement Rules
 ENTITY_REFINEMENT_RULES = {
-    'ORGANISM': [r'\b(bacter|coccus|sp\.|spp\.|phage|virus)\b', r'[A-Z][a-z]+ [a-z]+'],
-    'DISEASE': [r'\b(disease|syndrome|infection|itis|osis)\b'],
-    'CHEMICAL': [r'\b(acid|peptide|protein|enzyme|lipid|ol|ate)\b'],
+    # TAXON/ORGANISM - Highest priority for microbiome CDM
+    'TAXON': [
+        r'\bbacter(ia|ium|ial|oides)\b',
+        r'\b(species|strain|genus|family|phylum|order)\b',
+        r'\b(firmicutes|bacteroidetes|actinobacteria|proteobacteria)\b',
+        r'\b(bacteroides|prevotella|faecalibacterium|akkermansia|bifidobacterium)\b',
+        r'\b(lactobacillus|clostridium|ruminococcus)\b',
+        r'(coccus|bacter|phage|viridae)$',
+        r'\b(microbiota|microbial|microorganism)\b',
+        r'\b(probiotic|prebiotic|commensal|pathogen)\b'
+    ],
+    # GENE/GENOMIC
+    'GENE_OR_GENE_PRODUCT': [
+        r'\bgene(s|tic|ome)?\b',
+        r'\b(16s|rrna|dna|rna)\b',
+        r'\b(expression|transcription|upregulated)\b',
+        r'\b(genomic|metagenomic|amplicon|otu|asv)\b'
+    ],
+    # PROTEIN/ENZYME
+    'PROTEIN': [
+        r'\bprotein(s)?\b',
+        r'\benzyme(s)?\b',
+        r'\b(peptide|antibody|iga|igg|cytokine|interleukin)\b',
+        r'(ase|kinase)$'
+    ],
+    # DISEASE/PATHOLOGY
+    'DISEASE': [
+        r'\b(disease|disorder|syndrome|infection)\b',
+        r'\b(cancer|diabetes|obesity|inflammation)\b',
+        r'\b(ibd|colitis|crohn|ibs|dysbiosis)\b',
+        r'(itis|osis|emia)$'
+    ],
+    # CHEMICAL/METABOLITE
+    'CHEMICAL': [
+        r'\b(metabolite|compound|molecule)\b',
+        r'\b(butyrate|propionate|acetate|scfa|bile acid|fatty acid)\b',
+        r'\b(lipid|metabolism|vitamin)\b'
+    ],
+    # CELL TYPE
+    'CELL_TYPE': [
+        r'\b(t cell|b cell|macrophage|dendritic|epithelial)\b'
+    ],
+    # ANATOMICAL
+    'ANATOMICAL_ENTITY': [
+        r'\b(gut|intestinal|colon|oral|mucosal)\b'
+    ]
 }
 
 
@@ -993,13 +1041,72 @@ class MicrobiomeSemanticFilter:
         self.model = semantic_model
         # Use default seeds if none provided
         self.seed_terms = seed_terms or [
-           "microbiome", "microbiota", "gut flora", "intestinal bacteria",
-           "microbial community", "bacterial diversity", "dysbiosis",
-           "probiotic", "prebiotic", "synbiotic", "postbiotic",
-           "short-chain fatty acids", "SCFA", "butyrate", "propionate", "acetate",
-           "Firmicutes", "Bacteroidetes", "Actinobacteria", "Proteobacteria",
-           "Lactobacillus", "Bifidobacterium", "Clostridium", "Bacteroides",
-           "gut-brain axis", "intestinal permeability", "leaky gut"
+            # CORE MICROBIOME
+            "microbiome", "microbiota", "metagenome", "metagenomics",
+            "microbial", "bacterial", "archaeal", "fungal", "viral", "virome",
+            "bacteriome", "mycobiome", "phageome",
+            
+            # ANATOMICAL SITES
+            "gut", "intestinal", "gastrointestinal", "GI tract", "colon", "colonic",
+            "intestine", "small intestine", "large intestine", "cecum", "cecal",
+            "ileum", "ileal", "jejunum", "duodenum", "rectum", "rectal",
+            "fecal", "stool", "feces", "mucosal", "luminal",
+            "oral", "buccal", "saliva", "salivary", "tongue", "dental", "periodontal",
+            "skin", "cutaneous", "dermal", "vaginal", "urogenital",
+            "respiratory", "nasal", "nasopharyngeal", "lung", "pulmonary",
+            
+            # ORGANISMS & TAXONOMY
+            "bacteria", "archaea", "fungi", "virus", "bacteriophage", "phage",
+            "Firmicutes", "Bacteroidetes", "Actinobacteria", "Proteobacteria",
+            "Verrucomicrobia", "Fusobacteria", "Spirochaetes",
+            "Bacteroides", "Prevotella", "Faecalibacterium", "Akkermansia",
+            "Bifidobacterium", "Lactobacillus", "Clostridium", "Ruminococcus",
+            "Roseburia", "Eubacterium", "Enterococcus", "Streptococcus",
+            "Escherichia", "E. coli", "Blautia", "Coprococcus",
+            "probiotic", "prebiotic", "synbiotic", "postbiotic",
+            "commensal", "symbiont", "pathogen", "pathobiont",
+            "strain", "species", "genus", "family", "phylum",
+            
+            # METABOLITES & BIOCHEMISTRY
+            "metabolite", "metabolism", "metabolic", "metabolomics",
+            "SCFA", "short-chain fatty acid", "butyrate", "propionate", "acetate",
+            "lactate", "succinate", "formate",
+            "bile acid", "bile salt", "primary bile acid", "secondary bile acid",
+            "deoxycholic acid", "lithocholic acid", "chenodeoxycholic acid",
+            "amino acid", "tryptophan", "indole", "skatole",
+            "neurotransmitter", "serotonin", "GABA", "dopamine",
+            "vitamin", "B12", "folate", "vitamin K", "biotin",
+            "lipopolysaccharide", "LPS", "endotoxin",
+            "peptidoglycan", "lipoteichoic acid",
+            "polysaccharide", "oligosaccharide", "glycan",
+            "fiber", "dietary fiber", "resistant starch", "inulin",
+            "fermentation", "fermentable", "saccharolytic", "proteolytic",
+            
+            # DISEASES & CONDITIONS
+            "disease", "disorder", "syndrome", "condition", "pathology",
+            "IBD", "inflammatory bowel disease", "Crohn's disease", "Crohn",
+            "ulcerative colitis", "colitis", "IBS", "irritable bowel syndrome",
+            "dysbiosis", "eubiosis", "inflammation", "inflammatory",
+            "infection", "colonization", "overgrowth", "SIBO",
+            "obesity", "metabolic syndrome", "diabetes", "T2D", "insulin resistance",
+            "cardiovascular", "atherosclerosis", "hypertension",
+            "cancer", "colorectal cancer", "CRC", "carcinoma", "tumor",
+            "neurological", "autism", "ASD", "Parkinson", "Alzheimer",
+            "depression", "anxiety", "gut-brain axis",
+            "gut-brain", "axis", "brain-gut",
+            "allergy", "atopy", "asthma", "eczema",
+            "autoimmune", "rheumatoid arthritis", "multiple sclerosis",
+            "liver", "hepatic", "NAFLD", "cirrhosis",
+            
+            # HOST FACTORS & PHYSIOLOGY
+            "immune", "immunity", "immunology", "immunological",
+            "T cell", "B cell", "dendritic cell", "macrophage", "neutrophil",
+            "cytokine", "interferon", "interleukin", "TNF", "IL-6", "IL-10",
+            "antibody", "IgA", "IgG", "secretory IgA",
+            "barrier", "permeability", "tight junction", "leaky gut",
+            "epithelial", "epithelium", "mucus", "mucin", "goblet cell",
+            "host", "host-microbe", "colonization resistance",
+            "homeostasis", "tolerance", "immune tolerance"
         ]
         self.seed_embeddings = None
         self._precompute_embeddings()
@@ -1319,20 +1426,25 @@ class TermsExtractor:
                 
         # Apply Contextual Cleaning (OCR fix)
         all_terms = ContextualCleaner.clean_terms(all_terms)
-        # Validate against known entities for refinement
-        # This part of the snippet seems to be misplaced or incomplete in the user's request.
-        # Assuming it was meant to be a new method or part of an existing one.
-        # For now, I'll place the new methods as requested and adjust the _apply_filters.
+        
+        # Apply label refinement
+        for term_data in all_terms:
+            term_data['label'] = self._refine_entity_label(term_data['term'], term_data['label'])
                 
         return all_terms
 
-    def _refine_entity_label(self, term: str, label: str) -> str:
-        """Refine entity label based on term content and known entities."""
-        # This method's implementation was not provided in the snippet,
-        # so I'm adding a placeholder.
-        # In a real scenario, this would involve checking against ontologies,
-        # dictionaries, or using more advanced NLP techniques.
-        return label # Placeholder: return original label
+    def _refine_entity_label(self, term_text: str, original_label: str) -> str:
+        """Refine entity labels using rule-based patterns"""
+        if original_label not in ['ENTITY', 'OTHER']:
+            return original_label
+
+        term_lower = term_text.lower()
+        for specific_label, patterns in ENTITY_REFINEMENT_RULES.items():
+            for pattern in patterns:
+                if re.search(pattern, term_lower):
+                    return specific_label
+
+        return original_label
 
     def _is_valid_scientific_term(self, term: str) -> bool:
         """Deep cleaning: Ensure term looks like a valid scientific concept"""
@@ -2876,10 +2988,13 @@ class OMOPMapper:
 
     def load_vocab(self):
         """Load OMOP vocabulary files and build optimized lookup table"""
-        from pathlib import Path
-        concept_file = Path("/home/jkalra/thesis/omop_vocab/CONCEPT.csv")
-        synonym_file = Path("/home/jkalra/thesis/omop_vocab/CONCEPT_SYNONYM.csv")
+        if not self.config.omop_vocab_dir:
+            logger.warning("OMOP vocabulary directory not configured.")
+            return
 
+        vocab_dir = Path(self.config.omop_vocab_dir)
+        concept_file = vocab_dir / "CONCEPT.csv"
+        synonym_file = vocab_dir / "CONCEPT_SYNONYM.csv"
 
         if not concept_file.exists():
             logger.warning(f"OMOP CONCEPT.csv not found at {concept_file}. OMOP mapping disabled.")
@@ -3695,6 +3810,60 @@ class BioBertQualitySelector:
         embeddings = outputs.last_hidden_state[:, 0, :]
         return embeddings
 
+class BioPortalMapper:
+    """NCBO BioPortal API wrapper for microbiome CDM labeling"""
+    def __init__(self, api_key: str):
+        self.api_key = api_key
+        self.base_url = "http://data.bioontology.org"
+        self.cache = {}
+
+    def get_label(self, term: str) -> Optional[str]:
+        """Query BioPortal for best matching ontology label"""
+        if term.lower() in self.cache:
+            return self.cache[term.lower()]
+            
+        try:
+            import requests
+            url = f"{self.base_url}/search?q={term}&apikey={self.api_key}&pagesize=1"
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get('collection'):
+                    # Basic mapping to CDM labels
+                    links = data['collection'][0].get('links', {})
+                    ontology = links.get('ontology', '')
+                    
+                    label = "ENTITY"
+                    if 'NCBITAXON' in ontology or 'TAXON' in ontology: label = "TAXON"
+                    elif 'CHEBI' in ontology: label = "CHEMICAL"
+                    elif 'GO' in ontology: label = "GENE_OR_GENE_PRODUCT"
+                    elif 'DOID' in ontology: label = "DISEASE"
+                    
+                    self.cache[term.lower()] = label
+                    return label
+        except Exception as e:
+            logger.debug(f"BioPortal query failed for {term}: {e}")
+        return None
+
+class LabelCorrector:
+    """Orchestrates label correction using multiple sources"""
+    def __init__(self, bioportal_api_key: Optional[str] = None, umls_api_key: Optional[str] = None):
+        self.bioportal = BioPortalMapper(bioportal_api_key) if bioportal_api_key else None
+        # UMLS API logic could be added here or reuse scispacy linker
+    
+    def correct_label(self, term: str, current_label: str) -> Dict[str, Any]:
+        """Attempt to correct generic labels using external APIs"""
+        if current_label not in ['ENTITY', 'OTHER']:
+            return {"label": current_label, "source": "original"}
+            
+        # Try BioPortal
+        if self.bioportal:
+            new_label = self.bioportal.get_label(term)
+            if new_label and new_label != "ENTITY":
+                return {"label": new_label, "source": "BioPortal"}
+                
+        return {"label": current_label, "source": "default"}
+
 
 class GlobalPipelineProcessor:
     """
@@ -3741,7 +3910,10 @@ class GlobalPipelineProcessor:
 
 
         # Initialize components once (no models loaded yet)
-        self.deduplicator = None
+        self.label_corrector = LabelCorrector(
+            bioportal_api_key=config.bioportal_api_key,
+            umls_api_key=config.umls_api_key
+        )
         self.term_corrector = None
         self.bert_selector = None
         self.mapper = None
@@ -4118,12 +4290,25 @@ class GlobalPipelineProcessor:
         logger.info("🔬 STEP 6: Advanced processing (correction, mapping, definitions, validation)...")
 
 
-        # Correction
+        # Term Correction
         if self.term_corrector:
             logger.info("   🔧 Running term correction...")
             terms = self.term_corrector.correct_terms(terms)
             logger.info(f"      ✅ Correction complete: {len(terms)} terms")
-            self.save_terms_to_files(terms, "step6_corrected")
+
+        # Label Correction (API-based)
+        logger.info("   🏷️  Running API-based label correction...")
+        corrected_count = 0
+        for term_data in terms:
+            if term_data.get('label') == 'ENTITY':
+                correction = self.label_corrector.correct_label(term_data['term'], 'ENTITY')
+                if correction['label'] != 'ENTITY':
+                    term_data['label'] = correction['label']
+                    term_data['label_source'] = correction['source']
+                    corrected_count += 1
+        
+        if corrected_count > 0:
+            logger.info(f"      ✅ Label correction complete: {corrected_count} labels refined via API")
 
 
         # Mapping

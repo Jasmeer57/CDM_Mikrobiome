@@ -239,7 +239,7 @@ class TermsExtractor:
 
     # Enhanced noise terms blocklist from reference terms.py
     NOISE_TERMS_BLOCKLIST = {
-        # Latin placeholder text
+        # General noise terms to filter out
         "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
         "proin", "ornare", "etiam", "condimentum", "mauris", "consequat", "fermentum",
         "phasellus", "elementum", "habitant", "morbi", "tristique", "senectus",
@@ -623,11 +623,8 @@ class TermsExtractor:
             if re.search(r'^[a-z]{4,}\d{1,}$', word) and not re.search(r'[-/]', word):
                 return False
                 
-        # 4. RELAXED: Allow terms with years/numbers if they're part of scientific context
-        # Only reject if it's PURELY a citation pattern like "et al 2012" or "(2012)"
-        #if re.match(r'\bet\s+al\b.*\d{4}', term_lower) or re.match(r'^\(\d{4}\)$', term):
-        #    return False
-        # REMOVED: Don't blanket-reject all 4-digit numbers - many scientific IDs contain them!
+        # Term relaxation for scientific contexts
+        # Allows terms with numbers that are valid scientific identifiers (e.g. 16S, IL-6)
 
         # 5. Reject run-on concatenated text (true OCR errors)
         for word in words:
@@ -682,6 +679,9 @@ class TermsExtractor:
         # CDM-specific filtering - optimize for Common Data Model
         if not self._is_cdm_relevant(term, context if 'context' in locals() else ""):
             return False
+
+        # If all checks passed, the term is valid
+        return True
 
 
     def _advanced_quality_check(self, term: str, context: str = "") -> bool:

@@ -1,5 +1,5 @@
 site_name: SpaCy Terms CDM Pipeline
-site_description: Production-ready pipeline for CDM terminology extraction with multi-layer filtering and NLP
+site_description: Production-ready pipeline for CDM terminology extraction with multi-layer filtering, NLP, and comprehensive security
 repo_url: https://github.com/SCAI-BIO/Microbiome-CDM
 
 theme:
@@ -26,12 +26,19 @@ nav:
   - Home: index.md
   - Getting Started:
     - getting-started/installation.md
+    - getting-started/security.md
   - Technical:
     - technical/deduplication.md
+    - technical/model-detection.md
+    - technical/term-extraction.md
   - API Documentation:
     - Configuration API: api/configuration-api.md
     - Extraction Endpoints: api/extraction-endpoints.md
     - Health Endpoints: api/health-endpoints.md
+  - Security:
+    - security/security-overview.md
+    - security/api-security.md
+    - security/input-validation.md
   - Safety:
     - Medical Safety: safety/medical-safety.md
 

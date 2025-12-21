@@ -3,21 +3,33 @@ version: '3.8'
 services:
   # Main application service
   term-extractor:
-    build: .
+    build:
+      context: .
+      target: production
     container_name: sci-term-extractor
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"  # Bind to localhost only
     volumes:
-      - ./data:/app/data
+      - ./data:/app/data:ro
       - ./output:/app/output
       - ./logs:/app/logs
     environment:
       - PYTHONPATH=/app
       - LOG_LEVEL=INFO
       - CUDA_VISIBLE_DEVICES=0
+      - MAX_FILE_SIZE=52428800  # 50MB limit
     depends_on:
       - redis
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: true  # Read-only filesystem except for volumes
+    tmpfs:
+      - /tmp:noexec,nosuid,size=100m
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     deploy:
       resources:
         reservations:
@@ -31,10 +43,13 @@ services:
     image: redis:7-alpine
     container_name: sci-term-redis
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"  # Bind to localhost only
     volumes:
       - redis_data:/data
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-defaultpassword}
 
   # Nginx for load balancing (production)
   nginx:

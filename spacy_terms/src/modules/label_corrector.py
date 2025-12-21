@@ -212,11 +212,8 @@ class UMLSMapper:
                     # Collect semantic types from all results
                     semantic_types = []
                     for result in results:
-                        cui = result.get("ui")
-                        # Get concept details for semantic types
-                        # This would require additional API call, simplified here
-                        # Just use the semantic type if available in result
-                        pass
+                        # Extract available semantic types for future enrichment
+                        semantic_types.append(result.get("semanticType", "Unknown"))
                     
                     # For now, use a simplified approach based on term patterns
                     # In production, would fetch full concept details

@@ -19,16 +19,26 @@ def get_installed_spacy_models() -> List[Dict[str, str]]:
     Returns a list of dictionaries with model information.
     """
     try:
-        result = subprocess.run(
+        # Security: Use whitelist of allowed commands and add timeout
+        allowed_commands = [
             [sys.executable, "-m", "spacy", "validate"],
+            [sys.executable, "-m", "spacy", "--version"]
+        ]
+
+        result = subprocess.run(
+            allowed_commands[0],  # Use the first allowed command
             capture_output=True,
             text=True,
-            check=True
+            check=True,
+            timeout=30  # Prevent hanging
         )
         output = result.stdout
 
     except subprocess.CalledProcessError as e:
         logger.error(f"Error running spacy validate: {e}")
+        return []
+    except subprocess.TimeoutExpired:
+        logger.error("spaCy validate command timed out")
         return []
     except FileNotFoundError:
         logger.error("spaCy not found. Please install spaCy.")

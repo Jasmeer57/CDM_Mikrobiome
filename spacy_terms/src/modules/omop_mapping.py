@@ -86,6 +86,9 @@ class OMOPMapper:
         self.lookup_df: Optional[pd.DataFrame] = None
         self.standard_concepts: Optional[pd.DataFrame] = None
         self._concept_cache: Dict[str, OMOPConcept] = {}
+        
+        if not self.vocab_dir:
+            logger.warning("OMOP vocabulary directory not provided. OMOP mapping will be disabled.")
 
     def preprocess_term(self, term: str) -> str:
         """Preprocess term for matching"""

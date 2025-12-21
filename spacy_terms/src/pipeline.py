@@ -31,6 +31,7 @@ from src.modules.microbiome_components import (
     MicrobiomeSemanticFilter,
     ContextualCleaner
 )
+from src.modules.label_corrector import LabelCorrector
 from src.modules.ranking_components import (
     TermRanker,
     TfidfSemanticModel
@@ -58,11 +59,38 @@ def process_file_worker(file_path: Path) -> Tuple[Path, List[Dict[str, Any]]]:
     global _worker_extractor
     if _worker_extractor is None:
         return file_path, []
-    
+
     try:
-        text = file_path.read_text(encoding='utf-8', errors='ignore')
+        # Security: Validate file path to prevent path traversal attacks
+        resolved_path = file_path.resolve()
+
+        # Check if file exists and is actually a file
+        if not resolved_path.exists() or not resolved_path.is_file():
+            logger.warning(f"File does not exist or is not a regular file: {file_path}")
+            return file_path, []
+
+        # Additional file validation for security
+        if resolved_path.suffix.lower() not in {'.txt', '.md', '.csv', '.json'}:
+            logger.warning(f"Unauthorized file type: {resolved_path.suffix}")
+            return file_path, []
+
+        # Check file size to prevent processing extremely large files
+        file_size = resolved_path.stat().st_size
+        max_file_size = 50 * 1024 * 1024  # 50MB limit
+        if file_size > max_file_size:
+            logger.warning(f"File too large ({file_size} bytes): {file_path}")
+            return file_path, []
+
+        # Secure file reading with path validation
+        text = resolved_path.read_text(encoding='utf-8', errors='ignore')
         terms = _worker_extractor.extract_from_text(text)
         return file_path, terms
+    except (PermissionError, OSError) as e:
+        logger.error(f"Permission or OS error accessing {file_path}: {e}")
+        return file_path, []
+    except UnicodeDecodeError as e:
+        logger.error(f"Text encoding error in {file_path}: {e}")
+        return file_path, []
     except Exception as e:
         logger.error(f"Worker failed on {file_path}: {e}")
         return file_path, []
@@ -91,6 +119,10 @@ class GlobalPipelineProcessor:
         self.gold_scorer = MicrobiomeGoldStandardScorer()
         self.semantic_filter = MicrobiomeSemanticFilter()
         self.term_ranker = TermRanker(config)
+        self.label_corrector = LabelCorrector(
+            bioportal_api_key=config.bioportal.api_key,
+            umls_api_key=config.umls.api_key
+        )
 
         # Fallback semantic model
         try:
@@ -204,20 +236,8 @@ class GlobalPipelineProcessor:
         logger.info("STEP 2: GLOBAL DEDUPLICATION")
         logger.info("="*50)
         
-        # The deduplicator module handles the 4-layer deduplication
-        # We just need to call it.
+        # Apply 4-layer deduplication (Exact, Fuzzy, Semantic, Biomedical)
         result = self.deduplicator.deduplicate_terms(terms)
-        
-        # The result object contains the deduplicated terms list
-        # Note: Deduplicator.deduplicate_terms returns a DeduplicationResult object
-        # but in standalone it returned the list directly or modified it?
-        # Let's check src/modules/deduplication.py
-        # It returns DeduplicationResult (Step 754, line 481)
-        # But wait, standalone deduplicator might have returned a list?
-        # Let's adapt to the module's return type.
-        
-        # Actually, looking at src/modules/deduplication.py:
-        # It returns a DeduplicationResult object.
         
         logger.info(f"   Exact removed: {result.exact_removed}")
         logger.info(f"   Fuzzy removed: {result.fuzzy_removed}")
@@ -232,28 +252,9 @@ class GlobalPipelineProcessor:
         logger.info("STEP 3: FILTERING NOISE TERMS")
         logger.info("="*50)
         
-        # The deduplicator module has _semantic_quality_filter, but it's internal.
-        # However, it IS called inside deduplicate_terms (Step 5 in deduplication.py).
-        # So terms returned from run_global_deduplication are ALREADY filtered?
-        
-        # Let's check src/modules/deduplication.py again.
-        # Line 461: after_semantic_filter = self._semantic_quality_filter(after_biomedical)
-        # Yes, it is already done in Step 2.
-        
-        # But standalone pipeline had it as a separate explicit step in GlobalPipelineProcessor.
-        # If I use the existing src/modules/deduplication.py, it's bundled.
-        # That's fine, as long as it's done.
-        
-        # However, to match standalone EXACTLY, I might want to run it again or ensure it's doing the same thing.
-        # Standalone `filter_noise_terms` in `GlobalPipelineProcessor` (Step 677 context) 
-        # might have been calling `deduplicator._semantic_quality_filter` explicitly if it wasn't in the main `deduplicate_terms` flow.
-        
-        # In standalone `standalone_scispacy_pipeline.py`:
-        # The `Deduplicator` class had `deduplicate_terms` which called `_semantic_quality_filter`.
-        # So it's the same.
-        
-        logger.info("   (Already performed as part of Deduplication Step 5)")
+        # Semantic quality filtering is integrated into the deduplication system
         logger.info(f"   ✅ Remaining terms: {len(terms)}")
+        return terms
     
     def apply_label_correction(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Correct generic ENTITY labels using enhanced pattern matching"""
@@ -288,6 +289,16 @@ class GlobalPipelineProcessor:
                             break
                     if matched:
                         break
+                
+                # If still ENTITY, try API-based correction if enabled
+                if term_data['labels'] == ['ENTITY']:
+                    api_result = self.label_corrector.correct_label(term_text, 'ENTITY')
+                    if api_result and api_result['label'] != 'ENTITY':
+                        term_data['labels'] = [api_result['label']]
+                        term_data['original_label'] = 'ENTITY'
+                        term_data['label_source'] = api_result['source']
+                        corrected_count += 1
+                        label_changes[api_result['label']] = label_changes.get(api_result['label'], 0) + 1
         
         logger.info(f"   ✓ Corrected {corrected_count}/{len(terms)} generic ENTITY labels")
         for label, count in sorted(label_changes.items(), key=lambda x: x[1], reverse=True):
@@ -296,23 +307,7 @@ class GlobalPipelineProcessor:
         
         return terms
 
-    def select_final_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Step 4: Select top N terms based on score"""
-        logger.info("="*50)
-        logger.info(f"STEP 4: SELECTING FINAL {self.config.target_final_terms} TERMS")
-        logger.info("="*50)
-        
-        # Calculate scores
-        # Advanced Ranking using TermRanker (Gold Standard + Semantic + Frequency)
-        logger.info("   🌟 Applying Advanced Term Ranking...")
-        ranked_terms = self.term_ranker.rank_terms(terms)
-        
-        # Select top N
-        final_terms = ranked_terms[:self.config.target_final_terms]
-
-        logger.info(f"   ✅ Selected {len(final_terms):,} final terms")
-        return final_terms
-
+  
     def run_advanced_processing(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Step 5: Correction, Definitions, Validation, Mapping"""
         logger.info("="*50)

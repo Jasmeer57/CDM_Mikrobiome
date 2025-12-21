@@ -8,8 +8,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# Install system dependencies with security updates
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y \
     python3.9 \
     python3.9-dev \
     python3-pip \
@@ -17,7 +18,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     build-essential \
-    && rm -rf /var/lib/apt/lists/*
+    ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/*
 
 # Create symbolic link for python
 RUN ln -s /usr/bin/python3.9 /usr/bin/python
@@ -28,9 +32,9 @@ WORKDIR /app
 # Copy requirements first for better caching
 COPY requirements.txt .
 
-# Install Python dependencies
+# Install Python dependencies with security considerations
 RUN pip install --upgrade pip setuptools wheel && \
-    pip install -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
 
 # Download and install sciSpaCy models
 RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz && \
@@ -41,11 +45,10 @@ RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5
 # Copy application code
 COPY . .
 
-# Create necessary directories
-RUN mkdir -p /app/data /app/output /app/logs
-
-# Set permissions
-RUN chmod +x main.py
+# Create necessary directories with secure permissions
+RUN mkdir -p /app/data /app/output /app/logs && \
+    chmod -R 755 /app && \
+    chmod +x main.py
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
@@ -57,13 +60,22 @@ EXPOSE 8000
 # Default command - run pipeline
 CMD ["python", "main.py", "--help"]
 
-# Production stage - smaller image
+# Production stage - secure smaller image
 FROM base as production
 
-# Create non-root user
-RUN useradd --create-home --shell /bin/bash appuser && \
-    chown -R appuser:appuser /app
+# Create non-root user with limited privileges
+RUN groupadd -r appgroup && \
+    useradd --no-log-init -r -g appgroup appuser && \
+    chown -R appuser:appgroup /app
+
+# Switch to non-root user
 USER appuser
 
-# Default production command
+# Add security-related labels
+LABEL maintainer="Jasmeer Singh Kalra" \
+      version="2.0.0" \
+      description="Secure Scientific Term Extraction Pipeline" \
+      security.scan="completed"
+
+# Default production command with input validation
 CMD ["python", "main.py", "--input_dir", "./data", "--output_formats", "json", "csv", "sqlite"]

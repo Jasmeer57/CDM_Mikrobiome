@@ -10,7 +10,7 @@ import os
 
 @dataclass
 class SciSpaCyConfig:
-    """Configuration for sciSpaCy models - ALL 6 MODELS (safe for 8GB RAM with num_workers=1)"""
+    """Configuration for sciSpaCy models optimized for 8GB RAM environments"""
     # User-specified models (will be validated against available models)
     preferred_models: Optional[List[str]] = None  # None means auto-detect
 
@@ -31,13 +31,13 @@ class SciSpaCyConfig:
     disabled_components: List[str] = field(default_factory=lambda: ["parser"])
     batch_size: int = 1000
     
-    # CRASH-PROOF SETTING: Sequential processing (1 worker) prevents memory overload on 8GB RAM
-    num_workers: int = 1  # DO NOT INCREASE on base M2 MacBook Pro - will cause crash!
+    # Sequential processing for memory stability on 8GB RAM environments
+    num_workers: int = 1
 
 
 @dataclass
 class DeduplicationConfig:
-    """Configuration for 4-layer deduplication system - OPTIMIZED for high recall"""
+    """Configuration for 4-layer deduplication system optimized for maximum coverage"""
     exact_enabled: bool = True
     fuzzy_threshold: float = 0.92  # High similarity required to remove variants
     fuzzy_enabled: bool = True
@@ -59,10 +59,10 @@ class DeduplicationConfig:
 
 @dataclass
 class AIConfig:
-    """Configuration for AI correction and validation"""
+    """Configuration for automated term refinement and validation"""
     enabled: bool = True
     model_name: str = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-full-text"
-    api_key: Optional[str] = "HF_TOKEN_PLACEHOLDER"
+    api_key: Optional[str] = None
     use_hf_inference: bool = True
     hf_api_url: str = "https://api-inference.huggingface.co/models/BioMistral/BioMistral-7B-0.3-Instruct"
     temperature: float = 0.1
@@ -137,7 +137,7 @@ class PipelineConfig:
     top_k: int = 200
     min_frequency: int = 1
     
-    # Global Pipeline Settings - OPTIMIZED FOR HIGH RECALL
+    # Global Pipeline Settings - Optimized for maximum term extraction
     target_final_terms: int = 2000  # Global target for all files combined
     min_terms_per_file: int = 50     # Minimum per file to ensure high recall
     

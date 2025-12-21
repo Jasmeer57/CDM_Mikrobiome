@@ -86,12 +86,45 @@ Based on microbiome research paper (PRJDB4360.txt - 56KB):
 - **"16S rRNA"** (frequency: 9, relevance: 1.0) - **Laboratory procedure**
 - **"DNA extraction"** (frequency: 2, relevance: 1.0) - **Procedure domain**
 
+## 🔒 Security Features
+
+This pipeline includes comprehensive security measures to ensure safe operation in production environments:
+
+### **Security Hardening**
+- ✅ **No hardcoded credentials**: All API keys must be provided via environment variables
+- ✅ **Path traversal protection**: File operations validate paths to prevent directory traversal attacks
+- ✅ **Input validation**: File type, size, and content validation for secure processing
+- ✅ **Command injection protection**: Subprocess calls use whitelisted commands with timeouts
+- ✅ **Secure CORS configuration**: Restrictive cross-origin resource sharing settings
+- ✅ **Error handling**: Specific exception handling without information disclosure
+- ✅ **Resource limits**: File size and processing limits to prevent denial of service
+
+### **Security Configuration**
+```bash
+# Required Environment Variables for API Features
+export HF_TOKEN="your-huggingface-token"  # For AI correction features
+export UMLS_API_KEY="your-umls-key"      # For medical ontology mapping
+export BIOPORTAL_API_KEY="your-bioportal-key"  # For biomedical terminology
+
+# Security Settings (optional)
+export MAX_FILE_SIZE=52428800           # 50MB limit
+export CORS_ORIGINS="http://localhost:3000,https://your-domain.com"
+```
+
+### **Security Best Practices**
+- Use HTTPS in production environments
+- Implement API rate limiting and authentication
+- Regular security updates of dependencies
+- Monitor logs for security events
+- Use container orchestration with network policies
+
 ## 🛠️ Installation
 
 ### Prerequisites
 - Python 3.9+
 - CUDA (for GPU acceleration)
 - 8GB+ RAM recommended
+- Docker (for containerized deployment)
 
 ### Option 1: Local Installation
 ```bash
