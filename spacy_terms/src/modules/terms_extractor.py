@@ -8,11 +8,40 @@ import spacy
 from typing import List, Dict, Any, Optional
 from pathlib import Path
 import json
+import re # Added global import
+import urllib.request
 from collections import defaultdict, Counter
 from src.config.settings import SciSpaCyConfig
 from src.utils.model_detector import update_scispacy_config_with_available_models, sort_models_by_priority
 
 logger = logging.getLogger(__name__)
+
+
+# --- Custom Filter Integration ---
+class CustomFilterLoader:
+    """Loads and manages the 20k.txt custom filter list for modular pipeline"""
+
+    def __init__(self):
+        self.custom_terms = set()
+        self._load_custom_filter()
+
+    def _load_custom_filter(self):
+        """Load the 20k.txt filter from GitHub gist"""
+        try:
+            url = "https://gist.githubusercontent.com/eyturner/3d56f6a194f411af9f29df4c9d4a4e6e/raw/63b6dbaf2719392cb2c55eb07a6b1d4e758cc16d/20k.txt"
+            with urllib.request.urlopen(url, timeout=30) as response:
+                content = response.read().decode('utf-8')
+                self.custom_terms.update(word.lower().strip() for word in content.split('\n') if word.strip())
+            logger.info(f"✓ Loaded {len(self.custom_terms)} custom filter terms from 20k.txt")
+        except Exception as e:
+            logger.warning(f"Could not load custom filter 20k.txt: {e}")
+
+    def is_filtered(self, term: str) -> bool:
+        """Check if term should be filtered"""
+        return term.lower().strip() in self.custom_terms
+
+# Initialize global custom filter for modular pipeline
+CUSTOM_FILTER = CustomFilterLoader()
 
 
 # ENHANCED: Safer Synonym/Normalization maps preserving clinical specificity
@@ -73,8 +102,13 @@ PERMISSIBLE_CLINICAL_TERMS = {
     "irritable bowel syndrome",
     "small intestinal bacterial overgrowth",
     "spondyloarthritis",
-    "lupus erythematosus"
+    "lupus erythematosus",
+    "obesity",
+    "metabolic syndrome"
 }
+
+# Combined list for safety checks
+CLINICAL_SPECIFICITY_TERMS = CRITICAL_CLINICAL_TERMS | PERMISSIBLE_CLINICAL_TERMS
 
 # Abbreviation expansion map - expand abbreviations but don't collapse to them
 ABBREVIATION_EXPANSION = {
@@ -128,28 +162,36 @@ class TermsExtractor:
         'P6': r'^.{1,2}$',  # Very short terms (1-2 chars)
         'P7': r'^\W+$',  # Only non-word characters
         'P8': r'^[0-9\W]+$',  # Only numbers and symbols
-        'P9': r'\b(and|or|the|of|in|on|at|to|for|with|by|as)\b',  # Common stop words
+        # REMOVED P9: Common stop words - these can be part of valid multi-word biomedical terms
+        # 'P9': r'\b(and|or|the|of|in|on|at|to|for|with|by|as)\b',  # REMOVED for higher recall
         'P10': r'^[a-z]{1,3}$',  # Very short lowercase words
         'P11': r'^\W*\d+\W*$',  # Numbers with optional surrounding symbols
         'P12': r'^[^a-zA-Z]*[a-z][^a-zA-Z]*$',  # Single lowercase letter with symbols
 
         # Enhanced P13-P28 filters for low-quality term removal
-        'P13': r'^[A-Z][a-z]+[0-9]+(?:\*|†)?$',  # Author names with numbers and asterisks (e.g., "Odamaki1", "Odamaki1*")
-        'P14': r'^[A-Z][a-z]+ [A-Z][a-z]+[0-9]+(?:\*|†)?$',  # Two author names with numbers (e.g., "John Doe1")
-        'P15': r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\s+[0-9]+,\s*[0-9]+',  # Multiple authors with numbers (e.g., "Smith1, Jones2")
+        # REMOVED P13-P15: Author name patterns - not needed for biomedical terms
+        # 'P13': r'^[A-Z][a-z]+[0-9]+(?:\*|†)?$',  # Author names with numbers and asterisks
+        # 'P14': r'^[A-Z][a-z]+ [A-Z][a-z]+[0-9]+(?:\*|†)?$',  # Two author names with numbers
+        # 'P15': r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\s+[0-9]+,\s*[0-9]+',  # Multiple authors with numbers
         'P16': r'https?://[^\s]+',  # URLs
-        'P17': r'\b(?:university|department|institute|college|hospital|center|centre)\b',  # Institutional terms
-        'P18': r'\b(?:abstract|introduction|methods|results|discussion|conclusion|references)\b',  # Paper sections
-        'P19': r'\b(?:doi|isbn|issn|pmid|pmcid)\b',  # Publication identifiers
-        'P20': r'\b(?:email|phone|fax|address|correspondence)\b',  # Contact information
-        'P21': r'\b(?:study|research|paper|article|report|manuscript)\b',  # Generic academic terms
-        'P22': r'\b(?:cross-?sectional|prospective|retrospective|observational)\b\s+study',  # Study design terms
-        'P23': r'^[A-Z][a-z]+,\s*[A-Z]\.?\s*[A-Z][a-z]+$',  # Author format: "Smith, J. John"
-        'P24': r'^[A-Z][a-z]+(?:-[A-Z][a-z]+)?\s+[A-Z]\.\s*[A-Z][a-z]+$',  # Author format: "Smith-Jones J. John"
-        'P25': r'\b(?:professor|dr|md|phd)\b',  # Academic titles
-        'P26': r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+){2,}\s*[0-9]*\*?$',  # Three or more names with numbers
+        # REMOVED P17: Institutional terms - can be part of valid biomedical context
+        # 'P17': r'\b(?:university|department|institute|college|hospital|center|centre)\b',
+        # REMOVED P18: Paper sections - can be mentioned in text
+        # 'P18': r'\b(?:abstract|introduction|methods|results|discussion|conclusion|references)\b',
+        'P19': r'\b(?:doi|isbn|issn|pmid|pmcid)\b',  # Publication identifiers - keep for technical filtering
+        'P20': r'\b(?:email|phone|fax|address|correspondence)\b',  # Contact information - keep for technical filtering
+        # REMOVED P21: Generic academic terms - context dependent
+        # 'P21': r'\b(?:study|research|paper|article|report|manuscript)\b',
+        # REMOVED P22: Study design terms - can be valid biomedical terms
+        # 'P22': r'\b(?:cross-?sectional|prospective|retrospective|observational)\b\s+study',
+        # REMOVED P23-P26: All author-related patterns - not needed for biomedical terms
+        # 'P23': r'^[A-Z][a-z]+,\s*[A-Z]\.?\s*[A-Z][a-z]+$',  # Author format: "Smith, J. John"
+        # 'P24': r'^[A-Z][a-z]+(?:-[A-Z][a-z]+)?\s+[A-Z]\.\s*[A-Z][a-z]+$',  # Author format: "Smith-Jones J. John"
+        # 'P25': r'\b(?:professor|dr|md|phd)\b',  # Academic titles
+        # 'P26': r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+){2,}\s+[0-9]*\*?$',  # Three or more names with numbers
         'P27': r'/[A-Za-z0-9_\-./]+',  # File paths
-        'P28': r'^[A-Z][a-z]+\s+et\s+al\.$'  # "et al" patterns
+        # REMOVED P28: "et al" patterns - not needed for biomedical terms
+        # 'P28': r'^[A-Z][a-z]+\s+et\s+al\.$'  # "et al" patterns
     }
 
     # Enhanced noise terms blocklist from reference terms.py
@@ -462,7 +504,19 @@ class TermsExtractor:
                         return original_term
 
             # Return normalized form or original term if no normalization applied
-            return normalized_form if normalized_form else original_term
+            final_form = normalized_form if normalized_form else original_term
+            
+            # POST-NORMALIZATION VALIDATION: Reject if normalized form contains OCR garbage
+            words = final_form.split()
+            for word in words:
+                # Reject "word + digits" (e.g. "hosomi12")
+                if re.search(r'^[a-z]{4,}\d{1,}$', word):
+                    return ""  # Return empty to signal rejection
+                # Reject run-on words (>35 chars)
+                if len(word) > 35:
+                    return ""
+                    
+            return final_form
 
         except Exception as e:
             # Safety: return original term if normalization fails
@@ -487,6 +541,47 @@ class TermsExtractor:
 
         return original_label
 
+        return True  # Term passes all filters
+
+    def _is_valid_scientific_term(self, term: str) -> bool:
+        """Deep cleaning: Ensure term looks like a valid scientific concept"""
+        term_lower = term.lower()
+        
+        # 1. Reject if it's purely a year or citation pattern
+        if re.match(r'^\d{4}$', term) or re.match(r'^\(\d{4}\)$', term): 
+            return False
+            
+        # 1b. Reject if it STARTs with a digit followed by space (e.g. "42 blautia")
+        # Exception: "5-axis" or "3-D" or chemical names starting with digit-hyphen are OK.
+        if re.match(r'^\d+\s+', term):
+            return False
+
+        # 2. Reject common academic noise
+        noise_words = {'et', 'al', 'vol', 'vol.', 'pp', 'pp.', 'doi', 'http', 'www', 'fig', 'fig.', 'table'}
+        if any(w in term_lower.split() for w in noise_words):
+            return False
+
+        # 3. Reject if term CONT AINS "word + long digits" (e.g. "hosomi12")
+        # Split into words and check each one
+        words = term_lower.split()
+        for word in words:
+            # Reject "word + digits" (e.g. "hosomi12", "microbiome2020")
+            # Allow short digits (e.g. "IL6", "CD4", "p53")
+            if re.search(r'^[a-z]{4,}\d{1,}$', word): # Changed to {1,} to catch "hosomi12" (2 digits) confidently
+                return False
+                
+        # 4. Reject terms with "et al" or citation-like patterns in the middle
+        if re.search(r'\b\d{4}\b', term_lower): # Reject if it contains a 4-digit year like 2012
+             return False
+
+        # 5. Reject run-on words (concatenated text)
+        # e.g. "numberofthereadsmappedtoalgq12homolog"
+        for word in words:
+            if len(word) > 35: # Scientific terms rarely exceed 35 chars without spaces
+                return False
+
+        return True
+
     def _apply_filters(self, term: str) -> bool:
         """Apply P1-P12 filters plus enhanced noise filtering to determine if term should be kept"""
         import re
@@ -502,10 +597,18 @@ class TermsExtractor:
         if term_lower in self.NOISE_TERMS_BLOCKLIST:
             return False
 
+        # Custom 20k.txt filter
+        if CUSTOM_FILTER.is_filtered(term):
+            return False
+
         # Additional validation patterns from reference terms.py
         for pattern in self.INVALID_PATTERNS:
             if pattern.match(term):
                 return False
+
+        # Deep Cleaning Check (New)
+        if not self._is_valid_scientific_term(term):
+            return False
 
         # Length and content validation
         if len(term) < 2 or len(term) > 100:
@@ -530,8 +633,8 @@ class TermsExtractor:
 
     def _advanced_quality_check(self, term: str, context: str = "") -> bool:
         """Advanced quality checks for sophisticated filtering"""
-        import re  # Import re module for this function
-
+        import re 
+        
         term_lower = term.lower()
 
         # Skip terms that are mostly single characters repeated
@@ -886,7 +989,7 @@ class TermsExtractor:
 
                     # Calculate relevance score with refined entity label
                     relevance_score = self._calculate_science_relevance(canonical_form, sent, refined_label)
-                    if relevance_score < 0.1:  # Skip very low relevance terms
+                    if relevance_score < 0.05:  # Skip very low relevance terms - lowered for higher novel term recall
                         continue
 
                     term_data = {

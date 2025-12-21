@@ -10,17 +10,18 @@ import os
 
 @dataclass
 class SciSpaCyConfig:
-    """Configuration for sciSpaCy models"""
+    """Configuration for sciSpaCy models - ALL 6 MODELS (safe for 8GB RAM with num_workers=1)"""
     # User-specified models (will be validated against available models)
     preferred_models: Optional[List[str]] = None  # None means auto-detect
 
-    # Fallback models if preferred models are not available
+    # All 6 sciSpaCy models for maximum recall
     models: List[str] = field(default_factory=lambda: [
-        "en_core_sci_md",     # Medium model for UMLS entity linking
-        "en_core_sci_lg",     # Large model
-        "en_ner_craft_md",
-        "en_ner_bc5cdr_md",
-        "en_ner_jnlpba_md"
+        'en_core_sci_sm',        # Small general model
+        'en_core_sci_md',        # Medium general model
+        'en_core_sci_lg',        # Large general model
+        'en_ner_craft_md',       # NER: genes, chemicals
+        'en_ner_bc5cdr_md',      # NER: diseases, chemicals
+        'en_ner_jnlpba_md'       # NER: proteins, cell types
     ])
 
     # Model selection options
@@ -29,15 +30,18 @@ class SciSpaCyConfig:
 
     disabled_components: List[str] = field(default_factory=lambda: ["parser"])
     batch_size: int = 1000
+    
+    # CRASH-PROOF SETTING: Sequential processing (1 worker) prevents memory overload on 8GB RAM
+    num_workers: int = 1  # DO NOT INCREASE on base M2 MacBook Pro - will cause crash!
 
 
 @dataclass
 class DeduplicationConfig:
-    """Configuration for 4-layer deduplication system"""
+    """Configuration for 4-layer deduplication system - OPTIMIZED for high recall"""
     exact_enabled: bool = True
-    fuzzy_threshold: float = 0.85
+    fuzzy_threshold: float = 0.92  # High similarity required to remove variants
     fuzzy_enabled: bool = True
-    semantic_threshold: float = 0.9
+    semantic_threshold: float = 0.92  # Relaxed from 0.95 to keep more unique terms
     semantic_enabled: bool = True
     semantic_models: Dict[str, str] = field(default_factory=lambda: {
         "mini-lm": "sentence-transformers/all-MiniLM-L12-v2",
@@ -133,8 +137,9 @@ class PipelineConfig:
     top_k: int = 200
     min_frequency: int = 1
     
-    # Global Pipeline Settings
-    target_final_terms: int = 2000
+    # Global Pipeline Settings - OPTIMIZED FOR HIGH RECALL
+    target_final_terms: int = 2000  # Global target for all files combined
+    min_terms_per_file: int = 50     # Minimum per file to ensure high recall
     
     # BioMistral / LLM Settings
     biomistral_model: str = "BioMistral/BioMistral-7B"

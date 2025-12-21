@@ -174,9 +174,13 @@ class GlobalPipelineProcessor:
         # We need to pass the config to the worker init
         # Note: Config must be picklable. Dataclasses usually are.
         
-        max_workers = min(multiprocessing.cpu_count(), len(files))
-        # Cap workers to avoid OOM with large models
-        max_workers = min(max_workers, 4) 
+        # Use config.scispacy.num_workers if available (for crash-proof execution on low RAM)
+        if hasattr(self.config, 'scispacy') and hasattr(self.config.scispacy, 'num_workers'):
+            max_workers = self.config.scispacy.num_workers
+        else:
+            max_workers = min(multiprocessing.cpu_count(), len(files))
+            # Cap workers to avoid OOM with large models
+            max_workers = min(max_workers, 4) 
         
         logger.info(f"Starting parallel extraction with {max_workers} workers...")
         

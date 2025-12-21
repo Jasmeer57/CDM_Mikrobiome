@@ -188,9 +188,23 @@ class MicrobiomeSemanticFilter:
         self.semantic_model = semantic_model
         self.seed_terms = seed_terms or self._get_default_seed_terms()
         self.seed_embeddings = None
+        self.common_words = set() # Initialize here to avoid AttributeError
 
         if self.semantic_model and self.seed_terms:
             self._precompute_embeddings()
+        
+        # Load 20k common words filter (Moved from precompute to ensure it runs)
+        try:
+            from pathlib import Path
+            common_words_path = Path("data/20k.txt")
+            if common_words_path.exists():
+                with open(common_words_path, 'r') as f:
+                    self.common_words = {w.strip().lower() for w in f if len(w.strip()) > 3}
+                logger.info(f"Loaded {len(self.common_words)} common words for filtering")
+            else:
+                 logger.warning(f"20k common words file not found at {common_words_path}")
+        except Exception as e:
+            logger.warning(f"Failed to load common words: {e}")
 
     def _get_default_seed_terms(self) -> List[str]:
         """Get default microbiome seed terms for semantic filtering"""
@@ -215,6 +229,19 @@ class MicrobiomeSemanticFilter:
             except Exception as e:
                 logger.warning(f"Failed to precompute seed embeddings: {e}")
 
+        # Load 20k common words filter
+        self.common_words = set()
+        try:
+            common_words_path = Path("data/20k.txt")
+            if common_words_path.exists():
+                with open(common_words_path, 'r') as f:
+                    self.common_words = {w.strip().lower() for w in f if len(w.strip()) > 3} # Ignore short words, handled elsewhere
+                logger.info(f"Loaded {len(self.common_words)} common words for filtering")
+            else:
+                 logger.warning(f"20k common words file not found at {common_words_path}")
+        except Exception as e:
+            logger.warning(f"Failed to load common words: {e}")
+
     def get_relevance_score(self, term_text: str) -> float:
         """Get microbiome relevance score for a term"""
         term_lower = term_text.lower()
@@ -223,6 +250,15 @@ class MicrobiomeSemanticFilter:
         keyword_score = self._keyword_score(term_lower)
         if keyword_score >= 0.8:  # High confidence keyword match
             return keyword_score
+            
+        # Common Word Filter (New Feature)
+        # If term is in 20k common list and NOT a keyword match, kill it.
+        # This keeps "novel" terms that are scientific, but removes "novel" terms that are just basic English.
+        if term_lower in self.common_words:
+            # We already checked keywords (which return early above), so if we are here, it's NOT a keyword.
+            # So it's a common English word that is not a known microbiome/seed term.
+            # Return low score to filter it out.
+            return 0.0
 
         # Semantic similarity scoring (slower, secondary method)
         if self.semantic_model and self.seed_embeddings is not None:
@@ -246,8 +282,10 @@ class MicrobiomeSemanticFilter:
 
         return keyword_score
 
+        return score
+
     def _keyword_score(self, term_text: str) -> float:
-        """Calculate keyword-based relevance score"""
+        """Calculate keyword-based relevance score with context awareness"""
         score = 0.0
         term_lower = term_text.lower()
 
@@ -267,25 +305,38 @@ class MicrobiomeSemanticFilter:
             r'lactobacillus', r'bifidobacterium', r'clostridium', r'enterococcus',
             r'akkermania', r'faecalibacterium',
             r'scfa', r'butyrate', r'propionate', r'acetate',
-            r'16s', r'rrna', r'metagenom', r'metabolom'
+            r'16s', r'rrna', r'metagenom', r'metabolom',
+            r'gut', r'intestin', r'colorectal', r'gastric'  # Added context terms
         ]
 
+        # Check for microbiome context
+        has_microbiome_context = False
         for pattern in microbiome_patterns:
             if re.search(pattern, term_lower):
                 score = max(score, 0.8)
+                has_microbiome_context = True
                 break
 
         # Penalty for clearly non-microbiome terms
+        # Removed 'cancer', 'tumor' from blanket ban.
+        # Only penalize if NO microbiome context is present.
         non_microbiome_patterns = [
-            r'cancer', r'tumor', r'cardiovascular', r'renal', r'pulmonary',
-            r'dermatology', r'ophthalmology', r'orthopedic', r'neurology'
+             r'cardiovascular', r'pulmonary',
+            r'dermatology', r'ophthalmology', r'orthopedic', r'neurology',
+            r'traffic', r'vehicle', r'finance', r'political' # Added obvious noise
         ]
-
+        
+        # Penalize unrelated medical fields
         for pattern in non_microbiome_patterns:
             if re.search(pattern, term_lower):
                 score = score * 0.3  # Heavy penalty
                 break
-
+                
+        # Context-dependent penalties (e.g. generic cancer without gut context)
+        # But we want to be high-recall for novel terms, so be careful.
+        # If it's just "cancer" (generic), maybe low score. 
+        # But "colorectal cancer" has "colorectal" (context) -> has_microbiome_context=True -> saved.
+        
         return score
 
 
@@ -351,20 +402,22 @@ class ContextualCleaner:
         if len(term) == 1 and term.lower() not in ['a', 'i', 'x', 'y', 'z']:
             return False
 
-        # Skip pure numbers or single characters with numbers
-        if re.match(r'^[0-9]+$', term) or re.match(r'^[a-z][0-9]+$', term):
+        if re.match(r'^[0-9]+$', term):
             return False
 
-        # Skip meaningless patterns
-        meaningless_patterns = [
-            r'^[.,;:!?]+$',  # Pure punctuation
-            r'^[=-]+$',      # Pure symbols
-            r'^\s+$',        # Pure whitespace
-        ]
-
-        for pattern in meaningless_patterns:
-            if re.match(pattern, term):
-                return False
+        # Reject "word + number" patterns like "microbiome13", "protein53"
+        # Exception: Short prefixes like "IL6", "CD4", "p53", "T2" are valid.
+        # Rule: If term ends in a number, the alpha prefix must be <= 3 chars OR it must include a hyphen/space.
+        if re.search(r'[a-zA-Z]{4,}[0-9]+$', term):
+            # Check if it has a separator
+            if not re.search(r'[- ]', term):
+                 # "microbiome13" -> matches (len 10 > 3, no sep) -> REJECT
+                 # "COVID-19" -> matches (has sep) -> KEEP
+                 return False
+        
+        # Reject terms with underscores (variable names)
+        if '_' in term:
+            return False
 
         return True
 
@@ -379,6 +432,169 @@ def create_microbiome_filter(semantic_model=None, seed_terms: List[str] = None) 
     return MicrobiomeSemanticFilter(semantic_model, seed_terms)
 
 
+class NoveltyDetector:
+    """
+    Detects novel biomedical terms using semantic distance from known concepts.
+    Ported from standalone pipeline to enhance modular pipeline capabilities.
+    """
+
+    def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
+        self.model = None
+        self.model_name = model_name
+        self.known_biomedical_terms = set()
+        self._initialize()
+
+    def _initialize(self):
+        """Initialize the semantic model and known terms"""
+        try:
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer(self.model_name)
+            logger.info(f"✓ Loaded semantic model for novelty detection: {self.model_name}")
+        except ImportError:
+            logger.warning("sentence-transformers not available, novelty detection disabled")
+            self.model = None
+        except Exception as e:
+            logger.warning(f"Could not load semantic model: {e}")
+            self.model = None
+
+        # Initialize with common biomedical terms (enhanced from standalone)
+        self.known_biomedical_terms.update({
+            # Core microbiome terms
+            'gut microbiota', 'microbiome', 'microbiota', 'bacteria', 'bacteroides',
+            'firmicutes', 'proteobacteria', 'actinobacteria', 'verrucomicrobia',
+            'clostridia', 'bacteroidia', 'eubacterium', 'faecalibacterium',
+            'roseburia', 'prevotella', 'ruminococcus', 'akkermansia', 'lactobacillus',
+            'bifidobacterium', 'streptococcus', 'enterococcus', 'staphylococcus',
+            'escherichia coli', 'e. coli', 'salmonella', 'campylobacter',
+
+            # Health and disease terms
+            'inflammation', 'immune', 'antibiotic', 'probiotic', 'prebiotic',
+            'infection', 'disease', 'syndrome', 'disorder', 'condition',
+            'crohn disease', 'ulcerative colitis', 'irritable bowel syndrome',
+            'inflammatory bowel disease', 'ibd', 'ibs', 'sibo',
+
+            # Metabolism and metabolites
+            'metabolism', 'metabolic', 'fermentation', 'short-chain fatty acids',
+            'butyrate', 'propionate', 'acetate', 'bile acids', 'cholesterol',
+            'lipopolysaccharide', 'lps', 'cytokine', 'interleukin', 'tnf-alpha',
+            'trimethylamine', 'tmao', 'indole', 'succinate', 'lactate',
+
+            # Methods and techniques
+            'diversity', 'richness', 'evenness', 'shannon', 'simpson', 'alpha',
+            'beta', 'ordination', 'pcoa', 'pca', 'nmds', 'cluster', 'dendrogram',
+            'phylogeny', '16s', '16s rrna', 'metagenomics', 'metabarcoding',
+            'amplicon', 'shotgun', 'assembly', 'annotation', 'taxonomy',
+            'classification', 'otu', 'asv', 'operational taxonomic unit',
+            'amplicon sequence variant', 'pcr', 'qpcr', 'sequencing',
+
+            # Clinical terms
+            'clinical', 'patient', 'treatment', 'therapy', 'diagnosis',
+            'hospital', 'medical', 'health', 'drug', 'medication',
+            'resistance', 'susceptibility', 'pathogen', 'commensal', 'symbiotic'
+        })
+
+    def add_known_terms(self, terms: List[str]):
+        """Add new known biomedical terms to the reference set"""
+        self.known_biomedical_terms.update(term.lower().strip() for term in terms)
+        logger.debug(f"Added {len(terms)} new known terms to novelty detector")
+
+    def is_novel(self, term: str) -> tuple[bool, float]:
+        """
+        Check if a term is novel relative to known biomedical concepts.
+
+        Returns:
+            tuple: (is_novel, novelty_score)
+                   novelty_score: 0.0 (very familiar) to 1.0 (very novel)
+        """
+        if not self.model:
+            return False, 0.0
+
+        term_lower = term.lower().strip()
+
+        # If it's a known term, it's not novel
+        if term_lower in self.known_biomedical_terms:
+            return False, 0.0
+
+        try:
+            # Generate embedding for the term
+            term_embedding = self.model.encode([term], convert_to_numpy=True)
+
+            # Generate embeddings for known terms (sample for efficiency)
+            known_terms_sample = list(self.known_biomedical_terms)[:100]  # Limit for performance
+            known_embeddings = self.model.encode(known_terms_sample, convert_to_numpy=True)
+
+            # Calculate cosine similarities
+            from sklearn.metrics.pairwise import cosine_similarity
+            similarities = cosine_similarity(term_embedding, known_embeddings)[0]
+
+            # Get maximum similarity (closest known term)
+            max_similarity = float(similarities.max()) if len(similarities) > 0 else 0.0
+
+            # Calculate novelty score (inverse of similarity)
+            novelty_score = 1.0 - max_similarity
+
+            # Consider novel if similarity is below threshold (e.g., 0.5)
+            is_novel = novelty_score > 0.5
+
+            return is_novel, novelty_score
+
+        except Exception as e:
+            logger.warning(f"Error in novelty detection for '{term}': {e}")
+            return False, 0.0
+
+    def filter_novel_terms(self, terms: List[str], novelty_threshold: float = 0.5) -> List[str]:
+        """
+        Filter terms based on novelty threshold.
+
+        Args:
+            terms: List of terms to filter
+            novelty_threshold: Minimum novelty score to keep term (0.0 to 1.0)
+
+        Returns:
+            List of novel terms above threshold
+        """
+        novel_terms = []
+        for term in terms:
+            is_novel, novelty_score = self.is_novel(term)
+            if is_novel and novelty_score >= novelty_threshold:
+                novel_terms.append(term)
+
+        logger.info(f"Identified {len(novel_terms)} novel terms from {len(terms)} candidates")
+        return novel_terms
+
+    def get_novelty_stats(self, terms: List[str]) -> dict:
+        """
+        Get novelty statistics for a list of terms.
+
+        Returns:
+            Dictionary with novelty statistics
+        """
+        if not self.model:
+            return {"error": "Novelty detector not initialized"}
+
+        novelty_scores = []
+        novel_count = 0
+        for term in terms:
+            is_novel, score = self.is_novel(term)
+            novelty_scores.append(score)
+            if is_novel:
+                novel_count += 1
+
+        return {
+            "total_terms": len(terms),
+            "novel_terms": novel_count,
+            "known_terms": len(terms) - novel_count,
+            "average_novelty": sum(novelty_scores) / len(novelty_scores) if novelty_scores else 0.0,
+            "max_novelty": max(novelty_scores) if novelty_scores else 0.0,
+            "min_novelty": min(novelty_scores) if novelty_scores else 0.0
+        }
+
+
 def create_contextual_cleaner() -> ContextualCleaner:
     """Factory function to create ContextualCleaner instance"""
     return ContextualCleaner()
+
+
+def create_novelty_detector(model_name: str = "all-MiniLM-L6-v2") -> NoveltyDetector:
+    """Factory function to create NoveltyDetector instance"""
+    return NoveltyDetector(model_name)

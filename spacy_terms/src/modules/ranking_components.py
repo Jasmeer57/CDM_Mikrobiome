@@ -85,6 +85,14 @@ class TermRanker:
             semantic_score = self.semantic_filter.get_relevance_score(t_text)
             term['semantic_score'] = round(semantic_score, 4)
 
+            # --- NOVELTY DETECTION ---
+            # A term is "Novel" if it is High Semantic Relevance BUT Not Gold Standard.
+            # We also ensure it's not just a generic word (length check or keyword check processed earlier).
+            term['is_novel'] = False
+            if (not is_gold) and (semantic_score >= 0.7):
+                 term['is_novel'] = True
+                 term['novelty_status'] = "HighRelevance-NonGold"
+
             # 3. Calculate Composite Score (Logic from standalone pipeline)
             # Relevance (Base)
             relevance = 0.3  # Base relevance
@@ -148,7 +156,8 @@ class TermRanker:
                 math.log1p(file_count) * 0.15 +       # File distribution
                 math.log1p(model_diversity) * 0.10 +   # Model diversity
                 length_bonus * 0.05 +                 # Length preference
-                (0.5 if is_gold else 0.0)             # Gold standard bonus
+                (0.5 if is_gold else 0.0) +           # Gold standard bonus
+                (0.4 if term.get('is_novel') else 0.0) # Novelty bonus (Increased)
             )
 
             # Apply gold confidence multiplier
@@ -164,7 +173,8 @@ class TermRanker:
                 'file_count': file_count,
                 'model_diversity': model_diversity,
                 'length_bonus': length_bonus,
-                'gold_bonus': 0.5 if is_gold else 0.0
+                'gold_bonus': 0.5 if is_gold else 0.0,
+                'novelty_bonus': 0.4 if term.get('is_novel') else 0.0
             }
 
         # Sort by composite score

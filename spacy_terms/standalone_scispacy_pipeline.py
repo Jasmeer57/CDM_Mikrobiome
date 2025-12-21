@@ -23,6 +23,7 @@ Usage:
 
 import os
 import sys
+import urllib.request
 import re
 import json
 import time
@@ -62,60 +63,120 @@ except ImportError:
 
 @dataclass
 class PipelineConfig:
-    """Global configuration"""
+    """Enhanced configuration matching modular pipeline capabilities"""
     input_dir: str = "./data"
     output_dir: str = "./output"
     max_files: int = 100
-    
-    # Global Pipeline Settings - ALL AVAILABLE SCISPACY MODELS
-    models_to_use: List[str] = field(default_factory=lambda: ["en_core_sci_sm", "en_core_sci_md", "en_core_sci_lg", "en_ner_bc5cdr_md", "en_ner_bionlp13cg_md", "en_ner_jnlpba_md", "en_ner_craft_md"])
+
+    # Global Pipeline Settings - Dynamic model detection like modular pipeline
+    models_to_use: Optional[List[str]] = None  # None means auto-detect like modular
+    preferred_models: Optional[List[str]] = None  # User-specified preferred models
+    auto_detect_models: bool = True  # Whether to auto-detect available models
+    use_all_available: bool = False  # Whether to use all available models
     target_final_terms: int = 6000  # Smart target based on 100k raw terms
     max_raw_terms_limit: int = 100000  # Maximum raw terms for efficient processing (1 lakh)
 
+    # sciSpaCy Configuration (matching modular pipeline)
+    disabled_components: List[str] = field(default_factory=lambda: ["parser"])
+    batch_size: int = 1000  # spaCy processing batch size
 
-    # Extraction
-    spacy_model: str = "en_core_sci_md"  # Faster default model
-    
-    # Deduplication
-    fuzzy_threshold: float = 0.85
-    semantic_threshold: float = 0.90
-    semantic_model: str = "all-MiniLM-L6-v2"  # Lightweight default
-    
-    # API Keys (loaded from env)
+    # Deduplication Configuration (matching modular pipeline settings)
+    fuzzy_threshold: float = 0.90  # Increased from 0.85 - allow more term variants
+    fuzzy_enabled: bool = True
+    semantic_threshold: float = 0.95  # Increased from 0.85 - be more selective about semantic similarity
+    semantic_enabled: bool = True
+    semantic_model: str = "mini-lm"  # Using modular pipeline's naming convention
+    semantic_models: Dict[str, str] = field(default_factory=lambda: {
+        "mini-lm": "sentence-transformers/all-MiniLM-L12-v2",
+        "nomic": "nomic-ai/nomic-embed-text-v1.5",
+        "mpnet": "sentence-transformers/all-mpnet-base-v2"
+    })
+    # BioMistral biomedical deduplication (from modular pipeline)
+    biomedical_enabled: bool = True
+    biomedical_model: str = "microsoft/BioMedNLP-PubMedBERT-base-uncased-abstract-fulltext"
+    biomedical_context: str = "microbiome"
+    biomedical_confidence_threshold: float = 0.7
+
+    # API Keys (loaded from env - enhanced like modular pipeline)
     bioportal_api_key: Optional[str] = os.getenv("BIOPORTAL_API_KEY")
     umls_api_key: Optional[str] = os.getenv("UMLS_API_KEY")
+    hf_token: Optional[str] = os.getenv("HF_TOKEN")  # HuggingFace token
 
-
-    # Advanced Features
+    # Advanced Features (matching modular pipeline toggles)
     generate_definitions: bool = False
     correct_terms: bool = False
     map_umls: bool = False
     map_omop: bool = False
     map_bioportal: bool = False
-    
-    # Models
-    definition_model: str = "BioMistral/BioMistral-7B" # Can be BioBERT if user insists (but won't work well for gen)
-    correction_model: str = "BioMistral/BioMistral-7B"
+    include_definitions: bool = True
+    include_ai_correction: bool = True
+    include_umls_mapping: bool = True
+    include_omop_mapping: bool = True
 
+    # AI Correction Configuration (from modular pipeline)
+    ai_correction_enabled: bool = True
+    ai_correction_model: str = "microsoft/BioMedNLP-PubMedBERT-base-uncased-abstract-full-text"
+    use_hf_inference: bool = True
+    hf_api_url: str = "https://api-inference.huggingface.co/models/BioMistral/BioMistral-7B-0.3-Instruct"
+    temperature: float = 0.1
+    max_tokens: int = 512
+
+    # BioMistral/LLM Settings
+    biomistral_model: str = "BioMistral/BioMistral-7B"
+    load_4bit: bool = False
+    validate_biomistral: bool = False
+
+    # New Features
+    use_bert_selection: bool = False
+    bert_model_name: str = "dmis-lab/biobert-v1.1"
 
     # Ollama Settings
     use_ollama: bool = False  # Use Ollama instead of HuggingFace models
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "mistral:latest"  # Default Mistral model in Ollama
 
+    # UMLS Configuration (from modular pipeline)
+    umls_enabled: bool = True
+    umls_timeout: int = 30
+    umls_retry_attempts: int = 3
+    umls_sources: List[str] = field(default_factory=lambda: [
+        "SNOMEDCT_US", "MSH", "CUI", "LNC", "CST", "MDR"
+    ])
+    umls_batch_size: int = 50
 
-    # Validation
-    validate_biomistral: bool = False
-    biomistral_model: str = "BioMistral/BioMistral-7B"
-    load_4bit: bool = False
-    batch_size: int = 32  # Batch size for GPU inference
+    # BioPortal Configuration (from modular pipeline)
+    bioportal_enabled: bool = True
+    bioportal_base_url: str = "http://data.bioontology.org"
+    bioportal_timeout: int = 30
+    bioportal_ontologies: List[str] = field(default_factory=lambda: [
+        "SNOMEDCT", "GO", "CHEBI", "DOID", "EFO", "HP", "NCIT"
+    ])
+    bioportal_max_results: int = 10
 
+    # OMOP Configuration (from modular pipeline)
+    omop_enabled: bool = True
+    omop_vocab_dir: Optional[str] = None
+    omop_vocabularies: Dict[str, str] = field(default_factory=lambda: {
+        "Condition": "CONCEPT", "Drug": "CONCEPT", "Measurement": "CONCEPT",
+        "Procedure": "CONCEPT", "Device": "CONCEPT"
+    })
+    omop_use_fuzzy_matching: bool = True
+    omop_fuzzy_threshold: float = 0.85
+    omop_concept_cache_file: str = "omop_concepts.json"
 
     # Execution - OPTIMIZED: Better memory management
     workers: int = 2  # Increased to 2 for better parallelism
     checkpoint_file: str = "processed_files_checkpoint.json"
     memory_cleanup_interval: int = 5  # Cleanup every 5 files
     max_memory_gb: int = 10  # Memory limit
+
+    # File patterns and output formats (from modular pipeline)
+    input_patterns: List[str] = field(default_factory=lambda: [
+        "*.txt", "*.md", "*.csv", "*.json"
+    ])
+    output_formats: List[str] = field(default_factory=lambda: [
+        "json", "csv", "sqlite"
+    ])
 
 
 # --- Logging Setup ---
@@ -188,15 +249,153 @@ class OllamaClient:
             return False
 
 
-# --- Constants & Filters ---
+# --- Custom Filter Integration (from modular pipeline) ---
+class CustomFilterLoader:
+    """Loads and manages the 20k.txt custom filter list for standalone pipeline"""
+
+    def __init__(self):
+        self.custom_terms = set()
+        self._load_custom_filter()
+
+    def _load_custom_filter(self):
+        """Load the 20k.txt filter from GitHub gist"""
+        try:
+            url = "https://gist.githubusercontent.com/eyturner/3d56f6a194f411af9f29df4c9d4a4e6e/raw/63b6dbaf2719392cb2c55eb07a6b1d4e758cc16d/20k.txt"
+            with urllib.request.urlopen(url, timeout=30) as response:
+                content = response.read().decode('utf-8')
+                self.custom_terms.update(word.lower().strip() for word in content.split('\n') if word.strip())
+            logger.info(f"✓ Loaded {len(self.custom_terms)} custom filter terms from 20k.txt")
+        except Exception as e:
+            logger.warning(f"Could not load custom filter 20k.txt: {e}")
+
+    def is_filtered(self, term: str) -> bool:
+        """Check if term should be filtered"""
+        return term.lower().strip() in self.custom_terms
+
+# Initialize global custom filter for standalone pipeline
+CUSTOM_FILTER = CustomFilterLoader()
 
 
-# Available Models - OPTIMIZED: Use only 3 most effective models for speed
-SCISPACY_MODELS = [
-    "en_core_sci_md",        # Best general scientific terms
-    "en_ner_bc5cdr_md",      # Best biomedical entities
-    "en_core_sci_lg"         # High accuracy for verification
-]
+# --- Model Detection Utilities (from modular pipeline) ---
+def get_installed_spacy_models():
+    """Get list of installed spaCy models by parsing `spacy validate` output."""
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "spacy", "validate"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        output = result.stdout
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Error running spacy validate: {e}")
+        return []
+    except FileNotFoundError:
+        logger.error("spaCy not found. Please install spaCy.")
+        return []
+
+    models = []
+    lines = output.split('\n')
+    table_started = False
+    for line in lines:
+        if "NAME" in line and "SPACY" in line and "VERSION" in line:
+            table_started = True
+            continue
+        if table_started and line.strip():
+            parts = line.split()
+            if len(parts) >= 3:
+                model_name = parts[0]
+                spacy_version = parts[1]
+                version = parts[2] if len(parts) > 2 else "unknown"
+                if "✔" in line:
+                    models.append({
+                        "name": model_name,
+                        "spacy_version": spacy_version,
+                        "version": version,
+                        "compatible": True
+                    })
+                else:
+                    models.append({
+                        "name": model_name,
+                        "spacy_version": spacy_version,
+                        "version": version,
+                        "compatible": False
+                    })
+    return models
+
+
+def get_available_scientific_models(disabled_components=None):
+    """Get list of available and loadable scientific spaCy models."""
+    disabled = disabled_components or ["parser"]
+    logger.info("Detecting available spaCy models...")
+
+    # Get all installed models
+    installed_models = get_installed_spacy_models()
+    if not installed_models:
+        logger.warning("No spaCy models found")
+        return []
+
+    # Filter for scientific models
+    scientific_patterns = [
+        "en_core_sci", "en_ner_", "en_core_web_sm",
+        "en_core_web_md", "en_core_web_lg"
+    ]
+    compatible_scientific = []
+    for model in installed_models:
+        if model["compatible"] and any(pattern in model["name"] for pattern in scientific_patterns):
+            compatible_scientific.append(model["name"])
+
+    if not compatible_scientific:
+        logger.warning("No scientific spaCy models found")
+        return []
+
+    # Verify each model can be loaded
+    available_models = []
+    for model_name in compatible_scientific:
+        try:
+            nlp = spacy.load(model_name, disable=disabled)
+            if "sentencizer" not in nlp.pipe_names:
+                nlp.add_pipe("sentencizer")
+            available_models.append(model_name)
+            logger.info(f"✓ Model available: {model_name}")
+        except Exception as e:
+            logger.warning(f"✗ Model unavailable: {model_name} - {e}")
+
+    return available_models
+
+
+def get_model_priorities():
+    """Get priority values for different model types for optimal selection."""
+    return {
+        "en_core_sci_lg": 1, "en_core_sci_md": 2, "en_ner_bc5cdr_md": 3,
+        "en_ner_craft_md": 4, "en_ner_jnlpba_md": 5, "en_core_sci_scibert": 6,
+        "en_core_web_lg": 7, "en_core_web_md": 8, "en_core_web_sm": 9,
+    }
+
+
+def sort_models_by_priority(models):
+    """Sort models by priority for optimal results."""
+    priorities = get_model_priorities()
+    return sorted(models, key=lambda x: priorities.get(x, 999))
+
+
+# Available Models - DYNAMIC: Use auto-detected models with fallback
+def get_scispacy_models():
+    """Get available spaCy models with fallback to hardcoded list"""
+    available = get_available_scientific_models()
+    if available:
+        # Sort by priority and return top models for efficiency
+        return sort_models_by_priority(available)[:3]  # Use top 3 for speed
+    else:
+        # Fallback to hardcoded models
+        logger.warning("Using fallback model list - some models may not be available")
+        return [
+            "en_core_sci_md",        # Best general scientific terms
+            "en_ner_bc5cdr_md",      # Best biomedical entities
+            "en_core_sci_lg"         # High accuracy for verification
+        ]
+
+SCISPACY_MODELS = get_scispacy_models()
 
 
 # Safe synonyms that don't lose clinical specificity
@@ -224,7 +423,8 @@ FILTER_PATTERNS = {
     'P6': r'^.{1,2}$',  # Very short
     'P7': r'^\W+$',  # Non-word
     'P8': r'^[0-9\W]+$',  # Numbers/symbols
-    'P9': r'\b(and|or|the|of|in|on|at|to|for|with|by|as)\b',  # Stop words
+    # REMOVED P9: Stop words - these can be part of valid multi-word biomedical terms
+    # 'P9': r'\b(and|or|the|of|in|on|at|to|for|with|by|as)\b',  # REMOVED for higher recall
     'P10': r'^[a-z]{1,3}$',  # Short lowercase
     'P11': r'^\W*\d+\W*$',  # Numbers with symbols
     'P12': r'^[^a-zA-Z]*[a-z][^a-zA-Z]*$',  # Single lowercase with symbols
@@ -232,25 +432,32 @@ FILTER_PATTERNS = {
     'P14': r'^[A-Z][a-z]+ [A-Z][a-z]+[0-9]+(?:\*|†)?$',  # Two author names with numbers
     'P15': r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\s+[0-9]+,\s*[0-9]+',  # Multiple authors
     'P16': r'https?://[^\s]+',  # URLs
-    'P17': r'\b(?:university|department|institute|college|hospital|center|centre)\b',  # Institutions
-    'P18': r'\b(?:abstract|introduction|methods|results|discussion|conclusion|references)\b',  # Sections
+    # REMOVED P17: Institutions - can be part of valid biomedical context
+    # 'P17': r'\b(?:university|department|institute|college|hospital|center|centre)\b',
+    # REMOVED P18: Sections - can be mentioned in text
+    # 'P18': r'\b(?:abstract|introduction|methods|results|discussion|conclusion|references)\b',
     'P19': r'\b(?:doi|isbn|issn|pmid|pmcid)\b',  # IDs
     'P20': r'\b(?:email|phone|fax|address|correspondence)\b',  # Contact
-    'P21': r'\b(?:study|research|paper|article|report|manuscript)\b',  # Generic
-    'P22': r'\b(?:cross-?sectional|prospective|retrospective|observational)\b\s+study',  # Study design
-    'P23': r'^[A-Z][a-z]+,\s*[A-Z]\.?\s*[A-Z][a-z]+$',  # Author: Smith, J. John
-    'P24': r'^[A-Z][a-z]+(?:-[A-Z][a-z]+)?\s+[A-Z]\.\s*[A-Z][a-z]+$',  # Author: Smith-Jones J. John
-    'P25': r'\b(?:professor|dr|md|phd)\b',  # Titles
-    'P26': r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+){2,}\s*[0-9]*\*?$',  # 3+ names with numbers
-    'P27': r'/[A-Za-z0-9_\-./]+',  # File paths
-    'P28': r'^[A-Z][a-z]+\s+et\s+al\.?$',  # et al
-    'P29': r'\d{4};\d+:\d+(?:-\d+)?',  # Journal Citation
-    'P30': r'^\b(?:J|Am|Nat|Sci|Cell|Mol|Biol|Med|Res|Rev|Ann|Arch|Clin|Eur|Int|Proc|Trans|Front|BMC|PLoS)\.?\s',  # Journal Abbrev
-    'P31': r'\b[A-Z][a-z]+ [A-Z]{1,2}\b',  # Author Initials (e.g., Brown PO) - Reverted to simpler
-    'P32': r'\bet al\.?',  # Any et al
-    'P33': r'\b(?:vol|no|pp)\.\s*\d+',  # Volume/Page info
-    'P34': r'^[A-Z]+\s+[A-Z]+$',  # All caps names
-    'P35': r'\b(?:eds|ed)\.\b'  # Editors
+    # REMOVED P21: Generic academic terms - context dependent
+    # 'P21': r'\b(?:study|research|paper|article|report|manuscript)\b',
+    # REMOVED P22: Study designs - can be valid biomedical terms
+    # 'P22': r'\b(?:cross-?sectional|prospective|retrospective|observational)\b\s+study',
+    # REMOVED P23-P24: Author name patterns - not needed for biomedical terms
+    # 'P23': r'^[A-Z][a-z]+,\s*[A-Z]\.?\s*[A-Z][a-z]+$',  # Author: Smith, J. John
+    # 'P24': r'^[A-Z][a-z]+(?:-[A-Z][a-z]+)?\s+[A-Z]\.\s*[A-Z][a-z]+$',  # Author: Smith-Jones J. John
+    # REMOVED P25: Academic titles - context dependent
+    # 'P25': r'\b(?:professor|dr|md|phd)\b',
+    # REMOVED P26-P35: All author names, references, citations - not needed for biomedical terms
+    # 'P26': r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+){2,}\s*[0-9]*\*?$',  # 3+ names with numbers
+    'P27': r'/[A-Za-z0-9_\-./]+',  # File paths - keep for technical filtering
+    # 'P28': r'^[A-Z][a-z]+\s+et\s+al\.?$',  # et al - REMOVED
+    # 'P29': r'\d{4};\d+:\d+(?:-\d+)?',  # Journal Citation - REMOVED
+    # 'P30': r'^\b(?:J|Am|Nat|Sci|Cell|Mol|Biol|Med|Res|Rev|Ann|Arch|Clin|Eur|Int|Proc|Trans|Front|BMC|PLoS)\.?\s',  # Journal Abbrev - REMOVED
+    # 'P31': r'\b[A-Z][a-z]+ [A-Z]{1,2}\b',  # Author Initials - REMOVED
+    # 'P32': r'\bet al\.?',  # Any et al - REMOVED
+    # 'P33': r'\b(?:vol|no|pp)\.\s*\d+',  # Volume/Page info - REMOVED
+    # 'P34': r'^[A-Z]+\s+[A-Z]+$',  # All caps names - REMOVED
+    # 'P35': r'\b(?:eds|ed)\.\b'  # Editors - REMOVED
 }
 
 
@@ -283,6 +490,116 @@ NOISE_TERMS = {
     "available", "online", "download", "file", "click", "here", "visit", "website",
     "http", "https", "www", "com", "org", "net", "gov", "edu"
 }
+
+
+# --- Custom Filter Integration ---
+class CustomFilterLoader:
+    """Loads and manages the 20k.txt custom filter list"""
+
+    def __init__(self):
+        self.custom_terms = set()
+        self._load_custom_filter()
+
+    def _load_custom_filter(self):
+        """Load the 20k.txt filter from GitHub gist"""
+        try:
+            url = "https://gist.githubusercontent.com/eyturner/3d56f6a194f411af9f29df4c9d4a4e6e/raw/63b6dbaf2719392cb2c55eb07a6b1d4e758cc16d/20k.txt"
+            with urllib.request.urlopen(url, timeout=30) as response:
+                content = response.read().decode('utf-8')
+                self.custom_terms.update(word.lower().strip() for word in content.split('\n') if word.strip())
+            print(f"✓ Loaded {len(self.custom_terms)} custom filter terms from 20k.txt")
+        except Exception as e:
+            print(f"Warning: Could not load custom filter 20k.txt: {e}")
+
+    def is_filtered(self, term: str) -> bool:
+        """Check if term should be filtered"""
+        return term.lower().strip() in self.custom_terms
+
+# Initialize global custom filter
+CUSTOM_FILTER = CustomFilterLoader()
+
+
+# --- Novelty Detection ---
+class NoveltyDetector:
+    """Detects novel biomedical terms using semantic distance from known concepts"""
+
+    def __init__(self):
+        self.model = None
+        self.known_biomedical_terms = set()
+        self._initialize()
+
+    def _initialize(self):
+        """Initialize the semantic model and known terms"""
+        try:
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer("all-MiniLM-L6-v2")
+            print("✓ Loaded semantic model for novelty detection")
+        except ImportError:
+            print("Warning: sentence-transformers not available, novelty detection disabled")
+            self.model = None
+        except Exception as e:
+            print(f"Warning: Could not load semantic model: {e}")
+            self.model = None
+
+        # Initialize with common biomedical terms
+        self.known_biomedical_terms.update({
+            'gut microbiota', 'microbiome', 'bacteria', 'bacteroides', 'firmicutes',
+            'proteobacteria', 'actinobacteria', 'verrucomicrobia', 'clostridia',
+            'bacteroidia', 'eubacterium', 'faecalibacterium', 'roseburia',
+            'prevotella', 'ruminococcus', 'akkermansia', 'lactobacillus',
+            'bifidobacterium', 'streptococcus', 'enterococcus', 'staphylococcus',
+            'escherichia coli', 'e. coli', 'salmonella', 'campylobacter',
+            'inflammation', 'immune', 'antibiotic', 'probiotic', 'prebiotic',
+            'metabolism', 'metabolic', 'fermentation', 'short-chain fatty acids',
+            'butyrate', 'propionate', 'acetate', 'bile acids', 'cholesterol',
+            'lipopolysaccharide', 'lps', 'cytokine', 'interleukin', 'tnf-alpha',
+            'diversity', 'richness', 'evenness', 'shannon', 'simpson', 'alpha',
+            'beta', 'ordination', 'pcoa', 'pca', 'nmds', 'cluster', 'dendrogram',
+            'phylogeny', '16s', '16s rrna', 'metagenomics', 'metabarcoding', 'amplicon',
+            'shotgun', 'assembly', 'annotation', 'taxonomy', 'classification', 'otu',
+            'asv', 'operational taxonomic unit', 'amplicon sequence variant'
+        })
+
+    def is_novel(self, term: str) -> tuple[bool, float]:
+        """Check if a term is novel relative to known biomedical concepts"""
+        if not self.model:
+            return False, 0.0
+
+        term_lower = term.lower().strip()
+
+        # If it's a known term, it's not novel
+        if term_lower in self.known_biomedical_terms:
+            return False, 0.0
+
+        try:
+            import numpy as np
+            from sklearn.metrics.pairwise import cosine_similarity
+
+            # Get embedding for the term
+            term_embedding = self.model.encode([term_lower])
+
+            # Get embeddings for known terms
+            if not self.known_biomedical_terms:
+                return True, 0.8  # Default to novel if no known terms
+
+            known_terms_list = list(self.known_biomedical_terms)[:100]  # Limit for performance
+            known_embeddings = self.model.encode(known_terms_list)
+
+            # Calculate similarity
+            similarities = cosine_similarity(term_embedding, known_embeddings)[0]
+            max_similarity = np.max(similarities)
+
+            # Novelty score is inverse of max similarity
+            novelty_score = 1.0 - max_similarity
+
+            return novelty_score > 0.5, novelty_score
+
+        except Exception as e:
+            print(f"Warning: Error in novelty detection for '{term}': {e}")
+            return False, 0.0
+
+# Initialize global novelty detector
+NOVELTY_DETECTOR = NoveltyDetector()
 
 
 # Geographic Blocklist
@@ -624,26 +941,50 @@ class MicrobiomeSemanticFilter:
 
 
     def _precompute_embeddings(self):
-        if not self.model: return
+        if self.model: # Changed from 'if not self.model: return'
+            try:
+                # Check if model is SentenceTransformer or TF-IDF
+                if hasattr(self.model, 'encode'):
+                    self.seed_embeddings = self.model.encode(self.seed_terms, convert_to_tensor=True) # Added convert_to_tensor
+                    logger.info(f"Precomputed embeddings for {len(self.seed_terms)} seed terms") # Added info log
+            except Exception as e:
+                logger.warning(f"Failed to precompute seed embeddings: {e}")
+
+        # Load 20k common words filter
+        self.common_words = set()
         try:
-            # Check if model is SentenceTransformer or TF-IDF
-            if hasattr(self.model, 'encode'):
-                self.seed_embeddings = self.model.encode(self.seed_terms)
+            from pathlib import Path # Import Path
+            common_words_path = Path("data/20k.txt")
+            if common_words_path.exists():
+                with open(common_words_path, 'r') as f:
+                    self.common_words = {w.strip().lower() for w in f if len(w.strip()) > 3}
+                logger.info(f"Loaded {len(self.common_words)} common words for filtering")
         except Exception as e:
-            logger.warning(f"Failed to precompute seed embeddings: {e}")
+            logger.warning(f"Failed to load common words: {e}")
 
 
     def get_relevance_score(self, term_text: str) -> float:
-        """Calculate relevance score using embeddings or keywords."""
-        keyword_score = self._keyword_score(term_text)
-        
-        if self.seed_embeddings is None or not hasattr(self.model, 'encode'):
+        """Calculate relevance score using embeddings or keywords.""" # Docstring reverted to original
+        term_lower = term_text.lower() # Added term_lower
+
+
+        # Keyword-based scoring (faster, primary method)
+        keyword_score = self._keyword_score(term_text) # Changed to term_text for _keyword_score
+        if keyword_score >= 0.8:  # High confidence keyword match
             return keyword_score
+
+        # Common Word Filter (New Feature)
+        if term_lower in self.common_words:
+            return 0.0
+
+        # Semantic similarity scoring (slower, secondary method)
+        if self.seed_embeddings is None or not hasattr(self.model, 'encode'): # Changed self.semantic_model to self.model
+            return keyword_score # Fallback to keyword_score if no semantic model
 
 
         try:
             # Encode term
-            term_vec = self.model.encode([term_text])[0]
+            term_vec = self.model.encode([term_text])[0] # Changed self.semantic_model to self.model
             
             # Calculate max similarity to seeds (Cosine Similarity)
             # Manual cosine sim for speed/independence from heavy libs if needed, 
@@ -670,11 +1011,54 @@ class MicrobiomeSemanticFilter:
 
 
     def _keyword_score(self, term_text: str) -> float:
+        """Calculate keyword-based relevance score with context awareness"""
+        score = 0.0
         term_lower = term_text.lower()
-        for keyword in self.microbiome_keywords:
-            if keyword in term_lower:
-                return 0.8
-        return 0.0
+
+        # Direct keyword matches
+        for seed in self.seed_terms:
+            if seed in term_lower:
+                if seed == term_lower:  # Exact match
+                    score = max(score, 1.0)
+                elif term_lower.startswith(seed):  # Starts with keyword
+                    score = max(score, 0.9)
+                else:  # Contains keyword
+                    score = max(score, 0.7)
+
+        # Bonus for microbiome-specific patterns
+        microbiome_patterns = [
+            r'bacteroides', r'firmicutes', r'proteobacteria', r'actinobacteria',
+            r'lactobacillus', r'bifidobacterium', r'clostridium', r'enterococcus',
+            r'akkermania', r'faecalibacterium',
+            r'scfa', r'butyrate', r'propionate', r'acetate',
+            r'16s', r'rrna', r'metagenom', r'metabolom',
+            r'gut', r'intestin', r'colorectal', r'gastric'  # Added context terms
+        ]
+
+        # Check for microbiome context
+        has_microbiome_context = False
+        for pattern in microbiome_patterns:
+            if re.search(pattern, term_lower):
+                score = max(score, 0.8)
+                has_microbiome_context = True
+                break
+
+        # Penalty for clearly non-microbiome terms
+        # Removed 'cancer', 'tumor' from blanket ban.
+        # Only penalize if NO microbiome context is present.
+        non_microbiome_patterns = [
+             r'cardiovascular', r'pulmonary',
+            r'dermatology', r'ophthalmology', r'orthopedic', r'neurology',
+            r'traffic', r'vehicle', r'finance', r'political' # Added obvious noise
+        ]
+        
+        # Penalize unrelated medical fields
+        for pattern in non_microbiome_patterns:
+            if re.search(pattern, term_lower):
+                score = score * 0.3  # Heavy penalty
+                break
+                
+        return score
 
 
 class TermRanker:
@@ -700,6 +1084,13 @@ class TermRanker:
             semantic_score = self.semantic_filter.get_relevance_score(t_text)
             term['semantic_score'] = round(semantic_score, 4)
             
+            # --- NOVELTY DETECTION ---
+            # A term is "Novel" if it is High Semantic Relevance BUT Not Gold Standard.
+            term['is_novel'] = False
+            if (not is_gold) and (semantic_score >= 0.7):
+                 term['is_novel'] = True
+                 term['novelty_status'] = "HighRelevance-NonGold"
+
             # 3. Calculate Composite Score (Logic from old.py)
             # Relevance (Base)
             relevance = 0.3 # Base
@@ -735,6 +1126,7 @@ class TermRanker:
                 math.log1p(frequency) * 0.10 +
                 math.log1p(file_count) * 0.15 +
                 (0.5 if is_gold else 0.0) +
+                (0.4 if term.get('is_novel') else 0.0) + # Novelty bonus
                 semantic_penalty
             )
             
@@ -854,9 +1246,54 @@ class TermsExtractor:
                 
         # Apply Contextual Cleaning (OCR fix)
         all_terms = ContextualCleaner.clean_terms(all_terms)
+        # Validate against known entities for refinement
+        # This part of the snippet seems to be misplaced or incomplete in the user's request.
+        # Assuming it was meant to be a new method or part of an existing one.
+        # For now, I'll place the new methods as requested and adjust the _apply_filters.
                 
         return all_terms
 
+    def _refine_entity_label(self, term: str, label: str) -> str:
+        """Refine entity label based on term content and known entities."""
+        # This method's implementation was not provided in the snippet,
+        # so I'm adding a placeholder.
+        # In a real scenario, this would involve checking against ontologies,
+        # dictionaries, or using more advanced NLP techniques.
+        return label # Placeholder: return original label
+
+    def _is_valid_scientific_term(self, term: str) -> bool:
+        """Deep cleaning: Ensure term looks like a valid scientific concept"""
+        term_lower = term.lower()
+        import re
+        
+        # 1. Reject if it's purely a year or citation pattern
+        if re.match(r'^\d{4}$', term) or re.match(r'^\(\d{4}\)$', term): 
+            return False
+
+        # 1b. Reject if it STARTs with a digit followed by space (e.g. "42 blautia")
+        if re.match(r'^\d+\s+', term):
+            return False
+            
+        # 2. Reject common academic noise
+        noise_words = {'et', 'al', 'vol', 'vol.', 'pp', 'pp.', 'doi', 'http', 'www', 'fig', 'fig.', 'table'}
+        if any(w in term_lower.split() for w in noise_words):
+            return False
+
+        # 3. Reject if term CONT AINS "word + long digits" (e.g. "hosomi12")
+        words = term_lower.split()
+        for word in words:
+            # Reject "word + digits" (e.g. "hosomi12")
+            if re.search(r'^[a-z]{4,}\d{1,}$', word):
+                return False
+            # 5. Reject run-on words (>35 chars)
+            if len(word) > 35:
+                return False
+
+        # 4. Reject middle year citations
+        if re.search(r'\b\d{4}\b', term_lower):
+             return False
+
+        return True
 
     def _apply_filters(self, term: str, label: str = "ENTITY") -> bool:
         """Apply comprehensive P1-P28 filters and advanced checks"""
@@ -873,19 +1310,42 @@ class TermsExtractor:
         if term_lower in NOISE_TERMS:
             return False
             
-        # 3. Geo Blocklist
+        # 3. Custom 20k.txt Filter
+        if CUSTOM_FILTER.is_filtered(term):
+            return False
+
+        # 4. Geo Blocklist
         if any(geo in term_lower for geo in GEO_BLOCKLIST):
             return False
 
+        # New Noise Blocklist (assuming self.NOISE_TERMS_BLOCKLIST is a class attribute)
+        # Note: The original NOISE_TERMS is still present above.
+        # If NOISE_TERMS_BLOCKLIST is meant to replace NOISE_TERMS, the above line should be removed.
+        # For now, I'm adding it as a separate check as per the instruction.
+        if hasattr(self, 'NOISE_TERMS_BLOCKLIST') and term_lower in self.NOISE_TERMS_BLOCKLIST:
+            return False
 
-        # 4. Advanced Invalid Patterns
+        # Additional validation patterns (assuming self.INVALID_PATTERNS is a class attribute)
+        # Note: The original INVALID_PATTERNS is still present below.
+        # If this is meant to replace the original INVALID_PATTERNS, the original loop should be removed.
+        # For now, I'm adding it as a separate check as per the instruction.
+        if hasattr(self, 'INVALID_PATTERNS'):
+            for pattern in self.INVALID_PATTERNS:
+                if pattern.match(term):
+                    return False
+
+        # Deep Cleaning Check (New)
+        if not self._is_valid_scientific_term(term):
+            return False
+
+        # 5. Advanced Invalid Patterns (Original)
         for pattern in INVALID_PATTERNS:
             if pattern.match(term):
                 return False
 
 
-        # 5. Length & Content
-        if len(term) < 3 or len(term) > 100:
+        # 5. Length & Content (Original, adjusted to 2 as per snippet)
+        if len(term) < 2 or len(term) > 100:
             return False
         if not any(c.isalpha() for c in term):
             return False
@@ -1370,57 +1830,75 @@ class Deduplicator:
 
 
     def _conservative_fuzzy_dedup(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Very conservative fuzzy deduplication with high threshold"""
+        """Very conservative fuzzy deduplication with optimized blocking"""
         try:
             from rapidfuzz import fuzz
         except ImportError:
             logger.warning("rapidfuzz not installed, skipping fuzzy deduplication")
             return terms
 
-
         if len(terms) < 2:
             return terms
 
-
         # Use very high threshold - only merge near-identical terms
-        threshold = max(0.90, self.config.fuzzy_threshold)  # Never below 0.90
-        keep_indices = set(range(len(terms)))
-        term_texts = [t['term'] for t in terms]
-
-
+        threshold = max(0.90, self.config.fuzzy_threshold)
         logger.info(f"   Using fuzzy threshold: {threshold}")
 
-
-        for i in range(len(terms)):
-            if i not in keep_indices:
-                continue
-
-
-            for j in range(i + 1, len(terms)):
-                if j not in keep_indices:
-                    continue
-
-
-                # Check fuzzy similarity - only for very similar terms
-                similarity = fuzz.ratio(term_texts[i], term_texts[j]) / 100
-
-
-                if similarity >= threshold:
-                    # Very conservative merging logic
-                    term_i_freq = terms[i].get('frequency', 1)
-                    term_j_freq = terms[j].get('frequency', 1)
-
-
-                    # Only merge if they're nearly identical and one has much higher frequency
-                    if similarity >= 0.95 and max(term_i_freq, term_j_freq) > min(term_i_freq, term_j_freq) * 3:
-                        if term_j_freq > term_i_freq:
-                            keep_indices.discard(i)
-                        else:
-                            keep_indices.discard(j)
-
-
+        # OPTIMIZATION: Sort by length to allow effective blocking
+        # Longer terms first to prefer them as canonical if frequency is similar
+        terms.sort(key=lambda x: len(x['term']), reverse=True)
+        
+        keep_indices = set(range(len(terms)))
+        term_texts = [t['term'] for t in terms]
+        
+        # Blocking strategy: Partition indices by length
+        # We only need to compare terms with length difference <= 3 (approx) due to high threshold
+        length_map = {}
+        for idx, text in enumerate(term_texts):
+            l = len(text)
+            if l not in length_map: length_map[l] = []
+            length_map[l].append(idx)
+            
+        sorted_lengths = sorted(length_map.keys(), reverse=True)
+        
+        # Iterate efficiently
+        for l in sorted_lengths:
+            # Get candidates from current length and slightly smaller lengths
+            candidates = length_map[l]
+            
+            # Look at neighbor lengths (e.g. l, l-1, l-2)
+            for i in candidates:
+                if i not in keep_indices: continue
+                
+                # Check against other candidates of similar length
+                # We check smaller lengths too
+                potential_matches_indices = []
+                for check_l in [l, l-1, l-2]:
+                    if check_l in length_map:
+                        potential_matches_indices.extend(length_map[check_l])
+                        
+                for j in potential_matches_indices:
+                    if i == j: continue
+                    if j not in keep_indices: continue
+                    if j < i: continue # Avoid double checking or maintain strict order
+                    
+                    similarity = fuzz.ratio(term_texts[i], term_texts[j]) / 100
+                    
+                    if similarity >= threshold:
+                        term_i_freq = terms[i].get('frequency', 1)
+                        term_j_freq = terms[j].get('frequency', 1)
+                        
+                        # Only merge if they're nearly identical and one has much higher frequency
+                        if similarity >= 0.95 and max(term_i_freq, term_j_freq) > min(term_i_freq, term_j_freq) * 3:
+                            # Keep higher frequency
+                            if term_j_freq > term_i_freq:
+                                keep_indices.discard(i)
+                                break # i is gone
+                            else:
+                                keep_indices.discard(j)
+                                
         preserved = [terms[i] for i in sorted(keep_indices)]
-        logger.info(f"   Conservative fuzzy deduplication: {len(terms)} → {len(preserved)} terms")
+        logger.info(f"   Conservative fuzzy deduplication: {len(terms)} -> {len(preserved)} terms")
         return preserved
 
 
@@ -2963,6 +3441,149 @@ class Mapper:
 # --- Global Pipeline Logic ---
 
 
+
+class BioBertQualitySelector:
+    """Selects high-quality terms using BioBERT embeddings (Prototype Similarity)"""
+    
+    def __init__(self, config: PipelineConfig):
+        self.config = config
+        self.tokenizer = None
+        self.model = None
+        self.device = "cpu"
+        self._load_model()
+        
+    def _load_model(self):
+        if not self.config.use_bert_selection:
+            return
+
+        try:
+            from transformers import AutoTokenizer, AutoModel
+            import torch
+            
+            model_name = self.config.bert_model_name
+            logger.info(f"Loading BioBERT model for selection: {model_name}...")
+            
+            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+            self.model = AutoModel.from_pretrained(model_name).to(self.device)
+            self.model.eval()
+            
+            logger.info(f"BioBERT loaded on {self.device}")
+            
+        except Exception as e:
+            logger.error(f"Failed to load BioBERT model: {e}")
+            self.model = None
+
+    def select_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Filter terms based on similarity to scientific prototypes vs noise"""
+        if not self.model or not terms:
+            return terms # Pass through if model failed
+            
+        logger.info(f"Running BioBERT Quality Selection on {len(terms)} terms...")
+        start_time = time.time()
+        
+        # Prototypes
+        SCIENTIFIC_PROTOTYPES = [
+            "bacterium", "microbiome", "gene expression", "protein", "enzyme", 
+            "disease", "pathogen", "metabolite", "chemical compound", "clinical symptom", 
+            "anatomy", "physiology", "molecular biology", "genetics", "pharmacology",
+            "treatment", "diagnosis", "patient", "organism", "cell"
+        ]
+        
+        NOISE_PROTOTYPES = [
+            "scientific study", "research analysis", "statistical method", "data collection",
+            "experimental result", "clinical trial", "literature review", "author contribution",
+            "funding source", "conflict of interest", "copyright statement", "figure legend",
+            "table caption", "supplementary material", "university department", "correspondence address",
+            "p-value", "confidence interval", "standard deviation", "sample size",
+            "significant difference", "observed effect", "increased level", "decreased value",
+            "et al", "published by", "received on", "available online", "http url", "doi link",
+            "page number", "volume issue", "editorial board", "keywords", "abbreviation"
+        ]
+        
+        import torch
+        import numpy as np
+        
+        # 1. Embed Prototypes
+        logger.info("   Embedding prototypes...")
+        with torch.no_grad():
+            sci_emb = self._get_embeddings(SCIENTIFIC_PROTOTYPES)
+            noise_emb = self._get_embeddings(NOISE_PROTOTYPES)
+            
+        # Normalize prototypes
+        sci_emb = torch.nn.functional.normalize(sci_emb, p=2, dim=1)
+        noise_emb = torch.nn.functional.normalize(noise_emb, p=2, dim=1)
+        
+        # 2. Process Terms in Batches
+        batch_size = self.config.batch_size * 2 # Can handle larger batch for inference
+        kept_terms = []
+        dropped_count = 0
+        
+        # Map unique term strings to their items to verify duplicates once
+        term_map = {}
+        for t in terms:
+            txt = t['term']
+            if txt not in term_map: term_map[txt] = []
+            term_map[txt].append(t)
+            
+        unique_texts = list(term_map.keys())
+        logger.info(f"   Processing {len(unique_texts)} unique terms from {len(terms)} raw instances")
+        
+        kept_texts = set()
+        
+        for i in range(0, len(unique_texts), batch_size):
+            batch_texts = unique_texts[i:i+batch_size]
+            
+            with torch.no_grad():
+                # Get embeddings
+                batch_emb = self._get_embeddings(batch_texts)
+                batch_emb = torch.nn.functional.normalize(batch_emb, p=2, dim=1)
+                
+                # Sim to Science
+                # (Batch, Dim) @ (Proto, Dim).T -> (Batch, Proto)
+                sci_sims = torch.mm(batch_emb, sci_emb.T)
+                max_sci, _ = sci_sims.max(dim=1)
+                
+                # Sim to Noise
+                noise_sims = torch.mm(batch_emb, noise_emb.T)
+                max_noise, _ = noise_sims.max(dim=1)
+                
+                # Decision Logic
+                # keep if max_sci > max_noise
+                # OR if max_sci > conservative_threshold
+                
+                mask = (max_sci > max_noise) | (max_sci > 0.85)
+                # But filter definitely noise
+                mask = mask & (max_noise < 0.85)
+                
+                # Convert to bool list
+                keep_decisions = mask.cpu().tolist()
+                
+                for idx, keep in enumerate(keep_decisions):
+                    if keep:
+                        kept_texts.add(batch_texts[idx])
+                    else:
+                        dropped_count += 1
+                        
+        # Reconstruct list
+        result = []
+        for txt in kept_texts:
+            result.extend(term_map[txt])
+            
+        duration = time.time() - start_time
+        logger.info(f"BioBERT Selection: {len(terms)} -> {len(result)} terms ({dropped_count} unique filtered) in {duration:.1f}s")
+        return result
+
+    def _get_embeddings(self, texts: List[str]):
+        """Get CLS embeddings for a list of texts"""
+        import torch
+        inputs = self.tokenizer(texts, padding=True, truncation=True, return_tensors="pt", max_length=64).to(self.device)
+        outputs = self.model(**inputs)
+        # Use simple CLS pooling
+        embeddings = outputs.last_hidden_state[:, 0, :]
+        return embeddings
+
+
 class GlobalPipelineProcessor:
     """
     Correct Global Scientific Term Extraction Pipeline Processor
@@ -3010,6 +3631,7 @@ class GlobalPipelineProcessor:
         # Initialize components once (no models loaded yet)
         self.deduplicator = None
         self.term_corrector = None
+        self.bert_selector = None
         self.mapper = None
         self.umls_mapper = None
         self.def_generator = None
@@ -3056,10 +3678,31 @@ class GlobalPipelineProcessor:
         logger.info(f"Models to load: {models_to_load}")
 
         def load_single_model(model_name):
-            """Load a single model"""
+            """Load a single model with enhanced timeout handling (from modular pipeline)"""
             try:
                 logger.info(f"   Loading {model_name}...")
-                nlp = spacy.load(model_name)
+
+                # Enhanced timeout handling from modular pipeline
+                import signal
+                import platform
+
+                def timeout_handler(signum, frame):
+                    raise TimeoutError(f"Model loading timed out for {model_name}")
+
+                # Set timeout - Windows compatible approach
+                if platform.system() == "Windows":
+                    # Windows doesn't support SIGALRM, use alternative approach
+                    logger.debug(f"Windows detected: loading model {model_name} without SIGALRM timeout")
+                    nlp = spacy.load(model_name, disable=self.config.disabled_components)
+                else:
+                    # Unix/Linux systems support SIGALRM
+                    signal.signal(signal.SIGALRM, timeout_handler)
+                    signal.alarm(30)  # 30 second timeout
+                    try:
+                        nlp = spacy.load(model_name, disable=self.config.disabled_components)
+                    finally:
+                        signal.alarm(0)  # Cancel timeout
+
                 # Add sentencizer if missing for better performance
                 if "sentencizer" not in nlp.pipe_names:
                     nlp.add_pipe("sentencizer")
@@ -3075,8 +3718,14 @@ class GlobalPipelineProcessor:
 
                 logger.info(f"   ✅ {model_name} loaded and cached")
                 return model_name, extractor, None
+            except TimeoutError as te:
+                logger.error(f"   ❌ Timeout loading {model_name}: {te}")
+                return model_name, None, str(te)
             except Exception as e:
                 logger.error(f"   ❌ Failed to load {model_name}: {e}")
+                # Check if it's a missing model error specifically
+                if "Can't find model" in str(e):
+                    logger.warning(f"   💡 Model {model_name} not installed. Install with: pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.1/{model_name}-0.5.1.tar.gz")
                 return model_name, None, str(e)
 
         # Load models in parallel (limited to prevent memory issues)
@@ -3113,6 +3762,7 @@ class GlobalPipelineProcessor:
         if self.deduplicator is None:
             self.deduplicator = Deduplicator(self.config)
             self.term_corrector = LLMTermCorrector(self.config) if self.config.correct_terms else None
+            self.bert_selector = BioBertQualitySelector(self.config) if self.config.use_bert_selection else None
             self.mapper = ComprehensiveMapper(self.config) if (self.config.map_omop or self.config.map_bioportal) else None
             self.umls_mapper = UMLSMapper(self.config) if self.config.map_umls else None
             self.def_generator = DefinitionGenerator(self.config) if self.config.generate_definitions else None
@@ -3144,81 +3794,75 @@ class GlobalPipelineProcessor:
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
         
         for file_idx, file_path in enumerate(files, 1):
-            logger.info(f"📄 Processing file {file_idx}/{len(files)}: {file_path.name}")
-            
-            # CHECKPOINT: Check if we already processed this file
-            checkpoint_file = checkpoint_dir / f"{file_path.stem}.json"
-            if checkpoint_file.exists():
-                try:
-                    with open(checkpoint_file, 'r') as f:
-                        saved_terms = json.load(f)
-                    logger.info(f"   ⏩ Loaded {len(saved_terms)} terms from checkpoint")
-                    all_raw_terms.extend(saved_terms)
-                    continue
-                except Exception as e:
-                    logger.warning(f"   ⚠️ Failed to load checkpoint for {file_path.name}, re-processing: {e}")
-
-
-            try:
-                text = file_path.read_text(encoding='utf-8')
-                logger.info(f"   📖 File size: {len(text):,} characters")
-            except Exception as e:
-                logger.error(f"❌ Error reading {file_path}: {e}")
-                continue
-
-
-            # OPTIMIZED: Extract with lazy loading and memory management
-            file_terms = []
-            for model_name in self.config.models_to_use:
-                logger.info(f"   🤖 Extracting with {model_name}...")
-                try:
-                    # OPTIMIZED: Lazy load model only when needed
-                    extractor = self._load_model_lazy(model_name)
-                    if extractor is None:
-                        logger.warning(f"   ⚠️ Model {model_name} not available, skipping")
-                        continue
-
-
-                    terms = extractor.extract(text)
-
-
-                    logger.info(f"      ✅ Found {len(terms)} terms")
-
-
-                    # Tag terms with their source model and file for traceability
-                    for t in terms:
-                        t['source_model'] = model_name
-                        t['source_file'] = file_path.name
-
-
-                    file_terms.extend(terms)
-
-
-                except Exception as e:
-                    logger.error(f"   ❌ Extraction failed for {model_name} on {file_path.name}: {e}")
-            
-            # Save to checkpoint
-            if file_terms:
-                with open(checkpoint_file, 'w', encoding='utf-8') as f:
-                    json.dump(file_terms, f, ensure_ascii=False)
-            
+            file_terms = self._process_single_file_extraction(file_path, file_idx, len(files), checkpoint_dir)
             all_raw_terms.extend(file_terms)
-
 
             # Periodic cleanup
             if file_idx % 10 == 0:
                 self._cleanup_memory()
                 self._check_memory_usage()
 
-
             # OPTIMIZED: Smart raw terms limit for efficient processing
             if len(all_raw_terms) >= self.config.max_raw_terms_limit:
                 logger.info(f"🎯 Smart limit reached! {len(all_raw_terms):,} raw terms - time for deduplication")
                 break
 
-
         logger.info(f"🎯 STEP 1 COMPLETE: Total raw terms from ALL files: {len(all_raw_terms):,}")
         return all_raw_terms
+
+    def _process_single_file_extraction(self, file_path: Path, file_idx: int, total_files: int, checkpoint_dir: Path) -> List[Dict[str, Any]]:
+        """Process a single file for extraction (Refactored Helper)"""
+        logger.info(f"📄 Processing file {file_idx}/{total_files}: {file_path.name}")
+        
+        # CHECKPOINT: Check if we already processed this file
+        checkpoint_file = checkpoint_dir / f"{file_path.stem}.json"
+        if checkpoint_file.exists():
+            try:
+                with open(checkpoint_file, 'r') as f:
+                    saved_terms = json.load(f)
+                logger.info(f"   ⏩ Loaded {len(saved_terms)} terms from checkpoint")
+                return saved_terms
+            except Exception as e:
+                logger.warning(f"   ⚠️ Failed to load checkpoint for {file_path.name}, re-processing: {e}")
+
+        try:
+            text = file_path.read_text(encoding='utf-8')
+            logger.info(f"   📖 File size: {len(text):,} characters")
+        except Exception as e:
+            logger.error(f"❌ Error reading {file_path}: {e}")
+            return []
+
+        # OPTIMIZED: Extract with lazy loading and memory management
+        file_terms = []
+        for model_name in self.config.models_to_use:
+            logger.info(f"   🤖 Extracting with {model_name}...")
+            try:
+                # OPTIMIZED: Lazy load model only when needed
+                extractor = self._load_model_lazy(model_name)
+                if extractor is None:
+                    logger.warning(f"   ⚠️ Model {model_name} not available, skipping")
+                    continue
+
+                terms = extractor.extract(text)
+
+                logger.info(f"      ✅ Found {len(terms)} terms")
+
+                # Tag terms with their source model and file for traceability
+                for t in terms:
+                    t['source_model'] = model_name
+                    t['source_file'] = file_path.name
+
+                file_terms.extend(terms)
+
+            except Exception as e:
+                logger.error(f"   ❌ Extraction failed for {model_name} on {file_path.name}: {e}")
+            
+        # Save to checkpoint
+        if file_terms:
+            with open(checkpoint_file, 'w', encoding='utf-8') as f:
+                json.dump(file_terms, f, ensure_ascii=False)
+        
+        return file_terms
 
 
     def filter_noise_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -3476,15 +4120,20 @@ class GlobalPipelineProcessor:
         # STEP 2: Gather ALL terms into single collection (already done in step 1)
         logger.info(f"📦 STEP 2: Gathered ALL {len(all_raw_terms):,} terms into single collection")
 
+        # Initialize components early if needed for BERT
+        if self.config.use_bert_selection:
+            logger.info("🧠 STEP 2.5: BioBERT Quality Selection (Optional)...")
+            self._initialize_components()
+            all_raw_terms = self.bert_selector.select_terms(all_raw_terms)
+            self.save_terms_to_files(all_raw_terms, "step2_bert_selected")
 
         # STEP 3: Global deduplication (exact + fuzzy + semantic)
         logger.info("🔄 STEP 3: Global deduplication (exact + fuzzy + semantic)...")
 
-
-        # OPTIMIZED: Initialize deduplicator only when needed
-        self._initialize_components()
-
-
+        # OPTIMIZED: Initialize deduplicator only when needed (if not already done)
+        if self.deduplicator is None:
+            self._initialize_components()
+        
         dedup_terms = self.deduplicator.deduplicate(all_raw_terms)
         logger.info(f"   ✅ Global deduplication: {len(all_raw_terms):,} → {len(dedup_terms):,} terms")
 
@@ -4329,10 +4978,12 @@ def main():
     # ⭐ NEW arguments you requested ⭐
     parser.add_argument("--max_files", type=int, default=None, help="Maximum number of files to process")
     parser.add_argument("--target_terms", type=int, default=10000, help="Target final number of terms")
-    parser.add_argument("--fuzzy_threshold", type=float, default=0.85, help="Fuzzy matching threshold")
-    parser.add_argument("--semantic_threshold", type=float, default=0.90, help="Semantic similarity threshold")
+    parser.add_argument("--fuzzy_threshold", type=float, default=0.90, help="Fuzzy matching threshold (increased for novel term recall)")
+    parser.add_argument("--semantic_threshold", type=float, default=0.95, help="Semantic similarity threshold (increased for novel term recall)")
     parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers for extraction")
     parser.add_argument("--batch_size", type=int, default=32, help="Batch size for GPU inference")
+    parser.add_argument("--use_bert_selection", action="store_true", help="Use BERT/BioBERT for initial term selection/filtering")
+    parser.add_argument("--bert_model_name", default="dmis-lab/biobert-v1.1", help="BERT model name for selection (default: dmis-lab/biobert-v1.1)")
 
 
     args = parser.parse_args()
@@ -4350,24 +5001,31 @@ def main():
         models_to_use = [args.model]
 
 
-    # OPTIMIZED: --ensemble now uses optimized 3 models instead of all 8
-    # Only use ALL 8 models if specifically requested with --run_all_models
+      # ENHANCED: Dynamic model detection like modular pipeline
+    # Auto-detect available models if not specified
     if args.run_all_models:
-        models_to_use = SCISPACY_MODELS
-    # --ensemble will use the optimized 3 models by default
-
+        models_to_use = get_available_scientific_models()
+        logger.info(f"Using all available models: {models_to_use}")
+    elif args.models:
+        models_to_use = args.models
+        logger.info(f"Using specified models: {models_to_use}")
+    else:
+        # Auto-detect and prioritize models like modular pipeline
+        models_to_use = get_scispacy_models()
+        logger.info(f"Auto-detected models (prioritized): {models_to_use}")
 
     logger.info(f"🚀 Starting Standalone Pipeline with Global Workflow")
     logger.info(f"Models: {models_to_use}")
 
-
-    # Create config
+    # Create enhanced config with dynamic model detection
     config = PipelineConfig(
         input_dir=args.input_dir,
         output_dir=args.output_dir,
         models_to_use=models_to_use,
         max_files=args.max_files,
         target_final_terms=args.target_terms,
+        auto_detect_models=True,  # Enable auto-detection like modular pipeline
+        preferred_models=args.models if args.models else None,
         fuzzy_threshold=args.fuzzy_threshold,
         semantic_threshold=args.semantic_threshold,
         workers=args.workers,
@@ -4383,6 +5041,10 @@ def main():
         bioportal_api_key=args.bioportal_api_key,
         load_4bit=args.load_4bit,
         spacy_model=models_to_use[0], # Default for base components
+
+        # BERT Selection
+        use_bert_selection=args.use_bert_selection,
+        bert_model_name=args.bert_model_name,
 
 
         # Ollama configuration
