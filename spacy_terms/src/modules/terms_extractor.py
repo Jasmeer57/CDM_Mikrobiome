@@ -683,7 +683,6 @@ class TermsExtractor:
         if not self._is_cdm_relevant(term, context if 'context' in locals() else ""):
             return False
 
-        return True  # Term passes all filters
 
     def _advanced_quality_check(self, term: str, context: str = "") -> bool:
         """Advanced quality checks for sophisticated filtering"""

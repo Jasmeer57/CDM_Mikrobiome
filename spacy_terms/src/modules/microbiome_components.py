@@ -448,7 +448,6 @@ class MicrobiomeSemanticFilter:
         # If it's just "cancer" (generic), maybe low score. 
         # But "colorectal cancer" has "colorectal" (context) -> has_microbiome_context=True -> saved.
         
-        return score
 
 
 class ContextualCleaner:
