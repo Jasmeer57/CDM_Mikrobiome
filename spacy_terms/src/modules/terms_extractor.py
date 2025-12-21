@@ -127,9 +127,52 @@ ABBREVIATION_EXPANSION = {
 
 # ENHANCED: Entity refinement rules from reference terms.py (P6/P11 Fix)
 ENTITY_REFINEMENT_RULES = {
-    'ORGANISM': [r'\b(bacter|coccus|sp\.|spp\.|phage|virus)\b', r'[A-Z][a-z]+ [a-z]+'],
-    'DISEASE': [r'\b(disease|syndrome|infection|itis|osis)\b'],
-    'CHEMICAL': [r'\b(acid|peptide|protein|enzyme|lipid|ol|ate)\b'],
+    # TAXON/ORGANISM - Highest priority for microbiome CDM
+    'TAXON': [
+        r'\bbacter(ia|ium|ial|oides)\b',
+        r'\b(species|strain|genus|family|phylum|order)\b',
+        r'\b(firmicutes|bacteroidetes|actinobacteria|proteobacteria)\b',
+        r'\b(bacteroides|prevotella|faecalibacterium|akkermansia|bifidobacterium)\b',
+        r'\b(lactobacillus|clostridium|ruminococcus)\b',
+        r'(coccus|bacter|phage|viridae)$',
+        r'\b(microbiota|microbial|microorganism)\b',
+        r'\b(probiotic|prebiotic|commensal|pathogen)\b'
+    ],
+    # GENE/GENOMIC
+    'GENE_OR_GENE_PRODUCT': [
+        r'\bgene(s|tic|ome)?\b',
+        r'\b(16s|rrna|dna|rna)\b',
+        r'\b(expression|transcription|upregulated)\b',
+        r'\b(genomic|metagenomic|amplicon|otu|asv)\b'
+    ],
+    # PROTEIN/ENZYME
+    'PROTEIN': [
+        r'\bprotein(s)?\b',
+        r'\benzyme(s)?\b',
+        r'\b(peptide|antibody|iga|igg|cytokine|interleukin)\b',
+        r'(ase|kinase)$'
+    ],
+    # DISEASE/PATHOLOGY
+    'DISEASE': [
+        r'\b(disease|disorder|syndrome|infection)\b',
+        r'\b(cancer|diabetes|obesity|inflammation)\b',
+        r'\b(ibd|colitis|crohn|ibs|dysbiosis)\b',
+        r'(itis|osis|emia)$'
+    ],
+    # CHEMICAL/METABOLITE
+    'CHEMICAL': [
+        r'\b(metabolite|compound|molecule)\b',
+        r'\b(butyrate|propionate|acetate|scfa|bile acid|fatty acid)\b',
+        r'\b(lipid|metabolism|vitamin)\b'
+    ],
+    # CELL TYPE
+    'CELL_TYPE': [
+        r'\b(t cell|b cell|macrophage|dendritic|epithelial)\b'
+    ],
+    # ANATOMICAL
+    'ANATOMICAL_ENTITY': [
+        r'\b(gut|intestinal|colon|oral|mucosal)\b'
+    ]
 }
 
 # ENHANCED: Entity weights from reference terms.py for better scoring
@@ -507,11 +550,23 @@ class TermsExtractor:
             final_form = normalized_form if normalized_form else original_term
             
             # POST-NORMALIZATION VALIDATION: Reject if normalized form contains OCR garbage
+            # STEP 1: Check for leading numbers (CRITICAL - catches "42 blautia", "25 26 gut")
+            if re.match(r'^\d+\s', final_form):  # Starts with number(s) + space
+                return ""
+            if re.match(r'^\d+$', final_form):  # Is ONLY numbers
+                return ""
+            
             words = final_form.split()
+            
+            # STEP 2: Check for consecutive leading numbers
+            if len(words) >= 2 and words[0].isdigit() and words[1].isdigit():
+                return ""  # Blocks "25 26 gut microbiota"
+            
+            # STEP 3: Check each word
             for word in words:
                 # Reject "word + digits" (e.g. "hosomi12")
                 if re.search(r'^[a-z]{4,}\d{1,}$', word):
-                    return ""  # Return empty to signal rejection
+                    return ""  #Return empty to signal rejection
                 # Reject run-on words (>35 chars)
                 if len(word) > 35:
                     return ""
@@ -541,43 +596,42 @@ class TermsExtractor:
 
         return original_label
 
-        return True  # Term passes all filters
-
     def _is_valid_scientific_term(self, term: str) -> bool:
-        """Deep cleaning: Ensure term looks like a valid scientific concept"""
+        """Deep cleaning: Ensure term looks like a valid scientific concept - RELAXED FOR HIGH RECALL"""
         term_lower = term.lower()
         
-        # 1. Reject if it's purely a year or citation pattern
+        # 1. Reject if it's ONLY a year (standalone)
         if re.match(r'^\d{4}$', term) or re.match(r'^\(\d{4}\)$', term): 
             return False
             
-        # 1b. Reject if it STARTs with a digit followed by space (e.g. "42 blautia")
-        # Exception: "5-axis" or "3-D" or chemical names starting with digit-hyphen are OK.
+        # 1b. Reject if it STARTs with digit+space (OCR error like "42 blautia")
+        # Exception: "5-axis" or "3-D" or chemical names with digit-hyphen are OK
         if re.match(r'^\d+\s+', term):
             return False
 
         # 2. Reject common academic noise
-        noise_words = {'et', 'al', 'vol', 'vol.', 'pp', 'pp.', 'doi', 'http', 'www', 'fig', 'fig.', 'table'}
+        noise_words = {'et', 'al', 'vol', 'vol.', 'pp', 'pp.', 'doi', 'http', 'www'}
         if any(w in term_lower.split() for w in noise_words):
             return False
 
-        # 3. Reject if term CONT AINS "word + long digits" (e.g. "hosomi12")
-        # Split into words and check each one
+        # 3. Reject if term CONTAINS "word + digits" WITHOUT hyphen/space (e.g. "hosomi12")
+        # BUT ALLOW legitimate biomedical IDs like "IL6", "CD4", "COVID19", "p53"
         words = term_lower.split()
         for word in words:
-            # Reject "word + digits" (e.g. "hosomi12", "microbiome2020")
-            # Allow short digits (e.g. "IL6", "CD4", "p53")
-            if re.search(r'^[a-z]{4,}\d{1,}$', word): # Changed to {1,} to catch "hosomi12" (2 digits) confidently
+            # Only reject if it's a LONG word (>=4 chars) followed by digits with NO separator
+            # This blocks "hosomi12" but allows "IL6", "CD4", "p53", "COVID-19"
+            if re.search(r'^[a-z]{4,}\d{1,}$', word) and not re.search(r'[-/]', word):
                 return False
                 
-        # 4. Reject terms with "et al" or citation-like patterns in the middle
-        if re.search(r'\b\d{4}\b', term_lower): # Reject if it contains a 4-digit year like 2012
-             return False
+        # 4. RELAXED: Allow terms with years/numbers if they're part of scientific context
+        # Only reject if it's PURELY a citation pattern like "et al 2012" or "(2012)"
+        #if re.match(r'\bet\s+al\b.*\d{4}', term_lower) or re.match(r'^\(\d{4}\)$', term):
+        #    return False
+        # REMOVED: Don't blanket-reject all 4-digit numbers - many scientific IDs contain them!
 
-        # 5. Reject run-on words (concatenated text)
-        # e.g. "numberofthereadsmappedtoalgq12homolog"
+        # 5. Reject run-on concatenated text (true OCR errors)
         for word in words:
-            if len(word) > 35: # Scientific terms rarely exceed 35 chars without spaces
+            if len(word) > 35:  # Scientific terms rarely exceed 35 chars without spaces
                 return False
 
         return True

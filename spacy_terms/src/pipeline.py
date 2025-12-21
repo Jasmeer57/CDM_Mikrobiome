@@ -128,6 +128,9 @@ class GlobalPipelineProcessor:
 
         deduplicated_terms = self.run_global_deduplication(cleaned_terms)
         self.save_terms_to_files(deduplicated_terms, "step3_deduplicated_terms")
+        
+        # STEP 2B: Label Correction  
+        deduplicated_terms = self.apply_label_correction(deduplicated_terms)
 
         # STEP 3: Microbiome Semantic Filtering
         filtered_terms = self.apply_microbiome_semantic_filtering(deduplicated_terms)
@@ -251,6 +254,46 @@ class GlobalPipelineProcessor:
         
         logger.info("   (Already performed as part of Deduplication Step 5)")
         logger.info(f"   ✅ Remaining terms: {len(terms)}")
+    
+    def apply_label_correction(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Correct generic ENTITY labels using enhanced pattern matching"""
+        logger.info("="*50)
+        logger.info("STEP 2B: LABEL CORRECTION")
+        logger.info("="*50)
+        
+        from src.modules.terms_extractor import ENTITY_REFINEMENT_RULES
+        import re
+        
+        corrected_count = 0
+        label_changes = {}
+        
+        for term_data in terms:
+            current_labels = term_data.get('labels', [])
+            
+            # Only correct generic ENTITY labels
+            if 'ENTITY' in current_labels and len(current_labels) == 1:
+                term_text = term_data['term']
+                term_lower = term_text.lower()
+                
+                # Try pattern-based correction
+                for label, patterns in ENTITY_REFINEMENT_RULES.items():
+                    matched = False
+                    for pattern in patterns:
+                        if re.search(pattern, term_lower):
+                            term_data['labels'] = [label]
+                            term_data['original_label'] = 'ENTITY'
+                            corrected_count += 1
+                            label_changes[label] = label_changes.get(label, 0) + 1
+                            matched = True
+                            break
+                    if matched:
+                        break
+        
+        logger.info(f"   ✓ Corrected {corrected_count}/{len(terms)} generic ENTITY labels")
+        for label, count in sorted(label_changes.items(), key=lambda x: x[1], reverse=True):
+            logger.info(f"      ENTITY → {label}: {count}")
+        logger.info("")
+        
         return terms
 
     def select_final_terms(self, terms: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

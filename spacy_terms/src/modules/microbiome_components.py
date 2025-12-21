@@ -207,14 +207,122 @@ class MicrobiomeSemanticFilter:
             logger.warning(f"Failed to load common words: {e}")
 
     def _get_default_seed_terms(self) -> List[str]:
-        """Get default microbiome seed terms for semantic filtering"""
+        """COMPREHENSIVE: All microbiome-related terms for Common Data Model"""
         return [
-            "microbiome", "microbiota", "gut", "intestinal", "bacterial",
-            "microbial", "probiotic", "prebiotic", "dysbiosis", "antibiotic",
-            "fermentation", "metabolite", "short-chain fatty acids", "SCFA",
-            "butyrate", "propionate", "acetate", "bile acids", "inflammation",
-            "immune", "barrier", "permeability", "commensal", "pathogen",
-            "symbiosis", "metabolism", "digestion", "colon", "fecal"
+            # ==================== CORE MICROBIOME ====================
+            "microbiome", "microbiota", "microbiome", "metagenome", "metagenomics",
+            "microbial", "bacterial", "archaeal", "fungal", "viral", "virome",
+            "bacteriome", "mycobiome", "phageome",
+            
+            # ==================== ANATOMICAL SITES ====================
+            "gut", "intestinal", "gastrointestinal", "GI tract", "colon", "colonic",
+            "intestine", "small intestine", "large intestine", "cecum", "cecal",
+            "ileum", "ileal", "jejunum", "duodenum", "rectum", "rectal",
+            "fecal", "stool", "feces", "mucosal", "luminal",
+            "oral", "buccal", "saliva", "salivary", "tongue", "dental", "periodontal",
+            "skin", "cutaneous", "dermal", "vaginal", "urogenital",
+            "respiratory", "nasal", "nasopharyngeal", "lung", "pulmonary",
+            
+            # ==================== ORGANISMS & TAXONOMY ====================
+            "bacteria", "archaea", "fungi", "virus", "bacteriophage", "phage",
+            "Firmicutes", "Bacteroidetes", "Actinobacteria", "Proteobacteria",
+            "Verrucomicrobia", "Fusobacteria", "Spirochaetes",
+            "Bacteroides", "Prevotella", "Faecalibacterium", "Akkermansia",
+            "Bifidobacterium", "Lactobacillus", "Clostridium", "Ruminococcus",
+            "Roseburia", "Eubacterium", "Enterococcus", "Streptococcus",
+            "Escherichia", "E. coli", "Blautia", "Coprococcus",
+            "probiotic", "prebiotic", "synbiotic", "postbiotic",
+            "commensal", "symbiont", "pathogen", "pathobiont",
+            "strain", "species", "genus", "family", "phylum",
+            
+            # ==================== METABOLITES & BIOCHEMISTRY ====================
+            "metabolite", "metabolism", "metabolic", "metabolomics",
+            "SCFA", "short-chain fatty acid", "butyrate", "propionate", "acetate",
+            "lactate", "succinate", "formate",
+            "bile acid", "bile salt", "primary bile acid", "secondary bile acid",
+            "deoxycholic acid", "lithocholic acid", "chenodeoxycholic acid",
+            "amino acid", "tryptophan", "indole", "skatole",
+            "neurotransmitter", "serotonin", "GABA", "dopamine",
+            "vitamin", "B12", "folate", "vitamin K", "biotin",
+            "lipopolysaccharide", "LPS", "endotoxin",
+            "peptidoglycan", "lipoteichoic acid",
+            "polysaccharide", "oligosaccharide", "glycan",
+            "fiber", "dietary fiber", "resistant starch", "inulin",
+            "fermentation", "fermentable", "saccharolytic", "proteolytic",
+            
+            # ==================== DISEASES & CONDITIONS ====================
+            "disease", "disorder", "syndrome", "condition", "pathology",
+            "IBD", "inflammatory bowel disease", "Crohn's disease", "Crohn",
+            "ulcerative colitis", "colitis", "IBS", "irritable bowel syndrome",
+            "dysbiosis", "eubiosis", "inflammation", "inflammatory",
+            "infection", "colonization", "overgrowth", "SIBO",
+            "obesity", "metabolic syndrome", "diabetes", "T2D", "insulin resistance",
+            "cardiovascular", "atherosclerosis", "hypertension",
+            "cancer", "colorectal cancer", "CRC", "carcinoma", "tumor",
+            "neurological", "autism", "ASD", "Parkinson", "Alzheimer",
+            "depression", "anxiety", "gut-brain axis",
+            "allergy", "atopy", "asthma", "eczema",
+            "autoimmune", "rheumatoid arthritis", "multiple sclerosis",
+            "liver", "hepatic", "NAFLD", "cirrhosis",
+            
+            # ==================== HOST FACTORS & PHYSIOLOGY ====================
+            "immune", "immunity", "immunology", "immunological",
+            "T cell", "B cell", "dendritic cell", "macrophage", "neutrophil",
+            "cytokine", "interferon", "interleukin", "TNF", "IL-6", "IL-10",
+            "antibody", "IgA", "IgG", "secretory IgA",
+            "barrier", "permeability", "tight junction", "leaky gut",
+            "epithelial", "epithelium", "mucus", "mucin", "goblet cell",
+            "host", "host-microbe", "colonization resistance",
+            "homeostasis", "tolerance", "immune tolerance",
+            
+            # ==================== MOLECULAR & GENETICS ====================
+            "gene", "genome", "genomic", "genomics",
+            "DNA", "RNA", "16S rRNA", "16S", "rRNA",
+            "metatranscriptomics", "metaproteomics",
+            "sequencing", "NGS", "shotgun sequencing",
+            "amplicon", "OTU", "operational taxonomic unit",
+            "ASV", "amplicon sequence variant",
+            "taxonomic", "taxonomy", "phylogenetic", "phylogeny",
+            "functional", "function", "pathway", "KEGG", "COG",
+            "gene expression", "transcription", "translation",
+            "enzyme", "protein", "peptide",
+            
+            # ==================== TECHNIQUES & METHODS ====================
+            "sequencing", "metagenomics", "16S sequencing",
+            "shotgun metagenomics", "whole genome sequencing",
+            "culture", "cultivation", "culturomics",
+            "gnotobiotic", "germ-free", "axenic", "mono-associated",
+            "transplantation", "FMT", "fecal microbiota transplant",
+            "alpha diversity", "beta diversity", "diversity",
+            "Shannon", "Simpson", "richness", "evenness",
+            "PCoA", "principal coordinate analysis",
+            "clustering", "ordination", "PERMANOVA",
+            "differential abundance", "LEfSe", "DESeq2",
+            
+            # ==================== INTERVENTIONS & TREATMENTS ====================
+            "probiotic", "prebiotic", "synbiotic", "postbiotic",
+            "antibiotic", "antimicrobial", "antibacterial",
+            "diet", "dietary", "nutrition", "nutritional",
+            "western diet", "Mediterranean diet", "high-fat diet",
+            "supplement", "supplementation",
+            "therapy", "treatment", "intervention",
+            
+            # ==================== CLINICAL & DIAGNOSTIC ====================
+            "clinical", "patient", "cohort", "population",
+            "biomarker", "marker", "indicator",
+            "diagnosis", "diagnostic", "screening",
+            "prognosis", "prognostic", "outcome",
+            "therapeutic", "treatment response",
+            "personalized medicine", "precision medicine",
+            
+            # ==================== ECOLOGICAL & DYNAMICS ====================
+            "community", "composition", "structure",
+            "abundance", "relative abundance", "prevalence",
+            "colonization", "succession", "stability",
+            "resilience", "perturbation", "recovery",
+            "niche", "ecological", "ecology",
+            "competition", "cooperation", "cross-feeding",
+            "quorum sensing", "biofilm"
         ]
 
     def _precompute_embeddings(self):
@@ -251,15 +359,20 @@ class MicrobiomeSemanticFilter:
         if keyword_score >= 0.8:  # High confidence keyword match
             return keyword_score
             
-        # Common Word Filter (New Feature)
-        # If term is in 20k common list and NOT a keyword match, kill it.
-        # This keeps "novel" terms that are scientific, but removes "novel" terms that are just basic English.
-        if term_lower in self.common_words:
-            # We already checked keywords (which return early above), so if we are here, it's NOT a keyword.
-            # So it's a common English word that is not a known microbiome/seed term.
-            # Return low score to filter it out.
-            return 0.0
-
+        # IMPROVED Common Word Filter
+        # Only filter out standalone common words (single word, no scientific context)
+        # Keep multi-word scientific phrases even if they contain common words
+        words = term_lower.split()
+        if len(words) == 1:  # Only filter single-word common words
+            if term_lower in self.common_words:
+                # Check if it's scientific despite being common
+                scientific_suffixes = ['ase', 'osis', 'itis', 'emia', 'oma', 'gen', 'id', 'ine']
+                if not any(term_lower.endswith(suffix) for suffix in scientific_suffixes):
+                    return 0.2  # Low score for common non-scientific words
+        
+        # Multi-word terms with common words are OK! 
+        # E.g., "intestinal inflammation", "gut barrier function" - all have common words but are scientific
+        
         # Semantic similarity scoring (slower, secondary method)
         if self.semantic_model and self.seed_embeddings is not None:
             try:
@@ -281,8 +394,6 @@ class MicrobiomeSemanticFilter:
                 logger.warning(f"Semantic scoring failed for '{term_text}': {e}")
 
         return keyword_score
-
-        return score
 
     def _keyword_score(self, term_text: str) -> float:
         """Calculate keyword-based relevance score with context awareness"""

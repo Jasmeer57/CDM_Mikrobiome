@@ -23,6 +23,7 @@ Usage:
 
 import os
 import sys
+import subprocess
 import urllib.request
 import re
 import json
@@ -73,17 +74,17 @@ class PipelineConfig:
     preferred_models: Optional[List[str]] = None  # User-specified preferred models
     auto_detect_models: bool = True  # Whether to auto-detect available models
     use_all_available: bool = False  # Whether to use all available models
-    target_final_terms: int = 6000  # Smart target based on 100k raw terms
+    target_final_terms: int = 10000  # Increased for comprehensive microbiome CDM coverage
     max_raw_terms_limit: int = 100000  # Maximum raw terms for efficient processing (1 lakh)
 
     # sciSpaCy Configuration (matching modular pipeline)
     disabled_components: List[str] = field(default_factory=lambda: ["parser"])
     batch_size: int = 1000  # spaCy processing batch size
 
-    # Deduplication Configuration (matching modular pipeline settings)
-    fuzzy_threshold: float = 0.90  # Increased from 0.85 - allow more term variants
+    # Deduplication Configuration (optimized for microbiome and bioinformatics coverage)
+    fuzzy_threshold: float = 0.82  # Decreased from 0.90 - capture more variants while controlling noise
     fuzzy_enabled: bool = True
-    semantic_threshold: float = 0.95  # Increased from 0.85 - be more selective about semantic similarity
+    semantic_threshold: float = 0.88  # Decreased from 0.95 - allow more related concepts
     semantic_enabled: bool = True
     semantic_model: str = "mini-lm"  # Using modular pipeline's naming convention
     semantic_models: Dict[str, str] = field(default_factory=lambda: {
@@ -95,7 +96,7 @@ class PipelineConfig:
     biomedical_enabled: bool = True
     biomedical_model: str = "microsoft/BioMedNLP-PubMedBERT-base-uncased-abstract-fulltext"
     biomedical_context: str = "microbiome"
-    biomedical_confidence_threshold: float = 0.7
+    biomedical_confidence_threshold: float = 0.65  # Slightly lowered to capture more relevant terms
 
     # API Keys (loaded from env - enhanced like modular pipeline)
     bioportal_api_key: Optional[str] = os.getenv("BIOPORTAL_API_KEY")
@@ -615,50 +616,122 @@ GEO_BLOCKLIST = {
 
 
 # High-value biomedical keywords (must contain at least one)
-# High-value biomedical keywords (must contain at least one)
+# Comprehensive coverage for microbiome and bioinformatics CDM
 BIOMEDICAL_KEYWORDS = {
-    # Microbiology/Bacteria
+    # Microbiology/Bacteria (Enhanced)
     'microbi', 'microbe', 'bacter', 'microbiota', 'microbiome',
-    'pathogen', 'commensal', 'symbio', 'probiot', 'prebiot',
-    'coccus', 'bacillus', 'bacterium', 'virus', 'viral', 'phage',
+    'pathogen', 'commensal', 'symbio', 'probiot', 'prebiot', 'postbiot',
+    'coccus', 'bacillus', 'bacterium', 'virus', 'viral', 'phage', 'archae',
+    'fungi', 'fungal', 'yeast', 'mold', 'protozoa', 'parasit', 'cyanobacteri',
 
-
-    # Microbial Groups/Genera (CRITICAL for recall)
+    # Microbial Groups/Genera (Expanded for CDM)
     'actinobacteri', 'proteobacteri', 'bacteroidet', 'firmicut',
     'firmicutes', 'bacteroidetes', 'proteobacteria', 'actinobacteria',
     'enterobacteri', 'bifidobacteri', 'lactobacillus', 'eubacteri',
     'clostridi', 'streptococc', 'escherichi', 'salmonell',
     'bacteroides', 'alistipes', 'blautia', 'faecalibacterium',
     'ruminococcus', 'prevotella', 'akkermansia', 'roseburia',
+    'bifidobacterium', 'lactobacill', 'enterococc', 'staphylococc',
+    'pseudomonas', 'vibrio', 'campylobacter', 'helicobacter', 'clostridioid',
+    'methanobacteri', 'methanobrevibacter', 'sutterella', 'dialister',
 
+    # Bioinformatics & Genomics (New comprehensive section)
+    'bioinformatic', 'genom', 'transcriptom', 'proteom', 'metabolom',
+    'metagenom', 'metatranscriptom', 'shotgun', 'amplicon', 'sequenc',
+    'phylogen', 'phylogenet', 'taxonom', 'clade', 'cladogram', 'dendrogram',
+    'otus', 'asvs', 'denois', 'dada2', 'deblur', 'qiime', 'mothur',
+    'silva', 'greengenes', 'rdp', 'ncbi', 'refseq', 'genbank',
+    'blast', 'bowtie', 'bwa', 'samtools', 'picard', 'gatk',
+    'contig', 'scaffold', 'assembly', 'annotation', 'functional',
+    'pathway', 'kegg', 'go', 'gene ontology', 'reactom', 'biocyc',
+    'operon', 'promoter', 'regulator', 'transcription', 'translation',
 
-    # Genetics/Molecular Biology
-    'gene', 'dna', 'rna', 'protein', 'enzyme', 'genome', 'genom',
-    'transcript', 'express', 'mutat', 'sequenc', 'amplif',
-    'polymeras', 'primer', 'nucleotid', 'peptide', 'lipid',
+    # Molecular Biology (Enhanced)
+    'gene', 'dna', 'rna', 'mrna', 'trna', 'rrna', 'protein', 'enzyme',
+    'peptide', 'lipid', 'carbohydrate', 'polysaccharid', 'glycan',
+    'mutat', 'variant', 'allele', 'snp', 'indel', 'cnv', 'rearrange',
+    'express', 'regulat', 'signaling', 'cascade', 'feedback', 'homeostasis',
+    'replication', 'transcription', 'translation', 'splicing', 'editing',
+    'polymeras', 'primer', 'nucleotid', 'ribosom', 'mitochondri',
+    'chromosom', 'plasmid', 'epigenet', 'methylation', 'acetylation',
 
+    # Clinical & Health Context (Expanded)
+    'clinical', 'medical', 'health', 'disease', 'disorder', 'syndrome',
+    'therapeut', 'treatment', 'intervention', 'prevent', 'diagnos',
+    'antibiot', 'antimicrobial', 'resistance', 'susceptibilit', 'tolerance',
+    'infection', 'inflammation', 'immune', 'immunolog', 'autoimmun',
+    'metabol', 'catabol', 'anabol', 'ferment', 'oxidation', 'reduction',
+    'gastrointestin', 'intestinal', 'colonic', 'fecal', 'stool', 'gut',
+    'dysbiosis', 'eubiosis', 'homeostasis', 'equilibrium', 'balance',
+    'ibd', 'ibs', 'crohn', 'colitis', 'sibo', 'candida', 'helicobacter',
 
-    # Health/Medical Context
-    'clinical', 'medical', 'health', 'disease', 'therapeut',
-    'antibiot', 'antimicrobial', 'resistance', 'susceptibilit',
-    'infection', 'inflammation', 'immune', 'immunolog',
-    'metabol', 'catabol', 'anabol', 'ferment', 'oxidation',
-    
-    # Taxonomy
-    'phylum', 'class', 'order', 'family', 'genus', 'species',
-    'strain', 'isolat', 'culture', 'colony', 
+    # Metabolites & Molecules (Microbiome-specific)
+    'metabolite', 'scfa', 'short-chain fatty acid', 'butyrate', 'propionate',
+    'acetate', 'lactate', 'succinate', 'formate', 'bile', 'bilirubin',
+    'tryptophan', 'tyrosine', 'phenylalanine', 'indole', 'skatole',
+    'tma', 'trimethylamine', 'tmao', 'lipopolysaccharid', 'lps',
+    'cytokine', 'chemokine', 'interferon', 'interleukin', 'tnf', 'il-',
+    'hormone', 'cortisol', 'serotonin', 'dopamine', 'gaba',
 
+    # Environmental & Lifestyle Factors
+    'diet', 'nutrition', 'fiber', 'prebiotic', 'symbiotic', 'functional food',
+    'probiotic', 'fermented', 'yogurt', 'kefir', 'sauerkraut', 'kimchi',
+    'antibiotic', 'antibacterial', 'antiviral', 'antifungal', 'disinfect',
+    'pollutant', 'contaminant', 'heavy metal', 'pesticide', 'herbicide',
+    'stress', 'exercise', 'sleep', 'circadian', 'aging', 'development',
 
-    # Analysis
-    '16s', 'rrna', 'otu', 'asv', 'pcr', 'sample', 'specimen'
+    # Taxonomy & Classification (Enhanced)
+    'phylum', 'class', 'order', 'family', 'genus', 'species', 'subspecies',
+    'strain', 'isolat', 'culture', 'colony', 'biofilm', 'planktonic',
+    'gram-posit', 'gram-negat', 'aerob', 'anaerob', 'facultative',
+    'mesophil', 'thermophil', 'psychrophil', 'acidophil', 'alkaliphil',
+    'halophil', 'osmophil', 'xerophil', 'barophil', 'piezophil',
+
+    # Laboratory & Technical Methods
+    '16s', '18s', 'its', 'rrna', 'otu', 'asv', 'pcr', 'qpcr', 'rt-pcr',
+    'sample', 'specimen', 'collection', 'preservation', 'extraction',
+    'purification', 'quantification', 'amplification', 'electrophoresis',
+    'chromatography', 'spectrometry', 'microscopy', 'flow cytometry',
+    'culture', 'incubat', 'sterile', 'aseptic', 'contaminant',
+
+    # Data Analysis & Statistics
+    'biostatistic', 'biostatistics', 'epidemiolog', 'cohort', 'case-control',
+    'randomized', 'placebo', 'double-blind', 'statistical', 'significant',
+    'p-value', 'confidence interval', 'odds ratio', 'hazard ratio',
+    'multivariate', 'univariate', 'regression', 'correlation', 'clustering',
+    'classification', 'prediction', 'machine learning', 'artificial intelligence'
 }
 
 
-# CDM Essential Domains
+# CDM Essential Domains (Enhanced for microbiome CDM)
 CDM_KEYWORDS = {
-    'patient', 'subject', 'disease', 'disorder', 'drug', 'medication',
-    'procedure', 'measurement', 'analysis', 'bacteria', 'virus', 'gene',
-    'clinical', 'medical', 'health', 'study', 'research'
+    # Clinical Entities
+    'patient', 'subject', 'participant', 'individual', 'person', 'case',
+    'disease', 'disorder', 'syndrome', 'condition', 'illness', 'pathology',
+    'drug', 'medication', 'pharmaceutical', 'therapeutic', 'intervention',
+    'procedure', 'surgery', 'operation', 'treatment', 'therapy', 'management',
+    'measurement', 'biomarker', 'indicator', 'marker', 'parameter', 'variable',
+
+    # Microbiome-Specific
+    'bacteria', 'virus', 'fungi', 'archaea', 'microbe', 'microorganism',
+    'gene', 'protein', 'enzyme', 'metabolite', 'molecule', 'compound',
+    'microbiome', 'microbiota', 'flora', 'commensal', 'symbiotic', 'pathogen',
+    'taxa', 'taxon', 'genus', 'species', 'strain', 'isolate', 'clone',
+
+    # Research Context
+    'clinical', 'medical', 'health', 'study', 'research', 'trial',
+    'cohort', 'sample', 'specimen', 'data', 'result', 'outcome',
+    'observation', 'finding', 'conclusion', 'evidence', 'analysis',
+
+    # Standardization & Classification
+    'standard', 'guideline', 'protocol', 'algorithm', 'classification',
+    'taxonomy', 'ontology', 'terminology', 'vocabulary', 'nomenclature',
+    'coding', 'system', 'framework', 'model', 'schema', 'structure',
+
+    # Data Management
+    'database', 'repository', 'registry', 'dictionary', 'thesaurus',
+    'concept', 'entity', 'attribute', 'value', 'relationship', 'mapping',
+    'identifier', 'code', 'identifier', 'uid', 'key', 'index', 'reference'
 }
 
 
@@ -1914,9 +1987,29 @@ class Deduplicator:
         
         # Prototypes
         SCIENTIFIC_PROTOTYPES = [
-            "bacterium", "microbiome", "gene expression", "protein", "enzyme", 
-            "disease", "pathogen", "metabolite", "chemical compound", "clinical symptom", 
-            "anatomy", "physiology", "molecular biology", "genetics", "pharmacology"
+            # Microbiology
+            "bacterium", "microbiome", "microbiota", "pathogen", "commensal bacteria",
+            "probiotic bacteria", "gut flora", "intestinal microbiome", "bacterial species",
+            "archaea", "fungal microbiome", "viral community", "microbial diversity",
+
+            # Bioinformatics & Genomics
+            "gene expression", "protein coding", "enzyme activity", "genome sequence",
+            "metagenomics analysis", "16s rrna gene", "phylogenetic tree", "bacterial taxonomy",
+            "shotgun sequencing", "amplicon sequencing", "bioinformatic pipeline", "gene ontology",
+
+            # Clinical & Medical
+            "disease", "clinical symptom", "infection", "inflammation", "immune response",
+            "gastrointestinal disease", "metabolic disorder", "antibiotic resistance",
+            "therapeutic intervention", "diagnostic biomarker", "patient cohort",
+
+            # Molecular Biology
+            "metabolite", "chemical compound", "molecular pathway", "biological process",
+            "cell signaling", "metabolic pathway", "enzyme reaction", "protein interaction",
+            "gene regulation", "transcription factor", "cellular metabolism",
+
+            # Methods & Analysis
+            "microbial analysis", "laboratory method", "statistical analysis", "bioinformatics tool",
+            "clinical trial", "experimental study", "research methodology"
         ]
         
         NOISE_PROTOTYPES = [
@@ -3484,10 +3577,29 @@ class BioBertQualitySelector:
         
         # Prototypes
         SCIENTIFIC_PROTOTYPES = [
-            "bacterium", "microbiome", "gene expression", "protein", "enzyme", 
-            "disease", "pathogen", "metabolite", "chemical compound", "clinical symptom", 
-            "anatomy", "physiology", "molecular biology", "genetics", "pharmacology",
-            "treatment", "diagnosis", "patient", "organism", "cell"
+            # Microbiology
+            "bacterium", "microbiome", "microbiota", "pathogen", "commensal bacteria",
+            "probiotic bacteria", "gut flora", "intestinal microbiome", "bacterial species",
+            "archaea", "fungal microbiome", "viral community", "microbial diversity",
+
+            # Bioinformatics & Genomics
+            "gene expression", "protein coding", "enzyme activity", "genome sequence",
+            "metagenomics analysis", "16s rrna gene", "phylogenetic tree", "bacterial taxonomy",
+            "shotgun sequencing", "amplicon sequencing", "bioinformatic pipeline", "gene ontology",
+
+            # Clinical & Medical
+            "disease", "clinical symptom", "infection", "inflammation", "immune response",
+            "gastrointestinal disease", "metabolic disorder", "antibiotic resistance",
+            "therapeutic intervention", "diagnostic biomarker", "patient cohort",
+
+            # Molecular Biology
+            "metabolite", "chemical compound", "molecular pathway", "biological process",
+            "cell signaling", "metabolic pathway", "enzyme reaction", "protein interaction",
+            "gene regulation", "transcription factor", "cellular metabolism",
+
+            # Methods & Analysis
+            "microbial analysis", "laboratory method", "statistical analysis", "bioinformatics tool",
+            "clinical trial", "experimental study", "research methodology"
         ]
         
         NOISE_PROTOTYPES = [
@@ -4978,8 +5090,8 @@ def main():
     # ⭐ NEW arguments you requested ⭐
     parser.add_argument("--max_files", type=int, default=None, help="Maximum number of files to process")
     parser.add_argument("--target_terms", type=int, default=10000, help="Target final number of terms")
-    parser.add_argument("--fuzzy_threshold", type=float, default=0.90, help="Fuzzy matching threshold (increased for novel term recall)")
-    parser.add_argument("--semantic_threshold", type=float, default=0.95, help="Semantic similarity threshold (increased for novel term recall)")
+    parser.add_argument("--fuzzy_threshold", type=float, default=0.82, help="Fuzzy matching threshold (optimized for microbiome CDM coverage)")
+    parser.add_argument("--semantic_threshold", type=float, default=0.88, help="Semantic similarity threshold (optimized for microbiome CDM coverage)")
     parser.add_argument("--workers", type=int, default=1, help="Number of parallel workers for extraction")
     parser.add_argument("--batch_size", type=int, default=32, help="Batch size for GPU inference")
     parser.add_argument("--use_bert_selection", action="store_true", help="Use BERT/BioBERT for initial term selection/filtering")
