@@ -128,7 +128,22 @@ class LLMClient:
                 extra_body=extra_body if extra_body else None
             )
             
-            return response.choices[0].message.content.strip()
+            message = response.choices[0].message
+            content = message.content
+            
+            # Fallback for models (like GLM-4.7/Deepseek) that return output in reasoning_content
+            if not content:
+                # Try attribute access (standard in some SDKs)
+                if hasattr(message, 'reasoning_content') and message.reasoning_content:
+                    content = message.reasoning_content
+                # Try model_extra (Pydantic models in newer OpenAI SDK)
+                elif hasattr(message, 'model_extra') and message.model_extra and 'reasoning_content' in message.model_extra:
+                    content = message.model_extra['reasoning_content']
+                # Try dict access if it's a dict
+                elif isinstance(message, dict) and 'reasoning_content' in message:
+                    content = message['reasoning_content']
+            
+            return content.strip() if content else ""
             
         except Exception as e:
             logger.error(f"OpenAI-compatible call failed: {e}")

@@ -74,12 +74,33 @@ Requirements:
             
             cleaned_response = cleaned_response.strip()
 
-            # 2. Try to parse as JSON first (List of objects)
-            if (cleaned_response.startswith('[') and cleaned_response.endswith(']')) or \
-               (cleaned_response.startswith('{') and cleaned_response.endswith('}')):
-                try:
+            # 2. Try to parse as JSON first (Robust substring search)
+            # Find the JSON structure irrespective of surrounding noise
+            try:
+                json_start = -1
+                json_end = -1
+                
+                # Check for array
+                arr_start = cleaned_response.find('[')
+                arr_end = cleaned_response.rfind(']')
+                
+                # Check for object
+                obj_start = cleaned_response.find('{')
+                obj_end = cleaned_response.rfind('}')
+                
+                # Determine which outer structure to capture (prefer array for entity list)
+                if arr_start != -1 and arr_end != -1 and arr_end > arr_start:
+                    json_start = arr_start
+                    json_end = arr_end + 1
+                elif obj_start != -1 and obj_end != -1 and obj_end > obj_start:
+                    json_start = obj_start
+                    json_end = obj_end + 1
+                    
+                if json_start != -1:
+                    json_str = cleaned_response[json_start:json_end]
                     import json
-                    data = json.loads(cleaned_response)
+                    import json
+                    data = json.loads(json_str)
                     
                     # If it's a dictionary wrapping the list (e.g. {"entities": [...]})
                     if isinstance(data, dict):
@@ -119,8 +140,8 @@ Requirements:
                         if entities:
                             return entities
                             
-                except json.JSONDecodeError:
-                    pass # Fallback to line parsing
+            except json.JSONDecodeError:
+                pass # Fallback to line parsing
 
             # 3. Strict Line-by-Line Parsing
             # We expect: "- Term (TYPE): Context"

@@ -381,7 +381,7 @@ class BioMistralConfig:
 class OptimizationConfig:
     """Configuration for performance optimizations."""
     fast_mode: bool = False
-    use_json_mode: bool = True
+    use_json_mode: bool = False
     chunk_size_multiplier: float = 1.0
     api_type: str = "ollama"  # ollama, openai (for vLLM), or huggingface
     api_key: str = "EMPTY"    # For vLLM/OpenAI
@@ -772,13 +772,30 @@ class LLMClient:
                     self.token_usage['input_tokens'] += completion.usage.prompt_tokens
                     self.token_usage['output_tokens'] += completion.usage.completion_tokens
                 
-                return completion.choices[0].message.content.strip()
+                message = completion.choices[0].message
+                content = message.content
+                
+                # Fallback for models (like GLM-4.7) that return output in reasoning_content
+                if not content:
+                    # Try attribute access
+                    if hasattr(message, 'reasoning_content') and message.reasoning_content:
+                        content = message.reasoning_content
+                    # Try model_extra
+                    elif hasattr(message, 'model_extra') and message.model_extra and 'reasoning_content' in message.model_extra:
+                        content = message.model_extra['reasoning_content']
+                    # Try dict access
+                    elif isinstance(message, dict) and 'reasoning_content' in message:
+                        content = message['reasoning_content']
+
+                return content.strip() if content else ""
                 
             except Exception as e:
                 logger.warning(f"OpenAI API call failed (attempt {attempt+1}): {e}")
+                if hasattr(e, 'response') and e.response:
+                    logger.warning(f"Response body: {e.response.text}")
                 time.sleep(base_delay * (2 ** attempt))
         
-        logger.error("OpenAI API call failed after all retries.")
+        logger.error(f"OpenAI API call failed after {max_retries} retries.")
         return ""
 
     def _call_anthropic(self, prompt: str, max_tokens: Optional[int] = None) -> str:
