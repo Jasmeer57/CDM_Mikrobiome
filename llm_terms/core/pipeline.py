@@ -38,7 +38,8 @@ class CDMEntityPipeline:
                  mapping_confidence_threshold: float = 0.7,
                  enable_correction: bool = False, enable_llm_correction: bool = False,
                  api_key: str = "EMPTY", bioportal_api_key: str = None,
-                 enable_scispacy_linking: bool = False):
+                 enable_scispacy_linking: bool = False,
+                 include_speculative: bool = False):
         self.config = config or PipelineConfig()
         self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url, api_key=api_key)
         

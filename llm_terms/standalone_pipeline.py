@@ -4470,8 +4470,895 @@ class SemanticDeduplicator:
         merged['max_confidence_score'] = max_confidence
         merged['frequency'] = len(group)
         merged['source_count'] = len(group)
-        
+
         return merged
+
+# ==========================================
+# ADVANCED RELATIONSHIP & ANALYTICS EXTRACTORS
+# ==========================================
+
+class RelationshipExtractor:
+    """Extract subject-predicate-object relationships from text."""
+
+    def __init__(self, llm_client: 'LLMClient'):
+        self.llm_client = llm_client
+
+        # Define relationship categories
+        self.relation_types = {
+            'causal': ['causes', 'leads to', 'results in', 'induces', 'triggers', 'elicits'],
+            'prevents': ['prevents', 'inhibits', 'suppresses', 'blocks', 'reduces', 'decreases'],
+            'treats': ['treats', 'ameliorates', 'alleviates', 'therapeutic for'],
+            'produces': ['produces', 'synthesizes', 'generates', 'secretes', 'releases', 'creates'],
+            'regulates': ['regulates', 'modulates', 'controls', 'mediates'],
+            'activates': ['activates', 'stimulates', 'enhances', 'upregulates', 'increases'],
+            'associated': ['associated with', 'correlated with', 'linked to', 'related to'],
+            'binds': ['binds to', 'interacts with', 'attaches to'],
+            'metabolizes': ['metabolizes', 'converts', 'transforms', 'degrades'],
+            'transports': ['transports', 'carries', 'moves', 'translocates']
+        }
+
+    def extract_relationships(self, text: str, entities: List[Dict], include_speculative: bool = False) -> List[Dict]:
+        """Extract relationships between entities from text.
+
+        Args:
+            text: Source text
+            entities: List of extracted entities
+            include_speculative: If False, filter to asserted only (thesis mode)
+                              If True, include all relationships (exploratory mode)
+        """
+        if not entities or len(entities) < 2:
+            return []
+
+        # Create entity lookup for context
+        entity_names = {e['entity'].lower(): e for e in entities}
+        entity_list = list(entity_names.keys())
+
+        # Create prompt
+        prompt = self._create_relationship_prompt(text, entity_list)
+
+        # Call LLM
+        response = self.llm_client.call_llm(prompt, max_tokens=2000)
+
+        # Parse response with text for evidence spans
+        relationships = self._parse_relationship_response(response, entity_names, text)
+
+        # Filter based on mode
+        if include_speculative:
+            logger.info("🔍 EXPLORATORY MODE: Including all relationships (speculative/negated)")
+        else:
+            # Filter to asserted relationships only for strict mode
+            original_count = len(relationships)
+            relationships = [r for r in relationships if r.get('evidence_strength') == 'asserted']
+            filtered_count = original_count - len(relationships)
+            logger.info(f"✅ STRICT MODE: {len(relationships)} asserted relationships ({filtered_count} speculative/negated filtered)")
+
+        return relationships
+
+    def _create_relationship_prompt(self, text: str, entity_list: List[str]) -> str:
+        """Create prompt for relationship extraction."""
+        entities_str = "\n".join([f"- {e}" for e in entity_list[:50]])  # Limit to 50 entities
+
+        prompt = f"""Extract relationships between the following entities from the biomedical text.
+
+ENTITIES FOUND:
+{entities_str}
+
+RELATIONSHIP TYPES TO EXTRACT:
+- CAUSES: causes, leads to, results in, induces
+- PREVENTS: prevents, inhibits, suppresses, reduces
+- TREATS: treats, ameliorates, alleviates
+- PRODUCES: produces, synthesizes, generates, secretes
+- REGULATES: regulates, modulates, controls
+- ACTIVATES: activates, stimulates, enhances
+- ASSOCIATED_WITH: associated with, correlated with, linked to
+- BINDS: binds to, interacts with
+- METABOLIZES: metabolizes, converts, transforms
+
+TEXT:
+{text[:8000]}
+
+OUTPUT FORMAT (one per line):
+Subject | Relation | Object | Context | Reasoning
+Example: Bacteroides fragilis | PRODUCES | propionate | B. fragilis produces propionate | Direct production statement
+
+INSTRUCTIONS:
+1. Use EXACT entity names from the list above (case-insensitive match)
+2. Extract 10-20 relationships if available
+3. Include brief context and reasoning
+4. Mark speculative relationships with "(speculative)" in reasoning
+5. Extract relationships even if tentative or exploratory
+6. Format: Subject | Relation | Object | Context | Reasoning
+
+Start extracting relationships now:"""
+
+        return prompt
+
+    def _parse_relationship_response(self, response: str, entity_names: Dict, text: str) -> List[Dict]:
+        """Parse LLM response for relationships with enhanced evidence tracking."""
+        relationships = []
+
+        try:
+            # Clean response
+            response = re.sub(r'```.*', '', response, flags=re.DOTALL)
+            response = re.sub(r'^Here.*?:', '', response, flags=re.IGNORECASE | re.MULTILINE)
+            lines = response.split('\n')
+
+            for line in lines:
+                line = line.strip()
+                if not line or line.lower().startswith(('sure', 'here', 'note:', 'the relationships', '-')):
+                    continue
+
+                # Parse format: Subject | Relation | Object | Context | Reasoning
+                if '|' in line:
+                    parts = [p.strip() for p in line.split('|')]
+                    if len(parts) >= 3:
+                        subject = parts[0]
+                        relation = parts[1].upper().strip()  # Normalize to uppercase
+                        obj = parts[2]
+                        context = parts[3] if len(parts) > 3 else ""
+                        reasoning = parts[4] if len(parts) > 4 else ""
+
+                        # Check if entities exist in our list (case-insensitive)
+                        subject_lower = subject.lower()
+                        obj_lower = obj.lower()
+
+                        # More flexible matching - check if entity name appears in our list
+                        subject_match = None
+                        obj_match = None
+
+                        for entity_name in entity_names.keys():
+                            if subject_lower in entity_name or entity_name in subject_lower:
+                                subject_match = entity_name
+                                break
+                        for entity_name in entity_names.keys():
+                            if obj_lower in entity_name or entity_name in obj_lower:
+                                obj_match = entity_name
+                                break
+
+                        if subject_match and obj_match:
+                            # Normalize relation
+                            relation_normalized = self._normalize_relation(relation)
+
+                            # Calculate evidence strength
+                            evidence_strength = self._calculate_evidence_strength(context + " " + reasoning)
+
+                            # Extract evidence span
+                            subject_start = text.lower().find(subject_match)
+                            subject_span = {
+                                'start_char': subject_start if subject_start != -1 else -1,
+                                'end_char': subject_start + len(subject) if subject_start != -1 else -1,
+                                'sentence': self._extract_sentence(text, subject)
+                            }
+
+                            # Build enhanced relationship object
+                            relationships.append({
+                                'subject': subject,
+                                'subject_type': entity_names[subject_match].get('entity_type', 'UNKNOWN'),
+                                'relation': relation_normalized,
+                                'object': obj,
+                                'object_type': entity_names[obj_match].get('entity_type', 'UNKNOWN'),
+                                'context': context[:200] if context else "",
+                                'reasoning': reasoning[:200] if reasoning else "",
+                                'evidence_strength': evidence_strength,
+                                'negated': (evidence_strength == 'negated'),
+                                'speculated': (evidence_strength == 'speculative')
+                            })
+
+        except Exception as e:
+            logger.error(f"Error parsing relationships: {e}")
+
+        return relationships
+
+    def _normalize_relation(self, relation: str) -> str:
+        """Normalize relation to standard types."""
+        relation = relation.lower().strip()
+
+        # Mapping variations to standard types
+        mapping = {
+            'cause': 'causes',
+            'lead to': 'causes',
+            'result in': 'causes',
+            'induce': 'causes',
+            'prevent': 'prevents',
+            'inhibit': 'inhibits',
+            'suppress': 'inhibits',
+            'reduce': 'prevents',
+            'decrease': 'prevents',
+            'treat': 'treats',
+            'produce': 'produces',
+            'synthesize': 'produces',
+            'generate': 'produces',
+            'secrete': 'produces',
+            'regulate': 'regulates',
+            'modulate': 'regulates',
+            'activate': 'activates',
+            'stimulate': 'activates',
+            'enhance': 'activates',
+            'upregulate': 'activates',
+            'associate': 'associated',
+            'correlate': 'associated',
+            'link': 'associated',
+            'bind': 'binds',
+            'interact': 'binds',
+            'metabolize': 'metabolizes',
+            'convert': 'metabolizes',
+            'transform': 'metabolizes',
+            'transport': 'transports',
+            'carry': 'transports'
+        }
+
+        return mapping.get(relation, relation)
+
+    def _check_negation(self, text: str) -> bool:
+        """Check if relationship is negated."""
+        negation_patterns = [
+            r'\bno\b.*\b(effect|impact|influence|change)',
+            r'\bnot\b',
+            r'\bfailed to\b',
+            r'\bdid not\b',
+            r'\bdoes not\b',
+            r'\bunable to\b',
+            r'\bnone\b'
+        ]
+
+        text_lower = text.lower()
+        for pattern in negation_patterns:
+            if re.search(pattern, text_lower):
+                return True
+        return False
+
+    def _check_speculation(self, text: str) -> bool:
+        """Check if relationship is speculative."""
+        speculation_patterns = [
+            r'\bmay\b',
+            r'\bmight\b',
+            r'\bcould\b',
+            r'\bpotentially\b',
+            r'\bpossibly\b',
+            r'\bsuggests?\b',
+            r'\bappears?\b',
+            r'\bseems?\b',
+            r'\blikely\b',
+            r'\bprobable\b'
+        ]
+
+        text_lower = text.lower()
+        for pattern in speculation_patterns:
+            if re.search(pattern, text_lower):
+                return True
+        return False
+
+    def _calculate_evidence_strength(self, context: str) -> str:
+        """Calculate evidence strength category for evidence strength classification."""
+        negated = self._check_negation(context)
+        speculated = self._check_speculation(context)
+
+        if negated:
+            return 'negated'
+        elif speculated:
+            return 'speculative'
+        elif any(w in context.lower() for w in ['associated', 'correlated', 'linked', 'related', 'connected']):
+            return 'associated'
+        else:
+            return 'asserted'
+
+    def _get_relation_type(self, relation: str) -> str:
+        """Categorize relation into causal, regulatory, or association."""
+        relation_lower = relation.lower()
+
+        causal = ['causes', 'prevents', 'treats', 'produces', 'metabolizes', 'inhibits', 'blocks']
+        regulatory = ['regulates', 'activates', 'stimulates', 'suppresses', 'modulates', 'controls']
+
+        if relation_lower in causal or any(c in relation_lower for c in causal):
+            return 'causal'
+        elif relation_lower in regulatory or any(r in relation_lower for r in regulatory):
+            return 'regulatory'
+        else:
+            return 'association'
+
+    def _get_polarity(self, context: str) -> str:
+        """Determine polarity of relationship (positive, negative, neutral)."""
+        negative_words = ['decreases', 'reduces', 'inhibits', 'prevents', 'blocks', 'suppresses', 'downregulates']
+        positive_words = ['increases', 'enhances', 'activates', 'promotes', 'stimulates', 'upregulates', 'induces']
+
+        context_lower = context.lower()
+
+        if any(w in context_lower for w in negative_words):
+            return 'negative'
+        elif any(w in context_lower for w in positive_words):
+            return 'positive'
+        else:
+            return 'neutral'
+
+    def _get_confidence_basis(self, context: str, entities_validated: bool) -> List[str]:
+        """Generate confidence basis instead of arbitrary scores."""
+        basis = []
+
+        # Check for explicit verbs
+        explicit_verbs = ['causes', 'produces', 'inhibits', 'activates', 'prevents', 'treats']
+        if any(v in context.lower() for v in explicit_verbs):
+            basis.append('explicit_verb')
+
+        # Check entity validation
+        if entities_validated:
+            basis.append('entity_validated')
+
+        # Check for negation
+        if not self._check_negation(context):
+            basis.append('non_negated')
+
+        # Check for speculation
+        if not self._check_speculation(context):
+            basis.append('non_speculative')
+
+        # Check for direct evidence
+        direct_evidence = ['shown', 'demonstrated', 'found', 'observed', 'detected', 'measured']
+        if any(w in context.lower() for w in direct_evidence):
+            basis.append('direct_evidence')
+
+        # Check for statistical support
+        if re.search(r'p\s*[<>=]+\s*[0-9.]+', context):
+            basis.append('statistical_support')
+
+        return basis if basis else ['weak_evidence']
+
+    def _extract_sentence(self, text: str, term: str) -> str:
+        """Extract the full sentence containing a term."""
+        # Split into sentences
+        sentences = re.split(r'[.!?]+\s+', text)
+
+        # Find sentence containing the term
+        term_lower = term.lower()
+        for sentence in sentences:
+            if term_lower in sentence.lower():
+                return sentence.strip()
+
+        # Fallback: return surrounding text
+        try:
+            idx = text.lower().find(term_lower)
+            if idx != -1:
+                start = max(0, idx - 100)
+                end = min(len(text), idx + len(term) + 100)
+                return text[start:end].strip()
+        except:
+            pass
+
+        return ""
+
+
+class MicrobiomeInteractionExtractor:
+    """Extract microbiome-specific interactions and relationships."""
+
+    def __init__(self, llm_client: 'LLMClient'):
+        self.llm_client = llm_client
+
+        self.interaction_types = {
+            'microbe_disease': ['associated with', 'increased in', 'decreased in', 'found in'],
+            'microbe_metabolite': ['produces', 'consumes', 'degrades', 'converts'],
+            'microbe_microbe': ['inhibits', 'promotes', 'co-occurs with', 'cross-feeds'],
+            'diet_microbe': ['promotes', 'reduces', 'increases', 'decreases'],
+            'drug_microbe': ['affects', 'alters', 'reduces', 'eliminates'],
+            'host_microbe': ['harbors', 'colonized by', 'hosts']
+        }
+
+    def extract_interactions(self, text: str, entities: List[Dict]) -> Dict[str, List[Dict]]:
+        """Extract microbiome-specific interactions."""
+        interactions = {
+            'microbe_disease': [],
+            'microbe_metabolite': [],
+            'microbe_microbe': [],
+            'diet_microbe_host': [],
+            'drug_microbe': []
+        }
+
+        if not entities:
+            return interactions
+
+        # Categorize entities
+        organisms = [e for e in entities if e['entity_type'] == 'ORGANISM']
+        chemicals = [e for e in entities if e['entity_type'] == 'CHEMICAL']
+        diseases = [e for e in entities if e['entity_type'] == 'DISEASE']
+        drugs = [e for e in entities if e['entity_type'] in ['DRUG', 'CHEMICAL']]
+
+        # Extract microbe-metabolite interactions
+        if organisms and chemicals:
+            interactions['microbe_metabolite'] = self._extract_microbe_metabolite(text, organisms, chemicals)
+
+        # Extract microbe-disease associations
+        if organisms and diseases:
+            interactions['microbe_disease'] = self._extract_microbe_disease(text, organisms, diseases)
+
+        # Extract microbe-microbe interactions
+        if len(organisms) >= 2:
+            interactions['microbe_microbe'] = self._extract_microbe_microbe(text, organisms)
+
+        return interactions
+
+    def _extract_microbe_metabolite(self, text: str, organisms: List[Dict], chemicals: List[Dict]) -> List[Dict]:
+        """Extract microbe-metabolite production/consumption relationships."""
+        prompt = f"""Extract relationships between microbes and metabolites from the text.
+
+MICROBES:
+{', '.join([o['entity'] for o in organisms[:20]])}
+
+METABOLITES:
+{', '.join([c['entity'] for c in chemicals[:20]])}
+
+RELATIONSHIP TYPES:
+- PRODUCES: microbe produces the metabolite
+- CONSUMES: microbe uses/degrades the metabolite
+- CONVERTS: microbe converts one metabolite to another
+
+TEXT:
+{text[:4000]}
+
+OUTPUT FORMAT:
+Microbe | Relation | Metabolite | Context
+Example: Bacteroides fragilis | PRODUCES | propionate | B. fragilis produces propionate as a fermentation product
+
+Start now:"""
+
+        response = self.llm_client.call_llm(prompt, max_tokens=1500)
+        return self._parse_interaction_response(response, organisms, chemicals, 'microbe_metabolite')
+
+    def _extract_microbe_disease(self, text: str, organisms: List[Dict], diseases: List[Dict]) -> List[Dict]:
+        """Extract microbe-disease associations."""
+        prompt = f"""Extract associations between microbes and diseases/conditions from the text.
+
+MICROBES:
+{', '.join([o['entity'] for o in organisms[:20]])}
+
+DISEASES/CONDITIONS:
+{', '.join([d['entity'] for d in diseases[:20]])}
+
+RELATIONSHIP TYPES:
+- INCREASED: microbe abundance is increased in the disease
+- DECREASED: microbe abundance is decreased in the disease
+- ASSOCIATED: general association (direction unclear)
+- PROTECTIVE: microbe protects against disease
+
+TEXT:
+{text[:4000]}
+
+OUTPUT FORMAT:
+Microbe | Relation | Disease | Context
+Example: Faecalibacterium prausnitzii | DECREASED | Crohn's disease | F. prausnitzii is depleted in Crohn's disease patients
+
+Start now:"""
+
+        response = self.llm_client.call_llm(prompt, max_tokens=1500)
+        return self._parse_interaction_response(response, organisms, diseases, 'microbe_disease')
+
+    def _extract_microbe_microbe(self, text: str, organisms: List[Dict]) -> List[Dict]:
+        """Extract microbe-microbe interactions."""
+        organism_names = [o['entity'] for o in organisms[:30]]
+
+        prompt = f"""Extract interactions between microbes from the text.
+
+MICROBES:
+{', '.join(organism_names)}
+
+RELATIONSHIP TYPES:
+- INHIBITS: one microbe inhibits growth of another
+- PROMOTES: one microbe promotes growth of another
+- CROSS-FEEDS: one microbe produces metabolite consumed by another
+- CO-OCCURS: microbes found together frequently
+
+TEXT:
+{text[:4000]}
+
+OUTPUT FORMAT:
+Microbe1 | Relation | Microbe2 | Context
+Example: Bacteroides | CROSS-FEEDS | Faecalibacterium | Bacteroides produces acetate used by Faecalibacterium
+
+Start now:"""
+
+        response = self.llm_client.call_llm(prompt, max_tokens=1500)
+
+        # Parse response
+        interactions = []
+        entity_lookup = {o['entity'].lower(): o for o in organisms}
+
+        try:
+            lines = response.split('\n')
+            for line in lines:
+                line = line.strip()
+                if not line or '|' not in line:
+                    continue
+
+                parts = [p.strip() for p in line.split('|')]
+                if len(parts) >= 3:
+                    microbe1 = parts[0]
+                    relation = parts[1].upper()
+                    microbe2 = parts[2]
+                    context = parts[3] if len(parts) > 3 else ""
+
+                    if microbe1.lower() in entity_lookup and microbe2.lower() in entity_lookup:
+                        interactions.append({
+                            'microbe1': microbe1,
+                            'microbe1_type': entity_lookup[microbe1.lower()]['entity_type'],
+                            'interaction': relation,
+                            'microbe2': microbe2,
+                            'microbe2_type': entity_lookup[microbe2.lower()]['entity_type'],
+                            'context': context[:200],
+                            'confidence': 0.75
+                        })
+        except Exception as e:
+            logger.error(f"Error parsing microbe-microbe interactions: {e}")
+
+        return interactions
+
+    def _parse_interaction_response(self, response: str, entities1: List[Dict], entities2: List[Dict], interaction_type: str) -> List[Dict]:
+        """Parse interaction response."""
+        interactions = []
+        entity_lookup1 = {e['entity'].lower(): e for e in entities1}
+        entity_lookup2 = {e['entity'].lower(): e for e in entities2}
+
+        try:
+            response = re.sub(r'```.*', '', response, flags=re.DOTALL)
+            lines = response.split('\n')
+
+            for line in lines:
+                line = line.strip()
+                if not line or '|' not in line or line.lower().startswith(('sure', 'here', 'note:')):
+                    continue
+
+                parts = [p.strip() for p in line.split('|')]
+                if len(parts) >= 3:
+                    entity1 = parts[0]
+                    relation = parts[1].upper()
+                    entity2 = parts[2]
+                    context = parts[3] if len(parts) > 3 else ""
+
+                    if entity1.lower() in entity_lookup1 and entity2.lower() in entity_lookup2:
+                        interactions.append({
+                            'entity1': entity1,
+                            'entity1_type': entity_lookup1[entity1.lower()]['entity_type'],
+                            'interaction': relation,
+                            'entity2': entity2,
+                            'entity2_type': entity_lookup2[entity2.lower()]['entity_type'],
+                            'context': context[:200],
+                            'confidence': 0.8
+                        })
+        except Exception as e:
+            logger.error(f"Error parsing {interaction_type} interactions: {e}")
+
+        return interactions
+
+
+class TemporalExtractor:
+    """Extract temporal information and relationships from text."""
+
+    def __init__(self, llm_client: 'LLMClient'):
+        self.llm_client = llm_client
+
+        # Temporal patterns
+        self.timepoint_patterns = [
+            r'(?:after|at|on|during)\s+(?:day|hour|week|month)\s+\d+',
+            r'\d+\s*(?:hours|days|weeks|months|years)\s+(?:after|post|following)',
+            r'(?:baseline|week\s+\d+|day\s+\d+|timepoint)',
+            r'\d+\s*(?:h|hr|d|day|w|week|m|month|y|year)'
+        ]
+
+        self.duration_patterns = [
+            r'(?:for|over)\s+\d+\s*(?:hours|days|weeks|months|years)',
+            r'\d+\s*-\s*\d+\s*(?:hours|days|weeks|months)',
+            r'(?:long-term|short-term|acute|chronic)'
+        ]
+
+        self.sequence_patterns = [
+            r'(?:followed by|subsequently|then|after that|prior to|before)',
+            r'(?:first|then|next|finally|firstly|secondly)',
+            r'(?:gradual|progressive|sequential)'
+        ]
+
+    def extract_temporal(self, text: str) -> List[Dict]:
+        """Extract temporal expressions and relationships."""
+        temporal_data = []
+
+        # Extract timepoints
+        timepoints = self._extract_timepoints(text)
+        temporal_data.extend(timepoints)
+
+        # Extract durations
+        durations = self._extract_durations(text)
+        temporal_data.extend(durations)
+
+        # Extract sequences
+        sequences = self._extract_sequences(text)
+        temporal_data.extend(sequences)
+
+        logger.info(f"⏰ Extracted {len(temporal_data)} temporal expressions")
+        return temporal_data
+
+    def _extract_timepoints(self, text: str) -> List[Dict]:
+        """Extract specific timepoints mentioned."""
+        timepoints = []
+
+        for pattern in self.timepoint_patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                timepoints.append({
+                    'type': 'timepoint',
+                    'expression': match.group(),
+                    'start_pos': match.start(),
+                    'confidence': 0.85
+                })
+
+        return timepoints
+
+    def _extract_durations(self, text: str) -> List[Dict]:
+        """Extract duration expressions."""
+        durations = []
+
+        for pattern in self.duration_patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                durations.append({
+                    'type': 'duration',
+                    'expression': match.group(),
+                    'start_pos': match.start(),
+                    'confidence': 0.80
+                })
+
+        return durations
+
+    def _extract_sequences(self, text: str) -> List[Dict]:
+        """Extract sequential relationships."""
+        sequences = []
+
+        for pattern in self.sequence_patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                sequences.append({
+                    'type': 'sequence',
+                    'expression': match.group(),
+                    'start_pos': match.start(),
+                    'confidence': 0.75
+                })
+
+        return sequences
+
+
+class QuantitativeDataExtractor:
+    """Extract quantitative measurements, concentrations, and statistical data."""
+
+    def __init__(self, llm_client: 'LLMClient'):
+        self.llm_client = llm_client
+
+        # Quantitative patterns
+        self.concentration_patterns = [
+            r'(\d+\.?\d*)\s*(mM|μM|uM|nM|pM|mg/mL|μg/mL|ng/mL|pg/mL)',
+            r'(\d+\.?\d*)\s*(millimolar|micromolar|nanomolar|picomolar)'
+        ]
+
+        self.fold_change_patterns = [
+            r'(\d+\.?\d*)\s*-fold\s*(?:increase|decrease|change|up|down)',
+            r'(?:increased|decreased|upregulated|downregulated)\s+(?:by\s+)?(\d+\.?\d*)\s*-?fold',
+            r'(\d+\.?\d*)\s*x\s+(?:increase|decrease|change)'
+        ]
+
+        self.percentage_patterns = [
+            r'(\d+\.?\d*)%',
+            r'(\d+\.?\d*)\s*percent'
+        ]
+
+        self.statistical_patterns = [
+            r'p\s*[<>=]+\s*[0-9.]+',
+            r'p\s*=\s*[0-9.]+',
+            r'[fr]\s*=\s*[0-9.]+',
+            r'effect size',
+            r'confidence interval'
+        ]
+
+    def extract_quantitative(self, text: str) -> List[Dict]:
+        """Extract all quantitative data from text."""
+        quantitative_data = []
+
+        # Extract concentrations
+        concentrations = self._extract_concentrations(text)
+        quantitative_data.extend(concentrations)
+
+        # Extract fold changes
+        fold_changes = self._extract_fold_changes(text)
+        quantitative_data.extend(fold_changes)
+
+        # Extract percentages
+        percentages = self._extract_percentages(text)
+        quantitative_data.extend(percentages)
+
+        # Extract statistical measures
+        stats = self._extract_statistics(text)
+        quantitative_data.extend(stats)
+
+        logger.info(f"📊 Extracted {len(quantitative_data)} quantitative data points")
+        return quantitative_data
+
+    def _extract_concentrations(self, text: str) -> List[Dict]:
+        """Extract concentration measurements."""
+        concentrations = []
+
+        for pattern in self.concentration_patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                concentrations.append({
+                    'type': 'concentration',
+                    'value': match.group(1),
+                    'unit': match.group(2),
+                    'context': self._get_context(text, match.start(), match.end()),
+                    'confidence': 0.90
+                })
+
+        return concentrations
+
+    def _extract_fold_changes(self, text: str) -> List[Dict]:
+        """Extract fold change measurements."""
+        fold_changes = []
+
+        for pattern in self.fold_change_patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                full_match = match.group()
+                # Determine if increase or decrease
+                change_type = 'unknown'
+                if 'increase' in full_match.lower() or 'up' in full_match.lower() or 'upregulated' in full_match.lower():
+                    change_type = 'increase'
+                elif 'decrease' in full_match.lower() or 'down' in full_match.lower() or 'downregulated' in full_match.lower():
+                    change_type = 'decrease'
+
+                fold_changes.append({
+                    'type': 'fold_change',
+                    'value': match.group(1),
+                    'change_type': change_type,
+                    'context': self._get_context(text, match.start(), match.end()),
+                    'confidence': 0.88
+                })
+
+        return fold_changes
+
+    def _extract_percentages(self, text: str) -> List[Dict]:
+        """Extract percentage measurements."""
+        percentages = []
+
+        for pattern in self.percentage_patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                percentages.append({
+                    'type': 'percentage',
+                    'value': match.group(1),
+                    'context': self._get_context(text, match.start(), match.end()),
+                    'confidence': 0.85
+                })
+
+        return percentages
+
+    def _extract_statistics(self, text: str) -> List[Dict]:
+        """Extract statistical measures."""
+        stats = []
+
+        for pattern in self.statistical_patterns:
+            matches = re.finditer(pattern, text, re.IGNORECASE)
+            for match in matches:
+                stats.append({
+                    'type': 'statistical',
+                    'expression': match.group(),
+                    'context': self._get_context(text, match.start(), match.end()),
+                    'confidence': 0.95
+                })
+
+        return stats
+
+    def _get_context(self, text: str, start: int, end: int, window: int = 100) -> str:
+        """Get surrounding context for a match."""
+        context_start = max(0, start - window)
+        context_end = min(len(text), end + window)
+        return text[context_start:context_end].strip()
+
+
+class CoreferenceResolver:
+    """Resolve coreferences and link pronouns to entities."""
+
+    def __init__(self, llm_client: 'LLMClient'):
+        self.llm_client = llm_client
+
+        self.pronoun_patterns = [
+            r'\bit\b',
+            r'\bthey\b',
+            r'\bthis\b',
+            r'\bthat\b',
+            r'\bthese\b',
+            r'\bthose\b',
+            r'\bwhich\b',
+            r'\bwho\b'
+        ]
+
+        self.demonstrative_patterns = [
+            r'\bthis (?:bacterium|microbe|organism|metabolite|compound)\b',
+            r'\bthat (?:bacterium|microbe|organism|metabolite|compound)\b',
+            r'\bthese bacteria|microbes|organisms\b',
+            r'\bthose bacteria|microbes|organisms\b'
+        ]
+
+    def resolve_coreferences(self, text: str, entities: List[Dict]) -> List[Dict]:
+        """Resolve coreferences and link to entities."""
+        coreference_chains = []
+
+        if not entities:
+            return coreference_chains
+
+        # Create entity lookup
+        entity_names = [e['entity'] for e in entities]
+
+        # Find sentences with potential coreferences
+        sentences = re.split(r'[.!?]+', text)
+
+        for sentence in sentences:
+            if len(sentence.strip()) < 20:
+                continue
+
+            # Check for pronouns
+            pronoun_matches = []
+            for pattern in self.pronoun_patterns:
+                matches = re.finditer(pattern, sentence, re.IGNORECASE)
+                pronoun_matches.extend([(m.group(), m.start()) for m in matches])
+
+            if pronoun_matches:
+                # Use LLM to resolve
+                resolved = self._resolve_with_llm(sentence, entity_names)
+                if resolved:
+                    coreference_chains.extend(resolved)
+
+        logger.info(f"🔗 Resolved {len(coreference_chains)} coreferences")
+        return coreference_chains
+
+    def _resolve_with_llm(self, sentence: str, entities: List[str]) -> List[Dict]:
+        """Use LLM to resolve coreferences in a sentence."""
+        entities_str = ', '.join(entities[:20])
+
+        prompt = f"""Resolve pronoun references to specific entities in the sentence.
+
+AVAILABLE ENTITIES:
+{entities_str}
+
+SENTENCE:
+{sentence}
+
+TASK: Identify which entity each pronoun refers to.
+
+OUTPUT FORMAT:
+Pronoun | Entity
+Example: it | Escherichia coli
+
+If a pronoun cannot be resolved, output: Pronoun | UNKNOWN
+
+Start now:"""
+
+        response = self.llm_client.call_llm(prompt, max_tokens=500)
+
+        # Parse response
+        resolutions = []
+        try:
+            lines = response.split('\n')
+            for line in lines:
+                line = line.strip()
+                if '|' in line and not line.lower().startswith(('sure', 'here', 'note:')):
+                    parts = [p.strip() for p in line.split('|')]
+                    if len(parts) == 2:
+                        pronoun = parts[0]
+                        entity = parts[1]
+
+                        if entity != 'UNKNOWN':
+                            resolutions.append({
+                                'pronoun': pronoun,
+                                'refers_to': entity,
+                                'sentence': sentence[:200],
+                                'confidence': 0.70
+                            })
+        except Exception as e:
+            logger.error(f"Error parsing coreference resolution: {e}")
+
+        return resolutions
+
 
 class CDMEntityPipeline:
     """Main CDM entity extraction pipeline with semantic deduplication."""
@@ -4486,7 +5373,8 @@ class CDMEntityPipeline:
                  mapping_confidence_threshold: float = 0.7,
                  enable_correction: bool = False, enable_llm_correction: bool = False,
                  dry_run: bool = False, fast_mode: bool = False, api_type: str = "ollama",
-                 api_key: str = "EMPTY", hf_token: str = None):
+                 api_key: str = "EMPTY", hf_token: str = None,
+                 include_speculative: bool = False):
         self.config = config or PipelineConfig()
         self.dry_run = dry_run
         
@@ -4519,6 +5407,11 @@ class CDMEntityPipeline:
             self.biomistral_validator = None
             self.biomistral_deduplicator = None
             self.comprehensive_mapper = None
+            self.relationship_extractor = None
+            self.microbiome_extractor = None
+            self.temporal_extractor = None
+            self.quantitative_extractor = None
+            self.coreference_resolver = None
             return
 
         self.llm_client = LLMClient(model or self.config.default_model, base_url or self.config.default_base_url, self.opt_config)
@@ -4562,6 +5455,18 @@ class CDMEntityPipeline:
                 use_scispacy=enable_scispacy_linking
             )
             logger.info(f"🗂️  Comprehensive mapping initialized with OMOP vocab: {omop_vocab_dir}")
+
+        # Initialize advanced analytics extractors
+        self.relationship_extractor = RelationshipExtractor(self.llm_client)
+        self.microbiome_extractor = MicrobiomeInteractionExtractor(self.llm_client)
+        self.temporal_extractor = TemporalExtractor(self.llm_client)
+        self.quantitative_extractor = QuantitativeDataExtractor(self.llm_client)
+        self.coreference_resolver = CoreferenceResolver(self.llm_client)
+        logger.info("✅ Advanced analytics extractors initialized: Relationships, Microbiome, Temporal, Quantitative, Coreference")
+
+        # Paper metadata (can be set externally)
+        self.paper_metadata = {}
+        self.include_speculative = False  # Default to strict mode
 
     def validate_prerequisites(self) -> bool:
         """Validate that the pipeline can run."""
@@ -4698,6 +5603,69 @@ class CDMEntityPipeline:
                     
         return all_entities
 
+    def extract_advanced_analytics(self, text: str, entities: List[Dict], include_speculative: bool = False) -> Dict[str, Any]:
+        """Extract advanced analytics: relationships, microbiome interactions, temporal, quantitative, coreferences.
+
+        Args:
+            text: Source text
+            entities: Extracted entities
+            include_speculative: If True, include speculative/negated relationships (exploratory mode)
+        """
+        if self.dry_run or not entities:
+            return {
+                'relationships': [],
+                'microbiome_interactions': {},
+                'temporal_data': [],
+                'quantitative_data': [],
+                'coreference_chains': []
+            }
+
+        analytics = {}
+
+        # 1. Extract relationships (triplets)
+        logger.info("🔗 Extracting entity relationships...")
+        try:
+            analytics['relationships'] = self.relationship_extractor.extract_relationships(text, entities, include_speculative)
+        except Exception as e:
+            logger.error(f"Error extracting relationships: {e}")
+            analytics['relationships'] = []
+
+        # 2. Extract microbiome-specific interactions
+        logger.info("🧬 Extracting microbiome-specific interactions...")
+        try:
+            analytics['microbiome_interactions'] = self.microbiome_extractor.extract_interactions(text, entities)
+        except Exception as e:
+            logger.error(f"Error extracting microbiome interactions: {e}")
+            analytics['microbiome_interactions'] = {}
+
+        # 3. Extract temporal information
+        logger.info("⏰ Extracting temporal data...")
+        try:
+            analytics['temporal_data'] = self.temporal_extractor.extract_temporal(text)
+        except Exception as e:
+            logger.error(f"Error extracting temporal data: {e}")
+            analytics['temporal_data'] = []
+
+        # 4. Extract quantitative data
+        logger.info("📊 Extracting quantitative data...")
+        try:
+            analytics['quantitative_data'] = self.quantitative_extractor.extract_quantitative(text)
+        except Exception as e:
+            logger.error(f"Error extracting quantitative data: {e}")
+            analytics['quantitative_data'] = []
+
+        # 5. Resolve coreferences - DISABLED for speed (takes too long on large texts)
+        logger.info("🔗 Skipping coreference resolution (disabled for performance)...")
+        try:
+            # analytics['coreference_chains'] = self.coreference_resolver.resolve_coreferences(text, entities)
+            analytics['coreference_chains'] = []  # Empty instead of running
+        except Exception as e:
+            logger.error(f"Error resolving coreferences: {e}")
+            analytics['coreference_chains'] = []
+
+        logger.info(f"✅ Advanced analytics extraction complete")
+        return analytics
+
     def post_process_entities(self, entities: List[Dict], use_semantic: bool = False) -> List[Dict]:
         if self.dry_run:
             return entities
@@ -4822,9 +5790,9 @@ class CDMEntityPipeline:
             'unique_entity_types': len(type_counts)
         }
 
-    def save_results(self, entities: List[Dict], output_path: str, text_stats: Dict = None):
+    def save_results(self, entities: List[Dict], output_path: str, text_stats: Dict = None, advanced_analytics: Dict = None, paper_metadata: Dict = None):
         """Save extraction results to JSON file in the requested flat format."""
-        
+
         flat_results = []
         
         for entity in entities:
@@ -4877,17 +5845,27 @@ class CDMEntityPipeline:
             'metadata': {
                 'timestamp': time.time(),
                 'model_used': self.llm_client.model if self.llm_client else "dry-run",
-                'pipeline_version': '1.0.0',
+                'pipeline_version': '2.0.0',  # Updated version with advanced analytics
                 'token_usage': self.llm_client.get_token_usage() if self.llm_client else {},
                 'extraction_config': {
                     'min_confidence': self.config.min_confidence,
                     'max_entities': self.config.max_entities,
-                    'max_workers': self.config.max_workers
+                    'max_workers': self.config.max_workers,
+                    'mode': 'exploratory' if self.include_speculative else 'strict',
+                    'filtering': 'disabled' if self.include_speculative else 'enabled'
                 }
             },
             'text_statistics': text_stats or {},
             'extraction_statistics': stats,
-            'results': flat_results # Now a flat list
+            'results': flat_results,  # Now a flat list
+            # NEW: Advanced analytics sections
+            'relationships': advanced_analytics.get('relationships', []) if advanced_analytics else [],
+            'microbiome_interactions': advanced_analytics.get('microbiome_interactions', {}) if advanced_analytics else {},
+            'temporal_data': advanced_analytics.get('temporal_data', []) if advanced_analytics else [],
+            'quantitative_data': advanced_analytics.get('quantitative_data', []) if advanced_analytics else [],
+            'coreference_chains': advanced_analytics.get('coreference_chains', []) if advanced_analytics else [],
+            # NEW: Paper metadata if available
+            'paper_metadata': paper_metadata or {}
         }
 
         # Write to file
@@ -4901,6 +5879,15 @@ class CDMEntityPipeline:
         for entity_type, count in stats['entity_type_distribution'].items():
             logger.info(f"   {entity_type}: {count} entities")
         logger.info(f"   Average confidence: {stats['average_confidence']:.3f}")
+
+        # Log advanced analytics summary
+        if advanced_analytics:
+            logger.info(f"📈 Advanced Analytics Summary:")
+            logger.info(f"   Relationships extracted: {len(advanced_analytics.get('relationships', []))}")
+            logger.info(f"   Microbiome interactions: {sum(len(v) for v in advanced_analytics.get('microbiome_interactions', {}).values())}")
+            logger.info(f"   Temporal expressions: {len(advanced_analytics.get('temporal_data', []))}")
+            logger.info(f"   Quantitative data points: {len(advanced_analytics.get('quantitative_data', []))}")
+            logger.info(f"   Coreferences resolved: {len(advanced_analytics.get('coreference_chains', []))}")
 
     def generate_statistics(self, entities: List[Dict]) -> Dict:
         """Generate statistics from extracted entities."""
@@ -4949,8 +5936,11 @@ class CDMEntityPipeline:
             entities = self.extract_entities(text, chunk_size)
             extraction_time = time.time() - start_time
 
-            # Save results
-            self.save_results(entities, output_path, text_stats)
+            # Extract advanced analytics (relationships, temporal, quantitative, etc.)
+            advanced_analytics = self.extract_advanced_analytics(text, entities, self.include_speculative)
+
+            # Save results with advanced analytics and paper metadata
+            self.save_results(entities, output_path, text_stats, advanced_analytics, self.paper_metadata)
 
             logger.info(f"⚡ Pipeline completed in {extraction_time:.1f} seconds")
             logger.info(f"📊 Total unique entities: {len(entities)}")
@@ -5003,10 +5993,10 @@ class CDMEntityPipeline:
         # Deduplicate
         logger.info("🔄 Running semantic deduplication...")
         deduplicated_entities = self.semantic_deduplicator.apply_semantic_deduplication(all_entities)
-        
-        # Save
+
+        # Save (no advanced analytics for consolidated results)
         logger.info(f"💾 Saving consolidated results to {output_path}")
-        self.save_results(deduplicated_entities, str(output_path))
+        self.save_results(deduplicated_entities, str(output_path), advanced_analytics=None)
         logger.info("🎉 Consolidation complete!")
 
     def apply_mappings_to_file(self, input_file: str):
@@ -5246,6 +6236,7 @@ Provide one line per term. Start immediately.
         """Run a specific pipeline stage."""
         force = kwargs.get('force', False)
         all_entities = []
+        all_text = []
         text_stats_agg = {"character_count": 0, "word_count": 0}
         
         # Define worker function for parallel processing
@@ -5270,7 +6261,7 @@ Provide one line per term. Start immediately.
                                 
                             # Check if it's a completed run (all chunks done) or legacy format
                             if isinstance(data, list):
-                                return data, None # Legacy format, assume complete
+                                return data, None, "" # Legacy format, assume complete (no text)
                             elif isinstance(data, dict) and 'completed_chunks' in data:
                                 # Check if all chunks are done? 
                                 # Actually, extract_entities will handle resumption.
@@ -5301,11 +6292,11 @@ Provide one line per term. Start immediately.
                 # Add source file info
                 for entity in file_entities:
                     entity['source_file'] = file_path.name
-                
-                return file_entities, stats
+
+                return file_entities, stats, text
             except Exception as e:
                 logger.error(f"Error processing {file_path.name}: {e}")
-                return [], None
+                return [], None, ""
 
         # Run parallel processing
         max_file_workers = self.config.max_file_workers
@@ -5317,9 +6308,11 @@ Provide one line per term. Start immediately.
             for future in tqdm(as_completed(future_to_file), total=len(files), desc=f"Processing {stage_name} files", unit="file"):
                 file_path = future_to_file[future]
                 try:
-                    file_entities, stats = future.result()
+                    file_entities, stats, file_text = future.result()
                     if file_entities:
                         all_entities.extend(file_entities)
+                    if file_text:
+                        all_text.append(file_text)
                     if stats:
                         text_stats_agg["character_count"] += stats["character_count"]
                         text_stats_agg["word_count"] += stats["word_count"]
@@ -5334,8 +6327,34 @@ Provide one line per term. Start immediately.
             # Use semantic deduplication again on the full set
             all_entities = self.post_process_entities(all_entities, use_semantic=True)
 
-        # Save aggregated results
-        self.save_results(all_entities, output_file, text_stats_agg)
+        # Extract advanced analytics from aggregated text
+        advanced_analytics = None
+        if all_text and not self.dry_run:
+            try:
+                logger.info(f"🔗 Extracting advanced analytics (relationships, triplets, etc.) from aggregated text...")
+                combined_text = "\n\n".join(all_text)
+                advanced_analytics = self.extract_advanced_analytics(combined_text, all_entities, self.include_speculative)
+                logger.info(f"✅ Advanced analytics extraction complete: {len(advanced_analytics.get('relationships', []))} relationships, {len(advanced_analytics.get('microbiome_interactions', {}))} interaction types")
+            except Exception as e:
+                logger.error(f"❌ Error extracting advanced analytics: {e}")
+                advanced_analytics = {
+                    'relationships': [],
+                    'microbiome_interactions': {},
+                    'temporal_data': [],
+                    'quantitative_data': [],
+                    'coreference_chains': []
+                }
+        else:
+            advanced_analytics = {
+                'relationships': [],
+                'microbiome_interactions': {},
+                'temporal_data': [],
+                'quantitative_data': [],
+                'coreference_chains': []
+            }
+
+        # Save aggregated results with advanced analytics
+        self.save_results(all_entities, output_file, text_stats_agg, advanced_analytics=advanced_analytics)
         
         logger.info(f"✅ Pipeline completed. Total unique entities: {len(all_entities)}")
         return True
@@ -5372,10 +6391,13 @@ def setup_environment():
 def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
     """Run a single stage of the pipeline on a file or directory."""
     logger.info(f"\n=== RUNNING {stage_name.upper()} PIPELINE ===")
-    
+
     try:
         # Extract force argument to prevent passing it to pipeline init
         force = kwargs.pop('force', False)
+
+        # Extract paper_metadata if provided
+        paper_metadata = kwargs.pop('paper_metadata', {})
 
         # Initialize pipeline
         pipeline = CDMEntityPipeline(
@@ -5384,6 +6406,17 @@ def run_pipeline_stage(stage_name, input_path, output_file, config, **kwargs):
             config=config,
             **kwargs
         )
+
+        # Set paper_metadata on pipeline
+        pipeline.paper_metadata = paper_metadata
+        if paper_metadata:
+            logger.info(f"📄 Pipeline configured with paper metadata: {paper_metadata.get('paper_id', 'unknown')}")
+
+        # Set include_speculative mode from kwargs
+        include_speculative = kwargs.pop('include_speculative', False)
+        pipeline.include_speculative = include_speculative
+        mode_str = "EXPLORATORY" if include_speculative else "STRICT"
+        logger.info(f"🎯 Pipeline mode: {mode_str} (speculative content: {'enabled' if include_speculative else 'filtered'})")
         
         input_p = Path(input_path)
         all_entities = []
@@ -5470,6 +6503,69 @@ def _analyze_file(filepath):
         return None
 
 
+def load_paper_metadata(paper_id: str, metadata_base_dir: str = None) -> Dict[str, Any]:
+    """Load metadata from projects.csv and sample_metadata.tsv for a given paper_id.
+
+    Args:
+        paper_id: The paper/project ID (e.g., '15122187' or project accession)
+        metadata_base_dir: Base directory containing metadata files (default: ./15122187)
+
+    Returns:
+        Dictionary containing metadata from projects.csv and sample_metadata.tsv
+    """
+    if not metadata_base_dir:
+        # Try to find metadata directory
+        possible_paths = [
+            Path(paper_id),  # Direct paper_id as directory
+            Path('./15122187'),  # Default location
+            Path('..') / paper_id,  # Parent directory
+        ]
+
+        metadata_base_dir = None
+        for path in possible_paths:
+            if path.exists() and (path / 'projects.csv').exists():
+                metadata_base_dir = str(path)
+                break
+
+        if not metadata_base_dir:
+            logger.warning(f"⚠️  Could not find metadata directory for paper_id: {paper_id}")
+            return {}
+
+    metadata_dir = Path(metadata_base_dir)
+    metadata = {}
+
+    # Load projects.csv
+    projects_file = metadata_dir / 'projects.csv'
+    if projects_file.exists():
+        try:
+            import pandas as pd
+            df = pd.read_csv(projects_file)
+            # Convert to list of dicts
+            metadata['projects'] = df.to_dict('records')
+            logger.info(f"✅ Loaded {len(metadata['projects'])} project records from {projects_file}")
+        except Exception as e:
+            logger.error(f"Error loading projects.csv: {e}")
+    else:
+        logger.warning(f"Projects file not found: {projects_file}")
+
+    # Load sample_metadata.tsv
+    samples_file = metadata_dir / 'sample_metadata.tsv'
+    if samples_file.exists():
+        try:
+            import pandas as pd
+            df = pd.read_csv(samples_file, sep='\t')
+            # Convert to list of dicts
+            metadata['samples'] = df.to_dict('records')
+            logger.info(f"✅ Loaded {len(metadata['samples'])} sample records from {samples_file}")
+        except Exception as e:
+            logger.error(f"Error loading sample_metadata.tsv: {e}")
+    else:
+        logger.warning(f"Sample metadata file not found: {samples_file}")
+
+    # Store paper_id for reference
+    metadata['paper_id'] = paper_id
+
+    return metadata
 
 
 def main():
@@ -5505,6 +6601,13 @@ def main():
     parser.add_argument('--overlap', type=int, help='Overlap size (deprecated)')
     parser.add_argument('--enable-omop-mapping', action='store_true', help='Enable OMOP mapping (enabled by default in enhanced mode)')
 
+    # NEW: Metadata loading arguments
+    parser.add_argument('--paper-id', help='Paper/project ID for metadata lookup (e.g., 15122187)')
+    parser.add_argument('--metadata-dir', help='Base directory containing projects.csv and sample_metadata.tsv')
+    parser.add_argument('--enable-advanced-analytics', action='store_true', default=True, help='Enable advanced analytics extraction (relationships, temporal, quantitative, etc.)')
+    parser.add_argument('--include-speculative', action='store_true', help='Include speculative/negated relationships (exploratory mode). Default is strict mode (asserted only).')
+
+
     
     parser.add_argument('--verbose', '-v', action='store_true', help='Enable verbose logging (DEBUG level)')
     
@@ -5525,7 +6628,17 @@ def main():
     if not input_path.exists():
         logger.error(f"Input path not found: {input_path}")
         return 1
-        
+
+    # Load metadata if paper_id is provided
+    paper_metadata = {}
+    if args.paper_id:
+        logger.info(f"📄 Loading metadata for paper_id: {args.paper_id}")
+        paper_metadata = load_paper_metadata(args.paper_id, args.metadata_dir)
+        if paper_metadata:
+            logger.info(f"✅ Loaded metadata: {len(paper_metadata.get('projects', []))} projects, {len(paper_metadata.get('samples', []))} samples")
+        else:
+            logger.warning(f"⚠️  Could not load metadata for paper_id: {args.paper_id}")
+
     # Common config
     pipeline_config = PipelineConfig(
         default_model=args.model,
@@ -5580,7 +6693,9 @@ def main():
         enable_comprehensive_mapping=args.enable_comprehensive_mapping,
         enable_scispacy_linking=args.enable_scispacy_linking,
         bioportal_api_key=args.bioportal_api_key or api_keys['BIOPORTAL_API_KEY'],
-        force=args.force
+        force=args.force,
+        paper_metadata=paper_metadata,
+        include_speculative=args.include_speculative
     )
     
     if not basic_success:
@@ -5623,7 +6738,9 @@ def main():
             api_type=args.api_type,
             api_key=args.api_key,
             hf_token=args.hf_token,
-            force=args.force
+            force=args.force,
+            paper_metadata=paper_metadata,
+            include_speculative=args.include_speculative
         )
         
         if enhanced_success:
