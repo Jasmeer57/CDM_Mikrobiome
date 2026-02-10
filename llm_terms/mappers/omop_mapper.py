@@ -137,7 +137,6 @@ class OMOPMapper:
 
             # Try multiple mapping strategies
             mappings.extend(self._map_via_athena_api(entity_name, entity_config))
-            mappings.extend(self._map_via_standard_vocabs(entity_name, entity_config))
             mappings.extend(self._map_via_pattern_matching(entity_name, entity_config))
 
             # Sort by confidence and remove duplicates
@@ -192,14 +191,7 @@ class OMOPMapper:
 
         return mappings
 
-    def _map_via_standard_vocabs(self, entity_name: str, entity_config: Dict) -> List[OMOPMapping]:
-        """Map using direct vocabulary lookups."""
-        mappings = []
 
-        # Implementation would include specific vocabulary mappings
-        # This is a placeholder for actual mapping logic
-
-        return mappings
 
     def _map_via_pattern_matching(self, entity_name: str, entity_config: Dict) -> List[OMOPMapping]:
         """Map using pattern-based heuristics."""
@@ -208,34 +200,34 @@ class OMOPMapper:
         try:
             entity_lower = entity_name.lower()
             domain_id = entity_config["domain_id"]
+            domain_id_val = domain_id if isinstance(domain_id, str) else domain_id.value
 
             # Pattern-based mapping examples
-            if entity_type == "GENE":
-                if entity_upper := entity_name.upper():
-                    # HGNC pattern
-                    if len(entity_upper) >= 2 and entity_upper.isalpha():
-                        mapping = self._create_pattern_mapping(
-                            entity_name, entity_upper, "HGNC", domain_id, 0.8
-                        )
-                        mappings.append(mapping)
+            # Note: We check all patterns since we don't have entity_type in this function
 
-            elif entity_type == "CHEMICAL":
-                # Chemical suffix patterns
-                chemical_suffixes = ["-ine", "-ol", "-one", "-acid", "-ate", "-ide"]
-                if any(entity_lower.endswith(suffix) for suffix in chemical_suffixes):
+            # GENE pattern - HGNC gene symbols (all caps, 2-10 chars, alphabetic)
+            if entity_upper := entity_name.upper():
+                if len(entity_upper) >= 2 and entity_upper.isalpha() and len(entity_upper) <= 10:
                     mapping = self._create_pattern_mapping(
-                        entity_name, entity_name, "SNOMED", domain_id, 0.6
+                        entity_name, entity_upper, "HGNC", domain_id_val, 0.8
                     )
                     mappings.append(mapping)
 
-            elif entity_type == "DISEASE":
-                # Disease pattern matching
-                disease_suffixes = ["-itis", "-osis", "-emia", "-pathy", "-oma"]
-                if any(entity_lower.endswith(suffix) for suffix in disease_suffixes):
-                    mapping = self._create_pattern_mapping(
-                        entity_name, entity_name, "SNOMED", domain_id, 0.7
-                    )
-                    mappings.append(mapping)
+            # CHEMICAL pattern - chemical suffixes
+            chemical_suffixes = ["-ine", "-ol", "-one", "-acid", "-ate", "-ide"]
+            if any(entity_lower.endswith(suffix) for suffix in chemical_suffixes):
+                mapping = self._create_pattern_mapping(
+                    entity_name, entity_name, "SNOMED", domain_id_val, 0.6
+                )
+                mappings.append(mapping)
+
+            # DISEASE pattern - medical suffixes
+            disease_suffixes = ["-itis", "-osis", "-emia", "-pathy", "-oma"]
+            if any(entity_lower.endswith(suffix) for suffix in disease_suffixes):
+                mapping = self._create_pattern_mapping(
+                    entity_name, entity_name, "SNOMED", domain_id_val, 0.7
+                )
+                mappings.append(mapping)
 
         except Exception as e:
             logger.debug(f"Pattern mapping failed for {entity_name}: {e}")
@@ -244,18 +236,30 @@ class OMOPMapper:
 
     def _create_pattern_mapping(self, entity_name: str, concept_code: str,
                                vocab_id: str, domain_id: str, confidence: float) -> OMOPMapping:
-        """Create a pattern-based OMOP mapping."""
+        """
+        Create a pattern-based OMOP mapping.
+
+        Note: Pattern-based matches use negative concept_id values to indicate
+        these are heuristic matches not from the actual OMOP vocabulary.
+        Always validate pattern-based mappings against the actual OMOP vocabulary.
+        """
+        # Generate a deterministic negative ID based on entity name hash
+        # This ensures the same entity always gets the same temporary ID
+        import hashlib
+        hash_val = int(hashlib.md5(f"{vocab_id}:{concept_code}".encode()).hexdigest()[:8], 16)
+        temp_concept_id = -(hash_val % 1000000)  # Negative ID between -1 and -999999
+
         return OMOPMapping(
-            concept_id=0,  # Placeholder ID
+            concept_id=temp_concept_id,  # Negative ID indicates pattern-based match
             concept_name=entity_name,
             domain_id=domain_id,
             vocabulary_id=vocab_id,
             concept_class_id="Clinical Finding",
-            standard_concept="",
+            standard_concept="",  # Pattern matches are not standard concepts
             concept_code=concept_code,
             valid_start_date="1970-01-01",
             valid_end_date="2099-12-31",
-            invalid_reason="",
+            invalid_reason="PATTERN_MATCH",  # Indicates this is a heuristic match
             create_time="",
             mapping_confidence=confidence,
             mapping_method="Pattern_Matching"

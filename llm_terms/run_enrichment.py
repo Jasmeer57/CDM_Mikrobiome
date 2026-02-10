@@ -24,8 +24,14 @@ def main():
     # Configuration
     INPUT_FILE = "output/Common_Data_Model_LLMs.json"
     OUTPUT_FILE = "output/Common_Data_Model_LLMs_Enriched.json"
-    
-    API_KEY = "REDACTED_API_KEY.XUKb58aJoZho9YlH"
+
+    # Load API key from environment variable
+    API_KEY = os.getenv('GLM_API_KEY')
+    if not API_KEY:
+        logger.error("ERROR: GLM_API_KEY environment variable not set!")
+        logger.error("Please set it with: export GLM_API_KEY='your-api-key'")
+        sys.exit(1)
+
     BASE_URL = "https://api.z.ai/api/coding/paas/v4/"
     MODEL = "glm-4.6"
     

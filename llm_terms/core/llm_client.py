@@ -22,9 +22,9 @@ except ImportError:
 class LLMClient:
     """Client for interacting with LLM models."""
 
-    def __init__(self, model: str = "qwen3:8b", base_url: str = "http://localhost:11434", api_key: str = "EMPTY"):
+    def __init__(self, model: str = "qwen3:8b", base_url: str = None, api_key: str = "EMPTY"):
         self.model = model
-        self.base_url = base_url
+        self.base_url = base_url or os.environ.get("LLM_BASE_URL", "http://localhost:11434")
         self.api_key = api_key
         self.config = CDMEntityConfig.MODEL_CONFIGS.get(model, CDMEntityConfig.MODEL_CONFIGS['qwen3:8b'])
         
@@ -45,7 +45,7 @@ class LLMClient:
         """Call LLM with structured prompt and return response."""
         
         # Determine provider based on model name and URL
-        is_ollama = "/api/generate" in self.base_url or "localhost:11434" in self.base_url
+        is_ollama = "/api/generate" in self.base_url or ":11434" in self.base_url or "ollama" in self.base_url
         is_zhipu = "glm" in self.model.lower() or "api.z.ai" in self.base_url
         is_anthropic = "claude" in self.model.lower()
         

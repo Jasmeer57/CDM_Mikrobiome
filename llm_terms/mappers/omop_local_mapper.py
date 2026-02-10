@@ -46,7 +46,14 @@ class OMOPLocalMapper:
             fuzzy_threshold: Minimum fuzzy matching score (default: 95)
             max_matches: Maximum matches per entity (default: 3)
         """
-        self.vocab_dir = vocab_dir or os.environ.get('OMOP_VOCAB_DIR', '/home/jkalra/Documents/CDM/omop_vocab')
+        # Use project-relative path as default instead of user-specific path
+        if vocab_dir:
+            self.vocab_dir = vocab_dir
+        else:
+            # Default to data/omop_vocab relative to project root
+            default_dir = Path(__file__).parent.parent.parent / 'data' / 'omop_vocab'
+            self.vocab_dir = os.environ.get('OMOP_VOCAB_DIR', str(default_dir))
+
         self.fuzzy_threshold = fuzzy_threshold
         self.max_matches = max_matches
 

@@ -18,6 +18,7 @@ from core.entity_filter import EntityFilter
 from core.biomedical_deduplicator import BioMistralDeduplicator
 from core.term_corrector import MiniLMTermCorrector
 from core.relevance_scorer import MicrobiomeRelevanceScorer
+from core.confidence_scorer import ConfidenceScorer
 from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
 from mappers.mapping import ComprehensiveMapper
 from config.cdm_config import CDMEntityConfig, PipelineConfig
@@ -49,6 +50,7 @@ class CDMEntityPipeline:
 
         self.entity_filter = EntityFilter(strict_mode=True)
         self.relevance_scorer = MicrobiomeRelevanceScorer()
+        self.confidence_scorer = ConfidenceScorer(self.entity_config)
         self.term_corrector = MiniLMTermCorrector(semantic_model, 0.9)
 
         # Initialize biomedical and mapping components
@@ -76,8 +78,10 @@ class CDMEntityPipeline:
 
         if enable_comprehensive_mapping:
             from mappers.mapping import ComprehensiveMapper
-            # Get OMOP vocab directory from environment or default
-            omop_vocab_dir = os.environ.get('OMOP_VOCAB_DIR', '/home/jkalra/Documents/CDM/omop_vocab')
+            # Get OMOP vocab directory from environment or use relative path
+            PROJECT_ROOT = Path(__file__).parent.parent
+            default_vocab_dir = PROJECT_ROOT / 'data' / 'omop_vocab'
+            omop_vocab_dir = os.environ.get('OMOP_VOCAB_DIR', str(default_vocab_dir))
 
             self.comprehensive_mapper = ComprehensiveMapper(
                 umls_api_key=umls_api_key,
@@ -255,6 +259,22 @@ class CDMEntityPipeline:
         filtered_entities = self.entity_filter.apply_comprehensive_filtering(unique_entities)
         logger.info(f"✅ Comprehensive filtering: {len(unique_entities)} → {len(filtered_entities)} high-quality entities")
         
+        # Calculate Term Frequencies (Consensus check)
+        term_counts = {}
+        # Count from original raw entities to see extraction consensus
+        for e in entities:
+             k = (e.get('entity', '').lower().strip(), e.get('entity_type', '').upper())
+             term_counts[k] = term_counts.get(k, 0) + 1
+
+        # Update Confidence Scores using Hybrid Scorer
+        logger.info("🔧 Recalculating confidence scores...")
+        for entity in filtered_entities:
+            k = (entity.get('entity', '').lower().strip(), entity.get('entity_type', '').upper())
+            freq = term_counts.get(k, 1)
+            # Recalculate score with full context (mapping, validation, frequency)
+            new_score = self.confidence_scorer.calculate_score(entity, frequency_count=freq)
+            entity['confidence'] = new_score
+
         # Apply microbiome relevance scoring
         logger.info("📊 Calculating microbiome relevance scores...")
         scored_entities = self.relevance_scorer.score_entities(filtered_entities)

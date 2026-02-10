@@ -8,6 +8,7 @@ import re
 from typing import List, Dict, Tuple, Optional
 from config.cdm_config import CDMEntityConfig
 from core.llm_client import LLMClient
+from core.confidence_scorer import ConfidenceScorer
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,7 @@ class CDMEntityExtractor:
     def __init__(self, llm_client: LLMClient):
         self.llm_client = llm_client
         self.entity_config = CDMEntityConfig()
+        self.confidence_scorer = ConfidenceScorer(self.entity_config)
 
     def create_extraction_prompt(self, chunk_text: str) -> str:
         """Create structured prompt for CDM entity extraction."""
@@ -133,7 +135,14 @@ Requirements:
                                     'definition': definition,
                                     'aliases': aliases,
                                     'examples': examples,
-                                    'confidence': 0.8,
+                                    'confidence': self.confidence_scorer.calculate_score({
+                                        'entity': term,
+                                        'entity_type': entity_type,
+                                        'context': context,
+                                        'definition': definition,
+                                        'aliases': aliases,
+                                        'examples': examples
+                                    }),
                                     'source': f'chunk_{chunk_num}'
                                 })
                         
@@ -204,7 +213,14 @@ Requirements:
                             'definition': definition,
                             'aliases': aliases,
                             'examples': examples,
-                            'confidence': 0.8,
+                            'confidence': self.confidence_scorer.calculate_score({
+                                'entity': term,
+                                'entity_type': entity_type,
+                                'context': context,
+                                'definition': definition,
+                                'aliases': aliases,
+                                'examples': examples
+                            }),
                             'source': f'chunk_{chunk_num}'
                         })
 
@@ -442,7 +458,8 @@ TEXT:
             logger.warning(f"⚠️ Pass {pass_num} returned no response")
             return []
             
-        logger.debug(f"🔍 Raw LLM Response (Pass {pass_num}):\n{response[:500]}...") # Log first 500 chars
+        # Limit logging to first 200 chars to avoid sensitive data leakage
+        logger.debug(f"🔍 Raw LLM Response (Pass {pass_num}):\n{response[:200]}...")
         entities = self.parse_llm_response(response, pass_num)
         logger.info(f"✅ Pass {pass_num} found {len(entities)} entities")
         return entities

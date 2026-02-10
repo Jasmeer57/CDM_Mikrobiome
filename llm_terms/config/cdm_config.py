@@ -3,6 +3,7 @@ CDM Pipeline Configuration
 """
 
 from typing import Dict, List
+import os
 from dataclasses import dataclass
 
 @dataclass
@@ -251,7 +252,7 @@ class CDMEntityConfig:
 class PipelineConfig:
     """Main pipeline configuration."""
     default_model: str = "qwen3:8b"
-    default_base_url: str = "http://localhost:11434"
+    default_base_url: str = os.environ.get("LLM_BASE_URL", "http://localhost:11434")
     max_workers: int = 1  # Reduced to prevent rate limiting (sequential processing)
     max_entities: int = 200
     min_confidence: float = 0.6

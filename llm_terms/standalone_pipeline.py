@@ -252,10 +252,10 @@ class CDMEntityConfig:
 
     # Chunking strategies - Optimized for Yield (Balanced context)
     CHUNK_SIZES = {
-        'small': 5000,    # Was 10000
-        'medium': 12500,  # Was 25000
-        'large': 20000,   # Was 40000
-        'xlarge': 30000   # Was 60000
+        'small': 4000,    
+        'medium': 8000,  
+        'large': 12000,   
+        'xlarge': 15000    
     }
 
     OVERLAP_RATIOS = {
@@ -362,8 +362,8 @@ class CDMEntityConfig:
 @dataclass
 class PipelineConfig:
     """Main pipeline configuration."""
-    default_model: str = "gemma3:12b"
-    default_base_url: str = "http://localhost:11434"
+    default_model: str = "qwen3:8b"
+    default_base_url: str = os.environ.get("LLM_BASE_URL", "http://localhost:11434")
     max_workers: int = 5
     max_file_workers: int = 1
     max_entities: int = 500
@@ -6003,8 +6003,8 @@ class CDMEntityPipeline:
                 "files_found_in": entity.get('source_file', ''),
                 "is_core_term": entity.get('frequency', 1) > 1, # Simple heuristic
                 "relevance_classification": "High" if entity.get('microbiome_relevance_score', 0) > 0.7 else "Medium",
-                "source_code": "", # Placeholder
-                
+                # Note: source_code field removed - use files_found_in for source tracking
+
                 # Requested IDs
                 "UMLS_ID": comp_mapping.get('umls_mappings', [{}])[0].get('umls_cui', '') if comp_mapping.get('umls_mappings') else '',
                 "OMOP": get_item(omop_mappings, 0, 'concept_id', ''),
