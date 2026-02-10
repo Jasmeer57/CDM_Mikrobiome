@@ -128,8 +128,14 @@ class CDMEntityConfig:
         'phi3:mini': {
             'max_tokens': 2000,
             'temperature': 0.1,
-            'timeout': 300,
+            'timeout': 1800,
             'num_ctx': 4096
+        },
+        'mistral': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
         },
         'qwen3:8b': {
             'max_tokens': 4000,
@@ -138,10 +144,22 @@ class CDMEntityConfig:
             'num_ctx': 8192
         },
         'qwen3:14b': {
-            'max_tokens': 8000,
-            'temperature': 0.3,
-            'timeout': 1200,
-            'num_ctx': 32768
+            'max_tokens': 2000,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
+        },
+        'Qwen/Qwen2.5-14B-Instruct': {
+            'max_tokens': 2000,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
+        },
+        'Qwen/Qwen3-8B': {
+            'max_tokens': 2000,
+            'temperature': 0.1,
+            'timeout': 300,
+            'num_ctx': 8192
         },
         'gemma3:12b': {
             'max_tokens': 8000,
@@ -191,6 +209,12 @@ class CDMEntityConfig:
             'timeout': 3000,
             'num_ctx': 128000
         },
+        'glm-4.7': {
+            'max_tokens': 4096,
+            'temperature': 0.1,
+            'timeout': 600,
+            'num_ctx': 128000
+        },
         'claude-3-5-sonnet-20240620': {
             'max_tokens': 4096,
             'temperature': 0.1,
@@ -228,6 +252,6 @@ class PipelineConfig:
     """Main pipeline configuration."""
     default_model: str = "qwen3:8b"
     default_base_url: str = "http://localhost:11434"
-    max_workers: int = 3
+    max_workers: int = 1  # Reduced to prevent rate limiting (sequential processing)
     max_entities: int = 200
     min_confidence: float = 0.6

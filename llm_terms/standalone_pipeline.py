@@ -1050,9 +1050,166 @@ class LLMClient:
 class CDMEntityExtractor:
     """Extracts CDM-structured biomedical entities from text."""
 
+    # Microbiome-specific keywords for relevance scoring
+    MICROBIOME_KEYWORDS = {
+        'gut', 'microbiome', 'microbiota', 'bacteria', 'bacterial', 'intestinal',
+        'colon', 'fecal', 'faecal', 'stool', 'dysbiosis', 'probiotic', 'prebiotic',
+        'fermentation', 'scfa', 'short-chain fatty acid', 'mucosa', 'lumen',
+        'commensal', 'pathogen', 'axis', 'metabolite', 'butyrate', 'propionate', 'acetate',
+        'firmicutes', 'bacteroidetes', 'proteobacteria', 'actinobacteria', 'veillonella',
+        'coprococcus', 'ruminococcus', 'faecalibacterium', 'bifidobacterium', 'lactobacillus',
+        'prevotella', 'clostridium', 'enterobacteriaceae', 'streptococcaceae', 'microbial',
+        'antibiotic', 'antimicrobial', 'inflammation', 'immune', 'metabolome', 'metagenomic'
+    }
+
     def __init__(self, llm_client: 'LLMClient'):
         self.llm_client = llm_client
         self.entity_config = CDMEntityConfig()
+
+    def calculate_confidence(self, term: str, entity_type: str, context: str = '',
+                            definition: str = '', examples: list = None,
+                            aliases: list = None) -> float:
+        """
+        Calculate confidence score based on multiple factors.
+
+        Factors:
+        1. Entity type priority (from ENTITY_TYPES)
+        2. Pattern matching (does term match expected patterns?)
+        3. Context quality (length, relevance)
+        4. Supporting evidence (definition, examples, aliases)
+        5. Microbiome relevance (keyword matching)
+        6. Term quality (length, formatting)
+
+        Returns: float between 0.0 and 1.0
+        """
+        if examples is None:
+            examples = []
+        if aliases is None:
+            aliases = []
+
+        confidence = 0.5  # Base confidence
+
+        # ========== 1. Entity Type Priority (0-0.25) ==========
+        type_info = self.entity_config.ENTITY_TYPES.get(entity_type, {})
+        priority = type_info.get('priority', 10)
+
+        # Lower priority = higher confidence (priority 1 is best)
+        if priority <= 2:
+            confidence += 0.25
+        elif priority <= 4:
+            confidence += 0.18
+        elif priority <= 6:
+            confidence += 0.12
+        elif priority <= 8:
+            confidence += 0.06
+        else:
+            confidence += 0.02
+
+        # ========== 2. Pattern Matching (0-0.15) ==========
+        patterns = type_info.get('patterns', [])
+        if patterns:
+            pattern_match = any(re.search(pattern, term, re.IGNORECASE) for pattern in patterns)
+            if pattern_match:
+                confidence += 0.15
+            elif entity_type == 'ORGANISM' and re.search(r'\b[A-Z][a-z]+[a-z]*\s+[a-z]+', term):
+                # Scientific name format bonus
+                confidence += 0.12
+            elif entity_type in ['GENE', 'PROTEIN'] and re.search(r'^[A-Z0-9\-]{2,}$', term):
+                # Gene/Protein abbreviation format
+                confidence += 0.10
+
+        # ========== 3. Context Quality (0-0.15) ==========
+        context_lower = context.lower()
+        term_lower = term.lower()
+
+        # Context length score
+        if len(context) >= 100:
+            confidence += 0.08
+        elif len(context) >= 50:
+            confidence += 0.05
+        elif len(context) >= 20:
+            confidence += 0.02
+
+        # Context contains the term (good indicator)
+        if term_lower in context_lower:
+            confidence += 0.07
+
+        # ========== 4. Supporting Evidence (0-0.15) ==========
+        evidence_score = 0.0
+
+        # Definition quality
+        if definition and len(definition) > 50:
+            evidence_score += 0.06
+        elif definition and len(definition) > 20:
+            evidence_score += 0.04
+        elif definition:
+            evidence_score += 0.02
+
+        # Examples
+        if examples:
+            if isinstance(examples, list) and len(examples) > 0:
+                evidence_score += 0.05
+            elif isinstance(examples, str) and len(examples) > 5:
+                evidence_score += 0.05
+
+        # Aliases
+        if aliases:
+            if isinstance(aliases, list) and len(aliases) > 0:
+                evidence_score += 0.04
+            elif isinstance(aliases, str) and len(aliases) > 2:
+                evidence_score += 0.04
+
+        confidence += min(evidence_score, 0.15)
+
+        # ========== 5. Microbiome Relevance (0-0.15) ==========
+        relevance_text = term_lower + ' ' + context_lower
+        keyword_matches = sum(1 for kw in self.MICROBIOME_KEYWORDS if kw in relevance_text)
+
+        if keyword_matches >= 3:
+            confidence += 0.15
+        elif keyword_matches >= 2:
+            confidence += 0.12
+        elif keyword_matches >= 1:
+            confidence += 0.08
+
+        # Bonus for core entity types in microbiome context
+        if entity_type in ['ORGANISM', 'CHEMICAL', 'GENE', 'PROTEIN']:
+            if any(kw in relevance_text for kw in ['gut', 'microbiome', 'microbiota', 'fecal', 'stool']):
+                confidence += 0.05
+
+        # ========== 6. Term Quality (penalties) ==========
+        term_len = len(term)
+
+        # Very short terms
+        if term_len < 3:
+            confidence *= 0.6
+        elif term_len < 5:
+            confidence *= 0.8
+
+        # Single word terms (slightly lower confidence)
+        if ' ' not in term and not re.match(r'^[A-Z]{2,}[0-9\-]*$', term):
+            confidence *= 0.92
+
+        # Terms with only numbers/symbols
+        if re.match(r'^[\d\W]+$', term):
+            confidence *= 0.3
+
+        # Terms with excessive special characters
+        special_char_ratio = sum(1 for c in term if not c.isalnum() and c != ' ') / max(len(term), 1)
+        if special_char_ratio > 0.3:
+            confidence *= 0.7
+        elif special_char_ratio > 0.2:
+            confidence *= 0.85
+
+        # ========== 7. Certainty Boosters ==========
+        # Well-formatted scientific names
+        if re.match(r'^[A-Z][a-z]+ [a-z]+$', term):  # Genus species
+            confidence = min(confidence * 1.08, 1.0)
+        elif re.match(r'^[A-Z]{2,}[0-9\-]*$', term):  # Gene/Protein code
+            confidence = min(confidence * 1.05, 1.0)
+
+        # Final clamp
+        return round(min(max(confidence, 0.1), 1.0), 3)
 
     def create_extraction_prompt(self, chunk_text: str) -> str:
         """Create structured prompt for CDM entity extraction."""
@@ -1120,7 +1277,7 @@ class CDMEntityExtractor:
                                     'definition': definition,
                                     'aliases': aliases,
                                     'examples': examples,
-                                    'confidence': 0.8,
+                                    'confidence': self.calculate_confidence(term, entity_type, context, definition, examples, aliases),
                                     'source_pass': 0
                                 })
                         
@@ -1192,7 +1349,7 @@ class CDMEntityExtractor:
                             'definition': definition,
                             'aliases': aliases,
                             'examples': examples,
-                            'confidence': 0.8, # Default confidence for explicit extraction
+                            'confidence': self.calculate_confidence(term, entity_type, context, definition, examples, aliases),
                             'source_pass': 0
                         })
 
@@ -1405,7 +1562,10 @@ TEXT TO ANALYZE:
 {chunk_text}
 
 OUTPUT FORMAT (STRICT):
-- [Extracted Term] (TYPE): [Context found in text] | Definition: [Brief definition] | Aliases: [Alias1, Alias2] | Examples: [Ex1, Ex2]
+For each extracted term, output in this format:
+- TermName (TYPE): Context sentence | Definition: definition | Aliases: alias1, alias2 | Examples: example1, example2
+
+IMPORTANT: Replace TermName with the actual extracted term, not "[Extracted Term]".
 
 Start output immediately:
 """
@@ -5968,21 +6128,21 @@ class CDMEntityPipeline:
             logger.error(f"Pipeline execution failed: {e}")
             return False
 
-    def consolidate_results(self, processed_dir: str, output_file: str):
+    def consolidate_results(self, processed_dir: str, output_file: str, skip_dedup: bool = False):
         """Consolidate processed JSON files into a single output."""
         processed_path = Path(processed_dir)
         output_path = Path(output_file)
-        
+
         logger.info(f"📂 Reading processed files from {processed_path}")
-        
+
         all_entities = []
         files_processed = 0
-        
+
         for file_path in processed_path.glob("*.json"):
             try:
                 with open(file_path, 'r') as f:
                     data = json.load(f)
-                    
+
                 if isinstance(data, list):
                     entities = data
                 elif isinstance(data, dict) and 'entities' in data:
@@ -5994,22 +6154,26 @@ class CDMEntityPipeline:
                 else:
                     logger.warning(f"⚠️ Unknown format in {file_path.name}")
                     continue
-                    
+
                 for entity in entities:
                     if 'source_file' not in entity:
                         entity['source_file'] = file_path.stem + ".txt"
-                        
+
                 all_entities.extend(entities)
                 files_processed += 1
-                
+
             except Exception as e:
                 logger.error(f"❌ Failed to read {file_path.name}: {e}")
 
         logger.info(f"✅ Loaded {len(all_entities)} entities from {files_processed} files")
 
-        # Deduplicate
-        logger.info("🔄 Running semantic deduplication...")
-        deduplicated_entities = self.semantic_deduplicator.apply_semantic_deduplication(all_entities)
+        # Deduplicate (unless skipped)
+        if skip_dedup:
+            logger.info("⏭️  Skipping semantic deduplication (--skip-dedup enabled)")
+            deduplicated_entities = all_entities
+        else:
+            logger.info("🔄 Running semantic deduplication...")
+            deduplicated_entities = self.semantic_deduplicator.apply_semantic_deduplication(all_entities)
 
         # Save (no advanced analytics for consolidated results)
         logger.info(f"💾 Saving consolidated results to {output_path}")
@@ -6623,9 +6787,12 @@ def main():
     parser.add_argument('--metadata-dir', help='Base directory containing projects.csv and sample_metadata.tsv')
     parser.add_argument('--enable-advanced-analytics', action='store_true', default=True, help='Enable advanced analytics extraction (relationships, temporal, quantitative, etc.)')
     parser.add_argument('--include-speculative', action='store_true', help='Include speculative/negated relationships (exploratory mode). Default is strict mode (asserted only).')
+    parser.add_argument('--skip-dedup', action='store_true', help='Skip semantic deduplication to keep all entities (including duplicates)')
+    parser.add_argument('--semantic-threshold', type=float, default=0.95, help='Semantic similarity threshold for deduplication (default: 0.95, higher = fewer duplicates removed)')
+    parser.add_argument('--min-confidence', type=float, default=0.1, help='Minimum confidence threshold for entity extraction (default: 0.1, lower = more terms extracted)')
 
 
-    
+
     parser.add_argument('--verbose', '-v', action='store_true', help='Enable verbose logging (DEBUG level)')
     
     args = ConfigManager.setup_parser_with_config(parser)
@@ -6661,7 +6828,8 @@ def main():
         default_model=args.model,
         default_base_url=args.base_url,
         max_workers=args.max_workers,
-        max_file_workers=args.max_file_workers
+        max_file_workers=args.max_file_workers,
+        min_confidence=args.min_confidence
     )
 
     # Handle Special Modes
@@ -6679,7 +6847,7 @@ def main():
         )
         
         if args.consolidate:
-            pipeline.consolidate_results(args.input, args.output)
+            pipeline.consolidate_results(args.input, args.output, skip_dedup=args.skip_dedup)
             return 0
             
         if args.map:
