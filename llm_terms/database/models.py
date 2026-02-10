@@ -287,14 +287,19 @@ class CDMDatabase:
 
     def cleanup_old_entities(self, days: int = 30) -> int:
         """Remove entities older than specified days."""
+        # Calculate the cutoff date in Python to avoid SQL injection
+        from datetime import timedelta
+        cutoff_date = datetime.now() - timedelta(days=days)
+        cutoff_str = cutoff_date.strftime('%Y-%m-%d %H:%M:%S')
+
         with self._get_connection() as conn:
             cursor = conn.execute("""
                 DELETE FROM entities
-                WHERE timestamp < datetime('now', '-{} days')
-            """.format(days))
+                WHERE timestamp < ?
+            """, (cutoff_str,))
             deleted_count = cursor.rowcount
             conn.commit()
-            logger.info(f"Cleaned up {deleted_count} old entities")
+            logger.info(f"Cleaned up {deleted_count} old entities (older than {days} days)")
             return deleted_count
 
 # Database instance for global use
