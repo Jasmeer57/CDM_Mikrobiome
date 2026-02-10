@@ -181,7 +181,7 @@ if __name__ == "__main__":
     test_data = {
         'user_email': 'test@example.com',
         'password': 'secret123',
-        'api_key': 'REDACTED_API_KEY',
+        'api_key': 'xxxxxxxx_redacted_api_key_xxxxxxxx',
         'message': 'User test@example.com called from 555-123-4567',
         'normal_data': 'This is fine to log'
     }

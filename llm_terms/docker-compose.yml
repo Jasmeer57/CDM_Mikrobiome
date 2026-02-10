@@ -164,7 +164,7 @@ services:
       - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
       - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-REDACTED_PASSWORD}  # Use env var
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}  # Must be set in .env
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_INSTALL_PLUGINS=
     restart: unless-stopped
@@ -185,7 +185,7 @@ services:
     environment:
       - POSTGRES_DB=llm_terms
       - POSTGRES_USER=${POSTGRES_USER:-cdm_user}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-REDACTED_PASSWORD}  # Use env vars
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}  # Must be set in .env
       - PGDATA=/var/lib/postgresql/data/pgdata
     restart: unless-stopped
     networks:
