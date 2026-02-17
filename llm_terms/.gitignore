@@ -119,8 +119,19 @@ test_*.sh
 !.gitignore
 !README.md
 !requirements.txt
+!pipeline_summary.txt
 
 old.py
 
 *.md
 
+
+# Database files (exceeds 100MB limit)
+*.db
+*.db-shm
+*.db-wal
+microbiome_cdm.db
+
+# Pipeline summaries
+pipeline_summary.txt
+outputs/*/pipeline_summary.txt
