@@ -59,8 +59,8 @@ def parse_args():
     parser.add_argument(
         '--output',
         type=str,
-        default='knowledge_graph/cdm_kg_refined.json',
-        help='Path to save refined KG (default: knowledge_graph/cdm_kg_refined.json)'
+        default='outputs/knowledge_graph/cdm_kg_refined.json',
+        help='Path to save refined KG (default: outputs/knowledge_graph/cdm_kg_refined.json)'
     )
 
     parser.add_argument(

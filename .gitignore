@@ -33,11 +33,15 @@ env/
 .env.production.local
 .idea/  # IDE files
 .vscode/ # VS Code files
-
+outputs
+knowledge_graph
+/home/jkalra/Microbiome-CDM/llm_terms/knowledge_graph/cdm_kg_refined.json
+slurm/
 # Machine Learning / Caches
 model_cache/
 *.model_cache # Specific to the path that caused the error
-
+stage1_*/
+relationships
 # Log files - comprehensive patterns
 *.log
 *.log.*
@@ -212,3 +216,9 @@ spacy_terms/inspect_excel_v2.py
 spacy_terms/venv_scispacy/pyvenv.cfg
 llm_terms/run_glm47_pipeline.slurm
 llm_terms/run_full_pipeline.slurm
+llm_terms/run_all_files.slurm
+llm_terms/run_extract_terms_only.slurm
+llm_terms/run_single_test.slurm
+llm_terms/run_papers_all_mappings.slurm
+llm_terms/submit_cdm_all_papers.sh
+llm_terms/knowledge_graph/cdm_kg_refined.json

@@ -61,7 +61,13 @@ class LLMClient:
     def _call_ollama(self, prompt: str, max_tokens: Optional[int] = None, **kwargs) -> str:
         """Call Ollama API."""
         try:
-            endpoint = f"{self.base_url}/api/generate"
+            # Fix double /api path issue
+            base_url = self.base_url.rstrip('/')
+            if base_url.endswith('/api'):
+                endpoint = f"{base_url}/generate"
+            else:
+                endpoint = f"{base_url}/api/generate"
+
             request_config = {
                 "model": self.model,
                 "prompt": prompt,
@@ -72,7 +78,7 @@ class LLMClient:
                     "num_predict": max_tokens or self.config['max_tokens']
                 }
             }
-            
+
             response = requests.post(
                 endpoint,
                 json=request_config,
@@ -88,7 +94,7 @@ class LLMClient:
             else:
                 logger.error(f"Ollama API error: {response.status_code} - {response.text}")
                 return ""
-                
+
         except Exception as e:
             logger.error(f"Ollama call failed: {e}")
             return ""
@@ -211,6 +217,24 @@ class LLMClient:
         except Exception as e:
             logger.error(f"Anthropic call failed: {e}")
             return ""
+
+    def is_available(self) -> bool:
+        """Check if LLM service is available."""
+        try:
+            if "localhost" in self.base_url or "127.0.0.1" in self.base_url:
+                # Fix: Use correct endpoint path
+                base_url = self.base_url.rstrip('/')
+                if base_url.endswith('/api'):
+                    tags_url = f"{base_url}/tags"
+                else:
+                    tags_url = f"{base_url}/api/tags"
+                response = requests.get(tags_url, timeout=5)
+                return response.status_code == 200
+            else:
+                # For remote endpoints, just try a simple call
+                return len(self.get_available_models()) > 0
+        except:
+            return False
 
     def get_available_models(self) -> List[str]:
         """Get list of available models."""

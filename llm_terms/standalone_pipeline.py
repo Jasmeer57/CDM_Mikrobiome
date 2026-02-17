@@ -1360,42 +1360,58 @@ class CDMEntityExtractor:
         return entities
 
     def _find_sentence_context(self, term: str, text: str) -> str:
-        """Find the full sentence containing the term in the text."""
+        """Find the full paragraph (multiple sentences) containing the term in the text."""
         if not term or not text:
             return ""
-            
+
         # Normalize for search
         term_lower = term.lower()
         text_lower = text.lower()
-        
+
         try:
             start_idx = text_lower.find(term_lower)
             if start_idx == -1:
                 return ""
-                
-            # Find sentence boundaries
-            # Look backward for sentence start
-            sent_start = max(
-                text.rfind('.', 0, start_idx),
-                text.rfind('!', 0, start_idx),
-                text.rfind('?', 0, start_idx),
-                text.rfind('\n', 0, start_idx)
-            )
-            sent_start = sent_start + 1 if sent_start != -1 else 0
-            
-            # Look forward for sentence end
-            sent_end = min(
-                text.find('.', start_idx),
-                text.find('!', start_idx),
-                text.find('?', start_idx),
-                text.find('\n', start_idx)
-            )
-            if sent_end == -1: # Not found, take rest of text
+
+            # Find paragraph boundaries (capture 3 sentences before and after for context)
+            # Look backward for paragraph start (3 sentences back or newline)
+            sent_start = start_idx
+            for _ in range(3):  # Go back up to 3 sentences
+                prev_period = text.rfind('.', 0, sent_start)
+                prev_excl = text.rfind('!', 0, sent_start)
+                prev_quest = text.rfind('?', 0, sent_start)
+                prev_newline = text.rfind('\n\n', 0, sent_start)  # Double newline = paragraph break
+
+                # Find the furthest back we can go
+                prev_boundaries = [b for b in [prev_period, prev_excl, prev_quest, prev_newline] if b > 0]
+                if not prev_boundaries:
+                    break
+                sent_start = min(prev_boundaries)
+
+            sent_start = sent_start + 1 if sent_start > 0 else 0
+
+            # Look forward for paragraph end (3 sentences forward or newline)
+            sent_end = start_idx
+            for _ in range(3):  # Go forward up to 3 sentences
+                next_period = text.find('.', sent_end + 1)
+                next_excl = text.find('!', sent_end + 1)
+                next_quest = text.find('?', sent_end + 1)
+                next_newline = text.find('\n\n', sent_end)  # Double newline = paragraph break
+
+                # Find the nearest boundary
+                next_boundaries = [b for b in [next_period, next_excl, next_quest, next_newline] if b > sent_end]
+                if not next_boundaries:
+                    break
+                sent_end = min(next_boundaries)
+
+            if sent_end == -1 or sent_end <= start_idx:  # Not found, take rest of text
                 sent_end = len(text)
             else:
-                sent_end += 1 # Include the punctuation
-                
-            return text[sent_start:sent_end].strip()
+                sent_end += 1  # Include the punctuation
+
+            # Limit to 2000 characters to avoid huge contexts
+            context = text[sent_start:sent_end].strip()
+            return context[:2000] if len(context) > 2000 else context
         except Exception:
             return ""
 
@@ -2095,7 +2111,7 @@ class OMOPMapper:
 class OMOPLocalMapper:
     """Maps CDM entities to OMOP standard concepts using local vocabulary."""
 
-    def __init__(self, vocab_dir: str = None, fuzzy_threshold: int = 95, max_matches: int = 3):
+    def __init__(self, vocab_dir: str = None, fuzzy_threshold: int = 70, max_matches: int = 3):
         self.vocab_dir = vocab_dir or os.environ.get('OMOP_VOCAB_DIR', 'omop_vocab')
         self.fuzzy_threshold = fuzzy_threshold
         self.max_matches = max_matches
@@ -2138,6 +2154,27 @@ class OMOPLocalMapper:
             "CLINICAL": {
                 "domain_id": "Observation",
                 "concept_classes": ["Clinical Finding", "Observation", "Sign", "Clinical Observation"]
+            },
+            # Handle variations
+            "CLINICAL OUTCOME": {
+                "domain_id": "Observation",
+                "concept_classes": ["Clinical Finding", "Observation"]
+            },
+            "CLINICAL PARAMETER": {
+                "domain_id": "Measurement",
+                "concept_classes": ["Clinical Observation", "Measurement"]
+            },
+            "DATA_ANALYSIS": {
+                "domain_id": "Procedure",
+                "concept_classes": ["Procedure", "Laboratory Procedure", "Device", "Research Study"]
+            },
+            "SCIENTIFIC_TERM": {
+                "domain_id": "Observation",
+                "concept_classes": ["Clinical Finding", "Observation"]
+            },
+            "GENOMICS": {
+                "domain_id": "Procedure",
+                "concept_classes": ["Procedure", "Laboratory Procedure", "Genomic Procedure"]
             }
         }
 
@@ -2291,13 +2328,31 @@ class OMOPLocalMapper:
 
         return [(row['concept_id'], term_clean, 100.0) for _, row in matches.iterrows()]
 
+    def _get_entity_config(self, entity_type: str) -> Dict:
+        """Get entity type configuration with fallback to partial matches."""
+        # Try exact match first
+        config = self.entity_type_mappings.get(entity_type, {})
+        if config:
+            return config
+
+        # Try partial match (for types like "CLINICAL OUTCOME" -> "CLINICAL")
+        for key, value in self.entity_type_mappings.items():
+            if key in entity_type.upper() or entity_type.upper() in key:
+                return value
+
+        # Default to Observation for unknown types
+        return {
+            "domain_id": "Observation",
+            "concept_classes": ["Observation", "Clinical Finding"]
+        }
+
     def map_entity_to_omop(self, entity_name: str, entity_type: str) -> List[OMOPMapping]:
         """Map a single entity to OMOP concepts."""
         mappings = []
 
         try:
-            # Get entity type configuration
-            entity_config = self.entity_type_mappings.get(entity_type, {})
+            # Get entity type configuration (with fuzzy matching)
+            entity_config = self._get_entity_config(entity_type)
 
             # Try exact matching first
             exact_matches = self._get_exact_matches(entity_name)
@@ -2319,7 +2374,7 @@ class OMOPLocalMapper:
                 concept_row = concept_info.iloc[0]
 
                 # Check if matches entity type domain
-                target_domain = entity_config.get('domain_id')
+                target_domain = entity_config.get("domain_id")
                 if target_domain and concept_row['domain_id'] != target_domain:
                     # Still include but with lower confidence
                     confidence_adjustment = 0.8
@@ -2453,7 +2508,7 @@ class UMLSMapping:
 class UMLSMapper:
     """Maps entities to UMLS concepts."""
 
-    def __init__(self, api_key: str = None, cache_size: int = 1000, use_scispacy: bool = False):
+    def __init__(self, api_key: str = None, cache_size: int = 5000, use_scispacy: bool = False, request_delay: float = 0.1):
         self.api_key = api_key
         self.cache = {}
         self.cache_size = cache_size
@@ -2461,7 +2516,10 @@ class UMLSMapper:
         self.nlp = None
         self.linker = None
         self.semantic_type_mappings = self._initialize_semantic_mappings()
-        
+        self.request_delay = request_delay  # Delay between API calls to avoid rate limiting (reduced for speed)
+        self._last_request_time = 0
+        self.session = requests.Session()  # Use session for connection pooling
+
         if self.use_scispacy:
             self._initialize_scispacy()
 
@@ -2513,6 +2571,15 @@ class UMLSMapper:
             "GENOMICS": ["inpr", "diap"],  # Intellectual Product, Diagnostic Procedure
             "CLINICAL": ["fndg", "clna", "lbpr"]  # Finding, Clinical Attribute, Laboratory Procedure
         }
+
+    def _rate_limit_delay(self):
+        """Apply rate limiting delay between API calls."""
+        import time
+        if self._last_request_time > 0:
+            elapsed = time.time() - self._last_request_time
+            if elapsed < self.request_delay:
+                time.sleep(self.request_delay - elapsed)
+        self._last_request_time = time.time()
 
     def map_entity_to_umls(self, entity_name: str, entity_type: str) -> List[UMLSMapping]:
         """Map a single entity to UMLS concepts."""
@@ -2623,13 +2690,15 @@ class UMLSMapper:
         concepts = []
 
         try:
+            # Rate limiting delay
+            self._rate_limit_delay()
+
             # UMLS REST API search
             search_url = "https://uts-ws.nlm.nih.gov/rest/search/current"
             params = {
                 "string": entity_name,
                 "apiKey": self.api_key,
-                "pageSize": 20,
-                "returnType": "object"
+                "pageSize": 20
             }
 
             response = requests.get(search_url, params=params, timeout=10)
@@ -2650,6 +2719,9 @@ class UMLSMapper:
     def _get_umls_concept_details(self, cui: str) -> Optional[UMLSConcept]:
         """Get detailed UMLS concept information."""
         try:
+            # Rate limiting delay before each sub-request
+            self._rate_limit_delay()
+
             # Get concept details
             concept_url = f"https://uts-ws.nlm.nih.gov/rest/content/current/CUI/{cui}"
             params = {"apiKey": self.api_key}
@@ -2659,7 +2731,8 @@ class UMLSMapper:
             if response.status_code == 200:
                 concept_data = response.json().get('result', {})
 
-                # Get semantic types
+                # Get semantic types (with delay)
+                self._rate_limit_delay()
                 semantic_types_url = f"https://uts-ws.nlm.nih.gov/rest/content/current/CUI/{cui}/semanticTypes"
                 semantic_response = requests.get(semantic_types_url, params=params, timeout=5)
 
@@ -2668,7 +2741,8 @@ class UMLSMapper:
                     for sem_type in semantic_response.json().get('result', []):
                         semantic_types.append(sem_type.get('name', ''))
 
-                # Get definitions
+                # Get definitions (with delay)
+                self._rate_limit_delay()
                 definitions_url = f"https://uts-ws.nlm.nih.gov/rest/content/current/CUI/{cui}/definitions"
                 definitions_response = requests.get(definitions_url, params=params, timeout=5)
 
@@ -2677,7 +2751,8 @@ class UMLSMapper:
                     for def_data in definitions_response.json().get('result', []):
                         definitions.append(def_data.get('value', ''))
 
-                # Get synonyms
+                # Get synonyms (with delay)
+                self._rate_limit_delay()
                 synonyms_url = f"https://uts-ws.nlm.nih.gov/rest/content/current/CUI/{cui}/atoms"
                 synonyms_response = requests.get(synonyms_url, params=params, timeout=5)
 
@@ -2831,17 +2906,18 @@ class BioPortalMapping:
 class BioPortalMapper:
     """Maps entities to BioPortal ontologies."""
 
-    def __init__(self, api_key: str = None, cache_size: int = 1000):
+    def __init__(self, api_key: str = None, cache_size: int = 2000):
         self.api_key = api_key
         self.cache = {}
         self.cache_size = cache_size
         self.base_url = "http://data.bioontology.org/search"
+        self.session = requests.Session()  # Use session for connection pooling
 
     def map_entity(self, entity_name: str, entity_type: str) -> List[BioPortalMapping]:
         """Map entity using BioPortal API."""
         if not self.api_key:
             return []
-            
+
         cache_key = f"{entity_name.lower()}_{entity_type}"
         if cache_key in self.cache:
             return self.cache[cache_key]
@@ -2854,8 +2930,8 @@ class BioPortalMapper:
                 "pagesize": 5,
                 "include": "prefLabel,cui,semanticType"
             }
-            
-            response = requests.get(self.base_url, params=params, timeout=10)
+
+            response = self.session.get(self.base_url, params=params, timeout=10)
             if response.status_code == 200:
                 results = response.json().get('collection', [])
                 # print(f"DEBUG: BioPortal found {len(results)} results for {entity_name}")
@@ -2872,15 +2948,15 @@ class BioPortalMapper:
                         ))
             else:
                  logger.warning(f"BioPortal API error: {response.status_code} - {response.text[:100]}")
-            
+
             mappings.sort(key=lambda x: x.mapping_confidence, reverse=True)
-            
+
         except Exception as e:
             logger.debug(f"BioPortal mapping failed for {entity_name}: {e}")
 
         if len(self.cache) < self.cache_size:
             self.cache[cache_key] = mappings
-            
+
         return mappings
 
     def _calculate_confidence(self, entity_name: str, result: Dict) -> float:
@@ -2910,6 +2986,7 @@ class OLSMapper:
         self.cache = {}
         self.cache_size = cache_size
         self.base_url = "https://www.ebi.ac.uk/ols/api/search"
+        self.session = requests.Session()  # Use session for connection pooling
 
     def map_entity(self, entity_name: str, entity_type: str) -> List[OLSMapping]:
         """Map entity using OLS API."""
@@ -2924,8 +3001,8 @@ class OLSMapper:
                 "rows": 5,
                 "exact": "false"
             }
-            
-            response = requests.get(self.base_url, params=params, timeout=10)
+
+            response = self.session.get(self.base_url, params=params, timeout=10)
             if response.status_code == 200:
                 results = response.json().get('response', {}).get('docs', [])
                 for result in results:
@@ -2940,16 +3017,42 @@ class OLSMapper:
                             mapping_confidence=confidence,
                             mapping_method="OLS_API"
                         ))
-            
+
             mappings.sort(key=lambda x: x.mapping_confidence, reverse=True)
-            
+
         except Exception as e:
             logger.debug(f"OLS mapping failed for {entity_name}: {e}")
 
         if len(self.cache) < self.cache_size:
             self.cache[cache_key] = mappings
-            
+
         return mappings
+
+    def map_entities_batch(self, entities: List[Tuple[str, str]], max_workers: int = 10) -> Dict[str, List[OLSMapping]]:
+        """Map multiple entities in parallel for faster processing."""
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
+        results = {}
+
+        def map_single(entity_name, entity_type):
+            try:
+                return (entity_name, self.map_entity(entity_name, entity_type))
+            except Exception as e:
+                logger.debug(f"Error mapping {entity_name}: {e}")
+                return (entity_name, [])
+
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(map_single, name, etype): (name, etype)
+                      for name, etype in entities}
+
+            for future in as_completed(futures):
+                try:
+                    entity_name, mappings = future.result()
+                    results[entity_name] = mappings
+                except Exception as e:
+                    logger.error(f"Batch mapping error: {e}")
+
+        return results
 
     def _calculate_confidence(self, entity_name: str, result: Dict) -> float:
         confidence = 0.5
@@ -2965,7 +3068,7 @@ class ComprehensiveMapper:
 
     def __init__(self, umls_api_key: str = None, bioportal_api_key: str = None, athena_api_url: str = None,
                  cache_mappings: bool = True, use_local_omop: bool = True,
-                 omop_vocab_dir: str = None, fuzzy_threshold: int = 95, max_matches: int = 3,
+                 omop_vocab_dir: str = None, fuzzy_threshold: int = 70, max_matches: int = 3,
                  use_scispacy: bool = False):
 
         # Use local OMOP mapper by default, fallback to API mapper
@@ -3034,16 +3137,16 @@ class ComprehensiveMapper:
             'best_confidence': max(umls_confidences + omop_confidences + bioportal_confidences + ols_confidences, default=0.0)
         }
 
-    def map_entity_list_comprehensive(self, entities: List[Dict]) -> List[Dict]:
-        """Map a list of entities comprehensively."""
+    def map_entity_list_comprehensive(self, entities: List[Dict], max_workers: int = 16) -> List[Dict]:
+        """Map a list of entities comprehensively with parallel processing."""
         mapped_entities = []
 
-        for entity in entities:
+        def process_single_entity(entity):
             entity_name = entity.get('entity', '')
             entity_type = entity.get('entity_type', '')
 
             if not entity_name or not entity_type:
-                continue
+                return None
 
             # Get comprehensive mapping
             comprehensive_mapping = self.map_entity_comprehensive(entity_name, entity_type)
@@ -3054,9 +3157,21 @@ class ComprehensiveMapper:
                 'comprehensive_mapping': comprehensive_mapping
             }
 
-            mapped_entities.append(enhanced_entity)
+            return enhanced_entity
 
-        logger.info(f"🌐 Comprehensive mapping: {len(entities)} entities processed")
+        # Use ThreadPoolExecutor for parallel API calls
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(process_single_entity, entity): entity for entity in entities}
+
+            for future in tqdm(as_completed(futures), total=len(futures), desc="Mapping entities", unit="entity"):
+                try:
+                    result = future.result()
+                    if result:
+                        mapped_entities.append(result)
+                except Exception as e:
+                    logger.error(f"Error processing entity: {e}")
+
+        logger.info(f"🌐 Comprehensive mapping: {len(entities)} entities processed with {max_workers} workers")
         return mapped_entities
 
     def generate_comprehensive_summary(self, entities: List[Dict]) -> Dict:
@@ -5883,7 +5998,7 @@ class CDMEntityPipeline:
         # Apply comprehensive mapping if enabled
         if self.enable_comprehensive_mapping:
             logger.info("🔄 Applying comprehensive biomedical mapping...")
-            cleaned_entities = self.comprehensive_mapper.map_entity_list_comprehensive(cleaned_entities)
+            cleaned_entities = self.comprehensive_mapper.map_entity_list_comprehensive(cleaned_entities, max_workers=self.config.max_workers)
             logger.info(f"✅ Comprehensive mapping: {len(cleaned_entities)} entities processed")
 
         # Apply semantic deduplication if requested
@@ -6198,14 +6313,14 @@ class CDMEntityPipeline:
             logger.error("❌ Unknown file format")
             return
 
-        logger.info(f"🚀 Starting mapping for {len(entities)} entities...")
-        
+        logger.info(f"🚀 Starting mapping for {len(entities)} entities with {self.config.max_workers} workers...")
+
         updated_entities = []
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=self.config.max_workers) as executor:
             futures = []
             for entity in entities:
                 futures.append(executor.submit(self._process_mapping_entity, entity, is_flat))
-                
+
             for future in tqdm(as_completed(futures), total=len(entities)):
                 updated_entities.append(future.result())
         
@@ -6228,10 +6343,11 @@ class CDMEntityPipeline:
         if not term:
             return entity
             
-        # Check if mapping is missing
+        # Check if mapping is missing (check all 4 mapping fields)
         needs_mapping = False
         if is_flat:
-            if not entity.get('Bioportal') or not entity.get('OLS'):
+            # Need mapping if any of the key mappings are missing
+            if not entity.get('Bioportal') or not entity.get('OLS') or not entity.get('UMLS_ID') or not entity.get('OMOP'):
                 needs_mapping = True
         else:
             if 'comprehensive_mapping' not in entity:
@@ -6243,20 +6359,38 @@ class CDMEntityPipeline:
                 mapping_result = self.comprehensive_mapper.map_entity_comprehensive(term, entity_type)
                 
                 if is_flat:
+                    # Update Bioportal
                     bioportal_list = mapping_result.get('bioportal_mappings', [])
                     bioportal = bioportal_list[0].get('concept_id', '') if bioportal_list else ''
-                    
+                    if bioportal: entity['Bioportal'] = bioportal
+
+                    # Update OLS
                     ols_list = mapping_result.get('ols_mappings', [])
                     ols = ols_list[0].get('iri', '') if ols_list else ''
-                    
-                    if bioportal: entity['Bioportal'] = bioportal
                     if ols: entity['OLS'] = ols
-                    
-                    # Also update UMLS/OMOP if missing
+
+                    # Update UMLS_ID if missing
                     umls_list = mapping_result.get('umls_mappings', [])
                     umls = umls_list[0].get('umls_cui', '') if umls_list else ''
                     if umls and not entity.get('UMLS_ID'): entity['UMLS_ID'] = umls
-                    
+
+                    # Update OMOP if missing
+                    omop_list = mapping_result.get('omop_mappings', [])
+                    omop = omop_list[0].get('concept_id', '') if omop_list else ''
+                    if omop and not entity.get('OMOP'): entity['OMOP'] = omop
+                    elif omop_list and not entity.get('OMOP') or not entity.get('OMOP') or entity.get('OMOP') == '':
+                        # If no concept_id, try domain_id or construct mapping string
+                        if omop_list:
+                            concept_id = omop_list[0].get('concept_id', '')
+                            if concept_id:
+                                entity['OMOP'] = concept_id
+                            else:
+                                # Use vocabulary-specific identifier if available
+                                concept_code = omop_list[0].get('concept_code', '')
+                                vocab_id = omop_list[0].get('vocabulary_id', '')
+                                if concept_code and vocab_id:
+                                    entity['OMOP'] = f"{vocab_id}:{concept_code}"
+
                 else:
                     entity['comprehensive_mapping'] = mapping_result
                     
@@ -6371,6 +6505,88 @@ Provide one line per term. Start immediately.
         except Exception as e:
             logger.error(f"Enrichment batch failed: {e}")
 
+
+    def _extract_llm_relationships(self, term: str, entity: Dict, all_entities: List[Dict]) -> List[Dict]:
+        """Extract relationships for an entity using LLM."""
+        entity_type = entity.get('categories', entity.get('entity_type', ''))
+        context = entity.get('contextual_definition', entity.get('definition', ''))[:500]
+
+        # Get top related entities (same type or related types)
+        related_entities = []
+        for e in all_entities[:100]:  # Limit to first 100 for efficiency
+            other_term = e.get('term', '')
+            other_type = e.get('categories', e.get('entity_type', ''))
+            if other_term and other_term.lower() != term.lower():
+                related_entities.append(f"{other_term} ({other_type})")
+
+        if not related_entities:
+            return []
+
+        entities_str = "\n".join(related_entities[:20])  # Limit to 20
+
+        prompt = f"""You are a biomedical expert. Extract relationships between the primary entity and other entities.
+
+PRIMARY ENTITY:
+- {term} ({entity_type})
+
+RELATED ENTITIES:
+{entities_str}
+
+CONTEXT: {context}
+
+Extract 5-10 relationships in format:
+Subject | Relation | Object | Evidence
+Relations to extract: CAUSES, PREVENTS, TREATS, PRODUCES, REGULATES, ACTIVATES, ASSOCIATED_WITH, BINDS, METABOLIZES
+
+Only extract relationships that are directly supported by the text or well-established biomedical knowledge."""
+
+        try:
+            response = self.llm_client.call_llm(prompt, max_tokens=1000)
+            relationships = []
+            for line in response.split('\n'):
+                if '|' in line and not line.strip().lower().startswith(('-')):
+                    parts = [p.strip() for p in line.split('|')]
+                    if len(parts) >= 3:
+                        relationships.append({
+                            'subject': parts[0],
+                            'relation': parts[1].upper(),
+                            'object': parts[2],
+                            'evidence': parts[3] if len(parts) > 3 else ''
+                        })
+            return relationships[:10]  # Max 10 relationships
+        except Exception as e:
+            logger.debug(f"LLM relationship extraction failed for {term}: {e}")
+            return []
+
+    def _extract_microbiome_connection(self, term: str, entity: Dict) -> str:
+        """Extract microbiome domain connection using LLM."""
+        entity_type = entity.get('categories', entity.get('entity_type', ''))
+        definition = entity.get('definition', '')
+        context = entity.get('contextual_definition', '')[:800]
+
+        prompt = f"""You are a microbiome domain expert. Explain how this entity connects to the microbiome field.
+
+ENTITY: {term} ({entity_type})
+DEFINITION: {definition}
+CONTEXT: {context}
+
+Provide a concise 1-2 sentence explanation of how this entity relates to microbiome research.
+Focus on: gut microbiota, bacterial communities, metabolites (SCFAs), immune interactions, or dysbiosis.
+If not directly related, state "Not directly related to microbiome" and explain briefly."""
+
+        try:
+            response = self.llm_client.call_llm(prompt, max_tokens=300)
+            # Clean response
+            response = response.strip()
+            if response.lower().startswith(('here', 'the entity', 'this entity', '-')):
+                # Remove prefix
+                lines = response.split('\n')
+                response = '\n'.join(lines[1:]) if len(lines) > 1 else lines[0]
+            return response[:500]  # Limit length
+        except Exception as e:
+            logger.debug(f"Microbiome connection extraction failed for {term}: {e}")
+            return ""
+
     def run_batch(self, input_path: str, output_file: str, chunk_size: int = None, force: bool = False):
         """Run the full pipeline on a directory or file."""
         start_time = time.time()
@@ -6469,6 +6685,64 @@ Provide one line per term. Start immediately.
                 file_entities = [e for e in raw_entities if isinstance(e, dict)]
                 if len(file_entities) < len(raw_entities):
                     logger.warning(f"⚠️  Filtered out {len(raw_entities) - len(file_entities)} invalid entities from {file_path.name}")
+
+                # PER-FILE DEDUPLICATION: Remove exact duplicates before aggregating
+                # This prevents massive duplicate counts (e.g., 95x "Fucose Utilisation")
+                import re
+                from collections import defaultdict
+
+                # First pass: normalize entity names (remove extra whitespace, parentheses, etc.)
+                def normalize_entity_name(name):
+                    # Remove extra whitespace
+                    name = re.sub(r'\s+', ' ', name.strip())
+                    # Remove content in parentheses for matching (but keep original)
+                    name_base = re.sub(r'\s*\([^)]*\)\s*$', '', name, flags=re.IGNORECASE)
+                    return name.lower().strip(), name_base.lower().strip()
+
+                # Group by normalized name (ignoring entity type for better dedup)
+                grouped = defaultdict(lambda: {'entities': [], 'types': Counter()})
+                for e in file_entities:
+                    name_full, name_base = normalize_entity_name(e['entity'])
+                    # Use base name as key (without parentheses)
+                    grouped[name_base]['entities'].append(e)
+                    grouped[name_base]['types'][e['entity_type']] += 1
+
+                # Merge duplicates within this file
+                deduped_file_entities = []
+                for group_data in grouped.values():
+                    group = group_data['entities']
+                    types = group_data['types']
+
+                    if len(group) > 1:
+                        # Merge: keep highest confidence, aggregate info
+                        best = max(group, key=lambda x: x.get('confidence', 0))
+
+                        # Use the most common entity type, or the one from best entity
+                        most_common_type = types.most_common(1)[0][0] if types else best['entity_type']
+                        best['entity_type'] = most_common_type
+
+                        # Clean up the entity name (remove extra parentheses if redundant)
+                        name_full, name_base = normalize_entity_name(best['entity'])
+                        if name_base != name_full:
+                            # Keep the cleaner version
+                            best['entity'] = best['entity'].split('(')[0].strip()
+
+                        best['frequency'] = len(group)
+                        best['avg_confidence_score'] = sum(e.get('confidence', 0) for e in group) / len(group)
+                        best['max_confidence_score'] = max(e.get('confidence', 0) for e in group)
+
+                        # Store alternative types that were merged
+                        if len(types) > 1:
+                            best['merged_types'] = list(types.keys())
+
+                        deduped_file_entities.append(best)
+                    else:
+                        deduped_file_entities.append(group[0])
+
+                if len(deduped_file_entities) < len(file_entities):
+                    logger.info(f"✂️  Deduped {file_path.name}: {len(file_entities)} → {len(deduped_file_entities)} entities ({len(file_entities) - len(deduped_file_entities)} duplicates removed)")
+
+                file_entities = deduped_file_entities
 
                 # Add source file info
                 for entity in file_entities:
@@ -6759,6 +7033,7 @@ def main():
     parser.add_argument('--base-url', default='http://localhost:11434', help='LLM service URL')
     parser.add_argument('--max-workers', type=int, default=3, help='Parallel workers')
     parser.add_argument('--max-file-workers', type=int, default=1, help='Parallel file workers')
+    parser.add_argument('--max-entities', type=int, default=50000, help='Maximum entities to output (default: 50000, set higher for more results)')
     parser.add_argument('--enable-biomistral', action='store_true', help='Enable BioMistral validation (requires ~14GB disk space)')
     parser.add_argument('--enable-correction', action='store_true', help='Enable MiniLM term correction')
     parser.add_argument('--enable-llm-correction', action='store_true', help='Enable LLM-based type correction')
@@ -6776,8 +7051,6 @@ def main():
     parser.add_argument('--consolidate', action='store_true', help='Consolidate processed files')
     parser.add_argument('--map', action='store_true', help='Apply mappings to existing file')
     parser.add_argument('--enrich', action='store_true', help='Enrich definitions using LLM')
-    
-    # Compatibility arguments (ignored or deprecated but kept for script compatibility)
     parser.add_argument('--chunk-size', type=int, help='Chunk size (deprecated, using windowed strategy)')
     parser.add_argument('--overlap', type=int, help='Overlap size (deprecated)')
     parser.add_argument('--enable-omop-mapping', action='store_true', help='Enable OMOP mapping (enabled by default in enhanced mode)')
@@ -6829,35 +7102,10 @@ def main():
         default_base_url=args.base_url,
         max_workers=args.max_workers,
         max_file_workers=args.max_file_workers,
-        min_confidence=args.min_confidence
+        min_confidence=args.min_confidence,
+        max_entities=args.max_entities
     )
 
-    # Handle Special Modes
-    if args.consolidate or args.map or args.enrich:
-        # Initialize pipeline
-        pipeline = CDMEntityPipeline(
-            model=args.model,
-            base_url=args.base_url,
-            config=pipeline_config,
-            api_type=args.api_type,
-            api_key=args.api_key,
-            hf_token=args.hf_token,
-            enable_comprehensive_mapping=args.enable_comprehensive_mapping,
-            bioportal_api_key=args.bioportal_api_key or api_keys['BIOPORTAL_API_KEY']
-        )
-        
-        if args.consolidate:
-            pipeline.consolidate_results(args.input, args.output, skip_dedup=args.skip_dedup)
-            return 0
-            
-        if args.map:
-            pipeline.apply_mappings_to_file(args.input)
-            return 0
-            
-        if args.enrich:
-            pipeline.enrich_definitions(args.input)
-            return 0
-    
     # Determine output paths
     base_output = Path(args.output)
     basic_output = str(base_output)
@@ -6877,6 +7125,7 @@ def main():
         hf_token=args.hf_token,
         enable_comprehensive_mapping=args.enable_comprehensive_mapping,
         enable_scispacy_linking=args.enable_scispacy_linking,
+        umls_api_key=api_keys['UMLS_API_KEY'],
         bioportal_api_key=args.bioportal_api_key or api_keys['BIOPORTAL_API_KEY'],
         force=args.force,
         paper_metadata=paper_metadata,

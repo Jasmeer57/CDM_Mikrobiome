@@ -109,8 +109,7 @@ class UMLSMapper:
             params = {
                 "string": entity_name,
                 "apiKey": self.api_key,
-                "pageSize": 20,
-                "returnType": "object"
+                "pageSize": 20
             }
 
             response = requests.get(search_url, params=params, timeout=10)

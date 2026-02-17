@@ -22,6 +22,8 @@ from core.confidence_scorer import ConfidenceScorer
 from biomedical.biomistral_validator import BioMistralValidator, BioMistralConfig
 from mappers.mapping import ComprehensiveMapper
 from config.cdm_config import CDMEntityConfig, PipelineConfig
+from core.relationship_extractor import RelationshipExtractor
+from core.knowledge_graph import KnowledgeGraphBuilder
 
 logger = logging.getLogger(__name__)
 
@@ -503,24 +505,34 @@ class CDMEntityPipeline:
         
         with open(input_path, 'r') as f:
             data = json.load(f)
-            
-        if isinstance(data, dict) and 'results' in data:
-            entities = data['results']['cdm_entities']
-            # Flatten for mapping if it's the structured format
-            flat_entities = []
-            for etype, elist in entities.items():
-                for e in elist:
-                    e['entity_type'] = etype # Ensure type is preserved
-                    flat_entities.append(e)
-            entities = flat_entities
-            is_flat = True 
-            is_structured = True
-        elif isinstance(data, list):
-            entities = data
-            is_flat = False
-            is_structured = False
-        else:
-            logger.error("❌ Unknown file format")
+
+        # Handle multiple possible structures from consolidation
+        entities = None
+        is_flat = False
+        is_structured = False
+
+        if isinstance(data, dict):
+            # Try old structure: data['results']['cdm_entities']
+            if 'results' in data and isinstance(data['results'], dict) and 'cdm_entities' in data['results']:
+                entities = data['results']['cdm_entities']
+                is_flat = True
+                is_structured = True
+            # Try new structure: data['extraction_statistics']['cdm_entities']
+            elif 'extraction_statistics' in data and isinstance(data['extraction_statistics'], dict) and 'cdm_entities' in data['extraction_statistics']:
+                entities = data['extraction_statistics']['cdm_entities']
+                is_flat = True
+                is_structured = True
+            # If data itself is a list (from direct extraction)
+            elif isinstance(data, list):
+                entities = data
+                is_flat = False
+                is_structured = False
+            else:
+                logger.error(f"❌ Unknown file format - expected dict with 'results' or 'extraction_statistics', got {type(data)}")
+                return
+
+        if entities is None:
+            logger.error("❌ No entities found in file")
             return
 
         logger.info(f"🚀 Starting mapping for {len(entities)} entities...")
