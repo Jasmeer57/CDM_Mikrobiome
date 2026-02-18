@@ -100,6 +100,30 @@ class CDMEntityConfig:
             'priority': 9
         },
 
+        # Metabolic and Signaling Pathways (Phase 2 - PATHWAY type)
+        'PATHWAY': {
+            'description': 'Metabolic pathways, signaling pathways, biological processes, cascades',
+            'examples': ['glycolysis', 'TCA cycle', 'Leloir pathway', 'MAPK signaling', 'Bifid shunt', 'Inflammasome activation', 'NF-κB signaling', 'butyrate synthesis'],
+            'patterns': [r'\b([A-Z][a-z]+\s+(?:pathway|cycle|signaling|shunt|cascade))\b|\b([A-Z][a-z]+\s+synthesis)\b'],
+            'priority': 3
+        },
+
+        # Experimental Methods (Phase 1 - EXPERIMENTAL_METHOD type)
+        'EXPERIMENTAL_METHOD': {
+            'description': 'Experimental techniques, laboratory methods, measurement techniques',
+            'examples': ['Sequencing', 'Genome binning', 'DNA extraction', 'Metagenomics', 'qPCR', 'ELISA', 'Western blot', 'Chromatography', 'Mass spectrometry'],
+            'patterns': [r'\b([A-Z][a-z]+(?:sequencing|extraction|binning|omics))\b|\b([A-Z][a-z]+\s+(?:PCR|blot|assay))\b'],
+            'priority': 8
+        },
+
+        # Study Design (Phase 1 - STUDY_DESIGN type)
+        'STUDY_DESIGN': {
+            'description': 'Study designs, experimental groups, control groups, cohort types',
+            'examples': ['Cross-sectional', 'Longitudinal', 'Case-control', 'Randomized controlled trial', 'Control group', 'Standard control', 'Placebo'],
+            'patterns': [r'\b([A-Z][a-z]+(?:sectional|tional|control|randomized))\b|\b(Control\s+group|Standard\s+Control)\b'],
+            'priority': 8
+        },
+
         # Clinical, Medical, Healthcare Terms
         'CLINICAL': {
             'description': 'Clinical terms, medical procedures, treatments, healthcare',
@@ -149,6 +173,12 @@ class CDMEntityConfig:
             'temperature': 0.1,
             'timeout': 300,
             'num_ctx': 8192
+        },
+        'qwen3:30b': {
+            'max_tokens': 3000,
+            'temperature': 0.1,
+            'timeout': 180,
+            'num_ctx': 16384
         },
         'Qwen/Qwen2.5-14B-Instruct': {
             'max_tokens': 2000,
@@ -256,3 +286,12 @@ class PipelineConfig:
     max_workers: int = 1  # Reduced to prevent rate limiting (sequential processing)
     max_entities: int = 200
     min_confidence: float = 0.6
+
+
+@dataclass
+class ValidationConfig:
+    """Configuration for dual-model validation (Phase 5)."""
+    extractor_model: str = "qwen3:32b"
+    validator_model: str = "mistral"  # Different model for independent validation
+    confidence_threshold: float = 0.8
+    human_calibration_ratio: float = 0.1  # 10% for human review

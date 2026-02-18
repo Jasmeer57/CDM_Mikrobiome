@@ -67,6 +67,16 @@ class RelationshipExtractor:
         'ENTITY-co_occurs_with-ENTITY': 'Entities mentioned together',
         'ENTITY-correlates_with-ENTITY': 'Statistical correlation',
 
+        # Entity-Microbiome relationships (NEW)
+        'ORGANISM-inhabits-MICROBIOME': 'Organism lives in microbiome/gut',
+        'ORGANISM-alters-MICROBIOME': 'Organism changes microbiome composition',
+        'CHEMICAL-disrupts-MICROBIOME': 'Chemical disrupts microbiome (e.g., antibiotics)',
+        'CHEMICAL-modulates-MICROBIOME': 'Chemical modulates microbiome (e.g., prebiotics)',
+        'DISEASE-alters-MICROBIOME': 'Disease changes microbiome composition',
+        'DISEASE-associated_with-MICROBIOME': 'Disease linked to microbiome state',
+        'GENE-expressed_in-MICROBIOME': 'Gene expressed in microbiome context',
+        'PROTEIN-affects-MICROBIOME': 'Protein affects microbiome function',
+
         # Experimental/Method relationships (NEW)
         'ENTITY-measured_by-DATA_ANALYSIS': 'Entity measured by method',
         'ENTITY-analyzed_by-DATA_ANALYSIS': 'Entity analyzed by method',
@@ -114,6 +124,463 @@ class RelationshipExtractor:
             'prevotella', 'bacteroides', 'faecalibacterium', 'lactobacillus',
             'bifidobacterium', 'clostridium', 'escherichia', 'enterobacteriaceae'
         }
+
+        # Fuzzy matching: entity normalization dictionary
+        self.entity_normalization_map = {
+            # Common variations
+            'e.coli': 'escherichia coli',
+            'e. coli': 'escherichia coli',
+            'e coli': 'escherichia coli',
+            'ecoli': 'escherichia coli',
+            # Clinical terms normalization
+            'high cu microbiomes': 'high carbohydrate unavailable microbiomes',
+            'low cu microbiomes': 'low carbohydrate unavailable microbiomes',
+            'cu microbiomes': 'carbohydrate unavailable microbiomes',
+            # Organism name standardization
+            'f. prausnitzii': 'faecalibacterium prausnitzii',
+            'bifido': 'bifidobacterium',
+            'lacto': 'lactobacillus',
+            'strep': 'streptococcus',
+        }
+
+        # Invalid entity patterns (generic terms that shouldn't be entities)
+        self.invalid_entity_patterns = [
+            r'^high\s+\w+\s+microrob?iomes?$',
+            r'^low\s+\w+\s+microrob?iomes?$',
+            r'^\d+\s*(samples|subjects|patients)$',
+            r'^figure\s+\d+[a-z]?$',
+            r'^table\s+\d+[a-z]?$',
+        ]
+
+    def normalize_entity_name(self, entity_name: str) -> str:
+        """
+        Normalize entity name using fuzzy matching and lookup tables.
+        Returns the normalized name or original if no match found.
+        """
+        if not entity_name:
+            return entity_name
+
+        entity_lower = entity_name.lower().strip()
+
+        # Check if it's in our normalization map
+        if entity_lower in self.entity_normalization_map:
+            return self.entity_normalization_map[entity_lower]
+
+        # Check invalid patterns
+        import re
+        for pattern in self.invalid_entity_patterns:
+            if re.match(pattern, entity_lower, re.IGNORECASE):
+                logger.debug(f"Filtered invalid entity pattern: {entity_name}")
+                return None  # Signal that this entity should be filtered
+
+        # Try fuzzy matching for organism names
+        from fuzzywuzzy import fuzz
+        for normalized, full_name in self.entity_normalization_map.items():
+            if fuzz.ratio(entity_lower, normalized) > 85:
+                logger.debug(f"Fuzzy matched {entity_name} -> {full_name}")
+                return full_name
+
+        return entity_name
+
+    def calculate_entity_similarity(self, entity1: str, entity2: str) -> float:
+        """
+        Calculate semantic similarity between two entity names using multiple strategies.
+        Returns similarity score 0.0-1.0.
+        """
+        if not entity1 or not entity2:
+            return 0.0
+
+        # Strategy 1: Exact match (after normalization)
+        norm1 = self.normalize_entity_name(entity1.lower())
+        norm2 = self.normalize_entity_name(entity2.lower())
+        if norm1 and norm2 and norm1 == norm2:
+            return 1.0
+
+        # Strategy 2: Fuzzy string matching
+        from fuzzywuzzy import fuzz
+        fuzzy_score = fuzz.ratio(entity1.lower(), entity2.lower()) / 100.0
+
+        # Strategy 3: Contains relationship
+        if entity1.lower() in entity2.lower() or entity2.lower() in entity1.lower():
+            return 0.9
+
+        # Strategy 4: Taxonomic similarity (for organisms)
+        # Split by space and check if they share genus/species
+        words1 = set(entity1.lower().split())
+        words2 = set(entity2.lower().split())
+        if words1 & words2:  # Intersection
+            shared_ratio = len(words1 & words2) / max(len(words1), len(words2))
+            return max(fuzzy_score, shared_ratio)
+
+        return fuzzy_score
+
+    def validate_entity_pair(self, entity_a: Dict, entity_b: Dict, context: str) -> Tuple[bool, str]:
+        """
+        Validate if an entity pair should have a relationship extracted.
+        Uses multiple strategies: fuzzy matching, semantic validation, LLM verification.
+
+        Returns:
+            (is_valid, reason)
+        """
+        term_a = entity_a.get('term', '').strip()
+        term_b = entity_b.get('term', '').strip()
+
+        # Normalize entity names
+        norm_a = self.normalize_entity_name(term_a)
+        norm_b = self.normalize_entity_name(term_b)
+
+        # Filter invalid entities
+        if norm_a is None or norm_b is None:
+            return False, "Invalid entity pattern"
+
+        # Check for self-relationships
+        if norm_a == norm_b:
+            return False, "Self-relationship"
+
+        # Check if entities are too generic (single words that are common)
+        generic_terms = {'study', 'analysis', 'data', 'result', 'group', 'sample', 'level'}
+        if term_a.lower() in generic_terms or term_b.lower() in generic_terms:
+            return False, "Too generic"
+
+        # Check if entities actually co-occur in context
+        if not self._entities_co_occur_in_context(term_a, term_b, context):
+            return False, "No co-occurrence in context"
+
+        # Check semantic similarity - if too similar, likely same entity
+        similarity = self.calculate_entity_similarity(term_a, term_b)
+        if similarity > 0.95:
+            return False, f"Too similar (similarity: {similarity:.2f})"
+
+        # Entity type compatibility check
+        type_a = entity_a.get('categories', entity_a.get('entity_type', 'UNKNOWN'))
+        type_b = entity_b.get('categories', entity_b.get('entity_type', 'UNKNOWN'))
+
+        # Discourage certain type combinations
+        discouraged_pairs = [
+            ('CLINICAL', 'CLINICAL'),
+            ('DATA_ANALYSIS', 'DATA_ANALYSIS'),
+            ('SCIENTIFIC_TERM', 'SCIENTIFIC_TERM'),
+        ]
+
+        if (type_a, type_b) in discouraged_pairs:
+            # Only allow if explicitly stated with high confidence
+            return True, "Allowed with caution"
+
+        return True, "Valid"
+
+    def score_microbiome_relevance(self, entity: Dict) -> float:
+        """
+        Score how relevant an entity is to microbiome research (0.0-1.0).
+        Based on contextual definition and entity properties.
+        """
+        term = entity.get('term', '').lower()
+        context = entity.get('contextual_definition', entity.get('definition', '')).lower()
+        category = entity.get('categories', entity.get('entity_type', ''))
+
+        score = 0.0
+
+        # High relevance: direct microbiome terms
+        if any(mw in term for mw in ['microbiome', 'microbiota', 'gut', 'fecal', 'stool']):
+            score += 0.5
+
+        # Check context for microbiome keywords
+        mw_keywords = {
+            'microbiome', 'microbiota', 'gut flora', 'intestinal flora',
+            'fecal', 'stool', 'commensal', 'dysbiosis', 'symbiosis',
+            'probiotic', 'prebiotic', 'synbiotic', 'postbiotic',
+            'short-chain fatty acid', 'scfa', 'butyrate', 'propionate',
+            'lactobacillus', 'bifidobacterium', 'bacteroides', 'firmicutes',
+            'bacteroidetes', 'faecalibacterium', 'akkermansia',
+            'intestinal', 'colon', 'ileum', 'cecum', 'mucosa'
+        }
+
+        context_hits = sum(1 for kw in mw_keywords if kw in context)
+        score += min(context_hits * 0.1, 0.5)
+
+        # Entity type relevance
+        if category == 'ORGANISM':
+            score += 0.2
+        elif category in ['CHEMICAL', 'GENE', 'PROTEIN']:
+            # Check if explicitly related to microbiome in context
+            if any(mw in context for mw in ['microbi', 'gut', 'intestinal', 'fecal']):
+                score += 0.3
+        elif category in ['DISEASE', 'CLINICAL']:
+            # Many diseases are microbiome-related
+            if any(mw in context for mw in ['microbi', 'gut', 'intestinal']):
+                score += 0.2
+
+        return min(score, 1.0)
+
+    def extract_relationship_with_llm_verification(
+        self,
+        entity_a: Dict,
+        entity_b: Dict,
+        context: str,
+        paper_id: str = None
+    ) -> List[EntityRelationship]:
+        """
+        Extract relationship with enhanced LLM verification using contextual definitions
+        and microbiome relevance scoring. Uses qwen3:30B for better understanding.
+        """
+        term_a = entity_a.get('term', '').strip()
+        term_b = entity_b.get('term', '').strip()
+        type_a = entity_a.get('categories', entity_a.get('entity_type', 'UNKNOWN'))
+        type_b = entity_b.get('categories', entity_b.get('entity_type', 'UNKNOWN'))
+
+        # Get contextual definitions
+        ctx_a = entity_a.get('contextual_definition', entity_a.get('definition', ''))[:800]
+        ctx_b = entity_b.get('contextual_definition', entity_b.get('definition', ''))[:800]
+
+        # Score microbiome relevance
+        relevance_a = self.score_microbiome_relevance(entity_a)
+        relevance_b = self.score_microbiome_relevance(entity_b)
+        avg_relevance = (relevance_a + relevance_b) / 2
+
+        # Normalize entity names
+        norm_a = self.normalize_entity_name(term_a)
+        norm_b = self.normalize_entity_name(term_b)
+
+        if not norm_a or not norm_b:
+            return []
+
+        # Use normalized names in prompt
+        display_a = norm_a if norm_a != term_a else term_a
+        display_b = norm_b if norm_b != term_b else term_b
+
+        # Enhanced prompt with contextual definitions and microbiome analysis
+        prompt = f"""You are an expert biomedical relationship extractor with deep knowledge of microbiome science, molecular biology, and clinical research.
+
+## TASK
+Extract the relationship between two entities based on their contextual definitions and the text where they co-occur.
+
+## ENTITY A
+Name: {display_a} {"(original: " + term_a + ")" if norm_a != term_a else ""}
+Type: {type_a}
+Contextual Definition: {ctx_a if ctx_a else "Not provided"}
+Microbiome Relevance Score: {relevance_a:.2f}
+
+## ENTITY B
+Name: {display_b} {"(original: " + term_b + ")" if norm_b != term_b else ""}
+Type: {type_b}
+Contextual Definition: {ctx_b if ctx_b else "Not provided"}
+Microbiome Relevance Score: {relevance_b:.2f}
+
+## SHARED CONTEXT (where both entities appear)
+\"\"\"
+{context}
+\"\"\"
+
+## VALID RELATIONSHIP TYPES
+
+**Causal/Treatment:**
+- causes: Entity A directly causes Entity B (disease, symptom, condition)
+- treats: Entity A treats Entity B (drug, probiotic, therapy)
+- prevents: Entity A prevents Entity B
+- exacerbates: Entity A makes Entity B worse
+
+**Molecular/Genetic:**
+- encodes: Gene encodes protein/RNA
+- regulates: Gene/protein regulates another
+- inhibits: Entity A inhibits Entity B
+- activates: Entity A activates Entity B
+- binds_to: Physical binding interaction
+- interacts_with: General molecular interaction
+
+**Metabolic/Functional:**
+- produces: Organism produces chemical/metabolite (e.g., bacteria produces butyrate)
+- consumes: Organism consumes substrate
+- metabolizes: Organism transforms chemical
+
+**Statistical/Associative:**
+- associated_with: General association or correlation
+- correlates_with: Statistical correlation
+- co_occurs_with: Found together (not necessarily causal)
+
+**Experimental/Methodological:**
+- measured_by: Entity measured by method/experiment
+- analyzed_by: Entity analyzed by method
+- derived_from: Entity derived from analysis
+
+## VALIDATION RULES (STRICT)
+
+1. **Co-occurrence Required:** BOTH entities must be explicitly mentioned in the shared context
+2. **Direct Relationship:** The relationship must be clearly stated or strongly implied
+3. **Reject Generic Terms:** Do not extract relationships with generic phrases like:
+   - "high X microbiomes" (unless X is a specific clinical entity)
+   - "data analysis", "statistical test", "p-value"
+   - "Figure X", "Table Y", "Supplemental"
+4. **Microbiome Context:** Give HIGHER confidence (0.8-1.0) for:
+   - Organism-disease relationships with explicit microbiome context
+   - Metabolite production/consumption by gut bacteria
+   - Probiotic/prebiotic therapeutic effects
+5. **Statistical Associations:** Give LOWER confidence (0.6-0.7) for:
+   - Correlations without clear mechanism
+   - "Associated with" statements without causality
+6. **Directionality:** Maintain correct direction (A→B vs B→A)
+
+## OUTPUT FORMAT
+For each valid relationship found, output ONE line:
+SOURCE||TARGET||RELATIONSHIP||CONFIDENCE||EVIDENCE||MICROBIOME_RELEVANCE
+
+Example output:
+Faecalibacterium prausnitzii||butyrate||produces||0.95||F. prausnitzii is a major butyrate producer in the gut||1.0
+
+If NO valid relationship exists, output:
+NONE
+
+Begin extraction:"""
+
+        try:
+            response = self.llm_client.call_llm(prompt, temperature=0.1)
+            relationships = self._parse_enhanced_response(
+                response,
+                entity_a,
+                entity_b,
+                context,
+                paper_id,
+                norm_a,
+                norm_b,
+                avg_relevance
+            )
+            return relationships
+
+        except Exception as e:
+            logger.error(f"Error in LLM verification: {e}")
+            return []
+
+    def _parse_enhanced_response(
+        self,
+        response: str,
+        entity_a: Dict,
+        entity_b: Dict,
+        source_context: str,
+        paper_id: str,
+        norm_a: str,
+        norm_b: str,
+        microbiome_relevance: float
+    ) -> List[EntityRelationship]:
+        """Parse LLM response with microbiome relevance support."""
+        relationships = []
+        lines = response.strip().split('\n')
+
+        term_a = entity_a.get('term', '')
+        term_b = entity_b.get('term', '')
+        type_a = entity_a.get('categories', entity_a.get('entity_type', 'UNKNOWN')).upper()
+        type_b = entity_b.get('categories', entity_b.get('entity_type', 'UNKNOWN')).upper()
+
+        for line in lines:
+            line = line.strip()
+            if not line or line.startswith('#') or line.startswith('//'):
+                continue
+
+            if line.upper().startswith('NONE'):
+                return []
+
+            parts = line.split('||')
+            if len(parts) < 5:
+                continue
+
+            source = parts[0].strip()
+            target = parts[1].strip()
+            rel_type = parts[2].strip().lower().replace(' ', '_')
+
+            try:
+                confidence = float(parts[3].strip())
+            except ValueError:
+                confidence = 0.5
+
+            evidence = parts[4].strip() if len(parts) > 4 else ''
+
+            # Adjust confidence based on microbiome relevance
+            if microbiome_relevance > 0.7 and confidence < 0.9:
+                confidence = min(confidence + 0.1, 1.0)
+            elif microbiome_relevance < 0.3 and confidence > 0.7:
+                confidence = max(confidence - 0.1, 0.5)
+
+            # Validate entity matching
+            if source.lower() not in [term_a.lower(), term_b.lower(), norm_a.lower(), norm_b.lower()]:
+                continue
+            if target.lower() not in [term_a.lower(), term_b.lower(), norm_a.lower(), norm_b.lower()]:
+                continue
+
+            # Determine direction
+            if source.lower() in [term_a.lower(), norm_a.lower()]:
+                source_ent, target_ent = entity_a, entity_b
+                source_type, target_type = type_a, type_b
+                source_name = norm_a if norm_a != term_a else term_a
+                target_name = norm_b if norm_b != term_b else term_b
+            else:
+                source_ent, target_ent = entity_b, entity_a
+                source_type, target_type = type_b, type_a
+                source_name = norm_b if norm_b != term_b else term_b
+                target_name = norm_a if norm_a != term_a else term_a
+
+            if not self._is_valid_relationship(source_type, target_type, rel_type):
+                continue
+
+            relationship = EntityRelationship(
+                source_entity=source_name,
+                source_type=source_type,
+                target_entity=target_name,
+                target_type=target_type,
+                relationship_type=rel_type,
+                confidence=confidence,
+                evidence=evidence[:500],
+                source_context=source_context[:1000],
+                paper_id=paper_id,
+                umls_source_cui=source_ent.get('UMLS_ID', ''),
+                umls_target_cui=target_ent.get('UMLS_ID', '')
+            )
+
+            if confidence >= self.min_confidence:
+                relationships.append(relationship)
+
+        return relationships
+
+        # Fuzzy matching: entity normalization dictionary
+        self.entity_normalization_map = {
+            # Common variations
+            'e.coli': 'escherichia coli',
+            'e. coli': 'escherichia coli',
+            'e coli': 'escherichia coli',
+            'ecoli': 'escherichia coli',
+
+            # Clinical terms normalization
+            'high cu microbiomes': 'high carbohydrate unavailable microbiomes',
+            'low cu microbiomes': 'low carbohydrate unavailable microbiomes',
+            'cu microbiomes': 'carbohydrate unavailable microbiomes',
+            'high uc': 'high ulcerative colitis',
+            'low uc': 'low ulcerative colitis',
+
+            # Organism name standardization
+            'f. prausnitzii': 'faecalibacterium prausnitzii',
+            'bifido': 'bifidobacterium',
+            'lacto': 'lactobacillus',
+            'strep': 'streptococcus',
+            'staph': 'staphylococcus',
+            'entero': 'enterobacteriaceae',
+
+            # Disease/condition normalization
+            'ibd': 'inflammatory bowel disease',
+            'ibs': 'irritable bowel syndrome',
+            'uc': 'ulcerative colitis',
+            'cd': 'crohn disease',
+            't2d': 'type 2 diabetes',
+            't1d': 'type 1 diabetes',
+            'c.diff': 'clostridioides difficile',
+            'c. diff': 'clostridioides difficile',
+        }
+
+        # Invalid entity patterns (generic terms that shouldn't be entities)
+        self.invalid_entity_patterns = [
+            r'^high\s+\w+\s+microrob?iomes?$',
+            r'^low\s+\w+\s+microrob?iomes?$',
+            r'^\d+\s*(samples|subjects|patients)$',
+            r'^figure\s+\d+[a-z]?$',
+            r'^table\s+\d+[a-z]?$',
+            r'^p\s*[<>=]+\s*0\.\d+$',
+            r'^data\s+not\s+shown$',
+        ]
 
     def extract_relationships_from_text(
         self,
@@ -537,10 +1004,10 @@ Begin extraction:"""
         paper_id: str = None
     ) -> List[EntityRelationship]:
         """
-        Extract relationships from a batch of entities using their context.
+        OPTIMIZED: Extract relationships from multiple entity pairs in single LLM call.
 
-        FIXED MODE: Uses pairwise-entity extraction with validation that both entities
-        appear in the source context. Prevents hallucination.
+        Batches up to 15 entity pairs that co-occur in shared contexts into one prompt.
+        Much faster than individual calls per pair.
 
         Args:
             entities: List of entity dicts with 'term', 'categories', 'contextual_definition'
@@ -550,35 +1017,175 @@ Begin extraction:"""
             return []
 
         relationships = []
-        entity_map = {e.get('term', ''): e for e in entities}
 
-        # Process entities pairwise using their actual source contexts
-        for i, entity_a in enumerate(entities[:20]):  # Limit to 20 entities per batch
+        # Collect co-occurring entity pairs with their shared contexts
+        entity_pairs = []
+        max_pairs = 15  # Process at most 15 pairs per batch to keep prompt manageable
+        max_entities = 15  # Only check first 15 entities
+
+        for i, entity_a in enumerate(entities[:max_entities]):
             term_a = entity_a.get('term', '').strip()
             if not term_a:
                 continue
 
-            # Get the actual source context for entity_a
-            context_a = entity_a.get('contextual_definition', entity_a.get('definition', ''))[:1000]
-            if not context_a:
+            context_a = entity_a.get('contextual_definition', entity_a.get('definition', ''))[:800]
+            if not context_a or len(context_a) < 50:
                 continue
 
-            # Check which other entities are mentioned in this context
-            for entity_b in entities[i+1:20]:
+            # Find entities that co-occur with entity_a
+            for entity_b in entities[i+1:max_entities]:
                 term_b = entity_b.get('term', '').strip()
                 if not term_b:
                     continue
 
-                # Validate: BOTH entity terms must appear in the context
-                # This ensures we only extract relationships from text where entities co-occur
+                # Quick co-occurrence check (both must appear in context)
                 if not self._entities_co_occur_in_context(term_a, term_b, context_a):
                     continue
 
-                # Extract relationship between this specific pair
-                pair_rels = self._extract_pairwise_relationship(
-                    entity_a, entity_b, context_a, paper_id
+                entity_pairs.append({
+                    'entity_a': entity_a,
+                    'entity_b': entity_b,
+                    'context': context_a
+                })
+
+                if len(entity_pairs) >= max_pairs:
+                    break
+
+            if len(entity_pairs) >= max_pairs:
+                break
+
+        if not entity_pairs:
+            logger.debug(f"No co-occurring entity pairs found for paper {paper_id}")
+            return []
+
+        logger.info(f"Processing {len(entity_pairs)} entity pairs for paper {paper_id}")
+
+        # Batch extract all pairs in one LLM call
+        try:
+            relationships = self._batch_extract_relationships(entity_pairs, paper_id)
+        except Exception as e:
+            logger.error(f"Batch extraction failed for paper {paper_id}: {e}")
+            return []
+
+        return relationships
+
+    def _batch_extract_relationships(
+        self,
+        entity_pairs: List[Dict],
+        paper_id: str = None
+    ) -> List[EntityRelationship]:
+        """
+        Extract relationships from multiple entity pairs in a single LLM call.
+
+        Args:
+            entity_pairs: List of dicts with 'entity_a', 'entity_b', 'context'
+            paper_id: Optional paper identifier
+        """
+        # Build batch prompt
+        prompt_parts = ["Extract relationships between the following entity pairs based on the provided text.\n\n"]
+
+        for idx, pair in enumerate(entity_pairs, 1):
+            term_a = pair['entity_a'].get('term', '')
+            type_a = pair['entity_a'].get('categories', 'UNKNOWN')
+            term_b = pair['entity_b'].get('term', '')
+            type_b = pair['entity_b'].get('categories', 'UNKNOWN')
+            context = pair['context'][:600]
+
+            prompt_parts.append(f"PAIR {idx}:\n")
+            prompt_parts.append(f"Entity A: {term_a} ({type_a})\n")
+            prompt_parts.append(f"Entity B: {term_b} ({type_b})\n")
+            prompt_parts.append(f"Context: {context}\n\n")
+
+        prompt_parts.append("""RELATIONSHIP TYPES:
+- causes: A causes B (e.g., bacteria causes disease)
+- treats: A treats B (e.g., probiotic treats disease)
+- produces: A produces B (e.g., bacteria produces butyrate)
+- consumes: A consumes B (e.g., bacteria consumes fiber)
+- inhibits: A inhibits B (e.g., antibiotic inhibits bacteria)
+- associated_with: A associated with B (e.g., bacteria associated with disease)
+
+CRITICAL RULES:
+1. Only extract if BOTH entities appear together in the context
+2. Relationship must be explicitly stated or strongly implied
+3. Confidence: 0.0-1.0 (explicit = 0.9+, implied = 0.7-0.8, weak = 0.6)
+4. If NO relationship, output "NONE"
+
+OUTPUT FORMAT (one line per valid relationship):
+PAIR_NUM||SOURCE||TARGET||RELATIONSHIP||CONFIDENCE||EVIDENCE
+
+Example:
+1||E. coli||diarrhea||causes||0.95||Enterotoxigenic E. coli causes traveler's diarrhea
+
+Begin extraction:""")
+
+        prompt = "".join(prompt_parts)
+
+        try:
+            response = self.llm_client.call_llm(prompt, temperature=0.1, timeout=180)
+            return self._parse_batch_response(response, entity_pairs, paper_id)
+        except Exception as e:
+            logger.error(f"Batch LLM call failed: {e}")
+            return []
+
+    def _parse_batch_response(
+        self,
+        response: str,
+        entity_pairs: List[Dict],
+        paper_id: str = None
+    ) -> List[EntityRelationship]:
+        """Parse the batch LLM response and create EntityRelationship objects."""
+        relationships = []
+        lines = response.strip().split('\n')
+
+        for line in lines:
+            line = line.strip()
+            if not line or line.upper() == 'NONE':
+                continue
+
+            parts = line.split('||')
+            if len(parts) < 6:
+                continue
+
+            try:
+                pair_num = int(parts[0]) - 1  # Convert to 0-indexed
+                if pair_num < 0 or pair_num >= len(entity_pairs):
+                    continue
+
+                pair = entity_pairs[pair_num]
+                entity_a = pair['entity_a']
+                entity_b = pair['entity_b']
+
+                source = parts[1].strip()
+                target = parts[2].strip()
+                rel_type = parts[3].strip()
+                confidence = float(parts[4])
+                evidence = parts[5].strip()
+
+                # Get entity types
+                source_type = entity_a.get('categories', entity_a.get('entity_type', 'UNKNOWN'))
+                target_type = entity_b.get('categories', entity_b.get('entity_type', 'UNKNOWN'))
+
+                # Normalize entities
+                norm_source = self.normalize_entity_name(source)
+                norm_target = self.normalize_entity_name(target)
+
+                rel = EntityRelationship(
+                    source_entity=norm_source,
+                    source_type=source_type,
+                    target_entity=norm_target,
+                    target_type=target_type,
+                    relationship_type=rel_type,
+                    confidence=confidence,
+                    evidence=evidence,
+                    source_context=pair.get('context', '')[:200],
+                    paper_id=paper_id,
+                    evidence_type='literature'
                 )
-                relationships.extend(pair_rels)
+                relationships.append(rel)
+
+            except (ValueError, IndexError) as e:
+                logger.debug(f"Failed to parse line: {line} - {e}")
+                continue
 
         return relationships
 

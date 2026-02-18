@@ -57,11 +57,21 @@ TYPE_MAPPINGS: Dict[str, str] = {
     'GENOMIC': 'GENE',
     'DNA/RNA': 'DNA_RNA',
 
-    # Methodological type variants (for potential filtering)
-    'LAB_METHOD': 'DATA_ANALYSIS',
-    'EXPERIMENTAL_METHOD': 'DATA_ANALYSIS',
-    'ANALYSIS_METHOD': 'DATA_ANALYSIS',
-    'STATISTICAL_METHOD': 'DATA_ANALYSIS',
+    # Pathway type variants (Phase 2 - PATHWAY type)
+    'PATHWAYS': 'PATHWAY',
+    'METABOLIC_PATHWAY': 'PATHWAY',
+    'SIGNALING_PATHWAY': 'PATHWAY',
+    'BIOLOGICAL_PATHWAY': 'PATHWAY',
+
+    # Methodological type variants - split into proper types
+    'LAB_METHOD': 'EXPERIMENTAL_METHOD',
+    'EXPERIMENTAL_METHOD': 'EXPERIMENTAL_METHOD',  # New canonical type
+    'ANALYSIS_METHOD': 'EXPERIMENTAL_METHOD',
+    'STATISTICAL_METHOD': 'DATA_ANALYSIS',  # Keep stats as DATA_ANALYSIS
+    'STUDY_DESIGN': 'STUDY_DESIGN',  # New canonical type
+    'EXPERIMENTAL_DESIGN': 'STUDY_DESIGN',
+    'CONTROL_GROUP': 'STUDY_DESIGN',
+    'TRANSGENIC_MODEL': 'ORGANISM',  # Re-classify as organism
 
     # Deprecated/legacy types
     'SCIENTIFIC_TERM': 'DATA_ANALYSIS',
@@ -84,13 +94,15 @@ CORE_BIOLOGICAL_TYPES: Set[str] = {
     'DNA_RNA',
     'CLINICAL',
     'CLINICAL_PARAMETER',
+    'PATHWAY',  # Phase 2: Add pathway type
+    'STUDY_DESIGN',  # Phase 1: Study design entities
 }
 
 
 # Types that represent methods/tools (may be filtered or tagged separately)
 METHOD_TYPES: Set[str] = {
-    'DATA_ANALYSIS',
-    'LAB_METHOD',
+    'DATA_ANALYSIS',  # Statistical/bioinformatics analysis methods
+    'EXPERIMENTAL_METHOD',  # Wet lab and experimental methods
     'SAMPLE_METHOD',
     'GENOMICS',
 }
@@ -213,7 +225,28 @@ VALID_TYPE_PAIRS: Dict[tuple, Set[str]] = {
     ('CHEMICAL', 'DISEASE'): {'causes', 'treats'},
     ('DISEASE', 'CLINICAL'): {'characterized_by', 'has_symptom'},
 
-    # Experimental/method relationships (any entity to DATA_ANALYSIS)
+    # EXPERIMENTAL_METHOD relationships (Phase 1 - was DATA_ANALYSIS)
+    ('EXPERIMENTAL_METHOD', 'ORGANISM'): {'measures', 'quantifies', 'detects', 'identifies'},
+    ('EXPERIMENTAL_METHOD', 'GENE'): {'measures', 'quantifies', 'detects'},
+    ('EXPERIMENTAL_METHOD', 'PROTEIN'): {'measures', 'quantifies', 'detects'},
+    ('EXPERIMENTAL_METHOD', 'CHEMICAL'): {'measures', 'detects', 'quantifies'},
+    ('EXPERIMENTAL_METHOD', 'DISEASE'): {'diagnoses', 'detects', 'screens_for'},
+
+    # STUDY_DESIGN relationships (Phase 1)
+    ('STUDY_DESIGN', 'ORGANISM'): {'studies', 'investigates', 'compares', 'examines'},
+    ('STUDY_DESIGN', 'DISEASE'): {'investigates', 'treats', 'prevents', 'examines'},
+    ('STUDY_DESIGN', 'CLINICAL'): {'measures', 'assesses', 'evaluates'},
+    ('STUDY_DESIGN', 'CHEMICAL'): {'analyzes', 'quantifies', 'examines'},
+
+    # PATHWAY relationships (Phase 2)
+    ('GENE', 'PATHWAY'): {'regulates', 'participates_in', 'activates', 'inhibits'},
+    ('PROTEIN', 'PATHWAY'): {'participates_in', 'activates', 'inhibits', 'regulates'},
+    ('PATHWAY', 'CHEMICAL'): {'produces', 'metabolizes', 'synthesizes'},
+    ('PATHWAY', 'ORGANISM'): {'exists_in', 'utilized_by', 'activated_in'},
+    ('PATHWAY', 'DISEASE'): {'contributes_to', 'mediates', 'causes', 'associated_with'},
+    ('ORGANISM', 'PATHWAY'): {'utilizes', 'activates', 'modulates'},
+
+    # DATA_ANALYSIS relationships (kept for compatibility)
     ('ORGANISM', 'DATA_ANALYSIS'): {'measured_by', 'analyzed_by', 'derived_from'},
     ('CHEMICAL', 'DATA_ANALYSIS'): {'measured_by', 'analyzed_by', 'derived_from'},
     ('GENE', 'DATA_ANALYSIS'): {'measured_by', 'analyzed_by'},
@@ -411,6 +444,9 @@ def create_canonical_id(term: str, entity_type: str) -> str:
         'CLINICAL': 'CLIN',
         'CLINICAL_PARAMETER': 'CPARAM',
         'DATA_ANALYSIS': 'METHOD',
+        'EXPERIMENTAL_METHOD': 'EXP',
+        'STUDY_DESIGN': 'DESIGN',
+        'PATHWAY': 'PATH',
     }
 
     prefix = prefixes.get(normalized_type, normalized_type[:4].upper())

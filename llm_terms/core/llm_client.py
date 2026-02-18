@@ -33,23 +33,26 @@ class LLMClient:
         # Initialize OpenAI client if applicable
         self.client = None
         if OPENAI_AVAILABLE:
-            if "api.z.ai" in self.base_url or "bigmodel.cn" in self.base_url:
-                 logger.info(f"🚀 Initializing OpenAI client for ZhipuAI/GLM: {self.base_url}")
-                 self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
-            elif "localhost" not in self.base_url and "127.0.0.1" not in self.base_url:
-                 # Assume generic OpenAI compatible for other remote endpoints
-                 logger.info(f"🚀 Initializing OpenAI client for remote endpoint: {self.base_url}")
+            # Initialize OpenAI client for /v1 endpoints (including local llama.cpp)
+            has_v1_endpoint = "/v1/" in self.base_url or self.base_url.endswith("/v1")
+            is_zhipu_or_bigmodel = "api.z.ai" in self.base_url or "bigmodel.cn" in self.base_url
+            if has_v1_endpoint or is_zhipu_or_bigmodel:
+                 logger.info(f"🚀 Initializing OpenAI client for endpoint: {self.base_url}")
                  self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
 
     def call_llm(self, prompt: str, max_tokens: Optional[int] = None, **kwargs) -> str:
         """Call LLM with structured prompt and return response."""
-        
+
         # Determine provider based on model name and URL
         is_ollama = "/api/generate" in self.base_url or ":11434" in self.base_url or "ollama" in self.base_url
         is_zhipu = "glm" in self.model.lower() or "api.z.ai" in self.base_url
         is_anthropic = "claude" in self.model.lower()
-        
-        if is_zhipu:
+        # Check for /v1 or /v1/ to detect llama.cpp OpenAI-compatible endpoints
+        is_llama_cpp = ("/v1/" in self.base_url or self.base_url.endswith("/v1")) and ("localhost" in self.base_url or "127.0.0.1" in self.base_url)
+
+        if is_llama_cpp:
+            return self._call_llama_cpp(prompt, max_tokens, **kwargs)
+        elif is_zhipu:
             return self._call_glm(prompt, max_tokens, **kwargs)
         elif is_anthropic:
             return self._call_anthropic(prompt, max_tokens, **kwargs)
@@ -99,33 +102,81 @@ class LLMClient:
             logger.error(f"Ollama call failed: {e}")
             return ""
 
+    def _call_llama_cpp(self, prompt: str, max_tokens: Optional[int] = None, **kwargs) -> str:
+        """Call llama.cpp server using raw requests (avoids OpenAI SDK httpx issues)."""
+        try:
+            # Ensure URL has correct endpoint
+            url = self.base_url
+            if not url.endswith("/chat/completions"):
+                url = url.rstrip("/") + "/chat/completions"
+
+            headers = {
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self.api_key}" if self.api_key else ""
+            }
+
+            prompt_preview = prompt[:100] + "..." if len(prompt) > 100 else prompt
+            logger.info(f"Calling llama.cpp (prompt: {prompt_preview}, max_tokens: {max_tokens or self.config['max_tokens']})")
+
+            payload = {
+                "model": self.model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": kwargs.get('temperature', self.config['temperature']),
+                "max_tokens": max_tokens or self.config['max_tokens'],
+                "top_p": 0.9
+            }
+
+            timeout = kwargs.get('timeout', self.config['timeout'])
+            logger.debug(f"Sending request to {url} with timeout {timeout}s")
+
+            response = requests.post(
+                url,
+                headers=headers,
+                json=payload,
+                timeout=timeout
+            )
+            response.raise_for_status()
+            data = response.json()
+
+            content = data["choices"][0]["message"]["content"].strip()
+            logger.info(f"Received response ({len(content)} chars)")
+            return content
+
+        except requests.exceptions.Timeout as e:
+            logger.error(f"llama.cpp call timed out after {timeout}s: {e}")
+            return ""
+        except Exception as e:
+            logger.error(f"llama.cpp call failed: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                logger.error(f"API Response: {e.response.text}")
+            return ""
+
     def _call_openai_compatible(self, prompt: str, max_tokens: Optional[int] = None, **kwargs) -> str:
-        """Call OpenAI-compatible API (vLLM, ZLM, etc)."""
+        """Call OpenAI-compatible API (vLLM, ZLM, llama.cpp, etc)."""
         if not OPENAI_AVAILABLE:
             logger.error("OpenAI SDK not installed. Cannot make OpenAI-compatible calls.")
             return ""
 
+        # Ensure we have a client
+        if not self.client:
+            logger.error("OpenAI client not initialized. Cannot make call.")
+            return ""
+
         try:
-            # Use the initialized client if available, or create a temporary one
-            client = self.client
-            if not client:
-                 logger.info(f"⚠️ Creating temporary OpenAI client with base_url: {self.base_url}")
-                 client = OpenAI(api_key=self.api_key, base_url=self.base_url)
-            
-            logger.info(f"📞 Calling OpenAI-compatible API. Client base_url: {client.base_url}")
+            logger.info(f"📞 Calling OpenAI-compatible API. Model: {self.model}")
 
             messages = [{"role": "user", "content": prompt}]
-            
+
             # Handle extra_body (for thinking or other custom params)
             extra_body = kwargs.get('extra_body', {})
-            
+
             # Legacy boolean thinking support (if passed directly)
             if kwargs.get('thinking', False):
                  # Default to old behavior if boolean passed, but prefer object if in extra_body
                  if 'thinking' not in extra_body:
                      extra_body['thinking'] = True
-                 
-            response = client.chat.completions.create(
+
+            response = self.client.chat.completions.create(
                 model=self.model,
                 messages=messages,
                 temperature=kwargs.get('temperature', self.config['temperature']),
@@ -133,10 +184,10 @@ class LLMClient:
                 timeout=kwargs.get('timeout', self.config['timeout']),
                 extra_body=extra_body if extra_body else None
             )
-            
+
             message = response.choices[0].message
             content = message.content
-            
+
             # Fallback for models (like GLM-4.7/Deepseek) that return output in reasoning_content
             if not content:
                 # Try attribute access (standard in some SDKs)
@@ -148,11 +199,13 @@ class LLMClient:
                 # Try dict access if it's a dict
                 elif isinstance(message, dict) and 'reasoning_content' in message:
                     content = message['reasoning_content']
-            
+
             return content.strip() if content else ""
-            
+
         except Exception as e:
             logger.error(f"OpenAI-compatible call failed: {e}")
+            import traceback
+            logger.debug(traceback.format_exc())
             return ""
 
     def _call_glm(self, prompt: str, max_tokens: Optional[int] = None, **kwargs) -> str:
@@ -220,21 +273,45 @@ class LLMClient:
 
     def is_available(self) -> bool:
         """Check if LLM service is available."""
-        try:
-            if "localhost" in self.base_url or "127.0.0.1" in self.base_url:
-                # Fix: Use correct endpoint path
-                base_url = self.base_url.rstrip('/')
-                if base_url.endswith('/api'):
-                    tags_url = f"{base_url}/tags"
-                else:
-                    tags_url = f"{base_url}/api/tags"
+        base_url = self.base_url.rstrip('/')
+
+        # For llama.cpp / OpenAI-compatible endpoints on localhost
+        if ("localhost" in base_url or "127.0.0.1" in base_url) and '/v1/' in base_url:
+            try:
+                # For llama.cpp, just check if port is open
+                import socket
+                from urllib.parse import urlparse
+
+                parsed = urlparse(base_url)
+                host = parsed.hostname or '127.0.0.1'
+                port = parsed.port or (443 if parsed.scheme == 'https' else 80)
+
+                logger.info(f"Checking connection to {host}:{port}...")
+                sock = socket.create_connection((host, port), timeout=5)
+                sock.close()
+                logger.info(f"✓ Port {port} is open for {base_url}")
+                return True
+            except Exception as e:
+                logger.error(f"Port check failed for {base_url}: {e}")
+                return False
+
+        # Check for Ollama API
+        elif '/api/' in base_url or base_url.endswith('/api'):
+            try:
+                tags_url = f"{base_url}/tags"
                 response = requests.get(tags_url, timeout=5)
                 return response.status_code == 200
-            else:
-                # For remote endpoints, just try a simple call
+            except Exception as e:
+                logger.error(f"Ollama check failed: {e}")
+                return False
+
+        # For remote endpoints, try available models
+        else:
+            try:
                 return len(self.get_available_models()) > 0
-        except:
-            return False
+            except Exception as e:
+                logger.error(f"Remote endpoint check failed: {e}")
+                return False
 
     def get_available_models(self) -> List[str]:
         """Get list of available models."""
