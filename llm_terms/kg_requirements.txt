@@ -1,0 +1,27 @@
+# CDM Knowledge Graph Pipeline - Python Dependencies
+# Install with: pip install -r kg_requirements.txt
+
+# Core scientific computing
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Graph operations
+networkx>=3.1
+python-louvain>=0.16
+
+# HTTP requests
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Optional: UMLS enrichment (requires UMLS data installation)
+# quickumls>=1.5.0
+
+# Visualization dependencies (for Phase 4)
+# These are bundled in the HTML but needed for graph export
+matplotlib>=3.7.0
+
+# LLM client
+llama-cpp-python[server]>=0.2.0
+
+# Data handling
+pandas>=2.0.0
