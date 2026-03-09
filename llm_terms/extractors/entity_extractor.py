@@ -35,21 +35,25 @@ TEXT:
 Return ONLY a JSON array with objects containing:
 {{
   "entity": "extracted term",
-  "entity_type": "one of: ORGANISM|GENE|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|BIOINFO_TOOL|GENOMICS|CLINICAL",
+  "entity_type": "one of: ORGANISM|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|SAMPLE_METHOD|LAB_METHOD|DATA_ANALYSIS|PATHWAY|EXPERIMENTAL_METHOD|STUDY_DESIGN|GENOMICS|CLINICAL",
   "context": "brief context or description"
 }}
 
 CDM Entity Types and Examples:
-- ORGANISM: Bacteria, archaea, fungi, viruses, taxa (e.g., "Bacteroides fragilis", "E. coli", "Firmicutes", "Archaea")
-- GENE: Gene names, genetic markers, transcription factors (e.g., "IL6", "TNF-alpha", "TLR4", "NF-kB", "p53")
+- ORGANISM: Bacteria, archaea, fungi, viruses, taxa, microbiota (e.g., "Bacteroides fragilis", "E. coli", "Firmicutes", "gut microbiota", "microbiome")
 - PROTEIN: Proteins, enzymes, receptors, antibodies (e.g., "butyrate kinase", "lipopolysaccharide", "cytokine", "immunoglobulin")
-- CHEMICAL: Metabolites, SCFAs, compounds, biochemical substances (e.g., "butyrate", "propionate", "glucose", "amino acids")
-- DISEASE: Diseases, conditions, disorders, syndromes (e.g., "ulcerative colitis", "Crohn's disease", "diabetes", "cancer")
-- DNA_RNA: Genetic material, sequences, nucleic acids (e.g., "16S rRNA", "bacterial DNA", "mRNA", "mitochondrial DNA")
+- CHEMICAL: Metabolites, SCFAs, compounds, biochemical substances (e.g., "butyrate", "propionate", "glucose", "amino acids", "TMAO")
+- DISEASE: Diseases, conditions, disorders, syndromes (e.g., "ulcerative colitis", "Crohn's disease", "diabetes", "cancer", "obesity")
+- DNA_RNA: Genetic material, sequences, nucleic acids (e.g., "16S rRNA", "bacterial DNA", "mRNA", "mitochondrial DNA", "V4 region")
 - CELL_TYPE: Cell types, immune cells, tissue types (e.g., "macrophages", "T-cells", "epithelial cells", "stem cells")
-- BIOINFO_TOOL: Bioinformatics tools, software, databases (e.g., "BLAST", "Qiime", "MetaPhlAn", "shotgun sequencing")
-- GENOMICS: Genomics, omics technologies (e.g., "genomics", "transcriptomics", "proteomics", "metabolomics")
-- CLINICAL: Clinical terms, medical procedures, treatments (e.g., "therapy", "diagnosis", "clinical trial", "medication")
+- SAMPLE_METHOD: Sample collection methods (e.g., "fecal samples", "oral gavage", "blood collection", "tissue biopsy")
+- LAB_METHOD: Laboratory techniques and instruments (e.g., "Illumina MiSeq", "PCR", "sequencing", "mass spectrometry", "GC-MS", "LC-MS")
+- DATA_ANALYSIS: Statistical and bioinformatics analysis methods (e.g., "OTUs", "UniFrac", "PCoA", "PERMANOVA", "Random Forests", "Shannon diversity")
+- PATHWAY: Metabolic and signaling pathways (e.g., "glycolysis", "TCA cycle", "butyrate synthesis", "fatty acid metabolism")
+- EXPERIMENTAL_METHOD: Experimental procedures (e.g., "calorie restriction", "cohousing", "fecal transplantation", "dietary intervention")
+- STUDY_DESIGN: Study design terms (e.g., "case-control", "longitudinal", "CRON", "AMER", "twin cohort")
+- GENOMICS: Genomics and omics technologies (e.g., "metagenomics", "phylogenetics", "gene content", "functional diversity")
+- CLINICAL: Clinical terms and treatments (e.g., "probiotics", "antibiotics", "nutritional therapy", "BMI", "biomarkers")
 
 Requirements:
 1. Extract ALL relevant biomedical entities
@@ -126,7 +130,11 @@ Requirements:
                             
                             # Map type
                             entity_type = self._map_hallucinated_type(entity_type)
-                            
+
+                            # REJECT GENE entities - LLMs keep hallucinating this type
+                            if entity_type == 'GENE':
+                                continue
+
                             if self._validate_entity(term, entity_type):
                                 entities.append({
                                     'entity': term,
@@ -186,7 +194,11 @@ Requirements:
                     
                     # Map hallucinated types
                     entity_type = self._map_hallucinated_type(entity_type)
-                
+
+                    # REJECT GENE entities - LLMs keep hallucinating this type
+                    if entity_type == 'GENE':
+                        continue
+
                     # Parse extra fields
                     definition = ""
                     aliases = []
@@ -242,7 +254,6 @@ Requirements:
             'BACTERIA': 'ORGANISM',
             'SPECIES': 'ORGANISM',
             'MICROBE': 'ORGANISM',
-            'GENES': 'GENE',
             'PROTEINS': 'PROTEIN',
             'METABOLITE': 'CHEMICAL',
             'COMPOUND': 'CHEMICAL',
@@ -277,64 +288,197 @@ Requirements:
         stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
         if term.lower() in stop_words:
             return False
-            
+
+        # Convert to lowercase once for all comparisons
+        term_lower = term.lower()
+
+        # Noise terms to filter out (common non-entity terms)
+        noise_terms = {
+            'et al', 'figure', 'fig', 'table', 'supplemental', 'supplementary',
+            'data', 'study', 'analysis', 'result', 'results', 'method', 'methods',
+            'significant', 'significantly', 'associated', 'correlation', 'p-value',
+            'abstract', 'introduction', 'discussion', 'conclusion', 'materials',
+            'background', 'objective', 'design', 'setting', 'participants', 'measures',
+            'compared', 'versus', 'vs', 'respectively', 'however', 'therefore', 'thus',
+            'hence', 'although', 'though', 'whereas', 'whether', 'while', 'during',
+            'following', 'before', 'after', 'between', 'among', 'within', 'without',
+            'according', 'based', 'using', 'used', 'including', 'included', 'excluding'
+        }
+
         # Check for Author names and Affiliations (Junk filtering)
-        if 'et al' in term.lower():
+        if 'et al' in term_lower:
             return False
-            
-        # Reject if term is in artifacts
-        if term.lower() in ['none', 'n/a', 'null', 'unknown']:
+
+        # Check for these terms (case-insensitive)
+        if term_lower in noise_terms:
             return False
-            
+
+        # Check for terms that are just numbers with common units
+        if re.match(r'^[\d\.]+\s*(?:mg|ml|ug|ng|mm|cm|kg|hr|min|sec|day|week|month|year|%|fold|log2|ratio)$', term):
+            return False
+
+        # Check for general scientific methods that are not entities
+        if entity_type in ['DATA_ANALYSIS', 'EXPERIMENTAL_METHOD', 'STUDY_DESIGN']:
+            if any(kw in term_lower for kw in ['method', 'analysis', 'protocol', 'technique', 'approach', 'study', 'design']):
+                 return False
+
+        # Additional patterns for tool/software/algorithm filtering (case-insensitive)
+        tool_patterns = [
+            r'.*algorithm.*', r'.*software.*', r'.*package.*', r'.*pipeline.*',
+            r'.*tool.*', r'.*database.*', r'.*web_tool.*', r'.*web_application.*',
+            r'.*r_package.*', r'.*python_package.*', r'.*toolchain.*', r'.*framework.*',
+            r'.*approach.*', r'.*strategy.*', r'.*system.*', r'.*platform.*',
+            r'.*principle.*', r'.*concept.*', r'.*process.*', r'.*technique.*',
+            r'.*assay.*', r'.*kit.*', r'.*panel.*', r'.*array.*', r'.*sequencing_method.*',
+            r'.*omics_method.*', r'.*microbiome_analyst.*', r'.*uparse.*',
+            r'.*corrplot.*', r'.*bestglm.*', r'.*deseq2.*', r'.*qiime2.*', r'.*dada2.*',
+            r'.*mothur.*', r'.*silva.*', r'.*greengenes.*', r'.*unifrac.*', r'.*bray_curtis.*',
+            r'.*pca.*', r'.*random_forest.*', r'.*kegg.*', r'.*tigr.*', r'.*blast.*',
+            r'.*hmmer.*', r'.*fastq.*', r'.*samtools.*', r'.*bowtie2.*', r'.*bwa.*',
+            r'.*macs2.*', r'.*trimmomatic.*', r'.*snps.*', r'.*indel.*', r'.*mutation.*',
+            r'.*genomic_region.*', r'.*exome.*', r'.*genome.*', r'.*transcriptome.*',
+            r'.*proteome.*', r'.*metabolome.*', r'.*lipidome.*', r'.*epigenome.*',
+            r'.*microbiome.*', r'.*microbiota.*', r'.*microbial_community.*',
+            r'.*gut_microbiota.*', r'.*bacterial_community.*', r'.*archaeal_community.*',
+            r'.*fungal_community.*', r'.*viral_community.*', r'.*pathogen.*', r'.*commensal.*',
+            r'.*probiotic.*', r'.*prebiotic.*', r'.*antibiotic.*', r'.*antimicrobial.*',
+            r'.*dysbiosis.*', r'.*eubiosis.*', r'.*health.*', r'.*disease.*',
+            r'.*syndrome.*', r'.*condition.*', r'.*disorder.*', r'.*phenotype.*',
+            r'.*genotype.*', r'.*haplotype.*', r'.*genotype_phenotype.*', r'.*meta_analysis.*'
+        ]
+
+        if any(re.match(pattern, term_lower) for pattern in tool_patterns):
+            return False
+
         return True
 
 
     def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
         """Generate specific prompt for each extraction pass."""
-        
-        system_context = """You are a comprehensive biomedical terminology extractor. Extract ALL concrete scientific terms from the text including bioinformatics, molecules, chemicals, organisms, species, and technical biomedical terms.
 
-CRITICAL RULES:
-1. Extract ALL biomedical terms: bioinformatics tools, molecules, chemicals, organisms, species, technical terms
-2. Include terms from ALL biomedical domains: molecular biology, biochemistry, genetics, bioinformatics, pharmacology, etc.
-3. NEVER extract your own instructions, notes, or conversational phrases
-4. ONLY extract terms that would be valid entries in a biomedical ontology
-5. Be EXTREMELY COMPREHENSIVE - extract any term that appears biomedical or technical in nature.
-6. Do not filter out terms because they seem "too common" or "generic". If it is scientific, extract it.
+        # Few-shot examples for each entity type to prevent misclassification
+        entity_examples = """
+EXAMPLES OF CORRECT ENTITY CLASSIFICATION:
 
-VALID CATEGORIES TO EXTRACT:
-- ALL biological entities (organisms, species, genera, phyla)
-- ALL chemical compounds, metabolites, molecules
-- ALL molecular biology terms (genes, proteins, pathways, enzymes)
-- ALL bioinformatics tools, methods, and pipelines
-- ALL sequencing technologies and omics platforms
-- ALL statistical and computational methods
-- ALL medical, clinical, and pharmaceutical terms
-- ALL laboratory methods and techniques
-- ALL anatomical and physiological terms
-- ANY technical biomedical term
+ORGANISM (microbes, animals, humans):
+- "Bacteroides thetaiotaomicron" → ORGANISM
+- "Faecalibacterium prausnitzii" → ORGANISM
+- "C57BL/6J mice" → ORGANISM
+- "Ruminococcus sp. Ce2" → ORGANISM
+- "Bilophila wadsworthia" → ORGANISM
+
+CHEMICAL (metabolites, compounds, molecules):
+- "TMAO" → CHEMICAL
+- "propionate" → CHEMICAL
+- "acetate" → CHEMICAL
+- "succinate" → CHEMICAL
+- "lactate" → CHEMICAL
+- "bile acids" → CHEMICAL
+- "chiro-inositol" → CHEMICAL
+- "alpha-ketoglutarate" → CHEMICAL
+
+PROTEIN (specific named proteins):
+- "insulin" → PROTEIN
+- "amylase" → PROTEIN
+- "TLR4" → PROTEIN
+
+DISEASE:
+- "atherosclerosis" → DISEASE
+- "type 2 diabetes" → DISEASE
+- "colorectal cancer" → DISEASE
+
+DNA_RNA:
+- "16S rRNA" → DNA_RNA
+- "V4 region" → DNA_RNA
+- "23S rRNA gene" → DNA_RNA
+
+SAMPLE_METHOD (sample collection/prep):
+- "fecal sampling" → SAMPLE_METHOD
+- "bead beating" → SAMPLE_METHOD
+- "frozen at -80°C" → SAMPLE_METHOD
+- "RNAlater" → SAMPLE_METHOD
+
+LAB_METHOD (lab techniques):
+- "Illumina MiSeq" → LAB_METHOD
+- "qPCR" → LAB_METHOD
+- "V4 region PCR" → LAB_METHOD
+- "flow cytometry" → LAB_METHOD
+- "Nanopore sequencing" → LAB_METHOD
+
+DATA_ANALYSIS (statistics/bioinformatics):
+- "PERMANOVA" → DATA_ANALYSIS
+- "Bray-Curtis" → DATA_ANALYSIS
+- "Random Forest" → DATA_ANALYSIS
+- "QIIME2" → DATA_ANALYSIS
+- "Linear mixed-effects models" → DATA_ANALYSIS
+
+EXPERIMENTAL_METHOD:
+- "calorie restriction" → EXPERIMENTAL_METHOD
+- "cohousing" → EXPERIMENTAL_METHOD
+- "oral gavage" → EXPERIMENTAL_METHOD
+
+PATHWAY:
+- "glycolysis" → PATHWAY
+- "TCA cycle" → PATHWAY
+- "bile acid metabolism" → PATHWAY
+
+STUDY_DESIGN:
+- "case-control" → STUDY_DESIGN
+- "longitudinal cohort" → STUDY_DESIGN
+- "CRON diet" → STUDY_DESIGN
+
+CLINICAL:
+- "BMI" → CLINICAL
+- "blood pressure" → CLINICAL
+- "nutrient intake" → CLINICAL
+
+GENOMICS:
+- "metagenomics" → GENOMICS
+- "metatranscriptomics" → GENOMICS
+- "whole genome sequencing" → GENOMICS
+"""
+
+        system_context = f"""You are an expert biomedical NER (Named Entity Recognition) system. Your task is to extract and classify biomedical entities with HIGH PRECISION.
+
+CRITICAL CLASSIFICATION RULES (READ CAREFULLY):
+6. When uncertain, use the entity's CONTEXT and SCIENTIFIC DOMAIN to classify correctly
+
+{entity_examples}
+
+EXTRACTION RULES:
+1. Extract ALL concrete biomedical entities from the text
+2. Classify each entity into its correct type using the examples above
+3. Pay attention to suffixes and prefixes:
+   - Words ending in "-ate", "-ol", "-ine", "-ic acid" → likely CHEMICAL
+   - Words ending in "-ase" → likely ENZYME/PROTEIN
+   - Latin binomials (Genus species) → ORGANISM
+   - Words starting with "PCR", "sequencing", "analysis" → METHODS
+4. Include terms from ALL biomedical domains
+5. NEVER extract your own instructions or conversational phrases
 
 OUTPUT: Return ONLY a JSON array with objects containing:
-{
+{{
   "entity": "extracted term",
-  "entity_type": "one of: ORGANISM|GENE|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|BIOINFO_TOOL|GENOMICS|CLINICAL|SCIENTIFIC_TERM",
-  "context": "brief context or description"
-}"""
+  "entity_type": "one of: ORGANISM|PROTEIN|CHEMICAL|DISEASE|DNA_RNA|CELL_TYPE|SAMPLE_METHOD|LAB_METHOD|DATA_ANALYSIS|PATHWAY|EXPERIMENTAL_METHOD|STUDY_DESIGN|GENOMICS|CLINICAL",
+  "context": "brief description"
+}}"""
 
         if pass_num == 1:
             return f"""{system_context}
 
-EXTRACTION GOAL: Extract ALL biological entities, organisms, species, and taxonomic terms from the text.
+EXTRACTION GOAL: Extract ALL biological organisms and taxonomic entities.
 
-FOCUS ON:
-- ALL bacterial, archaeal, fungal genera and species mentioned
-- ALL viral strains and types mentioned
-- ALL eukaryotic organisms mentioned (human, mouse, rat, etc.)
-- ALL taxonomic ranks and classifications mentioned
-- ANY organism names that appear in the text
-- Species names, genus names, family names, etc.
+FOCUS ON - ORGANISM type:
+- Bacterial species: "Bacteroides thetaiotaomicron", "Faecalibacterium prausnitzii"
+- Bacterial genera: "Bacteroides", "Prevotella", "Ruminococcus"
+- Fungi: "Candida albicans", "Saccharomyces"
+- Viruses: "influenza A", "bacteriophage"
+- Animals: "C57BL/6J mice", "gnotobiotic mice", " Sprague-Dawley rats"
+- Humans: "human subjects", "patients"
 
-IMPORTANT: Extract ALL biological entities you find, not just microbiome-related.
+CLASSIFICATION RULES:
+- Use ORGANISM for all living things
+- Include strain names: "Ruminococcus sp. Ce2" → ORGANISM
 
 TEXT:
 {chunk_text}"""
@@ -342,18 +486,25 @@ TEXT:
         elif pass_num == 2:
             return f"""{system_context}
 
-EXTRACTION GOAL: Extract ALL chemical compounds, metabolites, molecules, and biochemical terms from the text.
+EXTRACTION GOAL: Extract ALL chemicals, metabolites, and molecular entities.
 
-FOCUS ON:
-- ALL metabolites mentioned (SCFAs, bile acids, amino acids, lipids, etc.)
-- ALL drugs, pharmaceuticals, compounds mentioned
-- ALL proteins, enzymes, hormones, neurotransmitters mentioned
-- ALL genes, DNA, RNA molecules mentioned
-- ALL metabolic pathways and processes mentioned
-- ANY chemical or molecular entity that appears in the text
-- Small molecules, large molecules, organic compounds, inorganic compounds
+FOCUS ON - CHEMICAL type:
+- Short-chain fatty acids: "acetate", "propionate", "butyrate", "succinate"
+- Bile acids: "cholic acid", "deoxycholic acid"
+- Amino acids: "leucine", "isoleucine", "tryptophan"
+- Sugars: "glucose", "inositol", "pinitol"
+- Metabolites: "TMAO", "lactate", "pyruvate", "citrate"
+- Compounds: "alpha-ketoglutarate", "methylmalonyl-CoA"
 
-IMPORTANT: Extract ALL chemical and molecular terms you find.
+FOCUS ON - PROTEIN type:
+- Enzymes: "amylase", "protease", "lipase"
+- Proteins: "insulin", "glucagon", "cytokine"
+- NOT generic terms
+
+CLASSIFICATION RULES:
+- Metabolites ending in "-ate", "-ol", "-ic acid" → CHEMICAL
+- Enzymes ending in "-ase" → PROTEIN (or CHEMICAL if metabolic)
+- Gene names usually include "gene" or are specific symbols: "lct gene"
 
 TEXT:
 {chunk_text}"""
@@ -361,29 +512,35 @@ TEXT:
         elif pass_num == 3:
             return f"""{system_context}
 
-EXTRACTION GOAL: Extract ALL methodological and technical terms, classifying them into these 3 categories:
+EXTRACTION GOAL: Extract ALL methodological terms - classify carefully into 3 categories:
 
-1. SAMPLE_METHOD:
-   - Sample collection (e.g., "fecal sampling", "swabs")
-   - Transport & Storage (e.g., "frozen at -80C", "RNAlater")
-   - DNA/RNA Extraction (e.g., "PowerSoil Kit", "bead beating")
+1. SAMPLE_METHOD (sample collection/prep):
+   - "fecal sampling" → SAMPLE_METHOD
+   - "bead beating" → SAMPLE_METHOD
+   - "frozen at -80°C" → SAMPLE_METHOD
+   - "RNAlater" → SAMPLE_METHOD
+   - "oral gavage" → SAMPLE_METHOD
 
-2. LAB_METHOD:
-   - Library Preparation (e.g., "Nextera XT", "V4 region PCR")
-   - Sequencing Platforms (e.g., "Illumina MiSeq", "Nanopore")
-   - Wet-lab techniques (e.g., "qPCR", "flow cytometry")
+2. LAB_METHOD (wet lab techniques):
+   - "Illumina MiSeq" → LAB_METHOD
+   - "qPCR" → LAB_METHOD
+   - "V4 region PCR" → LAB_METHOD
+   - "flow cytometry" → LAB_METHOD
+   - "Nanopore sequencing" → LAB_METHOD
+   - "Nextera XT" → LAB_METHOD (kit)
+   - "GC-MS" → LAB_METHOD
 
-3. DATA_ANALYSIS:
-   - Bioinformatics Tools (e.g., "QIIME2", "Mothur", "DADA2")
-   - Databases (e.g., "SILVA", "GreenGenes", "KEGG")
-   - Statistical Methods (e.g., "Bray-Curtis", "PERMANOVA", "Random Forest")
+3. DATA_ANALYSIS (computational/statistical methods):
+   - "PERMANOVA" → DATA_ANALYSIS
+   - "Bray-Curtis" → DATA_ANALYSIS
+   - "Random Forest" → DATA_ANALYSIS
+   - "QIIME2" → DATA_ANALYSIS
+   - "Linear mixed-effects models" → DATA_ANALYSIS
+   - "Shannon diversity" → DATA_ANALYSIS
 
-FOCUS ON:
-- Capturing the specific commercial names of kits and tools (e.g., "QIAamp DNA Stool Mini Kit").
-- Capturing specific sequencing regions (e.g., "V3-V4").
-- Capturing software versions if mentioned.
-
-IMPORTANT: You MUST classify each term into one of these 3 types (`SAMPLE_METHOD`, `LAB_METHOD`, `DATA_ANALYSIS`).
+CRITICAL RULES:
+- Kits are LAB_METHOD, not CHEMICAL
+- Be precise with the 3 categories
 
 TEXT:
 {chunk_text}"""
@@ -391,17 +548,39 @@ TEXT:
         elif pass_num == 4:
             return f"""{system_context}
 
-EXTRACTION GOAL: Extract ALL medical, clinical, pharmaceutical, and disease-related terms from the text.
+EXTRACTION GOAL: Extract ALL diseases, clinical terms, and pathways.
 
-FOCUS ON:
-- ALL diseases, disorders, and medical conditions mentioned
-- ALL drugs, pharmaceuticals, and treatments mentioned
-- ALL clinical procedures and diagnostic methods mentioned
-- ALL anatomical terms and body systems mentioned
-- ALL physiological processes and pathways mentioned
-- ANY medical or clinical term that appears in the text
+FOCUS ON - DISEASE type:
+- "atherosclerosis" → DISEASE
+- "type 2 diabetes" → DISEASE
+- "colorectal cancer" → DISEASE
+- "inflammatory bowel disease" → DISEASE
+- "obesity" → DISEASE
 
-IMPORTANT: Extract ALL medical and clinical terms you find.
+FOCUS ON - PATHWAY type:
+- "glycolysis" → PATHWAY
+- "TCA cycle" → PATHWAY
+- "bile acid metabolism" → PATHWAY
+- "fatty acid oxidation" → PATHWAY
+
+FOCUS ON - EXPERIMENTAL_METHOD:
+- "calorie restriction" → EXPERIMENTAL_METHOD
+- "cohousing" → EXPERIMENTAL_METHOD
+- "high-fat diet" → EXPERIMENTAL_METHOD
+
+FOCUS ON - STUDY_DESIGN:
+- "case-control" → STUDY_DESIGN
+- "longitudinal" → STUDY_DESIGN
+- "randomized controlled trial" → STUDY_DESIGN
+- "CRON diet" → STUDY_DESIGN
+
+FOCUS ON - CLINICAL:
+- "BMI" → CLINICAL
+- "blood pressure" → CLINICAL
+- "nutrient intake" → CLINICAL
+- "body weight" → CLINICAL
+
+CRITICAL RULES:
 
 TEXT:
 {chunk_text}"""
@@ -410,17 +589,17 @@ TEXT:
             existing_str = ', '.join(existing_terms[:30]) if existing_terms else "None"
             return f"""{system_context}
 
-EXTRACTION GOAL: Extract ANY remaining biomedical terms from ALL categories that haven't been captured yet.
+EXTRACTION GOAL: Final comprehensive sweep - extract ANY remaining biomedical terms.
 
 LOOK FOR:
-- ANY scientific term related to biology, medicine, chemistry, biochemistry
-- ANY technical term mentioned in the text
-- ANY domain-specific terminology that appears biomedical
-- ANY term that could be part of a biomedical ontology
-- Laboratory techniques, experimental methods, analytical approaches
-- ANY term from biomedical research that you haven't extracted yet
+- DNA/RNA terms: "16S rRNA", "V4 region", "23S rRNA gene" → DNA_RNA
+- Genomics terms: "metagenomics", "metatranscriptomics" → GENOMICS
+- Cell types: "macrophages", "T-cells", "enterocytes" → CELL_TYPE
+- Any remaining organisms, chemicals, methods
 
-TERMS ALREADY EXTRACTED (examples):
+REMEMBER CLASSIFICATION RULES:
+
+TERMS ALREADY EXTRACTED:
 {existing_str}
 
 TEXT:
@@ -429,14 +608,12 @@ TEXT:
         elif pass_num == 6:
             return f"""{system_context}
 
-EXTRACTION GOAL: AGGRESSIVELY extract ANY biomedical terms.
-BE VERY INCLUSIVE:
-- Extract ANY term that sounds scientific, technical, or biomedical
-- Include method names, technique names, approach names
-- Include any compound, molecule, or chemical mentioned
-- Include any organism, species, or biological entity
-- Include any computational, statistical, or analytical method
-- Include any medical, clinical, or pharmaceutical term
+EXTRACTION GOAL: AGGRESSIVE final sweep - extract ANY biomedical terms.
+
+BE VERY INCLUSIVE BUT ACCURATE:
+- Extract ANY scientific, technical, or biomedical term
+- Double-check classifications:
+- Use the examples from system context to guide classification
 
 TEXT:
 {chunk_text}"""

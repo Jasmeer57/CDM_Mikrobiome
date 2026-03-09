@@ -116,70 +116,90 @@ class CDMEntityPipeline:
 
         all_entities = []
         text_len = len(text)
-        
-        # Define Windows (from Reference Script)
-        # Pass 1: 0-8000
-        # Pass 2: 0-8000
-        # Pass 3: 10000-18000 (or 0-8000 if short)
-        # Pass 4: 15000-23000 (or 0-8000 if short)
-        # Pass 5: 20000-28000 (or 0-8000 if short)
-        # Pass 6: 25000-35000 (or 0-8000 if short)
-        
-        # Helper to get safe window
-        def get_window(start, length):
-            if text_len < start: return ""
-            end = min(start + length, text_len)
-            return text[start:end]
+        window_size = 8000  # Process 8K chunks
+        overlap = 0  # No overlap, sequential coverage
 
-        # Prepare Pass Data
-        pass_configs = [
-            (text[0:8000], 1),
-            (text[0:8000], 2),
-            (get_window(10000, 8000) if text_len > 10000 else text[0:min(text_len, 8000)], 3),
-            (get_window(15000, 8000) if text_len > 15000 else text[0:min(text_len, 8000)], 4)
-        ]
+        # Create sliding windows to cover entire paper
+        # Calculate number of windows needed
+        num_windows = (text_len + window_size - 1) // window_size
 
-        # Run Passes 1-4 in Parallel
-        logger.info(f"🔄 Running Passes 1-4 in parallel ({len(pass_configs)} tasks)...")
+        logger.info(f"📊 Paper requires {num_windows} windows of {window_size} chars each")
+        logger.info(f"   Coverage: {num_windows * window_size} chars ({(num_windows * window_size / text_len * 100):.1f}% of paper)")
+
+        # Create window configurations
+        # First 4 passes use different strategies on the same windows
+        pass_configs = []
+
+        # Add windows for Pass 1-4 (parallel processing)
+        for window_idx in range(min(4, num_windows)):  # First 4 windows
+            start_pos = window_idx * window_size
+            end_pos = min(start_pos + window_size, text_len)
+            window_text = text[start_pos:end_pos]
+
+            # Pass 1: Standard extraction
+            pass_configs.append((window_text, 1, window_idx + 1))
+            # Pass 2: Alternative strategy on same window
+            pass_configs.append((window_text, 2, window_idx + 1))
+            # Pass 3: Another strategy
+            pass_configs.append((window_text, 3, window_idx + 1))
+            # Pass 4: Another strategy
+            pass_configs.append((window_text, 4, window_idx + 1))
+
+        logger.info(f"🔄 Running {len(pass_configs)} extraction passes in parallel (max 4 workers)...")
+
+        # Run passes in parallel (limit to 4 concurrent)
         with ThreadPoolExecutor(max_workers=4) as executor:
-            futures = [
-                executor.submit(self.extractor.run_extraction_pass, (p_text, p_num, []))
-                for p_text, p_num in pass_configs
-                if p_text.strip() # Only run if text is not empty
-            ]
-            
+            futures = {}
+            for config in pass_configs:
+                if config[0].strip():  # Only run if text is not empty
+                    future = executor.submit(self.extractor.run_extraction_pass, (config[0], config[1], []))
+                    futures[future] = config
+
+            # Collect results as they complete
             for future in as_completed(futures):
                 try:
                     pass_entities = future.result()
                     all_entities.extend(pass_entities)
+                    p_num = futures[future][1]
+                    logger.info(f"✅ Pass {p_num} found {len(pass_entities)} entities")
                 except Exception as e:
                     logger.error(f"Error in extraction pass: {e}")
 
-        # Collect unique terms so far for Pass 5 context
+        # Collect unique terms
         unique_terms = list(set([e['entity'] for e in all_entities]))
-        logger.info(f"📊 Terms after Passes 1-4: {len(unique_terms)}")
+        logger.info(f"📊 Terms after parallel passes: {len(unique_terms)}")
 
-        # Conditional Pass 5 (Catch-all)
-        if len(unique_terms) < 100:
-            logger.info("⚠️  Term count low. Running Pass 5 (Catch-all)...")
-            p5_text = get_window(20000, 8000) if text_len > 20000 else text[0:min(text_len, 8000)]
-            if p5_text.strip():
-                p5_entities = self.extractor.run_extraction_pass((p5_text, 5, unique_terms))
-                all_entities.extend(p5_entities)
+        # Conditional Pass 5 (Catch-all) - if we need more coverage
+        if len(unique_terms) < 100 and num_windows > 4:
+            logger.info("⚠️  Term count low. Running Pass 5 (Catch-all) on remaining windows...")
+            for window_idx in range(4, num_windows):
+                start_pos = window_idx * window_size
+                end_pos = min(start_pos + window_size, text_len)
+                window_text = text[start_pos:end_pos]
+                if window_text.strip():
+                    p5_entities = self.extractor.run_extraction_pass((window_text, 5, unique_terms))
+                    all_entities.extend(p5_entities)
+                    logger.info(f"✅ Pass 5 on window {window_idx+1} found {len(p5_entities)} entities")
+                    unique_terms = list(set([e['entity'] for e in all_entities]))
 
-        # Conditional Pass 6 (Aggressive)
+        # Conditional Pass 6 (Aggressive) - if still too few
         unique_terms = list(set([e['entity'] for e in all_entities]))
         if len(unique_terms) < 50:
-            logger.info("⚠️  Term count still low. Running Pass 6 (Aggressive)...")
-            p6_text = get_window(25000, 10000) if text_len > 25000 else text[0:min(text_len, 10000)]
-            if p6_text.strip():
-                p6_entities = self.extractor.run_extraction_pass((p6_text, 6, []))
-                all_entities.extend(p6_entities)
+            logger.info("⚠️  Term count still low. Running Pass 6 (Aggressive) on remaining windows...")
+            for window_idx in range(4, num_windows):
+                start_pos = window_idx * window_size
+                end_pos = min(start_pos + window_size, text_len)
+                window_text = text[start_pos:end_pos]
+                if window_text.strip():
+                    p6_entities = self.extractor.run_extraction_pass((window_text, 6, []))
+                    all_entities.extend(p6_entities)
+                    logger.info(f"✅ Pass 6 on window {window_idx+1} found {len(p6_entities)} entities")
 
         # Post-process entities with semantic deduplication
         processed_entities = self.post_process_entities(all_entities, use_semantic=True)
 
         logger.info(f"✅ Extraction complete: {len(processed_entities)} unique entities")
+        logger.info(f"✅ Processed {num_windows * window_size} characters ({(num_windows * window_size / text_len * 100):.1f}% coverage)")
         return processed_entities
 
     def post_process_entities(self, entities: List[Dict], use_semantic: bool = False) -> List[Dict]:
@@ -258,9 +278,12 @@ class CDMEntityPipeline:
 
         # Apply comprehensive entity filtering and quality control
         logger.info("🔍 Applying comprehensive entity filtering and quality control...")
-        filtered_entities = self.entity_filter.apply_comprehensive_filtering(unique_entities)
-        logger.info(f"✅ Comprehensive filtering: {len(unique_entities)} → {len(filtered_entities)} high-quality entities")
-        
+        # DISABLED for benchmarking - use raw extracted entities with minimal filtering
+        # filtered_entities = self.entity_filter.apply_comprehensive_filtering(unique_entities)
+        # Only apply basic validation (remove GENE entities, exact duplicates)
+        filtered_entities = self.entity_filter.remove_exact_duplicates(unique_entities)
+        logger.info(f"✅ Minimal filtering (no comprehensive): {len(unique_entities)} → {len(filtered_entities)} entities")
+
         # Calculate Term Frequencies (Consensus check)
         term_counts = {}
         # Count from original raw entities to see extraction consensus

@@ -250,12 +250,12 @@ class CDMEntityConfig:
         }
     }
 
-    # Chunking strategies - Optimized for Yield (Balanced context)
+    # Chunking strategies - Optimized for full paper processing
     CHUNK_SIZES = {
-        'small': 4000,    
-        'medium': 8000,  
-        'large': 12000,   
-        'xlarge': 15000    
+        'small': 4000,
+        'medium': 8000,
+        'large': 20000,   # Increased from 12000
+        'xlarge': 100000  # Increased to process full papers (~50-100k chars)
     }
 
     OVERLAP_RATIOS = {
@@ -333,19 +333,25 @@ class CDMEntityConfig:
             'timeout': 3000,
             'num_ctx': 128000
         },
+        'phi4:14b': {
+            'max_tokens': 16000,  # Large output for 500-700 entities
+            'temperature': 0.1,
+            'timeout': 1800,      # 30 minutes per paper
+            'num_ctx': 128000     # 128k context for full papers
+        },
     }
 
     @classmethod
     def get_chunk_size(cls, text_length: int) -> int:
-        """Get optimal chunk size based on text length."""
+        """Get optimal chunk size based on text length - favor full paper processing."""
         if text_length < 10000:
             return cls.CHUNK_SIZES['small']
-        elif text_length < 50000:
+        elif text_length < 30000:  # Lowered from 50000
             return cls.CHUNK_SIZES['medium']
-        elif text_length < 100000:
+        elif text_length < 60000:  # Lowered from 100000
             return cls.CHUNK_SIZES['large']
         else:
-            return cls.CHUNK_SIZES['xlarge']
+            return cls.CHUNK_SIZES['xlarge']  # 100k for very large papers
 
     @classmethod
     def get_overlap(cls, chunk_size: int) -> int:
@@ -362,12 +368,12 @@ class CDMEntityConfig:
 @dataclass
 class PipelineConfig:
     """Main pipeline configuration."""
-    default_model: str = "qwen3:8b"
+    default_model: str = "phi4:14b"  # Changed to phi4:14b for better biomedical understanding
     default_base_url: str = os.environ.get("LLM_BASE_URL", "http://localhost:11434")
     max_workers: int = 5
     max_file_workers: int = 1
-    max_entities: int = 500
-    min_confidence: float = 0.4
+    max_entities: int = 1000  # Increased from 500 to get 500-700 entities per paper
+    min_confidence: float = 0.3  # Lowered from 0.4 to get more entities
 
 @dataclass
 class BioMistralConfig:
@@ -1268,7 +1274,11 @@ class CDMEntityExtractor:
                             
                             # Map type
                             entity_type = self._map_hallucinated_type(entity_type)
-                            
+
+                            # REJECT GENE entities - LLMs consistently misclassify as GENE
+                            if entity_type == 'GENE':
+                                continue
+
                             if self._validate_entity(term, entity_type):
                                 entities.append({
                                     'entity': term,
@@ -1321,7 +1331,11 @@ class CDMEntityExtractor:
                     
                     # Map hallucinated types
                     entity_type = self._map_hallucinated_type(entity_type)
-                    
+
+                    # REJECT GENE entities - LLMs consistently misclassify as GENE
+                    if entity_type == 'GENE':
+                        continue
+
                     # Parse extra fields
                     definition = ""
                     aliases = []
@@ -1547,32 +1561,70 @@ class CDMEntityExtractor:
         return entity_type
 
     def _get_pass_prompt(self, pass_num: int, chunk_text: str, existing_terms: List[str] = None) -> str:
-        """Generate specific prompt for extraction."""
-        
-        return f"""You are a specialized biomedical terminology extractor. Your goal is to extract **ONLY high-value, specific terms relevant to a Microbiome Common Data Model (CDM)**.
+        """Generate specific prompt for extraction based on pass number."""
+
+        # Pass-specific instructions and focus
+        pass_configs = {
+            0: {
+                "name": "General Comprehensive",
+                "focus": "ALL biomedical entity types",
+                "categories": ["ORGANISM", "CHEMICAL", "DISEASE", "PROTEIN", "DNA_RNA", "CELL_TYPE", "SAMPLE_METHOD", "LAB_METHOD", "DATA_ANALYSIS", "GENOMICS", "CLINICAL"],
+                "target": "30-40 most important entities"
+            },
+            1: {
+                "name": "Organisms & Species",
+                "focus": "Bacteria, Archaea, Fungi, Viruses, Microbiota, Taxonomic names",
+                "categories": ["ORGANISM", "CELL_TYPE"],
+                "target": "25-35 specific organisms"
+            },
+            2: {
+                "name": "Chemicals & Metabolites",
+                "focus": "SCFAs, metabolites, drugs, compounds, substrates",
+                "categories": ["CHEMICAL"],
+                "target": "20-30 specific chemicals"
+            },
+            3: {
+                "name": "Proteins & Enzymes",
+                "focus": "Proteins, enzymes, receptors (NOT genes)",
+                "categories": ["PROTEIN"],
+                "target": "15-25 proteins/enzymes"
+            },
+            4: {
+                "name": "Diseases & Clinical",
+                "focus": "Diseases, conditions, symptoms, treatments, clinical parameters",
+                "categories": ["DISEASE", "CLINICAL"],
+                "target": "20-30 clinical entities"
+            },
+            5: {
+                "name": "Methods & Tools",
+                "focus": "Lab techniques, bioinformatics tools, databases, analysis methods",
+                "categories": ["SAMPLE_METHOD", "LAB_METHOD", "DATA_ANALYSIS", "GENOMICS"],
+                "target": "20-30 methods/tools"
+            }
+        }
+
+        config = pass_configs.get(pass_num, pass_configs[0])
+        categories_list = "\n".join(f"- {cat}" for cat in config["categories"])
+
+        existing_notice = ""
+        if existing_terms and len(existing_terms) > 0:
+            existing_notice = f"\n\nNOTE: These terms were already extracted in previous passes: {', '.join(existing_terms[:20])}. Focus on finding NEW, DIFFERENT entities not already captured.\n"
+
+        return f"""You are a specialized biomedical terminology extractor for PASS {pass_num}: {config["name"]}.
+
+PASS FOCUS: {config["focus"]}
 
 CRITICAL RULES:
-1. Extract ONLY specific biomedical terms: specific organisms (species/genus), specific metabolites/chemicals, specific genes/proteins, and specific bioinformatics tools.
+1. Extract ONLY specific biomedical terms related to this pass's focus.
 2. IGNORE generic scientific terms (e.g., "study", "analysis", "data", "results", "significant", "correlation", "p-value", "table", "figure").
-3. Aim for HIGH PRECISION. Target the top 15-25 most important entities per chunk. Do NOT list every possible noun.
+3. Aim for HIGH PRECISION. Target the top {config["target"]} per chunk. Do NOT list every possible noun.
 4. NEVER extract your own instructions, notes, or conversational phrases.
 5. IGNORE all reasoning or "thinking" processes. Output ONLY the final list.
 6. FORMAT: One term per line.
-   Format: - Term (TYPE): Brief Context | Definition: Brief definition | Aliases: Alias1, Alias2 | Examples: Ex1, Ex2
+   Format: - Term (TYPE): Brief Context | Definition: Brief definition | Aliases: Alias1, Alias2 | Examples: Ex1, Ex2{existing_notice}
 
-VALID CATEGORIES:
-- ORGANISM: Specific bacteria, viruses, fungi, taxa
-- GENE: Specific genes, markers
-- PROTEIN: Specific proteins, enzymes
-- CHEMICAL: Specific metabolites, drugs, compounds
-- DISEASE: Specific diseases, conditions
-- DNA_RNA: Specific genetic material types
-- CELL_TYPE: Specific cells, tissues
-- SAMPLE_METHOD: Sample collection, transport, storage, DNA extraction
-- LAB_METHOD: Library prep, sequencing platforms, wet-lab
-- DATA_ANALYSIS: Bioinformatics tools, databases, statistics
-- GENOMICS: Specific omics methods
-- CLINICAL: Specific clinical parameters
+VALID CATEGORIES FOR THIS PASS:
+{categories_list}
 
 TEXT TO ANALYZE:
 {chunk_text}
@@ -1587,15 +1639,19 @@ Start output immediately:
 """
 
     def extract_chunk_multi_pass(self, chunk_text: str, chunk_num: int) -> List[Dict]:
-        """Extract entities from a chunk using multi-pass strategy (Single Comprehensive Pass)."""
+        """Extract entities from a chunk using multi-pass strategy (ALL PASSES for maximum coverage)."""
         all_entities = []
-        
-        # Define passes
-        # Reduced to single comprehensive pass for efficiency as per user request
+
+        # Define passes - ALL passes for comprehensive extraction
         passes = [
-            (0, "General Comprehensive"), 
+            (0, "General Comprehensive - All entity types"),
+            (1, "Organisms & Species - Bacteria, Archaea, Fungi, Microbiota"),
+            (2, "Chemicals & Metabolites - SCFAs, Drugs, Compounds"),
+            (3, "Genes & Proteins - Genetic entities, Proteins, Enzymes"),
+            (4, "Diseases & Clinical - Conditions, Treatments, Symptoms"),
+            (5, "Methods & Tools - Lab techniques, Bioinformatics, Analysis")
         ]
-        
+
         for pass_num, pass_name in passes:
             try:
                 # logger.debug(f"   - Pass {pass_num} ({pass_name})...")

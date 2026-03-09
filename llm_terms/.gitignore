@@ -1,6 +1,6 @@
 # Ignore all txt files in data directory
 data/*.txt
-
+*plan/
 # Ignore output directories
 output/
 enhanced_output/
@@ -10,7 +10,7 @@ logs/
 *.out
 *.err
 omop_vocab
-
+benchmarking/
 # Ignore python cache
 __pycache__/
 *.pyc
@@ -136,5 +136,18 @@ microbiome_cdm.db
 pipeline_summary.txt
 outputs/*/pipeline_summary.txt
 
-knowledge_graph/
+
 *.slurm
+# Gemini CLI and Pipeline Temp Files
+temp/
+logs/
+*.log
+__pycache__/
+*.pyc
+evaluate_kg.py
+deep_critical_audit.py
+evaluation_summary.json
+cdm_entities_final_v4_consolidated.json
+validate_knowledge_graph.py
+PUBLICATION_STRATEGY.md
+!Output_final/scripts/

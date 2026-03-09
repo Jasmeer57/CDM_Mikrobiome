@@ -20,14 +20,6 @@ class CDMEntityConfig:
             'priority': 1
         },
 
-        # Genes, Genetic Markers
-        'GENE': {
-            'description': 'Gene names, genetic markers, gene families, transcription factors',
-            'examples': ['IL6', 'TNF-alpha', 'TLR4', 'NF-kB', 'IFN-gamma', 'p53', 'BRCA1', 'STAT3', 'NOD2'],
-            'patterns': [r'\b([A-Z]{2,}[0-9]*(?:-[a-z]+)?)\b'],
-            'priority': 2
-        },
-
         # Proteins, Enzymes, Molecular Components
         'PROTEIN': {
             'description': 'Proteins, enzymes, receptors, signaling molecules, antibodies',
