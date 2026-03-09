@@ -18,6 +18,7 @@ import requests
 import json
 import time
 import csv
+import os
 from typing import List, Dict, Optional, Set
 from pathlib import Path
 import logging
@@ -33,7 +34,7 @@ logger = logging.getLogger(__name__)
 class UMLSRelationshipExtractor:
     """Extract scientifically validated relationships from UMLS."""
 
-    API_KEY = "UMLS_API_KEY_PLACEHOLDER"
+    API_KEY = os.getenv("UMLS_API_KEY", "")
     BASE_URL = "https://uts-ws.nlm.nih.gov/rest"
 
     # Semantic type mappings for entity types

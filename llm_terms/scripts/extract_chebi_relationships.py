@@ -25,6 +25,7 @@ import json
 import csv
 import re
 import time
+import os
 from typing import List, Dict, Optional, Set
 from pathlib import Path
 import logging
@@ -40,7 +41,7 @@ logger = logging.getLogger(__name__)
 class ChEBIRelationshipExtractor:
     """Extract metabolic production relationships from ChEBI."""
 
-    API_KEY = "BIOPORTAL_API_KEY_PLACEHOLDER"
+    API_KEY = os.getenv("BIOPORTAL_API_KEY", "")
     BASE_URL = "https://data.bioontology.org"
 
     # Known microbiome metabolites with experimental validation
