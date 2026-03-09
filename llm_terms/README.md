@@ -4,6 +4,12 @@
 
 A microbiome terminology standard aligned with OMOP CDM and standard ontologies (OLS, BioPortal, UMLS), containing 8,706 curated entity definitions extracted from 351 published microbiome studies.
 
+## 📥 Download Large Files
+
+The database (SQLite) and ontology (OWL) files are too large for GitHub. Download them here:
+
+- **Database & Ontology**: [Google Drive](https://drive.google.com/file/d/1FcPNIUS3iDEuz-na7Y-sCkgYLLH4f-lV/view?usp=sharing)
+
 ## 📁 Output Directories
 
 ### Output_final/ - Knowledge Graph Export (Primary Output)
