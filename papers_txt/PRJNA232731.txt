@@ -1,1183 +1,0 @@
- 
- 
- 
-The methylome of the gut microbiome: disparate Dam methylation
-patterns in intestinal Bacteroides dorei
- 
-Michael T. Leonard, Austin G. Davis-Richardson, Alexandria N. Ardissone, Kaisa Kemppainen, Jennifer C. Drew, Jorma
-Ilonen, Mikael Knip, Olli Simell, Jorma Toppari, Riitta Veijola, Heikki Hyöty and Eric W. Triplett
-Journal Name:
-Frontiers in Microbiology
-ISSN:
-1664-302X
-Article type:
-Original Research Article
-Received on:
-08 May 2014
-Accepted on:
-26 Jun 2014
-Provisional PDF published on:
-26 Jun 2014
-www.frontiersin.org:
-www.frontiersin.org
-Citation:
-Leonard MT, Davis-richardson AG, Ardissone AN, Kemppainen K,
-Drew JC, Ilonen J, Knip M, Simell O, Toppari J, Veijola R, Hyöty H
-and Triplett EW(2014) The methylome of the gut microbiome:
-disparate Dam methylation patterns in intestinal Bacteroides
-dorei. Front. Microbiol. 5:361. doi:10.3389/fmicb.2014.00361
-Copyright statement:
-© 2014 Leonard, Davis-richardson, Ardissone, Kemppainen, Drew,
-Ilonen, Knip, Simell, Toppari, Veijola, Hyöty and Triplett. This is an
-open-access article distributed under the terms of the Creative
-Commons Attribution License (CC BY). The use, distribution or
-reproduction in other forums is permitted, provided the original
-author(s) or licensor are credited and that the original
-publication in this journal is cited, in accordance with accepted
-academic practice. No use, distribution or reproduction is
-permitted which does not comply with these terms.
- 
-This Provisional PDF corresponds to the article as it appeared upon acceptance, after rigorous
-peer-review. Fully formatted PDF and full text (HTML) versions will be made available soon.
- 
-Evolutionary and Genomic Microbiology
-Frontiers	  in	  Journal	  
-	  
-Original	  Research	  
-Date	  
-The methylome of the gut microbiome: disparate Dam methylation 
-1	  
-patterns in intestinal Bacteroides dorei  
-2	  
- 
-3	  
-Michael	  T.	  Leonard1,	  Austin	  G.	  Davis-­‐Richardson1,	  Alexandria	  N.	  Ardissone1,	  Kaisa	  M.	  Kemppainen1,	  Jennifer	  C.	  Drew1,	  
-4	  
-Jorma	  Ilonen2,	  Mikael	  Knip3,	  Olli	  Simell4,	  Jorma	  Toppari4,	  Riitta	  Veijola5,	  Heikki	  Hyöty6,	  and	  Eric	  W.	  Triplett1	  
-5	  
-1Department	   of	   Microbiology	   and	   Cell	   Science,	   Institute	   of	   Food	   and	   Agricultural	   Sciences,	   University	   of	   Florida,	  
-6	  
-Gainesville,	  FL	  32611-­‐0700	  USA	  
-7	  
-2Department	  of	  Clinical	  Microbiology,	  University	  of	  Eastern	  Finland,	  Kuopio,	  Immunogenetics	  Laboratory,	  University	  of	  
-8	  
-Turku,	  Turku,	  Finland.	  	  
-9	  
-3Children's	   Hospital,	   University	   of	   Helsinki	   and	   Helsinki	   University	   Central	   Hospital,	   Helsinki,	   Diabetes	   and	   Obesity	  
-10	  
-Research	  Program.	  University	  of	  Helsinki,	  Helsinki,	  Department	  of	  Pediatrics,	  Tampere	  University	  Hospital,	  Tampere,	  
-11	  
-Finland	  	  
-12	  
-4Department	  of	  Pediatrics,	  Turku	  University	  Hospital	  and	  University	  of	  Turku,	  Turku,	  Finland	  
-13	  
-5Department	  of	  Pediatrics,	  University	  of	  Oulu,	  and	  Oulu	  University	  Hospital,	  Oulu,	  Finland	  
-14	  
-6School	  of	  Medicine,	  University	  of	  Tampere,	  Tampere,	  Finland	  
-15	  
-	  
-16	  
-*	  Correspondence:	  Eric	  W.	  Triplett,	  Department	  of	  Microbiology	  and	  Cell	  Science,	  Institute	  of	  Food	  and	  Agricultural	  
-17	  
-Sciences,	  University	  of	  Florida,	  1355	  Museum	  Rd.,	  Gainesville,	  FL	  32611-­‐0700	  USA	  	  
-18	  
-ewt@ufl.edu	  
-19	  
-Keywords:	  DNA	  adenine	  methyltransferase1,	  GATC2,	  metagenomics3,	  genomics4,	  epigenetics5.	  
-20	  
-	  
-21	  
-Abstract 
-22	  
-Despite the large interest in the human microbiome in recent years, there are no reports of bacterial 
-23	  
-DNA methylation in the microbiome.  Here metagenomic sequencing using the Pacific Biosciences 
-24	  
-platform allowed for rapid identification of bacterial GATC methylation status of a bacterial species  
-25	  
-in human stool samples.  For this work, two stool samples were chosen that were dominated by a 
-26	  
-single species, Bacteroides dorei.  Based on 16S rRNA analysis, this species represented over 45% of 
-27	  
-the bacteria present in these two samples. The B. dorei genome sequence from these samples was 
-28	  
-determined and the GATC methylation sites mapped.  The Bacteroides dorei genome from one 
-29	  
-subject lacked any GATC methylation and lacked the DNA adenine methyltransferase genes.  In 
-30	  
-contrast, B. dorei from another subject contained 20,551 methylated GATC sites. Of the 4,970 open 
-31	  
-reading frames identified in the GATC methylated B. dorei genome, 3,184 genes were methylated as 
-32	  
-well as 1,735 GATC methylations in intergenic regions.  These results suggest that DNA methylation 
-33	  
-patterns are important to consider in multi-omic analyses of microbiome samples seeking to discover 
-34	  
-the diversity of bacterial functions and may differ between disease states.   
-35	  
- 
-36	  
-1. 
-Introduction 
-37	  
-DNA adenosine methylation (Dam methylation) of the 5'-GATC-3' motif in bacterial genomes, 
-38	  
-particularly in Escherichia coli, has been well characterized for decades (Barras and Marinus, 1989; 
-39	  
-Marinus, 1987; Marinus and Casadeus, 2009).   Of all of the DNA methylation systems known in 
-40	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-	  
-2	  
-This	  is	  a	  provisional	  file,	  not	  the	  final	  typeset	  article	  
-bacteria, GATC methylation appears to have the highest impact on gene expression (Barras and 
-41	  
-Marinus, 1989).  The biochemistry of the adenosine methylation reaction catalyzed by bacterial DNA 
-42	  
-adenine methyltransferase (DamMT) is also well characterized (Thielking et al., 1997; Urig et al., 
-43	  
-2002).  As DamMT mutants are not lethal, the phenotype of DamMT mutants in several bacteria 
-44	  
-have shown that methylation of the GATC motif affects gene expression of many processes including 
-45	  
-chromosome replication, mismatch repair, and nucleoid structure (Løbner-Olesen et al., 2005).  The 
-46	  
-GATC methylation system has been shown to increase virulence in Salmonella enterica serovar 
-47	  
-Typhimurium, Vibrio cholerae, Yersinia pestis, and Yersinia pseudotuberculosis, (Heithoff et al., 
-48	  
-1999; Robinson et al., 2005; Julio et al., 2001; Julio et al., 2002).  As a result, significant efforts have 
-49	  
-been made in recent years to design antibiotics that inhibit DamMT (Hobley et al., 2012; Mashhoon 
-50	  
-et al., 2004; Mashhoon, 2006; McKelvie et al., 2012).  
-51	  
- 
-Despite the enormous interest in recent years to characterize the bacterial diversity of the 
-52	  
-human microbiome, particularly as it relates to gut diseases, the role that DNA methylation plays in 
-53	  
-function of the microbiome remains unknown.  The PacBio RS II system is capable of detecting 
-54	  
-DNA methylation through analysis of polymerase kinetics (Clark et al., 2012; Fang et al., 2012; 
-55	  
-Flusberg et al., 2010; Murray et al., 2012).  This technology was used here to discover the profound 
-56	  
-differences in the extent of Dam methylation in one dominant bacterial species in the gut between 
-57	  
-two children at high genetic risk for type 1 diabetes and one year prior to the development of type 1 
-58	  
-diabetes autoimmunity in one of these children.   
-59	  
- 
-60	  
-2. 
-Materials and methods 
-61	  
-	  
-62	  
-The stool samples used here were collected by the Finnish Type 1 Diabetes Prediction and 
-63	  
-Prevention Study (DIPP) (Kukko et al., 2005).  Newborns were screened for high-risk HLA-DR and 
-64	  
-HLA-DQ genotypes using a previously described method (Kukko et al., 2005). Stool samples were 
-65	  
-collected by the subjects' parents at home and mailed to the DIPP Virus Laboratory for virology in 
-66	  
-Tampere, Finland, where they were stored at -80 °C.  Detection of beta-cell autoimmunity was done 
-67	  
-as described in (Parikka et al., 2012).  Sample 105 was collected from the subject at 13.5 months of 
-68	  
-age.  This subject became autoimmune for type 1 diabetes at 15.1 months of age.   Sample 439 was 
-69	  
-collected from a subject who remained healthy at 3.3 months of age.  Both subjects were genetically 
-70	  
-at high risk for type 1 diabetes given their HLA genotype.   
-71	  
- 
-In this study, DNA extraction and 16S rRNA amplification, sequencing, and analysis was 
-72	  
-done as described previously (Fagen et al., 2012) except the Qiagen AllPrep DNA/RNA/Protein Mini 
-73	  
-Kit (QIAGEN) was used to extract DNA, RNA, and protein from stool. Based on the 16S rRNA 
-74	  
-results, two samples were chosen for long-read Pacific Biosciences sequencing based on the high 
-75	  
-relative abundance of this organism was 63.7% and 47.9% from samples 105 and 439, respectively.  
-76	  
-These samples, 105 and 439, were collected from children who became autoimmune or remained 
-77	  
-healthy, respectively.   
-78	  
-	  
-Pacific Biosciences (PacBio RS II system) library construction and sequencing was done by 
-79	  
-the University of Florida's Interdisciplinary Center for Biotechnology Research.  Prior to sequencing, 
-80	  
-a PacBio library was made with SMRTbell Adaptors. The Bacteroides dorei genome was assembled 
-81	  
-to closure from sample 105 after obtaining eight SMRT cells of sequence data. A total of 1,502,920 
-82	  
-reads and 1,860,712,096 bases were obtained, with a mean read length of 2,706 bp. Average read 
-83	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-Eric	  Triplett	  
-3	  
-quality was 0.848.  The initial Pacbio reads were error corrected using the Pacbio 
-84	  
-RS_PreAssembler.1 module (Koren et al., 2012) with minimum subread length of 400 bp, minimum 
-85	  
-read quality 0.60, and minimum seed read length of 3800 bp. The error correction process yielded 
-86	  
-47,654 reads of 2,378 bp average length. Reads were binned according to coverage reported by the 
-87	  
-Pacbio RS_PreAssembler.1 protocol, filtering out reads with lower than 200X coverage. A set of 27 
-88	  
-contigs was assembled directly from the binned reads using SPAdes assembler v3.0 (Bankevich et 
-89	  
-al., 2012). A single scaffold was obtained by detecting overlaps with Mauve 2.3.1 (Darling et al., 
-90	  
-2010) and manually assembling the remaining contigs. The initial genome assembly was further 
-91	  
-refined using the Pacbio RS_Resequencing.1 module with Quiver consensus calling. The final, 
-92	  
-circular genome consists of 5,726,633 bp and an overall GC content of 42.0%.   
-93	  
- 
-The complete B. dorei genome from sample 439 metageomic DNA was closed in the same 
-94	  
-manner as described above for the 105 sample.  The 439 closed genome was significantly smaller 
-95	  
-than the 105 genome with 5,243,219 bp.  Genome annotation for both genomes was done by using 
-96	  
-the NCBI Prokaryotic Genome Annotation pipeline (Angiuoli et al., 2008), which relies on 
-97	  
-GeneMarkS+ for gene prediction (Besemer et al., 2001). The NCBI accession numbers for the closed 
-98	  
-105 B. dorei genome and the 439 B. dorei genome are CP007619 and CP008741, respectively.  Two-
-99	  
-way average nucleotide identities between pairs of genomes were determined as described by Goris 
-100	  
-et al. (2007).   
-101	  
- 
-Methylation patterns obtained from the PacBio data were recovered from both genomes using 
-102	  
-the assembled genomes as a reference. Methylation data was extracted from the full set of sequence 
-103	  
-data using Kinetics Tools. This tool utilizes the P_ModificationDetection module in SMRT Portal, 
-104	  
-which is utilized by the RS Modification Detection as well as the RS Modifications and Motif 
-105	  
-Detection protocol. The Motif Detection protocol generated motifs by comparing methylation 
-106	  
-patterns to genomic context. 
-107	  
- 
-108	  
-3. 
-Results 
-109	  
-PacBio sequencing and assembly from 105 and 439 metagenomic DNA resulted in two closed 
-110	  
-Bacteroides dorei genomes of 5,726,633 and 5,243,219 bp, respectively,  The 105 and 439 genomes 
-111	  
-assembled to an average coverage across each genome of 306.72- and 249.47-fold, respectively.  The 
-112	  
-16S rRNA and whole genome average nucleotide identities were compared between the 105 and 439 
-113	  
-genomes as well as two reference genomes, the nearly complete genome of B. dorei DSM 17855 and 
-114	  
-the complete genome of B. vulgatus 8482 (Tables 1 and 2).  These data show that the 105 and 439 
-115	  
-genomes are far more closely related to B. dorei than B. vulgatus.    
-116	  
- 
-Methylated GATC motifs were only found in the B. dorei from the 105 sample and were 
-117	  
-completely absent in the B. dorei contigs obtained for sample 439 (Table 1).  There were 49,007 total 
-118	  
-methylations detected in B. dorei 105, and 38,203 total methylations detected in B. dorei 439. Of 
-119	  
-these, 14,322 and 24,770 methylation sites for the 105 and 439 genomes, respectively, could not be 
-120	  
-clustered to any motif.  In the B. dorei genome from the 105 sample, 20,551 GATC methylations and 
-121	  
-one copy of the DamMT gene were identified.   Of 20,554 GATC sites in the 105 genome, only 3 
-122	  
-were not detected as methylated.  In contrast, the B. dorei genome of 5,243,219 bp from sample 439 
-123	  
-lacked a DamMT gene and no GATC motif methylations were detected among the 18,908 GATC 
-124	  
-sites identified.  
-125	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-	  
-4	  
-This	  is	  a	  provisional	  file,	  not	  the	  final	  typeset	  article	  
- 
-A total of 5,107,008 bp or 89% of the B. dorei 105 genome codes directly for ORFs.  Of the 
-126	  
-20,551 methylated GATC sties found in B. dorei 105, 18,816 were found within 3,184 of the 4,970 
-127	  
-annotated open reading frames.  Of the 1,735 methylated GATC sites identified between ORFs many 
-128	  
-are likely within promoter regions.  Thus, there are 2.80 GATC methylation sites per kbp of non-
-129	  
-coding genome space which is slightly lower than the 3.68 GATC methylation sites per kbp of the 
-130	  
-coding region.   This suggests that the evolutionary pressure to maintain GATC sites is stronger in 
-131	  
-coding regions compared to non-coding regions.   
-132	  
- 
-Of the 245 SEED subsystems identified by RAST annotation of the complete B. dorei 105 
-133	  
-genome, only 13 subsystems had no GATC methylation sites (Table S1).  Those include purine 
-134	  
-utilization, carbon starvation, copper homeostasis, gentisate degradation, salicylate and gentisate 
-135	  
-catabolism.   
-136	  
- 
-The remaining 232 subsystems were methylated at nearly every GATC site.  The Ton and Tol 
-137	  
-transport systems which provide energy for transport across the outer membrane in Gram negative 
-138	  
-bacteria was the most highly GATC methylated subsystem, accounting for 6.7% of all GATC 
-139	  
-methylations and 5.5% of the genome. Transport plays a crucial role in the heterotrophic bacteria that 
-140	  
-reside in the gut.   
-141	  
- 
-Other motifs in both genomes were detected in this analysis as well (Table 1).  About 8.6% 
-142	  
-and 35.2% of all of the motifs detected in the 105 and 439 genomes, respectively, cannot be 
-143	  
-characterized as to the position of modification on the adenosine ring.  The remaining motifs were all 
-144	  
-methylations of the 6-position of the adenosine ring and less abundant than the GATC modification.  
-145	  
-Excluding the GATC motif, there are 15,991 motifs remaining in the 105 genome, of which 14,134 
-146	  
-(88.4%) are modified. In the 439 genome, there are 22,969 motifs detected, however, only 13,433 
-147	  
-(58.5%) are modified. Thus, even non-GATC adenosine methylation sites are much more likely to be 
-148	  
-methylated in the 105 genome compared to the 439 genome.  The phenotypic effects of these 
-149	  
-methylations are unknown.    
-150	  
- 
- 
-151	  
- 
-As the primary objective of this work was to obtain closed B. dorei genomes and examine 
-152	  
-GATC methylations, the libraries were not prepared in a way that would allow detection of 5-
-153	  
-methylcytosine modifications.  Both the 105 and 439 genomes each have genes that code for putative 
-154	  
-DNA cytosine methyltransferases.  Hence, we predict that 5'-cytosine methylation is normal in both 
-155	  
-the 105 and 439 samples.  
-156	  
- 
-157	  
- 
-This is in contrast to the Dam methyltransferase gene, which is only present in the 105 
-158	  
-genome.  In the 105 genome, a single Dam methyltransferase gene was annotated that is predicted to 
-159	  
-recognize the GATC motif (Figure 1).  This gene is within a bacterial prophage region that is 47,617 
-160	  
-bp in length (between bases 1,014,516 and 1,062,132 bp in the genome), making it similar to other 
-161	  
-bacteriophage orphan DNA methyltransferases found in bacteria (Murphy et al., 2013).   
-162	  
- 
- 
- 
- 
-163	  
- 
-Another interesting observation is that of all of the methylation motifs observed in these two 
-164	  
-genomes, none is methylated in both genomes. This suggests that the primary source of 
-165	  
-methyltransferases in these genomes is through lateral transfer, often from phage.  Nevertheless, the 
-166	  
-GATC motif methylation and abundance is the primary difference between the two genomes.    
-167	  
- 
-168	  
- 
-169	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-Eric	  Triplett	  
-5	  
-4. 
-Discussion 
-170	  
-Given that nearly all subsystems can be virtually completely methylated in one strain of a dominant 
-171	  
-gut bacterium and completely unmethylated in another strain of the same species from a different 
-172	  
-subject, suggests that epigenetics may be a crucial process regulating the metabolic potential of 
-173	  
-heterotrophic bacteria in the human gut.   The observation that similar species reside in the gut of two 
-174	  
-individuals is not sufficient to propose that the metabolic capabilities of the two microbiomes are 
-175	  
-similar.  This work suggests that future microbiome studies should consider the methylome when 
-176	  
-describing the bacterial diversity in the gut.  Such analyses are no longer difficult given the latest 
-177	  
-sequencing technologies.   
-178	  
- 
-Although methylation can lead to up-regulation or down-regulation of a gene (Marinus and 
-179	  
-Casadesus, 2009), it is impossible to say whether the GATC motif affects the expression of B. dorei 
-180	  
-genes in the gut.  However, the sheer number of GATC methylations found in one of these genomes 
-181	  
-suggests that GATC methylation is worthy of analysis in future investigations.  It is likely that gene 
-182	  
-expression varies widely between a strain that is fully GATC methylated versus another that is not.  
-183	  
-Unfortunately, unlike 16S rRNA, DamMT genes are not sufficiently conserved at the nucleotide 
-184	  
-level to allow rapid PCR analyses of this gene in metagenomic samples.      
-185	  
- 
-The effect of Dam methylation on gut colonization and survival may be significant.  For 
-186	  
-example, Dam methylation of various transport systems affects many processes including import of 
-187	  
-nutrients, energy transfer, and antibiotic resistance conferred by antibiotic efflux.  All of these are 
-188	  
-important to gut colonization and survival.  A Dam mutant of Haemophilus influenzae is more 
-189	  
-susceptible to many antibiotics including erythromycin, tetracycline, kanamycin, and spectinomycin 
-190	  
-(Sanchez et al., 1997).  In most cases, the H. influenzae Dam mutant showed not only a lower 
-191	  
-minimum inhibitory concentration, but also increased susceptibility to higher concentrations of 
-192	  
-antibiotics (Zaleski and Piekarowicz, 2004) suggesting that Dam methylation has a role in 
-193	  
-upregulating expression of efflux pumps and ultimately antibiotic resistance.     
-194	  
- 
-GATC methylation has also been implicated in pathogenesis by bacteria.  DamMT mutants in 
-195	  
-several species have shown attenuated pathogenesis (Balbontin et al., 2006; Heithoff et al., 1999; 
-196	  
-Julio et al., 2001; Julio et al., 2002; Kim et al., 2008; Mehling et al., 2007; Murphy et al., 2008; 
-197	  
-Robinson et al., 2005; Watson et al., 2004) and as GATC methylation is involved in many 
-198	  
-fundamental bacterial processes including, but not limited to, replication, DNA repair, transcription, 
-199	  
-and LPS composition (Marinus and Casadeus, 2009), it is not surprising that DamMT deficient 
-200	  
-strains would be impaired in their ability to interact with eukaryotic hosts.  Of course, given that have 
-201	  
-only two samples were examined here, no estimate of the effects of gut bacterial GATC methylation 
-202	  
-on type 1 diabetes autoimmunity outcome can be made.  
-203	  
- 
-GATC methylation in the B. dorei 105 genome appears to be the result of a single orphan 
-204	  
-DNA adenine methyltransferase gene embedded within a bacterial prophage of unknown origin.  
-205	  
-These orphan DamMTases have been reported to protect phage DNA that include the GATC motif 
-206	  
-from restriction (Kossykh et al., 1995; Miller et al., 2003).  That may be the case here as the 
-207	  
-frequency of GATC motifs within the DamMT-containing bacteriophage region is 1.7 times higher 
-208	  
-than in the 105 genome overall with 6.09 and 3.59 GATC motifs per kb in the prophage and whole 
-209	  
-genome, respectively.   
-210	  
- 
-These orphan DamMT-containing bacteriophage can also regulate lysogeny by the 
-211	  
-bacteriophage (Murphy et al., 2008).  Until this strain is cultured and a mutant is made that lacks 
-212	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-	  
-6	  
-This	  is	  a	  provisional	  file,	  not	  the	  final	  typeset	  article	  
-DamMTase activity, the phenotype(s) conferred by this gene will remain unknown. 
-213	  
- 
-How GATC methylation affects microbiome function is unknown.  But given the many 
-214	  
-bacterial processes affected by GATC methylation, environmental shaping of bacterial genomes 
-215	  
-through environmental exposures may influence the role of the microbiome in gut diseases.  The 
-216	  
-surprising aspect of this work is that a single dominant species in the gut of these two subjects, B. 
-217	  
-dorei, can vary so radically in methylation patterns simply because of the absence of the DamMT 
-218	  
-gene in B. dorei in one of these subjects.  Current and future metagenomic datasets from the gut 
-219	  
-microbiome should be mined for DamMT genes and GATC methylation sites to determine their 
-220	  
-abundance and taxonomic breadth. 
-221	  
-  
-222	  
-5. 
-Acknowledgements  
-223	  
-This research was generously supported by grants from JDRF, the Juvenile Diabetes Research 
-224	  
-Foundation (www.jdrf.org) (Project 17-2011-266 to EWT) and the National Science Foundation, 
-225	  
-Division of Undergraduate Education: Course, Curriculum and Laboratory Instruction CCLI Phase 2 
-226	  
-(DUE-0920151 to EWT).  
-227	  
- 
-228	  
-6. 
-References  
-229	  
-Angiuoli,	  S.	  V.,	  Gussman,	  A.,	  Klimke,	  W.,	  Cochrane,	  G.,	  Field,	  D.,	  Garrity,	  G.,	  et	  al.	  (2008)	  Toward	  an	  online	  
-230	  
-repository	  of	  Standard	  Operating	  Procedures	  (SOPs)	  for	  (meta)genomic	  annotation.	  OMICS	  12,	  137-­‐41	  
-231	  
-Balbontin,	  R.,	  Rowley,	  G.,	  Pucciarelli,	  M.G.,	  Lopez-­‐Garrido,	  J.,	  Wormstone,	  Y.,	  Lucchini,	  S.,	  et	  al.	  	  (2006).	  DNA	  
-232	  
-adenine	  methylation	  regulates	  virulence	  gene	  expression	  in	  Salmonella	  enterica	  serovar	  typhimurium.	  	  
-233	  
-J.	  Bacteriol.	  188,	  8160-­‐8168.	  
-234	  
-Bankevich,	  A.,	  Nurk,	  S.,	  Antipov,	  D.,	  Gurevich,	  A.A.,	  Dvorkin,	  M.,	  Kulikov,	  A.S.,	  et	  al.	  (2012).	  	  	  SPAdes:	  a	  new	  
-235	  
-genome	  assembly	  algorithm	  and	  its	  applications	  to	  single-­‐cell	  sequencing.	  	  J.	  Comput.	  Biol.	  19,	  455-­‐477.	  
-236	  
-Barras,	  F.,	  and	  Marinus,	  M.	  G.	  (1989).	  The	  great	  GATC:	  DNA	  methylation	  in	  E.	  coli.	  Trends	  in	  Genetics	  5,	  139-­‐
-237	  
-143.	  	  
-238	  
-Besemer,	  J.,	  Lomsadze,	  A.	  and	  Borodovsky	  M.	  (2001)	  GeneMarkS+	  is	  an	  extension	  of	  the	  GeneMarkS	  ab	  initio	  
-239	  
-gene	  finding	  program.	  Nucleic	  Acids	  Research	  29,	  2607-­‐2618.	  
-240	  
-Clark	   T.	   A.,	   Murray,	   I.	   A.,	   Morgan,	   R.	   D.,	   Kislyuk,	   A.	   O.,	  	   Spittle,	   K.	   E.,	   Boitano,	   M.,	   et	   al.	   (2012).	  
-241	  
-Characterization	   of	   DNA	   methyltransferase	   specificities	   using	   single-­‐molecule,	   real-­‐time	   DNA	  
-242	  
-sequencing.	  	  Nucleic	  Acids	  Research	  40,	  e29.	  
-243	  
-Darling,	  A.	  E.,	  Mau,	  B.,	  and	  Perna,	  N.	  T.	  (2010).	  progressiveMauve:	  multiple	  genome	  alignment	  with	  gene	  
-244	  
-gain,	  loss	  and	  rearrangement.	  PLOS	  ONE	  5,	  e11147.	  
-245	  
-Fagen,	   J.R.,	   Giongo,	   A.,	   Brown,	   C.T.,	   Davis-­‐Richardson,	   A.G.,	   Gano,	   K.A.,	   and	   Triplett,	   E.W.	   (2012).	  
-246	  
-Characterization	   of	   the	   relative	   abundance	   of	   the	   citrus	   pathogen	   Ca.	   Liberibacter	   asiaticus	   in	   the	  
-247	  
-microbiome	   of	   its	   insect	   vector,	   Diaphorina	   citri,	   using	   high	   throughput	   16S	   rRNA	   sequencing.	   Open	  
-248	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-Eric	  Triplett	  
-7	  
-Microbiol.	  J.	  6,	  29-­‐33.	  
-249	  
-Fang,	  G.,	  Munera,	  D.,	  Friedman,	  D.	  I.,	  Mandlik,	  A.,	  Chao,	  M.	  C.,	  Banerjee,	  O.,	  et	  al.	  (2012).	  Genome-­‐wide	  
-250	  
-mapping	  of	  methylated	  adenine	  residues	  in	  pathogenic	  Escherichia	  coli	  using	  single-­‐molecule	  real-­‐time	  
-251	  
-sequencing.	  	  Nature	  Biotechnology	  30,	  1232-­‐1242.	  
-252	  
-Goris,	  J.,	  Konstantinidis,	  K.	  T.,	  Klappenbach,	  J.	  A.,	  Coenye,	  T.,	  Vandamme,	  P.,	  and	  Tiedje,	  J.	  M.	  (2007)	  DNA-­‐
-253	  
-DNA	  hybridization	  values	  and	  their	  relationship	  to	  whole-­‐genome	  sequence	  similarities.	  	  Int	  J	  Syst	  Evol	  
-254	  
-Microbiol	  57,	  81-­‐91.	  
-255	  
-Flusberg,	   B.	   A.,	   Webster,	   D.	   R.,	   Lee,	   J.	   H.,	   Travers,	   K.	   J.,	   Olivares,	   E.	   C.,	   Clark,	   T.	   A.,	   et	   al.	   (2010).	   	   Direct	  
-256	  
-detection	  of	  dnA	  methylation	  during	  single-­‐molecule,	  real-­‐time	  sequencing.	  	  Nature	  Methods	  7,	  461-­‐
-257	  
-467.	  
-258	  
-Heithoff,	  D.	  M.,	  Sinsheimer,	  R.	  L.,	  Low,	  D.	  A.,	  and	  Mahan,	  M.	  J.	  (1999).	  An	  essential	  role	  for	  DNA	  adenine	  
-259	  
-methylation	  in	  bacterial	  virulence.	  	  Science	  284,	  967-­‐970.	  	  
-260	  
-Hobley,	  G.,	  McKelvie,	  J.	  C.,	  Harmer,	  J.	  E.,	  Howe,	  J.,	  Oyston,	  P.	  C.	  F.,	  and	  Roach,	  P.	  L.	  (2012).	  Development	  of	  
-261	  
-rationally	  designed	  DNA	  N6	  adenine	  methyltransferase	  inhibitors.	  	  Bioorganic	  Medicinal	  Chem.	  Lett.	  22,	  
-262	  
-3079–3082.	  
-263	  
-Julio,	  S.	  M.,	  Heithoff,	  D.	  M.,	  Provenzano,	  D.,	  Klose,	  K.	  E.,	  Sinsheimer,	  R.	  L.,	  Low,	  D.	  A.,	  et	  al.	  	  (2001).	  DNA	  
-264	  
-adenine	   methylase	   is	   essential	   for	   viability	   and	   plays	   a	   role	   in	   the	   pathogenesis	   of	   Yersinia	  
-265	  
-pseudotuberculosis	  and	  Vibrio	  cholerae.	  	  Infect.	  Immun.	  6,	  7610-­‐7615.	  
-266	  
-Julio,	  S.	  M.,	  Heithoff,	  D.	  M.,	  Sinsheimer,	  R.	  L.,	  Low,	  D.	  A.,	  and	  Mahan,	  M.	  J.	  (2002).	  	  DNA	  adenine	  methylase	  
-267	  
-overproduction	  in	  Yersinia	  pseudotuberculosis	  alters	  YopE	  expression	  and	  secretion	  and	  host	  immune	  
-268	  
-responses	  to	  infection.	  Infect.	  Immun.	  70,	  1006-­‐1009.	  
-269	  
-Koren,	  S.,	  Schatz,	  M.	  C.,	  Walenz,	  B.	  P.,	  Martin,	  J.,	  Howard,	  J.	  T.,	  Ganapathy,	  G.,	  et	  al.	  (2012).	  Hybrid	  error	  
-270	  
-correction	  and	  de	  novo	  assembly	  of	  single-­‐molecule	  sequencing	  reads.	  Nat.	  Biotechnol.	  30,	  693–700.	  
-271	  
-Kossykh,	   V.	   G.,	   Schlagman,	   S.	   L.,	   and	   Hattman,	   S.	   (1995).	   	   Phage	   T4	   DNA	   [N6-­‐adenine)methyltransferase.	  	  
-272	  
-Overexpression,	  purification,	  and	  characterization.	  	  J.	  Biol.	  Chem.	  270,	  14389-­‐14393.	  
-273	  
-Kukko,	  M.,	  Kimpimäki,	  T.,	  Korhonen,	  S.,	  Kupila,	  A.,	  Simell,	  S.,	  Veijola,	  R.,	  et	  al.	  (2005).	  Dynamics	  of	  diabetes-­‐
-274	  
-associated	  autoantibodies	  in	  young	  children	  with	  increased	  genetic	  risk	  of	  Type	  1	  diabetes	  recruited	  
-275	  
-from	  the	  general	  population.	  	  J.	  Clin.	  Endocrinol.	  Metab.	  90,	  2712-­‐2717.	  
-276	  
-Løbner-­‐Olesen,	   A.,	   Skovgaard,	   O.,
-	  
-and	   Marinus,	   M.	   G.	   (2005).	   Dam	   methylation:	   coordinating	   cellular	  
-277	  
-processes.	  	  Current	  Opinion	  Microbiol.	  8,	  154–160.	  
-278	  
-Marinus,	  M.	  G.,	  and	  Casadeus,	  J.	  (2009).	  Roles	  of	  DNA	  adenine	  methylation	  in	  host-­‐pathogen	  interactions:	  
-279	  
-mismatch	  repair,	  transcriptional	  regulation,	  and	  more.	  	  FEMS	  Microbiol.	  Rev.	  33,	  488-­‐503.	  
-280	  
-Marinus,	  M.	  G.	  (1987).	  DNA	  methylation	  in	  Escherichia	  coli.	  	  Annu.	  Rev.	  Genetics	  21,	  113-­‐131.	  	  
-281	  
-Mashhoon,	   N.,	   Carroll,	   M.,	   Pruss,	   C.,	   Eberhard,	   J.,	   Ishikawa,	   S.,	   Estabrook,	   R.	   A.,	   et	   al.	   (2004).	   Functional	  
-282	  
-characterization	  of	  Escherichia	  coli	  DNA	  adenine	  methyltransferase,	  a	  novel	  target	  for	  antibiotics.	  J.	  Biol.	  
-283	  
-Chem.	  279,	  52075-­‐52081.	  	  	  
-284	  
-Mashhoon,	  N.,	  Pruss,	  C.,	  Carroll,	  M.,	  Johnson,	  P.	  H.,	  and	  Reich,	  N.	  O.	  (2006)	  Selective	  inhibitors	  of	  bacterial	  
-285	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-	  
-8	  
-This	  is	  a	  provisional	  file,	  not	  the	  final	  typeset	  article	  
-DNA	  adenine	  methyltransferases.	  	  J.	  Biomol.	  Screen	  11,	  497-­‐510.	  
-286	  
-McKelvie,	  J.	  C.,	  Richards,	  M.	  I.,	  Harmer,	  J.	  E.,	  Milne,	  T.	  S.,	  Roach,	  P.	  L.,	  and	  Oyston,	  P.	  C.	  F.	  (2013).	  Inhibition	  of	  
-287	  
-Yersinia	  pestis	  DNA	  adenine	  methyltransferase	  in	  vitro	  by	  a	  stibonic	  acid	  compound:	  identification	  of	  a	  
-288	  
-potential	  novel	  class	  of	  antimicrobial	  agents.	  	  Brit.	  J.	  Pharmacol.	  168,	  172–188.	  
-289	  
-Mehling,	  J.	  S.,	  Lavender,	  H.,	  and	  Clegg,	  S.	  (2007).	  A	  Dam	  methylation	  mutant	  of	   Klebsiella	  pneumoniae	  is	  
-290	  
-partially	  attenuated.	  	  FEMS	  Microbiol.	  Lett.	  268,	  187-­‐193.	  
-291	  
-Miller,	  E.	  S.,	  Kutter,	  E.,	  Mosig,	  G.,	  Arisaka,	  F.,	  Kunisawa,	  T.,	  and	  Ruger,	  W.	  	  (2003).	  	  Bacteriophage	  T4	  genome.	  	  
-292	  
-Microbiol.	  Mol.	  Biol.	  Rev.	  67,	  86-­‐156.	  	  	  
-293	  
-Murphy,	  J.,	  Mahony,	  J.,	  Ainsworth,	  S.,	  Nauta,	  A.,	  and	  van	  Sinderen,	  D.	  	  (2013).	  	  Bacteriophage	  orphan	  DNA	  
-294	  
-methyltransferases:	   insights	   from	   their	   bacterial	   origin,	   function,	   and	   occurrence.	   	   Appl.	   Environ.	  
-295	  
-Microbiol.	  79,	  7547-­‐7555.	  	  	  
-296	  
-Murphy,	   K.	   C.,	   Ritchie,	   J.	   M.,	   Waldor,	   M.	   K.,	   Løbner-­‐Olesen,	   A.,	   and	   Marinus,	   M.	   G.	   (2008).	   Dam	  
-297	  
-methyltransferase	   is	   required	   for	   stable	   lysogeny	   of	   the	   Shiga	   toxin	   (Stx2)-­‐encoding	   bacteriophage	  
-298	  
-933W	  of	  enterohemorrhagic	  Escherichia	  coli	  O157:H7.	  J.	  Bacteriol.	  190,	  438–441.	  
-299	  
-Murray,	  I.	  A.,	  Clark,	  T.	  A.,	  Morgan,	  R.	  D.,	  Boitano,	  M.,	  Anton,	  B.	  P.,	  Luong,	  K.,	  et	  al.	  (2012).	  The	  methylomes	  of	  
-300	  
-six	  bacteria.	  	  Nucleic	  Acids	  Research	  40,	  11450-­‐11462.	  
-301	  
-Parikka,	  V.,	  Näntö-­‐Salonen,	  K.,	  Saarinen,	  M.,	  Simell,	  T.,	  Ilonen	  J,	  Hyoty,	  H.,	  et	  al.	  (2012).	  Early	  seroconversion	  
-302	  
-and	   rapidly	   increasing	   autoantibody	   concentrations	   predict	   prepubertal	   manifestation	   of	   type	   1	  
-303	  
-diabetes	  in	  children	  at	  genetic	  risk.	  Diabetologia	  55,	  1926-­‐1936. 
-304	  
-Robinson,	  V.	  L.,	  Oyston,	  P.	  C.,	  and	  Titball,	  R.	  W.	  (2005).	  	  A	  dam	  mutant	  of	  Yersinia	  pestis	  is	  attenuated	  and	  
-305	  
-induces	  protection	  against	  plaque.	  	  FEMS	  Microbiol.	  Lett.	  252,	  251-­‐256.	  	  
-306	  
-Sanchez,	  L.,	  Pan,	  W.,	  Vinas,	  M.,	  and	  Nikaido,	  H.	  (1997).	  The	  acrAB	  homolog	  of	  Haemophilus	  influenzae	  codes	  
-307	  
-for	  a	  functional	  multidrug	  efflux	  pump.	  J.	  Bacteriol.	  179,	  6855–6857.	  	  
-308	  
-Thielking,	  V.,	  DuBois,	  S.,	  Eritja,	  R.,	  and	  Guschlbauer,	  W.	  (1997).	  Dam	  methyltransferase	  from	  Escherichia	  coli:	  
-309	  
-kinetic	  studies	  using	  modified	  DNA	  oligomers:	  nonmethylated	  substrates.	  Biol.	  Chem.	  378,	  407-­‐415.	  
-310	  
-Urig,	  S.,	  Gowher,	  H.,	  Hermann,	  A.,	  Beck,	  C.,	  Fatemi,	  M.,	  Humeny,	  A.,	  and	  Jeltsch,	  A.	  (2012).	  The	  Escherichia	  
-311	  
-coli	  dam	  DNA	  methyltransferase	  modifies	  DNA	  in	  a	  highly	  processive	  reaction.	  	  J.	  Molec.	  Biol.	  319:1085-­‐
-312	  
-1096.	  	  	  
-313	  
-Watson	  Jr.,	  M.	  E.,	  Jarisch,	  J.,	  and	  Smith,	  A.	  L.	  (2004).	  Inactivation	  of	  deoxyadenosine	  methyltransferase	  (dam)	  
-314	  
-attenuates	  Haemophilus	  influenzae	  virulence.	  Mol.	  Microbiol.	  53,	  651–664.	  
-315	  
-Zaleski,	   P.,	   and	   Piekarowicz,	   A.,	   (2004).	   Characterization	   of	   a	   dam	   mutant	   of	   Haemophilus	   influenzae	   Rd.	  
-316	  
-Microbiology	  150,	  3773-­‐3781.	  
-317	  
-	  
-318	  
-	  
-319	  
- 
- 
-320	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-Eric	  Triplett	  
-9	  
-Table 1.  Percent two-way average nucleotide identities (ANI) at the whole genome level between the 
-321	  
-B. dorei 105 and 439 genomes described here and the nearly complete genome of B. dorei 
-322	  
-DSM 17855 and the complete genome of B. vulgatus ATCC 8482.   
-323	  
- 
-324	  
-Strain  
-105 
- 
-439 
- 
-17855  
-8422 
-325	  
- 
-326	  
-105 
- 
-100 
- 
-  99.50  
-  99.42  
-  96.25 
-327	  
- 
-328	  
-439 
- 
- 
- 
-100 
- 
-  99.55  
-  96.33 
-329	  
- 
-330	  
-17855  
- 
- 
- 
- 
-100 
- 
-  96.27 
-331	  
- 
-332	  
-8422  
- 
- 
- 
- 
- 
- 
-100 
-333	  
- 
-334	  
- 
-335	  
- 
-336	  
-Table 2. Percent 16S rRNA identities between the B. dorei 105 and 439 genomes described here and 
-337	  
-the nearly complete genome of B. dorei DSM 17855 and the complete genome of B. vulgatus 
-338	  
-ATCC 8482.   
-339	  
- 
-340	  
-Strain  
-105 
- 
-439 
- 
-17855  
-8422 
-341	  
- 
-342	  
-105 
- 
-100 
- 
-  99.93  
-100 
- 
-  97.36 
-343	  
- 
- 
- 
- 
-344	  
-439 
- 
- 
- 
-100 
- 
-  99.93  
-  97.42  
- 
- 
-345	  
- 
-346	  
-17855  
- 
- 
- 
- 
-100 
- 
-  97.05 
-347	  
- 
-348	  
-8422  
- 
- 
- 
- 
- 
- 
-100 
-349	  
- 
-350	  
- 
-351	  
- 
-352	  
- 
-353	  
-Table 3.  Methylated motif analysis of the 105 and 439 genomes.  The number methylation sites 
-354	  
-observed that could not be clustered to any motif were 14,322 and 24,770 for the 105 and 439 
-355	  
-genomes, respectively. 
-356	  
-105 Motifs 
-modification 
-type 
-# of 
-methylations 
-# of motifs 
-in genome 
-% motifs 
-methylated 
-# of methylated 
-motifs/kb 
-# of 
-motifs / 
-kb 
-mean 
-motif 
-coverage 
-GATC 
-m6A 
-20551 
-20554 
-99.99 
-3.58867 
-3.58919 
-147.5 
-CGMATC 
-m6A 
-4353 
-4353 
-100.00 
-0.76013 
-0.76013 
-148.8 
-CAGNNNNNNRTKG 
-m6A 
-2948 
-3196 
-92.24 
-0.51479 
-0.55809 
-149.3 
-CAAYNNNNNNCTG 
-m6A 
-1808 
-1812 
-99.78 
-0.31572 
-0.31642 
-147.1 
-SAGNNNNNNCTTC 
-unknown 
-1070 
-1599 
-66.92 
-0.18685 
-0.27922 
-149.4 
-GAAGNNNNNNCTS 
-unknown 
-997 
-1599 
-62.35 
-0.17410 
-0.27922 
-148.7 
-CCAYNNNNNNCTG 
-unknown 
-931 
-1384 
-67.27 
-0.16257 
-0.24168 
-152.2 
-GACNNNNNRTTG 
-m6A 
-1022 
-1024 
-99.80 
-0.17846 
-0.17881 
-147.7 
-CAAYNNNNNGTC 
-m6A 
-1005 
-1024 
-98.14 
-0.17550 
-0.17881 
-145.3 
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-	  
-10	  
-This	  is	  a	  provisional	  file,	  not	  the	  final	  typeset	  article	  
-Total 
-34685 
-36545 
-94.91 
-6.05679 
-6.38159 
-439 Motifs 
-modification 
-type 
-# of 
-methylations 
-# of motifs 
-in genome 
-% motifs 
-methylated 
-# of methylated 
-motifs/kb 
-# of 
-motifs / 
-kb 
-mean 
-motif 
-coverage 
-GAANNNNNNNNNTTC 
-unknown 
-926 
-5626 
-16.46 
-0.17661 
-1.07300 
-180.7 
-GGANNNNNNNNNTCC 
-m6A 
-2395 
-3016 
-79.41 
-0.45678 
-0.57522 
-177.4 
-TTCGAA 
-m6A 
-2103 
-2112 
-99.57 
-0.40109 
-0.40281 
-176.0 
-GAANNNNNNNNRTGG 
-unknown 
-680 
-1914 
-35.53 
-0.12969 
-0.36504 
-178.8 
-ACAYNNNNNNNTCC 
-unknown 
-922 
-1367 
-67.45 
-0.17585 
-0.26072 
-175.8 
-GGANNNNNNNRTGT 
-unknown 
-777 
-1367 
-56.84 
-0.14819 
-0.26072 
-178.1 
-CCAYNNNNNNNNTCC 
-m6A 
-1177 
-1324 
-88.90 
-0.22448 
-0.25252 
-174.4 
-GGANNNNNNNNRTGG 
-m6A 
-1136 
-1324 
-85.80 
-0.21666 
-0.25252 
-175.2 
-GAAGNNNNNNNTCC 
-m6A 
-643 
-924 
-69.59 
-0.12263 
-0.17623 
-174.6 
-ACAYNNNNNNNTGG 
-unknown 
-536 
-867 
-61.82 
-0.10223 
-0.16536 
-177.4 
-CCANNNNNNNRTGT 
-unknown 
-535 
-867 
-61.71 
-0.10204 
-0.16536 
-178.3 
-CCANNNNNNNCTTC 
-m6A 
-630 
-800 
-78.75 
-0.12016 
-0.15258 
-178.6 
-GAAGNNNNNNNTGG 
-m6A 
-616 
-800 
-77.00 
-0.11749 
-0.15258 
-173.4 
-GGANNNNNNNCTTCD 
-unknown 
-357 
-661 
-54.01 
-0.06809 
-0.12607 
-180.2 
-Total 
-13433 
-22969 
-58.48 
-2.56198 
-4.38071 
- 
-357	  
- 
-358	  
- 
-359	  
- 
-360	  
- 
-361	  
- 
-362	  
- 
- 
-363	  
-Leonard	  et	  al.	  
-	  
-Gut	  microbiome	  methylome	  
-Eric	  Triplett	  
-11	  
-7. 
-Figure legends 
-364	  
-FIGURE	  1	  |	  Location	  of	  the	  DNA	  adenine	  methyltransferase	  gene	  (in	  red)	  within	  the	  Bacteroides	  dorei	  105	  
-365	  
-genome.	  	  	  
-366	  
-	  
-367	  
-	  Supplementary Material 
-368	  
-Table S1.  This is an excel file showing the number of GATC and total methylations in the 
-369	  
-subsystems identified in the 105 genome.  	  
-370	  
-Figure 1.TIF
-Copyright of Frontiers in Microbiology is the property of Frontiers Media S.A. and its content
-may not be copied or emailed to multiple sites or posted to a listserv without the copyright
-holder's express written permission. However, users may print, download, or email articles for
-individual use.
