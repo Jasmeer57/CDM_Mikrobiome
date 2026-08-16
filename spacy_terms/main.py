@@ -10,6 +10,14 @@ import argparse
 import logging
 from pathlib import Path
 
+# This pipeline logs/prints Unicode (checkmarks, emoji) throughout. Windows
+# consoles default stdout/stderr to the system codepage (e.g. cp1252), which
+# raises UnicodeEncodeError on that output - reconfigure to UTF-8 up front
+# rather than special-casing every print/log call.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
 # Add src to path for imports
 sys.path.append(str(Path(__file__).parent / "src"))
 

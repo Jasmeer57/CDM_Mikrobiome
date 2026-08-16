@@ -12,6 +12,11 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - LOG_LEVEL=INFO
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - REDIS_URL=redis://redis:6379
+      - UMLS_API_KEY=${UMLS_API_KEY:-}
+      - BIOMISTRAL_MODEL=${BIOMISTRAL_MODEL:-biomistral-7B}
+      - DEFAULT_MODEL=${DEFAULT_MODEL:-phi3:mini}
     security_opt:
       - no-new-privileges:true
     read_only: true
@@ -21,11 +26,6 @@ services:
       - ALL
     cap_add:
       - NET_BIND_SERVICE
-      - OLLAMA_BASE_URL=http://ollama:11434
-      - REDIS_URL=redis://redis:6379
-      - UMLS_API_KEY=${UMLS_API_KEY:-}
-      - BIOMISTRAL_MODEL=${BIOMISTRAL_MODEL:-biomistral-7B}
-      - DEFAULT_MODEL=${DEFAULT_MODEL:-phi3:mini}
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs

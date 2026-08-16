@@ -62,8 +62,12 @@ def get_installed_spacy_models() -> List[Dict[str, str]]:
                 spacy_version = parts[1]
                 version = parts[2] if len(parts) > 2 else "unknown"
 
-                # Check if model is compatible (marked with ✔)
-                if "✔" in line:
+                # Check if model is compatible. `spacy validate` marks this
+                # with a Unicode checkmark (✔) normally, but falls back to
+                # ASCII "[+]" on consoles that don't report UTF-8 support
+                # (e.g. Windows cmd/PowerShell without UTF-8 codepage) -
+                # both must be checked or every model reads as incompatible.
+                if "✔" in line or "[+]" in line:
                     models.append({
                         "name": model_name,
                         "spacy_version": spacy_version,

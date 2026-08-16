@@ -445,9 +445,10 @@ class MicrobiomeSemanticFilter:
                 
         # Context-dependent penalties (e.g. generic cancer without gut context)
         # But we want to be high-recall for novel terms, so be careful.
-        # If it's just "cancer" (generic), maybe low score. 
+        # If it's just "cancer" (generic), maybe low score.
         # But "colorectal cancer" has "colorectal" (context) -> has_microbiome_context=True -> saved.
-        
+
+        return score
 
 
 class ContextualCleaner:
