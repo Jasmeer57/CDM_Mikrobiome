@@ -1,0 +1,1131 @@
+cells
+Article
+Metagenomic Proﬁling of Fecal-Derived Bacterial Membrane
+Vesicles in Crohn’s Disease Patients
+Nader Kameli 1,2,*, Heike E. F. Becker 1,3, Tessa Welbers 1, Daisy M. A. E. Jonkers 3, John Penders 1,4
+,
+Paul Savelkoul 1,5 and Frank R. Stassen 1,*
+
+
+Citation: Kameli, N.; Becker, H.E.F.;
+Welbers, T.; Jonkers, D.M.A.E.;
+Penders, J.; Savelkoul, P.; Stassen, F.R.
+Metagenomic Proﬁling of
+Fecal-Derived Bacterial Membrane
+Vesicles in Crohn’s Disease Patients.
+Cells 2021, 10, 2795. https://doi.org/
+10.3390/cells10102795
+Academic Editor: Laura Grasa
+Received: 25 August 2021
+Accepted: 14 October 2021
+Published: 19 October 2021
+Publisher’s Note: MDPI stays neutral
+with regard to jurisdictional claims in
+published maps and institutional afﬁl-
+iations.
+Copyright: © 2021 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed
+under
+the
+terms
+and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+1
+Department of Medical Microbiology, School of Nutrition and Translational Research in
+Metabolism (NUTRIM), Maastricht University Medical Center+, 6229 ER Maastricht, The Netherlands;
+h.becker@maastrichtuniversity.nl (H.E.F.B.); tessa.welbers@mumc.nl (T.W.);
+j.penders@maastrichtuniversity.nl (J.P.); paul.savelkoul@mumc.nl (P.S.)
+2
+Department of Medical Microbiology, Faculty of Applied Medical Sciences, Jazan University,
+Jazan 45142, Saudi Arabia
+3
+Department of Internal Medicine, Division of Gastroenterology/Hepatology, NUTRIM school of Nutrition
+and Translational Research in Metabolism, Maastricht University Medical Center+,
+6200 MD Maastricht, The Netherlands; d.jonkers@maastrichtuniversity.nl
+4
+Department of Medical Microbiology, Caphri School for Public Health and Primary Care, Maastricht
+University Medical Centre+, 6229 ER Maastricht, The Netherlands
+5
+Department of Medical Microbiology and Infection Control, VU University Medical Center,
+1081 HV Amsterdam, The Netherlands
+*
+Correspondence: nkameli@jazanu.edu.sa (N.K.); f.stassen@maastrichtuniversity.nl (F.R.S.)
+Abstract: Background: In the past, many studies suggested a crucial role for dysbiosis of the gut
+microbiota in the etiology of Crohn’s disease (CD). However, despite being important players in
+host–bacteria interaction, the role of bacterial membrane vesicles (MV) has been largely overlooked
+in the pathogenesis of CD. In this study, we addressed the composition of the bacterial and MV
+composition in fecal samples of CD patients and compared this to the composition in healthy
+individuals. Methods: Fecal samples from six healthy subjects (HC) in addition to twelve CD patients
+(six active, six remission) were analyzed in this study. Fecal bacterial membrane vesicles (fMVs)
+were isolated by a combination of ultraﬁltration and size exclusion chromatography. DNA was
+obtained from the fMV fraction, the pellet of dissolved feces as bacterial DNA (bDNA), or directly
+from feces as fecal DNA (fDNA). The fMVs were characterized by nanoparticle tracking analysis and
+cryo-electron microscopy. Amplicon sequencing of 16s rRNA V4 hypervariable gene regions was
+conducted to assess microbial composition of all fractions. Results: Beta-diversity analysis showed
+that the microbial community structure of the fMVs was signiﬁcantly different from the microbial
+proﬁles of the fDNA and bDNA. However, no differences were observed in microbial composition
+between fDNA and bDNA. The microbial richness of fMVs was signiﬁcantly decreased in CD patients
+compared to HC, and even lower in active patients. Proﬁling of fDNA and bDNA demonstrated
+that Firmicutes was the most dominant phylum in these fractions, while in fMVs Bacteroidetes was
+dominant. In fMV, several families and genera belonging to Firmicutes and Proteobacteria were
+signiﬁcantly altered in CD patients when compared to HC. Conclusion: The microbial alterations of
+MVs in CD patients particularly in Firmicutes and Proteobacteria suggest a possible role of MVs in
+host-microbe symbiosis and induction or progression of inﬂammation in CD pathogenesis. Yet, the
+exact role for these fMV in the pathogenesis of the disease needs to be elucidated in future studies.
+Keywords: gut microbiota; bacterial membrane vesicles; Crohn’s disease; metagenomics
+1. Introduction
+Inﬂammatory bowel disease (IBD) comprises Crohn’s disease (CD) and ulcerative col-
+itis. Although the etiology of IBD is unresolved, a three-compartment pathophysiological
+circuit consisting of 1. the gut microbiota, 2. the intestinal barrier and 3. the intestinal
+Cells 2021, 10, 2795. https://doi.org/10.3390/cells10102795
+https://www.mdpi.com/journal/cells
+
+Cells 2021, 10, 2795
+2 of 16
+immune system has been suggested to play a critical role [1–4]. More recently, bacterial
+membrane vesicles (MVs) have gained attention as a potentially important new player in
+understanding the intersection of the gut-microbial communities and human health. Gut
+microbiota can secrete different types of MVs, including outer membrane vesicles (OMVs)
+and outer-inner membrane vesicles for Gram-negative bacteria, and membrane vesicles
+for Gram-positive bacteria. MVs can contain lipids, outer membrane proteins, nucleic
+acids, ATPs, and cytoplasmic and inner membranes. As a result, they play a crucial role in
+bacterial survival, nutrient sensing, carrying virulence factors, modulation of host immune
+function, and killing competing bacteria [5–10].
+Recent studies have strongly indicated a coherence between gut microbiota dysbiosis
+and CD [11–13]. Those perturbations are characterized by a decrease in the diversity of
+commensal bacteria, for instance with major alterations in members of the phyla Firmicutes
+and Bacteroidetes [14,15]. Microbial shifts have also been observed in active disease versus
+remission within CD patients. For instance, during an exacerbation, severe reductions
+in Faecalibacterium prausnitzii and Clostridium coccoides were seen while the prevalence of
+Enterobacteriaceae, and Bacteroides spp. were increased [15–17]. Studies also suggested that
+dysbiosis in CD is correlated to a reduction of butyrate-producing bacteria [18,19]. This
+results in decreased butyrate levels, in turn causing reduced expression of epithelial tight
+junction proteins and therefore increased epithelial permeability. This might describe one
+potential mechanism of the role of dysbiosis [15,16]. MVs isolated from different strains
+of Biﬁdobacterium and Lactobacillus may mediate the probiotic impacts of the MV-releasing
+microbes [20]. Studies investigating the immunoregulatory roles of MVs have unraveled
+pro- and anti-inﬂammatory effects [21–23].
+Despite the suggested importance of the microbiota in the pathogenesis of CD, the
+role of microbiota-derived MVs in the etiology has been neglected. To investigate a
+potential role of microbiota-derived MVs in CD pathogenesis, we proﬁled the origin
+of MVs isolated from CD patients (both with active disease and in remission) and healthy
+controls using 16 S ribosomal DNA (rDNA) amplicon sequencing, and compared them to
+the fecal microbiota composition.
+2. Materials and Method
+2.1. Study Population
+From twelve patients with CD (either with active disease n = 6 (Ac-CD), or in remission,
+n = 6 (Re-CD)) of the IBD South Limburg (IBD-SL) biobank project, fecal samples were
+collected as described previously [24]. Also, samples from six healthy volunteers (HC)
+of the Maastricht IBS Cohort (MIBS) were included [24]. CD was diagnosed based on
+clinical and endoscopic or radiological ﬁndings conforming to the ECCO guidelines [25].
+Fecal samples were collected by the patients at home, stored at 4 ◦C, and brought to the
+hospital within 2 h after defecation. The samples were aliquoted and frozen directly at
+−80 ◦C for further analyses. Disease activity was deﬁned by the simple endoscopic score
+of CD (SES-CD) [26]. Active disease was deﬁned by SES-CD score ≥3, while remission was
+deﬁned by SES-CD score <3.
+2.2. Ethical Statement
+The patients gave written informed consent prior to participation. The study was
+approved by the Medical Ethics Committee of Maastricht University Medical Center+, and
+was executed according to the revised declaration of Helsinki (59th general assembly of
+WMA, Seoul, Korea, October 2008). The study was registered in the Central Committee on
+Research Involving Human Subjects (CCMO) registry, under ﬁle number NL31636.068.10
+(IBD-SL) and NL24160.068.08 (MIBS).
+2.3. Vesicle Isolation from Fecal Samples
+The steps for optimizing a protocol for isolating heterogeneous MV populations from
+fecal samples (fMVs) were based on previous research performed by Benedikter et al. [27],
+
+Cells 2021, 10, 2795
+3 of 16
+in which a protocol was designed to isolate MVs from cell culture media and modiﬁed by
+our group for feces MVs [28]. Brieﬂy, 0.5 g of fecal matter was weighed and dissolved in
+10 mL ﬁltered phosphate buffered saline (PBS). A centrifugation step was applied (15 min,
+4668 rcf, 4 ◦C) to remove solid debris and cells. After centrifugation, the debris pellet
+containing bacterial cells was resolved in lysis buffer (ASL buffer, QIAamp DNA Stool
+Kit 51504, QIAGEN, Hilden, Germany) for further bacterial DNA (bDNA) isolation while
+the supernatant containing vesicles was applied on ultracentrifugation (100,000× g for
+2.5 h, at 4 ◦C) to remove extracellular DNA not associated with fMVs [7], the pellet were
+re-suspended in 5ml PBS and sequentially ﬁltered, ﬁrst by 0.45 µm (Acrodisc syringe ﬁlters,
+Pall Life Sciences, New York, NY, USA) and then by 0.2 µm (Minisart© NML syringe ﬁlter,
+Sartorius Stedim Biotech, Gottingen, Germany). To separate vesicles from free molecules,
+the ﬁltrate was then loaded onto a ﬁlter with a molecular weight cut-off of 100 kDa (Amicon
+Ultra 15 mL Centrifugal Filter Unit, Merck Millipore, Billerica, MA, USA) and concentrated
+to 250 µL by centrifugation (45 min., 4668 rcf, 4 ◦C). The ﬁlter membrane was additionally
+rinsed with 250 µL sterile PBS in order to achieve complete MV recovery, and an end
+volume of 500 µL was used for the next step.
+The next step involved puriﬁcation of the concentrate by separating the vesicles from
+free protein. This was achieved by size exclusion chromatography (SEC) with 10 mL
+sepharose (CL2B) columns (GE Healthcare, Eindhoven, The Netherlands). The concen-
+trated supernatant was loaded onto the column and fractions of 0.5 mL were immediately
+collected in Eppendorf tubes. In total, 24 fractions of 0.5 mL were collected per sample.
+Fractions 7–11, containing membrane vesicles [27], were pooled, and particle concentration
+was determined using nanoparticle tracking analysis (NTA; ZetaView PMX120). Pooled
+fractions were stored at −80 ◦C until further analysis. Internal and external MVs-DNA
+were obtained from pooled fractions by heating extraction at 95 ◦C for 7 min [29].
+2.4. Visualizing MVs by Cryo-Transmission Electron MICROSCOPY (Cryo-TEM)
+Three microliters of isolated vesicles were applied to a glow-discharged holey carbon
+grid before blotting against ﬁlter paper to leave only a thin ﬁlm spanning the grid holes.
+The sample was kept at 95% humidity before plunge-freezing in liquid ethane using a
+Vitrobot (FEI, Eindhoven, The Netherlands). The vitreous sample ﬁlms were transferred
+to a Tecnai Arctica Cryo-Transmission electron microscope (ThermoFisher, Eindhoven,
+The Netherlands). The images were taken at 200 kV with a Falcon camera (ThermoFisher,
+The Netherlands).
+2.5. Fecal and Bacterial DNA Isolation
+DNA was isolated directly from frozen fecal samples, representing total fecal DNA
+(fDNA), and from the 4668 rcf pellet after dissolving fecal matter with PBS which represent
+bacterial cells’ DNA (bDNA). DNA was isolated by repeated-bead-beating (RBB) combined
+with chemical lysis and a column-based puriﬁcation method using the QIAamp® DNA
+Mini kit (Qiagen, Cat. No. 51306) [30]. For bDNA, the obtained pellet from the 5000 rpm
+was homogenized with 2.0 mL pre-heated (65 ◦C) ASL buffer of the kit by vortexing.
+1.0 mL of this suspension was then added in a 2 mL tube containing 0.5 g of sterile
+zirconia beads (Ø 0.1 mm, BioSpec, Cat. No. 11079101z), while for fDNA approximately
+150 mg of feces was directly added to the beads without this pre-processing step. The
+DNA isolation procedures were performed according to the manufacturer’s instructions
+of the kit. The DNA concentration was then measured using the Qubit 3 ﬂuorometer
+(ThermoFisher Scientiﬁc).
+2.6. Next Generation Sequencing by Illumina MiSeq
+Negative controls were included for each isolation batch (PBS for MVs isolation, and
+PCR-grade water for fecal DNA isolation). A previously published protocol was used for
+generating amplicon libraries and sequencing [31]. Brieﬂy, the 16S rRNA gene V4 variable
+region was ampliﬁed using 10 pmol of both primers (5′-GTGCCAGCMGCCGCGGTAA*-
+
+Cells 2021, 10, 2795
+4 of 16
+3′[515 F] and barcoded 5′-GGACTACHVGGGTWTCTAAT*-3′ [806 R]), 5 µL Accuprime
+buffer II, 0.2 µL Accuprime Hiﬁpolymerase (Thermo Fisher Scientiﬁc, Waltham, WA,
+USA), H2O(WMB) and 2 µL DNA in a total reaction volume of 50 µL. The PCR program
+consisted of an initial denaturation and enzyme activation step at 94 ◦C for 3 min, then
+PCR ampliﬁcation was carried out for 35 cycles for low yield DNA <5 ng, and 24 cycles for
+high yield DNA >5 ng; ampliﬁcation cycles ran for 30 s at 94 ◦C, 45 s at 50 ◦C and 1 min at
+72 ◦C, ﬁnally the program ended with a post-PCR step at 72 ◦C for 10 min for completion of
+synthesis of PCR products. PCR amplicon libraries were checked for quality and adequate
+size on a 1% agarose gel.
+Amplicons were subsequently puriﬁed automatically on a Zephyr® G3 NGS Worksta-
+tion (PerkinElmer, Waltham, MA, USA) using Agencourt AMPure beads (Brea, CA, USA),
+subsequently quantiﬁed by Quant-iT PicoGreen dsDNA reagent kit (Invitrogen, New York,
+NY, USA), and measured on a Victor3 1424 multilabel counter (PerkinElmer). Amplicons
+were mixed in equimolar concentrations to a ﬁnal concentration of 1 ng/µL of pooled
+DNA to ensure equal representation of each sample, then sequenced on an Illumina MiSeq
+instrument using the V3 reagent kit (2 × 250 cycles). All V4 16S rDNA bacterial sequences
+generated in this study were submitted to NCBI databases with accession (PRJNA720101).
+2.7. Sequencing Analysis
+The online Integrated Microbial Next Generation Sequencing (IMNGS) platform was
+used for data demultiplexing, length and quality ﬁltering, pairing of reads, and clustering
+of reads into operational taxonomic units (OTUs) at 97% sequence identity using default
+settings (www.imngs.org accessed on 25 July 2020). Sequences were conducted from both
+the 3′ and 5′ sides, and fragments around 250 bases each were extracted after removal
+of the primers and technical reads. IMNGS is an UPRASE-based analysis pipeline [32].
+Demultiplexing was performed by demultiplexer_v3.pl (unpublished Perl script), while
+pairing, quality ﬁltering and OTU clustering (97% identity) were performed by USEARCH
+8.1 [33]. Chimera ﬁltering was performed by UCHIME (with RDP set 15 as a reference
+database) [34]. Taxonomic classiﬁcation was performed by RDP classiﬁer version 2.11
+training set 15 [35]. Sequence alignment was performed by MUSCLE, and treeing by
+FastTree [36,37]. Sequences of negative controls were evaluated and compared to the lowest
+abundant microbial samples to exclude any possible DNA contaminants and to ensure that
+the results were not driven by potential contaminant taxa. The highest-sequence reads of
+the negative controls was less than 9000 reads, while the lowest reads of the samples were
+more than 59,000. Therefore, the negative controls contained far fewer reads and had a
+completely different composition and diversity (see supplementary Figure S5).
+2.8. Richness, Diversity, and Taxonomy
+To normalize the data, Rhea package version 1.6 with RStudio (version 1.3.1056) was
+used [38]. It was also used to detect alpha- and beta-diversity and taxonomical binning.
+After discarding the negative control reads, normalization of the data was performed
+based on the lowest sequence reads of the samples, which was 59,527, thereafter OTUs
+were counted.
+2.9. Statistical Analysis
+Data analysis was performed with RStudio (version 1.3.1056) and GraphPad Prism
+(version 5.03). For distance matrix analysis of beta diversity, a permutational multivariate
+analysis of variance (PERMANOVA) was applied to detect signiﬁcant differences between
+the groups. The Mann–Whitney test was performed for differences in bacterial richness
+and diversity, and for differences in the relative abundance of phyla, families and genera.
+p values are indicated as follows: **** p < 0.0001; *** p < 0.001; ** p < 0.01; and * p < 0.05.
+
+Cells 2021, 10, 2795
+5 of 16
+3. Results
+3.1. Study Population
+In Table S1, the general characteristics of both CD patients and healthy controls,
+are shown. No demographic differences were seen between the groups. Most of the
+CD patients belonged to phenotype B1 with (4/6) and (5/6) for active and remission,
+respectively (Tables S1 and S2). Importantly, most patients used immunosuppressants,
+three used antibiotics, and none of the healthy controls used any of these drugs.
+3.2. MVs Characterizations
+The fMVs were characterized based on protein concentration and particle quantiﬁ-
+cation followed by TEM visualization. Quantiﬁcation of fMVs was done by nanoparticle
+tracking analysis (NTA). The particle concentration of isolated vesicles was signiﬁcantly
+higher in healthy controls compared to CD patients (p-value < 0.05). Particle concen-
+trations from healthy volunteers ranged from 3.7 × 1010–3.14 × 1011 particles/g wet
+weight of fecal samples with a median of 1.8 × 1011, while in Re-CD patients particles
+ranged from 3.29 × 1010–2.2 × 1011 with a median of 1.03 × 1011, and in Ac-CD from
+2.97 × 1010–2.6 × 1011 with a median of 7.5 × 1010. The vesicles were visualized by cryo-
+TEM (Figure S1).
+3.3. Microbial Composition and Diversity
+To investigate how the bacterial origin of fMVs relates to the bacterial composition
+of the intestinal microbiota, DNA was isolated either directly from fecal samples (fDNA),
+from pelleted bacteria (bDNA) or from isolated MVs (MV-DNA). A total of 7,505,735
+sequence reads with a median of 84,392 reads per sample (range from 59,527 to 121,131)
+were obtained upon amplicon sequencing of the 16S rRNA V4 gene region of the samples.
+All sequences were subsequently clustered into 361 OTUs based on 97% similarity.
+To evaluate the possible differences in microbial origin between MV-DNA, fDNA
+and bDNA, we ﬁrst assessed the compositions within healthy individuals. While no
+differences were observed in microbial richness between the three sample types (Figure 1A),
+a signiﬁcant reduction in microbial diversity (Shannon index) in MV-DNA was observed
+when compared to the other two sample types (Figure 1B). Also, when the generalized
+UniFrac was calculated as a measure of inter-sample distance in microbial community
+structure, MV-DNA was signiﬁcantly separated from fDNA and bDNA, as visualized
+by non-metric multidimensional scaling (NDMS). Statistical testing using PERMANOVA
+indeed conﬁrmed a signiﬁcant difference in the microbial community structure of MV-DNA
+samples (adjusted p-value = 0.003). No differences were observed in composition between
+fDNA and bDNA (Figure 1C). Intriguingly, with respect to the microbial composition,
+fDNA and bDNA were dominated by the Gram-positive phylum Firmicutes (mean of
+relative abundance for fDNA 70%; bDNA 72.1%). In contrast, in MV-DNA the Bacteroidetes
+phylum was dominant, with a mean prevalence of 66 % (Figure 2, Table 1). On the other
+hand, Firmicutes and Actinobacteria show signiﬁcantly less abundance in MV-DNA, which
+was 3- and 10-fold less, respectively (Figure 2, Figures S2 and S3, Table 1).
+In CD patients, the microbiota compositions of MV were also signiﬁcantly different
+compared to fecal and bacterial as seen by beta-diversity analysis (Figure 3). Although
+microbial richness analysis does not show differences between the three samples types,
+the microbiota reveals a signiﬁcantly higher diversity in fDNA and bDNA compared
+to MV-DNA (Figure 2). Similar to HC, in CD, MV-DNA microbiota is dominated with
+Bacteroidetes, while Firmicutes is more abundant in fDNA and bDNA (Figure 3, Figures S2
+and S3).
+
+Cells 2021, 10, 2795
+6 of 16
+ 
+ 
+(A) 
+(B) 
+(C) 
+Healthy control richness
+fDNA
+bDNA
+MV-DNA
+100
+150
+200
+250
+OTUs
+Healthy control
+fDNA
+bDNA
+MV-DNA
+0
+1
+2
+3
+4
+5
+*
+*
+shannon index
+Figure 1. Microbial richness and alpha diversity of DNA obtained from HC to show the differences between the three
+different conditions: OTU numbers were used to represent the richness of samples. (A) Graphs show the richness among
+the three groups (fDNA, bDNA, and MV-DNA). (B) Shannon indices as an indicator for alpha diversity (microbial diversity
+within the samples). (C) Pairwise beta diversity of microbial compositions: non-metric multidimensional scaling (NMDS)
+calculated from the generalized UniFrac dissimilarity matrix (red: bDNA; green: fDNA; blue: MV-DNA). Results shown as
+boxplots with whiskers, and p-value indicated as * < 0.05.
+
+Cells 2021, 10, 2795
+7 of 16
+ 
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+fDNA
+bDNA
+MV-DNA
+Relative abundance % 
+p__Verrucomicrobia
+p__Proteobacteria
+p__Lentisphaerae
+p__Fusobacteria
+p__Firmicutes
+p__Euryarchaeota
+p__Bacteroidetes
+p__Actinobacteria
+Figure 2. Comparison of relative abundances of the most dominant phyla between the three DNA
+conditions. The graphs represent the relative differences in healthy controls. (fDNA) DNA obtained
+directly from fecal samples, (bDNA) DNA obtained from pellet of dissolved feces in PBS–bacteria
+DNA, and (MV-DNA) DNA obtained from MV fractions.
+Table 1. Signiﬁcantly different phyla in MV microbiome compared to fDNA and bDNA compositions in HC. MAV (mean
+abundance value). A Mann–Whitney test was used to determine the p-value.
+Phylum
+MAV of HC %
+p-Value of
+fDNA/bDNA
+p-Value of
+fDNA/MV-
+DNA
+p-Value of
+bDNA/MV-
+DNA
+fDNA
+bDNA
+MV-DNA
+p__Actinobacteria
+8.665
+13.35
+1
+0.3254
+0.0009
+0.0001
+p__Bacteroidetes
+18.69
+12.22
+66.5
+0.08
+0.004
+0.0001
+p__Firmicutes
+70
+72.1
+27
+0.5
+0.001
+0.0001
+p__Proteobacteria
+1.707
+1.013
+5
+0.2
+0.9
+0.3
+p__Euryarchaeota
+0.3482
+0.3087
+0.006617
+0.8
+0.22
+0.04
+p__Fusobacteria
+0.003017
+0.000227
+0.001063
+0.1
+0.1
+0.17
+p__Lentisphaerae
+0.01331
+0.000988
+0.08437
+0.9
+0.3
+0.1
+p__Verrucomicrobia
+0.8032
+0.7239
+0.3012
+0.8
+0.22
+0.1
+Thereafter, we analyzed the microbial composition in CD patients as compared to
+HC. Since the differences between fDNA and bDNA compositions were only marginal, we
+decided to use only the bDNA readouts to compare it to MV-DNA. The microbial richness
+was signiﬁcantly lower in Re-CD as compared to HC, and was even further decreased in
+Ac-CD in both the MV and bacterial fractions (Figure 4A,B). The Shannon indices, which
+represent microbial diversity within samples, showed a signiﬁcant reduction in CD patients
+in MV-DNA, but not in bDNA (Figure 4C,D). The overall microbial community structure
+(generalized UniFrac) of samples from HC and Ac-CD was statistically signiﬁcantly dif-
+ferent in both bDNA and MV-DNA fractions (p-value of 0.003 and 0.03, respectively;
+Figure 4E,F). The microbial community structure of samples from re-CD as compared to
+HC was neither signiﬁcantly different in the bDNA nor in the MV-DNA factions upon
+adjustment for multiple comparisons (p = 0.07 and 0.083, respectively).
+
+Cells 2021, 10, 2795
+8 of 16
+ 
+ 
+(A) 
+(B) 
+ 
+(C) 
+ 
+(D) 
+Crohn's disease richness
+fDNA
+bDNA
+MV-DNA
+0
+50
+100
+150
+200
+250
+OTUs
+Crohn's disease
+fDNA
+bDNA
+MV-DNA
+0
+1
+2
+3
+4
+5
+***
+***
+shannon index
+0%
+10%
+20%
+30%
+40%
+50%
+60%
+70%
+80%
+90%
+100%
+fDNA
+bDNA
+MV-DNA
+Rrelative abundance
+p__Verrucomicrobia
+p__Proteobacteria
+p__Lentisphaerae
+p__Fusobacteria
+p__Firmicutes
+p__Euryarchaeota
+p__Bacteroidetes
+p__Actinobacteria
+Figure 3. Microbial richness and alpha diversity of DNA obtained from CD to show the differences between the three
+sample types: OTUs numbers were used to represent the richness of samples. (A) Graphs show the richness among the
+three groups (fDNA, bDNA, and MV-DNA). (B) Shannon indices as an indicator for alpha diversity (microbial diversity
+within the samples). (C) Pairwise beta diversity of microbial compositions: non-metric multidimensional scaling (NMDS)
+calculated from the generalized UniFrac dissimilarity matrix (red: bacterial DNA; green: fecal DNA; blue: vesicles) from the
+PERMANOVA test used to determine the p-value. (D) Relative abundances of the most dominant phyla in CD among the
+three sample types. Results shown as boxplots with whiskers, and p-value indicated as (*** < 0.001).
+
+Cells 2021, 10, 2795
+9 of 16
+ 
+ 
+(A) 
+(B) 
+ 
+ 
+(C) 
+(D) 
+ 
+(E) 
+ 
+(F) 
+bDNA-richness
+HC
+Re-CD
+Ac-CD
+0
+50
+100
+150
+200
+250
+300
+*
+*
+OTUs
+MV-DNA-richness
+HC
+Re-CD
+Ac-CD
+0
+50
+100
+150
+200
+250
+300
+*
+*
+**
+OTUs
+ (bDNA)
+HC
+Re-CD
+Ac-CD
+1
+2
+3
+4
+5
+shannon index
+ (MV-DNA)
+HC
+Re-CD
+Ac-CD
+0
+1
+2
+3
+4
+5
+*
+*
+shannon index
+Figure 4. Microbial compositions and diversity of MV-DNA and bDNA of CD patients in comparison to HC (green: HC;
+red: Re-CD; blue: Ac-CD). (A,B) Microbial richness in bacterial DNA and MV DNA. (C,D) Alpha diversity as indicated by
+Shannon indices. (E,F) Beta diversity of microbial compositions: non-metric multidimensional scaling (NMDS) calculated
+from the generalized UniFrac dissimilarity matrix. Pairwise comparison revealed a signiﬁcant distance between HC and
+Ac-CD in bacterial DNA (E) and vesicles DNA (F), the PERMANOVA test used to determine the p-value. Results show as
+boxplots with whiskers. A Mann–Whitney test is used for statistics; p-value indicated as (* < 0.05, ** < 0.01).
+We next examined the composition of bacterial fMVs and bacterial fractions of both CD
+and HC patients in more detail by testing for differentially abundant genera and families.
+In CD patients, a signiﬁcant reduction in the relative abundance in the family Biﬁdobac-
+teriaceae and genus Biﬁdobacterium was observed in both bacterial and MV fractions. This re-
+duction became even more pronounced among patients with active disease (Figure 5A–D).
+
+Cells 2021, 10, 2795
+10 of 16
+Another striking ﬁnding was the almost complete absence of the genus Lactobacillus and
+even the entire family Lactobacillaceae in both the bacterial and fMVs fractions of all CD
+patients as compared to HC.
+ 
+(A) 
+ 
+(B) 
+ 
+(C) 
+ 
+(D) 
+bDNA (Family level)
+f__Bacteroidaceae
+f__Bifidobacteriaceae
+f__Enterobacteriaceae
+f__Erysipelotrichaceae
+f__Lactobacillaceae
+f__Porphyromonadaceae
+f__Ruminococcaceae
+f__Sutterellaceae
+0
+2
+4
+20
+40
+60
+HC
+Re-CD
+Ac-CD
+*
+*
+*
+Relative abundance %
+MVs-DNA (family level)
+f__Bacteroidaceae
+f__Bifidobacteriaceae
+f__Enterobacteriaceae
+f__Erysipelotrichaceae
+f__Lactobacillaceae
+f__Porphyromonadaceae
+f__Ruminococcaceae
+f__Sutterellaceae
+0.0
+0.5
+1.0
+20
+40
+60
+HC
+Re-CD
+Ac-CD
+**
+*
+*
+*
+**
+**
+**
+*
+**
+**
+**
+Relative abundance %
+B-DNA (genus level)
+g__Akkermansia
+g__Bacteroides
+g__Bifidobacterium
+g__Clostridium XI
+g__Escherichia/Shigella
+g__Faecalibacterium
+g__Lactobacillus
+g__Parabacteroides
+g__Phascolarctobacterium
+g__Ruminococcus
+g__Sutterella
+g__Coprobacter
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+5
+10
+15
+20
+HC
+Re-CD
+Ac-CD
+**
+*
+*
+*
+**
+*
+*
+Relative abundance %
+MVs-DNA (genus level)
+g__Akkermansia
+g__Bacteroides
+g__Bifidobacterium
+g__Clostridium XI
+g__Escherichia/Shigella
+g__Faecalibacterium
+g__Lactobacillus
+g__Parabacteroides
+g__Phascolarctobacterium
+g__Ruminococcus
+g__Sutterella
+g__Coprobacter
+0.0
+0.1
+0.2
+2
+4
+20
+40
+60
+HC
+Re-CD
+Ac-CD
+*
+*
+*
+**
+*
+*
+*
+*
+*
+*
+**
+*
+*
+*
+*
+Relative abundance %
+Figure 5. Relative abundance of microbial compositions of MV-DNA and bDNA at the family and
+genus levels. (A,C) The relative abundances of the most important families and genera that show
+clinical importance in IBD, in DNA obtained from bacterial fractions. (B,D) Relative abundances of
+microbial compositions of DNA derived from MV fractions. Results represented as means ± SEM. A
+Mann–Whitney test was used for statistics; p-value indicated as (* < 0.05, ** < 0.01).
+
+Cells 2021, 10, 2795
+11 of 16
+Although the above-mentioned differences were observed in both bacterial and MV
+fractions, more profound differences were observed in the MVs. The abundance of Sutterel-
+laceae was signiﬁcantly increased in patients with active disease, and at the genus level a
+signiﬁcant trend could also be observed with lowest levels of Suterella among HC, interme-
+diate levels in Re-CD and the highest levels among Ac-CD. Signiﬁcant differences were
+also observed for Enterobacteriaceae, Porphyromonadaceae, Erysipelotrichaceae, Lactobacillaceae,
+and Ruminococcaceae at the family level (Figure 5B), whereas at the genus level the reduced
+abundance of Faecalibacterium among ac-CD was most striking.
+4. Discussion
+It is well established that the gut microbiota provide a variety of health-related func-
+tions based on symbiotic interactions between the host and the microbiota [39]. Alterna-
+tively, currently there is compelling evidence that microbial dysbiosis, which is character-
+ized by alterations in the composition and/or the function of the microbiota, results in
+a disbalance with the host immune system [14,40]. Consequently, diseases like asthma,
+allergies, cardiovascular diseases and, in particular, IBD will develop [14,41]. With respect
+to the latter, many studies have shown that the composition of the microbiota is altered
+in CD patients compared with that in healthy subjects [14,15,42]. However, convincing
+evidence showing a direct causal relationship between microbial dysbiosis and CD is
+lacking, and results show a great diversity in dysbiosis. More recently, it was suggested
+that not only the bacteria themselves, but also small nanosized vesicles released by almost
+all bacteria may play a role in health and disease [6,43]. However, the relationship between
+the composition of the bacterial microbiota and the membrane vesicles released by the
+bacteria has largely been unexplored. Here, we demonstrate a remarkable difference in
+the bacterial composition of the gut microbiota and the relative abundance of membrane
+vesicles within the same microbiota. Also, we explored whether the compositions of both
+the bacteria and the membrane vesicles was altered in patients with CD.
+In the ﬁrst part of this study, we determined the richness and diversity of three different
+fecal sample types (whole feces fraction, bacterial fraction and MV fraction) from healthy
+volunteers. No differences in richness were observed between all three sample types,
+but diversity was signiﬁcantly lower in MV-DNA when compared to fDNA and bDNA.
+Moreover, MV-DNA could be clearly separated from fDNA and bDNA when beta diversity
+was calculated. Even more intriguing was the difference in the relative abundances of
+the most dominant phyla between MVs and the bacteria. In both the fDNA and the
+bDNA samples Firmicutes were the most dominant phylum, while Actinobacteria could also
+easily be identiﬁed. In the MV-DNA samples, however, Bacteroidetes was the dominant
+phylum, while Actinobacteria could hardly be found. Others recently also determined the
+composition of MVs in different sample types by metagenomic proﬁling. In several studies,
+the highest abundance was found for Firmicutes in stool [44] and serum samples [45], which
+is in contrast to our ﬁndings. In these studies, they only determined the bacterial origin
+of the MV, but did not compare this to the actual bacterial composition, as in the current
+paper. Such a pairwise comparison was made by Yang et al. [46]. Although correlations
+were found between the presence of MV and bacteria in stool samples, differences were
+also observed, although they were not in complete alignment with our data. In a similar
+animal study, Kang et al. reported that the MV present in murine stool samples were
+almost exclusively proteobacteria-derived, while the relative abundance of bacteria in the
+sample was more diverse, with Firmicutes being the most prevalent phylum. What causes
+these discrepancies is yet unknown, although it cannot be excluded those differences in MV
+isolation play a crucial role. Moreover, the processing of fecal samples and DNA extraction
+methods need to be standardized since it was shown that variations in either processing or
+extraction may have a large effect on the outcome of metagenomic analyses [47].
+In the second part of this study, we determined whether the composition of the gut
+microbiota was altered in patients with Crohn’s disease. Several studies have demonstrated
+differences in microbial composition of the gut microbiota among IBD patients in compari-
+
+Cells 2021, 10, 2795
+12 of 16
+son to healthy individuals, describing a global compositional change but also the presence
+of potential pathogens. For instance, Faecalibacterium is often reduced in CD patients, while
+Enterobacteriaceae are increased [48]. Yet, the composition of MV has barely been explored
+in CD patients. Here we demonstrated that, like in healthy controls, the richness between
+the three sample types was comparable, while the diversity was signiﬁcantly lower in the
+MV fractions. Also, calculation of the beta diversity allowed a clear separation between
+MV-DNA on one hand and fDNA/bDNA on the other. Likewise, the relative abundance
+of the most important phyla was clearly different in the MV and fDNA/bDNA samples.
+Overall, these data demonstrate an unexpected diversity between the MV and bacteria in
+in term of composition both in healthy controls and in CD patients.
+Several gut microbiota composition studies and their correlations to CD were per-
+formed on DNA isolated from fecal samples; however so far these studies could not provide
+deﬁnitive cause-effect mechanistic relationships [49]. Nevertheless, bacterial products are
+thought to have an impact on causation of IBD and other related diseases. One of the
+main products are MVs which are suggested to modulate host–microbe interactions [50,51].
+Here, we examined whether the composition of the microbiota was different between
+HC and CD patients (active disease or in remission). In terms of richness, we observed a
+signiﬁcant decrease in the bacteria and the MVs in patients in remission when compared to
+HC, and this was even more pronounced in patients with active disease. A similar trend
+was observed when beta diversity was calculated. This allowed a signiﬁcant separation
+for both MVs and bacteria between AC-CD patients and HC, while the difference between
+Re-CD and HC was less pronounced. Alpha diversity was also decreased in MV, but not in
+bacteria. Overall, this conﬁrms the results from other studies also showing a decrease in
+the richness of the intestinal microbiota in CD patients, which depends on the disease state
+of the patients [40,52–54].
+We also determined whether changes could be observed at the family and genus levels.
+Many different studies have revealed enriched or lower fecal concentrations of members
+of the most important phyla. In particular, changes in the abundances of Faecalibacterium,
+Clostridium, Biﬁdobacterium and Lactobacillus have been reported [11,16]. In our study
+differences in abundance were noted when the bDNA factions were analyzed at the family
+and genus level. In Ac-CD, signiﬁcant reductions in the abundance of Biﬁdobacterium,
+Lactobacillus and Phascolarctobacterium were noted. Most of these genera have been shown
+to protect the host from mucosal inﬂammation, e.g., by downregulating the release of
+inﬂammatory cytokines [55–58], and lower abundances have been found frequently in
+IBD patients. Alternatively, Sutterella was more abundant in Ac-CD than Re-CD and HC.
+A recent study has demonstrated an IgA-degrading effect of Sutterella spp in ulcerative
+colitis [59]. Elevated abundance of Sutterella was also observed in IBD patients, which is
+proposed to correlate with IgA deﬁciency among IBD patients [60,61]. Nonetheless, in
+contrast to earlier reports we could not ﬁnd signiﬁcant differences in the abundance of
+Enterobacteriaceae of Faecalibacterium in the bDNA fractions.
+We also performed a taxonomic proﬁling of the MV isolated form fecal samples. In line
+with the changes observed in the bDNA samples, the abundance of MVs derived from Biﬁ-
+dobacterium, Lactobacillus and Phascolarctobacterium were also signiﬁcantly reduced in Ac-CD
+patients. Yet, signiﬁcant differences were also noting for other genera. For example, a sig-
+niﬁcant decrease in the abundance of Faecalibacterium prausnitzii and Ruminococcus, which
+are known as anti-inﬂammatory organism and acetate producers, respectively [62,63], was
+exclusively seen in the MV fractions. The abundance of Erysipelotrichaceae was markedly
+reduced in CD patients irrespective of disease status. The Erysipelotrichaceae family was
+shown to cause inﬂammation by degrading the protective intestinal mucus layer and
+secreting many enzymes that can worsen inﬂammation in different ways. As such, it
+may play a role in inﬂammation-related diseases like IBD [64]. Indeed, enhanced levels of
+Erysipelotrichacea have been found in mice with TNF-driven Crohn’s disease-like transmural
+inﬂammation. However, lower levels were observed in new-onset CD patients [12]. Like-
+wise, signiﬁcantly lower levels have been observed in patients who experienced recurrence
+
+Cells 2021, 10, 2795
+13 of 16
+of CD [65]. In the current study, we also found a slight, non-signiﬁcant decrease in the
+bDNA samples, but in the MV-DNA samples the levels of Erysipelotrichaceae were markedly
+reduced in both Ac-CD and Re-CD. Additional studies are needed to further elucidate the
+role of Erysipelotrichacea in IBD or other inﬂammation related-diseases.
+In conclusion, the data presented here provide a novel layer of complexity in the patho-
+physiology of inﬂammation-related disorders like CD. We showed a striking difference in
+the composition of the bacterial microbiota and bacteria-derived MV herein. In particu-
+lar, the Firmicutes/Bacteriodetes ratio was remarkably different between the bacterial/fecal
+factions and the MV fraction. Moreover, this is the ﬁrst study which demonstrates that in
+addition to changes in the intestinal bacterial composition, the MV composition changes
+in CD patients. Although we realize that the current data were obtained in only a small
+patient group and need to be conﬁrmed in new prospective longitudinal and mechanistic
+studies to further unravel the importance of these ﬁndings, they provide promising new
+research targets for the discovery of therapeutic agents and drug delivery systems in the
+IBD ﬁeld [43,50].
+Supplementary Materials: The following are available online at https://www.mdpi.com/article/10.3
+390/cells10102795/s1, Figure S1: cryo-TEM images. (A) vesicles derived from feces of HC. (B) from Ac-
+CD, and (C) from Re-CD, Figure S2: Comparison of relative abundances of the most dominants phyla.
+The graphs represent the relative differences between healthy controls and CD patients (remissive
+and active) based on DNA obtained (A) from feces, (B) from bacteria pellet, and (C) from MVs.
+Firmicutes and Bacteroidetes which are the most abundant don’t show signiﬁcant differences, while
+Actinobactria, Fusobacteria, and Proteobacteria display signiﬁcant changes especially in MV-DNA.
+The graphs (D), (E), and (F) demonstrate altering in ratio between bacteria and their corresponding
+vesicles in HC, Re-CD, and Ac-CD, respectively. Results represent as means ±SEM. Student t-test
+is used for statistics; p-value indicates as (* < 0.05, ** < 0.01, *** < 0.001), Figure S3: The microbial
+compositions of DNA at Phyla level. (A) microbial composition of DNA obtained directly from fecal
+samples. bars 1-6 from healthy individuals, 7-12 from Crohn’s patients in remissive state Re-CD,
+13-18 from Crohn’s patients in active state Ac-CD. (B) microbial compositions of DNA obtained
+from bacterial pellet, each sample were analyzed twice (two different isolation from each individual
+fecal sample for reproducibility); bars 1-12 represents healthy individuals, 13-24 from Re-CD, and
+25-36 from Ac-CD. (C) Microbial composition of DNA isolated from MVs, all samples also analyzed
+twice, bars 1-12 from HC, 13-24 from Re-CD, and 25-36 from Ac-CD. Firmicutes phylum are more
+dominant in fecal and bacterial DNA while Bacteroidetes are abundant in MVs-DNA, Figure S4: The
+relative abundance of microbial compositions at genus level. all samples also ran twice (two different
+isolation from each individual fecal sample for reproducibility). (A) microbial compositions of DNA
+obtained from bacterial pellet; each sample were analyzed in twice. Bars 1-12 represents healthy
+individuals, 13-24 from Re-CD, and 25-36 from Ac-CD. (B) Microbial composition of DNA isolated
+from MVs; bars 1-12 from HC, 13-24 from Re-CD, and 25-36 from Ac-CD. Each two bars in a row
+represent one individual, Figure S5: Beta diversity of highest negative controls compare to the lowest
+sequences reads of samples. It shows that the microbial compositions of negative controls have
+completely different compositions compare to the samples and the microbial compositions of samples
+are not driven by potential contaminated DNA. Table S1: Baseline characterizations of the samples:
+Healthy Control (HC) and Crohn’s Disease (CD) patients (CD), Table S2: Disease characterizations of
+the Crohn’s Disease (CD) patients.
+Author Contributions: N.K. conception of the study, study design, sample processing, data analysis,
+writing of the manuscript; H.E.F.B. patient recruitment, samples acquisition and processing; T.W.
+sample processing; D.M.A.E.J. conception of the study, supervision; J.P. data analysis, supervision;
+P.S. conception of the study, supervision; F.R.S. conception of the study, study design, writing of the
+manuscript, supervision. All authors reviewed the manuscript. All authors have read and agreed to
+the published version of the manuscript.
+Funding: This research did not receive any speciﬁc grant from funding agencies in the public,
+commercial, or not-for-proﬁt sectors.
+Institutional Review Board Statement: The study was approved by the Medical Ethics Committee
+of Maastricht University Medical Center+. The study was registered in the Central Committee on
+
+Cells 2021, 10, 2795
+14 of 16
+Research Involving Human Subjects (CCMO) registry, under ﬁle number NL31636.068.10 (IBD-SL)
+and NL24160.068.08 (MIBS).
+Informed Consent Statement: Informed consent was obtained from all subjects involved in the study.
+Data Availability Statement: The data underlying this article are available in the article and in its
+online supplementary material.
+Acknowledgments: This work was supported by Jazan University. The authors would like to thank
+Christel Driessen for technical and operational help.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+References
+1.
+Kim, H.D.; Cheon, J.H. Pathogenesis of Inﬂammatory Bowel Disease and Recent Advances in Biologic Therapies. Immune Netw.
+2017, 171, 25–40. [CrossRef]
+2.
+Sartor, R.B. The intestinal microbiota in inﬂammatory bowel diseases. Nestle Nutr. Inst. Workshop Ser. 2014, 79, 29–39.
+3.
+Vindigni, M.S.; Zisman, T.L.; Suskind, D.L.; Damman, C.J. The intestinal microbiome, barrier function, and immune system in
+inﬂammatory bowel disease: A tripartite pathophysiological circuit with implications for new therapeutic directions. Ther. Adv.
+Gastroenterol. 2016, 9, 606–625. [CrossRef]
+4.
+Torres, J.; Mehandru, S.; Colombel, J.F.; Peyrin-Biroulet, L. Crohn’s disease. Lancet 2017, 389, 1741–1755. [CrossRef]
+5.
+Schwechheimer, C.; Kuehn, M.J. Outer-membrane vesicles from Gram-negative bacteria: Biogenesis and functions. Nat. Rev.
+Micro. 2015, 13, 605–619. [CrossRef] [PubMed]
+6.
+Pathirana, D.R.; Kaparakis-Liaskos, M. Bacterial membrane vesicles: Biogenesis, immune regulation and pathogenesis. Cell.
+Microbiol. 2016, 18, 1518–1524. [CrossRef] [PubMed]
+7.
+Bitto, J.N.; Chapman, R.; Pidot, S.; Costin, A.; Lo, C.; Choi, J.; D’Cruze, T.; Reynolds, E.C.; Dashper, S.G.; Turnbull, L.; et al.
+Bacterial membrane vesicles transport their DNA cargo into host cells. Sci. Rep. 2017, 7, 7072. [CrossRef] [PubMed]
+8.
+Nagakubo, T.; Nomura, N.; Toyofuku, M. Cracking Open Bacterial Membrane Vesicles. Front. Microbiol. 2019, 10, 3026. [CrossRef]
+9.
+Perez-Cruz, C.; Delgado, L.; Lopez-Iglesias, C.; Mercade, E. Outer-inner membrane vesicles naturally secreted by gram-negative
+pathogenic bacteria. PLoS ONE 2015, 10, e0116896. [CrossRef]
+10.
+Lee, Y.E.; Choi, D.S.; Kim, K.P.; Gho, Y.S. Proteomics in gram-negative bacterial outer membrane vesicles. Mass. Spectrom. Rev.
+2008, 27, 535–555. [CrossRef]
+11.
+Joossens, M.; Huys, G.; Cnockaert, M.; De Preter, V.; Verbeke, K.; Rutgeerts, P.; Vandamme, P.; Vermeire, S. Dysbiosis of the faecal
+microbiota in patients with Crohn’s disease and their unaffected relatives. Gut 2011, 60, 631–637. [CrossRef]
+12.
+Gevers, D.; Kugathasan, S.; Denson, L.A.; Vazquez-Baeza, Y.; Van Treuren, W.; Ren, B.; Schwager, E.; Knights, D.; Song, S.J.;
+Yassour, M.; et al. The treatment-naive microbiome in new-onset Crohn’s disease. Cell Host Microbe 2014, 15, 382–392. [CrossRef]
+13.
+Manichanh, C.; Rigottier-Gois, L.; Bonnaud, E.; Gloux, K.; Pelletier, E.; Frangeul, L.; Nalin, R.; Jarrin, C.; Chardon, P.; Marteau, P.;
+et al. Reduced diversity of faecal microbiota in Crohn’s disease revealed by a metagenomic approach. Gut 2006, 55, 205–211.
+[CrossRef] [PubMed]
+14.
+DeGruttola, A.K.; Low, D.; Mizoguchi, A.; Mizoguchi, E. Current Understanding of Dysbiosis in Disease in Human and Animal
+Models. Inﬂamm. Bowel Dis. 2016, 22, 1137–1150. [CrossRef] [PubMed]
+15.
+Hedin, C.R.; McCarthy, N.E.; Louis, P.; Farquharson, F.M.; McCartney, S.; Taylor, K.; Prescott, N.J.; Murrells, T.; Stagg, A.J.;
+Whelan, K.; et al. Altered intestinal microbiota and blood T cell phenotype are shared by patients with Crohn’s disease and their
+unaffected siblings. Gut 2014, 63, 1578–1586. [CrossRef] [PubMed]
+16.
+Li, J.; Butcher, J.; Mack, D.; Stintzi, A. Functional Impacts of the Intestinal Microbiome in the Pathogenesis of Inﬂammatory Bowel
+Disease. Inﬂamm. Bowel Dis. 2015, 21, 139–153. [CrossRef] [PubMed]
+17.
+Seksik, P.; Rigottier–Gois, L.; Gramet, G.; Sutren, M.; Pochart, P.; Marteau, P.; Jian, R.; Dore, J. Alterations of the dominant faecal
+bacterial groups in patients with Crohn’s disease of the colon. Gut 2003, 52, 237–242. [CrossRef] [PubMed]
+18.
+Machiels, K.; Joossens, M.; Sabino, J.; De Preter, V.; Arijs, I.; Eeckhaut, V.; Ballet, V.; Claes, K.; Van Immerseel, F.; Verbeke, K.; et al.
+A decrease of the butyrate-producing species Roseburia hominis and Faecalibacterium prausnitzii deﬁnes dysbiosis in patients
+with ulcerative colitis. Gut 2014, 63, 1275–1283. [CrossRef]
+19.
+Geirnaert, A.; Calatayud, M.; Grootaert, C.; Laukens, D.; Devriese, S.; Smagghe, G.; De Vos, M.; Boon, N.; Van De Wiele, T.
+Butyrate-producing bacteria supplemented in vitro to Crohn’s disease patient microbiota increased butyrate production and
+enhanced intestinal epithelial barrier integrity. Sci. Rep. 2017, 7, 11450. [CrossRef]
+20.
+Vargoorani, M.E.; Modarressi, M.H.; Vaziri, F.; Motevaseli, E.; Siadat, S.D. Stimulatory effects of Lactobacillus casei derived
+extracellular vesicles on toll-like receptor 9 gene expression and cytokine proﬁle in human intestinal epithelial cells. J. Diabetes
+Metab. Disord. 2020, 19, 223–231. [CrossRef]
+21.
+Patten, D.A.; Hussein, E.; Davies, S.P.; Humphreys, P.; Collett, A. Commensal-derived OMVs elicit a mild proinﬂammatory
+response in intestinal epithelial cells. Microbiology 2017, 163, 702–711. [CrossRef]
+22.
+Vanaja, S.K.; Russo, A.J.; Behl, B.; Banerjee, I.; Yankova, M.; Deshmukh, S.D.; Rathinam, V.A. Bacterial Outer Membrane Vesicles
+Mediate Cytosolic Localization of LPS and Caspase-11 Activation. Cell 2016, 165, 1106–1119. [CrossRef]
+
+Cells 2021, 10, 2795
+15 of 16
+23.
+Fabrega, M.J.; Rodríguez-Nogales, A.; Mesa, J.G.; Algieri, F.; Badía, J.; Giménez, R.; Galvez, J.; Baldomà, L. Intestinal Anti-
+inﬂammatory Effects of Outer Membrane Vesicles from Escherichia coli Nissle 1917 in DSS-Experimental Colitis in Mice. Front.
+Microbiol. 2017, 8, 1274. [CrossRef]
+24.
+van den Heuvel, T.R.; Jonkers, D.M.; Jeuring, S.F.; Romberg-Camps, M.J.; E Oostenbrug, L.; Zeegers, M.P.; Masclee, A.A.; Pierik,
+M.J. Cohort Proﬁle: The Inﬂammatory Bowel Disease South Limburg Cohort (IBDSL). Int. J. Epidemiol. 2017, 46, e7. [CrossRef]
+[PubMed]
+25.
+Van Assche, G.; Dignass, A.; Panes, J.; Beaugerie, L.; Karagiannis, J.; Allez, M.; Ochsenkuhn, T.; Orchard, T.; Rogler, G.; Louis, E.;
+et al. The second European evidence-based Consensus on the diagnosis and management of Crohn’s disease: Deﬁnitions and
+diagnosis. J. Crohns Colitis 2010, 4, 7–27. [CrossRef]
+26.
+Daperno, M.; D’Haens, G.; Van Assche, G.; Baert, F.; Bulois, P.; Maunoury, V.; Sostegni, R.; Rocca, R.; Pera, A.; Gevers, A.; et al.
+Development and validation of a new, simpliﬁed endoscopic activity score for Crohn’s disease: The SES-CD. Gastrointest. Endosc.
+2004, 60, 505–512. [CrossRef]
+27.
+Benedikter, B.J.; Bouwman, F.G.; Vajen, T.; Heinzmann, A.C.A.; Grauls, G.; Mariman, E.C.; Wouters, E.F.M.; Savelkoul, P.H.; Lopez-
+Iglesias, C.; Koenen, R.R.; et al. Ultraﬁltration combined with size exclusion chromatography efﬁciently isolates extracellular
+vesicles from cell culture media for compositional and functional studies. Sci. Rep. 2017, 7, 15297. [CrossRef] [PubMed]
+28.
+Kameli, N.; Borman, R.; López-Iglesias, C.; Savelkoul, P.; Stassen, F.R. Characterization of Feces-Derived Bacterial Membrane
+Vesicles and the Impact of Their Origin on the Inﬂammatory Response. Front. Cell. Infect. Microbiol. 2021, 11, 667987.
+29.
+Schaar, V.; Nordstrom, T.; Morgelin, M.; Riesbeck, K. Moraxella catarrhalis outer membrane vesicles carry beta-lactamase and
+promote survival of Streptococcus pneumoniae and Haemophilus inﬂuenzae by inactivating amoxicillin. Antimicrob. Agents
+Chemother. 2011, 55, 3845–3853. [CrossRef]
+30.
+Salonen, A.; Nikkilä, J.; Jalanka-Tuovinen, J.; Immonen, O.; Rajilic-Stojanovic, M.; Kekkonen, R.A.; Palva, A.; de Vos, W.M.
+Comparative analysis of fecal DNA extraction methods with phylogenetic microarray: Effective recovery of bacterial and archaeal
+DNA using mechanical cell lysis. J. Microbiol. Methods 2010, 81, 127–134. [CrossRef]
+31.
+Caporaso, J.G.; Lauber, C.L.; A Walters, W.; Berg-Lyons, D.; Huntley, J.; Fierer, N.; Owens, S.; Betley, J.; Fraser, L.; Bauer, M.; et al.
+Ultra-high-throughput microbial community analysis on the Illumina HiSeq and MiSeq platforms. ISME J. 2012, 6, 1621–1624.
+[CrossRef]
+32.
+Edgar, R.C. UPARSE: Highly accurate OTU sequences from microbial amplicon reads. Nat. Methods 2013, 10, 996–998. [CrossRef]
+33.
+Edgar, R.C. Search and clustering orders of magnitude faster than BLAST. Bioinformatics 2010, 26, 2460–2461. [CrossRef] [PubMed]
+34.
+Edgar, R.C.; Haas, B.J.; Clemente, J.C.; Quince, C.; Knight, R. UCHIME improves sensitivity and speed of chimera detection.
+Bioinformatics 2011, 27, 2194–2200. [CrossRef] [PubMed]
+35.
+Wang, Q.; Garrity, G.M.; Tiedje, J.M.; Cole, J.R. Naive Bayesian classiﬁer for rapid assignment of rRNA sequences into the new
+bacterial taxonomy. Appl. Environ. Microbiol. 2007, 73, 5261–5267. [CrossRef] [PubMed]
+36.
+Edgar, R.C. MUSCLE: Multiple sequence alignment with high accuracy and high throughput. Nucleic Acids Res. 2004, 32,
+1792–1797. [CrossRef] [PubMed]
+37.
+Price, M.N.; Dehal, P.S.; Arkin, A. FastTree 2–Approximately Maximum-Likelihood Trees for Large Alignments. PLoS ONE 2010,
+5, e9490. [CrossRef]
+38.
+Lagkouvardos, I.; Fischer, S.; Kumar, N.; Clavel, T. Rhea: A transparent and modular R pipeline for microbial proﬁling based on
+16S rRNA gene amplicons. PeerJ 2017, 5, e2836. [CrossRef]
+39.
+Fan, Y.; Pedersen, O. Gut microbiota in human metabolic health and disease. Nat. Rev. Genet. 2021, 19, 55–71. [CrossRef]
+40.
+Baumgart, D.C.; Sandborn, W.J. Crohn’s disease. Lancet 2012, 380, 1590–1605. [CrossRef]
+41.
+Tang, W.H.W.; Li, D.Y.; Hazen, S.L. Dietary metabolism, the gut microbiome, and heart failure. Nat. Rev. Cardiol. 2019, 16, 137–154.
+[CrossRef]
+42.
+Khanna, S.; Raffals, L.E. The Microbiome in Crohn’s Disease: Role in Pathogenesis and Role of Microbiome Replacement
+Therapies. Gastroenterol. Clin. North. Am. 2017, 46, 481–492. [CrossRef]
+43.
+Liu, Y.; Defourny, K.A.Y.; Smid, E.J.; Abee, T. Gram-Positive Bacterial Extracellular Vesicles and Their Impact on Health and
+Disease. Front. Microbiol. 2018, 9, 1502. [CrossRef]
+44.
+Kim, D.J.; Yang, J.; Seo, H.; Lee, W.H.; Lee, D.H.; Kym, S.; Park, Y.S.; Kim, J.G.; Jang, I.-J.; Kim, Y.-K.; et al. Colorectal cancer
+diagnostic model utilizing metagenomic and metabolomic data of stool microbial extracellular vesicles. Sci. Rep. 2020, 10, 2860.
+[CrossRef] [PubMed]
+45.
+Lee, J.-H.; Choi, J.-P.; Yang, J.; Won, H.-K.; Park, C.S.; Song, W.-J.; Kwon, H.-S.; Kim, T.-B.; Kim, Y.-K.; Park, H.-S.; et al.
+Metagenome analysis using serum extracellular vesicles identiﬁed distinct microbiota in asthmatics. Sci. Rep. 2020, 10, 1–9.
+[CrossRef]
+46.
+Yang, J.; McDowell, A.; Kim, E.K.; Seo, H.; Yum, K.; Lee, W.H.; Jee, Y.K.; Kim, Y.K. Consumption of a Leuconostoc holzapfelii-
+enriched synbiotic beverage alters the composition of the microbiota and microbial extracellular vesicles. Exp. Mol. Med. 2019, 51,
+1–11. [CrossRef] [PubMed]
+47.
+Costea, P.I.; Zeller, G.; Sunagawa, S.; Pelletier, E.; Alberti, A.; Levenez, F.; Tramontano, M.; Driessen, M.; Hercog, R.; Jung, F.-E.;
+et al. Towards standards for human fecal sample processing in metagenomic studies. Nat. Biotechnol. 2017, 35, 1069–1076.
+[CrossRef] [PubMed]
+
+Cells 2021, 10, 2795
+16 of 16
+48.
+Lopetuso, L.R.; Petito, V.; Graziani, C.; Schiavoni, E.; Paroni Sterbini, F.; Poscia, A.; Gaetani, E.; Franceschi, F.; Cammarota, G.;
+Sanguinetti, M.; et al. Gut Microbiota in Health, Diverticular Disease, Irritable Bowel Syndrome, and Inﬂammatory Bowel
+Diseases: Time for Microbial Marker of Gastrointestinal Disorders? Dig. Dis. 2018, 36, 56–65. [CrossRef]
+49.
+Ni, J.; Wu, G.D.; Albenberg, L.; Tomov, V.T. Gut microbiota and IBD: Causation or correlation? Nat. Rev. Gastroenterol. Hepatol.
+2017, 14, 573–584. [CrossRef] [PubMed]
+50.
+Chang, X.; Wang, S.-L.; Zhao, S.-B.; Shi, Y.-H.; Pan, P.; Gu, L.; Yao, J.; Li, Z.-S.; Bai, Y. Extracellular Vesicles with Possible Roles in
+Gut Intestinal Tract Homeostasis and IBD. Mediat. Inﬂamm. 2020, 2020, 1945832. [CrossRef]
+51.
+Cecil, J.D.; Sirisaengtaksin, N.; O’Brien-Simpson, N.; Krachler, A.M. Outer Membrane Vesicle-Host Cell Interactions. Microbiol.
+Spectr. 2019, 7, 201–214. [CrossRef]
+52.
+Galazzo, G.; I Tedjo, D.; Wintjens, D.S.J.; Savelkoul, P.H.M.; Masclee, A.A.M.; Bodelier, A.G.L.; Pierik, M.J.; A E Jonkers, D.M.;
+Penders, J. Faecal Microbiota Dynamics and their Relation to Disease Course in Crohn’s Disease. J. Crohn’s Coliti 2019, 13,
+1273–1282. [CrossRef] [PubMed]
+53.
+Ahmed, I.; Roy, B.C.; Khan, S.A.; Septer, S.; Umar, S. Microbiome, Metabolome and Inﬂammatory Bowel Disease. Microorganisms
+2016, 4, 20. [CrossRef] [PubMed]
+54.
+Tedjo, D.I.; Smolinska, A.B.; Savelkoul, P.H.; Masclee, A.A.; Van Schooten, F.J.; Pierik, M.J.; Penders, J.; Jonkers, D.M.A.E. The
+fecal microbiota as a biomarker for disease activity in Crohn’s disease. Sci. Rep. 2016, 6, 35216. [CrossRef] [PubMed]
+55.
+Morgan, X.C.; Tickle, T.L.; Sokol, H.; Gevers, D.; Devaney, K.L.; Ward, D.V.; Reyes, J.A.; Shah, S.A.; LeLeiko, N.; Snapper, S.B.; et al.
+Dysfunction of the intestinal microbiome in inﬂammatory bowel disease and treatment. Genome Biol. 2012, 13, R79. [CrossRef]
+56.
+Elian, S.; Souza, E.; Vieira, A.; Teixeira, M.; Arantes, R.; Nicoli, J.; Martins, F. Biﬁdobacterium longum subsp. infantis BB-02
+attenuates acute murine experimental model of inﬂammatory bowel disease. Benef. Microbes 2015, 6, 277–286. [CrossRef]
+57.
+Bajer, L.; Kverka, M.; Kostovcik, M.; Macinga, P.; Dvorak, J.; Stehlikova, Z.; Brezina, J.; Wohl, P.; Spicak, J.; Drastich, P. Distinct
+gut microbiota proﬁles in patients with primary sclerosing cholangitis and ulcerative colitis. World J. Gastroenterol. 2017, 23,
+4548–4558. [CrossRef]
+58.
+von Schillde, M.-A.; Hörmannsperger, G.; Weiher, M.; Alpert, C.-A.; Hahne, H.; Bäuerl, C.; van Huynegem, K.; Steidler, L.;
+Hrncir, T.; Martinez, G.P.; et al. Lactocepin Secreted By Lactobacillus Exerts Anti-Inﬂammatory Effects By Selectively Degrading
+Proinﬂammatory Chemokines. Cell Host Microbe 2012, 11, 387–396. [CrossRef]
+59.
+Kaakoush, N.O. Sutterella Species, IgA-degrading Bacteria in Ulcerative Colitis. Trends Microbiol. 2020, 28, 519–522. [CrossRef]
+60.
+Santoru, M.L.; Piras, C.; Murgia, A.; Palmas, V.; Camboni, T.; Liggi, S.; Ibba, I.; Lai, M.A.; Orrù, S.; Blois, S.; et al. Cross sectional
+evaluation of the gut-microbiome metabolome axis in an Italian cohort of IBD patients. Sci. Rep. 2017, 7, 9523. [CrossRef]
+61.
+Rai, T.; Wu, X.; Shen, B. Frequency and risk factors of low immunoglobulin levels in patients with inﬂammatory bowel disease.
+Gastroenterol. Rep. 2015, 3, 115–121. [CrossRef] [PubMed]
+62.
+Sokol, H.; Pigneur, B.; Watterlot, L.; Lakhdari, O.; Humaran, L.G.B.; Gratadoux, J.-J.; Blugeon, S.; Bridonneau, C.; Furet, J.-P.;
+Corthier, G.; et al. Faecalibacterium prausnitzii is an anti-inﬂammatory commensal bacterium identiﬁed by gut microbiota
+analysis of Crohn disease patients. Proc. Natl. Acad. Sci. USA 2008, 105, 16731–16736. [CrossRef] [PubMed]
+63.
+Kang, S.; Denman, S.E.; Morrison, M.; Yu, Z.T.; Dore, J.; Leclerc, M.; McSweeney, C.S. Dysbiosis of Fecal Microbiota in Crohn’s
+Disease Patients as Revealed by a Custom Phylogenetic Microarray. Inﬂamm. Bowel Dis. 2010, 16, 2034–2042. [CrossRef]
+64.
+Kaakoush, N.O. Insights into the Role of Erysipelotrichaceae in the Human Host. Front. Cell. Infect. Microbiol. 2015, 5, 84.
+[CrossRef] [PubMed]
+65.
+Dey, N.; Soergel, D.A.W.; Repo, S.; E Brenner, S. Association of gut microbiota with post-operative clinical course in Crohn’s
+disease. BMC Gastroenterol. 2013, 13, 131. [CrossRef]

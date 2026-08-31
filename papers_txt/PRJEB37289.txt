@@ -1,0 +1,1562 @@
+Integrative Transkingdom Analysis of the Gut Microbiome in
+Antibiotic Perturbation and Critical Illness
+Bastiaan W. Haak,a
+Ricard Argelaguet,b Cormac M. Kinsella,c Robert F. J. Kullberg,a Jacqueline M. Lankelma,a Martin Deijs,c
+Michelle Klein,c Maarten F. Jebbink,c Floor Hugenholtz,a Sarantos Kostidis,d Martin Giera,d Theodorus B. M. Hakvoort,e
+Wouter J. de Jonge,e Marcus J. Schultz,f Tom van Gool,g Tom van der Poll,a,j Willem M. de Vos,h,i Lia M. van der Hoek,c
+W. Joost Wiersingaa,j
+aCenter for Experimental and Molecular Medicine, Amsterdam UMC, Location AMC, Amsterdam Infection and Immunity Institute, Amsterdam, The Netherlands
+bEuropean Molecular Biology Laboratory, European Bioinformatics Institute, Hinxton, Cambridge, United Kingdom
+cLaboratory of Experimental Virology, Department of Medical Microbiology, Amsterdam UMC, Location AMC, Amsterdam, The Netherlands
+dCenter for Proteomics and Metabolomics, Leiden University Medical Center, Leiden, The Netherlands
+eTytgat Institute for Liver and Intestinal Research, Amsterdam UMC, Location AMC, Amsterdam, The Netherlands
+fDepartment of Intensive Care, Amsterdam UMC, Location AMC, Amsterdam, The Netherlands
+gDepartment of Parasitology, Amsterdam UMC, Location AMC, Amsterdam, The Netherlands
+hLaboratory of Microbiology, Wageningen University, Wageningen, The Netherlands
+iResearch Programs Unit Immunobiology, Department of Bacteriology and Immunology, Helsinki University, Helsinki, Finland
+jDepartment of Medicine, Division of Infectious Diseases, Amsterdam UMC, Location AMC, Amsterdam, The Netherlands
+Bastiaan W. Haak and Ricard Argelaguet contributed equally. Author order was determined by role in conceptualization of study as well as by order of increasing seniority.
+ABSTRACT
+Bacterial microbiota play a critical role in mediating local and systemic
+immunity, and shifts in these microbial communities have been linked to impaired
+outcomes in critical illness. Emerging data indicate that other intestinal organisms,
+including bacteriophages, viruses of eukaryotes, fungi, and protozoa, are closely
+interlinked with the bacterial microbiota and their host, yet their collective role dur-
+ing antibiotic perturbation and critical illness remains to be elucidated. We employed
+multi-omics factor analysis (MOFA) to systematically integrate the bacterial (16S
+rRNA), fungal (intergenic transcribed spacer 1 rRNA), and viral (virus discovery next-
+generation sequencing) components of the intestinal microbiota of 33 critically ill
+patients with and without sepsis and 13 healthy volunteers. In addition, we quanti-
+ﬁed the absolute abundances of bacteria and fungi using 16S and 18S rRNA PCRs
+and characterized the short-chain fatty acids (SCFAs) butyrate, acetate, and propio-
+nate using nuclear magnetic resonance spectroscopy. We observe that a loss of the
+anaerobic intestinal environment is directly correlated with an overgrowth of aerobic
+pathobionts and their corresponding bacteriophages as well as an absolute enrich-
+ment of opportunistic yeasts capable of causing invasive disease. We also observed
+a strong depletion of SCFAs in both disease states, which was associated with an
+increased absolute abundance of fungi with respect to bacteria. Therefore, these
+ﬁndings illustrate the complexity of transkingdom changes following disruption of
+the intestinal bacterial microbiome.
+IMPORTANCE While numerous studies have characterized antibiotic-induced disrup-
+tions of the bacterial microbiome, few studies describe how these disruptions impact
+the composition of other kingdoms such as viruses, fungi, and protozoa. To address
+this knowledge gap, we employed MOFA to systematically integrate viral, fungal,
+and bacterial sequence data from critically ill patients (with and without sepsis)
+and healthy volunteers, both prior to and following exposure to broad-spectrum
+antibiotics. In doing so, we show that modulation of the bacterial component of the
+microbiome has implications extending beyond this kingdom alone, enabling the
+Citation Haak BW, Argelaguet R, Kinsella CM,
+Kullberg RFJ, Lankelma JM, Deijs M, Klein M,
+Jebbink MF, Hugenholtz F, Kostidis S, Giera M,
+Hakvoort TBM, de Jonge WJ, Schultz MJ, van
+Gool T, van der Poll T, de Vos WM, van der
+Hoek LM, Wiersinga WJ. 2021. Integrative
+transkingdom analysis of the gut microbiome
+in antibiotic perturbation and critical illness.
+mSystems 6:e01148-20. https://doi.org/10
+.1128/mSystems.01148-20.
+Editor Nicholas Chia, Mayo Clinic
+Copyright © 2021 Haak et al. This is an open-
+access article distributed under the terms of
+the Creative Commons Attribution 4.0
+International license.
+Address correspondence to Bastiaan W. Haak,
+b.w.haak@amsterdamumc.nl.
+Received 5 November 2020
+Accepted 18 February 2021
+Published 16 March 2021
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+1
+RESEARCH ARTICLE
+
+overgrowth of potentially invasive fungi and viruses. While numerous preclinical
+studies have described similar ﬁndings in vitro, we conﬁrm these observations in
+humans using an integrative analytic approach. These ﬁndings underscore the
+potential value of multi-omics data integration tools in interrogating how different
+components of the microbiota contribute to disease states. In addition, our ﬁndings
+suggest that there is value in further studying potential adjunctive therapies using
+anaerobic bacteria or SCFAs to reduce fungal expansion after antibiotic exposure,
+which could ultimately lead to improved outcomes in the intensive care unit (ICU).
+KEYWORDS bacteriophages, fungi, multi-omics, data integration, bacteria, microbiome
+I
+n recent years, widespread efforts have been dedicated to elucidating the impact of
+intestinal microorganisms in health and disease (1, 2). Animal studies have shown
+that broad-spectrum antibiotic modulation of the intestinal microbiota enhances sus-
+ceptibility to enteric and systemic infections (3–5). In line with these preclinical ﬁnd-
+ings, our group and others have observed that exposure to broad-spectrum antimicro-
+bial therapy profoundly distorts the composition of the intestinal microbes of critically
+ill patients in the intensive care unit (ICU) (6–8). These disruptions within the intestinal
+environment enable the rapid expansion of opportunistic pathobionts and nosocomial
+infections, including infections with vancomycin-resistant enterococci as well as inva-
+sive disease by antibiotic-resistant Enterobacteriaceae (9–11).
+Traditionally, viruses were considered solely pathogens; however, growing evidence
+suggests a more dynamic relationship between the virome and the host, mediated by
+direct interactions with the bacterial microbiome (12–15). Viruses inﬂuence immune
+development and shape tissue architecture (16, 17), and changes in the composition
+of viral communities have been associated with disease severity in inﬂammatory bowel
+disease (IBD), AIDS, and the development of graft-versus-host disease (GvHD) (12, 18,
+19). Similarly, intestinal fungi have recently been acknowledged as a small but poten-
+tially important part of the intestinal ecosystem and have been shown to play a poten-
+tially immunomodulatory role in the development of colorectal cancer, IBD, and irrita-
+ble bowel syndrome (IBS) (20–24).
+While these ﬁndings provide clues that speciﬁc cross-kingdom interactions poten-
+tially contribute to or exacerbate disease, a large knowledge gap remains on the com-
+position and interactions of fungi and viruses following exposure to broad-spectrum
+antibiotics, both in healthy volunteers and in patients with a critical illness. Moreover,
+there is a large gap between in vitro observations and conﬁrmation of these patterns
+in humans. Hence, there is an increasing need for integrative computational frame-
+works that can systematically identify underlying patterns of variation across these
+communities in health and disease (12, 23).
+RESULTS AND DISCUSSION
+Experimental design. To examine the extent of transkingdom associations during
+critical illness, we collected fecal samples from 33 patients (mean age, 62 years; 45%
+male) (see Table S1 in the supplemental material) admitted to the intensive care unit
+(ICU) of the Amsterdam University Medical Center, Location AMC. Of these patients, 24
+were admitted with sepsis, while 9 patients had a noninfectious diagnosis (nonseptic
+ICU). All ICU patients were treated with between one and nine different classes of anti-
+microbial agents (Fig. S1). Thirteen healthy, nonsmoking, Caucasian male subjects
+(aged 18 to 25 years; mean age, 22 years) were evaluated as controls. Six healthy sub-
+jects received oral broad-spectrum antibiotics (ciproﬂoxacin at 500 mg every 12 h
+[q12h], vancomycin at 500 mg q8h, and metronidazole at 500 mg q8h) for 7 days,
+whereas 7 subjects did not receive antibiotics. Subjects were asked to collect fecal sam-
+ples before antibiotic treatment and 1 day after completing the course of antibiotics.
+We performed sequencing of the V3-V4 region of the bacterial 16S rRNA gene and
+the fungal intergenic transcribed spacer 1 (ITS1) rRNA gene, seeking to examine com-
+munity compositions by characterizing fungal and bacterial sequences into exact
+Haak et al.
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+2
+
+amplicon sequencing variants (ASVs) (25). We simultaneously performed virus discov-
+ery cDNA-ampliﬁed fragment length polymorphism next-generation sequencing
+(VIDISCA-NGS) (26) using a validated virome-enriched library preparation (27, 28).
+Finally, the presence of Giardia lamblia, Cryptosporidium parvum, Entamoeba histolytica,
+Blastocystis hominis, and Dientamoeba fragilis was assessed by real-time PCR targeting
+the small-subunit (SSU) rRNA gene. Of note, the bacterial microbiomes of ICU patients
+(6) and volunteers (29) included in this study have been described previously by our
+group in two separate publications. For the purpose of this study, the bacterial micro-
+biomes of patients and volunteers were resequenced to reduce batch effects.
+Composition and diversity of the bacterial, fungal, and viral microbiome. First,
+we characterized the changes of each microbiome kingdom before and after antibiotic
+treatment. While the bacterial microbiome of healthy volunteers prior to antibiotic ex-
+posure was predominated by the anaerobic bacterial families Lachnospiraceae and
+Ruminococcaceae, the bacterial composition of both ICU patients and volunteers fol-
+lowing antibiotics was characterized by an individualized loss of these anaerobic com-
+munities (Fig. 1a). In addition, bacterial alpha diversity and richness dropped signiﬁ-
+cantly in ICU patients and healthy subjects exposed to antibiotics, with the latter being
+most signiﬁcantly impacted in both metrics (Fig. 1b). In line with previous observations
+(30–32), fungal communities were dominated by Candida and Saccharomyces, while
+Malassezia and Aspergillus were also frequently observed. Overall, fungal diversity met-
+rics were comparable between ICU patients and healthy controls not exposed to anti-
+biotics, while signiﬁcant drops in diversity were observed in healthy subjects after ex-
+posure to antibiotics. Viral communities were largely dominated by environmental
+Healthy, no antibiotics
+Healthy, antibiotics
+Sepsis
+Non septic ICU
+0.00
+0.25
+0.50
+0.75
+1.00
+Relative abundance
+a
+****
+****
+**
+20
+6
+24
+9
+***
+****
+*
+20
+6
+24
+9
+Shannon
+Observed
+100
+200
+0
+2
+4
+Diversity/Richness
+b
+Healthy, no antibiotics
+Healthy, antibiotics
+Sepsis
+Non septic ICU
+0.00
+0.25
+0.50
+0.75
+1.00
+Relative abundance
+**
+20
+6
+24
+9
+**
+20
+6
+24
+9
+Shannon
+Observed
+0
+20
+40
+60
+0
+1
+2
+3
+4
+Diversity/Richness
+Healthy, no antibiotics
+Healthy, antibiotics
+Sepsis
+Non septic ICU
+0.00
+0.25
+0.50
+0.75
+1.00
+Relative abundance
+20
+5
+23
+9
+*
+*
+20
+5
+23
+9
+Shannon
+Observed
+0
+30
+60
+90
+0
+1
+2
+3
+4
+Diversity/Richness
+Bacteria (compiled taxa)
+Actinobacteria (Phylum)
+Other Bacteroidetes (Phylum)
+Bacteroides 
+Ruminococcaceae (Family) 
+Lachnospiraceae (Family) 
+Other Proteobacteria (Phylum) 
+Enterobacteriaceae (Family) 
+Escherichia/Shigella 
+Klebsiella 
+Other Firmicutes (Phylum) 
+Lactobacillus 
+Lactococcus 
+Staphylococcus 
+Streptococcus 
+Enterococcus 
+Other Bacteria
+Fungi
+Agaricus
+Aspergillus
+Candida
+Malassezia
+Penicillium
+Issatchenkia
+Debaryomyces
+Cladosporium
+Filobasidium
+Saccharomyces
+Aureobasidium
+Other fungi
+Viruses
+Environmental ssRNA virus
+Caudovirales
+crAss−like
+Podoviridae
+Myoviridae
+Siphoviridae
+Inoviridae
+Microviridae
+Anellovirus
+Chrysovirus
+Partitivirus
+Picobirnavirus
+Marseilleviridae
+Other virus
+Healthy, no antibiotics
+Healthy, antibiotics
+Sepsis
+Non septic ICU
+FIG 1 Overview of the composition and diversity of the bacterial, fungal, and viral microbiome. (a) Relative proportions of sequence reads at the genus
+level assigned to different bacterial and fungal taxa and at the order level for viral taxa. Viral metagenomics of two samples did not pass quality control
+due to high background levels, and these samples were therefore excluded from further analysis. For bacteria, the Ruminococcaceae, Lachnospiraceae,
+and Enterobacteriaceae families as well as genera that made up $5% of the total microbiota in at least one sample are included; other genera and
+families are pooled within the category “Other Bacteria.” (b) Alpha diversity metrics of bacteria (top), fungi (middle), and viruses (bottom), using the
+Shannon diversity index (Shannon) and the observed taxon richness index (Observed). In the box plots, the central rectangle spans the ﬁrst quartile to
+the third quartile (the interquartile range [IQR]), the central line inside the rectangle shows the median, and whiskers above and below the box indicate
+variability outside the upper and lower quartiles. Given the nonparametric nature of the data, P values were calculated using the Wilcoxon rank sum test.
+*, P , 0.05; **, P , 0.01; ***, P , 0.001; ****, P , 0.0001.
+Transkingdom Analysis of the Gut Microbiome
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+3
+
+single-stranded RNA (ssRNA) viruses and bacteriophages of the order Caudovirales.
+Strikingly, around 50% of the abundance of the virome consisted of cross-assembly
+(crAss) phages, which have recently been connected to Bacteroides spp. (33, 34). No dif-
+ferences in viral alpha diversity were observed, yet both septic ICU patients and antibi-
+otic-perturbed volunteers displayed higher viral richness. We observed short-term tem-
+poral stability of all three kingdoms in healthy subjects not receiving antibiotics (35)
+(Fig. S2). In agreement with recent studies (36, 37), we observed that a total of 30% of
+healthy subjects were colonized by the anaerobic gut protozoon Blastocystis hominis
+or Dientamoeba fragilis, yet these protozoa were undetectable following antibiotic
+administration (Table S2).
+Multi-omics factor analysis reveals covariation patterns across kingdoms. Next,
+to understand the patterns of covariation between these intestinal communities, we
+used multi-omics factor analysis (MOFA), a statistical framework for multi-omics data
+integration (38, 39). MOFA is a statistically rigorous generalization of principal-compo-
+nent analysis (PCA) to multi-omics data. Given multiple data modalities derived from
+the same sets of samples (Y matrices) (Fig. 2a), MOFA infers a common low-dimen-
+sional representation in terms of a small number of latent factors that capture the
+global sources of sample heterogeneity in the data (Z matrix) (Fig. 2a). Although the
+factors are inferred using information from all data modalities simultaneously, MOFA
+distinguishes variation that is shared across multiple modalities from the variation that
+is present within a single modality. In addition, MOFA facilitates the association of mo-
+lecular features with each factor by the exploration of the feature weights (W matrices)
+(Fig. 2a). Notably, although this integrative method was initially conceived for single-
+cell multimodal assays (40), here, we show that it is also effective for the analysis of
+sparse readouts from microbiome data. For a more detailed mathematical treatment,
+see Materials and Methods.
+As input into the model, we collapsed the inferred bacterial and fungal ASVs and vi-
+ral reads to their respective family or genus level, followed by centralized log ratio nor-
+malization (41, 42). MOFA identiﬁed 6 factors with a minimum explained variance of
+5% (see Materials and Methods) that were robust to downsampling analysis (Fig. 2a;
+Fig. S3). Altogether, the latent representation explained 39% of the sample heteroge-
+neity for bacteria, 39% for fungi, and 19% for viral composition (Fig. 2b and c; Fig. S4).
+Notably, factor 1 and factor 3 (sorted by the total variance explained) captured covaria-
+tion across all three kingdoms, allowing partitioning of microbiome compositions of
+critically ill patients from those of healthy subjects exposed to antibiotics and unex-
+posed healthy subjects (Fig. 2d).
+Factor 1, the major source of variation, was linked to a transkingdom signature driven
+by antibiotic perturbation in both health and critical illness (Fig. 3a and b). Speciﬁcally,
+bacterial taxa positively associated with this factor were facultative aerobic bacterial
+pathobionts that have been previously associated with critical illness (43–45), such as
+Staphylococcus, Enterococcus, Klebsiella, Escherichia/Shigella, and Enterobacter. Bacterial
+taxa that were negatively associated with this factor consisted predominantly of genera
+within the obligatory anaerobic families Lachnospiraceae and Ruminococcaceae, which
+have been identiﬁed as markers of a healthy microbiota and are linked to colonization
+resistance against bacterial pathobionts (10, 46). Fungal taxa positively associated with
+this factor were characterized by yeasts capable of causing invasive disease, such as
+Candida, Aspergillus, and Debaryomyces (24, 47, 48), with a relative absence of the gut
+constituents Filobasidium, Malassezia, and Dipodascus (31). The speciﬁc cooccurrences of
+fungal and bacterial taxa observed in factor 1 are supported by previous studies. For
+example, members of the Lachnospiraceae family, such as Blautia and Roseburia, display
+a direct inhibitory effect on the growth of several Candida spp. and Saccharomyces cere-
+visiae through the production of short-chain fatty acids (SCFAs) and other metabolites
+(49–51). In addition, in vitro studies have shown that metabolites produced by Candida
+spp. enhance the growth of Escherichia coli and Staphylococcus aureus (52, 53), providing
+Haak et al.
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+4
+
+further indications that the in vivo intestinal transkingdom signatures identiﬁed by
+MOFA are biologically meaningful.
+Factor 3 captured signatures that were absent in critically ill patients and present in
+healthy subjects following exposure to broad-spectrum antibiotics, with a predomi-
+nance of the closely related Streptococcaceae family (Streptococcus and Lactococcus),
+Lactobacillales order (Lactobacillus and Granulicatella), and Actinomycetales order
+(Actinomyces and Rothia). While 16S rRNA sequencing provides limited resolution to
+identify the ASVs on the species and strain levels, several species of these bacterial
+orders and families have been shown to possess mutualistic properties with Candida in
+oral and vaginal environments, potentially through the modiﬁcation of bioﬁlm
+Healthy, no antibiotics
+Healthy, antibiotics
+Sepsis
+Non septic ICU
+Samples (N=59)
+ASV (D=180)
+a
+b
+c
+d
+Bacteria
+Fungi
+Viruses
+Factor 1
+Factor 2
+Factor 3
+Factor 4
+Factor 5
+Factor 6
+0
+5
+10
+15
+Var. explained (%)
+ASV (D=18)
+Sequences (D=42)
+−1
+0
+1
+2
+3
+−1
+0
+1
+Factor 1
+Factor 3
+0.26
+0.39
+0.59
+0.07
+0.56
+0.07
+0.07
+0.22
+0.16
+0.05
+0.11
+0.33
+0
+0.27
+0.43
+0.14
+0.0
+0.5
+1.0
+Factor 1
+Factor 2
+Factor 3
+Factor 4
+Factor 5
+Factor 6
+Fraction of significant associations
+Bacteria
+Fungi
+Viruses
+ASV (D=180)
+ASV (D=18)
+Contigs (D=42)
+Samples (N=59)
+Factors
+Viruses 
+(VIDISCA-NGS)
+Fungi 
+(ITS-1)
+Bacteria 
+(16s RNA)
+Factors
+×
+≈
+FIG 2 Multi-omics factor analysis (MOFA) delineates the sources of transkingdom heterogeneity. (a) Model overview. MOFA takes as the input the three
+microbiome quantiﬁcation matrices. MOFA exploits the covariation patterns between the features within and between microbiome modalities to learn a
+low-dimensional representation of the data in terms of a small number of latent factors (Z matrix) and three different weight matrices (W) (one per
+kingdom). By maximizing the variance explained under sparsity assumptions, MOFA provides a principled way to discover the global sources of variability
+in the data. For each latent factor (i.e., each source of variation), the weights provide a measure of feature importance for every feature in each factor,
+hence enabling the interpretation of the variation captured by every factor. (b) Heat map displaying the percentage of variance explained (R2) by each
+factor (rows) across the three microbe modalities (columns). Factors 1 and 3 capture coordinated variation across all three microbiome modalities,
+whereas factor 2 is mostly dominated by heterogeneity in fungal composition. (c) Bar plots showing the fraction of signiﬁcant associations between the
+features of each microbiome modality and each factor. P values were obtained using a t test based on Pearson’s product-moment correlation coefﬁcient.
+Statistical signiﬁcance is called at a 10% FDR. This plot is useful to interpret whether the variance-explained values displayed in panel b are driven by a
+strong change in a small number of features or by a moderate effect across a large range of features. (d) Scatterplot of factor 1 (x axis) versus factor 3 (y
+axis). Each dot represents a sample, colored by condition. Factor 1 captures the gradient in microbiome variation associated with antibiotic treatment
+and critical illness (from negative to positive factor values), whereas factor 3 captures the variation associated with antibiotic treatment in healthy
+patients (positive factor 3 values) versus critically ill patients (negative factor 3 values).
+Transkingdom Analysis of the Gut Microbiome
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+5
+
+formation (23, 54–56). These observations indicate that similar fungal-bacterial associa-
+tions are potentially maintained within the gastrointestinal tract, warranting further
+elucidation on a larger scale and at a higher taxonomic resolution.
+Notably, the majority of viral sequences that were associated with factors 1 and 3
+consisted of bacteriophages that signiﬁcantly correlated with the presence of the cor-
+responding bacterial targets in the same factor (Fig. S5). The expansion of aerobic bac-
+terial species during critical illness and following antibiotics can therefore potentially
+facilitate the enrichment of their corresponding bacteriophages (12, 57). Other notable
+associations with the viral microbiome were the increases of the mycoviruses
+Klebsiella p.
+Escherichia/Shigella p.
+Enterobacteriaceae p.
+Staphylococcus p.
+Enterococcus p.
+1
+0
+1
+−
+Factor 1 weight (viruses)
+Rank (viruses)
+Dipodascus
+Malassezia
+Filobasidium
+Candida
+Debaryomyces
+Penicillium
+Aspergillus
+Saccharomyces
+1
+0
+1
+−
+Factor 1 weight (fungi)
+Rank (fungi)
+Agathobacter
+Roseburia
+Faecalibacterium
+Ruminococcus
+Coprococcus
+s
+Blautia
+oc
+Lachnospiraceae
+Escherichia/Shigella
+Erysipelotrichaceae
+Enterobacter
+Staphylococcus
+Klebsiella
+Enterococcus
+1
+0
+1
+−
+Factor 1 weight (bacteria)
+Rank (bacteria)
+Blautia
+Lachnospiraceae
+Faecalibacterium
+Ruminococcus
+Coprococcus
+Agathobacter
+Roseburia
+Enterococcus
+Klebsiella
+Enterobacter
+Staphylococcus
+Escherichia/Shigella
+Erysipelotrichaceae
+Malassezia
+Filobasidium
+Dipodascus
+Paraphaeosphaeria
+Debaryomyces
+Saccharomyces
+Candida
+Penicillium
+Aspergillus
+−1
+0
+1
+Scaled levels
+c
+b
+a
+Paraphaeosphaeria
+Healthy, antibiotics
+Healthy, no antibiotics
+Non septic ICU
+Sepsis
+−1
+0
+1
+Scaled levels
+d
+Lactococcus p.
+Lactobacillus p.
+Streptococcus p.
+Partitivirus
+Chrysovirus
+1
+0
+1
+−
+Parabacteroides
+e
+Bacteroides
+Alistipes
+Odoribacter
+Hungatella
+Lactobacillus
+Rothia
+Lactococcus
+Granulicatella
+th
+Actinomyces
+Streptococcus
+1
+0
+1
+−
+Lactococcus
+Actinomyces
+Streptococcus
+Lactobacillus
+Rothia
+Granulicatella
+Hungatella
+Parabacteroides
+Odoribacter
+Bacteroides
+Alistipes
+Lactobacillus p.
+Partitivirus
+Chrysovirus
+Lactococcus p.
+Streptococcus p.
+E
+bs
+Meyerozyma
+Malassezia
+Penicillium
+Candida
+Aureobasidium
+Piskurozyma
+1
+0
+1
+−
+Candida
+Piskurozyma
+Meyerozyma
+Penicillium
+Malassezia
+Aureobasidium
+Factor 3 weight (viruses)
+Factor 3 weight (fungi)
+Factor 3 weight (bacteria)
+Rank (viruses)
+)
+air
+e
+tc
+a
+b
+( k
+n
+a
+R
+)ig
+n
+u
+f( k
+n
+a
+R
+Enterococcus p.
+Enterobacteriaceae p.
+Escherichia/Shigella p.
+Klebsiella p.
+Staphylococcus p.
+Factor 1
+Category
+Factor 1
+Category
+Factor 1
+Category
+Category
+Factor 3
+Category
+Factor 3
+Category
+Factor 3
+Category
+FIG 3 Characterization of the transkingdom covariation captured by factor 1 and factor 3. (a) Scatterplots displaying the distribution of bacterial (top),
+fungal (middle), and viral (bottom) weights for factor 1. A positive value indicates a positive association with factor 1 values, whereas a negative value
+indicates a negative association with factor 1 values (Fig. 2d). The larger the absolute value of the weight, the stronger the association. For ease of
+visualization, weights are scaled from 21 to 1. Representative taxa among the top weights are labeled. (b) Heat maps displaying the reconstructed data
+(see Materials and Methods) based on the MOFA model for the taxa highlighted in panel a. Samples are shown in the columns (sorted based on factor 1
+values), and features are shown in the rows. (c) Scatterplots displaying the distribution of bacterial (top), fungal (middle), and viral (bottom) weights for
+factor 3. A positive value indicates a positive association with factor 3 values, whereas a negative value indicates a negative association with factor 3
+values (Fig. 2d). The larger the absolute value of the weight, the stronger the association. For ease of visualization, weights are scaled from 21 to 1.
+Representative taxa among the top weights are labeled. (d) Heat maps displaying the (denoised) data reconstruction (see Materials and Methods) based
+on the MOFA model for the taxa highlighted in panel c. Samples are shown in the columns (sorted based on factor 3 values), and features are shown in
+the rows.
+Haak et al.
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+6
+
+Chrysovirus and Partitivirus, which are capable of infecting fungi (58), in healthy sub-
+jects following antibiotic exposure. These ﬁndings indicate that coordinated transking-
+dom changes are occurring beyond intestinal bacteria, further underscoring the com-
+plexity of relationships within the intestinal environment.
+After the global characterization of the transkingdom microbiome associations
+upon antibiotic exposure, we asked whether we could ﬁnd associations between indi-
+vidual MOFA factors and speciﬁc antibiotics. Whereas factor 1 is associated with expo-
+sure to antibiotics in general, factor 4 was speciﬁcally associated with exposure to ﬂuo-
+roquinolones and negatively correlated with exposure to cephalosporins (Fig. S6a and
+b). Speciﬁcally, we observed that patients receiving ﬂuoroquinolones had higher abun-
+dances of the Gram-positive genera Lactococcus and Pediococcus and lower abundan-
+ces of, among others, the Gram-negative genera Escherichia/Shigella and Desulfovibrio.
+Interestingly, we observed a negative correlation between Aspergillus and ﬂuoroquino-
+lone exposure, which could be linked to the previously described synergy between
+ciproﬂoxacin and antifungal agents directed toward Aspergillus (59).
+The 3 remaining factors identiﬁed sample heterogeneity related to low-abundance
+fungal variations (factor 2) (Fig. S7) as well as bacterial (factor 5) and viral (factor 6) sig-
+natures pertaining to individual ICU patients.
+Fecal levels of short-chain fatty acids are negatively correlated with fungal
+loads in health and critical illness. An important indicator of the inﬂuence of the bac-
+terial microbiota on the fungal population in the gut is the dramatic increase in the
+fungal burden after antibiotic treatment (23). This phenomenon can partly be
+explained by antibiotic-induced alterations in nutrient availability, yet a loss of the
+direct inhibitory effects of anaerobic bacteria and their associated metabolites toward
+fungal expansion has also been documented (49–51). In light of these observations,
+we quantiﬁed absolute levels of bacteria and fungi using targeted PCRs and linked
+their abundance to the absolute quantities of the SCFAs butyrate, propionate, and ace-
+tate, which are well-known metabolites of predominantly anaerobic bacteria. First, we
+observed a strong depletion of SCFAs both in critical illness and following antibiotic
+perturbation (Fig. 4a to c). Notably, both conditions were associated with increased
+fungal-to-bacterial ratios, with the relative proportion of fungi to bacteria increasing
+by a factor of 103 to 104 times. In addition, we observed that absolute fecal SCFA con-
+centrations were inversely correlated with absolute fungal copies, with propionate lev-
+els displaying the strongest correlation (r = 0.75; P , 0.0001) (Fig. 4d). These ﬁndings
+are in line with those of a recent study reporting that a reduction of anaerobic bacteria
+during the course of allogeneic hematopoietic stem cell transplantation directly facili-
+tates the intestinal overgrowth of speciﬁc Candida species, ultimately culminating in
+invasive fungal disease (24). Therefore, our ﬁndings and those of others suggest that
+fungal expansion not only occurs in the context of a decreased absolute bacterial
+abundance but also is dependent on altered functions of the remaining bacterial com-
+munities in the intestinal environment.
+Perspectives and limitations. This study has several limitations. First, since 16S
+rRNA sequencing provides limited taxonomic resolution of bacterial communities at
+the species level, data were collapsed to the genus level. While our ﬁndings remained
+robust in a downsampling analysis, implementing MOFA with larger data sets with
+higher resolution, such as those obtained by shotgun metagenomic sequencing, will
+be an important next step to further uncover the more intricate transkingdom cooccur-
+rence associations, including interactions. Second, this study mainly describes associa-
+tions between bacteria, fungi, and viruses, but it does not directly prove causality that
+these shifts are mechanically linked. However, our ﬁndings are in line with those of sev-
+eral preclinical in vitro studies, providing assurance that these transkingdom effects
+seem to also occur in humans. Third, although our study is among the ﬁrst to validate
+several preclinical ﬁndings in humans and emphasizes the importance of transkingdom
+disruptions of the intestinal microbiome during critical illness, it was not powered to
+detect if the observed disruptions were associated with altered outcomes such as
+increased mortality or length of hospital stay. Finally, while the characterization of
+Transkingdom Analysis of the Gut Microbiome
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+7
+
+demographic information and antibiotic exposure in our cohorts was excellent, our
+analyses did not account for the different times between antibiotic exposure and sam-
+ple collection nor for other well-known confounders such as dietary habits, (par)enteral
+feeding, and exposure to (vasoactive) drugs.
+In conclusion, our ﬁndings shed light on the covariation patterns between king-
+doms following broad-spectrum antibiotic modulation, both in health and in the con-
+text of critical illness. These ﬁndings underscore the potential value of multi-omics
+data integration tools in interrogating how different components of the microbiota
+contribute to health and disease.
+R = 0.73
+p = 5.5e−11
+R = 0.68
+p = 2.2e−09
+R = 0.73
+p = 3.5e−11
+Acetate
+Butyrate
+Propionate
+0
+5
+10
+15
+0
+5
+10
+15
+0
+5
+10
+15
+−5
+0
+5
+20
+6
+24
+9
+****
+****
+*
+20
+6
+24
+9
+***
+****
+****
+20
+6
+24
+9
+***
+****
+**
+Acetate
+Butyrate
+Propionate
+0
+30
+60
+90
+Metabolite levels (nmol/mg feces)
+0
+2
+4
+6
+8
+Butyrate
+Acetate
+Propionate
+Factor 1
+Factor 2
+Factor 3
+Factor 4
+Factor 5
+Factor 6
+Butyrate
+Acetate
+Propionate
+a
+b
+c
+log10 FDR adjusted p-values
+Pearson correlation coefficient
+Healthy, no antibiotics
+Healthy, antibiotics
+Sepsis
+Non septic ICU
+d
+−1
+0
+1
+2
+3
+−1
+0
+1
+Factor 1
+Factor 3
+−1
+0
+1
+2
+3
+−1
+0
+1
+Factor 1
+Factor 3
+−1
+0
+1
+2
+3
+−1
+0
+1
+Factor 1
+Factor 3
+Fungal to Bacterial ratio (-log2)
+Metabolite levels (log2)
+Healthy, antibiotics
+Healthy, no antibiotics
+Non septic ICU
+Sepsis
+Healthy, antibiotics
+Healthy, no antibiotics
+Non septic ICU
+Sepsis
+Healthy, antibiotics
+Healthy, no antibiotics
+Non septic ICU
+Sepsis
+0
+10
+20
+0
+35
+70
+0
+10
+20
+Butyrate
+(nmol/mg)
+Acetate 
+(nmol/mg)
+Propionate
+(nmol/mg)
+(+) Bacteria
+(+) Fungi
+(+) Bacteria
+(+) Fungi
+(+) Bacteria
+(+) Fungi
+−5
+0
+5
+−5
+0
+5
+−1
+0
+1
+FIG 4 Correlation of total bacterial and fungal loads with fecal levels of short-chain fatty acids in health and critical illness. (a) Association analysis
+between factor values and SCFA levels. (Left) Pearson correlation coefﬁcients between factor values and the levels of three types of SCFAs: butyrate,
+acetate, and propionate. (Right) Corresponding FDR-adjusted and log-transformed P values. (b) Box plots showing the SCFA concentrations (y axis) per
+sample group (x axis). In the box plots, the central rectangle spans the ﬁrst quartile to the third quartile (the interquartile range [IQR]), the central line
+inside the rectangle shows the median, and whiskers above and below the box indicate variability outside the upper and lower quartiles. Given the
+nonparametric nature of the data, P values were calculated using the Wilcoxon rank sum test. *, P , 0.05; **, P , 0.01; ***, P , 0.001; ****, P , 0.0001. (c)
+Scatterplot of factor 1 (x axis) versus factor 3 (y axis) values. Each dot represents a sample, shaped by the sample group and colored by SCFA
+concentrations (in milligrams per milligram of feces). (d) Scatterplot of fungal-to-bacterial absolute level ratios (after log10 transformation) (x axis) versus
+SCFA concentrations (after log2 transformation) (y axis). The line represents the linear regression ﬁt, and the shading represents the corresponding 95%
+conﬁdence interval. Corresponding Pearson correlation coefﬁcients and P values are also displayed in the top left corner.
+Haak et al.
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+8
+
+MATERIALS AND METHODS
+Study design and participants. Patients were recruited as part of a large prospective observational
+study in critically ill patients admitted to the ICU (Molecular Diagnosis and Risk Stratiﬁcation of Sepsis
+[MARS] study [ClinicalTrials.gov identiﬁer NCT01905033]) (6, 60). A total of 33 randomly selected adult
+patients who were admitted to the ICU of the Academic Medical Center (Amsterdam, The Netherlands)
+between October 2012 and November 2013 were included. Patients who were transferred from other
+ICUs or had an expected length of ICU stay of ,24 h were excluded. All patients met at least two of the
+following criteria: body temperature of #36°C or $38°C, tachycardia of .90 beats/min, tachypnea of
+.20 breaths/min or partial pressure of carbon dioxide (pCO2) of ,4.3 kPa, and leukocyte count of
+,4  10E9 leukocytes/liter or .12  10E9 leukocytes/liter. Sepsis was deﬁned when the inclusion criteria
+were associated with suspected infection within 24 h after ICU admission, with subsequent systemic
+therapeutic administration of antibiotics to the patient (6). The control group consisted of 13 healthy,
+nonsmoking, Caucasian male subjects (aged 18 to 25 years; mean age, 22 years) who had not taken anti-
+biotics during the previous year (ClinicalTrials.gov identiﬁer NCT02127749) (29, 61). Six healthy subjects
+received oral broad-spectrum antibiotics (ciproﬂoxacin at 500 mg q12h, vancomycin at 500 mg q8h, and
+metronidazole at 500 mg q8h) for 7 days. Subjects were asked to collect fecal samples before antibiotic
+treatment and 1 day after the 7-day course of antibiotics. Fresh stool samples from ICU patients were
+stored at 4°C and transferred to 280°C within 24 h of collection. Fecal samples from healthy subjects
+were collected in plastic containers, stored at 220°C at home, and transported to the study center for
+storage at 280°C within 24 h.
+Bacterial and fungal microbiota sequencing. Fecal DNA was extracted and puriﬁed using a combi-
+nation of repeated bead beating (method 5) (62) and the Maxwell 16 tissue Low Elution Volume total
+RNA puriﬁcation kit (Promega, Madison, WI, USA), with STAR (stool transport and recovery) buffer
+(Roche, Basel, Switzerland). Negative extraction controls (DNA-free water) were processed in a similar
+manner.
+Twenty nanograms of DNA was used for the ampliﬁcation of the bacterial 16S rRNA gene with the
+V3-V4 341F forward primer and the 805R reverse primer for 25 cycles. The PCR was performed in a total
+volume of 30ml containing 1 High Fidelity buffer (Thermo Fisher Scientiﬁc, Waltham, MA, USA); 1ml
+deoxynucleoside triphosphate (dNTP) mix (10 mM; Promega, Leiden, The Netherlands); 1 U of Phusion
+green high-ﬁdelity DNA polymerase (Thermo Fisher Scientiﬁc, Waltham, MA, USA); 500 nM the forward
+8-nucleotide (nt) sample-speciﬁc barcode primer containing the Illumina adapter, pad, and link (341F
+[59-CCTACGGGNGGCWGCAG-39]); 500 nM the reverse 8-nt sample-speciﬁc barcode primer containing
+the Illumina adapter, pad, and link (805R [59-GACTACHVGGGTATCTAATCC-39]); 20 ng/ml of template
+DNA; and nuclease-free water. The ampliﬁcation program was as follows: an initial denaturation step at
+98°C for 30 s; 25 cycles of denaturation at 98°C for 10 s, annealing at 55°C for 20 s, and elongation at 72°
+C for 90 s; and an extension step at 72°C for 10 min (63). The size of the PCR products (;540 bp) was
+conﬁrmed by gel electrophoresis using 4ml of the ampliﬁcation reaction mixture on a 1% (wt/vol) aga-
+rose gel containing ethidium bromide (AppliChem GmbH, Darmstadt, Germany).
+Fungal composition was determined by ITS1 amplicon sequence analysis. PCR-generated amplicon
+libraries were obtained from 100 ng fecal DNA using the ITS1 primer set containing an overhang for the
+Illumina Nextera platform (forward primer 59-TCGTCGGCAGCGTCAGATGTGTATAAGAGACAGCTTGG
+TCATTTAGAGGAAGTAA and reverse primer 59-GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAGGCTGCG
+TTCTTCATCGATGC) and Phusion high-ﬁdelity DNA polymerase (Thermo Fisher Scientiﬁc, Waltham, MA,
+USA). A duplicate reaction in 20ml was performed with following thermocycling conditions: an initial
+denaturation step at 98°C for 1 min followed by 35 cycles of denaturation (20 s), annealing (20 s at 58°C),
+and extension (60 s at 72°C) and a ﬁnal extension step at 72°C for 5 min. The duplicates were pooled to a
+ﬁnal volume of 40ml. The PCR products were puriﬁed with AMPure XP beads (Beckman Coulter, Brea,
+CA, USA) and taken into 15ml DNA-free water. A second ampliﬁcation step was used to introduce multi-
+plex indices and the Illumina sequencing adapters using the Kapa polymerase system. The reaction was
+performed in 40 ml using the following thermocycling conditions: initial denaturation at 95°C for 3 min
+followed by 24 cycles of denaturation (20 s at 98°C), annealing (20 s at 60°C), and extension (60 s at 72°
+C) and a ﬁnal extension step at 72°C for 5 min.
+Bacterial and fungal PCR products were puriﬁed using AMPure XP beads (Beckman Coulter, Brea, CA,
+USA). The amplicon DNA concentration was measured using the Qubit ﬂuorometric quantitation
+method (Thermo Fisher Scientiﬁc, Waltham, MA, USA), and DNA quality was determined using the
+Agilent Bioanalyzer DNA-1000 chip, after which the puriﬁed products were equimolarly pooled. The
+libraries were sequenced in a paired-end run with 251 cycles on an Illumina MiSeq platform
+(GATCBiotech, Constance, Germany) using V3 chemistry. Forward and reverse reads were truncated to
+240 and 210 bases, respectively, and merged using USEARCH (64). Merged reads that did not pass the
+Illumina chastity ﬁlter, had an expected error rate higher than 2, or were shorter than 380 bases were ﬁl-
+tered. Amplicon sequencing variants (ASVs) were inferred for each sample individually with a minimum
+abundance of 4 reads (25). Unﬁltered reads were then mapped against the collective ASV set to deter-
+mine the abundances. Bacterial taxonomy was assigned using the RDP classiﬁer (65) and SILVA 16S ribo-
+somal database V132 (66). Fungal taxonomy was assigned using the UNITE database (67). Of note, for
+the purpose of this study, the bacterial microbiomes of ICU patients (6) and volunteers (29) were rese-
+quenced together to reduce batch effects.
+Viral microbiota sequencing and analysis. The collected fecal suspension was centrifuged to pellet
+cells and debris, and nucleic acids in the supernatant were extracted using the Boom method (68), fol-
+lowed by reverse transcription with nonribosomal random hexamers (69) and second-strand synthesis.
+DNA was digested with MseI (T^TAA; New England BioLabs, Ipswich, MA, USA) and ligated to adapters
+Transkingdom Analysis of the Gut Microbiome
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+9
+
+containing a sample identiﬁer sequence. Next, size selection with AMPure XP beads (Beckman Coulter,
+Brea, CA, USA) was performed to remove small DNA fragments prior to a 28-cycle PCR using adapter-
+annealing primers. Small and large size selection was performed with AMPure XP beads to select DNA
+strands with a length ranging between 150 and 550 nucleotides. Libraries were analyzed using the
+Bioanalyzer (high-sensitivity [HS] kit; Agilent Genomics, Santa Clara, CA, USA) and Qubit (dsDNA [dou-
+ble-stranded DNA] HS assay kit; Thermo Fisher Scientiﬁc, Waltham, MA, USA) instruments to quantify the
+DNA length and concentration, respectively. Sample libraries were pooled at equimolar concentrations.
+In total, 50 pmol DNA of the pool was clonally ampliﬁed on beads using the Ion Chef system (Thermo
+Fisher Scientiﬁc, Waltham, MA, USA), and sequencing was performed on the Ion PGM system (Thermo
+Fisher Scientiﬁc, Waltham, MA, USA) with the Ion 316 chip (400-bp read length and 2 million sequences
+expected per run).
+VIDISCA-NGS reads were aligned using BWA-MEM (70) to a reference database consisting of the
+human reference genome (hg38), the SILVA SSU V132 database (66), and all RefSeq viral genomes
+(downloaded in September 2019). Mapping outputs were further processed using the PathoID module
+of PathoScope 2.0 (71, 72) to reassign reads with multiple alignments to their most likely target. Viral
+candidates were aligned back to the reference database with BLASTn, and those aligning at $95% for
+100 bp were retained as hits. To ensure that all known eukaryotic viruses were detected with this
+approach, all reads that remained unmapped in the BWA-MEM step were analyzed with a separate virus
+discovery bioinformatic pipeline described in detail previously (28). Brieﬂy, rRNA reads were identiﬁed
+with SortMeRNA v2.1, non-rRNA reads were made nonredundant using CD-HIT v4.7, and these were
+queried against a eukaryotic virus protein database using the UBLAST algorithm provided as part of the
+USEARCH v10 software package (64). Reads with a signiﬁcant alignment to a viral protein were subse-
+quently aligned to the nonredundant nucleotide database using BLASTn. Those with a best hit to a viral
+sequence were regarded as conﬁdently viral, and those not aligning to any sequences were regarded as
+putatively viral, while those with a nonviral best hit were regarded as false positives.
+Targeted measurement of intestinal protozoa. Automated nucleic acid extraction was performed
+on the MagNA Pure 96 instrument (Roche Applied Science, The Netherlands) according to the manufac-
+turer’s protocol. DNA was eluted in a 100-ml elution buffer (Roche Applied Science). Phocine herpesvirus
+(PhoHV) DNA was added to all samples as an internal control for extraction and ampliﬁcation efﬁciency.
+The presence of Giardia lamblia, Cryptosporidium parvum, Entamoeba histolytica, Blastocystis hominis,
+and Dientamoeba fragilis was assessed by real-time PCR targeting the small-subunit rRNA gene (37).
+Positive controls consisting of a plasmid containing the target sequence were included in every run, as
+were negative extraction controls and negative PCR controls. Subjects were excluded from further analy-
+ses if internal controls tested negative in one or more samples.
+Targeted measurement of short-chain fatty acids. Sample preparation of fecal extracts and nu-
+clear magnetic resonance (NMR) spectroscopy for the quantiﬁcation of SCFAs were performed as
+described previously by H. K. Kim et al. (73), with some modiﬁcations. Brieﬂy, aqueous extracts of feces
+were prepared by mixing 50 to 100 mg of feces and 0.3 ml of deionized water, followed by mechanical
+homogenization in a Bullet Blender 24 (Next Avance Inc., Troy, NY, USA). The fecal slurry was centrifuged
+twice at 18,213  g for 10 min at 4°C, and 0.225 ml of the supernatant was mixed with 0.025 ml of 1.5 M
+potassium phosphate buffer (pH 7.4) containing 2 mM sodium azide and 4 mM sodium trimethylsilyl-
+propionate-d4 (TSP-d4) in D2O. For each sample, the one-dimensional (1D)
+1H-NMR spectrum was
+acquired in a 14.1 T Avance II NMR instrument (Bruker Biospin Ltd., Karlsruhe, Germany). Quantiﬁcation
+of SCFAs from the NMR spectra was performed in ChenomX (Chenomx NMR suite 8.4) using the known
+concentration of TSP-d4.
+Quantitative PCR for bacterial and fungal loads. For the measurement of the total bacterial con-
+tent in fecal samples, we used a method reported previously by Nadkarni and colleagues (74), with mod-
+iﬁcations. Brieﬂy, we used a primer concentration of 500 nM in a ﬁnal volume of 10ml with the SensiFast
+SYBR No-ROX kit (Bioline, London, UK). The ampliﬁcation conditions were as follows: an initial denatura-
+tion step at 95°C for 5 s followed by denaturation (10 s at 95°C), annealing (10 s at 66°C), and extension
+(20 s at 72°C) for 44 repetitive cycles in a Bio-Rad (Hercules, CA, USA) CFX96 thermocycler. The primer
+set of FungiQuant (75) was used for fungal load determination, with modiﬁcations. The ﬁnal PCR primer
+concentration was 500 nM in a volume of 10ml with the SensiFast SYBR No-ROX kit (Bioline, London,
+UK). The following ampliﬁcation program was used: an initial denaturation step at 95°C for 5 s followed
+by denaturation (10 s at 95°C), annealing (10 s at 60°C), and extension (20 s at 72°C) in 44 repetitive
+cycles in a Bio-Rad (Hercules, CA, USA) CFX96 thermocycler. Following ampliﬁcation, fungal and bacterial
+ratios were calculated using LinRegPCR (76).
+Multi-omics factor analysis: model description. The input into multi-omics factor analysis (MOFA)
+is a set of M data matrices, Y1,. . ., YM, of dimensions N  Dm, where N is the number of samples and Dm is
+the number of features in data matrix m. MOFA decomposes these matrices as
+Ym ¼ ZWmT þ «m
+m ¼ 1; . . . ; M
+Here, Z denotes the factor matrix and Wm denotes the weight matrices for each data modality m. « m
+denotes the modality-speciﬁc Gaussian noise term « m
+nd~Nð0; 1=tm
+d Þ.
+The model is formulated in a probabilistic Bayesian framework, where prior distributions are placed
+on all unobserved variables of the model. The most important prior is the sparsity-inducing prior in the
+weights. MOFA uses a two-level regularization. The ﬁrst level encourages modality- and factor-wise spar-
+sity, thereby allowing the direct identiﬁcation of which factor is active in which data modality. The sec-
+ond level encourages feature-wise sparsity, resulting in a small number of features with nonzero weights
+Haak et al.
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+10
+
+for each factor. Mathematically, MOFA encodes this by combining an automatic relevance determination
+prior for the ﬁrst type of sparsity and a spike-and-slab prior for the second. Model inference is performed
+using variational Bayesian inference with mean-ﬁeld assumption. We refer the reader to a previous pub-
+lication from our group for further mathematical details (38).
+Multi-omics factor analysis: downstream analysis. After model ﬁtting, the number of factors was
+estimated by requiring a minimum of 5% variance explained across all microbiome modalities. The
+downstream characterization of the model output included several analyses:
+ variance decomposition. The fraction of variance explained (R2) by each factor in each view is
+quantiﬁed using a coefﬁcient of determination (38–40),
+R2
+m;k ¼ 12ðR
+n;d ym
+nd 2 znkwm
+kd 2 mm
+d Þ2=ðR
+n;d ym
+nd 2 mm
+d Þ2
+ visualization of weights. The model learns a weight for every feature in each factor, which can be
+interpreted as a measure of feature importance. Larger weights (in absolute values) indicate a
+higher correlation with the corresponding factor values. The sign of the weight indicates the
+directionality of the variation: features with positive weights are positively associated with
+the corresponding values, whereas features with negative weights are negatively associated with
+the corresponding values.
+ visualization of factors. Each MOFA factor captures a different dimension of heterogeneity in the
+microbiome composition. Mathematically, each factor ordinates cells along a one-dimensional axis
+centered at zero. Samples with different signs manifest opposite phenotypes along the inferred
+axis of variation, with a higher absolute value indicating a stronger effect. Note that the
+interpretation of factors is analogous to the interpretation of the principal components in PCA.
+ denoising by data reconstruction. MOFA generates a compressed low-dimensional representation
+of the data. By taking the product of the factors and the weights, the model can reconstruct a
+normally distributed denoised representation of the input data. This is particularly useful for the
+visualization of sparse readouts.
+Data processing for MOFA. The input into MOFA is a set of data modalities with matching samples.
+In this case, bacterial 16S rRNA ASVs, fungal ITS1 rRNA ASVs, and viral sequences were deﬁned as sepa-
+rate data modalities. As a ﬁltering criterion, bacterial and fungal features were required to have a mini-
+mum of 10 ASVs observed in at least 25% of the data set. In addition, to mitigate the sparsity of the data
+and to simplify the interpretation, we collapsed the inferred bacterial and fungal ASVs and viral sequen-
+ces to their respective family or genus level. The numbers of sequences were subsequently scaled using
+a centralized log ratio (41), which has been shown to be effective in normalizing compositional
+data (42).
+Signiﬁcance of MOFA factors and downsampling analysis. The signiﬁcance of the MOFA factors
+can be assessed by the variance-explained estimates (per data modality) that result from the variance
+decomposition analysis. In addition, we performed a sensitivity analysis to quantify the robustness of
+the factors after downsampling the number of samples in the data set. For each downsampled version
+of the data, we have retrained a MOFA model, and for each model, we then correlated the resulting fac-
+tors with the factors that are found with the full data set (see Fig. S3 in the supplemental material).
+Statistics. All analyses were performed in the R statistical framework (version 3.6.1; R Foundation for
+Statistical Computing, Vienna, Austria). To assess alpha diversity and richness, we calculated the
+Shannon diversity index and the observed taxon richness index with the phyloseq package (17). Data
+were not normally distributed and are therefore presented as medians and interquartile ranges (IQRs),
+while data were analyzed using a Wilcoxon rank sum test. Associations between factor values and cova-
+riates were analyzed using linear regression by Pearson correlation coefﬁcients. Statistical signiﬁcance is
+called at a 10% false discovery rate (FDR).
+Ethics approval and consent to participate. Ethical approval for both the patient and healthy sub-
+ject studies was received from the Medical Ethics Committee of the Academic Medical Center in
+Amsterdam, and all research was conducted in accordance with the Declaration of Helsinki. Written
+informed consent was obtained from all healthy subjects and patients or their legal representatives.
+Availability of data. Raw sequencing data (bacterial and fungal ASVs and VIDISCA-NGS sequencing
+reads) were submitted to the European Nucleotide Archive (ENA) (accession number PRJEB37289).
+All code used for analysis is available at https://github.com/bwhaak/MOFA_microbiome. Links to the
+processed data are included in the GitHub repository.
+SUPPLEMENTAL MATERIAL
+Supplemental material is available online only.
+FIG S1, TIF ﬁle, 0.8 MB.
+FIG S2, TIF ﬁle, 1.2 MB.
+FIG S3, TIF ﬁle, 0.4 MB.
+FIG S4, TIF ﬁle, 0.1 MB.
+Transkingdom Analysis of the Gut Microbiome
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+11
+
+FIG S5, TIF ﬁle, 1 MB.
+FIG S6, TIF ﬁle, 2.1 MB.
+FIG S7, TIF ﬁle, 1.9 MB.
+TABLE S1, DOCX ﬁle, 0.02 MB.
+TABLE S2, DOCX ﬁle, 0.01 MB.
+ACKNOWLEDGMENTS
+We acknowledge Lonneke A. van Vught, Maryse A. Wiewel, Friso M. de Beer, Lieuwe
+D. J. Bos, Gerie J. Glas, Roosmarijn T. M. van Hooijdonk, Michaëla A. M. Huson, Laura R. A.
+Schouten, Marleen Straat, Esther Witteveen, and Luuk Wieske (Department of Intensive
+Care, Amsterdam UMC, Location Academic Medical Center, The Netherlands) for their
+participation in data collection. We also thank Jorn Hartman, Patricia Broekhuizen-van
+Haaften, and Ellen Wentink-Bonnema for their indispensable help in the laboratory
+work on the fecal samples.
+We declare no competing interests.
+This work was supported by the Netherlands Organization for Scientiﬁc Research
+(NWO) (Vidi grant 91716475).
+B.W.H. and W.J.W. conceived the original study. R.A. performed the MOFA analysis.
+C.M.K., M.D., M.K., M.F.J., and L.M.V.D.H. designed and performed the viral sequencing
+and bioinformatics pipeline. S.K. and M.G. designed and performed the NMR analyses.
+Fungal proﬁling and sequencing were designed and performed by W.J.D.J. and T.B.M.H.
+Protozoal analysis was overseen by T.V.G. Microbiome sequencing and initial analysis
+were performed and facilitated by R.F.J.K., F.H., and W.M.D.V. M.J.S. and T.V.D.P. oversaw
+sample collection in the ICU, and J.M.L. oversaw sample collection from the healthy
+subjects. B.W.H., R.F.J.K., and R.A. analyzed the data, wrote the original manuscript, and
+prepared the ﬁnal ﬁgures. All authors have seen and approved the ﬁnal version of the
+manuscript.
+REFERENCES
+1. Belkaid Y, Hand TW. 2014. Role of the microbiota in immunity and inﬂam-
+mation. Cell 157:121–141. https://doi.org/10.1016/j.cell.2014.03.011.
+2. Honda K, Littman DR. 2012. The microbiome in infectious disease and
+inﬂammation. Annu Rev Immunol 30:759–795. https://doi.org/10.1146/
+annurev-immunol-020711-074937.
+3. Schuijt TJ, Lankelma JM, Scicluna BP, de Sousa e Melo F, Roelofs JJTH, de
+Boer JD, Hoogendijk AJ, de Beer R, de Vos A, Belzer C, de Vos WM, van der
+Poll T, Wiersinga WJ. 2016. The gut microbiota plays a protective role in
+the host defence against pneumococcal pneumonia. Gut 65:575–583.
+https://doi.org/10.1136/gutjnl-2015-309728.
+4. Clarke TB, Davis KM, Lysenko ES, Zhou AY, Yu Y, Weiser JN. 2010. Recogni-
+tion of peptidoglycan from the microbiota by Nod1 enhances systemic
+innate immunity. Nat Med 16:228–231. https://doi.org/10.1038/nm.2087.
+5. Bufﬁe CG, Pamer EG. 2013. Microbiota-mediated colonization resistance
+against intestinal pathogens. Nat Rev Immunol 13:790–801. https://doi
+.org/10.1038/nri3535.
+6. Lankelma JM, van Vught LA, Belzer C, Schultz MJ, van der Poll T, de Vos
+WM, Wiersinga WJ. 2017. Critically ill patients demonstrate large interper-
+sonal variation in intestinal microbiota dysregulation: a pilot study. Inten-
+sive Care Med 43:59–68. https://doi.org/10.1007/s00134-016-4613-z.
+7. McDonald D, Ackermann G, Khailova L, Baird C, Heyland D, Kozar R,
+Lemieux M, Derenski K, King J, Vis-Kampen C, Knight R, Wischmeyer PE.
+2016. Extreme dysbiosis of the microbiome in critical illness. mSphere
+1:e00199-16. https://doi.org/10.1128/mSphere.00199-16.
+8. Zaborin A, Smith D, Garﬁeld K, Quensen J, Shakhsheer B, Kade M, Tirrell
+M, Tiedje J, Gilbert JA, Zaborina O, Alverdy JC. 2014. Membership and
+behavior of ultra-low-diversity pathogen communities present in the gut
+of humans during prolonged critical illness. mBio 5:e01361-14. https://doi
+.org/10.1128/mBio.01361-14.
+9. Haak BW, Wiersinga WJ. 2017. The role of the gut microbiota in sepsis.
+Lancet Gastroenterol Hepatol 2:135–143. https://doi.org/10.1016/S2468
+-1253(16)30119-4.
+10. Taur Y, Xavier JB, Lipuma L, Ubeda C, Goldberg J, Gobourne A, Lee YJ,
+Dubin KA, Socci ND, Viale A, Perales M-A, Jenq RR, van den Brink MRM,
+Pamer EG. 2012. Intestinal domination and the risk of bacteremia in
+patients undergoing allogeneic hematopoietic stem cell transplantation.
+Clin Infect Dis 55:905–914. https://doi.org/10.1093/cid/cis580.
+11. Agudelo-Ochoa GM, Valdés-Duque BE, Giraldo-Giraldo NA, Jaillier-
+Ramírez AM, Giraldo-Villa A, Acevedo-Castaño I, Yepes-Molina MA,
+Barbosa-Barbosa J, Benítez-Paéz A. 2020. Gut microbiota proﬁles in crit-
+ically ill patients, potential biomarkers and risk variables for sepsis. Gut
+Microbes 12:1707610. https://doi.org/10.1080/19490976.2019.1707610.
+12. Shkoporov AN, Hill C. 2019. Bacteriophages of the human gut: the
+“known unknown” of the microbiome. Cell Host Microbe 25:195–209.
+https://doi.org/10.1016/j.chom.2019.01.017.
+13. Norman JM, Handley SA, Virgin HW. 2014. Kingdom-agnostic metage-
+nomics and the importance of complete characterization of enteric mi-
+crobial communities. Gastroenterology 146:1459–1469. https://doi.org/
+10.1053/j.gastro.2014.02.001.
+14. Pfeiffer JK, Virgin HW. 2016. Transkingdom control of viral infection and
+immunity in the mammalian intestine. Science 351:aad5872. https://doi
+.org/10.1126/science.aad5872.
+15. Neil JA, Cadwell K. 2018. The intestinal virome and immunity. J Immunol
+201:1615–1624. https://doi.org/10.4049/jimmunol.1800631.
+16. Kuss SK, Best GT, Etheredge CA, Pruijssers AJ, Frierson JM, Hooper LV,
+Dermody TS, Pfeiffer JK. 2011. Intestinal microbiota promote enteric virus
+replication and systemic pathogenesis. Science 334:249–252. https://doi
+.org/10.1126/science.1211057.
+17. De Sordi L, Lourenço M, Debarbieux L. 2019. The battle within: interac-
+tions of bacteriophages and bacteria in the gastrointestinal tract. Cell
+Host Microbe 25:210–218. https://doi.org/10.1016/j.chom.2019.01.018.
+18. Legoff J, Resche-Rigon M, Bouquet J, Robin M, Naccache SN, Mercier-
+Delarue S, Federman S, Samayoa E, Rousseau C, Piron P, Kapel N, Simon F,
+Socié G, Chiu CY. 2017. The eukaryotic gut virome in hematopoietic stem
+cell transplantation: new clues in enteric graft-versus-host disease. Nat
+Med 23:1080–1085. https://doi.org/10.1038/nm.4380.
+19. Zuo T, Lu XJ, Zhang Y, Cheung CP, Lam S, Zhang F, Tang W, Ching JYL,
+Zhao R, Chan PKS, Sung JJY, Yu J, Chan FKL, Cao Q, Sheng JQ, Ng SC.
+Haak et al.
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+12
+
+2019.
+Gut
+mucosal
+virome
+alterations
+in
+ulcerative
+colitis.
+Gut
+68:1169–1179. https://doi.org/10.1136/gutjnl-2018-318131.
+20. Sokol H, Leducq V, Aschard H, Pham HP, Jegou S, Landman C, Cohen D,
+Liguori G, Bourrier A, Nion-Larmurier I, Cosnes J, Seksik P, Langella P,
+Skurnik D, Richard ML, Beaugerie L. 2017. Fungal microbiota dysbiosis in
+IBD. Gut 66:1039–1048. https://doi.org/10.1136/gutjnl-2015-310746.
+21. Botschuijver S, Roeselers G, Levin E, Jonkers DM, Welting O, Heinsbroek
+SEM, de Weerd HH, Boekhout T, Fornai M, Masclee AA, Schuren FHJ, de
+Jonge WJ, Seppen J, van den Wijngaard RM. 2017. Intestinal fungal dys-
+biosis is associated with visceral hypersensitivity in patients with irritable
+bowel syndrome and rats. Gastroenterology 153:1026–1039. https://doi
+.org/10.1053/j.gastro.2017.06.004.
+22. Sovran B, Planchais J, Jegou S, Straube M, Lamas B, Natividad JM, Agus A,
+Dupraz L, Glodt J, Da Costa G, Michel M-L, Langella P, Richard ML, Sokol
+H. 2018. Enterobacteriaceae are essential for the modulation of colitis se-
+verity by fungi. Microbiome 6:152. https://doi.org/10.1186/s40168-018
+-0538-9.
+23. Richard ML, Sokol H. 2019. The gut mycobiota: insights into analysis, envi-
+ronmental interactions and role in gastrointestinal diseases. Nat Rev
+Gastroenterol Hepatol 16:331–345. https://doi.org/10.1038/s41575-019
+-0121-2.
+24. Zhai B, Ola M, Rolling T, Tosini NL, Joshowitz S, Littmann ER, Amoretti LA,
+Fontana E, Wright RJ, Miranda E, Veelken CA, Morjaria SM, Peled JU, van
+den Brink MRM, Babady NE, Butler G, Taur Y, Hohl TM. 2020. High-resolu-
+tion mycobiota analysis reveals dynamic intestinal translocation preced-
+ing invasive candidiasis. Nat Med 26:59–64. https://doi.org/10.1038/
+s41591-019-0709-7.
+25. Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJA, Holmes SP.
+2016. DADA2: high-resolution sample inference from Illumina amplicon
+data. Nat Methods 13:581–583. https://doi.org/10.1038/nmeth.3869.
+26. van der Hoek L, de Vries M, Oude Munnink BB, Deijs M, Canuti M,
+Koekkoek SM, Molenkamp R, Bakker M, Jurriaans S, van Schaik BDC, Luyf
+AC, Olabarriaga SD, van Kampen AHC. 2012. Performance of VIDISCA-454
+in feces-suspensions and serum. Viruses 4:1328–1334. https://doi.org/10
+.3390/v4081328.
+27. Edridge AWD, Deijs M, van Zeggeren IE, Kinsella CM, Jebbink MF, Bakker
+M, van de Beek D, Brouwer MC, van der Hoek L. 2019. Viral metagenomics
+on cerebrospinal ﬂuid. Genes (Basel) 10:332. https://doi.org/10.3390/
+genes10050332.
+28. Kinsella CM, Deijs M, van der Hoek L. 2019. Enhanced bioinformatic proﬁl-
+ing of VIDISCA libraries for virus detection and discovery. Virus Res
+263:21–26. https://doi.org/10.1016/j.virusres.2018.12.010.
+29. Haak BW, Lankelma JM, Hugenholtz F, Belzer C, De Vos WM, Wiersinga
+WJ. 2019. Long-term impact of oral vancomycin, ciproﬂoxacin and metro-
+nidazole on the gut microbiota in healthy humans. J Antimicrob Chemo-
+ther 74:782–786. https://doi.org/10.1093/jac/dky471.
+30. Hallen-Adams HE, Suhr MJ. 2017. Fungi in the healthy human gastrointes-
+tinal tract. Virulence 8:352–358. https://doi.org/10.1080/21505594.2016
+.1247140.
+31. Suhr MJ, Hallen-Adams HE. 2015. The human gut mycobiome: pitfalls and
+potentials—a mycologist’s perspective. Mycologia 107:1057–1073. https://
+doi.org/10.3852/15-147.
+32. Nash AK, Auchtung TA, Wong MC, Smith DP, Gesell JR, Ross MC, Stewart
+CJ, Metcalf GA, Muzny DM, Gibbs RA, Ajami NJ, Petrosino JF. 2017. The
+gut mycobiome of the Human Microbiome Project healthy cohort. Micro-
+biome 5:153. https://doi.org/10.1186/s40168-017-0373-4.
+33. Dutilh BE, Cassman N, McNair K, Sanchez SE, Silva GGZ, Boling L, Barr JJ,
+Speth DR, Seguritan V, Aziz RK, Felts B, Dinsdale EA, Mokili JL, Edwards
+RA. 2014. A highly abundant bacteriophage discovered in the unknown
+sequences of human faecal metagenomes. Nat Commun 5:4498. https://
+doi.org/10.1038/ncomms5498.
+34. Shkoporov AN, Khokhlova EV, Fitzgerald CB, Stockdale SR, Draper LA,
+Ross RP, Hill C. 2018. UCrAss001 represents the most abundant bacterio-
+phage family in the human gut and infects Bacteroides intestinalis. Nat
+Commun 9:4781. https://doi.org/10.1038/s41467-018-07225-7.
+35. Shkoporov AN, Clooney AG, Sutton TDS, Ryan FJ, Daly KM, Nolan JA,
+McDonnell SA, Khokhlova EV, Draper LA, Forde A, Guerin E, Velayudhan V,
+Ross RP, Hill C. 2019. The human gut virome is highly diverse, stable, and
+individual speciﬁc. Cell Host Microbe 26:527–541.e5. https://doi.org/10
+.1016/j.chom.2019.09.009.
+36. van Hattem JM, Arcilla MS, Grobusch MP, Bart A, Bootsma MC, van
+Genderen PJ, van Gool T, Goorhuis A, van Hellemond JJ, Molenkamp R,
+Molhoek N, Oude Lashof AM, Stobberingh EE, de Wever B, Verbrugh HA,
+Melles DC, Penders J, Schultsz C, de Jong MD. 2017. Travel-related
+acquisition of diarrhoeagenic bacteria, enteral viruses and parasites in a
+prospective cohort of 98 Dutch travellers. Travel Med Infect Dis 19:33–36.
+https://doi.org/10.1016/j.tmaid.2017.08.003.
+37. van Hattem JM, Arcilla MS, Schultsz C, Bootsma MC, Verhaar N, Rebers SP,
+Goorhuis A, Grobusch MP, Penders J, de Jong MD, van Gool T, Bart A,
+COMBAT Consortium. 2019. Carriage of Blastocystis spp. in travellers—a
+prospective longitudinal study. Travel Med Infect Dis 27:87–91. https://
+doi.org/10.1016/j.tmaid.2018.06.005.
+38. Argelaguet R, Velten B, Arnol D, Dietrich S, Zenz T, Marioni JC, Buettner F,
+Huber W, Stegle O. 2018. Multi-omics factor analysis—a framework for
+unsupervised integration of multi-omics data sets. Mol Syst Biol 14:e8124.
+https://doi.org/10.15252/msb.20178124.
+39. Argelaguet R, Arnol D, Bredikhin D, Deloro Y, Velten B, Marioni JC, Stegle
+O. 2020. MOFA1: a statistical framework for comprehensive integration
+of multi-modal single-cell data. Genome Biol 21:111. https://doi.org/10
+.1186/s13059-020-02015-1.
+40. Argelaguet R, Clark SJ, Mohammed H, Stapel LC, Krueger C, Kapourani C-
+A, Imaz-Rosshandler I, Lohoff T, Xiang Y, Hanna CW, Smallwood S, Ibarra-
+Soria X, Buettner F, Sanguinetti G, Xie W, Krueger F, Göttgens B, Rugg-
+Gunn PJ, Kelsey G, Dean W, Nichols J, Stegle O, Marioni JC, Reik W. 2019.
+Multi-omics proﬁling of mouse gastrulation at single-cell resolution. Na-
+ture 576:487–491. https://doi.org/10.1038/s41586-019-1825-8.
+41. Aitchison J. 1982. The statistical analysis of compositional data. J R Stat
+Soc Series B Stat Methodol 44:139–160. https://doi.org/10.1111/j.2517
+-6161.1982.tb01195.x.
+42. Gloor GB, Macklaim JM, Pawlowsky-Glahn V, Egozcue JJ. 2017. Micro-
+biome datasets are compositional: and this is not optional. Front Micro-
+biol 8:2224. https://doi.org/10.3389/fmicb.2017.02224.
+43. Alverdy JC, Krezalek MA. 2017. Collapse of the microbiome, emergence of
+the pathobiome, and the immunopathology of sepsis. Crit Care Med
+45:337–347. https://doi.org/10.1097/CCM.0000000000002172.
+44. Wischmeyer PE, McDonald D, Knight R. 2016. Role of the microbiome,
+probiotics, and “dysbiosis therapy” in critical illness. Curr Opin Crit Care
+22:347–353. https://doi.org/10.1097/MCC.0000000000000321.
+45. Haak BW, Levi M, Wiersinga WJ. 2017. Microbiota-targeted therapies on
+the intensive care unit. Curr Opin Crit Care 23:167–174. https://doi.org/10
+.1097/MCC.0000000000000389.
+46. Lee YJ, Arguello ES, Jenq RR, Littmann E, Kim GJ, Miller LC, Ling L,
+Figueroa C, Robilotti E, Perales M-A, Barker JN, Giralt S, van den Brink
+MRM, Pamer EG, Taur Y. 2017. Protective factors in the intestinal micro-
+biome against Clostridium difﬁcile infection in recipients of allogeneic he-
+matopoietic stem cell transplantation. J Infect Dis 215:1117–1123. https://
+doi.org/10.1093/infdis/jix011.
+47. Miceli MH, Díaz JA, Lee SA. 2011. Emerging opportunistic yeast infections.
+Lancet Infect Dis 11:142–151. https://doi.org/10.1016/S1473-3099(10)
+70218-8.
+48. Beyda ND, Chuang SH, Alam MJ, Shah DN, Ng TM, McCaskey L, Garey KW.
+2013. Treatment of Candida famata bloodstream infections: case series
+and review of the literature. J Antimicrob Chemother 68:438–443. https://
+doi.org/10.1093/jac/dks388.
+49. Nguyen LN, Lopes LCL, Cordero RJBB, Nosanchuk JD. 2011. Sodium butyr-
+ate inhibits pathogenic yeast growth and enhances the functions of mac-
+rophages. J Antimicrob Chemother 66:2573–2580. https://doi.org/10
+.1093/jac/dkr358.
+50. García C, Tebbji F, Daigneault M, Liu N-N, Köhler JR, Allen-Vercoe E,
+Sellam A. 2017. The human gut microbial metabolome modulates fungal
+growth via the TOR signaling pathway. mSphere 2:e00555-17. https://doi
+.org/10.1128/mSphere.00555-17.
+51. Fan D, Coughlin LA, Neubauer MM, Kim J, Kim MS, Zhan X, Simms-
+Waldrip TR, Xie Y, Hooper LV, Koh AY. 2015. Activation of HIF-1a and LL-
+37 by commensal bacteria inhibits Candida albicans colonization. Nat
+Med 21:808–814. https://doi.org/10.1038/nm.3871.
+52. Huseyin CE, O’Toole PW, Cotter PD, Scanlan PD. 2017. Forgotten fungi—
+the gut mycobiome in human health and disease. FEMS Microbiol Rev
+41:479–511. https://doi.org/10.1093/femsre/fuw047.
+53. Kong EF, Tsui C, Kucharíková S, Van Dijck P, Jabra-Rizk MA. 2017. Modula-
+tion of Staphylococcus aureus response to antimicrobials by the Candida
+albicans quorum sensing molecule farnesol. Antimicrob Agents Chemo-
+ther 61:e01573-17. https://doi.org/10.1128/AAC.01573-17.
+54. Arzmi MH, Dashper S, Catmull D, Cirillo N, Reynolds EC, McCullough M.
+2015. Coaggregation of Candida albicans, Actinomyces naeslundii and
+Streptococcus mutans is Candida albicans strain dependent. FEMS Yeast
+Res 15:fov038. https://doi.org/10.1093/femsyr/fov038.
+Transkingdom Analysis of the Gut Microbiome
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+13
+
+55. Kim D, Sengupta A, Niepa THR, Lee BH, Weljie A, Freitas-Blanco VS,
+Murata RM, Stebe KJ, Lee D, Koo H. 2017. Candida albicans stimulates
+Streptococcus mutans microcolony development via cross-kingdom
+bioﬁlm-derived metabolites. Sci Rep 7:41332. https://doi.org/10.1038/
+srep41332.
+56. Uppuluri P, Busscher HJ, Chakladar J, van der Mei HC, Chafﬁn WL. 2017.
+Transcriptional proﬁling of C. albicans in a two species bioﬁlm with Rothia
+dentocariosa. Front Cell Infect Microbiol 7:311. https://doi.org/10.3389/
+fcimb.2017.00311.
+57. Knowles B, Silveira CB, Bailey BA, Barott K, Cantu VA, Cobian-Guëmes AG,
+Coutinho FH, Dinsdale EA, Felts B, Furby KA, George EE, Green KT,
+Gregoracci GB, Haas AF, Haggerty JM, Hester ER, Hisakawa N, Kelly LW,
+Lim YW, Little M, Luque A, McDole-Somera T, McNair K, De Oliveira LS,
+Quistad SD, Robinett NL, Sala E, Salamon P, Sanchez SE, Sandin S, Silva
+GGZ, Smith J, Sullivan C, Thompson C, Vermeij MJA, Youle M, Young C,
+Zgliczynski B, Brainard R, Edwards RA, Nulton J, Thompson F, Rohwer F.
+2016. Lytic to temperate switching of viral communities. Nature
+531:466–470. https://doi.org/10.1038/nature17193.
+58. Ghabrial SA, Castón JR, Jiang D, Nibert ML, Suzuki N. 2015. 50-plus years
+of fungal viruses. Virology 479–480:356–368. https://doi.org/10.1016/j
+.virol.2015.02.034.
+59. Stergiopoulou T, Meletiadis J, Sein T, Papaioannidou P, Tsiouris I, Roilides
+E, Walsh TJ. 2008. Isobolographic analysis of pharmacodynamic interac-
+tions between antifungal agents and ciproﬂoxacin against Candida
+albicans and Aspergillus fumigatus. Antimicrob Agents Chemother 52:
+2196–2204. https://doi.org/10.1128/AAC.00735-07.
+60. van Vught LA, Klein Klouwenberg PMC, Spitoni C, Scicluna BP, Wiewel
+MA, Horn J, Schultz MJ, Nürnberg P, Bonten MJM, Cremer OL, van der Poll
+T, for the MARS Consortium. 2016. Incidence, risk factors, and attributable
+mortality of secondary infections in the intensive care unit after admis-
+sion for sepsis. JAMA 315:1469–1479. https://doi.org/10.1001/jama.2016
+.2691.
+61. Lankelma JM, Cranendonk DR, Belzer C, De Vos AF, De Vos WM, Van Der
+Poll T, Wiersinga WJ. 2017. Antibiotic-induced gut microbiota disruption
+during human endotoxemia: a randomised controlled study. Gut
+66:1623–1630. https://doi.org/10.1136/gutjnl-2016-312132.
+62. Costea PI, Zeller G, Sunagawa S, Pelletier E, Alberti A, Levenez F,
+Tramontano M, Driessen M, Hercog R, Jung F-E, Kultima JR, Hayward MR,
+Coelho LP, Allen-Vercoe E, Bertrand L, Blaut M, Brown JRM, Carton T,
+Cools-Portier S, Daigneault M, Derrien M, Druesne A, de Vos WM, Finlay
+BB, Flint HJ, Guarner F, Hattori M, Heilig H, Luna RA, van Hylckama Vlieg J,
+Junick J, Klymiuk I, Langella P, Le Chatelier E, Mai V, Manichanh C, Martin
+JC, Mery C, Morita H, O’Toole PW, Orvain C, Patil KR, Penders J, Persson S,
+Pons N, Popova M, Salonen A, Saulnier D, Scott KP, Singh B, et al. 2017.
+Towards standards for human fecal sample processing in metagenomic
+studies. Nat Biotechnol 35:1069–1076. https://doi.org/10.1038/nbt.3960.
+63. Kozich JJ, Westcott SL, Baxter NT, Highlander SK, Schloss PD. 2013. Devel-
+opment of a dual-index sequencing strategy and curation pipeline for
+analyzing amplicon sequence data on the MiSeq Illumina sequencing
+platform. Appl Environ Microbiol 79:5112–5120. https://doi.org/10.1128/
+AEM.01043-13.
+64. Edgar RC. 2010. Search and clustering orders of magnitude faster than
+BLAST. Bioinformatics 26:2460–2461. https://doi.org/10.1093/bioinformatics/
+btq461.
+65. Wang Q, Garrity GM, Tiedje JM, Cole JR. 2007. Naive Bayesian classiﬁer
+for rapid assignment of rRNA sequences into the new bacterial taxon-
+omy. Appl Environ Microbiol 73:5261–5267. https://doi.org/10.1128/
+AEM.00062-07.
+66. Quast C, Pruesse E, Yilmaz P, Gerken J, Schweer T, Yarza P, Peplies J,
+Glöckner FO. 2013. The SILVA ribosomal RNA gene database project:
+improved data processing and Web-based tools. Nucleic Acids Res 41:
+D590–D596. https://doi.org/10.1093/nar/gks1219.
+67. Nilsson RH, Larsson K-H, Taylor AFS, Bengtsson-Palme J, Jeppesen TS,
+Schigel D, Kennedy P, Picard K, Glöckner FO, Tedersoo L, Saar I, Kõljalg U,
+Abarenkov K. 2019. The UNITE database for molecular identiﬁcation of
+fungi: handling dark taxa and parallel taxonomic classiﬁcations. Nucleic
+Acids Res 47:D259–D264. https://doi.org/10.1093/nar/gky1022.
+68. Boom R, Sol CJ, Salimans MM, Jansen CL, Wertheim-van Dillen PM, van
+der Noordaa J. 1990. Rapid and simple method for puriﬁcation of nucleic
+acids. J Clin Microbiol 28:495–503. https://doi.org/10.1128/JCM.28.3.495
+-503.1990.
+69. Endoh D, Mizutani T, Kirisawa R, Maki Y, Saito H, Kon Y, Morikawa S,
+Hayashi M. 2005. Species-independent detection of RNA virus by repre-
+sentational difference analysis using non-ribosomal hexanucleotides for
+reverse transcription. Nucleic Acids Res 33:e65. https://doi.org/10.1093/
+nar/gni064.
+70. Li H. 2013. Aligning sequence reads, clone sequences and assembly con-
+tigs with BWA-MEM. arXiv http://arxiv.org/abs/1303.3997.
+71. Hong C, Manimaran S, Shen Y, Perez-Rogers JF, Byrd AL, Castro-Nallar E,
+Crandall KA, Johnson WE. 2014. PathoScope 2.0: a complete computational
+framework for strain identiﬁcation in environmental or clinical sequencing
+samples. Microbiome 2:33. https://doi.org/10.1186/2049-2618-2-33.
+72. Byrd AL, Perez-Rogers JF, Manimaran S, Castro-Nallar E, Toma I, McCaffrey
+T, Siegel M, Benson G, Crandall KA, Johnson WE. 2014. Clinical PathoS-
+cope: rapid alignment and ﬁltration for accurate pathogen identiﬁcation
+in clinical samples using unassembled sequencing data. BMC Bioinfor-
+matics 15:262. https://doi.org/10.1186/1471-2105-15-262.
+73. Kim HK, Kostidis S, Choi YH. 2018. NMR analysis of fecal samples. Methods
+Mol Biol 1730:317–328. https://doi.org/10.1007/978-1-4939-7592-1_24.
+74. Nadkarni MA, Martin FE, Jacques NA, Hunter N. 2002. Determination of
+bacterial load by real-time PCR using a broad-range (universal) probe and
+primers set. Microbiology (Reading) 148:257–266. https://doi.org/10.1099/
+00221287-148-1-257.
+75. Liu CM, Kachur S, Dwan MG, Abraham AG, Aziz M, Hsueh P-R, Huang Y-T,
+Busch JD, Lamit LJ, Gehring CA, Keim P, Price LB. 2012. FungiQuant: a
+broad-coverage fungal quantitative real-time PCR assay. BMC Microbiol
+12:255. https://doi.org/10.1186/1471-2180-12-255.
+76. Ruijter JM, Ramakers C, Hoogaars WMH, Karlen Y, Bakker O, van den Hoff
+MJB, Moorman AFM. 2009. Ampliﬁcation efﬁciency: linking baseline and
+bias in the analysis of quantitative PCR data. Nucleic Acids Res 37:e45.
+https://doi.org/10.1093/nar/gkp045.
+Haak et al.
+March/April 2021
+Volume 6
+Issue 2
+e01148-20
+msystems.asm.org
+14

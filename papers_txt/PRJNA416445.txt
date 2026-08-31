@@ -1,0 +1,1059 @@
+ORIGINAL RESEARCH
+published: 12 June 2018
+doi: 10.3389/fmicb.2018.01230
+Frontiers in Microbiology | www.frontiersin.org
+1
+June 2018 | Volume 9 | Article 1230
+Edited by:
+Andrea Masotti,
+Bambino Gesù Ospedale Pediatrico
+(IRCCS), Italy
+Reviewed by:
+Francisco José Pérez-Cano,
+Universitat de Barcelona, Spain
+Antonella Celluzzi,
+Bambino Gesù Ospedale Pediatrico
+(IRCCS), Italy
+*Correspondence:
+Andrés Moya
+andres.moya@uv.es
+†These authors have contributed
+equally to this work.
+Specialty section:
+This article was submitted to
+Systems Microbiology,
+a section of the journal
+Frontiers in Microbiology
+Received: 25 February 2018
+Accepted: 22 May 2018
+Published: 12 June 2018
+Citation:
+Dinleyici EC, Martínez-Martínez D,
+Kara A, Karbuz A, Dalgic N, Metin O,
+Yazar AS, Guven S, Kurugol Z,
+Turel O, Kucukkoc M, Yasa O, Eren M,
+Ozen M, Martí JM, P. Garay C,
+Vandenplas Y and Moya A (2018)
+Time Series Analysis of the Microbiota
+of Children Suffering From Acute
+Infectious Diarrhea and Their
+Recovery After Treatment.
+Front. Microbiol. 9:1230.
+doi: 10.3389/fmicb.2018.01230
+Time Series Analysis of the
+Microbiota of Children Suffering
+From Acute Infectious Diarrhea and
+Their Recovery After Treatment
+Ener C. Dinleyici 1†, Daniel Martínez-Martínez 2†, Ates Kara 3, Adem Karbuz 4, Nazan Dalgic 5,
+Ozge Metin 6, Ahmet S. Yazar 7, Sirin Guven 7, Zafer Kurugol 8, Ozden Turel 9,
+Mehmet Kucukkoc 9, Olcay Yasa 10, Makbule Eren 1, Metehan Ozen 11, Jose Manuel Martí 2,
+Carlos P. Garay 2, Yvan Vandenplas 12 and Andrés Moya 2,13,14*
+1 Department of Pediatrics, Faculty of Medicine, Eskisehir Osmangazi University, Eskisehir, Turkey, 2 Institute for Integrative
+Systems Biology, Catedrático José Beltrán, Valencia, Spain, 3 Pediatric Infectious Disease Unit, Faculty of Medicine,
+Hacettepe University, Ankara, Turkey, 4 Department of Pediatrics, Okmeydani Education and Research Hospital, Istanbul,
+Turkey, 5 Division of Pediatric Infectious Diseases, Sisli Etfal Training and Research Hospital, Istanbul, Turkey, 6 Division of
+Pediatric Infectious Diseases, Konya Training and Research Hospital, Konya, Turkey, 7 Department of Pediatrics, Umraniye
+Education and Research Hospital, Istanbul, Turkey, 8 Department of Pediatrics, Faculty of Medicine, Ege University, Izmir,
+Turkey, 9 Department of Pediatric Infectious Disease Unit, Faculty of Medicine, Bezmialem Vakif University, Istanbul, Turkey,
+10 Department of Pediatrics, Goztepe Training and Research Hospital, SB Istanbul Medeniyet University, Istanbul, Turkey,
+11 Department of Pediatrics, Acibadem University Faculty of Medicine, Istanbul, Turkey, 12 Department of Pediatrics, UZ
+Brussel, Vrije Universiteit Brussel, Brussels, Belgium, 13 Area de Genómica y Salud, Fundación para el Fomento de la
+Investigación Sanitaria y Biomédica de la Comunidad Valenciana (FISABIO-Salud Pública), Valencia, Spain, 14 CIBER en
+Epidemiología y Salud Pública (CIBEResp), Madrid, Spain
+Gut microbiota is closely related to acute infectious diarrhea, one of the leading causes
+of mortality and morbidity in children worldwide. Understanding the dynamics of the
+recovery from this disease is of clinical interest. This work aims to correlate the dynamics
+of gut microbiota with the evolution of children who were suffering from acute infectious
+diarrhea caused by a rotavirus, and their recovery after the administration of a probiotic,
+Saccharomyces boulardii CNCM I-745. The experiment involved 10 children with acute
+infectious diarrhea caused by a rotavirus, and six healthy children, all aged between 3
+and 4 years. The children who suffered the rotavirus infection received S. boulardii CNCM
+I-745 twice daily for the ﬁrst 5 days of the experiment. Fecal samples were collected
+from each participant at 0, 3, 5, 10, and 30 days after probiotic administration. Microbial
+composition was characterized by 16S rRNA gene sequencing. Alpha and beta diversity
+were calculated, along with dynamical analysis based on Taylor’s law to assess the
+temporal stability of the microbiota. All children infected with the rotavirus stopped having
+diarrhea at day 3 after the intervention. We observed low alpha diversities in the ﬁrst 5
+days (p-value <0.05, Wilcoxon test), larger at 10 and 30 days after probiotic treatment.
+Canonical correspondence analysis (CCA) showed differences in the gut microbiota of
+healthy children and of those who suffered from acute diarrhea in the ﬁrst days (p-value
+<0.05, ADONIS test), but not in the last days of the experiment. Temporal variability
+was larger in children infected with the rotavirus than in healthy ones. In particular,
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+Gammaproteobacteria class was found to be abundant in children with acute diarrhea.
+We identiﬁed the microbiota transition from a diseased state to a healthy one with
+time, whose characterization may lead to relevant clinical data. This work highlights the
+importance of using time series for the study of dysbiosis related to diarrhea.
+Keywords: microbiota, temporal analysis, rotavirus, systems biology, acute infectious diarrhea
+1. INTRODUCTION
+The microbiota is intimately related with the health status
+of the host. In previous years, this complex community of
+microorganisms has been studied in depth, with special emphasis
+on the human gut microbiota because of its main role in a
+myriad of diseases (Moya and Ferrer, 2016). Moreover, the
+essential role of the gut microbiota in central processes, such
+as nutrition, immunity, and physiology, has been established.
+The composition of the human gut microbiota changes because
+of several factors, in which geography and age are of great
+importance (Yatsunenko et al., 2012), among other external
+perturbations, such as antibiotic use (Jernberg et al., 2007;
+Dethlefsen and Relman, 2011) and diets (David et al., 2014).
+Alterations in this bacterial composition inﬂuence human health
+through diﬀerent kinds of interactions between the host and
+microbes (Foster et al., 2017). Intestinal communities have been
+demonstrated to be stable over time in healthy adults, but
+the behavior of the microbiota becomes noisy in perturbed
+conditions (Martí et al., 2017).
+Acute diarrhea continues to be a leading cause of morbidity,
+hospitalization, and mortality worldwide (Tate et al., 2016). The
+rotavirus genus is the most common cause of gastroenteritis
+in children, and recent studies have shown that infections can
+cause changes in the composition of intestinal microbiota (Zhang
+et al., 2009). The rotavirus can infect intestinal epithelium villi
+cells and lead to watery diarrhea, resulting in intestinal dysbiosis
+that destroys the microbial barrier and, in the end, worsens
+the diarrhea and leads to fatal consequences in some cases
+(Ramig, 2004). The main method of therapy for all individuals
+with dehydration caused by diarrhea is the use of an oral
+rehydration solution (ORS). Probiotics have been proposed as
+a complementary therapy in the treatment of acute diarrhea;
+they reduce the duration and severity of diarrhea, as well as the
+duration of hospitalization (Guarino et al., 2014). In 2014, the
+European Society for Pediatric Gastroenterology, Hepatology,
+and Nutrition and the European Society of Paediatric Infectious
+Diseases published their current recommendations for children
+with acute gastroenteritis (AGE) (Guarino et al., 2014). They
+highlighted that active treatment with probiotics, in addition
+to ORS, is eﬀective in reducing the duration and intensity
+of gastroenteritis symptoms. Lactobacillus rhamnosus GG,
+Saccharomyces boulardii and Lactobacillus reuteri DSM 17938
+are the most common probiotics studied and used in children
+with AGE (Dinleyici et al., 2012; Dinleyici and Vandenplas,
+2014; Guarino et al., 2014). Several randomized and controlled
+studies on S. boulardii have been conducted, and in-depth meta-
+analyses are now available on the use of this microorganism
+in the treatment of acute diarrhea with viral, bacterial, and
+protozoan causes in both developing and developed countries
+(Dinleyici et al., 2012, 2014). S. boulardii can reduce the duration
+of diarrhea by approximately 1 day, shorten the initial phase of
+watery stools, and decrease the length of hospital stay (Dinleyici
+et al., 2012). Our recent study in a clinical trial with probiotics in
+acute gastroenteritis (PROBAGE Study), which is a multicenter,
+randomized, prospective, controlled, single-blind clinical trial,
+showed that S. boulardii CNCM I-745 reduced the duration of
+diarrhea in both in- and out-patient settings, as well as reduced
+the length of emergency care unit and hospital stay among
+children below 5 years of age with acute infectious diarrhea
+(Dinleyici et al., 2015). The probiotic eﬀect started to be observed
+at 48 h of intervention, and major beneﬁcial eﬀects were seen at
+72 h. A recent meta-analysis showed that in 9 out of 11 clinical
+trials, S. boulardii was beneﬁcial in children with acute infectious
+diarrhea, as it signiﬁcantly reduced the duration of their acute
+infectious diarrhea by approximately 24 h compared with the
+controls (Dinleyici et al., 2012).
+The changes in microbial composition related to diseases are
+known by the concept of dysbiosis. It has been observed that
+gut microbiota is related to a signiﬁcant number of well-deﬁned
+diseases such as irritable bowel syndrome (IBS) (Durbán et al.,
+2013), Crohn’s disease (Morgan et al., 2012), obesity (Turnbaugh
+et al., 2009; Ferrer et al., 2013), colorectal cancer (Peters et al.,
+2016), or HIV (Vázquez-Castellanos et al., 2014; Serrano-Villar
+et al., 2016) to cite some examples. Acute gastroenteritis can
+be considered as a related disease to other as IBS or Crohn’s
+regarding dysbiosis. It has been observed that people aﬀected
+by IBS had an increased abundance of Firmicutes, especially
+of Ruminococcaceae spp. and Clostridium cluster XIVa, with
+the reduction of Bacteroides, (Jeﬀery et al., 2011). In the case
+of Crohn’s disease, it has been observed that Faecalibacterium
+prausnitzii and Escherichia coli, in particular, were decreased
+in patients suﬀering from CD (Pascal et al., 2017). Concerning
+dysbiosis caused by rotavirus and norovirus infection in children,
+it has been observed a decrease of microbial diversity compared
+to children without infection, and diﬀerential abundances of
+Prevotella, Staphylococcus or Atopobium genera (Chen et al.,
+2017). At any rate, whether dysbiosis is cause or eﬀect of diseases
+is a matter of discussion, with a non-trivial answer most of the
+times (Gareau et al., 2010).
+In this study, called the Fecal microbiota Analysis of Children
+receiving probiotics due to acute Infectious Diarrhea (FACID),
+we aimed to explore the temporal evolution of the microbiota of
+children with acute infectious diarrhea caused by a rotavirus. We
+examined how the microbiota of these children improved after
+the administration of S. boulardii CNCM I-745 plus ORS during
+Frontiers in Microbiology | www.frontiersin.org
+2
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+the ﬁrst 5 days of the experiment, compared with the microbiota
+of a healthy group of children of the same age, over a period of
+30 days.
+2. MATERIALS AND METHODS
+2.1. Sample Selection
+FACID Study aims to evaluate the description and behavior
+of the fecal microbiota of children caused by acute infectious
+diarrhea due to a rotavirus infection. We enrolled a total of
+16 children, 6 of them with a healthy condition, and the other
+10 suﬀering from acute infectious diarrhea. All children were
+between 36 and 48 months old; this age range was selected
+because the microbiota is ﬁnally stabilized during this stage
+(Rodríguez et al., 2015), and so that the diﬀerences caused
+by age disparity between groups are reduced. Median age of
+children was 36 months. On admission, children were clinically
+examined and the fever and degree of dehydration were recorded.
+Two out of them had fever at admission and resolved in 24
+hours of hospitalization. Seven children have mild to moderate
+dehydratation. The duration of diarrhea was deﬁned as the time
+in hours from admission until cessation of diarrhea, which in
+turn was deﬁned as the ﬁrst normal stool according to Bristol
+score (a score under ﬁve is described as normalization of stool).
+In rotavirus diarrhea group, all children had no diarrhea at the
+3rd day of intervention. The duration of diarrhea varied from 24
+to 72 h (median 72 h). Speciﬁc clinical data about dehydration,
+fever and diarrhea duration in children with rotavirus diarrhea
+is included in Supplementary Table 1. To eliminate the potential
+biases associated with the intestinal microbiota during infancy,
+we selected children who were normally delivered, breastfed
+for at least 6 months, and have not received antibiotic therapy
+since birth. From each child enrolled, we collected samples at
+ﬁve diﬀerent time points, namely, at 0, 3, 5, 10, and 30 days,
+for a total of 80 diﬀerent samples. The sample at day 0 was
+taken before probiotic treatment in the group of children with
+infectious diarrhea. All children belonging to the infectious
+diarrhea group received oral lyophilized S. boulardii CNCM
+I-745 (250 mg twice daily, Reﬂor, Biocodex) for the ﬁrst 5 days,
+speciﬁcally days 3 and 5 (day 0 was with no intervention), in
+addition to ORS and/or intravenous therapy. These children
+were diagnosed to have a rotavirus infection with a rapid
+immunoassay test. Rehydration and electrolyte replacement were
+done using hypoosmolar ORS (glucose 20 g; sodium 60 mmol/L;
+potassium 20 mmol/L; bicarbonate 30 mmol/L). The frequency
+and consistency of the stools were recorded. The duration of
+diarrhea was deﬁned as the time in hours from admission until
+the cessation of diarrhea, which, in turn, was deﬁned as the ﬁrst
+normal stool according to the Bristol score (a score under ﬁve is
+described as a normalization of stool).
+The Eskisehir Osmangazi University Local Ethics Committee
+from Turkey reviewed and approved the protocol. Prior to the
+collection of the children’s stool and data, consent was given
+by their parents. This study was registered in ClinicalTrials.gov
+with the accession code NCT01927094. All samples were stored
+at -80◦C until the DNA extraction. All the fecal samples
+were transferred into sterile Falcon tubes and stored at -
+80◦C until further steps. The fecal samples were weighed
+to extract the total DNA using the QIAamp DNA Stool
+Mini Kit (Qiagen, Hilden, Germany), in accordance with the
+manufacturer’s instructions. The extracted DNA was shipped
+under cold shipment to FISABIO in Valencia, Spain for further
+analysis. More information about the participants is available in
+Supplementary Table 2.
+2.2. 16S rRNA Gene Sequencing and Read
+Processing
+A region of the 16S rRNA gene (V4) was selected to be studied.
+Sequencing was performed on the Illumina MiSeq platform
+according to the manufacturer’s speciﬁcations. Sequencing was
+conducted at the Sequencing and Bioinformatics Service of
+FISABIO Foundation. 16S rRNA gene reads were quality
+ﬁltered with PRINSEQ, lite version (Schmieder and Edwards,
+2011). Reads with a low score (<20) and short read lengths
+(<50 nucleotides) were removed. Chimeric sequence ﬁltering
+and taxonomic assignment of the 16S rRNA sequences were
+performed with the ChimeraSlayer algorithm and open-reference
+workﬂow, respectively, in QIIME (v 1.8) (Caporaso et al.,
+2010), with default parameter values. Operational taxonomic
+units (OTUs) were clustered at 97% similarity with the Uclust
+algorithm. The most representative sequences for each OTU were
+compared with those in the Greengenes database (representative
+sequences aligned at 97% similarity, August 2013). Only those
+annotations that had more than 0.6 in their bootstrap conﬁdence
+estimation values were accepted for further analyses.
+2.3. Diversity and Functional Analyses
+Alpha diversity estimators were computed with R programming
+language using the vegan package (v. 2.4-3) (Oksanen et al.,
+2017). We applied two ﬁlters on the OTU table that resulted
+from QIIME: any OTU that had less than 80 counts in total
+was deleted, and any OTU that had a count of 0 in more than
+65 samples was excluded from the analysis. Shannon entropy
+and Pielou evenness were computed. Then, the true diversity
+index based on Shannon entropy was also computed with the
+exponentiation of the Shannon values. This index has been
+proven as a true (and linear) estimator of the diversity of a
+population (Jost, 2007). While having twice of Shannon entropy
+in one sample with respect to another does not imply that we have
+double of diversity because of the non-linear nature of this index,
+the Shannon true diversity index is linear and relies on the term
+of eﬀective species. Diﬀerences in alpha diversities were studied
+by performing permutations over the Wilcoxon signed-rank test
+with a signiﬁcance level of 0.05, and it was calculated using the
+coin package in R (Hothorn et al., 2008). In the case of multiple
+comparisons, we applied false discovery rate correction to avoid
+type I errors.
+For beta diversity, canonical correspondence analysis (CCA)
+was performed by using the vegan package in R programming
+language. We applied the function ADONIS within the vegan
+package, a multivariate ANOVA based on dissimilarity tests,
+to assess the variables that were statistically signiﬁcant in the
+separation of the samples in two dimensions. We used the linear
+Frontiers in Microbiology | www.frontiersin.org
+3
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+discriminant analysis (LDA) eﬀect size (LEfSe) algorithm from
+the Galaxy software package of Huttenhower lab to identify the
+speciﬁc taxa that served as the biomarkers for patients with
+probiotic treatment and the controls (Segata et al., 2011). LEfSe
+ﬁrst determines the signiﬁcant diﬀerences in taxa composition
+between groups by using non-parametric factorial Kruskal-
+Wallis sum-rank test. Then, LEfSe uses LDA to estimate the
+eﬀect size of each diﬀerentially abundant feature. We ﬁxed a cut-
+oﬀalpha value of <0.05 for the Kruskal-Wallis test, and for the
+bacterial taxa that had signiﬁcant diﬀerences between samples,
+we ﬁxed a threshold of 4.0 in the logarithmic LDA score to
+consider it a discriminative feature. We split the dataset into two
+subsets: the ﬁrst one containing the days 0, 3, and 5, and the
+second one grouping days 10 and 30. This separation was made
+to have, on one hand, the time points of the probiotic treatment
+and, on the other hand, the time points without the probiotic
+treatment. We performed both CCA and LEfSe analysis on the
+resulting subsets.
+For functional content prediction, we used the PICRUSt
+software from Huttenhower laboratory (Langille et al., 2013), in
+which we feed the software with the taxonomical information
+of the 16S ribosomal gene, and then it extracts the metabolic
+information of the community. We used default parameters and
+the KEGG database for inference (Kanehisa, 2000; Kanehisa et al.,
+2015, 2016). We extracted the information at levels 2 and 3 in
+KEGG hierarchies, as we have more speciﬁcity when we increase
+the level of hierarchy. To assess the diﬀerences in function
+abundances, we applied the Kruskal-Wallist test, with the α value
+ﬁxed at 0.01.
+2.4. Temporal Analysis and Stability
+Temporal analysis was conducted according to Martí et al. (2017)
+to measure the stability, over time, of all the individuals. We use
+the Taylor’s Law, an ecological empirical law which is a power law
+dependence between mean relative abundance xi and dispersion
+σi (σi = V·xβ
+i ). In this model, we have two free parameters, V and
+β. Parameter V is a direct measure of the amplitude of temporal
+ﬂuctuations and, thus, the most informative parameter in this
+case. β is the scaling factor, and it is always less than 1, implying
+that the most abundant taxa are less susceptible to perturbations
+than the less-abundant ones. The importance of this method
+is that it captures relevant temporal information about the
+microbial communities, which can be related, in the end, to the
+health status of the host. Taylor’s parameters were computed and
+standardized in the same manner as in the original work (in
+standard deviation units), with those samples of children with
+acute infectious diarrhea compared with the ones of the healthy
+individuals in the study. We also computed the rank stability of
+all samples, which shows time diﬀerences per participant. For
+this purpose, we calculated the rank stability index (RSI), which
+shows the temporal stability of a certain taxon, by considering
+its rank in the total population. RSI is calculated as 1 minus the
+quotient of the true rank hops, divided by the maximum possible
+rank hops, all powered to an arbitrary p power:
+RSI =
+
+1 −
+true rank hops
+possible rank hops
+p
+(1)
+We also calculated the rank variability, which is the absolute
+diﬀerence between each taxon rank and the overall rank, as well
+as the diﬀerences variability, which is the absolute diﬀerence
+between each taxon rank at a given time and the value it had in
+the previous time step, averaged over all taxa present.
+2.5. Data Accession Number
+The microbiome data from this study are available at NCBI SRA
+Database under Bioproject ID PRJNA416445. Information about
+the participants of the study can be found Additional File 1.
+RESULTS
+Bacterial Composition and Diversity
+A total of 3,664,535 sequences of 16S rRNA gene amplicons
+from 80 samples passed the quality ﬁlters and were assigned to
+a taxonomy with QIIME. Each sample had an average number of
+45,806 sequences with an standard deviation of 12,598 sequences.
+The 25 most abundant taxa are illustrated in Figure 1, and the
+remaining taxa were joined into a single group named as Other.
+The most abundant genus is Bacteroides (13.14%), followed
+by Faecalibacterium (9.6%) and two unclassiﬁed genera from
+the Ruminococcaceae (9.35%) and Enterobacteriaceae (8.02%)
+families respectively. The abundance proﬁle of the children has
+a high heterogeneity. We can see that the Bacteroides genus
+is most abundant in patients C1, H1, H4, or H5, whereas
+Faecalibacterium is in higher proportions in patients C2, C8, C10,
+or H5, depending on the day we made the observation. C5 is
+dominated by the unclassiﬁed genera from Enterobacteriaceae,
+as this is the sample with the clearest dominance of one OTU
+over the others, in comparison with the rest of the participants.
+We can also observe that the Other group ﬂuctuates at a
+higher degree in the unhealthy group. From the analysis of
+patient variables from children with rotavirus infection (available
+in Supplementary Table 1), we did not ﬁnd any statistical
+diﬀerence neither grouping by dehydration nor by diarrhea
+duration (p-value >0.05, t-test).
+The analysis of alpha diversity with the Shannon diversity
+index, which compared both health states and considered all
+times together, reveals that healthy and non-healthy children
+are statistically diﬀerent in the Wilcoxon test (p-value = 6.3e-
+05), with a higher diversity in the former group than in the
+latter (see Figure 2). When we compare the diﬀerences between
+states, but per time, we ﬁnd statistical diﬀerences at day 0
+(p-value = 0.02), day 3 (p-value = 0.034) and day 5 (p-value =
+0.011), the period that corresponds to the treatment. On the
+contrary, we did not ﬁnd any statistical signiﬁcance at day 10
+(p-value = 0.42) nor day 30 (p-value = 0.21), which corresponds
+to the period after the treatment, when all children had healthy
+conditions. This increase in diversity is correlated with the health
+status recovery of the children. All the tests were also applied
+to Pielou’s Evenness index (Supplementary Figure 1), and the
+results were almost exactly the same except that no signiﬁcant
+diﬀerence was observed between the healthy and sick states at
+day 3 (p-value = 0.093).
+We performed a Canonical Correspondence Analysis (CCA)
+to the OTU community matrix, with an ADONIS test to assess
+Frontiers in Microbiology | www.frontiersin.org
+4
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+FIGURE 1 | Relative abundances of gut microbiota in every individual. Taxonomic relative abundances at genus level of each individual, separated per day of
+sampling. Healthy children (H1–H6) are marked in green, and cases (C1–C10) are marked in red. Only the 25 most abundant OTUs overall were represented. The less
+abundant OTUs were joined into the Others group.
+FIGURE 2 | Shannon diversity index per health status and per day Boxplots showing the Shannon diversity index between (A) both health status with all times
+together; and (B), separated by time of sampling. Color blue represents healthy children, and red color represents children with acute diarrhea. P-value of Wilcoxon
+test is showed in the upper part of each comparison in both parts of the Figure, and the different health states are represented by H and C letters in part B for healthy
+and cases respectively. All data points were represented using the function jitter in R.
+the variables that were separating the samples with statistical
+signiﬁcance. Not only we found statistical diﬀerences between the
+individuals of the experiment (p-value = 0.001), but also between
+the health status of the host (p-value = 0.009). Both variables
+separate the samples in two directions (see Figure 3). As can
+be observed, a clear separation exists between the community
+matrix belonging to healthy children compared with the children
+suﬀering from the rotavirus infection. By contrast, more
+overlapping is present between individuals when this variable
+is observed in the CCA (see Supplementary Figure 2). This
+result points to a diﬀerential composition in the communities
+depending on the health state. To determine whether this
+separation between health status was consistent with the results
+of alpha diversity, we applied CCA and the ADONIS test to the
+dataset split in two diﬀerent subsets: the ﬁrst one corresponding
+to days 0 through 5, and the second one corresponding to
+days 10 and 30. Running the ADONIS test on these two
+subsets revealed statistical diﬀerences in the status of the ﬁrst
+group (p-value = 0.019), but not in the second group (p-
+value = 0.289). In the ﬁrst case, the region of the healthy
+children is more constrained and centered than that of the
+children with acute diarrhea; in the second case, both regions
+overlap their area (see Figures 3B,C). These results reinforce
+the results obtained by alpha diversity, highlighting that we
+have diﬀerences in the ﬁrst three time points, but not in the
+last two.
+Frontiers in Microbiology | www.frontiersin.org
+5
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+FIGURE 3 | Comparison of microbiotas between healthy children and children with acute diarrhea. Three different representation of samples with Canonical
+Correspondence Analysis. In (A) is the global differences between both health status, Healthy (H, in red), and Cases (C, in green) for all times; in (B) we represented
+the CCA for the individuals from time 0 to 5, and in (C) it is represented the CCA of samples belonging to days 10 and 30. Both health status were circled in their
+respective colors with no error, and with 95% of Conﬁdence Level in all Figure parts.
+Taxonomic and Functional Enrichment
+To determine which taxa were responsible for the diﬀerences
+between host status, we performed the LEfSe analysis test
+in the two aforementioned subsets (days 0–5, and days
+10–30), which is represented in Figures 4A,B. We found
+that in the case of the subset from days 0, 3, and 5,
+there was an enrichment of bacteria belonging to phylum
+Proteobacteria, speciﬁcally the Gammaproteobacteria class. On
+the other hand, only phylum Firmicutes was abundant in
+the healthy children, in which we can ﬁnd genera, such as
+Blautia, Ruminococcus, or other bacteria belonging to the
+Lachnospiraceae and Ruminococcaceae families. By contrast, the
+analysis of the second subset showed that only the genus
+Blautia was abundant in the healthy children. The results from
+PICRUSt revealed a higher stability in functions, in general,
+with respect to the variability seen at the taxonomic level (see
+Supplementary Figure 3). The Kruskal-Wallis test showed the
+statistically signiﬁcant diﬀerences in the metabolism of other
+amino acids at level 2 in KEGG hierarchy in the comparison of
+both health states. The same test was also signiﬁcant for level
+3 in KEGG, as we observed diﬀerences between four groups:
+the pentose phosphate pathway, the biosynthesis of ansamycins,
+ether lipid metabolism, and other ion-coupled transporters (see
+Figure 4C).
+Dynamic Analysis of the Microbiota
+A temporal analysis was conducted to evaluate the temporal
+stability of the individuals over time. Of the two free parameters
+of the Taylor’s Law ﬁt, β was always less than 1 in all individuals,
+and we found pronounced diﬀerences between the values of
+the variability V (see Supplementary Table 3). Figure 5 shows
+the standardization of the parameters concerning the healthy
+group. We can observe that all children suﬀering from acute
+diarrhea (except child C8) are categorized under the healthy
+zone, meaning they have a higher temporal variability than the
+healthy individuals of the study. The lower stability of children
+with rotavirus was in agreement with the other results from this
+section, as their microbiomes have been suﬀering changes in time
+in respect to the healthy children, which have been stable through
+the time of sampling. All the children who are outside of the
+Frontiers in Microbiology | www.frontiersin.org
+6
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+FIGURE 4 | Taxonomic biomarkers and functions enriched. Linear discriminative analysis (LDA) effect size (LEfSe) analysis between the healthy children (in red) and
+case children (in green), in (A) from days 0 to 5, and in (B) from days 10 to 30. LDA scores (log 10) for the most prevalent taxa in controls are represented on the
+negative side, whereas LDA-positive scores indicate enriched taxa in cases. In (C) are represented the KEGG (Kyoto Encyclopedia of Genes and Genomes) pathways
+at level 3 of hierarchy validated by Kruskal-Wallis test.
+FIGURE 5 | Taylor’s Law Parameter Space. The inner darker-blue circle corresponds to the 68% CL region of healthy children in the Taylor’s parameter space, while
+the bigger light-blue circle delimits the 98% CL region. In the Figure are represented both the healthy children (red points with error bars) and children with acute
+diarrhea (green points with error bars). Taylor’s parameters were standardized as mentioned in Material and Methods, and they have standard deviation units.
+Frontiers in Microbiology | www.frontiersin.org
+7
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+healthy zone are, at least, two σ units distant from the center in
+terms of V.
+We also analyzed the rank stability of the individuals. We
+represent the two samples with the least and the greatest
+variability in the temporal analysis, which are H3 (a healthy child)
+and C6 (a non-healthy child), respectively (see Figure 6). We can
+see that the RSI has lower values in the non-healthy individual
+than in the healthy one. H3 has 33 taxa out of a total of 50,
+with an RSI above 70%, whereas C6 has only 8 taxa above that
+threshold. Some taxa also appear to be very stable despite their
+low proportions in the last 20 positions. An example is the case
+of genus Actinomyces, which appears to be very stable at low
+proportions (around rank 40) in four of the six healthy children.
+There are other genera of interest, such as Collinsela, which also
+seems to be very stable in healthy children, but it alternates cases
+where it has low proportions with others in which is highly
+abundant in the aﬀected children. Lastly, the case of Blautia is
+interesting; it is very stable and has high proportions in all healthy
+children, but it is absent in some of the children infected with
+the rotavirus and is found in low proportions in other cases. This
+ﬁnding is consistent with the LeFSe results. The general tendency
+of these less-abundant taxa is to belong to the phylum Firmicutes.
+Finally, as seen in Figure 6, we can observe that both the rank
+variability and the diﬀerences variability are signiﬁcantly lower
+in H3 than in C6, an indicator that is also present in all healthy
+children compared with the non-healthy group (all individuals
+are shown in Supplementary File 1).
+3. DISCUSSION
+The heterogeneity observed in the abundance proﬁle of every
+individual in this study is expected because of the inherent
+diversity that has been proven to exist in the human gut
+microbiota (Lozupone et al., 2012). Several factors can cause
+this heterogeneity, such as host genetics (Goodrich et al., 2014),
+microbial assembly (Costello et al., 2012; Franzenburg et al.,
+2013) and type of birth (Rodríguez et al., 2015), although the
+latter is controversial (Falony et al., 2016). Nevertheless, the most
+abundant taxa belonged to Firmicutes and Bacteroidetes, which
+are the dominant phyla in adult microbiota, in accordance with
+the literature (Turnbaugh et al., 2009; Claesson et al., 2011).
+Speciﬁcally, the ﬁnding that Bacteroides is one of the most
+abundant genera is also consistent with literature results (The
+et al., 2017). One interesting observation that can be made is
+the higher proportion and variability of the Others group in the
+children with acute diarrhea. This ﬁnding reveals two interesting
+features of the experiment: ﬁrst, these unhealthy microbiotas
+showed a higher instability than the healthy subset, and second,
+they had a higher representation of some taxa that were rather a
+minority in healthy individuals.
+The results of the alpha diversity analysis showed a transition
+from a low-diversity to a high-diversity condition in the children
+with acute diarrhea. The relationship between low diversity and
+diseases in the gut microbiota has been extensively demonstrated
+(Lozupone et al., 2012), and this seems to be in agreement with
+the results of our experiment. Overall, the low alpha diversity
+at diarrhea stages and its recovery to a normal diversity is in
+accordance with the ﬁndings of previous works (Pop et al., 2014;
+Subramanian et al., 2014; Chen et al., 2017), but it is important to
+remark that some of these studies were developed in low income
+countries and malnourished infants. Moreover, the beta diversity
+analysis with the CCA and the ADONIS test revealed that we
+had diﬀerent communities at the individual and condition levels.
+This means that not only were the microbiotas of the unhealthy
+children less diverse, but they had a diﬀerent conﬁguration
+of microbes, compared with those of the healthy children. In
+agreement with the alpha diversity results, these diﬀerences
+seemed to appear only in the ﬁrst time points of the experiment
+during the treatment. At days 10 and 30, the statistical diﬀerences
+disappeared, which means that the communities in both groups
+of children were similar. Diﬀerences found at the individual
+level are also in agreement with the heterogeneity observed in
+Figure 1.
+From the temporal analysis, a very good distinction between
+both groups of children was found in terms of population
+dynamics. Temporal stability has been proved to be related to the
+health status of the host (Martí et al., 2017), and in this study, we
+observed that almost every child infected with the rotavirus had a
+lower temporal stability than the healthy children. It is important
+to note that a higher temporal variability is, to a certain extent,
+caused by the transition from the diseased state to a healthy one.
+This transition is marked by changes in the bacteria that live
+in the gut, along with their relative abundance. Nevertheless, a
+high temporal variability during the diarrhea process is expected
+because of diﬀerent reasons, such as the rapid succession of
+microbes resulting from continuous and rapid fecal movement.
+The reason why participant C8 remained in the stable part in
+Figure 5 is intriguing, but it is worth noting that C8 is the child
+that had the fastest recovery compared to the other patients.
+He was the only aﬀected child in which diarrhea disappeared
+24 h later. With this quick recovery, C8 microbiome would
+have been stabilized earlier than the other aﬀected children. The
+rank stability plots presented some interesting trends, as well,
+because of the presence of some groups of bacterial genera that
+are stable even at a low abundance. The case of Actinomyces
+is particularly intriguing, as it seems to inhabit these low-
+abundance regimes in a very stable manner (Martí et al., 2017) in
+the healthy children. Some species from this genus are observed
+to be in higher proportions in other cases of diarrhea (The
+et al., 2017). Because of their opportunistic nature, limiting
+these species to live in low abundance could be beneﬁcial for
+the host.
+The microbial communities of children suﬀering from
+diarrhea are less mature than those of healthy children
+(Subramanian et al., 2014). It could be that some of the
+diﬀerences we see might be due for this eﬀect, along to the
+aforementioned microbial assembly processes that occurs in the
+ﬁrst stages of the human life. Suﬀering diseases as the acute
+infectious diarrhea could delay the maturation to the adult
+microbiota (David et al., 2015). This high variability in non-
+healthy children agrees with the other results of this study, as
+it seems that their microbiotas improve from a perturbed state
+to a healthy one with time. This is one of the most important
+points of this experiment, as it proves the power of time series
+analysis in microbiota, especially in cases in which a disease is
+being examined.
+Frontiers in Microbiology | www.frontiersin.org
+8
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+FIGURE 6 | Rank Stability Matrix. Rank Stability Matrix for the most variable subject (H3, A), and the least variable subject (C6, B). In both plots are represented the
+50 most abundant genera of each case, and the numbers inside each cell represents the ranking of that speciﬁc genus at that speciﬁc time point. The color inside
+each cell ranges from light-yellow for the rank 1, to black, representing very low ranks. At the right in each case it is shown the Rank Stability Index, and below them it
+is represented the Rank Variability (in red) and the Differences Variability (in blue).
+As we stated, the microbiota has a diﬀerent conﬁguration
+of microbes in both health states, and the diﬀerences between
+them could be of clinical interest. LEfSe analysis showed a
+clear diﬀerentiation in terms of the phyla enriched, with a high
+amount of Proteobacteria observed during the ﬁrst few days in
+the children suﬀering from acute diarrhea. This result agrees
+with those of extant literature, as an enrichment of bacteria,
+such as Escherichia coli (a Gammaproteobacteria), in children
+suﬀering diarrhea was found (Kotloﬀet al., 2013; Pop et al.,
+2014; Chen et al., 2017). On the contrary, Firmicutes phylum
+is usually lowered in children with diarrhea, so an enrichment
+of this group was expected in healthy children (Monira et al.,
+2013). Compared to other dysbiosis is interesting to notice that
+patients suﬀering from irritable bowel syndrome had an elevated
+abundance of Firmicutes, including Ruminococcus spp., members
+of genera Clostridium and Staphylococcus (Jeﬀery et al., 2011),
+what seems to be contrary to our results. However, it has also
+been observed that there might be a direct relationship between
+having an acute gastroenteritis, and the start of exacerbation of
+irritable bowel diseases (Rodríguez et al., 2006). Nevertheless,
+irritable bowel diseases are complex conditions, and most surely
+the microbiota is not the unique factor that can start or
+enhance patient’s symptoms. Interestingly, we did not see much
+diﬀerences regarding functions enriched. The most intriguing
+case is the pathway involved in the biosynthesis of ansamycins, a
+secondary bacterial metabolite that has antimicrobial properties
+against a broad range of bacteria (Binda et al., 1971). Some
+analogs of ansamycins interact with Hsp90, which helps inhibit
+the severity of the infection by rotavirus (Dutta et al., 2009).
+Although being only an in vitro work, this could be of future
+interest when the study is expanded to new directions.
+In summary, this is the ﬁrst study characterizing the
+microbiota of children with acute infectious diarrhea in time,
+caused by a rotavirus, where we have shown that microbiota
+composition seems to correlate with clinical improvement.
+Children stopped experiencing most of the symptoms 3
+days after probiotic administration, and alongside, microbiota
+recovered both its diversity and healthy conﬁguration within
+this period. Therefore, gut microbiota seems to play an essential
+role in diarrhea-related processes. Whether gut microbiota
+is an active actor or a mere spectator should be addressed
+in future studies with other experimental designs, and an
+in-depth study of the functions that carry its diﬀerent
+components.
+Frontiers in Microbiology | www.frontiersin.org
+9
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+AUTHOR CONTRIBUTIONS
+Conception and design: ED and AM. Enrollment, patient follow-
+up, data recording: AdK, ND, OM, AY, SG, ZK, OT, MK, OY, MO,
+ME. Data analysis: DM-M. Interpretation of data: DM-M, AM,
+ED. Draft writing: DM-M, AM, ED. Draft Revision: ED, DM-M,
+AtK, JM, CG, YV, AM. Approval of the submitted version: All
+authors.
+FUNDING
+This
+work
+was
+supported
+by
+grants
+to
+AM
+from
+the
+Spanish
+Ministry
+of
+Science
+and
+Competitivity
+(projects
+SAF
+2012-31187,
+SAF2013-49788-EXP,
+SAF2015-65878-
+R), Carlos III Institute of Health (projects PIE14/00045
+and
+AC15/00022),
+Generalitat
+Valenciana
+(project
+PrometeoII/2014/065)
+and
+co-ﬁnanced
+by
+FEDER.
+This
+work was also supported by the Ministry of Economy
+and
+Competitiveness
+grant
+FPI
+BES-2013-062767
+to
+DM-M.
+ACKNOWLEDGMENTS
+We would like to thank the always helpful and accurate
+comments from Ximo Pechuan, and the help provided by Daniel
+Biro, Konstantin Rumyantsev, and Aviv Bergman at Albert
+Einstein College of Medicine, in New York City. Also, we would
+like to thank the reviewers for their helpful remarks and insights
+about this work.
+SUPPLEMENTARY MATERIAL
+The Supplementary Material for this article can be found
+online
+at:
+https://www.frontiersin.org/articles/10.3389/fmicb.
+2018.01230/full#supplementary-material
+Supplementary Figure 1 | Boxplots showing the Evenness diversity index
+between both health status with all times together; and separated by time of
+sampling. Color blue represents healthy children, and red color represents children
+with acute diarrhea.
+Supplementary Figure 2 | Canonical Correspondence Analysis of all individuals
+and times, separated by different child.
+Supplementary Figure 3 | Relative abundances of the KEGG pathways inferred
+by PICRUSt at level 2 of the hierarchy.
+Supplementary Table 1 | Excel ﬁle with clinical data. Dehydration, fever and
+diarrhea duration are the variables included.
+Supplementary Table 2 | Excel ﬁle with subject information of this study. It is
+speciﬁed the hospital where the subjects were treated, the amount of DNA
+extracted, and the ratios of purity.
+Supplementary Table 3 | Excel ﬁle which summarizes the values of Taylor’s
+parameters V and β. In the ﬁle you can see information about each individual of
+this study: number of OTUs, times, mean of absolute frequencies, standard
+deviation of absolute frequencies, weighted values for V, β and their errors, and
+weighted values of the standardization of both parameters with their respective
+errors.
+Supplementary File 1 | Rank Stability matrices for every subject enrolled in the
+study. In each Figure, are represented the 50 most abundant genera of each
+subject, and the numbers inside each cell represents the ranking of that speciﬁc
+genus at that speciﬁc time point. The color inside each cell ranges from
+light-yellow for the rank 1 to black, representing very low ranks. At the right in
+each case it is shown the Rank Stability Index, and below them it is represented
+the Rank Variability (in red) and the Differences Variability (in blue).
+REFERENCES
+Binda, G., Domenichini, E., Gottardi, A., Orlandi, B., Ortelli, E., Pacini, B., et al.
+(1971). Rifampicin, a general review. Arzneimittel-forschung 21:1907.
+Caporaso,
+J.
+G.,
+Kuczynski,
+J.,
+Stombaugh,
+J.,
+Bittinger,
+K.,
+Bushman,
+F. D., Costello, E. K., et al. (2010).
+QIIME allows analysis of high-
+throughput community sequencing data.
+Nat. Methods 7, 335–336.
+doi: 10.1038/nmeth.f.303
+Chen, S.-Y., Tsai, C.-N., Lee, Y.-S., Lin, C.-Y., Huang, K.-Y., Chao, H.-C., et al..
+(2017). Intestinal microbiome in children with severe and complicated acute
+viral gastroenteritis. Sci. Rep. 7:46130. doi: 10.1038/srep46130
+Claesson, M. J., Cusack, S., O’Sullivan, O., Greene-Diniz, R., de Weerd, H.,
+Flannery, E., et al. (2011). Composition, variability, and temporal stability of
+the intestinal microbiota of the elderly. Proc. Natl. Acad. Sci. U.S.A. 108(Suppl.
+1), 4586–4591. doi: 10.1073/pnas.1000097107
+Costello, E. K., Stagaman, K., Dethlefsen, L., Bohannan, B. J. M., and Relman, D. A.
+(2012). The application of ecological theory toward an understanding of the
+human microbiome. Science 336, 1255–1262. doi: 10.1126/science.1224203
+David, L. A., Maurice, C. F., Carmody, R. N., Gootenberg, D. B., Button, J. E.,
+Wolfe, B. E., et al.. (2014). Diet rapidly and reproducibly alters the human
+gut microbiome. Nature 505, 559–563. doi: 10.1038/nature12820
+David, L. A., Weil, A., Ryan, E. T., Calderwood, S. B., Harris, J. B., Chowdhury,
+F., et al. (2015). Gut microbial succession follows acute secretory diarrhea in
+humans. mBio 6:e00381-15. doi: 10.1128/mBio.00381-15
+Dethlefsen, L., and Relman, D. A. (2011).
+Incomplete recovery and
+individualized responses of the human distal gut microbiota to repeated
+antibiotic perturbation. Proc. Natl. Acad. Sci. U.S.A 108(Suppl), 4554–4561.
+doi: 10.1073/pnas.1000087107
+Dinleyici, E., Kara, A., Dalgic, N., Kurugol, Z., Arica, V., Metin, O., et al. (2015).
+Saccharomyces boulardiiCNCM i-745 reduces the duration of diarrhoea, length
+of emergency care and hospital stay in children with acute diarrhoea. Benef.
+Microbes 6, 415–421. doi: 10.3920/BM2014.0086
+Dinleyici, E. C., Eren, M., Ozen, M., Yargic, Z. A., and Vandenplas,
+Y. (2012).
+Eﬀectiveness and safety of Saccharomyces boulardii for
+acute
+infectious
+diarrhea.
+Expert
+Opin.
+Biol.
+Ther.
+12,
+395–410.
+doi: 10.1517/14712598.2012.664129
+Dinleyici, E. C., Kara, A., Ozen, M., and Vandenplas, Y. (2014). Saccharomyces
+boulardii CNCM I-745 in diﬀerent clinical conditions. Expert Opin. Biol. Ther.
+14, 1593–1609. doi: 10.1517/14712598.2014.937419
+Dinleyici, E. C., and Vandenplas, Y. (2014).
+Lactobacillus reuteri DSM 17938
+eﬀectively reduces the duration of acute diarrhoea in hospitalised children. Acta
+Paediatr. 103:e300-5. doi: 10.1111/apa.12617
+Durbán, A., Abellán, J. J., Jiménez-Hernández, N., Artacho, A., Garrigues, V.,
+Ortiz, V., et al. (2013).
+Instability of the faecal microbiota in diarrhoea-
+predominant irritable bowel syndrome. FEMS Microbiol. Ecol. 86, 581–589.
+doi: 10.1111/1574-6941.12184
+Dutta,
+D.,
+Bagchi,
+P.,
+Chatterjee,
+A.,
+Nayak,
+M.
+K.,
+Mukherjee,
+A.,
+Chattopadhyay, S., et al. (2009).
+The molecular chaperone heat shock
+protein-90 positively regulates rotavirus infectionx.
+Virology 391, 325–333.
+doi: 10.1016/j.virol.2009.06.044
+Falony, G., Joossens, M., Vieira-Silva, S., Wang, J., Darzi, Y., Faust, K., et al. (2016).
+Population-level analysis of gut microbiome variation. Science 352, 560–564.
+doi: 10.1126/science.aad3503
+Ferrer, M., Ruiz, A., Lanza, F., Haange, S.-B., Oberbach, A., Till, H., et al.
+(2013).
+Microbiota from the distal guts of lean and obese adolescents
+exhibit partial functional redundancy besides clear diﬀerences in community
+structure.
+Environ. Microbiol. 15, 211–226. doi: 10.1111/j.1462-2920.2012.
+02845.x
+Foster, K. R., Schluter, J., Coyte, K. Z., and Rakoﬀ-Nahoum, S. (2017).
+The
+evolution of the host microbiome as an ecosystem on a leash.
+Nature 548,
+43–51. doi: 10.1038/nature23292
+Franzenburg, S., Fraune, S., Altrock, P. M., Künzel, S., Baines, J. F., Traulsen, A., et
+al. (2013). Bacterial colonization of Hydra hatchlings follows a robust temporal
+pattern. ISME J. 7, 781–90. doi: 10.1038/ismej.2012.156
+Frontiers in Microbiology | www.frontiersin.org
+10
+June 2018 | Volume 9 | Article 1230
+Dinleyici et al.
+Microbiota in Acute Diarrhea
+Gareau, M. G., Sherman, P. M., and Walker, W. A. (2010). Probiotics and the gut
+microbiota in intestinal health and disease. Nat. Rev. Gastroenterol. Hepatol. 7,
+503–514. doi: 10.1038/nrgastro.2010.117
+Goodrich, J. K., Waters, J. L., Poole, A. C., Sutter, J. L., Koren, O., Blekhman, R.,
+et al.. (2014). Human genetics shape the gut microbiome. Cell 159, 789–799.
+doi: 10.1016/j.cell.2014.09.053
+Guarino, A., Ashkenazi, S., Gendrel, D., Lo Vecchio, A., Shamir, R., and
+Szajewska, H. (2014).
+European society for pediatric gastroenterology,
+hepatology, and nutrition/European Society for pediatric infectious diseases
+evidence-based guidelines for the management of acute gastroenteritis
+in children in Europe.
+J. Pediatr. Gastroenterol. Nutr. 59, 132–152.
+doi: 10.1097/MPG.0000000000000375
+Hothorn, T., Hornik, K., van de Wiel, M. A., and Zeileis, A. (2008). Implementing
+a class of permutation tests: the coin package.
+J. Stat. Soft. 28, 1–23.
+doi: 10.18637/jss.v028.i08
+Jeﬀery, I. B., O’Toole, P. W., Öhman, L., Claesson, M. J., Deane, J., Quigley,
+E. M. M., et al. (2011).
+An irritable bowel syndrome subtype deﬁned
+by species-speciﬁc alterations in faecal microbiota.
+Gut 61, 997–1006.
+doi: 10.1136/gutjnl-2011-301501
+Jernberg, C., Löfmark, S., Edlund, C., and Jansson, J. K. (2007).
+Long-
+term ecological impacts of antibiotic administration on the human intestinal
+microbiota. ISME J. 1, 56–66. doi: 10.1038/ismej.2007.3
+Jost, L. (2007). Partitioning diversity into independent alpha and beta components.
+Ecology 88, 2427–2439. doi: 10.1890/06-1736.1
+Kanehisa, M. (2000). KEGG: kyoto encyclopedia of genes and genomes. Nucleic
+Acids Res. 28, 27–30. doi: 10.1093/nar/28.1.27
+Kanehisa, M., Furumichi, M., Tanabe, M., Sato, Y., and Morishima, K. (2016).
+KEGG: new perspectives on genomes, pathways, diseases and drugs. Nucleic
+Acids Res. 45, D353–D361. doi: 10.1093/nar/gkw1092
+Kanehisa, M., Sato, Y., Kawashima, M., Furumichi, M., and Tanabe, M. (2015).
+KEGG as a reference resource for gene and protein annotation. Nucleic Acids
+Res. 44, D457–D462. doi: 10.1093/nar/gkv1070
+Kotloﬀ, K. L., Nataro, J. P., Blackwelder, W. C., Nasrin, D., Farag, T. H.,
+Panchalingam, S., et al. (2013).
+Burden and aetiology of diarrhoeal disease
+in infants and young children in developing countries (the Global Enteric
+Multicenter Study, GEMS): a prospective, case-control study.
+Lancet 382,
+209–222. doi: 10.1016/S0140-6736(13)60844-2
+Langille, M. G. I., Zaneveld, J., Caporaso, J. G., McDonald, D., Knights, D., Reyes,
+J. A., et al. (2013). Predictive functional proﬁling of microbial communities
+using 16s rRNA marker gene sequences.
+Nat. Biotechnol. 31, 814–821.
+doi: 10.1038/nbt.2676
+Lozupone, C. A., Stombaugh, J. I., Gordon, J. I., Jansson, J. K., and Knight, R.
+(2012). Diversity, stability and resilience of the human gut microbiota. Nature
+489, 220–230. doi: 10.1038/nature11550
+Martí, J. M., Martínez-Martínez, D., Rubio, T., Gracia, C., Peña, M., Latorre, A., et
+al. (2017). Health and disease imprinted in the time variability of the human
+microbiome. mSystems 2:e00144-16. doi: 10.1128/mSystems.00144-16
+Monira, S., Nakamura, S., Gotoh, K., Izutsu, K., Watanabe, H., Alam, N. H., et al.
+(2013). Metagenomic proﬁle of gut microbiota in children during cholera and
+recovery. Gut Pathog. 5:1. doi: 10.1186/1757-4749-5-1
+Morgan, X. C., Tickle, T. L., Sokol, H., Gevers, D., Devaney, K. L., Ward, D. V.,
+et al. (2012). Dysfunction of the intestinal microbiome in inﬂammatory bowel
+disease and treatment. Genome Biol. 13:R79. doi: 10.1186/gb-2012-13-9-r79
+Moya, A., and Ferrer, M. (2016).
+Functional redundancy-induced stability of
+gut microbiota subjected to disturbance.
+Trends Microbiol. 24, 402–413.
+doi: 10.1016/j.tim.2016.02.002
+Oksanen, J., Blanchet, F. G., Friendly, M., Kindt, R., Legendre, P., McGlinn, D., et
+al. (2017). vegan: Community Ecology Package. R package version 2.4-3. Oulu.
+Pascal, V., Pozuelo, M., Borruel, N., Casellas, F., Campos, D., Santiago, A., et
+al. (2017).
+A microbial signature for crohn’s disease.
+Gut 66, 813–822.
+doi: 10.1136/gutjnl-2016-313235
+Peters, B. A., Dominianni, C., Shapiro, J. A., Church, T. R., Wu, J., Miller,
+G., et al. (2016).
+The gut microbiota in conventional and serrated
+precursors of colorectal cancer.
+Microbiome 4:69. doi: 10.1186/s40168-016-
+0218-6
+Pop, M., Walker, A. W., Paulson, J., Lindsay, B., Antonio, M., Hossain, M., et
+al. (2014).
+Diarrhea in young children from low-income countries leads to
+large-scale alterations in intestinal microbiota composition.
+Genome Biol.
+15:R76. doi: 10.1186/gb-2014-15-6-r76
+Ramig, R. F. (2004). Pathogenesis of intestinal and systemic rotavirus infection. J.
+Virol. 78, 10213–10220. doi: 10.1128/JVI.78.19.10213-10220.2004
+Rodríguez, J. M., Murphy, K., Stanton, C., Ross, R. P., Kober, O. I., Juge,
+N., et al. (2015).
+The composition of the gut microbiota throughout
+life, with an emphasis on early life.
+Microb. Ecol. Health Dis. 26:26050.
+doi: 10.3402/mehd.v26.26050
+Rodríguez, L. A. G., Ruigómez, A., and Panés, J. (2006). Acute gastroenteritis is
+followed by an increased risk of inﬂammatory bowel disease. Gastroenterology
+130, 1588–1594. doi: 10.1053/j.gastro.2006.02.004
+Schmieder,
+R.,
+and
+Edwards,
+R.
+(2011).
+Quality
+control
+and
+preprocessing of metagenomic datasets.
+Bioinformatics 27, 863–864.
+doi: 10.1093/bioinformatics/btr026
+Segata, N., Izard, J., Waldron, L., Gevers, D., Miropolsky, L., Garrett, W. S., et
+al. (2011). Metagenomic biomarker discovery and explanation. Genome Biol.
+12:R60. doi: 10.1186/gb-2011-12-6-r60
+Serrano-Villar, S., Rojo, D., Martínez-Martínez, M., Deusch, S., Vázquez-
+Castellanos, J. F., Sainz, T., et al. (2016). HIV infection results in metabolic
+alterations in the gut microbiota diﬀerent from those induced by other diseases.
+Sci. Rep. 6:26192. doi: 10.1038/srep26192
+Subramanian, S., Huq, S., Yatsunenko, T., Haque, R., Mahfuz, M., Alam, M. A., et
+al. (2014). Persistent gut microbiota immaturity in malnourished Bangladeshi
+children. Nature 510, 417–421. doi: 10.1038/nature13421
+Tate, J., Burton, A., Boschi-Pinto, C., Parashar, U., Agocs, M., Serhan, F., et
+al. (2016).
+Global, regional, and national estimates of rotavirus mortality
+in children <5 years of age, 2000-2013.
+Clin. Infect. Dis. 62, S96–S105.
+doi: 10.1093/cid/civ1013
+The, H. C., Sessions, P. F. D., Jie, S., Thanh, D. P., Thompson, C. N., Nguyen,
+C., et al. (2017).
+Assessing gut microbiota perturbations during the early
+phase of infectious diarrhea in Vietnamese children. Gut Microbes 9, 38–54.
+doi: 10.1080/19490976.2017.1361093
+Turnbaugh, P. J., Hamady, M., Yatsunenko, T., Cantarel, B. L., Duncan, A., Ley,
+R. E., et al. (2009). A core gut microbiome in obese and lean twins. Nature 457,
+480–484. doi: 10.1038/nature07540
+Vázquez-Castellanos, J. F., Serrano-Villar, S., Latorre, A., Artacho, A., Ferrús, M. L.,
+Madrid, N., et al. (2014). Altered metabolism of gut microbiota contributes to
+chronic immune activation in HIV-infected individuals. Mucosal Immunol. 8,
+760–772. doi: 10.1038/mi.2014.107
+Yatsunenko, T., Rey, F. E., Manary, M. J., Trehan, I., Dominguez-Bello,
+M. G., Contreras, M., et al. (2012).
+Human gut microbiome viewed
+across age and geography.
+Nature 486, 222–227. doi: 10.1038/nature
+11053
+Zhang, M., Zhang, M., Zhang, C., Du, H., Wei, G., Pang, X., et al.
+(2009).
+Pattern extraction of structural responses of gut microbiota
+to rotavirus infection via multivariate statistical analysis of clone library
+data.
+FEMS Microbiol. Ecol. 70, 177–185. doi: 10.1111/j.1574-6941.2009.
+00694.x
+Conﬂict of Interest Statement: This study has been totally supported and funded
+by the Turkish Pediatric Probiotic Prebiotic and Microbiota Society. ED has
+been a consultant and member of Biocodex Advisory Board, and serves as a
+consultant and speaker for Biocodex and BioGaia. YV has participated as a clinical
+investigator, and/or advisory board member, and/or consultant, and/or speaker
+for Abbott Nutrition, Aspen, Biocodex, Danone, Nestle Health Science, Nestle
+Nutrition Institute, Nutricia, Phacobel, and United Pharmaceuticals.
+The remaining authors declare that the research was conducted in the absence of
+any commercial or ﬁnancial relationships that could be construed as a potential
+conﬂict of interest.
+The reviewer AC and handling Editor declared their shared aﬃliation.
+Copyright © 2018 Dinleyici, Martínez-Martínez, Kara, Karbuz, Dalgic, Metin, Yazar,
+Guven, Kurugol, Turel, Kucukkoc, Yasa, Eren, Ozen, Martí, P. Garay, Vandenplas
+and Moya. This is an open-access article distributed under the terms of the Creative
+Commons Attribution License (CC BY). The use, distribution or reproduction in
+other forums is permitted, provided the original author(s) and the copyright owner
+are credited and that the original publication in this journal is cited, in accordance
+with accepted academic practice. No use, distribution or reproduction is permitted
+which does not comply with these terms.
+Frontiers in Microbiology | www.frontiersin.org
+11
+June 2018 | Volume 9 | Article 1230

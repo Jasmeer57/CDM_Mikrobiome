@@ -1,0 +1,438 @@
+pmcFront NeurosciFront Neurosci670frontneurosci101478481Front. Neurosci.Frontiers in Neuroscience1662-45481662-453XFrontiers Media SAPMC9274120PMC9274120.1927412092741203583711810.3389/fnins.2022.8793181NeuroscienceSystematic ReviewDifferences in Alpha Diversity of Gut Microbiota in Neurological DiseasesLiZhuoxin
+1
+
+2
+
+†
+ZhouJie
+1
+
+2
+
+†
+LiangHao
+1
+
+3
+YeLi
+1
+
+2
+LanLiuyan
+1
+
+2
+LuFang
+1
+
+2
+WangQing
+1
+
+2
+LeiTing
+1
+
+4
+YangXiping
+1
+
+2
+CuiPing
+1
+
+3
+
+*
+HuangJiegang
+1
+
+2
+
+*
+1Guangxi Key Laboratory of AIDS Prevention and Treatment, Guangxi Universities Key Laboratory of Prevention and Control of Highly Prevalent Disease, Nanning, China2School of Public Health, Guangxi Medical University, Nanning, China3Life Science Institute, Guangxi Medical University, Nanning, China4Geriatrics Digestion Department of Internal Medicine, The First Affiliated Hospital of Guangxi Medical University, Nanning, ChinaEdited by: Gustavo Provensi, University of Florence, ItalyReviewed by: Francesca Ronchi, University of Bern, Switzerland; Ghulam Hussain, Government College University, Faisalabad, Pakistan*Correspondence: Jiegang Huang jieganghuang@gxmu.edu.cnPing Cui cuiping769@163.comThis article was submitted to Gut-Brain Axis, a section of the journal Frontiers in Neuroscience†These authors have contributed equally to this work and share first authorship2862022202216400453879318
+1922022
+2352022
+010120221307202215072022Copyright © 2022 Li, Zhou, Liang, Ye, Lan, Lu, Wang, Lei, Yang, Cui and Huang.2022Li, Zhou, Liang, Ye, Lan, Lu, Wang, Lei, Yang, Cui and Huanghttps://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License (CC BY). The use, distribution or reproduction in other forums is permitted, provided the original author(s) and the copyright owner(s) are credited and that the original publication in this journal is cited, in accordance with accepted academic practice. No use, distribution or reproduction is permitted which does not comply with these terms.BackgroundNeurological diseases are difficult to diagnose in time, and there is currently a lack of effective predictive methods. Previous studies have indicated that a variety of neurological diseases cause changes in the gut microbiota. Alpha diversity is a major indicator to describe the diversity of the gut microbiota. At present, the relationship between neurological diseases and the alpha diversity of the gut microbiota remains unclear.MethodsWe performed a systematic literature search of Pubmed and Bioproject databases up to January 2021. Six indices were used to measure alpha diversity, including community richness (observed species, Chao1 and ACE), community diversity (Shannon, Simpson), and phylogenetic diversity (PD). Random-effects meta-analyses on the standardized mean difference (SMD) were carried out on the alpha diversity indices. Subgroup analyses were performed to explore the sources of interstudy heterogeneity. Meta-analysis was performed on articles by matching the age, sex, and body mass index (BMI) of the disease group with the control group. Meanwhile, subgroup analysis was performed to control the variability of the sequencing region, platform, geographical region, instrument, and diseases. The area under the curve (AUC) value of the receiver operating characteristic (ROC) curve was calculated to assess the prediction effectiveness of the microbial alpha diversity indices.ResultsWe conducted a meta-analysis of 24 published studies on 16S rRNA gene amplified sequencing of the gut microbiota and neurological diseases from the Pubmed and Bioproject database (patients, n = 1,469; controls, n = 1,289). The pooled estimate demonstrated that there was no significant difference in the alpha diversity between patients and controls (P < 0.05). Alpha diversity decreased only in Parkinson's disease patients, while it increased in anorexia nervosa patients compared to controls. After adjusting for age, sex, BMI, and geographical region, none of the alpha diversity was associated with neurological diseases. In terms of Illumina HiSeq 2000 and the V3-V5 sequencing region, the results showed that alpha diversity increased significantly in comparison with the controls, while decreased in Illumina HiSeq 2500. ROC curves suggested that alpha diversity could be used as a biomarker to predict the AD (Simpson, AUC= 0.769, P = 0.0001), MS (observed species, AUC= 0.737, P = 0.001), schizophrenia (Chao1, AUC = 0.739, P = 0.002).ConclusionsOur review summarized the relationship between alpha diversity of the gut microbiota and neurological diseases. The alpha diversity of gut microbiota could be a promising predictor for AD, schizophrenia, and MS, but not for all neurological diseases.neurological diseasesalpha diversitygut microbiota16S rRNAgut microbiota-brainNatural Science Foundation of Guangxi Zhuang Autonomous Region10.13039/100012547National Natural Science Foundation of China10.13039/501100001809National Outstanding Youth Science Fund Project of National Natural Science Foundation of China10.13039/100014717pmc-status-qastatus0pmc-status-liveyespmc-status-embargonopmc-status-releasedyespmc-prop-open-accessyespmc-prop-olfnopmc-prop-manuscriptnopmc-prop-legally-suppressednopmc-prop-has-pdfyespmc-prop-has-supplementyespmc-prop-pdf-onlynopmc-prop-suppress-copyrightnopmc-prop-is-real-versionnopmc-prop-is-scanned-articlenopmc-prop-preprintnopmc-prop-in-epmcyespmc-license-refCC BYIntroductionNeurological diseases are neurological or psychiatric complications resulting from structural or functional abnormalities of the brain or spinal cord caused by various factors, which can be divided into two categories: neurodegeneration and neuropsychiatric diseases. Neurodegeneration includes Alzheimer's disease (AD), Parkinson's disease, Huntington's disease (HD), multiple sclerosis (MS), amyotrophic lateral sclerosis (ALS), motor neuron disease (MND), hepatic encephalopathy, neuromyelitis optica, chronic fatigue syndrome (CFS), Guillain-Barre syndrome, epilepsy, and cerebral ischemia. The other includes depressive disorder, post-traumatic stress disorder (PTSD), attention deficit hyperactivity disorder (ADHD), autism spectrum disorder (ASD), anorexia nervosa, schizophrenia, and anxiety. Neurological diseases are a type of disease with complex etiology, easy recurrence, and difficult timely diagnosis. Their prevalence in developing countries is at least twice that in developed countries (Kundap et al., 2017). The significantly growing incidence implies that the health of a large number of people is undermined and the economic, societal, and mental burden becomes substantial (Zhang et al., 2020). Regarding the serious hazards of neurological diseases, early clinical detection and disease prediction are important. However, neurological diseases are difficult to diagnose in time, and there is currently a lack of effective prediction methods.A healthy gut microbiota participates in the body's growth, development, and aging process, and has the functions of improving human metabolism, regulating immunity, anti-inflammatory, anti-oxidant, anti-aging, and so on (Borre et al., 2014; Zhu et al., 2017). New evidence suggests that the gut microbiota may play an important role in the pathophysiology of various complex diseases (Jiang et al., 2015; Vogt and Kerby, 2017; Qian et al., 2018; Xu et al., 2020; Zou et al., 2020), including schizophrenia, depression, ASD, AD, and Parkinson's Disease, through the “gut microbiota-brain” axis (Morais et al., 2021). The gut microbiota-brain axis might have an important impact on the central nervous system through immunity, neuroendocrine, or vagus pathways. Nevertheless, there is still a lack of comprehensive and systematic understanding of the correlation between the pathophysiological mechanism of neurological diseases and the gut microbiota.In a certain niche, the important features of a bacterial community include the number of species present, their numerical composition, and bacterial diversity (Mack et al., 2016). The Irish ELDERMET study showed that the greater the diversity of the microbiota, the better the health outcomes (Cryan et al., 2020). Alpha diversity is used to describe the microbial diversity of an ecological community (Willis, 2019). Generally, three indices were used to describe it. Community richness is a metric to estimate the total number of species, including the Chao 1, abundance-based coverage estimator (ACE) index, and observed species (the number of different operational taxonomic units, OTUs, per sample) (Finotello et al., 2018; Hagerty et al., 2020; Qian et al., 2020). Community diversity is a metric of relative community evenness, reflecting the richness and evenness of the species in the sample, including the Shannon index and Simpson index (Finotello et al., 2018; Hagerty et al., 2020; Qian et al., 2020). Another indicator is phylogenetic diversity (PD) (Owen et al., 2019), which is the sum of the length of the interconnected phylogenetic branches of a group of species in their phylogenetic tree (Gumbs et al., 2020).Alpha diversity, as the most common indicator for assessing gut microbiota health, is closely associated with the disease status. Biodiversity plays an important role in maintaining a balanced ecosystem by contributing to the stability of an ecosystem as well as its ecological function (Gong et al., 2016). In general, a high diversity provides the ecosystem with strong stability (Gong et al., 2016). Wang et al. (2021) demonstrated that alpha diversity and Bacteroides abundance had the potential of identifying platinum-resistant patients early. Nylund et al. found that the severity of eczema was inversely correlated with the microbiota diversity (Nylund et al., 2015). Additionally, the microbial diversity was found to increase with the improvement of symptoms in eczema (Nylund et al., 2015).Numerous studies have demonstrated that diseases of the central nervous system cause changes in the gut microbiota, but there is still no consensus on alpha diversity. Some studies revealed an increase in alpha diversity in ASD, epilepsy, or transient ischemic patients (Yin et al., 2015; Coretti et al., 2018; Huang et al., 2019; Dan et al., 2020). While other studies found it decreased in AD, hepatic encephalopathy, MS, or Parkinson's disease patients (Zhang et al., 2013; Chen et al., 2016; Iebba et al., 2018; Liu et al., 2019; Weis et al., 2019; Choileáin et al., 2020). Moreover, some researchers suggested that no significant differences were observed in the alpha diversity of the gut microbiota in patients with MS, schizophrenia, Parkinson's disease, ASD, or AD compared with healthy controls (Jangi, 2016; Pulikkan et al., 2018; Gong et al., 2019; Li et al., 2019; Nguyen et al., 2019; Pietrucci et al., 2019; Pan et al., 2020).Importantly, it has not yet been determined whether the diversity of the gut microbiota can be used as an indicator to diagnose neurological diseases or predict the occurrence and development of the diseases. Aims to clarify the relationship between the diversity of the gut microbiota and neurological diseases, we performed a meta-analysis of gut microbiota studies on AD, Parkinson's disease, HD, MS, et, al. We comprehensively analyzed the alpha diversity index of the gut microbiota among neurological disease patients and controls, including estimates of community richness (Chao1, ACE, and observed species), community diversity (Shannon, Simpson), and PD.Materials and MethodsSearch Strategy and Selection CriteriaWe performed a systematic literature search in the Pubmed database (https://pubmed.ncbi.nlm.nih.gov) and Bioproject database (https://www.ncbi.nlm.nih.gov/bioproject), up to January 2021, by using the following retrieval type “Alzheimer's disease *[Title/Abstract] AND (gut or intestinal) *[Title/Abstract] AND (microbe or microbiota or flora or microorganism or microbiota) *[Title/Abstract]”. In order to more comprehensively search the relevant literature, the disease names in the above search formula were replaced successively by “Parkinson's disease”, “Huntington's disease”, “multiple sclerosis”, “amyotrophic lateral sclerosis”, “hepatic encephalopathy”, “motor neuron disease”, “chronic fatigue syndrome”, “Guillain-Barre syndrome”, “epilepsy”, “cerebral ischemia”, “depressive disorder”, “posttraumatic stress disorder”, “attention deficit hyperactivity disorder”, “autism spectrum disorder”, “anorexia nervosa”, “schizophrenia”, “anxiety”, and “neuromyelitis optica”.After excluding comments and duplicate articles, the abstracts were filtered according to the inclusion and exclusion criteria. The inclusion criteria were: (1) Population study; (2) The source of the sample is a stool or rectal swab; (3) Using 16S rRNA gene amplified sequencing method; (4) The sample size cannot be less than 10 of each group; (5) Patient and control groups can be distinguished; (6) Availability of gut microbiota data. The exclusion criteria were: (1) Editorial, letter, comment, reviews, and meta-analysis; (2) Non gut microbiota-related studies and other diseases; (3) Animal studies or in vitro studies; (4) Unpublished data and studies that couldn't distinguish between patient and control groups. PRISMA flow diagram depicts the screening process from the Pubmed and Bioproject database for inclusion of studies (Figures 1, 2).Figure 1PRISMA flow diagram depicting the screening process from the Pubmed database for inclusion of studies.Figure 2PRISMA flow diagram depicting the screening process from the Bioproject database for inclusion of studies.Data AnalysisFastq files for each study were downloaded from public databases. Microbiota bioinformatics was performed with QIIME 2 2021.2 (Bolyen et al., 2019). Raw sequence data were demultiplexed and quality filtered using the q2-demux plugin followed by denoising with DADA2 (Callahan et al., 2016), and then amplification sequence variants (ASVs) were generated. All amplicon sequence variants (ASVs) were aligned with mafft (Katoh et al., 2002) (via q2-alignment) and used to construct a phylogeny with fasttree2 (Price et al., 2010) (via q2-phylogeny). The amplicon sequence variants were annotated using the SilvA-138 99% OTU reference sequence pre-trained with the classify-Sklearn Naive Bayes classifier (McDonald et al., 2012) and the Q2 -feature-classifier (Bokulich et al., 2018) plug-in. Data filtering was performed to remove low-quality or uninformative features to improve downstream statistical analysis. Due to sequencing errors or contamination in the samples, we filtered the minimum count and prevalence (%) of the samples based on the characteristics of each dataset to obtain an analyzable dataset.The generated feature table, phylogenetic tree, and species annotation files were imported into R Studio 4.0 software. The Vegan package was first used to normalize the sample sequence according to the minimum sequence number of samples so that the results, such as the alpha diversity of each sample, could be compared under the same sequence number. Then, the microeco package (Liu et al., 2021) was used to calculate the microbial alpha diversity index, including estimates of community richness (observed species, Chao1, and ACE), community diversity (Shannon, Simpson), and PD (Qian et al., 2020).As primary outcomes of interest, we extracted the alpha diversity of the gut microbiota at the OTU level. Meta-analysis was performed on the included studies by using Review Manager 5.3 software. For continuous variables, mean and standard deviation (SD) were used as analytical statistics, and each effect size was represented by a 95% CI value. The heterogeneity of the included studies was tested by the q-value test and I2 test. Random-effects meta-analyses on the standardized mean difference (SMD) were executed for alpha diversity indices when each study had statistical heterogeneity (Q-value test of P < 0.05 or I2 test of >50%). Otherwise, the fixed-effect model was adopted. To explore sources of interstudy heterogeneity, the subgroup analysis controlled for age, sex, body mass index (BMI), sequencing region, geographical region, platform, instrument, and diseases. The area under the curve (AUC) value of the receiver operating characteristic (ROC) curve was calculated to assess the prediction effectiveness of the microbial alpha diversity indices. P < 0.05 was considered statistically significant.ResultsCharacteristics of Selected StudiesA total of 3,600 records were retrieved from the PubMed database, according to the screening criteria, 21 articles (Zhang et al., 2013; Yin et al., 2015; Chen et al., 2016; Jangi, 2016; Mack et al., 2016; Coretti et al., 2018; Forbes et al., 2018; Iebba et al., 2018; Pulikkan et al., 2018; Gong et al., 2019; Huang et al., 2019; Li et al., 2019; Liu et al., 2019; Nguyen et al., 2019; Pietrucci et al., 2019; Weis et al., 2019; Choileáin et al., 2020; Dan et al., 2020; Pan et al., 2020; Safak et al., 2020; Cao et al., 2021) were included for analysis after eliminating the repeated, review, meta, and other types of articles. A total of 17 separate datasets were obtained from 17 articles (Zhang et al., 2013; Jangi, 2016; Mack et al., 2016; Coretti et al., 2018; Forbes et al., 2018; Pulikkan et al., 2018; Gong et al., 2019; Li et al., 2019; Liu et al., 2019; Nguyen et al., 2019; Pietrucci et al., 2019; Weis et al., 2019; Choileáin et al., 2020; Dan et al., 2020; Pan et al., 2020; Safak et al., 2020; Cao et al., 2021) (the remaining 4 articles (Yin et al., 2015; Chen et al., 2016; Iebba et al., 2018; Huang et al., 2019) were removed due to incomplete and unavailable data) (see Supplementary Table 1,2). At the same time, a total of 200 studies were retrieved from the BioProject by using the same retrieval type as the PubMed database. Finally, 7 datasets were included in the analysis (Table 1). Multiple case groups in the dataset were divided for subsequent meta-analysis, and 32 sub-datasets were finally obtained.Table 1Characteristics of studies included in Bioproject.
+Country, Year, Project description
+
+BioProject accession
+
+Study setting
+
+Study population
+
+Sample type
+China, 2020 Alterations of the fecal microbiota in Chinese patients with multiple sclerosisPRJNA628832Zhejiang University34 MSFecal samplesChina, 2019 In this study, four patients of cirrhosis accompanied with hepatic encephalopathy (CHE) were enrolled, with their healthy relatives as the controls, and paired comparison analysis was carried out. Fresh fecal samples were collected from participants, and subjected to Illumina MiSeq high throughput sequencing of 16S rRNA regions.PRJNA534155Institute of Disease Control and Prevention4 hepatic encephalopathy; healthy controls (n = 4)Fecal samplesUSA, 2020 C. bolteae is elevated in NMOSD in India and shares sequence similarity with AQP4PRJNA662563Brigham and Women's Hospital39 NMOSD patients; 36 matched controlsFecal samplesChina, 2020 gut microbiota in children with autism spectrum disorder accompanied with sleep disorderPRJNA615774Chongqing Medical University affiliated Children HospitalNDFecal samplesSouth America Ecuador, 2019 Analysis of the intestinal and oropharyngeal microbiome, nutritional and immunological profile of children with Autism Spectrum Disorder (ASD) compared with children withoutPRJEB27306Universidad San Francisco de QuitoNDFecal samplesKorea, 2020 Gut microbiota of Human with mild anxiety/depressionPRJNA678145Kyung Hee UniversityNDFecal samplesJapan 2020 Specific bacterial species relating to the development and progression of multiple sclerosisPRJDB7752Laboratory for Microbiome Sciences, Center for Integrative Medical Sciences, RIKENNDFecal samplesND, not described; NMOSD, neuromyelitis optica spectrum disorders; MS, multiple sclerosis.Neurological diseases, AD, epilepsy, hepatic encephalopathy, ASD, MS, Parkinson's disease, anorexia nervosa, optic neuromyelitis, and schizophrenia were included in the study. A total of 2,758 subjects (patient, n = 1469; control, n = 1289) samples were included in the meta-analysis. Twenty four studies compared patients with healthy controls, and 6 compared one or more subgroups with diverse clinical statuses. A total of 22 studies were conducted in Asia (China, Turkey, India, Korea, and Japan), 4 in Europe (Italy and Germany), 1 in South America, and 5 in North America (the United States of America and Ecuador). In addition, 22 studies used 16S rRNA gene amplified sequencing with the Illumina Miseq platform, 3 studies used Illumina Hiseq 2500, 2 studies used Illumina Hiseq 2000 sequences, and the remaining studies used Roche 454 pyrosequencing Illumina iSeq 100 and NextSeq 500.No Significant Change in the Diversity of Patients With Whole Neurological DiseasesSix indices were used to evaluate alpha diversity, including community richness (observed species, Chao1, ACE), community diversity (Shannon, Simpson), and PD. Before controlling for other confounders, the pooled estimate demonstrated that there is no significant difference between AD, epilepsy, hepatic encephalopathy, ASD, MS, Parkinson's disease, anorexia nervosa, optic neuromyelitis, and schizophrenia patients and controls, including observed species (SMD = −0.02; 95%CI, −0.16 to 0.12, P = 0.77, I2 = 64%), Chao1 (SMD = −0.02; 95%CI, −0.16 to 0.12, P = 0.79, I2 = 65%), and ACE (SMD = −0.07; 95%CI, −0.21 to 0.07, P = 0.34, I2 = 61%), Shannon (SMD = 0.00; 95%CI, −0.14 to 0.15, P = 0.98, I2 = 67%), Simpson (SMD = −0.00; 95%CI, −0.14 to 0.14, P = 0.99, I2 = 64%), PD (SMD = 0.02; 95%CI, −0.11 to 0.16, P = 0.74, I2 = 64%) (see Supplementary Figure 1).Community Diversity Altered in Parkinson's Disease and Anorexia NervosaIn terms of different diseases, there was a significant decrease in Parkinson's disease compared to the control, including Shannon (SMD = −0.30; 95%CI, −0.51 to −0.08, P = 0.0001, I2 = 22%) (Figure 3A), Simpson (SMD = −0.28; 95%CI, −0.46 to −0.09, P = 0.004, I2 = 0%) (Figure 3B). However, Shannon (SMD = 0.37; 95%CI, 0.04 to 0.69, P = 0.03) (Figure 3A) and Simpson (SMD = 0.37; 95%CI, 0.05 to 0.70, P = 0.03) (Figure 3B) increased significantly in anorexia nervosa. But the results demonstrated that there was no significant difference in the alpha diversity between patients and controls in other diseases (P > 0.05) (see Supplementary Figure 2).Figure 3Community diversity meta-analyses for different diseases. Forest plot for the Shannon (A) and Simpson (B). SMD, standardized mean difference; SD, standard deviation.Community Richness Altered in the Illumine HiSeq Sequencing InstrumentMeta-analysis was performed on articles matching age, sex, and BMI between the patient and the control group. And subgroup analyses were performed to explore the sources of interstudy heterogeneity. However, the pooled estimate demonstrated that there is no significant difference between these two groups. When the analysis was limited to sequencing platform and geographical region, the result still showed no significant difference.Regarding the sequencing instrument, 32 studies provided observed species, Chao1, Shannon, and Simpson indices. The pooled estimate showed that no significant difference were found, including Shannon (SMD = 0.00; 95%CI, −0.14 to 0.15, P = 0.98, I2 = 67%) (see Supplementary Figure 3) and Simpson (SMD = −0.01; 95%CI, −0.16 to 0.13, P = 0.84, I2 = 66%) (see Supplementary Figure 4). Within Illumine HiSeq 2500, there was a significant decrease in the patient group compared to the control group (observed species SMD = −0.22; 95%CI, −0.40 to −0.03; P = 0.02, I2 = 0%; ACE SMD = −0.30; 95%CI, −0.52 to −0.07; P = 0.009, I2 = 0%; Shannon SMD = −0.20; 95%CI, −0.39 to −0.01; P = 0.04, I2 = 0%; PD SMD = −0.23; 95%CI, −0.42 to −0.05; P = 0.01, I2 = 0%) (Figures 4A, 5A,B, 6B). But in Illumine HiSeq 2000, the alpha diversity in the patient group was significantly increased in the observed species (SMD = 0.85; 95%CI, 0.43 to 1.27, P= 0.0001, I2 = 0%) (Figure 4A), Chao1 (SMD = 0.85; 95%CI, 0.43 to 1.27, P=0.0001, I2 = 0%) (Figure 4B), Shannon (SMD = 0.69; 95%CI, 0.27 to 1.10, P = 0.001, I2 = 0%) (Figure 5B), Simpson (SMD = 0.52; 95%CI, 0.11 to 0.93, P = 0.01, I2 = 0%) (Figure 6A), and PD (SMD = 0.76; 95%CI, 0.35 to 1.18, P = 0.0003, I2 = 0%) (Figure 6B).Figure 4Richness meta-analyses for the sequencing instrument. Forest plot for the observed species (A) and Chao1 (B). SMD, standardized mean difference; SD, standard deviation.Figure 5Richness meta-analyses for the sequencing instrument. Forest plot for the ACE (A) and Shannon (B). SMD, standardized mean difference; SD, standard deviation.Figure 6Evenness meta-analyses for the sequencing instrument. Forest plot for the Simpson (A), and PD (B). SMD, standardized mean difference; SD, standard deviation.Alpha Diversity Altered in the V3-V5 Sequencing RegionV4 region sequencing was used in 29 studies. Compared to the control, the pooled estimate showed a decrease but no significant difference, including Shannon (SMD = −0.03; 95%CI, 0.22 to 0.17, P = 0.79, I2 = 76%) (see Supplementary Figure 5) and Simpson (SMD = −0.06; 95%CI, −0.24 to 0.12, P = 0.50, I2 = 71%) (see Supplementary Figure 6). But when we considered the V3-V5 sequencing region, there was a significant decrease in the patient group compared to the control group (observed species SMD = 0.48; 95%CI, 0.08 to 0.87; P = 0.02; Chao1 SMD = 0.46; 95%CI, 0.07 to 0.85; P = 0.02; ACE SMD = 0.47; 95%CI, 0.07 to 0.86; P = 0.02; Shannon SMD = 0.48; 95%CI, 0.08 to 0.87; P = 0.02) (Figure 7).Figure 7Diversity meta-analyses for the V3-V5 sequencing region. Forest plot for the observed species (A), Chao1 (B), ACE (C), and Shannon (D). Observed, observed species; SMD, standardized mean difference; SD, standard deviation.Alpha Diversity Could Be an Indicator for Predicting AD, Schizophrenia, and MSTo furtherly investigate the relationship between the microbiota diversity and neurological diseases, we plotted the ROC curve of alpha diversity indices for AD, Parkinson's disease, schizophrenia, MS, and anorexia nervosa. Results from ROC curves illustrated that alpha diversity, such as Simpson, observed species, Chao1, and ACE index, based on the criterion of AUC >0.7, had a high potential to predict the AD (Shannon, AUC = 0.731, P = 0.001; Simpson, AUC = 0.769, P = 0.0001), MS (observed species, AUC = 0.737, P = 0.001; Chao1, AUC = 0.728, P = 0.002; ACE, AUC = 0.731, P = 0.002), schizophrenia (observed species, AUC = 0.739, P = 0.002; Chao1, AUC = 0.739, P = 0.002; ACE, AUC = 0.739, P = 0.002) (Figure 8), but not for the other neurological diseases (Supplementary Figure 7).Figure 8ROC curve analysis on neurological diseases. ROC curve for Alzheimer's disease (A), Parkinson's disease (B), Multiple sclerosis (C), Schizophrenia (D). ROC, receiver operating characteristic; AUC, area under the curve.DiscussionSo far, there has not been a systematic review has comprehensively revealed the association between the gut microbiota and neurological diseases, and previous studies have been limited to individual diseases (Xu et al., 2019; Fu et al., 2020; Tuddenham et al., 2020; Shen et al., 2021; Zheng et al., 2021). Alpha diversity, as an important index to describe the characteristics of the gut microbiota, was considered to be highly related to the occurrence and development of many diseases. It was expected to decrease in disturbed systems, and low diversity is related to disease status and poor health, that is, dysbiosis (Reese and Dunn, 2018; Nuzum et al., 2020; Freidin et al., 2021). In this study, we focused on exploring whether the alpha diversity of the gut microbiota could be used as a predictor of neurological diseases, which is very important and helpful for the early diagnosis of these diseases that seriously affect the quality of life of patients.This study systematically evaluated the relationship between the alpha diversity of the gut microbiota and neurological diseases, based on 2758 samples from China (Zhang et al., 2013; Li et al., 2019; Liu et al., 2019; Dan et al., 2020; Cao et al., 2021), Turkey (Safak et al., 2020), Italy (Coretti et al., 2018; Pietrucci et al., 2019), Germany (Mack et al., 2016; Weis et al., 2019), India (Pulikkan et al., 2018), Japan, America (Jangi, 2016; Nguyen et al., 2019; Choileáin et al., 2020), Korea, and Ecuador. Overall analysis was carried out and no significant differences in alpha diversity were observed between patients and controls. To evaluate the impact of disease classification on the gut microbiota, the subgroup analyses were performed on 24 studies, and alpha diversity showed a significant increase in anorexia nervosa, while a decrease in Parkinson's disease, compared to controls. These results demonstrated that alpha diversity of the gut microbiota could be a potential biomarker for predicting anorexia nervosa and Parkinson's disease. Previous studies have found similar results in the meta-analyses of psychiatric disorders, and Parkinson's disease (Nikolova et al., 2021; Plassais et al., 2021; McGuinness et al., 2022). Considering that different diseases have different pathological processes, the relationship between gut microbiota and disease progression may be more complex than just altered alpha diversity (Nuzum et al., 2020).Furthermore, the ROC curve analysis showed that alpha diversity was able to diagnose AD, schizophrenia, and MS. These results demonstrate dysregulation and alteration in gut microbiota in AD, schizophrenia, and MS, which had been confirmed in the previous studies (Murray et al., 2021; Cantoni et al., 2022). Dysregulation of gut microbiota could facilitate the occurrence and development of neurological diseases, in which the “gut microbiota-brain” axis might play an important role (Almeida et al., 2020). Through the intestinal barriers, modulation of afferent sensory nerves, neurotransmitters, and finally regulation of bacterial metabolites, the biochemical signaling was sent from the gastrointestinal tract to the central nervous system (CNS) (Arneth, 2018; Vindegaard et al., 2021). By the “gut microbiota-brain” axis, the gut microbiota could regulate the secretion of serotonin (5-hydroxytryptamine, 5-HT) (Evans et al., 2013; Ghaisas et al., 2016), brain-derived nerve neurotransmitters such as brain-derived neurotrophic factor (BDNF) (Keightley et al., 2015), and gamma-aminobutyric acid (GABA) (Aho et al., 2019; Averina et al., 2020) and then act on the host nerves to produce excitatory or inhibitory effects on the CNS. In this sense, understanding alterations in microbial diversity and microbiota-host interactions will contribute to the development of microbiota-targeted interventions for AD, schizophrenia, and MS.Nonetheless, our ultimate understanding of alpha diversity requires more than just measuring it, and we also need background data for thoughtful comparisons (Shade, 2017). So we should consider some potential confounding factors that contributed to microbial diversity, for example, the extrinsic factors (for c-section, non-breastfeeding, environment, lifestyle (Barandouzi et al., 2020), infection exposure, diet (Davis et al., 2017; Taylor et al., 2020), antibiotic use (Heiss and Olofsson, 2019), and age (Annalisa et al., 2014; Qian et al., 2020) and intrinsic factors (such as metabolite, immunity, hormone, and genetic background). They might affect the composition of the gut microbiota, which, in turn, affects the development of the individual. After we adjusted some variables, including sex, age, BMI, geographical region (east/west), hypervariable region sequenced, platform, and instrument, alpha diversity did not show a significant association with those neurodegeneration or neuropsychiatric diseases, which indicated that it might not be an all-round indicator for the whole neurological diseases.The 16S rRNA gene amplified sequencing technology had become the main method for the identification and quantification of human-resident bacteria, due to its exceptional increases in numbers of reads and the lower associated cost (Weinstock, 2012; Sanada et al., 2020). We restricted the sequencing instruments and the sequencing regions in the studies to explore their impact on the diversity of the gut microbiota. When instrument Illumina HiSeq 2500 was restricted, alpha diversity was significantly decreased compared to the control groups. But when Illumina HiSeq 2000 and the V3-V5 sequencing region were restricted, alpha diversity was significantly increased. We surmise that some rare species could be lost during the sampling location and targeted amplicon sequencing of 16S rRNA gene amplified sequencing (including amplified fragment, and sequencing platforms), resulted in an underestimation of species richness (Finotello et al., 2018; Cheung et al., 2019; Lodovico et al., 2021), which has a certain influence on the gut microbiota (Lodovico et al., 2021).There are limitations to our systematic review. Firstly, in our review, it's still missing in the great cohorts study of neurological disease and alpha-diversity. Secondly, we did not obtain all demographic data (age, sex, BMI, cigarette smoking, breastfeeding methods for early babies) and basic characteristics of the disease (including diagnostic criteria, and medication use) related to the subjects in all included studies. Some medications like antidepressants had been shown to have antibacterial effects (Vila et al., 2020). Thirdly, diet affects the gut microbiota, which, in turn, affects the health or disease state of the body. Different diets also contribute to bacterial diversity (David et al., 2014; Jiang et al., 2015). Furthermore, we only focused on the changes in the microbiota itself, and the relationship between the changes in the microbiota and other biomarkers, such as blood biomarkers, may also be an important orientation for future research (Vindegaard et al., 2021).ConclusionsIn conclusion, our review summarized the association between alpha diversity of the gut microbiota and neurological diseases. The alpha diversity of gut microbiota could be a promising predictor for AD, schizophrenia, and MS, but not for all neurological diseases. We should consider two key characteristics that can lead to inconsistencies between studies, the sequencing region and the instrument of sequencing. In the future, the measurement of diversity should serve as a starting point for further research into ecological mechanisms, and a comprehensive, multidisciplinary research agenda is needed to further clarify the relationship between the gut microbiota and host health.Data Availability StatementThe datasets generated for this study can be found in the Bioproject and SRA PRJNA489760, PRJNA513960, PRJNA510730, PRJEB11199, PRJNA450340, PRJNA355023, PRJNA422961, PRJEB29421, PRJNA496408, PRJNA559773, PBJEB30615, PRJEB34168, PRJNA321051, PRJEB26004, PRJNA642975, PRJNA174838, PRJNA453621, PRJNA534155, PRJNA615774, PRJNA628832, PRJNA662563, PRJDB7752, PRJNA678145, and PRJEB27306.Author ContributionsJH and PC conceived and designed the study and revised the manuscript. HL and LY supervised the manuscript. ZL and JZ participated in writing the manuscript, interpreting the results, and preparing the report for publication. LL, FL, QW, TL, and XY participated in data acquisition. All authors contributed to the article and approved the submitted version.FundingThis study was supported by the Regional Fund Project of National Natural Science Foundation of China (NSFC, 82060366, 82160385), National Natural Science Foundation of China Youth Science Foundation project (NSFC, 82002134), and Natural Science Foundation of Guangxi (2018GXNSFAA050099).Conflict of InterestThe authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.Publisher's NoteAll claims expressed in this article are solely those of the authors and do not necessarily represent those of their affiliated organizations, or those of the publisher, the editors and the reviewers. Any product that may be evaluated in this article, or claim that may be made by its manufacturer, is not guaranteed or endorsed by the publisher.Supplementary MaterialThe Supplementary Material for this article can be found online at: https://www.frontiersin.org/articles/10.3389/fnins.2022.879318/full#supplementary-materialClick here for additional data file.Click here for additional data file.ReferencesAhoV. T. E.
+PereiraP. A. B.
+VoutilainenS.
+PaulinL.
+PekkonenE.
+AuvinenP. (2019). Gut microbiota in Parkinson's disease: Temporal stability and relations to disease progression. EBioMed.
+44, 691–707. 10.1016/j.ebiom.2019.05.06431221587PMC6606744AlmeidaC.
+OliveiraR.
+SoaresR.
+BarataP. (2020). Influence of gut microbiota dysbiosis on brain function: a systematic review. Porto Biomed.J.
+5, 1–8. 10.1097/j.pbj.000000000000005933299942PMC7722401AnnalisaN.
+AlessioT.
+ClaudetteT. D.
+EraldV.
+AntoninoD. L.
+NicolaD. D. (2014). Gut microbioma population: an indicator really sensible to any change in age, diet, metabolic syndrome, and life-style. Mediators Inflamm. 2014, 901308. 10.1155/2014/90130824999296PMC4066855ArnethB. M. (2018). Gut-brain axis biochemical signalling from the gastrointestinal tract to the central nervous system: gut dysbiosis and altered brain function. Postgrad. Med. J. 94, 446–452. 10.1136/postgradmedj-2017-13542430026389AverinaO. V.
+ZorkinaY. A.
+YunesR. A.
+KovtunA. S.
+UshakovaV. M.
+MorozovaA. Y. (2020). Bacterial Metabolites of Human Gut Microbiota Correlating with Depression. Int. J. Mol. Sci. 21, 9234. 10.3390/ijms2123923433287416PMC7730936BarandouziZ. A.
+StarkweatherA. R.
+HendersonW. A.
+GyamfiA.
+CongX. S. (2020). Altered composition of gut microbiota in depression: a systematic review. Front. Psychiatry. 11, 541. 10.3389/fpsyt.2020.0054132587537PMC7299157BokulichN. A.
+KaehlerB. D.
+RideoutJ. R.
+DillonM.
+BolyenE.
+KnightR. (2018). Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME 2's q2-feature-classifier plugin. Microbiome. 6, 90. 10.1186/s40168-018-0470-z29773078PMC5956843BolyenE.
+RideoutJ. R.
+DillonM. R.
+BokulichN. A.
+AbnetC. C.
+Al-GhalithG. A. (2019). Reproducible, interactive, scalable and extensible microbiome data science using QIIME 2. Nat. Biotechnol. 37, 852–857. 10.1038/s41587-019-0209-931341288PMC7015180BorreY. E.
+O'KeeffeG. W.
+ClarkeG.
+StantonC.
+DinanT. G.
+CryanJ. F. (2014). Microbiota and neurodevelopmental windows: implications for brain disorders. Trends Mol. Med.
+20, 509–518. 10.1016/j.molmed.2014.05.00224956966CallahanB. J.
+McMurdieP. J.
+RosenM. J.
+HanA. W.
+JohnsonA. J. A.
+HolmesS. P. (2016). DADA2: High-resolution sample inference from Illumina amplicon data. Nat. Meth.
+13, 581–583. 10.1038/nmeth.386927214047PMC4927377CantoniC.
+LinQ.
+DorsettY.
+GhezziL.
+LiuZ.
+PanY. (2022). Alterations of host-gut microbiome interactions in multiple sclerosis. EBioMedicine. 76, 103798. 10.1016/j.ebiom.2021.10379835094961PMC8814376CaoX.
+LiuK.
+LiuJ.
+LiuY-. W.
+XuL.
+WangH. (2021). Dysbiotic gut microbiota and dysregulation of cytokine profile in children and teens with autism spectrum disorder. Front. Neurosci. 15, 635925. 10.3389/fnins.2021.63592533642989PMC7902875ChenJ.
+ChiaN.
+KalariK. R.
+YaoJ. Z.
+NovotnaM.
+SoldanM. M. P. (2016). Multiple sclerosis patients have a distinct gut microbiota compared to healthy controls. Sci. Rep.
+6, 28484. 10.1038/srep2848427346372PMC4921909CheungS. G.
+GoldenthalA. R.
+UhlemannA-. C.
+MannJ. J.
+MillerJ. M.
+SubletteM. E. (2019). Systematic review of gut microbiota and major depression. Front. Psychiatry. 10, 34. 10.3389/fpsyt.2019.0003430804820PMC6378305ChoileáinS. N.
+KleinewietfeldM.
+RaddassiK.
+HaflerD. A.
+RuffW. E.
+LongbrakeE. E. (2020). CXCR3+ T cells in multiple sclerosis correlate with reduced diversity of the gut microbiome. J. Transl. Autoimmun.
+3, 100032. 10.1016/j.jtauto.2019.10003232743517PMC7388357CorettiL.
+PaparoL.
+RiccioM. P.
+AmatoF.
+CuomoM.
+NataleA. (2018). Gut microbiota features in young children with autism spectrum disorders. Front. Microbiol.
+9, 3146. 10.3389/fmicb.2018.0314630619212PMC6305749CryanJ. F.
+O'RiordanK. J.
+SandhuK.
+PetersonV.
+DinanT. G. (2020). The gut microbiome in neurological disorders. Lancet Neurol.
+19, 179–194. 10.1016/S1474-4422(19)30356-431753762DanZ.
+MaoX.
+LiuQ.
+GuoM.
+ZhuangY.
+LiuZ. (2020). Altered gut microbial profile is associated with abnormal metabolism activity of Autism Spectrum Disorder. Gut Microbes. 11, 1246–1267. 10.1080/19490976.2020.174732932312186PMC7524265DavidL. A.
+MauriceC. F.
+CarmodyR. N.
+GootenbergD. B.
+ButtonJ. E.
+WolfeB. E. (2014). Diet rapidly and reproducibly alters the human gut microbiome. Nature. 505, 559–63. 10.1038/nature1282024336217PMC3957428DavisS. C.
+YadavJ. S.
+BarrowS. D.
+RobertsonB. K. (2017). Gut microbiome diversity influenced more by the Westernized dietary regime than the body mass index as assessed using effect size statistic. Microbiologyopen. 6, e00476. 10.1002/mbo3.47628677210PMC5552927EvansJ. M.
+MorrisL. S.
+MarchesiJ. R. (2013). The gut microbiome: the role of a virtual organ in the endocrinology of the host. J. Endocrinol. 218, R37–47. 10.1530/JOE-13-013123833275FinotelloF.
+MastrorilliE.
+CamilloB. D. (2018). Measuring the diversity of the human microbiota with targeted next-generation sequencing. Brief Bioinform. 19, 679–692. 10.1093/bib/bbw11928025179ForbesJ. D.
+ChenC. Y.
+KnoxN. C.
+MarrieR. A.
+El-GabalawyH.
+de KievitT.
+. (2018). A comparative study of the gut microbiota in immune-mediated inflammatory diseases-does a common dysbiosis exist?
+Microbiome. 6, 221. 10.1186/s40168-018-0603-430545401PMC6292067FreidinM. B.
+StalteriM. A.
+WellsP. M.
+LachanceG.
+BaleanuA-. F.
+BowyerR. C. E. (2021). An association between chronic widespread pain and the gut microbiome. Rheumatology. 60, 3727–3737. 10.1093/rheumatology/keaa84733331911PMC8328510FuP.
+GaoM.
+YungK. K. L. (2020). Association of Intestinal Disorders with Parkinson's Disease and Alzheimer's Disease: A Systematic Review and Meta-Analysis. ACS Chem. Neurosci.
+11, 395–405. 10.1021/acschemneuro.9b0060731876406GhaisasS.
+MaherJ.
+KanthasamyA. (2016). Gut microbiome in health and disease: linking the microbiome-gut-brain axis and environmental factors in the pathogenesis of systemic and neurodegenerative diseases. Pharmacol. Ther. 158, 52–62. 10.1016/j.pharmthera.2015.11.01226627987PMC4747781GongD.
+GongX.
+WangL.
+YuX.
+DongQ. (2016). Involvement of reduced microbial diversity in inflammatory bowel disease. Gastroenterol. Res. Pract.
+2016, 6951091. 10.1155/2016/695109128074093PMC5198157GongJ.
+QiuW.
+ZengQ.
+LiuX.
+SunX.
+LiH. (2019). Lack of short-chain fatty acids and overgrowth of opportunistic pathogens define dysbiosis of neuromyelitis optica spectrum disorders: A Chinese pilot study. Multiple Sclerosis J.
+25, 1316–1325. 10.1177/135245851879039630113252GumbsR.
+GrayC. L.
+BöhmM.
+HoffmannM.
+GrenyerR.
+JetzW. (2020). Global priorities for conservation of reptilian phylogenetic diversity in the face of human impacts. Nat. Commun. 11, 2616. 10.1038/s41467-020-16410-632457412PMC7250838HagertyS. L.
+HutchisonK. E.
+LowryC. A.
+BryanA. D. (2020). An empirically derived method for measuring human gut microbiome alpha diversity: Demonstrated utility in predicting health-related outcomes among a human clinical sample. PLoS ONE.
+15, e0229204. 10.1371/journal.pone.022920432119675PMC7051054HeissC. N.
+OlofssonL. E. (2019). The role of the gut microbiota in development, function and disorders of the central nervous system and the enteric nervous system. J. Neuroendocrinol.
+31, e12684. 10.1111/jne.1268430614568HuangC.
+LiY.
+FengX.
+LiD.
+LiX.
+OuyangQ. (2019). Distinct Gut Microbiota Composition and Functional Category in Children With Cerebral Palsy and Epilepsy. Front. Pediatrics. 7, 394. 10.3389/fped.2019.0039431646147PMC6779726IebbaV.
+GuerrieriF.
+GregorioV. D.
+LevreroM.
+GagliardiA.
+SantangeloF. (2018). Combining amplicon sequencing and metabolomics in cirrhotic patients highlights distinctive microbiota features involved in bacterial translocation, systemic inflammation and hepatic encephalopathy. Sci. Rep.
+8, 8210. 10.1038/s41598-018-26509-y29844325PMC5974022JangiS. R.
+Gandhi1L.M.
+CoxN.
+LiF.v.
+GlehnR.
+Yan. (2016). Alterations of the human gut microbiome in multiple sclerosis. Nat. Commun.
+7, 12015. 10.1038/ncomms1201527352007PMC4931233JiangH.
+LingZ.
+ZhangY.
+MaoH.
+MaZ.
+YinY. (2015). Altered fecal microbiota composition in patients with major depressive disorder. Brain Behav. Immun. 48, 186–94. 10.1016/j.bbi.2015.03.01625882912KatohK.
+MisawaK.
+KumaK-. i.
+MiyataT. (2002). MAFFT: a novel method for rapid multiple sequence alignment based on fast Fourier transform. Nucleic Acids Res. 30, 3059–66. 10.1093/nar/gkf43612136088PMC135756KeightleyP. C.
+KoloskiN. A.
+TalleyN. J. (2015). Pathways in gut-brain communication: evidence for distinct gut-to-brain and brain-to-gut syndromes. Aust. N. Z. J. Psychiatry. 49, 207–14. 10.1177/000486741556980125710826KundapU. P.
+BhuvanendranS.
+KumariY.
+OthmaI.
+ShaikhM. F. (2017). Plant Derived Phytocompound, Embelin in CNS Disorders: A Systematic Review. Front. Pharmacol. 8, 76. 10.3389/fphar.2017.0007628289385PMC5326771LiB.
+HeY.
+MaJ.
+HuangP.
+DuJ.
+CaoL. (2019). Mild cognitive impairment has similar alterations as Alzheimer's disease in gut microbiota. Alzheimer's Dementia.
+15, 1357–1366. 10.1016/j.jalz.2019.07.00231434623LiuC.
+CuiY.
+LiX.
+YaoM. (2021). microeco: an R package for data mining in microbial community ecology. FEMS Microbiol. Ecol. 97, fiaa255. 10.1093/femsec/fiaa25533332530LiuP.
+WuL.
+PengG.
+HanY.
+TangR.
+GeJ. (2019). Altered microbiomes distinguish Alzheimer's disease from amnestic mild cognitive impairment and health in a Chinese cohort. Brain Behav. Immun. 80, 633–643. 10.1016/j.bbi.2019.05.00831063846LodovicoL. D.
+MondotS.
+DoréJ.
+MackI.
+HanachiM.
+GorwoodP. (2021). Anorexia nervosa and gut microbiota: A systematic review and quantitative synthesis of pooled microbiological data. Prog. Neuropsychopharmacol. Biol. Psychiatry. 106, 110114. 10.1016/j.pnpbp.2020.11011432971217MackI.
+CuntzU.
+GrämerC.
+NiedermaierS.
+PohlC.
+SchwiertzA. (2016). Weight gain in anorexia nervosa does not ameliorate the faecal microbiota, branched chain fatty acid profiles, and gastrointestinal complaints. Sci. Rep. 6, 26752. 10.1038/srep2675227229737PMC4882621McDonaldD.
+PriceM. N.
+GoodrichJ.
+NawrockiE. P.
+DeSantisT. Z.
+ProbstA.
+. (2012). An improved Greengenes taxonomy with explicit ranks for ecological and evolutionary analyses of bacteria and archaea. ISME J. 6, 610–8. 10.1038/ismej.2011.13922134646PMC3280142McGuinnessA. J.
+DavisJ. A.
+DawsonS. L.
+LoughmanA.
+CollierF.
+O'HelyM.
+. (2022). A systematic review of gut microbiota composition in observational studies of major depressive disorder, bipolar disorder and schizophrenia. Mol. Psychiatry. 27, 1920–1935. 10.1038/s41380-022-01456-335194166PMC9126816MoraisL. H.
+SchreiberH. L.
+MazmanianS. K. (2021). The gut microbiota-brain axis in behaviour and brain disorders. Nature reviews. Microbiology. 19, 241–255. 10.1038/s41579-020-00460-033093662MurrayN.
+KhalafS. A.
+KaulmannD.
+LonerganE.
+CryanJ. F.
+ClarkeG. (2021). Compositional and functional alterations in the oral and gut microbiota in patients with psychosis or schizophrenia: a systematic review. HRB Open Res.
+4, 108. 10.12688/hrbopenres.13416.134870091PMC8634050NguyenT. T.
+KosciolekT.
+MaldonadoY.
+DalyR. E.
+MartinA. S. D.
+McDonald
+. (2019). Differences in gut microbiome composition between persons with chronic schizophrenia and healthy comparison subjects. Schizophrenia Res.
+204, 23–29. 10.1016/j.schres.2018.09.01430268819PMC6755901NikolovaV. L.
+SmithM. R. B.
+HallL. J.
+CleareA. J.
+StoneJ. M.
+YoungA. H. (2021). Perturbations in gut microbiota composition in psychiatric disorders: a review and meta-analysis. JAMA psychiatry. 78, 1343–1354. 10.1001/jamapsychiatry.2021.257334524405PMC8444066NuzumN. D.
+LoughmanA.
+Szymlek-GayE. A.
+HendyA.
+TeoW-. P.
+MacphersonH. (2020). Gut microbiota differences between healthy older adults and individuals with Parkinson's disease: A systematic review. Neurosci. Biobehav. Rev. 112, 227–241. 10.1016/j.neubiorev.2020.02.00332032654NylundL.
+NermesM.
+IsolauriE.
+SalminenS. W.M.d.
+VosR.
+Satokari. (2015). Severity of atopic disease inversely correlates with intestinal microbiota diversity and butyrate-producing bacteria. Allergy. 70, 241–4. 10.1111/all.1254925413686OwenN. R.
+GumbsR.
+GrayC. L.
+FaithD. P. (2019). Global conservation of phylogenetic diversity captures more than just functional diversity. Nat. Commun. 10, 859. 10.1038/s41467-019-08600-830787282PMC6382770PanR.
+ZhangX.
+GaoJ.
+YiW.
+WeiQ.
+SuH. (2020). Analysis of the diversity of intestinal microbiome and its potential value as a biomarker in patients with schizophrenia: A cohort study. Psychiatry Res.
+291, 113260. 10.1016/j.psychres.2020.11326032763534PietrucciD.
+CerroniR.
+UnidaV.
+FarcomeniA.
+PierantozziM.
+MercuriN. B. (2019). Dysbiosis of gut microbiota in a selected population of Parkinson's patients. Parkinsonism Relat. Disord.
+65, 124–130. 10.1016/j.parkreldis.2019.06.00331174953PlassaisJ.
+Gbikpi-BenissanG.
+FigarolM.
+ScheperjansF.
+GorochovG.
+DerkinderenP. (2021). Gut microbiome alpha-diversity is not a marker of Parkinson's disease and multiple sclerosis. Brain Commun. 3, fcab113. 10.1093/braincomms/fcab11334704023PMC8195527PriceM. N.
+DehalP. S.
+ArkinA. P. (2010). FastTree 2–approximately maximum-likelihood trees for large alignments. PLoS ONE.
+5, e9490. 10.1371/journal.pone.000949020224823PMC2835736PulikkanJ.
+MajiA.
+DhakanD. B.
+SaxenaR.
+MohanB.
+AntoM. M. (2018). Gut Microbial Dysbiosis in Indian Children with Autism Spectrum Disorders. Microbial. Ecol.
+76, 1102–1114. 10.1007/s00248-018-1176-229564487QianX-. B.
+ChenT.
+XuY-. P.
+ChenL.
+SunF-. X.
+LuM-. P. (2020). A guide to human microbiome research: study design, sample collection, and bioinformatics analysis. Chin. Med. J. (Engl). 133, 1844–1855. 10.1097/CM9.000000000000087132604176PMC7469990QianY.
+YangX.
+XuS.
+WuC.
+SongY.
+QinN. (2018). Alteration of the fecal microbiota in Chinese patients with Parkinson's disease. Brain Behav. Immun.
+70, 194–202. 10.1016/j.bbi.2018.02.01629501802ReeseA. T.
+DunnR. R. (2018). Drivers of microbiome biodiversity: a review of general rules, feces, and ignorance. mBio. 9, e01294–18. 10.1128/mBio.01294-1830065092PMC6069118SafakB.
+AltunanB.
+TopçuB.
+TopkayaA. E. (2020). The gut microbiome in epilepsy. Microbial Pathogenesis. 139, 103853. 10.1016/j.micpath.2019.10385331730997SanadaK.
+NakajimaS.
+KurokawaS.
+BarcelA.
+IkuseD.
+HirataA. (2020). Gut microbiota and major depressive disorder: a systematic review and meta-analysis. J. Affect. Disord.
+266, 1–13. 10.1016/j.jad.2020.01.10232056863ShadeA. (2017). Diversity is the question, not the answer. ISME J. 11, 1–6. 10.1038/ismej.2016.11827636395PMC5421358ShenT.
+YueY.
+HeT.
+HuangC.
+QuB.
+LvW. (2021). The association between the gut microbiota and Parkinson's Disease, a meta-analysis. Front. Aging Neurosci. 636545. 10.3389/fnagi.2021.63654533643026PMC7907649TaylorA. M.
+ThompsonS. V.
+EdwardsC. G.
+MusaadS. M. A.
+KhanN. A.
+HolscherH. D. (2020). Associations among diet, the gastrointestinal microbiota, and negative emotional states in adults. Nutr. Neurosci.
+23, 983–992. 10.1080/1028415X.2019.158257830794085TuddenhamS. A.
+KoayW. L. A.
+ZhaoN.
+WhiteJ. R.
+GhanemK. G.
+SearsC. L. (2020). The Impact of Human Immunodeficiency Virus Infection on Gut Microbiota α-Diversity: An Individual-level Meta-analysis. Clin. Infect. Dis.
+70, 615–627. 10.1093/cid/ciz25830921452PMC7319268VilaA. V.
+CollijV.
+SannaS.
+SinhaT.
+ImhannF.
+BourgonjeA. R. (2020). Impact of commonly used drugs on the composition and metabolic function of the gut microbiota. Nat. Commun. 11, 362. 10.1038/s41467-019-14177-z31953381PMC6969170VindegaardN.
+SpeyerH.
+NordentoftM.
+RasmussenS.
+BenrosM. E. (2021). Gut microbial changes of patients with psychotic and affective disorders: A systematic review. Schizophr Res. 234, 1–10. 10.1016/j.schres.2019.12.01431952911VogtN. M.
+KerbyR. L. K.A.
+Dill-McFarlandS.J.
+HardingA.P.
+MerluzziS.C.
+Johnson
+. (2017). Gut microbiome alterations in Alzheimer's disease. Sci. Rep. 7, 13537. 10.1038/s41598-017-13601-y29051531PMC5648830WangZ.
+XiaoR.
+HuangJ.
+QinX.
+HuD.
+GuoE. (2021). The diversity of vaginal microbiota predicts neoadjuvant chemotherapy responsiveness in locally advanced cervical cancer. Microb. Ecol. 10.1007/s00248-021-01800-034405250WeinstockG. M. (2012). Genomic approaches to studying the human microbiota. Nature. 489, 250–6. 10.1038/nature1155322972298PMC3665339WeisS.
+SchwiertzA.
+UngerM. M.
+BeckerA.
+FaßbenderK.
+RateringS. (2019). Effect of Parkinson's disease and related medications on the composition of the fecal bacterial microbiota. NPJ Parkinson's Dis.
+5, 28. 10.1038/s41531-019-0100-x31815177PMC6884491WillisA. D. (2019). Rarefaction, Alpha Diversity, and Statistics. Front. Microbiol. 10, 2407. 10.3389/fmicb.2019.0240731708888PMC6819366XuM.
+XuX.
+LiJ.
+LiF. (2019). Association between gut microbiota and autism spectrum disorder: a systematic review and meta-analysis. Front. Psychiatry. 10, 473. 10.3389/fpsyt.2019.0047331404299PMC6673757XuR.
+WuB.
+LiangJ.
+HeF.
+GuW.
+LiK. (2020). Altered gut microbiota and mucosal immunity in patients with schizophrenia. Brain Behav. Immun. 85, 120–127. 10.1016/j.bbi.2019.06.03931255682YinJ.
+LiaoS. X.
+HeY.
+WangS.
+XiaG. H.
+LiuF. T. (2015). Dysbiosis of gut microbiota with reduced trimethylamine-N-oxide level in patients with large-artery atherosclerotic stroke or transient ischemic attack. J. Am. Heart Assoc.
+4, e002699. 10.1161/JAHA.115.00269926597155PMC4845212ZhangX.
+ZhouJ.
+GuZ.
+ZhangH.
+GongQ.
+LuoK. (2020). Advances in nanomedicines for diagnosis of central nervous system disorders. Biomaterials. 269, 120492. 10.1016/j.biomaterials.2020.12049233153757ZhangZ.
+ZhaiH.
+GengJ.
+YuR.
+RenH.
+FanH. (2013). Large-scale survey of gut microbiota associated with MHE Via 16S rRNA-based pyrosequencing. Am. J. Gastroenterol.
+108, 1601–11. 10.1038/ajg.2013.22123877352ZhengY.
+DingQ.
+WeiY.
+GouX.
+TianJ.
+LiM. (2021). Effect of traditional Chinese medicine on gut microbiota in adults with type 2 diabetes: a systematic review and meta-analysis. Phytomed. Int. J. Phytother. Phytopharmacol.
+88, 153455. 10.1016/j.phymed.2020.15345533478831ZhuX.
+HanY.
+DuJ.
+LiuR.
+JinK.
+YiW. (2017). Microbiota-gut-brain axis and the central nervous system. Oncotarget. 8, 53829–53838. 10.18632/oncotarget.1775428881854PMC5581153ZouR.
+XuF.
+WangY.
+DuanM.
+GuoM.
+ZhangQ. (2020). Changes in the gut microbiota of children with autism spectrum disorder. Autism Res.
+13, 1614–1625. 10.1002/aur.235832830918

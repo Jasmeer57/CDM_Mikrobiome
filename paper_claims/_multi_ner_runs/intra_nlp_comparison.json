@@ -1,0 +1,3529 @@
+{
+  "model_stats": {
+    "gliner": {
+      "total_entities": 186832,
+      "unique_entities": 36750,
+      "papers_covered": 444,
+      "types_covered": 14
+    },
+    "pubmedbert": {
+      "total_entities": 321333,
+      "unique_entities": 228448,
+      "papers_covered": 444,
+      "types_covered": 1
+    },
+    "pubtator": {
+      "total_entities": 2308,
+      "unique_entities": 755,
+      "papers_covered": 126,
+      "types_covered": 6
+    },
+    "scispacy": {
+      "total_entities": 100688,
+      "unique_entities": 25338,
+      "papers_covered": 50,
+      "types_covered": 14
+    }
+  },
+  "pairwise": {
+    "gliner__pubmedbert": {
+      "a_entities": 36750,
+      "b_entities": 228448,
+      "overlap": 2710,
+      "union": 262488,
+      "jaccard": 0.0103,
+      "a_only": 34040,
+      "b_only": 225738,
+      "a_papers": 444,
+      "b_papers": 444,
+      "paper_overlap": 444,
+      "type_overlap": {
+        "CELL_TYPE": {
+          "a": 1183,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CHEMICAL": {
+          "a": 8401,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CLINICAL": {
+          "a": 2214,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DATA_ANALYSIS": {
+          "a": 1546,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DISEASE": {
+          "a": 5622,
+          "b": 228448,
+          "overlap": 1992,
+          "jaccard": 0.0086
+        },
+        "DNA_RNA": {
+          "a": 998,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "EXPERIMENTAL_METHOD": {
+          "a": 2551,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GENOMICS": {
+          "a": 2320,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "LAB_METHOD": {
+          "a": 1319,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ORGANISM": {
+          "a": 10033,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PATHWAY": {
+          "a": 1330,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PROTEIN": {
+          "a": 2532,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "SAMPLE_METHOD": {
+          "a": 1118,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "STUDY_DESIGN": {
+          "a": 445,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        }
+      }
+    },
+    "gliner__pubtator": {
+      "a_entities": 36750,
+      "b_entities": 755,
+      "overlap": 511,
+      "union": 36994,
+      "jaccard": 0.0138,
+      "a_only": 36239,
+      "b_only": 244,
+      "a_papers": 444,
+      "b_papers": 126,
+      "paper_overlap": 126,
+      "type_overlap": {
+        "CELL_TYPE": {
+          "a": 1183,
+          "b": 1,
+          "overlap": 1,
+          "jaccard": 0.0008
+        },
+        "CHEMICAL": {
+          "a": 8401,
+          "b": 203,
+          "overlap": 147,
+          "jaccard": 0.0174
+        },
+        "CLINICAL": {
+          "a": 2214,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DATA_ANALYSIS": {
+          "a": 1546,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DISEASE": {
+          "a": 5622,
+          "b": 294,
+          "overlap": 167,
+          "jaccard": 0.029
+        },
+        "DNA_RNA": {
+          "a": 998,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "EXPERIMENTAL_METHOD": {
+          "a": 2551,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GENOMICS": {
+          "a": 2320,
+          "b": 1,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "LAB_METHOD": {
+          "a": 1319,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ORGANISM": {
+          "a": 10033,
+          "b": 200,
+          "overlap": 132,
+          "jaccard": 0.0131
+        },
+        "PATHWAY": {
+          "a": 1330,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PROTEIN": {
+          "a": 2532,
+          "b": 65,
+          "overlap": 39,
+          "jaccard": 0.0152
+        },
+        "SAMPLE_METHOD": {
+          "a": 1118,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "STUDY_DESIGN": {
+          "a": 445,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        }
+      }
+    },
+    "gliner__scispacy": {
+      "a_entities": 36750,
+      "b_entities": 25338,
+      "overlap": 4756,
+      "union": 57332,
+      "jaccard": 0.083,
+      "a_only": 31994,
+      "b_only": 20582,
+      "a_papers": 444,
+      "b_papers": 50,
+      "paper_overlap": 50,
+      "type_overlap": {
+        "CELL_LINE": {
+          "a": 0,
+          "b": 280,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CELL_TYPE": {
+          "a": 1183,
+          "b": 246,
+          "overlap": 60,
+          "jaccard": 0.0438
+        },
+        "CHEBI": {
+          "a": 0,
+          "b": 432,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CHEMICAL": {
+          "a": 8401,
+          "b": 901,
+          "overlap": 313,
+          "jaccard": 0.0348
+        },
+        "CL": {
+          "a": 0,
+          "b": 81,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CLINICAL": {
+          "a": 2214,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DATA_ANALYSIS": {
+          "a": 1546,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DISEASE": {
+          "a": 5622,
+          "b": 1073,
+          "overlap": 400,
+          "jaccard": 0.0635
+        },
+        "DNA": {
+          "a": 0,
+          "b": 639,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DNA_RNA": {
+          "a": 998,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ENTITY": {
+          "a": 0,
+          "b": 22869,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "EXPERIMENTAL_METHOD": {
+          "a": 2551,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GENOMICS": {
+          "a": 2320,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GGP": {
+          "a": 0,
+          "b": 544,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GO": {
+          "a": 0,
+          "b": 34,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "LAB_METHOD": {
+          "a": 1319,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ORGANISM": {
+          "a": 10033,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PATHWAY": {
+          "a": 1330,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PROTEIN": {
+          "a": 2532,
+          "b": 1061,
+          "overlap": 82,
+          "jaccard": 0.0234
+        },
+        "RNA": {
+          "a": 0,
+          "b": 5,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "SAMPLE_METHOD": {
+          "a": 1118,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "SO": {
+          "a": 0,
+          "b": 342,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "STUDY_DESIGN": {
+          "a": 445,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "TAXON": {
+          "a": 0,
+          "b": 422,
+          "overlap": 0,
+          "jaccard": 0.0
+        }
+      }
+    },
+    "pubmedbert__pubtator": {
+      "a_entities": 228448,
+      "b_entities": 755,
+      "overlap": 215,
+      "union": 228988,
+      "jaccard": 0.0009,
+      "a_only": 228233,
+      "b_only": 540,
+      "a_papers": 444,
+      "b_papers": 126,
+      "paper_overlap": 126,
+      "type_overlap": {
+        "CELL_TYPE": {
+          "a": 0,
+          "b": 1,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CHEMICAL": {
+          "a": 0,
+          "b": 203,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DISEASE": {
+          "a": 228448,
+          "b": 294,
+          "overlap": 173,
+          "jaccard": 0.0008
+        },
+        "GENOMICS": {
+          "a": 0,
+          "b": 1,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ORGANISM": {
+          "a": 0,
+          "b": 200,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PROTEIN": {
+          "a": 0,
+          "b": 65,
+          "overlap": 0,
+          "jaccard": 0.0
+        }
+      }
+    },
+    "pubmedbert__scispacy": {
+      "a_entities": 228448,
+      "b_entities": 25338,
+      "overlap": 1192,
+      "union": 252594,
+      "jaccard": 0.0047,
+      "a_only": 227256,
+      "b_only": 24146,
+      "a_papers": 444,
+      "b_papers": 50,
+      "paper_overlap": 50,
+      "type_overlap": {
+        "CELL_LINE": {
+          "a": 0,
+          "b": 280,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CELL_TYPE": {
+          "a": 0,
+          "b": 246,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CHEBI": {
+          "a": 0,
+          "b": 432,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CHEMICAL": {
+          "a": 0,
+          "b": 901,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CL": {
+          "a": 0,
+          "b": 81,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DISEASE": {
+          "a": 228448,
+          "b": 1073,
+          "overlap": 404,
+          "jaccard": 0.0018
+        },
+        "DNA": {
+          "a": 0,
+          "b": 639,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ENTITY": {
+          "a": 0,
+          "b": 22869,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GGP": {
+          "a": 0,
+          "b": 544,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GO": {
+          "a": 0,
+          "b": 34,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PROTEIN": {
+          "a": 0,
+          "b": 1061,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "RNA": {
+          "a": 0,
+          "b": 5,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "SO": {
+          "a": 0,
+          "b": 342,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "TAXON": {
+          "a": 0,
+          "b": 422,
+          "overlap": 0,
+          "jaccard": 0.0
+        }
+      }
+    },
+    "pubtator__scispacy": {
+      "a_entities": 755,
+      "b_entities": 25338,
+      "overlap": 284,
+      "union": 25809,
+      "jaccard": 0.011,
+      "a_only": 471,
+      "b_only": 25054,
+      "a_papers": 126,
+      "b_papers": 50,
+      "paper_overlap": 11,
+      "type_overlap": {
+        "CELL_LINE": {
+          "a": 0,
+          "b": 280,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CELL_TYPE": {
+          "a": 1,
+          "b": 246,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CHEBI": {
+          "a": 0,
+          "b": 432,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "CHEMICAL": {
+          "a": 203,
+          "b": 901,
+          "overlap": 38,
+          "jaccard": 0.0356
+        },
+        "CL": {
+          "a": 0,
+          "b": 81,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "DISEASE": {
+          "a": 294,
+          "b": 1073,
+          "overlap": 72,
+          "jaccard": 0.0556
+        },
+        "DNA": {
+          "a": 0,
+          "b": 639,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ENTITY": {
+          "a": 0,
+          "b": 22869,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GENOMICS": {
+          "a": 1,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GGP": {
+          "a": 0,
+          "b": 544,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "GO": {
+          "a": 0,
+          "b": 34,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "ORGANISM": {
+          "a": 200,
+          "b": 0,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "PROTEIN": {
+          "a": 65,
+          "b": 1061,
+          "overlap": 10,
+          "jaccard": 0.009
+        },
+        "RNA": {
+          "a": 0,
+          "b": 5,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "SO": {
+          "a": 0,
+          "b": 342,
+          "overlap": 0,
+          "jaccard": 0.0
+        },
+        "TAXON": {
+          "a": 0,
+          "b": 422,
+          "overlap": 0,
+          "jaccard": 0.0
+        }
+      }
+    }
+  },
+  "unique_contribution": {
+    "gliner": {
+      "total_unique": 29921,
+      "pct_of_own": 81.4,
+      "pct_of_all_unique": 10.9
+    },
+    "pubmedbert": {
+      "total_unique": 225347,
+      "pct_of_own": 98.6,
+      "pct_of_all_unique": 81.7
+    },
+    "pubtator": {
+      "total_unique": 210,
+      "pct_of_own": 27.8,
+      "pct_of_all_unique": 0.1
+    },
+    "scispacy": {
+      "total_unique": 20192,
+      "pct_of_own": 79.7,
+      "pct_of_all_unique": 7.3
+    }
+  },
+  "total_unique_all": 275670,
+  "type_coverage": {
+    "gliner": {
+      "CELL_LINE": 0,
+      "CELL_TYPE": 3829,
+      "CHEBI": 0,
+      "CHEMICAL": 37077,
+      "CL": 0,
+      "CLINICAL": 5422,
+      "DATA_ANALYSIS": 3062,
+      "DISEASE": 35721,
+      "DNA": 0,
+      "DNA_RNA": 4326,
+      "ENTITY": 0,
+      "EXPERIMENTAL_METHOD": 5688,
+      "GENOMICS": 9094,
+      "GGP": 0,
+      "GO": 0,
+      "LAB_METHOD": 2899,
+      "ORGANISM": 65607,
+      "PATHWAY": 2421,
+      "PROTEIN": 5779,
+      "RNA": 0,
+      "SAMPLE_METHOD": 4030,
+      "SO": 0,
+      "STUDY_DESIGN": 943,
+      "TAXON": 0
+    },
+    "pubmedbert": {
+      "CELL_LINE": 0,
+      "CELL_TYPE": 0,
+      "CHEBI": 0,
+      "CHEMICAL": 0,
+      "CL": 0,
+      "CLINICAL": 0,
+      "DATA_ANALYSIS": 0,
+      "DISEASE": 321333,
+      "DNA": 0,
+      "DNA_RNA": 0,
+      "ENTITY": 0,
+      "EXPERIMENTAL_METHOD": 0,
+      "GENOMICS": 0,
+      "GGP": 0,
+      "GO": 0,
+      "LAB_METHOD": 0,
+      "ORGANISM": 0,
+      "PATHWAY": 0,
+      "PROTEIN": 0,
+      "RNA": 0,
+      "SAMPLE_METHOD": 0,
+      "SO": 0,
+      "STUDY_DESIGN": 0,
+      "TAXON": 0
+    },
+    "pubtator": {
+      "CELL_LINE": 0,
+      "CELL_TYPE": 2,
+      "CHEBI": 0,
+      "CHEMICAL": 503,
+      "CL": 0,
+      "CLINICAL": 0,
+      "DATA_ANALYSIS": 0,
+      "DISEASE": 923,
+      "DNA": 0,
+      "DNA_RNA": 0,
+      "ENTITY": 0,
+      "EXPERIMENTAL_METHOD": 0,
+      "GENOMICS": 1,
+      "GGP": 0,
+      "GO": 0,
+      "LAB_METHOD": 0,
+      "ORGANISM": 762,
+      "PATHWAY": 0,
+      "PROTEIN": 108,
+      "RNA": 0,
+      "SAMPLE_METHOD": 0,
+      "SO": 0,
+      "STUDY_DESIGN": 0,
+      "TAXON": 0
+    },
+    "scispacy": {
+      "CELL_LINE": 391,
+      "CELL_TYPE": 344,
+      "CHEBI": 1824,
+      "CHEMICAL": 2890,
+      "CL": 431,
+      "CLINICAL": 0,
+      "DATA_ANALYSIS": 0,
+      "DISEASE": 4348,
+      "DNA": 1152,
+      "DNA_RNA": 0,
+      "ENTITY": 81445,
+      "EXPERIMENTAL_METHOD": 0,
+      "GENOMICS": 0,
+      "GGP": 984,
+      "GO": 97,
+      "LAB_METHOD": 0,
+      "ORGANISM": 0,
+      "PATHWAY": 0,
+      "PROTEIN": 1845,
+      "RNA": 7,
+      "SAMPLE_METHOD": 0,
+      "SO": 1717,
+      "STUDY_DESIGN": 0,
+      "TAXON": 3213
+    }
+  },
+  "all_types": [
+    "CELL_LINE",
+    "CELL_TYPE",
+    "CHEBI",
+    "CHEMICAL",
+    "CL",
+    "CLINICAL",
+    "DATA_ANALYSIS",
+    "DISEASE",
+    "DNA",
+    "DNA_RNA",
+    "ENTITY",
+    "EXPERIMENTAL_METHOD",
+    "GENOMICS",
+    "GGP",
+    "GO",
+    "LAB_METHOD",
+    "ORGANISM",
+    "PATHWAY",
+    "PROTEIN",
+    "RNA",
+    "SAMPLE_METHOD",
+    "SO",
+    "STUDY_DESIGN",
+    "TAXON"
+  ],
+  "ensemble": {
+    "union_all": 282903,
+    "intersection_all": 125,
+    "progressive_union": [
+      {
+        "model": "gliner",
+        "new_entities": 125,
+        "cumulative_union": 125
+      },
+      {
+        "model": "pubmedbert",
+        "new_entities": 228323,
+        "cumulative_union": 228448
+      },
+      {
+        "model": "pubtator",
+        "new_entities": 540,
+        "cumulative_union": 228988
+      },
+      {
+        "model": "scispacy",
+        "new_entities": 23994,
+        "cumulative_union": 252982
+      }
+    ]
+  },
+  "per_paper": {
+    "PRJDB10485.txt": {
+      "gliner": 375,
+      "pubmedbert": 850,
+      "pubtator": 24,
+      "scispacy": 0
+    },
+    "PRJDB10527.txt": {
+      "gliner": 226,
+      "pubmedbert": 545,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB10528.txt": {
+      "gliner": 1006,
+      "pubmedbert": 1276,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB10612.txt": {
+      "gliner": 563,
+      "pubmedbert": 590,
+      "pubtator": 28,
+      "scispacy": 0
+    },
+    "PRJDB11845.txt": {
+      "gliner": 415,
+      "pubmedbert": 765,
+      "pubtator": 17,
+      "scispacy": 2433
+    },
+    "PRJDB11894.txt": {
+      "gliner": 915,
+      "pubmedbert": 848,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB4360.txt": {
+      "gliner": 265,
+      "pubmedbert": 557,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB5316.txt": {
+      "gliner": 318,
+      "pubmedbert": 520,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB5564.txt": {
+      "gliner": 342,
+      "pubmedbert": 469,
+      "pubtator": 0,
+      "scispacy": 2297
+    },
+    "PRJDB5678.txt": {
+      "gliner": 293,
+      "pubmedbert": 794,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB6499.txt": {
+      "gliner": 5,
+      "pubmedbert": 8,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB7891.txt": {
+      "gliner": 259,
+      "pubmedbert": 462,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB8027.txt": {
+      "gliner": 473,
+      "pubmedbert": 838,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJDB8511.txt": {
+      "gliner": 225,
+      "pubmedbert": 431,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB9239.txt": {
+      "gliner": 347,
+      "pubmedbert": 478,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB9469.txt": {
+      "gliner": 811,
+      "pubmedbert": 659,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB9705.txt": {
+      "gliner": 379,
+      "pubmedbert": 539,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJDB9936.txt": {
+      "gliner": 42,
+      "pubmedbert": 405,
+      "pubtator": 0,
+      "scispacy": 1398
+    },
+    "PRJDB9975.txt": {
+      "gliner": 232,
+      "pubmedbert": 376,
+      "pubtator": 0,
+      "scispacy": 2128
+    },
+    "PRJEB10326.txt": {
+      "gliner": 233,
+      "pubmedbert": 618,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB11419.txt": {
+      "gliner": 449,
+      "pubmedbert": 743,
+      "pubtator": 6,
+      "scispacy": 0
+    },
+    "PRJEB13896.txt": {
+      "gliner": 357,
+      "pubmedbert": 502,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB15481.txt": {
+      "gliner": 517,
+      "pubmedbert": 623,
+      "pubtator": 3,
+      "scispacy": 0
+    },
+    "PRJEB15534.txt": {
+      "gliner": 1294,
+      "pubmedbert": 1151,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB16344.txt": {
+      "gliner": 331,
+      "pubmedbert": 655,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB17608.txt": {
+      "gliner": 189,
+      "pubmedbert": 445,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB17610.txt": {
+      "gliner": 189,
+      "pubmedbert": 445,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB17613.txt": {
+      "gliner": 189,
+      "pubmedbert": 445,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB17860.txt": {
+      "gliner": 298,
+      "pubmedbert": 629,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB1799.txt": {
+      "gliner": 234,
+      "pubmedbert": 471,
+      "pubtator": 19,
+      "scispacy": 0
+    },
+    "PRJEB20766.txt": {
+      "gliner": 514,
+      "pubmedbert": 652,
+      "pubtator": 30,
+      "scispacy": 0
+    },
+    "PRJEB20773.txt": {
+      "gliner": 296,
+      "pubmedbert": 411,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB21946.txt": {
+      "gliner": 242,
+      "pubmedbert": 530,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB22676.txt": {
+      "gliner": 612,
+      "pubmedbert": 1005,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB23775.txt": {
+      "gliner": 160,
+      "pubmedbert": 432,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB25853.txt": {
+      "gliner": 546,
+      "pubmedbert": 1028,
+      "pubtator": 39,
+      "scispacy": 0
+    },
+    "PRJEB26012.txt": {
+      "gliner": 203,
+      "pubmedbert": 591,
+      "pubtator": 4,
+      "scispacy": 0
+    },
+    "PRJEB27068.txt": {
+      "gliner": 446,
+      "pubmedbert": 768,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB27564.txt": {
+      "gliner": 461,
+      "pubmedbert": 1212,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB27662.txt": {
+      "gliner": 851,
+      "pubmedbert": 1505,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB27807.txt": {
+      "gliner": 225,
+      "pubmedbert": 378,
+      "pubtator": 0,
+      "scispacy": 2087
+    },
+    "PRJEB27868.txt": {
+      "gliner": 635,
+      "pubmedbert": 1041,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB27978.txt": {
+      "gliner": 464,
+      "pubmedbert": 839,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB28159.txt": {
+      "gliner": 269,
+      "pubmedbert": 785,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB28700.txt": {
+      "gliner": 543,
+      "pubmedbert": 831,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB29433.txt": {
+      "gliner": 268,
+      "pubmedbert": 560,
+      "pubtator": 0,
+      "scispacy": 2361
+    },
+    "PRJEB30292.txt": {
+      "gliner": 471,
+      "pubmedbert": 729,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB30401.txt": {
+      "gliner": 480,
+      "pubmedbert": 858,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB30495.txt": {
+      "gliner": 408,
+      "pubmedbert": 654,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJEB3079.txt": {
+      "gliner": 1422,
+      "pubmedbert": 858,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB31155.txt": {
+      "gliner": 232,
+      "pubmedbert": 409,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB31354.txt": {
+      "gliner": 28,
+      "pubmedbert": 17,
+      "pubtator": 4,
+      "scispacy": 0
+    },
+    "PRJEB31775.txt": {
+      "gliner": 424,
+      "pubmedbert": 622,
+      "pubtator": 19,
+      "scispacy": 0
+    },
+    "PRJEB32077.txt": {
+      "gliner": 23,
+      "pubmedbert": 74,
+      "pubtator": 0,
+      "scispacy": 317
+    },
+    "PRJEB32244.txt": {
+      "gliner": 671,
+      "pubmedbert": 713,
+      "pubtator": 20,
+      "scispacy": 0
+    },
+    "PRJEB32537.txt": {
+      "gliner": 303,
+      "pubmedbert": 538,
+      "pubtator": 9,
+      "scispacy": 0
+    },
+    "PRJEB32547.txt": {
+      "gliner": 405,
+      "pubmedbert": 834,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB33065.txt": {
+      "gliner": 369,
+      "pubmedbert": 728,
+      "pubtator": 22,
+      "scispacy": 0
+    },
+    "PRJEB3324.txt": {
+      "gliner": 388,
+      "pubmedbert": 791,
+      "pubtator": 13,
+      "scispacy": 0
+    },
+    "PRJEB33268.txt": {
+      "gliner": 153,
+      "pubmedbert": 651,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB3360.txt": {
+      "gliner": 388,
+      "pubmedbert": 791,
+      "pubtator": 13,
+      "scispacy": 0
+    },
+    "PRJEB33905.txt": {
+      "gliner": 663,
+      "pubmedbert": 650,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB35769.txt": {
+      "gliner": 281,
+      "pubmedbert": 735,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB35994.txt": {
+      "gliner": 286,
+      "pubmedbert": 597,
+      "pubtator": 0,
+      "scispacy": 2930
+    },
+    "PRJEB36316.txt": {
+      "gliner": 270,
+      "pubmedbert": 779,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB36385.txt": {
+      "gliner": 578,
+      "pubmedbert": 966,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB36585.txt": {
+      "gliner": 568,
+      "pubmedbert": 1257,
+      "pubtator": 38,
+      "scispacy": 0
+    },
+    "PRJEB37289.txt": {
+      "gliner": 516,
+      "pubmedbert": 819,
+      "pubtator": 4,
+      "scispacy": 0
+    },
+    "PRJEB37553.txt": {
+      "gliner": 436,
+      "pubmedbert": 747,
+      "pubtator": 13,
+      "scispacy": 0
+    },
+    "PRJEB37877.txt": {
+      "gliner": 500,
+      "pubmedbert": 1017,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB38457.txt": {
+      "gliner": 280,
+      "pubmedbert": 772,
+      "pubtator": 17,
+      "scispacy": 0
+    },
+    "PRJEB38835.txt": {
+      "gliner": 150,
+      "pubmedbert": 611,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB38948.txt": {
+      "gliner": 28,
+      "pubmedbert": 87,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB39289.txt": {
+      "gliner": 46,
+      "pubmedbert": 51,
+      "pubtator": 27,
+      "scispacy": 0
+    },
+    "PRJEB39382.txt": {
+      "gliner": 193,
+      "pubmedbert": 579,
+      "pubtator": 14,
+      "scispacy": 0
+    },
+    "PRJEB39880.txt": {
+      "gliner": 400,
+      "pubmedbert": 703,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB40538.txt": {
+      "gliner": 245,
+      "pubmedbert": 523,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB40569.txt": {
+      "gliner": 211,
+      "pubmedbert": 599,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB40751.txt": {
+      "gliner": 242,
+      "pubmedbert": 592,
+      "pubtator": 7,
+      "scispacy": 0
+    },
+    "PRJEB41341.txt": {
+      "gliner": 526,
+      "pubmedbert": 535,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB42056.txt": {
+      "gliner": 257,
+      "pubmedbert": 388,
+      "pubtator": 10,
+      "scispacy": 0
+    },
+    "PRJEB42155.txt": {
+      "gliner": 2424,
+      "pubmedbert": 1107,
+      "pubtator": 29,
+      "scispacy": 0
+    },
+    "PRJEB4244.txt": {
+      "gliner": 632,
+      "pubmedbert": 819,
+      "pubtator": 11,
+      "scispacy": 0
+    },
+    "PRJEB42687.txt": {
+      "gliner": 490,
+      "pubmedbert": 1335,
+      "pubtator": 30,
+      "scispacy": 0
+    },
+    "PRJEB4335.txt": {
+      "gliner": 492,
+      "pubmedbert": 965,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB43667.txt": {
+      "gliner": 168,
+      "pubmedbert": 927,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB44113.txt": {
+      "gliner": 449,
+      "pubmedbert": 1151,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB44169.txt": {
+      "gliner": 70,
+      "pubmedbert": 218,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB44538.txt": {
+      "gliner": 276,
+      "pubmedbert": 613,
+      "pubtator": 1,
+      "scispacy": 1931
+    },
+    "PRJEB46174.txt": {
+      "gliner": 123,
+      "pubmedbert": 387,
+      "pubtator": 34,
+      "scispacy": 0
+    },
+    "PRJEB5482.txt": {
+      "gliner": 296,
+      "pubmedbert": 717,
+      "pubtator": 11,
+      "scispacy": 0
+    },
+    "PRJEB5714.txt": {
+      "gliner": 439,
+      "pubmedbert": 815,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB5729.txt": {
+      "gliner": 152,
+      "pubmedbert": 425,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB6358.txt": {
+      "gliner": 415,
+      "pubmedbert": 793,
+      "pubtator": 24,
+      "scispacy": 0
+    },
+    "PRJEB6518.txt": {
+      "gliner": 306,
+      "pubmedbert": 734,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB6702.txt": {
+      "gliner": 278,
+      "pubmedbert": 655,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB6705.txt": {
+      "gliner": 278,
+      "pubmedbert": 655,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB8463.txt": {
+      "gliner": 679,
+      "pubmedbert": 1204,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJEB9150.txt": {
+      "gliner": 526,
+      "pubmedbert": 1217,
+      "pubtator": 26,
+      "scispacy": 0
+    },
+    "PRJNA227062.txt": {
+      "gliner": 537,
+      "pubmedbert": 805,
+      "pubtator": 55,
+      "scispacy": 0
+    },
+    "PRJNA231909.txt": {
+      "gliner": 242,
+      "pubmedbert": 588,
+      "pubtator": 8,
+      "scispacy": 0
+    },
+    "PRJNA232731.txt": {
+      "gliner": 147,
+      "pubmedbert": 398,
+      "pubtator": 8,
+      "scispacy": 1889
+    },
+    "PRJNA237362.txt": {
+      "gliner": 447,
+      "pubmedbert": 732,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA240307.txt": {
+      "gliner": 907,
+      "pubmedbert": 710,
+      "pubtator": 6,
+      "scispacy": 0
+    },
+    "PRJNA246121.txt": {
+      "gliner": 466,
+      "pubmedbert": 691,
+      "pubtator": 0,
+      "scispacy": 2583
+    },
+    "PRJNA259224.txt": {
+      "gliner": 190,
+      "pubmedbert": 452,
+      "pubtator": 14,
+      "scispacy": 2400
+    },
+    "PRJNA275256.txt": {
+      "gliner": 299,
+      "pubmedbert": 604,
+      "pubtator": 0,
+      "scispacy": 2233
+    },
+    "PRJNA279031.txt": {
+      "gliner": 786,
+      "pubmedbert": 1095,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA279828.txt": {
+      "gliner": 302,
+      "pubmedbert": 844,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA280026.txt": {
+      "gliner": 471,
+      "pubmedbert": 908,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA290926.txt": {
+      "gliner": 336,
+      "pubmedbert": 788,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA297510.txt": {
+      "gliner": 267,
+      "pubmedbert": 595,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA297793.txt": {
+      "gliner": 435,
+      "pubmedbert": 761,
+      "pubtator": 32,
+      "scispacy": 0
+    },
+    "PRJNA301903.txt": {
+      "gliner": 443,
+      "pubmedbert": 606,
+      "pubtator": 5,
+      "scispacy": 0
+    },
+    "PRJNA306884.txt": {
+      "gliner": 349,
+      "pubmedbert": 462,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA307231.txt": {
+      "gliner": 366,
+      "pubmedbert": 740,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJNA307992.txt": {
+      "gliner": 320,
+      "pubmedbert": 667,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA308315.txt": {
+      "gliner": 380,
+      "pubmedbert": 511,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA311147.txt": {
+      "gliner": 333,
+      "pubmedbert": 659,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA313391.txt": {
+      "gliner": 531,
+      "pubmedbert": 997,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA317290.txt": {
+      "gliner": 418,
+      "pubmedbert": 681,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA317370.txt": {
+      "gliner": 596,
+      "pubmedbert": 1021,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA317429.txt": {
+      "gliner": 504,
+      "pubmedbert": 977,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA317493.txt": {
+      "gliner": 121,
+      "pubmedbert": 286,
+      "pubtator": 0,
+      "scispacy": 1669
+    },
+    "PRJNA318004.txt": {
+      "gliner": 137,
+      "pubmedbert": 370,
+      "pubtator": 0,
+      "scispacy": 1492
+    },
+    "PRJNA321731.txt": {
+      "gliner": 492,
+      "pubmedbert": 777,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA322688.txt": {
+      "gliner": 563,
+      "pubmedbert": 763,
+      "pubtator": 13,
+      "scispacy": 0
+    },
+    "PRJNA323603.txt": {
+      "gliner": 262,
+      "pubmedbert": 638,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA324147.txt": {
+      "gliner": 523,
+      "pubmedbert": 1000,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA324452.txt": {
+      "gliner": 50,
+      "pubmedbert": 113,
+      "pubtator": 0,
+      "scispacy": 697
+    },
+    "PRJNA324825.txt": {
+      "gliner": 509,
+      "pubmedbert": 1003,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA325931.txt": {
+      "gliner": 386,
+      "pubmedbert": 522,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA328016.txt": {
+      "gliner": 436,
+      "pubmedbert": 624,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA328258.txt": {
+      "gliner": 365,
+      "pubmedbert": 750,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA328987.txt": {
+      "gliner": 215,
+      "pubmedbert": 459,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA331150.txt": {
+      "gliner": 396,
+      "pubmedbert": 731,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA339264.txt": {
+      "gliner": 479,
+      "pubmedbert": 830,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA342173.txt": {
+      "gliner": 576,
+      "pubmedbert": 832,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA345390.txt": {
+      "gliner": 592,
+      "pubmedbert": 945,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA349463.txt": {
+      "gliner": 381,
+      "pubmedbert": 671,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA349809.txt": {
+      "gliner": 651,
+      "pubmedbert": 1131,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA350277.txt": {
+      "gliner": 559,
+      "pubmedbert": 827,
+      "pubtator": 34,
+      "scispacy": 0
+    },
+    "PRJNA352060.txt": {
+      "gliner": 402,
+      "pubmedbert": 749,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA353587.txt": {
+      "gliner": 396,
+      "pubmedbert": 601,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA354863.txt": {
+      "gliner": 461,
+      "pubmedbert": 706,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA362366.txt": {
+      "gliner": 343,
+      "pubmedbert": 781,
+      "pubtator": 0,
+      "scispacy": 2510
+    },
+    "PRJNA362482.txt": {
+      "gliner": 269,
+      "pubmedbert": 403,
+      "pubtator": 14,
+      "scispacy": 2122
+    },
+    "PRJNA362951.txt": {
+      "gliner": 346,
+      "pubmedbert": 837,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA368739.txt": {
+      "gliner": 606,
+      "pubmedbert": 995,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA369083.txt": {
+      "gliner": 149,
+      "pubmedbert": 355,
+      "pubtator": 7,
+      "scispacy": 2093
+    },
+    "PRJNA369241.txt": {
+      "gliner": 148,
+      "pubmedbert": 376,
+      "pubtator": 7,
+      "scispacy": 2120
+    },
+    "PRJNA375772.txt": {
+      "gliner": 375,
+      "pubmedbert": 719,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA378749.txt": {
+      "gliner": 709,
+      "pubmedbert": 1073,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA382861.txt": {
+      "gliner": 474,
+      "pubmedbert": 876,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA382889.txt": {
+      "gliner": 109,
+      "pubmedbert": 377,
+      "pubtator": 0,
+      "scispacy": 1482
+    },
+    "PRJNA383606.txt": {
+      "gliner": 438,
+      "pubmedbert": 786,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA385551.txt": {
+      "gliner": 157,
+      "pubmedbert": 513,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA386260.txt": {
+      "gliner": 537,
+      "pubmedbert": 797,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA386603.txt": {
+      "gliner": 404,
+      "pubmedbert": 583,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA388132.txt": {
+      "gliner": 480,
+      "pubmedbert": 849,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA388210.txt": {
+      "gliner": 725,
+      "pubmedbert": 1481,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA388263.txt": {
+      "gliner": 412,
+      "pubmedbert": 961,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA389357.txt": {
+      "gliner": 548,
+      "pubmedbert": 730,
+      "pubtator": 64,
+      "scispacy": 0
+    },
+    "PRJNA389431.txt": {
+      "gliner": 16,
+      "pubmedbert": 8,
+      "pubtator": 7,
+      "scispacy": 0
+    },
+    "PRJNA389481.txt": {
+      "gliner": 706,
+      "pubmedbert": 1088,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA390475.txt": {
+      "gliner": 465,
+      "pubmedbert": 950,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA390646.txt": {
+      "gliner": 361,
+      "pubmedbert": 594,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA392012.txt": {
+      "gliner": 130,
+      "pubmedbert": 270,
+      "pubtator": 0,
+      "scispacy": 1479
+    },
+    "PRJNA394608.txt": {
+      "gliner": 445,
+      "pubmedbert": 941,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA394877.txt": {
+      "gliner": 622,
+      "pubmedbert": 753,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA395034.txt": {
+      "gliner": 335,
+      "pubmedbert": 881,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA396815.txt": {
+      "gliner": 42,
+      "pubmedbert": 94,
+      "pubtator": 24,
+      "scispacy": 0
+    },
+    "PRJNA397396.txt": {
+      "gliner": 98,
+      "pubmedbert": 416,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA398089.txt": {
+      "gliner": 1091,
+      "pubmedbert": 1135,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA398187.txt": {
+      "gliner": 540,
+      "pubmedbert": 1021,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA398279.txt": {
+      "gliner": 462,
+      "pubmedbert": 810,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA399246.txt": {
+      "gliner": 415,
+      "pubmedbert": 584,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA400325.txt": {
+      "gliner": 393,
+      "pubmedbert": 700,
+      "pubtator": 20,
+      "scispacy": 0
+    },
+    "PRJNA400332.txt": {
+      "gliner": 316,
+      "pubmedbert": 556,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA401981.txt": {
+      "gliner": 308,
+      "pubmedbert": 714,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA413199.txt": {
+      "gliner": 589,
+      "pubmedbert": 987,
+      "pubtator": 1,
+      "scispacy": 0
+    },
+    "PRJNA414072.txt": {
+      "gliner": 288,
+      "pubmedbert": 665,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA414540.txt": {
+      "gliner": 550,
+      "pubmedbert": 517,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA414683.txt": {
+      "gliner": 487,
+      "pubmedbert": 568,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA416445.txt": {
+      "gliner": 309,
+      "pubmedbert": 867,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA417357.txt": {
+      "gliner": 390,
+      "pubmedbert": 1115,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA418903.txt": {
+      "gliner": 491,
+      "pubmedbert": 633,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA419373.txt": {
+      "gliner": 320,
+      "pubmedbert": 836,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA420339.txt": {
+      "gliner": 343,
+      "pubmedbert": 937,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA421286.txt": {
+      "gliner": 489,
+      "pubmedbert": 868,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA421288.txt": {
+      "gliner": 363,
+      "pubmedbert": 906,
+      "pubtator": 30,
+      "scispacy": 0
+    },
+    "PRJNA421371.txt": {
+      "gliner": 314,
+      "pubmedbert": 550,
+      "pubtator": 0,
+      "scispacy": 2210
+    },
+    "PRJNA422125.txt": {
+      "gliner": 522,
+      "pubmedbert": 516,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJNA422134.txt": {
+      "gliner": 361,
+      "pubmedbert": 545,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA422961.txt": {
+      "gliner": 354,
+      "pubmedbert": 1123,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA427170.txt": {
+      "gliner": 403,
+      "pubmedbert": 577,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA427597.txt": {
+      "gliner": 500,
+      "pubmedbert": 749,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA428477.txt": {
+      "gliner": 221,
+      "pubmedbert": 456,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA428736.txt": {
+      "gliner": 444,
+      "pubmedbert": 539,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA430990.txt": {
+      "gliner": 408,
+      "pubmedbert": 823,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA431126.txt": {
+      "gliner": 589,
+      "pubmedbert": 734,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJNA431746.txt": {
+      "gliner": 366,
+      "pubmedbert": 604,
+      "pubtator": 0,
+      "scispacy": 2301
+    },
+    "PRJNA432222.txt": {
+      "gliner": 455,
+      "pubmedbert": 1033,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA433163.txt": {
+      "gliner": 506,
+      "pubmedbert": 569,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA434046.txt": {
+      "gliner": 466,
+      "pubmedbert": 687,
+      "pubtator": 0,
+      "scispacy": 3073
+    },
+    "PRJNA434133.txt": {
+      "gliner": 765,
+      "pubmedbert": 1423,
+      "pubtator": 34,
+      "scispacy": 0
+    },
+    "PRJNA434243.txt": {
+      "gliner": 197,
+      "pubmedbert": 488,
+      "pubtator": 17,
+      "scispacy": 0
+    },
+    "PRJNA434249.txt": {
+      "gliner": 610,
+      "pubmedbert": 982,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA436359.txt": {
+      "gliner": 436,
+      "pubmedbert": 815,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA437504.txt": {
+      "gliner": 354,
+      "pubmedbert": 518,
+      "pubtator": 5,
+      "scispacy": 0
+    },
+    "PRJNA438120.txt": {
+      "gliner": 358,
+      "pubmedbert": 700,
+      "pubtator": 0,
+      "scispacy": 2507
+    },
+    "PRJNA445640.txt": {
+      "gliner": 297,
+      "pubmedbert": 722,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA445932.txt": {
+      "gliner": 371,
+      "pubmedbert": 732,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA449103.txt": {
+      "gliner": 345,
+      "pubmedbert": 652,
+      "pubtator": 0,
+      "scispacy": 2415
+    },
+    "PRJNA450025.txt": {
+      "gliner": 563,
+      "pubmedbert": 1073,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA450340.txt": {
+      "gliner": 552,
+      "pubmedbert": 1015,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA450540.txt": {
+      "gliner": 269,
+      "pubmedbert": 626,
+      "pubtator": 6,
+      "scispacy": 0
+    },
+    "PRJNA450690.txt": {
+      "gliner": 124,
+      "pubmedbert": 398,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA472002.txt": {
+      "gliner": 390,
+      "pubmedbert": 599,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA472768.txt": {
+      "gliner": 561,
+      "pubmedbert": 711,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA472812.txt": {
+      "gliner": 290,
+      "pubmedbert": 523,
+      "pubtator": 17,
+      "scispacy": 0
+    },
+    "PRJNA474717.txt": {
+      "gliner": 266,
+      "pubmedbert": 535,
+      "pubtator": 0,
+      "scispacy": 1830
+    },
+    "PRJNA475599.txt": {
+      "gliner": 616,
+      "pubmedbert": 888,
+      "pubtator": 7,
+      "scispacy": 0
+    },
+    "PRJNA476770.txt": {
+      "gliner": 449,
+      "pubmedbert": 510,
+      "pubtator": 9,
+      "scispacy": 0
+    },
+    "PRJNA478781.txt": {
+      "gliner": 322,
+      "pubmedbert": 715,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA480312.txt": {
+      "gliner": 183,
+      "pubmedbert": 625,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA480547.txt": {
+      "gliner": 463,
+      "pubmedbert": 671,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA480711.txt": {
+      "gliner": 548,
+      "pubmedbert": 1035,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA481072.txt": {
+      "gliner": 185,
+      "pubmedbert": 639,
+      "pubtator": 4,
+      "scispacy": 0
+    },
+    "PRJNA481243.txt": {
+      "gliner": 380,
+      "pubmedbert": 732,
+      "pubtator": 8,
+      "scispacy": 0
+    },
+    "PRJNA481413.txt": {
+      "gliner": 329,
+      "pubmedbert": 658,
+      "pubtator": 0,
+      "scispacy": 2805
+    },
+    "PRJNA485316.txt": {
+      "gliner": 353,
+      "pubmedbert": 584,
+      "pubtator": 0,
+      "scispacy": 2190
+    },
+    "PRJNA485797.txt": {
+      "gliner": 271,
+      "pubmedbert": 720,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA486009.txt": {
+      "gliner": 549,
+      "pubmedbert": 1011,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA487119.txt": {
+      "gliner": 618,
+      "pubmedbert": 1262,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA488351.txt": {
+      "gliner": 338,
+      "pubmedbert": 815,
+      "pubtator": 21,
+      "scispacy": 0
+    },
+    "PRJNA489137.txt": {
+      "gliner": 265,
+      "pubmedbert": 644,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA491657.txt": {
+      "gliner": 8,
+      "pubmedbert": 6,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA491813.txt": {
+      "gliner": 386,
+      "pubmedbert": 606,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA491825.txt": {
+      "gliner": 225,
+      "pubmedbert": 626,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA493625.txt": {
+      "gliner": 382,
+      "pubmedbert": 615,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA494680.txt": {
+      "gliner": 1085,
+      "pubmedbert": 1117,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA495320.txt": {
+      "gliner": 287,
+      "pubmedbert": 574,
+      "pubtator": 12,
+      "scispacy": 0
+    },
+    "PRJNA497734.txt": {
+      "gliner": 423,
+      "pubmedbert": 772,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA505353.txt": {
+      "gliner": 479,
+      "pubmedbert": 1102,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA509882.txt": {
+      "gliner": 275,
+      "pubmedbert": 592,
+      "pubtator": 0,
+      "scispacy": 2365
+    },
+    "PRJNA510423.txt": {
+      "gliner": 401,
+      "pubmedbert": 792,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA510713.txt": {
+      "gliner": 401,
+      "pubmedbert": 1119,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA510835.txt": {
+      "gliner": 420,
+      "pubmedbert": 856,
+      "pubtator": 26,
+      "scispacy": 0
+    },
+    "PRJNA511474.txt": {
+      "gliner": 378,
+      "pubmedbert": 844,
+      "pubtator": 42,
+      "scispacy": 0
+    },
+    "PRJNA515272.txt": {
+      "gliner": 427,
+      "pubmedbert": 772,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA516701.txt": {
+      "gliner": 196,
+      "pubmedbert": 229,
+      "pubtator": 10,
+      "scispacy": 1168
+    },
+    "PRJNA516932.txt": {
+      "gliner": 400,
+      "pubmedbert": 718,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA517050.txt": {
+      "gliner": 305,
+      "pubmedbert": 546,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA517509.txt": {
+      "gliner": 38,
+      "pubmedbert": 639,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA517572.txt": {
+      "gliner": 319,
+      "pubmedbert": 590,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA518731.txt": {
+      "gliner": 711,
+      "pubmedbert": 1000,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA520899.txt": {
+      "gliner": 311,
+      "pubmedbert": 448,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA521398.txt": {
+      "gliner": 532,
+      "pubmedbert": 1127,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA524461.txt": {
+      "gliner": 200,
+      "pubmedbert": 344,
+      "pubtator": 0,
+      "scispacy": 1681
+    },
+    "PRJNA525701.txt": {
+      "gliner": 873,
+      "pubmedbert": 1358,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA526551.txt": {
+      "gliner": 353,
+      "pubmedbert": 675,
+      "pubtator": 13,
+      "scispacy": 0
+    },
+    "PRJNA526906.txt": {
+      "gliner": 617,
+      "pubmedbert": 835,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA527059.txt": {
+      "gliner": 626,
+      "pubmedbert": 862,
+      "pubtator": 31,
+      "scispacy": 0
+    },
+    "PRJNA527265.txt": {
+      "gliner": 308,
+      "pubmedbert": 462,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA528344.txt": {
+      "gliner": 208,
+      "pubmedbert": 644,
+      "pubtator": 13,
+      "scispacy": 0
+    },
+    "PRJNA528754.txt": {
+      "gliner": 444,
+      "pubmedbert": 618,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA528813.txt": {
+      "gliner": 145,
+      "pubmedbert": 472,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA529598.txt": {
+      "gliner": 143,
+      "pubmedbert": 305,
+      "pubtator": 0,
+      "scispacy": 1855
+    },
+    "PRJNA530088.txt": {
+      "gliner": 239,
+      "pubmedbert": 579,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA531279.txt": {
+      "gliner": 313,
+      "pubmedbert": 431,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA531564.txt": {
+      "gliner": 555,
+      "pubmedbert": 943,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA531921.txt": {
+      "gliner": 346,
+      "pubmedbert": 715,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA532426.txt": {
+      "gliner": 242,
+      "pubmedbert": 464,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA532731.txt": {
+      "gliner": 512,
+      "pubmedbert": 1002,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA532853.txt": {
+      "gliner": 371,
+      "pubmedbert": 820,
+      "pubtator": 7,
+      "scispacy": 0
+    },
+    "PRJNA533120.txt": {
+      "gliner": 495,
+      "pubmedbert": 980,
+      "pubtator": 49,
+      "scispacy": 0
+    },
+    "PRJNA533720.txt": {
+      "gliner": 542,
+      "pubmedbert": 732,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA535518.txt": {
+      "gliner": 623,
+      "pubmedbert": 1002,
+      "pubtator": 27,
+      "scispacy": 0
+    },
+    "PRJNA540406.txt": {
+      "gliner": 618,
+      "pubmedbert": 777,
+      "pubtator": 28,
+      "scispacy": 0
+    },
+    "PRJNA541332.txt": {
+      "gliner": 515,
+      "pubmedbert": 1069,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA543007.txt": {
+      "gliner": 307,
+      "pubmedbert": 319,
+      "pubtator": 8,
+      "scispacy": 1967
+    },
+    "PRJNA544370.txt": {
+      "gliner": 80,
+      "pubmedbert": 190,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA544527.txt": {
+      "gliner": 854,
+      "pubmedbert": 982,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA544545.txt": {
+      "gliner": 431,
+      "pubmedbert": 700,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA544721.txt": {
+      "gliner": 679,
+      "pubmedbert": 1195,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA545312.txt": {
+      "gliner": 299,
+      "pubmedbert": 561,
+      "pubtator": 0,
+      "scispacy": 2493
+    },
+    "PRJNA547558.txt": {
+      "gliner": 605,
+      "pubmedbert": 1215,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA547591.txt": {
+      "gliner": 737,
+      "pubmedbert": 882,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA548153.txt": {
+      "gliner": 326,
+      "pubmedbert": 577,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA548177.txt": {
+      "gliner": 395,
+      "pubmedbert": 754,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA550519.txt": {
+      "gliner": 135,
+      "pubmedbert": 452,
+      "pubtator": 0,
+      "scispacy": 2161
+    },
+    "PRJNA551226.txt": {
+      "gliner": 543,
+      "pubmedbert": 748,
+      "pubtator": 26,
+      "scispacy": 0
+    },
+    "PRJNA552448.txt": {
+      "gliner": 540,
+      "pubmedbert": 1244,
+      "pubtator": 12,
+      "scispacy": 0
+    },
+    "PRJNA553646.txt": {
+      "gliner": 409,
+      "pubmedbert": 614,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA554232.txt": {
+      "gliner": 393,
+      "pubmedbert": 777,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA556249.txt": {
+      "gliner": 310,
+      "pubmedbert": 558,
+      "pubtator": 6,
+      "scispacy": 0
+    },
+    "PRJNA558158.txt": {
+      "gliner": 595,
+      "pubmedbert": 1221,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA559052.txt": {
+      "gliner": 822,
+      "pubmedbert": 1161,
+      "pubtator": 4,
+      "scispacy": 0
+    },
+    "PRJNA559143.txt": {
+      "gliner": 145,
+      "pubmedbert": 448,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA559803.txt": {
+      "gliner": 341,
+      "pubmedbert": 639,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA559898.txt": {
+      "gliner": 589,
+      "pubmedbert": 692,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA560950.txt": {
+      "gliner": 606,
+      "pubmedbert": 1066,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA561398.txt": {
+      "gliner": 315,
+      "pubmedbert": 532,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA562529.txt": {
+      "gliner": 698,
+      "pubmedbert": 907,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA564612.txt": {
+      "gliner": 204,
+      "pubmedbert": 647,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA564636.txt": {
+      "gliner": 759,
+      "pubmedbert": 930,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA573829.txt": {
+      "gliner": 46,
+      "pubmedbert": 86,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA574565.txt": {
+      "gliner": 46,
+      "pubmedbert": 68,
+      "pubtator": 37,
+      "scispacy": 0
+    },
+    "PRJNA575562.txt": {
+      "gliner": 673,
+      "pubmedbert": 883,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA576314.txt": {
+      "gliner": 181,
+      "pubmedbert": 383,
+      "pubtator": 0,
+      "scispacy": 2392
+    },
+    "PRJNA576564.txt": {
+      "gliner": 102,
+      "pubmedbert": 280,
+      "pubtator": 0,
+      "scispacy": 1352
+    },
+    "PRJNA577051.txt": {
+      "gliner": 328,
+      "pubmedbert": 627,
+      "pubtator": 0,
+      "scispacy": 2281
+    },
+    "PRJNA578412.txt": {
+      "gliner": 395,
+      "pubmedbert": 781,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA579147.txt": {
+      "gliner": 503,
+      "pubmedbert": 571,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA579560.txt": {
+      "gliner": 294,
+      "pubmedbert": 537,
+      "pubtator": 13,
+      "scispacy": 0
+    },
+    "PRJNA589036.txt": {
+      "gliner": 879,
+      "pubmedbert": 1279,
+      "pubtator": 31,
+      "scispacy": 0
+    },
+    "PRJNA589488.txt": {
+      "gliner": 175,
+      "pubmedbert": 457,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA590519.txt": {
+      "gliner": 303,
+      "pubmedbert": 455,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA591924.txt": {
+      "gliner": 751,
+      "pubmedbert": 2190,
+      "pubtator": 30,
+      "scispacy": 0
+    },
+    "PRJNA593062.txt": {
+      "gliner": 1068,
+      "pubmedbert": 1123,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA595821.txt": {
+      "gliner": 477,
+      "pubmedbert": 677,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA596776.txt": {
+      "gliner": 354,
+      "pubmedbert": 646,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA596889.txt": {
+      "gliner": 477,
+      "pubmedbert": 677,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA598280.txt": {
+      "gliner": 199,
+      "pubmedbert": 497,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA600229.txt": {
+      "gliner": 377,
+      "pubmedbert": 475,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA601994.txt": {
+      "gliner": 705,
+      "pubmedbert": 1215,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA603980.txt": {
+      "gliner": 172,
+      "pubmedbert": 318,
+      "pubtator": 0,
+      "scispacy": 1802
+    },
+    "PRJNA603983.txt": {
+      "gliner": 425,
+      "pubmedbert": 527,
+      "pubtator": 30,
+      "scispacy": 0
+    },
+    "PRJNA604280.txt": {
+      "gliner": 354,
+      "pubmedbert": 634,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA604466.txt": {
+      "gliner": 103,
+      "pubmedbert": 246,
+      "pubtator": 12,
+      "scispacy": 925
+    },
+    "PRJNA604825.txt": {
+      "gliner": 302,
+      "pubmedbert": 735,
+      "pubtator": 5,
+      "scispacy": 0
+    },
+    "PRJNA605031.txt": {
+      "gliner": 586,
+      "pubmedbert": 837,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA606023.txt": {
+      "gliner": 292,
+      "pubmedbert": 871,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA606061.txt": {
+      "gliner": 335,
+      "pubmedbert": 648,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA606262.txt": {
+      "gliner": 359,
+      "pubmedbert": 1006,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA606654.txt": {
+      "gliner": 366,
+      "pubmedbert": 1036,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA606879.txt": {
+      "gliner": 385,
+      "pubmedbert": 843,
+      "pubtator": 0,
+      "scispacy": 2380
+    },
+    "PRJNA606913.txt": {
+      "gliner": 425,
+      "pubmedbert": 969,
+      "pubtator": 14,
+      "scispacy": 0
+    },
+    "PRJNA607574.txt": {
+      "gliner": 1346,
+      "pubmedbert": 777,
+      "pubtator": 7,
+      "scispacy": 0
+    },
+    "PRJNA609050.txt": {
+      "gliner": 563,
+      "pubmedbert": 749,
+      "pubtator": 27,
+      "scispacy": 0
+    },
+    "PRJNA609319.txt": {
+      "gliner": 424,
+      "pubmedbert": 420,
+      "pubtator": 33,
+      "scispacy": 2720
+    },
+    "PRJNA610934.txt": {
+      "gliner": 371,
+      "pubmedbert": 696,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA612042.txt": {
+      "gliner": 539,
+      "pubmedbert": 823,
+      "pubtator": 8,
+      "scispacy": 0
+    },
+    "PRJNA615250.txt": {
+      "gliner": 267,
+      "pubmedbert": 617,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA616703.txt": {
+      "gliner": 504,
+      "pubmedbert": 617,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJNA622267.txt": {
+      "gliner": 389,
+      "pubmedbert": 1020,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA622517.txt": {
+      "gliner": 407,
+      "pubmedbert": 524,
+      "pubtator": 23,
+      "scispacy": 0
+    },
+    "PRJNA623574.txt": {
+      "gliner": 349,
+      "pubmedbert": 680,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA623853.txt": {
+      "gliner": 346,
+      "pubmedbert": 635,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA625181.txt": {
+      "gliner": 39,
+      "pubmedbert": 25,
+      "pubtator": 26,
+      "scispacy": 0
+    },
+    "PRJNA625750.txt": {
+      "gliner": 209,
+      "pubmedbert": 680,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA627982.txt": {
+      "gliner": 77,
+      "pubmedbert": 151,
+      "pubtator": 0,
+      "scispacy": 578
+    },
+    "PRJNA630848.txt": {
+      "gliner": 744,
+      "pubmedbert": 1018,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA631001.txt": {
+      "gliner": 813,
+      "pubmedbert": 1294,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA631262.txt": {
+      "gliner": 310,
+      "pubmedbert": 558,
+      "pubtator": 6,
+      "scispacy": 0
+    },
+    "PRJNA631283.txt": {
+      "gliner": 181,
+      "pubmedbert": 254,
+      "pubtator": 0,
+      "scispacy": 1617
+    },
+    "PRJNA631883.txt": {
+      "gliner": 320,
+      "pubmedbert": 559,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA633879.txt": {
+      "gliner": 433,
+      "pubmedbert": 1108,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA639644.txt": {
+      "gliner": 413,
+      "pubmedbert": 831,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA641414.txt": {
+      "gliner": 363,
+      "pubmedbert": 612,
+      "pubtator": 9,
+      "scispacy": 0
+    },
+    "PRJNA642894.txt": {
+      "gliner": 520,
+      "pubmedbert": 787,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA644097.txt": {
+      "gliner": 38,
+      "pubmedbert": 17,
+      "pubtator": 11,
+      "scispacy": 0
+    },
+    "PRJNA644496.txt": {
+      "gliner": 392,
+      "pubmedbert": 785,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA644520.txt": {
+      "gliner": 1,
+      "pubmedbert": 11,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA644655.txt": {
+      "gliner": 290,
+      "pubmedbert": 592,
+      "pubtator": 17,
+      "scispacy": 0
+    },
+    "PRJNA644788.txt": {
+      "gliner": 317,
+      "pubmedbert": 864,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA645223.txt": {
+      "gliner": 201,
+      "pubmedbert": 733,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA645635.txt": {
+      "gliner": 520,
+      "pubmedbert": 756,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA646021.txt": {
+      "gliner": 550,
+      "pubmedbert": 996,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA646360.txt": {
+      "gliner": 368,
+      "pubmedbert": 376,
+      "pubtator": 33,
+      "scispacy": 0
+    },
+    "PRJNA647534.txt": {
+      "gliner": 680,
+      "pubmedbert": 1079,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA648321.txt": {
+      "gliner": 237,
+      "pubmedbert": 770,
+      "pubtator": 4,
+      "scispacy": 0
+    },
+    "PRJNA648818.txt": {
+      "gliner": 683,
+      "pubmedbert": 681,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJNA650259.txt": {
+      "gliner": 223,
+      "pubmedbert": 436,
+      "pubtator": 0,
+      "scispacy": 2092
+    },
+    "PRJNA657036.txt": {
+      "gliner": 326,
+      "pubmedbert": 1056,
+      "pubtator": 15,
+      "scispacy": 0
+    },
+    "PRJNA657821.txt": {
+      "gliner": 157,
+      "pubmedbert": 527,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA659245.txt": {
+      "gliner": 599,
+      "pubmedbert": 851,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA659589.txt": {
+      "gliner": 534,
+      "pubmedbert": 927,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA659594.txt": {
+      "gliner": 249,
+      "pubmedbert": 634,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA661289.txt": {
+      "gliner": 386,
+      "pubmedbert": 916,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA662100.txt": {
+      "gliner": 499,
+      "pubmedbert": 855,
+      "pubtator": 15,
+      "scispacy": 0
+    },
+    "PRJNA663722.txt": {
+      "gliner": 614,
+      "pubmedbert": 613,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA665123.txt": {
+      "gliner": 490,
+      "pubmedbert": 746,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA673102.txt": {
+      "gliner": 376,
+      "pubmedbert": 837,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA674420.txt": {
+      "gliner": 17,
+      "pubmedbert": 80,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA674880.txt": {
+      "gliner": 516,
+      "pubmedbert": 1004,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA675093.txt": {
+      "gliner": 375,
+      "pubmedbert": 824,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA675753.txt": {
+      "gliner": 261,
+      "pubmedbert": 863,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA678221.txt": {
+      "gliner": 300,
+      "pubmedbert": 771,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA678695.txt": {
+      "gliner": 360,
+      "pubmedbert": 777,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA680445.txt": {
+      "gliner": 293,
+      "pubmedbert": 645,
+      "pubtator": 25,
+      "scispacy": 0
+    },
+    "PRJNA682076.txt": {
+      "gliner": 438,
+      "pubmedbert": 659,
+      "pubtator": 30,
+      "scispacy": 0
+    },
+    "PRJNA684584.txt": {
+      "gliner": 593,
+      "pubmedbert": 1155,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA685389.txt": {
+      "gliner": 345,
+      "pubmedbert": 789,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA685746.txt": {
+      "gliner": 33,
+      "pubmedbert": 39,
+      "pubtator": 15,
+      "scispacy": 0
+    },
+    "PRJNA685914.txt": {
+      "gliner": 683,
+      "pubmedbert": 1177,
+      "pubtator": 1,
+      "scispacy": 0
+    },
+    "PRJNA686801.txt": {
+      "gliner": 364,
+      "pubmedbert": 661,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA687360.txt": {
+      "gliner": 423,
+      "pubmedbert": 691,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA687633.txt": {
+      "gliner": 474,
+      "pubmedbert": 1062,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA688751.txt": {
+      "gliner": 226,
+      "pubmedbert": 841,
+      "pubtator": 16,
+      "scispacy": 0
+    },
+    "PRJNA688839.txt": {
+      "gliner": 412,
+      "pubmedbert": 739,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA689547.txt": {
+      "gliner": 379,
+      "pubmedbert": 388,
+      "pubtator": 26,
+      "scispacy": 0
+    },
+    "PRJNA690651.txt": {
+      "gliner": 319,
+      "pubmedbert": 569,
+      "pubtator": 0,
+      "scispacy": 2244
+    },
+    "PRJNA693579.txt": {
+      "gliner": 260,
+      "pubmedbert": 748,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA699380.txt": {
+      "gliner": 798,
+      "pubmedbert": 1008,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA701368.txt": {
+      "gliner": 654,
+      "pubmedbert": 788,
+      "pubtator": 15,
+      "scispacy": 0
+    },
+    "PRJNA701870.txt": {
+      "gliner": 464,
+      "pubmedbert": 1015,
+      "pubtator": 15,
+      "scispacy": 0
+    },
+    "PRJNA702086.txt": {
+      "gliner": 688,
+      "pubmedbert": 1354,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA703470.txt": {
+      "gliner": 617,
+      "pubmedbert": 1273,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA706153.txt": {
+      "gliner": 217,
+      "pubmedbert": 538,
+      "pubtator": 0,
+      "scispacy": 2547
+    },
+    "PRJNA706727.txt": {
+      "gliner": 530,
+      "pubmedbert": 1237,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA708262.txt": {
+      "gliner": 366,
+      "pubmedbert": 1133,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA709129.txt": {
+      "gliner": 311,
+      "pubmedbert": 554,
+      "pubtator": 33,
+      "scispacy": 0
+    },
+    "PRJNA713358.txt": {
+      "gliner": 2044,
+      "pubmedbert": 1078,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA715036.txt": {
+      "gliner": 276,
+      "pubmedbert": 425,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA715072.txt": {
+      "gliner": 1798,
+      "pubmedbert": 1220,
+      "pubtator": 9,
+      "scispacy": 0
+    },
+    "PRJNA715766.txt": {
+      "gliner": 31,
+      "pubmedbert": 15,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA716437.txt": {
+      "gliner": 364,
+      "pubmedbert": 683,
+      "pubtator": 21,
+      "scispacy": 0
+    },
+    "PRJNA720101.txt": {
+      "gliner": 430,
+      "pubmedbert": 803,
+      "pubtator": 21,
+      "scispacy": 0
+    },
+    "PRJNA720325.txt": {
+      "gliner": 45,
+      "pubmedbert": 77,
+      "pubtator": 28,
+      "scispacy": 0
+    },
+    "PRJNA721421.txt": {
+      "gliner": 873,
+      "pubmedbert": 1266,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA723466.txt": {
+      "gliner": 449,
+      "pubmedbert": 1047,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA724686.txt": {
+      "gliner": 463,
+      "pubmedbert": 1035,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA725388.txt": {
+      "gliner": 303,
+      "pubmedbert": 765,
+      "pubtator": 14,
+      "scispacy": 0
+    },
+    "PRJNA726866.txt": {
+      "gliner": 604,
+      "pubmedbert": 986,
+      "pubtator": 35,
+      "scispacy": 0
+    },
+    "PRJNA726917.txt": {
+      "gliner": 506,
+      "pubmedbert": 942,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA727279.txt": {
+      "gliner": 447,
+      "pubmedbert": 588,
+      "pubtator": 30,
+      "scispacy": 0
+    },
+    "PRJNA728515.txt": {
+      "gliner": 511,
+      "pubmedbert": 713,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA729439.txt": {
+      "gliner": 444,
+      "pubmedbert": 877,
+      "pubtator": 10,
+      "scispacy": 0
+    },
+    "PRJNA735699.txt": {
+      "gliner": 487,
+      "pubmedbert": 844,
+      "pubtator": 19,
+      "scispacy": 0
+    },
+    "PRJNA736070.txt": {
+      "gliner": 594,
+      "pubmedbert": 811,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA736821.txt": {
+      "gliner": 525,
+      "pubmedbert": 1042,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA741048.txt": {
+      "gliner": 111,
+      "pubmedbert": 361,
+      "pubtator": 25,
+      "scispacy": 0
+    },
+    "PRJNA742936.txt": {
+      "gliner": 348,
+      "pubmedbert": 668,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA743361.txt": {
+      "gliner": 1486,
+      "pubmedbert": 831,
+      "pubtator": 3,
+      "scispacy": 0
+    },
+    "PRJNA750230.txt": {
+      "gliner": 285,
+      "pubmedbert": 528,
+      "pubtator": 0,
+      "scispacy": 2086
+    },
+    "PRJNA753264.txt": {
+      "gliner": 612,
+      "pubmedbert": 947,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA759642.txt": {
+      "gliner": 420,
+      "pubmedbert": 882,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA760529.txt": {
+      "gliner": 543,
+      "pubmedbert": 1600,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA762104.txt": {
+      "gliner": 392,
+      "pubmedbert": 709,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA762195.txt": {
+      "gliner": 518,
+      "pubmedbert": 1048,
+      "pubtator": 33,
+      "scispacy": 0
+    },
+    "PRJNA764337.txt": {
+      "gliner": 677,
+      "pubmedbert": 960,
+      "pubtator": 0,
+      "scispacy": 0
+    },
+    "PRJNA803937.txt": {
+      "gliner": 725,
+      "pubmedbert": 572,
+      "pubtator": 0,
+      "scispacy": 0
+    }
+  },
+  "per_paper_summary": {
+    "gliner": {
+      "papers_with_entities": 444,
+      "total_papers": 444,
+      "coverage_pct": 100.0,
+      "mean_per_paper": 418.7,
+      "median_per_paper": 388,
+      "max_per_paper": 2424
+    },
+    "pubmedbert": {
+      "papers_with_entities": 444,
+      "total_papers": 444,
+      "coverage_pct": 100.0,
+      "mean_per_paper": 723.7,
+      "median_per_paper": 717,
+      "max_per_paper": 2190
+    },
+    "pubtator": {
+      "papers_with_entities": 126,
+      "total_papers": 444,
+      "coverage_pct": 28.4,
+      "mean_per_paper": 5.2,
+      "median_per_paper": 0,
+      "max_per_paper": 64
+    },
+    "scispacy": {
+      "papers_with_entities": 50,
+      "total_papers": 444,
+      "coverage_pct": 11.3,
+      "mean_per_paper": 226.8,
+      "median_per_paper": 0,
+      "max_per_paper": 3073
+    }
+  },
+  "model_display": {
+    "gliner": "GLiNER",
+    "pubmedbert": "PubMedBERT",
+    "pubtator": "PubTator3",
+    "scispacy": "sciSpaCy"
+  }
+}

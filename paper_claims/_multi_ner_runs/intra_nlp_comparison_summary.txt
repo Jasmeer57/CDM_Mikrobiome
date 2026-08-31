@@ -1,0 +1,58 @@
+================================================================================
+INTRA-NLP COMPARISON REPORT
+================================================================================
+
+1. PER-MODEL STATISTICS
+------------------------------------------------------------
+Model        Entities   Unique   Papers    Types
+GLiNER         186832    36750      444       14
+PubMedBERT     321333   228448      444        1
+PubTator3        2308      755      126        6
+sciSpaCy       100688    25338       50       14
+
+2. PAIRWISE ENTITY OVERLAP (Jaccard)
+------------------------------------------------------------
+Pair                   A_only   B_only  Overlap    Union  Jaccard
+GLiNER vs PubMedBERT    34040   225738     2710   262488   0.0103
+GLiNER vs PubTator3     36239      244      511    36994   0.0138
+GLiNER vs sciSpaCy      31994    20582     4756    57332   0.0830
+PubMedBERT vs PubTator3   228233      540      215   228988   0.0009
+PubMedBERT vs sciSpaCy   227256    24146     1192   252594   0.0047
+PubTator3 vs sciSpaCy      471    25054      284    25809   0.0110
+
+3. UNIQUE ENTITY CONTRIBUTION (found by ONLY one model)
+------------------------------------------------------------
+Model          Unique % of own % of all
+GLiNER          29921     81.4%     10.9%
+PubMedBERT     225347     98.6%     81.7%
+PubTator3         210     27.8%      0.1%
+sciSpaCy        20192     79.7%      7.3%
+  Total unique across all models: 275670
+
+4. TYPE COVERAGE MATRIX
+------------------------------------------------------------
+Model        CELL_LIN CELL_TYP    CHEBI CHEMICAL       CL CLINICAL DATA_ANA  DISEASE      DNA  DNA_RNA   ENTITY EXPERIME GENOMICS      GGP       GO LAB_METH ORGANISM  PATHWAY  PROTEIN      RNA SAMPLE_M       SO STUDY_DE    TAXON
+GLiNER              0     3829        0    37077        0     5422     3062    35721        0     4326        0     5688     9094        0        0     2899    65607     2421     5779        0     4030        0      943        0
+PubMedBERT          0        0        0        0        0        0        0   321333        0        0        0        0        0        0        0        0        0        0        0        0        0        0        0        0
+PubTator3           0        2        0      503        0        0        0      923        0        0        0        0        1        0        0        0      762        0      108        0        0        0        0        0
+sciSpaCy          391      344     1824     2890      431        0        0     4348     1152        0    81445        0        0      984       97        0        0        0     1845        7        0     1717        0     3213
+
+5. ENSEMBLE STATISTICS
+------------------------------------------------------------
+  Union of all models:     282903 entities
+  Intersection of all:      125 entities
+  Progressive union:
+    + GLiNER       ->    125 new (cumulative: 125)
+    + PubMedBERT   -> 228323 new (cumulative: 228448)
+    + PubTator3    ->    540 new (cumulative: 228988)
+    + sciSpaCy     ->  23994 new (cumulative: 252982)
+
+6. PER-PAPER COVERAGE
+------------------------------------------------------------
+Model          Papers   Cover%     Mean   Median      Max
+GLiNER            444    100.0%    418.7      388     2424
+PubMedBERT        444    100.0%    723.7      717     2190
+PubTator3         126     28.4%      5.2        0       64
+sciSpaCy           50     11.3%    226.8        0     3073
+
+================================================================================

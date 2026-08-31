@@ -1,0 +1,1343 @@
+The Gut Microbiome in Autism: Study-Site Effects and
+Longitudinal Analysis of Behavior Change
+Jennifer Fouquier,a,b Nancy Moreno Huizar,a Jody Donnelly,a Cody Glickman,b
+Dae-Wook Kang,c Juan Maldonado,d,e
+Rachel A. Jones,a Kimberly Johnson,f James B. Adams,g Rosa Krajmalnik-Brown,h,i
+Catherine Lozuponea
+aDepartment of Medicine, University of Colorado, Anschutz Medical Campus, Aurora, Colorado, USA
+bComputational Bioscience Graduate Program, University of Colorado, Anschutz Medical Campus, Aurora, Colorado, USA
+cDepartment of Civil and Environmental Engineering, The University of Toledo, Toledo, Ohio, USA
+dKE Genomics Core, Arizona State University, Tempe, Arizona, USA
+eBiodesign Center for Fundamental and Applied Microbiomics, Arizona State University, Tempe, Arizona, USA
+fMary Bridge Children’s Developmental Behavioral Pediatrics, Tacoma, Washington, USA
+gSchool for Engineering of Matter, Transport and Energy, Arizona State University, Tempe, Arizona, USA
+hBiodesign Swette Center for Environmental Biotechnology, Arizona State University, Tempe, Arizona, USA
+iSchool of Sustainable Engineering and the Built Environment, Arizona State University, Tempe, Arizona, USA
+Jennifer Fouquier and Nancy Moreno Huizar had equal contribution to this paper and order was determined alphabetically.
+ABSTRACT
+Research relating gut microbiome composition to autism spectrum dis-
+orders (ASD) has produced inconsistent results, indicative of the disorder’s complex-
+ity and the need for more sophisticated experimental designs. We address this need
+by (i) comparing gut microbiome composition between individuals with ASD and
+neurotypical controls in Arizona and Colorado using standardized DNA extraction
+and sequencing methods at both locations and (ii) longitudinally evaluating the gut
+microbiome’s relationship to autism behavioral severity, diet, and gastrointestinal
+symptoms. Gut microbiome composition differed between individuals in Arizona and
+individuals in Colorado, and gastrointestinal symptoms were signiﬁcantly higher in
+ASD individuals than in neurotypical individuals in Arizona but not in Colorado. Gut
+microbiome composition was signiﬁcantly associated with ASD while controlling for
+study-site location but not when controlling for gastrointestinal symptoms. This sug-
+gests that non-ASD-related study site differences in gut microbiome composition
+and different degrees of gastrointestinal symptoms involvement with ASD between
+sites may contribute to inconsistent results in the literature regarding the association
+between gut microbiome composition and ASD. In the longitudinal analysis, we
+found that difference in levels of lethargy/social withdrawal measured in individuals
+at different time points correlated with the degree of change in gut microbiome
+composition and that a worsening of inappropriate speech between time points
+was associated with decreased gut microbiome diversity. This relationship between
+changes in the gut microbiome composition within individuals and ASD behavioral
+severity metrics indicates that longitudinal study designs may be useful for explor-
+ing microbial drivers of ASD severity when substantial variability exists in baseline
+microbiome compositions across individuals and geographical regions.
+IMPORTANCE Autism spectrum disorder (ASD) is a brain developmental disorder with
+varying behavioral symptom severity both across individuals and within individuals
+over time. There have been promising but also inconsistent literature results regard-
+ing how the gut microbiota (microbiome) may be involved. We found that the gut
+microbiome in individuals with ASD is affected by study-site location as well as gas-
+trointestinal symptom severity. When we sampled some individuals with ASD at sev-
+eral different time points, we found that some behaviors, such as lethargy/social
+Citation Fouquier J, Moreno Huizar N,
+Donnelly J, Glickman C, Kang D-W, Maldonado
+J, Jones RA, Johnson K, Adams JB, Krajmalnik-
+Brown R, Lozupone C. 2021. The gut
+microbiome in autism: study-site effects and
+longitudinal analysis of behavior change.
+mSystems 6:e00848-20. https://doi.org/10
+.1128/mSystems.00848-20.
+Editor Jack A. Gilbert, University of California
+San Diego
+Copyright © 2021 Fouquier et al. This is an
+open-access article distributed under the terms
+of the Creative Commons Attribution 4.0
+International license.
+Address correspondence to
+Catherine Lozupone,
+catherine.lozupone@cuanschutz.edu.
+The gut microbiome relationship to
+autism spectrum disorder (ASD) is impacted by
+study-site location, and beneﬁts from
+longitudinal analysis to identify relationships to
+behavior changes in individuals.
+For a commentary on this article, see https://
+doi.org/10.1128/mSystems.00234-21.
+Received 28 August 2020
+Accepted 3 February 2021
+Published 6 April 2021
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+1
+RESEARCH ARTICLE
+
+withdrawal and inappropriate speech, changed along with changes in the gut micro-
+biota composition. This is the ﬁrst study to relate severity of behavior symptoms to
+gut microbiome composition within individuals over time and suggests a dynamic
+relationship between ASD-associated symptoms and gut microbes. Longitudinal
+study designs as well as collaborative efforts across multiple centers are needed to
+fully characterize the relationship between ASD and gut microbes.
+KEYWORDS autism, autism spectrum disorder, microbiome, microbiota, gut, next-
+generation sequencing, longitudinal study design, 16S rRNA gene, behavioral severity,
+behavior
+A
+utism spectrum disorder (ASD) includes brain developmental disorders deﬁned by
+poor socialization skills, deﬁciencies in communication (1), repetitive body move-
+ments (stereotyped behavior), and restricted interests (2). The Centers for Disease
+Control and Prevention surveyed the diagnosis of ASD in children and found that
+today, 1 in 54 children have ASD, compared to 1 in 150 children in 2000 (3) (https://
+www.cdc.gov/ncbddd/autism/addm.html). There is evidence of a link between the gut
+microbiome and ASD, and children with ASD have a higher incidence of gastrointesti-
+nal (GI) disorder comorbidity than that of neurotypical (NT) children (5–8). These GI
+problems can include abdominal pain, bloating, constipation, or loose stools (8). GI dis-
+orders within ASD cohorts have been linked with worse behavior as assessed by the
+aberrant behavior checklist (ABC) (9). Research demonstrated GI symptom and behav-
+ioral symptom improvements in ASD individuals with short-term antibiotic treatment
+(10) or through microbial transplant therapy (MTT) (11). Furthermore, investigation of
+the gut microbiome in a maternal infection mouse model of ASD supported a causal
+role for the gut microbiome in ASD symptoms, e.g., through the production of 4-ethyl-
+phenyl sulfate, a metabolite that induces anxiety (12). Another study demonstrated
+that ASD microbiota induce autistic-associated behavior in mice by performing gut
+microbiota transplants from ASD or NT human donors to gnotobiotic mice recipients
+(13). Additionally, increasing evidence to support a role of the gut microbiome in mod-
+ulating brain signaling, which is commonly called the gut-brain-axis, is emerging (14,
+15). Taken together, these studies support a causal role of the gut microbiome in ASD
+symptoms and suggest that the gut microbiome may be a useful therapeutic target.
+One challenge in deﬁning a role for the gut microbiome in ASD is the complexity
+and heterogeneity of the disorder. ASD individuals have various degrees of GI involve-
+ment, and many also have highly self-restricted diets (16), resulting in challenges when
+attempting to make associations with the gut microbiome. These challenges may be
+evident in the conﬂicting results published about the gut microbiome and its relation-
+ship to ASD (17). For instance, although most studies have reported differences in gut
+microbiome composition to occur with ASD (11, 18), some have not (19). Of those that
+have reported differences, there is a lack of consistency in which taxa are reported to
+differ (17). Such inconsistencies may be related to differences in gut microbiomes
+driven by other factors in the underlying etiology, in different study-site locations, or in
+the subtypes within the complex spectrum. A further analytic challenge is high inter-
+personal variation of the gut microbiome, which can lead to a scenario in which differ-
+ent organisms may drive different phenotypes in different individuals, despite an
+underlying similarity in mechanism (20).
+Little is known about the stability or volatility of ASD-associated gut microbiomes
+over time. It is known that the severity of behavioral symptoms within autistic children
+can be quite variable and affected by factors such as fever, which can result in fewer
+aberrant behaviors (21), diet, which can have various relationships to aberrant behavior
+(22), or GI distress, which is associated with more aberrant behavior (5). Whether be-
+havioral differences are associated with gut microbiome dissimilarities within ASD indi-
+viduals over time is not understood and prompted us to look at the gut microbiome
+over multiple time points within an ASD cohort.
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+2
+
+To assess the link between ASD and gut microbiome composition and its relation-
+ship to ASD-associated behavioral severity, diet, and GI distress, we performed tar-
+geted 16S rRNA gene sequencing of the V4 region on DNA extracted from fecal sam-
+ples of children with ASD and from those of NT controls. Our study design addresses
+two analytic issues that have challenged a consistent picture to emerge on the degree
+and nature of gut microbiome differences that occur with ASD. First, we investigated if
+different geographic locations may underlie inconsistent gut microbiome associations
+with ASD by analyzing a combined cohort of ASD and NT control individuals recruited
+in Arizona (AZ) and Colorado (CO). Second, we collected 2 to 4 samples longitudinally
+(span of 3 to 13 months apart) from 16 individuals in CO (7 with ASD and 9 non-ASD
+controls) with information on ASD-associated behavioral severity, diet, and GI symp-
+toms at each collection, so that relationships between these factors within individuals
+and over time could be assessed. Taken together, our results support that gut micro-
+biome differences occur between ASD and NT but that these differences are more
+subtle compared to differences in study-site location and may be affected by GI symp-
+toms. Longitudinal analysis within ASD individuals supports a relationship between dif-
+ferences in the gut microbiome composition and ASD-associated behaviors over time
+and within individuals.
+RESULTS
+We ﬁrst sought to identify differences in the gut microbiome that may occur
+between individuals with ASD and NT controls using data from cohorts recruited in AZ
+and CO (summarized in Table 1). The AZ cohort consists of a total of 74 individuals
+described in previous studies (23, 24): 36 children with ASD and 38 age-matched NT
+controls who did not have ﬁrst-degree relatives with autism. The CO cohort consisted
+of 29 individuals, 13 children with ASD and 16 age-matched NT controls, of which 5
+were siblings of individuals with ASD and 11 were unrelated. Within the CO cohort, 7
+ASD individuals and 9 NT controls were studied over time, with each individual provid-
+ing 2 to 4 samples spaced an average of 6 months (standard deviation [SD] = 3 months)
+apart (span of 3 to 13 months; Table 1), together with information on their behavioral
+severity, recent diet, and GI symptoms with each collected sample. For our cross-sec-
+tional analysis of both cohorts together, only one time point sample from each individ-
+ual in the CO cohort was selected as described in Materials and Methods.
+Although the AZ and CO studies were conducted by different research groups (led
+by Rosa Krajmalnik-Brown and James Adams in AZ and Catherine Lozupone in CO),
+efforts were made to standardize how the fecal samples were collected, processed,
+and sequenced. Speciﬁcally, fecal samples in both AZ and CO were collected at home
+by study participants and shipped frozen. The same DNA extraction protocol was used
+at both sites (MoBio PowerSoil DNA isolation kit, Qiagen, Venlo, Limburg, NL), and DNA
+extracts were multiplexed and sequenced together in AZ. Furthermore, a subset of
+samples had DNA extractions performed in both AZ and CO to conﬁrm that differences
+between laboratories did not drive differences observed between locations.
+TABLE 1 Characteristics of cohort subgroups
+Cohort
+Diagnosis
+No. of
+individuals
+Female (%)
+Male (%)
+Age mean
+Age SD
+Mean GI
+severity
+(scale 0–4)
+No. of individuals with
+longitudinal data
+(2–4 samples)
+Colorado
+ASD
+13
+15.38
+84.62
+6.85
+2.51
+0.67
+7
+Control: sibling to
+someone with ASD
+5
+40
+60
+4.6
+1.52
+0.25
+3
+Control: unrelated
+11
+54.55
+45.45
+6.36
+1.63
+0
+6
+Arizona
+ASD
+36
+8.33
+91.67
+8.47
+3.86
+1.97
+0
+Control: unrelated
+38
+23.68
+76.32
+8.61
+3.92
+0.68
+0
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+3
+
+Cross-sectional analysis. The cross-sectional analysis was composed of 103 indi-
+viduals (74 from AZ and 29 from CO), 49 with ASD and 54 NT. Sequencing of the V4
+region of the 16S rRNA gene region was performed on extracted DNA on the Illumina
+MiSeq platform at the Microbiome Facility at the Biodesign Institute (https://biodesign
+.asu.edu/microbiome-facility), Arizona State University. AZ and CO both collected infor-
+mation on GI symptoms but used different questionnaires as detailed in Materials and
+Methods. Responses to these questionnaires were standardized for comparison across
+locations by assigning a sub score to the frequency responses from the CO GI symp-
+tom questionnaire using the same scale as that used by the AZ GI symptom question-
+naire for constipation, diarrhea, and abdominal pain.
+The CO cohort (age range 2 to 11 years) was signiﬁcantly younger than the AZ
+cohort (age range 3 to 17 years; mean 6.28 years for CO versus 8.54 years for AZ,
+P = 0.014). The ASD cohort had signiﬁcantly more GI issues than the unrelated controls
+in AZ (Dunn [1964] Kruskal-Wallis test, P , 0.001) but not in CO. The ASD cohort in AZ
+also had more GI issues than the ASD cohort in CO (Dunn [1964] Kruskal-Wallis test,
+P = 0.02) (Table 2). This was the case even though the presence and/or severity of GI
+symptoms was not considered during subject recruitment at either site. The AZ study
+evaluated their individuals’ symptoms on a weekly basis, while the CO study evaluated
+their individuals’ symptoms on a monthly basis. Even after controlling for differences
+in the GI survey administration using normalization efforts that are explained in
+Materials and Methods, AZ individuals had more severe GI symptoms compared to
+those of CO individuals.
+Gut microbiota composition is inﬂuenced by study site and gastrointestinal
+symptoms. There was a signiﬁcant effect of site location (AZ versus CO) and GI symp-
+toms on gut microbiome composition. Site location had the greatest effect on gut
+microbiome beta diversity (Fig. 1; Adonis, unweighted UniFrac: P = 0.001, R2 = 0.029;
+weighted UniFrac: P = 0.001, R2 = 0.054), followed by GI symptoms (Fig. 1; Adonis,
+unweighted UniFrac: P = 0.025, R2 = 0.016; weighted UniFrac: P = 0.006, R2 = 0.033). ASD
+was not signiﬁcant after controlling for both site location and GI symptoms, but it was
+signiﬁcant while controlling only for site location (Adonis, unweighted UniFrac:
+P = 0.009, R2 = 0.019; weighted UniFrac: P = 0.017, R2 = 0.025). An effect of the study
+site but not of ASD was clearly evident with principal coordinates analysis (PCoA) with
+both unweighted and weighted UniFrac (Fig. 1A and B). Individuals from AZ showed
+greater beta diversity than that of individuals from CO, as seen by a greater spread of
+TABLE 2 Comparison of gastrointestinal symptom severity by location and ASD status
+Sample group
+Z
+P value
+Adjusted P value
+AZ ASD individualsa
+CO ASD individuals
+2.75
+,0.001
+0.02
+CO sibling controls
+AZ ASD individuals
+2.56
+0.01
+0.03
+CO ASD individuals
+0.75
+0.45
+0.65
+AZ unrelated controls
+AZ ASD individuals
+4.33
+,0.001
+,0.001b
+CO ASD individuals
+0.28
+0.78
+0.78
+CO sibling controls
+20.65
+0.52
+0.64
+CO unrelated controls
+AZ ASD individuals
+4.86
+,0.001
+,0.001b
+CO ASD individuals
+1.82
+0.07
+0.12
+CO sibling controls
+0.56
+0.58
+0.64
+AZ unrelated controls
+1.95
+0.05
+0.10
+aAll subheadings in the ﬁrst column are compared to each indented subgroup.
+bTest resulted in the ASD group having signiﬁcantly more GI issues than unrelated controls in AZ (P , 0.001) and
+ASD group in AZ having signiﬁcantly more GI symptoms than the unrelated controls in CO (P , 0.001) using
+Dunn (1964) Kruskal-Wallis test.
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+4
+
+points across PC2 of samples from AZ in both unweighted and weighted UniFrac PCoA
+analysis (Fig. 1A and B). Indeed, study site had a signiﬁcant effect on unweighted
+UniFrac distance variability but not for weighted UniFrac distances (PERMDISP,
+unweighted UniFrac: F-value = 11.7, P = 0.002; weighted UniFrac: F-value = 2.6,
+P = 0.142).
+The visible clustering by study site was surprising, since methods for fecal sample
+collection were highly similar between sites, the same DNA extraction method was
+used (though applied in different labs), and sequencing of the samples from both sites
+was done together. To further explore whether methodological differences between
+sites could inﬂuence the observed microbial diversity, 9 samples from CO were sent to
+AZ for reextraction. Adonis indicated that there was no signiﬁcant effect of DNA extrac-
+tion location on microbial diversity (Adonis, unweighted UniFrac: P = 0.226, weighted
+UniFrac: P = 0.160, Fig. S1). Additionally, the average beta diversity distances between
+the same stool sample sequenced twice, with DNA extracted in CO and AZ (mean
+unweighted UniFrac distance: 0.18; mean weighted UniFrac distance: 0.12), were signif-
+icantly lower than beta diversity distances between unique stool samples collected
+from the same individual at different time points (mean unweighted UniFrac distance:
+0.41; mean weighted UniFrac distance: 0.23) (Mann-Whitney test, unweighted UniFrac:
+P , 0.0001 and weighted UniFrac: P = 0.010). Although the extractions conducted at
+FIG 1 PCoA plots of unweighted and weighted UniFrac distances visualized by study site, ASD status, and GI
+symptoms. (a) Unweighted UniFrac distances and (b) weighted UniFrac distances show samples clustering by
+location and not ASD status. CO is yellow and AZ is purple. AZ had greater beta diversity than did CO due to
+the greater spread of samples across the plot. There was a signiﬁcant effect of study site on unweighted
+UniFrac distance variability but not for weighted UniFrac distances (PERMDISP, unweighted UniFrac: F-value =
+11.7, P = 0.002; weighted UniFrac: F-value = 2.6, P = 0.142). Study-site location clustering had the largest effect
+when using Adonis (a) unweighted UniFrac: P = 0.001, R2 = 0.029; (b) weighted UniFrac: P = 0.001, R2 = 0.054,
+followed by GI symptoms (c) unweighted UniFrac: P = 0.025, R2 = 0.016; (d) weighted UniFrac: P = 0.006, R2 =
+0.033 (see Results for detailed explanation). GI symptoms range from 0 to 4, where 4 indicates the most severe
+GI symptoms and is colored red. Two individuals did not complete the GI survey (NA values in white). ASD,
+autism spectrum disorder; NT, neurotypical; AZ, Arizona; CO, Colorado; GI, gastrointestinal.
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+5
+
+different sites did have some qualitative differences in the gut microbiome, these
+could not explain the differences observed between locations.
+Although GI symptoms only explained a small (but statistically signiﬁcant) propor-
+tion of beta diversity with Adonis, it is notable that the observed operational taxo-
+nomic units (OTUs) alpha diversity metric (which is the number of different OTUs
+observed in a sample at a standardized sampling depth) strongly correlated with vari-
+ability across PC1 with unweighted UniFrac (R2 = 20.87; P = ,0.001, Pearson’s prod-
+uct-moment correlation; Fig. S2A and B), but alpha diversity did not have a signiﬁcant
+association with ASD status in this study. AZ consisted of individuals with both large
+and small amounts of observed OTUs, but CO did not have samples that were as low in
+observed OTUs as those in AZ.
+Since the ASD cohort in AZ had more GI issues than the ASD cohort in CO, we also
+wondered whether the location effect could be driven by higher GI issues in the AZ-
+ASD cohort. However, a study-site effect was still evident when only considering sam-
+ples from unrelated non-ASD controls who did not have signiﬁcantly different levels of
+GI symptoms (unweighted UniFrac: P = 0.002, R2 = 0.048; weighted UniFrac: P = 0.002,
+R2 = 0.112).
+Random forest classiﬁcation of autism spectrum disorder status. After analyzing
+whether extraction site or higher GI issues in AZ were possible explanations for the
+study-site differences, we sought to understand whether bacterial genera (as assigned
+with the Greengenes database 13.8 [25, 26]) or amplicon sequence variants (ASVs;
+deﬁned using DADA2 [27]) could differentiate individuals with ASD from NT controls
+using Random Forest. A classiﬁer was built using samples from both AZ and CO, which
+yielded an area under the curve (AUC) of 0.83 for genera and 0.86 for ASVs, better than
+random chance (AUC = 0.5). The highest Random Forest importance values greater
+than or equal to 0.01 resulted in 13 ASVs for one classiﬁer and 41 genera for the other
+classiﬁer (Table S3). These important features were further evaluated with a linear
+model. This model was used to assess the impact of ASD, GI scores, and changes
+between AZ and CO on each microbial taxon, although after false-discovery rate (FDR)
+correction, no signiﬁcant relationships were identiﬁed for ASD status, GI scores, or
+study-site location (Table 3). A previous study had identiﬁed decreases in Coprococcus
+and Prevotella genera with ASD status in AZ (24), so we speciﬁcally interrogated for
+changes in these taxa because they were also found among the most important fea-
+tures (Table S3). Individuals in CO had a lower relative abundance of Coprococcus
+(Kruskal-Wallis: x 2 = 4.17, P = 0.041) and higher relative abundance levels of Prevotella
+(Kruskal-Wallis, x 2 = 6.18, P = 0.013) than those of AZ samples overall, while the relative
+abundance of these genera did not differ by ASD status (Kruskal-Wallis: Coprococcus,
+P = 0.093; Prevotella, P = 0.058) (Fig. 2 and Table 3). These differences between AZ and
+CO motivated building a second classiﬁer with only AZ samples and evaluating if this
+classiﬁer could accurately predict ASD status in CO samples. The model predicted sam-
+ples from AZ with an AUC of 0.66 and samples from CO with an AUC of 0.60, indicating
+that while location-speciﬁc classiﬁers predict ASD status less accurately, combining
+samples from both locations serves as a greater predictor.
+TABLE 3 Random Forest importance values and linear model independent variable
+importance on individual genus level microbial taxaa
+Family, genus
+Random Forest
+importance
+Variable
+P value
+t value
+Prevotellaceae, Prevotella
+0.014476193
+ASD
+0.188
+21.32
+GI score
+0.673
+20.42
+Change between AZ and CO
+0.002
+3.19
+Lachnospiraceae,
+Coprococcus
+0.018451293
+ASD
+0.449
+20.76
+GI score
+0.579
+0.56
+Change between AZ and CO
+0.126
+21.54
+aA negative t value indicates lower levels of a microbe in individuals with ASD.
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+6
+
+Longitudinal analysis. As indicated by our cross-sectional analyses, an individual’s
+gut microbiome can be inﬂuenced by factors such as study-site location or GI symp-
+toms. These various gut microbiome compositions can affect cross-sectional analyses,
+hiding the effects of other factors such as ASD. By using each individual as their own
+control with their own baseline gut microbiome, we used a longitudinal study design
+to understand how changes in the gut microbiome may relate to changes in the sever-
+ity of ASD-associated behaviors in children with ASD. We collected between 2 and 4
+stool samples from 7 ASD individuals and 9 NT controls from CO (Table 1). AZ individu-
+als did not participate in the longitudinal study. Stool samples were collected an aver-
+age of 6 months (SD = 3 months) apart. At the time of each fecal sample collection,
+study participants also ﬁlled out questionnaires to assess their diet within the prior
+week using the Block Kids food frequency questionnaire (FFQ), GI symptoms over the
+last 3 months or time since the last sample collection, and behavior over the last 4
+weeks using the ABC for those with ASD (for survey details see Materials and Methods).
+The gut microbiome shows a high degree of interpersonal variation and
+variability over time. The gut microbiome showed a high degree of interpersonal var-
+iation, with beta diversity between samples taken from the same individual at different
+time points being signiﬁcantly smaller than beta diversity between samples taken
+from different individuals and with “individual” accounting for 5.61% variation for
+unweighted UniFrac and 8.95% for weighted UniFrac (Fig. 3, unweighted UniFrac,
+Adonis, P , 0.001, R2 = 5.61%; weighted UniFrac, Adonis, P = 0.01, R2 = 8.95%). Beta
+diversity on different days between ASD individuals, NT individuals, and ASD sib-
+lings was not signiﬁcantly different using the Kruskal-Wallis test, whether siblings
+with ASD were included in the neurotypical control group (unweighted UniFrac,
+P = 0.71; weighted UniFrac, P = 0.12) or analyzed as their own group (Fig. S3;
+unweighted UniFrac, P = 0.57; weighted UniFrac, P = 0.23). Qualitative observations
+indicated that there was more gut microbiome stability between sampling days
+one and two within ASD individuals than within controls (Fig. S3), indicating that
+this might be of value to explore in a larger cohort with more statistical power.
+We also plotted differences in gut microbiome beta diversity within individuals
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+No
+Yes
+ASD
+Coprococcus
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+No
+Yes
+ASD
+Prevotella
+Cohort
+AZ
+CO
+FIG 2 Relative abundance of Coprococcus and Prevotella for each study-site location in individuals with and without ASD. Box and
+whisker plots are colored by study site and grouped by ASD status with Coprococcus on the left and Prevotella on the right.
+Individuals in CO had lower levels of Coprococcus (Kruskal-Wallis, x 2 = 4.17, P = 0.041) and higher levels of Prevotella (Kruskal-
+Wallis, x 2 = 6.18, P = 0.013) compared to those of individuals in AZ. ASD status was not signiﬁcantly related to relative abundance
+of either genus. AZ, Arizona; CO, Colorado; ASD, autism spectrum disorder.
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+7
+
+against time and between samples (Fig. S4). This plot did not indicate systematic direc-
+tional changes in the gut microbiome with time but rather variation within a composi-
+tional space (linear mixed effect [LME] model: unweighted UniFrac, P = 0.43; weighted
+UniFrac, P = 0.35).
+Linear mixed effect models for longitudinal analysis. Next, we tested whether
+ASD-associated behavioral severity, diet, or GI symptoms could explain differences in
+the gut microbiome measured at different time points. Overall, we reasoned that if
+ASD-associated behavioral severity, diet, or GI symptoms either inﬂuenced or were
+inﬂuenced by gut microbiome composition, the degree of change in these measure-
+ments within an individual across two time points would be correlated with the degree
+of change in the gut microbiome across these same two time points. We assessed
+change in gut microbiome composition with qualitative (unweighted UniFrac [28]) and
+quantitative (weighted UniFrac) beta diversity metrics and several alpha diversity met-
+rics. We evaluated changes in alpha diversity as change across time points in the fol-
+lowing four alpha diversity measures: Pielou’s measure of species evenness (29), which
+is how even each species’ count is within a sample, Faith’s PD, a measure of the phylo-
+genetic diversity of species present in a sample (30, 31), observed OTUs, which is the
+number of different OTUs observed in a sample at a standardized sampling depth and
+is a measure of richness, and Shannon Diversity (32), a diversity measure that accounts
+for both the OTU richness and the OTU evenness of a sample (33). We used Euclidean
+distance matrices (EDMs) for combined ASD-associated behavioral severity scores for
+ASD individuals, dietary measures for both ASD and NT individuals, and GI symptoms
+for both ASD and NT individuals. We compared these EDMs to qualitative and quanti-
+tative gut microbiome beta diversity and change in alpha diversity. The change in
+(delta) score for individual ASD-associated behavioral severity metrics was used to
+compare these metrics to beta diversity metrics. The raw scores for ASD-associated be-
+havioral severity were used to compare behavior to the alpha diversity metrics.
+Since there was no signiﬁcant relationship between time between measurements
+and microbiome diversity (Fig. S4), we used all pairwise comparisons within each indi-
+vidual in LME models even though the samples may have been collected for variable
+amounts of time apart. For all analyses that included an EDM, a vector containing only
+pairwise comparisons between samples from each individual was used. This allowed
+for gut microbiome relationships to be identiﬁed for each individual, independent of
+how that individual’s sample’s gut microbiome compared to another individual’s sam-
+ple’s gut microbiome. Because no distance matrices (sample comparisons) were
+involved when assessing relationships between ASD-associated behavioral severity
+a)
+b)
+ASD
+NT
+ASD Sibling
+PC1 (16.5%)
+PC3 (6.7%)
+PC2 (9.7%)
+PC1 (45.9%)
+PC3 (10.0%)
+PC2 (12.1%)
+FIG 3 Beta diversity PCoA plots for longitudinal gut microbiome samples from ASD individuals, NT control
+individuals, and ASD siblings. Beta diversity analysis PCoA plots with (a) unweighted UniFrac and (b) weighted
+UniFrac where individual gut microbiome samples of ASD, NT control, and sibling to someone with ASD are
+connected by vectors. PCoA, principal coordinates analysis; ASD, autism spectrum disorder; NT, neurotypical.
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+8
+
+metrics and alpha diversity metrics, the original scores were used for these linear
+models.
+Autism-associated behavioral severity is associated with differences in the
+microbiome at different time points. First, we evaluated whether there was a posi-
+tive relationship between changes in reported ASD-associated behavioral severity and
+changes in gut microbial beta diversity, over time and between only the ASD individu-
+als’ samples. The ABC provides measures of 5 different aspects of behavior: hyperactiv-
+ity, inappropriate speech, irritability, lethargy/social withdrawal, and stereotypy. These
+ﬁve individual ASD-associated behavior metrics, as well as an EDM for overall ABC
+scores, were related to unweighted UniFrac distances and weighted UniFrac distances
+using pairwise distances or changes between samples within ASD individuals. The ﬁve
+individual ASD-associated behavior metrics were compared to raw alpha diversity
+values. ABC EDM was additionally compared to changes in the four alpha diversity
+metrics.
+There was a signiﬁcant, positive correlation between change in ASD lethargy/social
+withdrawal and unweighted UniFrac distance when comparing full to reduced models
+using likelihood ratio tests (LME estimate: 65.72; likelihood ratio test: P = 0.001,
+q = 0.006, x 2 = 10.43) (Fig. 4A and Table S2).
+For alpha diversity metrics, observed OTUs had a signiﬁcant negative relationship
+to ASD inappropriate speech when comparing full to reduced models using likelihood
+ratio tests (LME estimate: 20.036; likelihood ratio test: P = 0.033, q = 0.163, x 2 = 4.57)
+(Fig. 4B and Table S2) but not to the other ASD-associated behavioral severity metrics.
+Pielou’s evenness, Faith’s PD, and Shannon diversity did not have any signiﬁcant rela-
+tionships to ASD-associated behavioral severity metrics. No individual taxa varied sig-
+niﬁcantly with behavior metrics after multiple comparison corrections.
+Diet and its relationship to the gut microbiome. Dietary EDMs as assessed by the
+FFQ for dietary carbohydrates, daily totals, percentages, and ﬁber (see Materials and
+Methods) were used with LME models to ﬁnd relationships to changes in unweighted
+Individual
+ASD_12
+ASD_14
+ASD_22
+ASD_24
+ASD_27
+ASD_6
+ASD_7
+0
+3
+6
+9
+0.20
+0.25
+0.30
+Unweighted UniFrac Distance
+Change in Lethargy
+ASD_22
+ASD_24
+ASD_27
+ASD_6
+ASD_7
+Lethargy
+2.5
+5.0
+7.5
+120
+160
+200
+240
+Inappropriate Speech
+a)
+b)
+p=0.001
+p=0.033
+Observed OTUs
+ Inappropriate Speech
+Change in Lethargy
+Unweighted UniFrac Distance
+FIG 4 Relationship between autism-associated behavioral severity and gut microbiome beta diversity and alpha diversity in seven ASD individuals
+over time, using linear mixed effects models. Relationship between beta diversity, using unweighted UniFrac distances, and (a) change in
+lethargy/social withdrawal (LME estimate: 65.72; likelihood ratio test: P = 0.001, q = 0.006, x 2 = 10.43) or (b) relationship between alpha diversity,
+using observed OTUs, and inappropriate speech (LME estimate: 20.036; likelihood ratio test: P = 0.033, q = 0.163, x 2 = 4.57). ASD, autism spectrum
+disorder; OTU, operational taxonomic units; LME, linear mixed effects. Statistics summary found in Table S2.
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+9
+
+UniFrac distances and weighted UniFrac distances for beta diversity metrics as well as
+changes in Pielou’s evenness, Faith’s PD, observed OTUs, and Shannon diversity for
+alpha diversity metrics, for both ASD individuals and NT individuals. For NT individuals,
+but not for ASD individuals, the dietary percentage EDM was signiﬁcantly and posi-
+tively related to change in Shannon diversity (Fig. S5 and Table S2; LME estimate 15.76;
+likelihood ratio test: P = 0.004, q = 0.016, x 2 = 8.31). All other dietary relationships were
+insigniﬁcant with respect to their relationship to the gut microbiome.
+Gastrointestinal symptoms and their relationship to the gut microbiome.
+Because ASD individuals have a high incidence of GI symptom comorbidity, we looked
+at changes in GI symptoms using an EDM created from reported abdominal pain,
+bloating, loose stool, and constipation and then compared these to changes in gut mi-
+crobial diversity. We found no signiﬁcant relationships using LME models for ASD or
+NT individuals (Table S2).
+Autism spectrum disorder associated behavioral severity and its relationship
+to gastrointestinal symptoms and diet. To explore whether ASD-associated behav-
+ioral severity may be affected by ﬂuctuations in different dietary measures or level of
+gastrointestinal severity, we compared ASD-associated behavioral severity to the EDMs
+for GI symptoms, dietary percentages, dietary daily totals, dietary ﬁber, and percent
+carbohydrates using LMEs. We found no signiﬁcant results between ASD-associated
+behavior and GI symptoms or diet (Table S2).
+DISCUSSION
+We discovered that in the cohorts used for this analysis, study-site location
+(whether subjects were recruited in AZ or CO) had a stronger relationship to the gut
+microbiome than did ASD status. Geographical differences in microbiomes have been
+a subject of recent research interest. The American Gut Project found a statistically sig-
+niﬁcant, but weak, effect of geography on the microbiome within the US, with dis-
+tance-decay relationships reaching signiﬁcance at neighborhood sizes of 100 km to
+1,000 km and with signiﬁcantly higher alpha diversity in the US than that in Europe
+(34). In another study conducted on links between the microbiome and metabolic dis-
+ease in 14 districts within 1 province in China, location strongly associated with micro-
+biome composition, and models that used microbiome information to predict meta-
+bolic disease that developed in 1 location failed when used in other locations (35).
+Large multilocation experimental designs may be essential for robust determination of
+microbiome associates with complex disease or disorder. An example of such research
+efforts is the TEDDY study, which uses 6 clinical centers (3 in the US and 3 in Europe)
+to determine early like microbiome type I diabetes determinants (36). It is important to
+note that there are many underlying factors, such as diet, climate, or lifestyle, that
+might elucidate the geographical differences we identiﬁed in the gut microbiome.
+Our Random Forest results support that different gut microbiome features may dif-
+ferentiate individuals with ASD from NT in AZ versus CO. A classiﬁer built with AZ only
+can predict ASD status 16% more accurately than random chance when used on indi-
+viduals in AZ who were not used to build the classiﬁer, while prediction was only 10%
+better than random chance when used on CO samples. Consistent with this, differen-
+ces in key taxa reported previously to differ in ASD in AZ, such as Prevotella (24), were
+not reproduced in CO, although a decrease in Coprococcus with ASD did appear to be
+consistent. CO samples have higher Prevotella counts than do AZ samples. This may be
+due to many factors, including regional dietary differences, because Prevotella is
+known to be linked to higher ﬁber diets (37) or frequency of exercise, as Prevotella has
+also been shown to be increased in competitive cyclists (38). Unfortunately, our AZ
+cohort did not include dietary survey information and neither cohort assessed physical
+activity, so we could not test these hypotheses directly. Overall, our Random Forest
+results show that gut microbiome data from one study site do not classify ASD status
+sufﬁciently beyond random chance, but including data from both sites created excel-
+lent classiﬁers. However, its current generalizability to other cohorts is not understood.
+Further multicenter research or meta-analysis would be necessary to establish whether
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+10
+
+microbiome classiﬁers for ASD status prediction can be accurate across diverse
+cohorts.
+One notable difference in ASD cohorts is an increase in GI symptoms with ASD in
+AZ and not in CO. This occurred even though neither study considered GI symptoms in
+recruitment, reﬂecting that the population of ASD individuals sampled in AZ may have
+more GI involvement than those in CO, perhaps reﬂecting underlying heterogeneity in
+ASD symptoms and comorbidity in different clinics. This again supports multicenter ex-
+perimental designs that also carefully characterize symptoms and comorbidity in
+patient populations.
+An additional difference between study design was that CO and not AZ included
+siblings of the ASD individual in the neurotypical control group. In general, studies of
+ASD have differed in whether they have (19, 39, 40) or have not (24, 41) used neurotyp-
+ical siblings of ASD individuals as controls. An argument for using siblings as controls is
+that there will be a greater similarity in other factors that may inﬂuence the micro-
+biome independently of ASD, such as diet, other exposures, and genetics. However, a
+2019 meta-analysis found that individuals who have siblings with ASD are more likely
+to have impaired functioning than individuals who have siblings without ASD (42), pro-
+viding support for excluding siblings of ASD individuals from being controls as other
+studies have done (24, 41). Interestingly, one study that included both sibling and non-
+sibling neurotypical controls found the sibling controls to have a microbiome more
+similar to that of children with ASD than to that of control subjects without a neurotyp-
+ical sibling (40), again providing insight into how experimental design can inﬂuence
+differences in the degree and nature of ASD that have been reported across studies.
+To address some of the challenges created by each individual having their own
+unique gut microbiome composition, we used a longitudinal study design. Longitudinal
+study designs are common in microbiome research, and these study designs usually
+include assessment of microbiome differences that occur in response to an intervention
+or experimental manipulation, such as response to drugs or diet (43, 44). However, for
+many different diseases with a known/suspected link with the microbiome, disease
+symptoms vary over time, necessitating the approach we applied here that related
+changes in ASD-associated behaviors within individuals, over time, to changes in the
+microbiome. This approach addresses the challenge that because of high interpersonal
+variation in the gut microbiome across individuals, different microbes may be important
+for ASD symptoms in different individuals, in particular if those individuals express differ-
+ent behavioral phenotypes across the broad spectrum of autism, different comorbidities
+such as the degree of GI involvement, or different dietary triggers that may also inﬂu-
+ence the microbiome.
+Longitudinal sampling of the same individual showed within-subject variation over
+time to be lower than between-subject variation, which is consistent with the results
+of many other research studies (45–47). We did not ﬁnd a positive relationship with
+the amount of time between sample collection and the amount of difference in gut
+microbiome composition (beta diversity) over our sampling period of 3 to 13 months,
+suggesting stochastic variation around a common core rather than directed drift of the
+community (deterministic process) over time across this time scale, which is consistent
+with other studies (48). We had suspected that ASD and NT controls may differ in beta
+diversity over time, for instance, if restricted eating caused greater stability or GI distur-
+bances caused a greater volatility. Indeed, greater volatility of the gut microbiome over
+time has been linked with disease in other systems, such as increased risk of infection
+in cancer patients and inﬂammatory bowel disease (49). However, although the mean
+beta diversity over time did not differ signiﬁcantly between ASD and NT control indi-
+viduals, we note that our study only looked at a small number of individuals and that it
+is possible that we did not have the statistical power to support observed trends.
+Although our study cohort was small, we found several relationships between ASD-
+associated behavioral severity and the gut microbiome among the ﬁve aspects of
+behavior that we measured with the ABC: hyperactivity, inappropriate speech,
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+11
+
+irritability, lethargy/social withdrawal, and stereotypy. We identiﬁed that worsening
+lethargy/social withdrawal behavior within ASD individuals had a positive relationship
+to changes in gut microbiome beta diversity. More speciﬁcally, changes in lethargy/
+social withdrawal were greater between time points that had a larger shift in gut
+microbiome composition. A study by Sappok et al. showed that ASD was the major,
+and only, factor out of 10 mental and neurological disorders associated with stereo-
+typic and lethargy/social withdrawal behaviors reported on the ABC (50), with social
+withdrawal and stereotypic behavior being two of the three core symptoms of autism.
+Additionally, a meta-analysis identiﬁed that supplementation of omega 3 fatty acids
+may improve hyperactivity, lethargy/social withdrawal, and stereotypy in ASD individu-
+als (51). In a fecal microbiota transplant trial, all ﬁve behavior measurements on the
+ABC, including lethargy/social withdrawal and inappropriate speech, were improved
+together with changes in gut microbiota (11). Together, these three previous studies,
+combined with ours, possibly demonstrate an important relationship between leth-
+argy/social withdrawal behavior, ASD, and the gut microbiome.
+In addition to lethargy/social withdrawal, inappropriate speech in the same individ-
+ual at different time points worsened when the number of gut bacteria (observed
+OTUs) decreased across those same time points. This trend suggests that an increase in
+the number of bacteria present in one’s gut microbiome may be related to improved
+speech in autistic individuals. This is interesting because the richness of the human gut
+microbiome is generally linked to health, including in attention deﬁcit hyperactive dis-
+order (ADHD), another disorder linked with inappropriate speech (52–55). Together,
+these ﬁndings suggest that shifts in the gut microbiome are related to changes in
+ASD-associated behavioral severity.
+Interestingly, we did not ﬁnd any signiﬁcant relationships between changes in
+behaviors and changes in overall GI symptoms or diet percentages/daily totals within
+ASD individuals. This lack of association between behavior and diet or GI symptoms is
+corroborated by a 2013 cross-sectional study of 20 ASD individuals (24) and is in con-
+trast with a previous paper in which GI symptoms were linked with worse behavior as
+assessed by the ABC (9). However, the individuals in CO with ASD did not have worse
+GI symptoms compared to those of NT controls, suggesting that these associations
+may not have been present because of a lack of GI disturbance. It is interesting, how-
+ever, that we found a relationship between the microbiome and behaviors in the ab-
+sence of GI disturbance. Future longitudinal studies that include individuals with ASD
+both with and without concurrent GI issues are warranted.
+For neurotypical individuals, we did identify a positive relationship between change
+in dietary percentages and alpha diversity between sampling days, but we did not
+observe this in ASD individuals. Diet is an accessible way to modify the microbiome,
+but our ﬁndings suggest that neurotypical individuals’ microbiomes may be more ame-
+nable to dietary modiﬁcation than those of autistic individuals.
+Our inability to ﬁnd signiﬁcant relationships between individual taxa and ASD-asso-
+ciated behavior may be a consequence of variation in individual response to these
+organisms. It is also possible that low power contributed to this negative result and
+that a larger study may elucidate relationships between individual taxa and autism be-
+havioral severity.
+Conclusions. The complex nature of ASD has led to inconsistencies in published
+ﬁndings connecting ASD to the gut microbiome. When comparing cohorts of individu-
+als with ASD in AZ and CO using cross-sectional analysis, we determined that study-
+site location had a stronger relationship to the gut microbiome than did ASD status,
+including in key taxa previously reported to differ in AZ, such as higher levels of
+Prevotella in CO compared to those in AZ independent of ASD status. Additionally, we
+identiﬁed an increase in gastrointestinal symptoms in ASD individuals in AZ but not in
+those in CO. Taken together, these results suggest that geographical differences in gut
+microbiome composition and differences in levels of gastrointestinal symptoms in
+autistic individuals at different study sites may contribute to inconsistent results in the
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+12
+
+literature. By performing a longitudinal analysis to understand microbiome changes
+within ASD individuals over time, we identiﬁed relationships between ASD-associated
+behavior and the gut microbiome but not between GI symptoms or diet and the gut
+microbiome, supporting a role for the microbiome in ASD-associated behavior severity.
+Multicenter studies in geographically distinct areas with more study participants, as
+well as longitudinal study designs that consider individual differences in the gut micro-
+biomes of ASD individuals, are essential for a disorder of this prevalence.
+MATERIALS AND METHODS
+Recruitment and sample collection. Colorado. Children diagnosed with ASD and their healthy sib-
+lings were recruited from the Child Development Unit at Children’s Hospital Colorado. Unrelated age-
+matched healthy controls were recruited from the Denver area by word of mouth. All children in the
+ASD cohort met criteria for an ASD based on standardized testing using the autism diagnostic observa-
+tion schedule (ADOS). Individuals were excluded if they had taken an antibiotic in the last 6 months or
+had comorbidities, including Fragile X, Down syndrome, 22q11 deletion syndrome, neuroﬁbromatosis,
+tuberous sclerosis, or metabolic syndromes. Informed consent of parents and assent of children were
+obtained under guidelines of CoMIRB protocol 11-0893. Between 1 and 4 stool samples were collected
+from each study participant spaced an average of 6 months (SD = 3 months) apart (span of 3 to
+13 months; Table 1). Stool samples were collected at home by study participants in provided sterile con-
+tainers and shipped overnight with 20°C freezer packs to the University of Colorado. Samples were then
+stored at 280°C before DNA extraction and sequencing. DNA extraction was performed at the site of
+sample collection (CO or AZ) with the same protocol (MoBio PowerSoil DNA isolation kit [Qiagen, Venlo,
+Limburg, NL]). Study participants ﬁlled out questionnaires at the time of each stool sample collection
+(additional details on these questionnaires follow). These included (i) the ABC, which is a validated tool
+that characterizes behavioral symptoms of children with atypical behavior (9) and which was used to
+evaluate behavior for 4 weeks prior to sample collection, (ii) the Block Kids 2004 FFQ (56), which
+assessed diet over the week prior to sample collection, and (iii) a GI symptoms questionnaire asking
+study participants to report changes in diet and frequency of constipation, diarrhea, bloating, and ab-
+dominal pain over the past 3 months or since the previous sample.
+Arizona. Samples from individuals previously recruited for 2013 and 2018 studies by Kang et al. (23,
+24), including 38 neurotypical children and 36 children with ASD, were used for the cross-sectional anal-
+yses. The subjects spanned the ages of 3 to 17 and were not using antifungals or antibiotics for at least
+1 month prior to sample collection. For detailed information about subject recruitment, see Materials
+and Methods from previous studies.
+Gastrointestinal symptoms questionnaire. The AZ questionnaire for participation in Autism Gut
+Microbiome Study by the Bhare Foundation asked study participants to report the frequency of consti-
+pation, diarrhea, average stool consistency, stool smell, ﬂatulence, and abdominal pain within 1 week of
+producing their sample. Frequency of constipation, average stool consistency, stool smell, ﬂatulence,
+and abdominal pain were evaluated on a weekly basis, and diarrhea was evaluated on a daily basis. The
+frequencies were then scored on a scale of 1 to 2.
+The CO GI symptoms questionnaire asked study participants to report the frequency of constipation,
+diarrhea, bloating, and abdominal pain within the 3 months prior to producing their sample or since the
+previous sample. Study participants were given the following frequency choices for each GI symptom:
+less than 1 time per month, 1 to 2 times per month, 3 to 4 times per month, 1 to 2 times per week, and
+greater than 3 times per week for each symptom.
+Responses to questionnaires were standardized for use in the cross-sectional analysis by assigning a
+sub score to the frequency responses from the CO GI symptom questionnaire using the same scale as
+that of the AZ GI questionnaire for constipation, diarrhea, and abdominal pain. Frequency reported less
+than once a week was assigned a score of zero. Frequency reported once to twice a week was assigned
+a score of 1. Frequency reported more than 3 times a week was assigned a score of 2. An overall GI
+symptom score was then assigned to each study participant by summation of these sub scores. CO addi-
+tionally collected information on diet and behavior that is described in “Longitudinal sequence analysis.”
+Dietary questionnaire. To understand the composition of each individual’s diet for the week prior
+to fecal sample collection, the FFQ was completed by the parent(s) of the study participants. The ques-
+tionnaire can be completed in 25 min and contains questions about consumption of 77 food items, and
+pictures are provided to improve portion size reporting. NHANES 1999 to 2002 (https://www.cdc.gov/
+nchs/nhanes/) dietary recall data were used to develop the food list in the questionnaire. After comple-
+tion of the questionnaire, dietary analysis output was determined by Nutrition Quest (Berkeley, CA, USA)
+and returned to us for downstream analyses.
+Aberrant behavior checklist. Each ASD study participant’s parent(s) ﬁlled out an ABC, assessing the
+child’s behavior for the 4 weeks prior to providing a fecal sample. The ABC investigates 58 behavioral
+items and is a 5-factor scale where a larger value equals more severe atypical behavior for the preceding
+4 weeks. The ﬁve factors assessed were hyperactivity, inappropriate speech, irritability, lethargy/social
+withdrawal, and stereotypy.
+DNA sequencing protocol. Stool samples were stored at 280°C until DNA extraction. Genomic DNA
+was extracted using the MoBio PowerSoil DNA isolation kit (Qiagen, Venlo, Limburg, NL). 16S rRNA
+genes were ampliﬁed via PCR in triplicate using barcoded PCR primers with 5PRIME HotMasterMix
+(Quantabio, Beverly, MA, USA) for each sample according to the Earth Microbiome
+Project (EMP)
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+13
+
+protocol (57). DNA extracted in CO was sent to AZ to be sequenced together with the AZ samples.
+Additionally, 9 samples from CO were sent to AZ for extraction as a control by employing the same isola-
+tion kit and protocols as those used in CO. Next-generation sequencing of the V4 region of the 16S
+rRNA gene region was performed on extracted DNA on the Illumina MiSeq platform (two MiSeq runs).
+Cross-sectional sequence analysis. Quantitative Insights Into Microbial Ecology (QIIME) 2 (v2019.1)
+(58) was used to do the cross-sectional analysis of CO and AZ locations. Keemei was used in Google
+documents for mapping ﬁle validation (59). Once validated, both sequencing runs were demultiplexed
+independently and sorted according to the sample’s corresponding barcodes, and quality control was
+done using DADA2 (27) to denoise the reads, remove chimeric sequences, dereplicate sequences, and
+deﬁne ASVs. Samples were trimmed using the following lengths. Forward reads: truncation length, 149;
+left trim, 10. Only the forward reads that had a Q score of 30 or above were used. ASVs were assigned
+taxonomically using the RDP Classiﬁer (60) and the Greengenes database version 13.8 and binned into
+genera using QIIME 2. All samples, split between two runs, yielded 16,448,151 sequences, and after qual-
+ity control the total of remaining sequences was 15,135,213, with an average of 93,693 reads per sample
+for run 1 and 59,606 for run 2. A phylogenetic tree for diversity analysis was built using MAFFT (61) and
+FastTree (62) (QIIME 2; qiime phylogeny align-to-tree-mafft-fasttree). Samples were rareﬁed at 6,529
+sequences for beta and alpha diversity analyses.
+Random Forest was run using QIIME 2 (v2019.7; qiime sample-classiﬁer classify-samples) using either
+ASVs or genera as predictors. For the ASV sample classiﬁer, 1,411 features were used, and for the genus
+sample classiﬁer, 226 genera were used. The input samples were randomly split into a training set con-
+taining 80% of the samples and a test set used to estimate the model accuracy containing 20% of the
+samples. Five-fold cross-validations were performed and used to calculate an average AUC for the ASV
+and genera predictors.
+Choosing representative samples among longitudinal data for Colorado. Individuals from CO,
+and not AZ, provided multiple samples, so a representative sample was selected for the cross-sectional
+analysis. Weighted and unweighted UniFrac distance matrices were used to create PCoA plots of CO
+samples (QIIME 1, core_diversity_analyses.py). Emperor (63) was used to generate vectors between all
+time points of stool samples for each study participant (QIIME 1, make_emperor.py with add_vectors
+ﬂag). Both PCoA plots were analyzed to choose a representative sample. Each study participant’s sample
+was viewed individually in Emperor, and the most central sample among the time points was chosen.
+For individuals that returned only 2 samples, the ﬁrst returned sample was chosen.
+Longitudinal sequence analysis. Analysis of the longitudinal Colorado next-generation sequences
+was performed independently from the cross-sectional portion of this analysis using QIIME 2 (v2017.9
+through v2017.11) (58). CO longitudinal samples, split between two runs, yielded 4,818,476 (run 1) and
+1,805,721 (run 2) sequences, and after quality control the remaining sequence totals were 3,714,950 (run
+1) and 1,017,263 (run 2). In total, 4,732,213 sequences out of 6,624,197 sequences (71.4%) remained.
+Keemei was used with Google Sheets for mapping ﬁle validation (59). Both sequencing runs were
+demultiplexed independently and sorted according to the samples’ corresponding barcodes (QIIME 2;
+qiime demux emp-paired). DADA2 (27) was used to denoise the reads, remove chimeric sequences, der-
+eplicate sequences, and trim using the following lengths for the forward reads: truncation length 148
+and left trim 4. Reverse read truncation length was 147 and left trim was 1 (QIIME 2, qiime dada2
+denoised-paired). Runs 1 and 2 were merged to create 1 feature table containing ASV counts and 1 rep-
+resentative sequences ﬁle (QIIME 2; qiime feature-table merge, qiime feature-table merge-seqs).
+Samples were rareﬁed at 17,000 sequences using the merged feature table from runs 1 and 2 (QIIME 2;
+qiime feature-table merge and qiime feature-table rarefy). A phylogenetic tree for diversity analysis was
+built using MAFFT and FastTree (QIIME 2; qiime phylogeny align-to-tree-mafft-fasttree). For volatility we
+looked at paired distances using qualitative and quantitative beta diversity distance matrices (QIIME 2;
+qiime q2-longitudinal pairwise-distances).
+Linear mixed effects model. Distance matrices were created using qiime metadata distance-matrix
+for one category or qiime diversity beta (with the “euclidean” metric) for inputting a feature table with
+multiple categories in QIIME 2. Distance matrices for beta diversity metrics were created using weighted
+UniFrac and unweighted UniFrac metrics (QIIME 2; qiime diversity core-metrics-phylogenetic). Eleven
+Euclidean distances were created for the following: (1) ASD-associated behavioral severity for ASD indi-
+viduals only, (2 to 3) GI distress in ASD and NT individuals, and (4 to 11) dietary percentages, daily totals,
+ﬁber, and percent carbohydrates for ASD and NT individuals. The overall ASD-associated behavioral se-
+verity EDM was created using the ﬁve autism behavioral severity metrics based on the ABC, which were
+hyperactivity, inappropriate speech, irritability, lethargy/social withdrawal, and stereotypy. The dietary
+percentages EDM was created based on an individual’s average daily percent consumption of fat, pro-
+tein, carbohydrates, and sweets for the past week. For average daily total values, the EDM was created
+from dietary analysis output variables returned to us from Nutrition Quest (Table S1).
+For GI distress, an EDM was created using abdominal pain, bloating, constipation, or loose stool
+quantiﬁed for 3 months prior to producing their sample or since the previous sample.
+Vectors were then created from each distance matrix by selecting within-individual comparisons
+and excluding those distances which compared different individuals. For all ASD-associated behavioral
+severity, diet, and GI EDM vector comparisons to alpha diversity, the pairwise change in Pielou’s even-
+ness, Faith’s PD, observed OTUs, and Shannon diversity between sampling days was used. For the ﬁve
+individual ASD-associated behavioral severity metrics, the original behavioral severity scores were used
+and compared to raw Pielou’s evenness, Faith’s PD, observed OTUs, and Shannon diversity alpha diver-
+sity metrics.
+For LME modeling, random intercepts were allowed for baseline subject differences and random
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+14
+
+slopes were used to allow variability in the relationship strength between response and explanatory var-
+iables for different individuals (64), as it is likely that gut microbiome relationships vary between individ-
+uals. There were no obvious departures from homoscedasticity or normality in the residual plots. We
+compared full and reduced models using analysis of variance (ANOVA) to obtain P values.
+Full model: response.variable ; explanatory.variable 1 (1 1 explanatory.variablejsubject).
+Reduced model: response.variable ; (1 1 explanatory.variablejsubject).
+Data availability. The data sets generated and/or analyzed during the current study are available in
+the asd-analysis github repository (https://github.com/JTFouquier/asd-analysis). Raw sequence informa-
+tion can be obtained using EBI PRJEB42687.
+SUPPLEMENTAL MATERIAL
+Supplemental material is available online only.
+FIG S1, PDF ﬁle, 0.6 MB.
+FIG S2, PDF ﬁle, 0.2 MB.
+FIG S3, PDF ﬁle, 1.5 MB.
+FIG S4, PDF ﬁle, 0.03 MB.
+FIG S5, PDF ﬁle, 0.01 MB.
+TABLE S1, DOCX ﬁle, 0.01 MB.
+TABLE S2, DOCX ﬁle, 0.02 MB.
+TABLE S3, DOCX ﬁle, 0.02 MB.
+ACKNOWLEDGMENTS
+We would like to sincerely thank all the individuals who participated in this research.
+A special thanks to the individuals and families of individuals with autism spectrum
+disorder who volunteer for scientiﬁc research studies. We thank the Peter Emch
+Foundation for supporting this work. Thank you to Mike Shaffer for computational help
+and answering miscellaneous computational questions. Contents are the authors’ sole
+responsibility and do not necessarily represent ofﬁcial NIH views.
+This work was supported by NIH/NCATS Colorado CTSA grant number UL1 TR002535.
+Jennifer Fouquier is funded by NIH U.S. National Library of Medicine, Colorado Biomedical
+Informatics Training Program T15 LM009451. Funding was also generously provided by
+the Peter Emch Foundation.
+J.F. and N.M.H. analyzed data, produced all ﬁgures, and wrote the manuscript.
+J.D. performed DNA sequencing, and C.G. performed preliminary data analyses. R.J.
+collected, processed, and organized samples and data. DW.K., R.KB., K.J., and C.L.
+recruited patients into the study. K.J. provided clinical expertise, and K.J., DW.K., R.KB.,
+J.B.A., J.M., and C.L. contributed to experimental design and data interpretation. C.L.
+led the study. All authors provided input and approved the manuscript.
+Ethics approval and consent to participate: CoMIRB protocol 11-0893.
+We declare that we have no competing interests.
+REFERENCES
+1. Ho P, Ross DA. 2017. More than a gut feeling: the implications of the gut
+microbiota in psychiatry. Biol Psychiatry 81:e35–e37. https://doi.org/10
+.1016/j.biopsych.2016.12.018.
+2. Cunningham AB, Schreibman L. 2008. Stereotypy in autism: the impor-
+tance of function. Res Autism Spectr Disord 2:469–479. https://doi.org/10
+.1016/j.rasd.2007.09.006.
+3. Baio J, Wiggins L, Christensen DL, Maenner MJ, Daniels J, Warren Z, Kurzius-
+Spencer M, Zahorodny W, Rosenberg C, White T, Durkin MS, Imm P, Nikolaou
+L, Yeargin-Allsopp M, Lee LC, Harrington R, Lopez M, Fitzgerald RT, Hewitt A,
+Pettygrove S, Constantino JN, Vehorn A, Shenouda J, Hall-Lande J, Van
+Naarden Braun K, Dowling NF. 2018. Prevalence of autism spectrum disorder
+among children aged 8 years - autism and developmental disabilities moni-
+toring network, 11 Sites, United States, 2014. MMWR Surveill Summ 67:1–23.
+https://doi.org/10.15585/mmwr.ss6706a1.
+4. Reference deleted.
+5. Chaidez V, Hansen RL, Hertz-Picciotto I. 2014. Gastrointestinal problems in
+children with autism, developmental delays or typical development. J Au-
+tism Dev Disord 44:1117–1127. https://doi.org/10.1007/s10803-013-1973-x.
+6. Kheirouri S, Kalejahi P, Noorazar SG. 2016. Plasma levels of serotonin, gas-
+trointestinal symptoms, and sleep problems in children with autism. Turk
+J Med Sci 46:1765–1772. https://doi.org/10.3906/sag-1507-68.
+7. Wang LW, Tancredi DJ, Thomas DW. 2011. The prevalence of gastrointes-
+tinal problems in children across the United States with autism spectrum
+disorders from families with multiple affected members. J Dev Behav
+Pediatr 32:351–360. https://doi.org/10.1097/DBP.0b013e31821bd06a.
+8. Coury DL, Ashwood P, Fasano A, Fuchs G, Geraghty M, Kaul A, Mawe G,
+Patterson P, Jones NE. 2012. Gastrointestinal conditions in children with
+autism spectrum disorder: developing a research agenda. Pediatrics 130
+Suppl 2:S160–S168. https://doi.org/10.1542/peds.2012-0900N.
+9. Aman MG, Singh NN, Stewart AW, Field CJ. 1985. The aberrant behavior
+checklist: a behavior rating scale for the assessment of treatment effects.
+Am J Ment Deﬁc 89:485–491.
+10. Sandler RH, Finegold SM, Bolte ER, Buchanan CP, Maxwell AP, Vaisanen
+ML, Nelson MN, Wexler HM. 2000. Short-term beneﬁt from oral vancomy-
+cin treatment of regressive-onset autism. J Child Neurol 15:429–435.
+https://doi.org/10.1177/088307380001500701.
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+15
+
+11. Kang DW, Adams JB, Gregory AC, Borody T, Chittick L, Fasano A, Khoruts
+A, Geis E, Maldonado J, McDonough-Means S, Pollard EL, Roux S,
+Sadowsky MJ, Lipson KS, Sullivan MB, Caporaso JG, Krajmalnik-Brown R.
+2017. Microbiota transfer therapy alters gut ecosystem and improves gas-
+trointestinal and autism symptoms: an open-label study. Microbiome
+5:10. https://doi.org/10.1186/s40168-016-0225-7.
+12. Hsiao EY, McBride SW, Hsien S, Sharon G, Hyde ER, McCue T, Codelli JA,
+Chow J, Reisman SE, Petrosino JF, Patterson PH, and, Mazmanian SK.
+2013. Microbiota modulate behavioral and physiological abnormalities
+associated with neurodevelopmental disorders. Cell 155:1451–1463.
+https://doi.org/10.1016/j.cell.2013.11.024.
+13. Sharon G, Cruz NJ, Kang DW, Gandal MJ, Wang B, Kim YM, Zink EM, Casey
+CP, Taylor BC, Lane CJ, Bramer LM, Isern NG, Hoyt DW, Noecker C,
+Sweredoski MJ, Moradian A, Borenstein E, Jansson JK, Knight R, Metz TO,
+Lois C, Geschwind DH, Krajmalnik-Brown R, Mazmanian SK. 2019. Human
+gut microbiota from autism spectrum disorder promote behavioral symp-
+toms in mice. Cell 177:1600–1618.e17. https://doi.org/10.1016/j.cell.2019
+.05.004.
+14. Mayer EA, Tillisch K, Gupta A. 2015. Gut/brain axis and the microbiota. J
+Clin Invest 125:926–938. https://doi.org/10.1172/JCI76304.
+15. Sherwin E, Sandhu KV, Dinan TG, Cryan JF. 2016. May the force be with
+you: the light and dark sides of the microbiota-gut-brain axis in neuropsy-
+chiatry. CNS Drugs 30:1019–1041. https://doi.org/10.1007/s40263-016
+-0370-3.
+16. Cermak SA, Curtin C, Bandini LG. 2010. Food selectivity and sensory sen-
+sitivity in children with autism spectrum disorders. J Am Diet Assoc
+110:238–246. https://doi.org/10.1016/j.jada.2009.10.032.
+17. Krajmalnik-Brown R, Lozupone C, Kang DW, Adams JB. 2015. Gut bacteria
+in children with autism spectrum disorders: challenges and promise of
+studying how a complex community inﬂuences a complex disease. Microb
+Ecol Health Dis 26:26914. https://doi.org/10.3402/mehd.v26.26914.
+18. Strati F, Cavalieri D, Albanese D, De Felice C, Donati C, Hayek J, Jousson O,
+Leoncini S, Renzi D, Calabro A, De Filippo C. 2017. New evidences on the
+altered gut microbiota in autism spectrum disorders. Microbiome 5:24.
+https://doi.org/10.1186/s40168-017-0242-1.
+19. Gondalia SV, Palombo EA, Knowles SR, Cox SB, Meyer D, Austin DW. 2012.
+Molecular characterisation of gastrointestinal microbiota of children with
+autism (with and without gastrointestinal dysfunction) and their neuro-
+typical siblings. Autism Res 5:419–427. https://doi.org/10.1002/aur.1253.
+20. McDonald D, Hornig M, Lozupone C, Debelius J, Gilbert JA, Knight R. 2015.
+Towards large-cohort comparative studies to deﬁne the factors inﬂuencing
+the gut microbial community structure of ASD patients. Microb Ecol Health
+Dis 26:26555. https://doi.org/10.3402/mehd.v26.26555.
+21. Curran LK, Newschaffer CJ, Lee LC, Crawford SO, Johnston MV, Zimmerman
+AW. 2007. Behaviors associated with fever in children with autism spec-
+trum disorders. Pediatrics 120:e1386–e1392. https://doi.org/10.1542/peds
+.2007-0360.
+22. Kawicka A, Regulska-Ilow B. 2013. How nutritional status, diet and dietary
+supplements can affect autism. A review. Rocz Panstw Zakl Hig 64:1–12.
+23. Kang DW, Ilhan ZE, Isern NG, Hoyt DW, Howsmon DP, Shaffer M, Lozupone
+CA, Hahn J, Adams JB, and, Krajmalnik-Brown R. 2018. Differences in fecal
+microbial metabolites and microbiota of children with autism spectrum
+disorders. Anaerobe 49:121–131. https://doi.org/10.1016/j.anaerobe.2017
+.12.007.
+24. Kang DW, Park JG, Ilhan ZE, Wallstrom G, Labaer J, Adams JB, Krajmalnik-
+Brown R. 2013. Reduced incidence of Prevotella and other fermenters in
+intestinal microﬂora of autistic children. PLoS One 8:e68322. https://doi
+.org/10.1371/journal.pone.0068322.
+25. DeSantis TZ, Hugenholtz P, Larsen N, Rojas M, Brodie EL, Keller K, Huber T,
+Dalevi D, Hu P, Andersen GL. 2006. Greengenes, a chimera-checked 16S
+rRNA gene database and workbench compatible with ARB. Appl Environ
+Microbiol 72:5069–5072. https://doi.org/10.1128/AEM.03006-05.
+26. McDonald D, Price MN, Goodrich J, Nawrocki EP, DeSantis TZ, Probst A,
+Andersen GL, Knight R, Hugenholtz P. 2012. An improved Greengenes
+taxonomy with explicit ranks for ecological and evolutionary analyses of
+bacteria and archaea. ISME J 6:610–618. https://doi.org/10.1038/ismej
+.2011.139.
+27. Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJ, and, Holmes SP.
+2016. DADA2: high-resolution sample inference from Illumina amplicon
+data. Nat Methods 13:581–583. https://doi.org/10.1038/nmeth.3869.
+28. Lozupone C, Knight R. 2005. UniFrac: a new phylogenetic method for com-
+paring microbial communities. Appl Environ Microbiol 71:8228–8235. https://
+doi.org/10.1128/AEM.71.12.8228-8235.2005.
+29. Pielou EC. 1966. Species-diversity and pattern-diversity in the study of ec-
+ological succession. J Theoretical Biology 10:370–383. https://doi.org/10
+.1016/0022-5193(66)90133-0.
+30. Faith DP. 1992. Conservation evaluation and phylogenetic diversity. Biol
+Conserv 61:1–10. https://doi.org/10.1016/0006-3207(92)91201-3.
+31. Faith DP. 2013. Biodiversity and evolutionary history: useful extensions of
+the PD phylogenetic diversity assessment framework. Ann N Y Acad Sci
+1289:69–89. https://doi.org/10.1111/nyas.12186.
+32. Shannon CE. 1948. A mathematical theory of communication. Bell System
+Technical J 27:379–423. https://doi.org/10.1002/j.1538-7305.1948.tb01338.x.
+33. Morris EK, Caruso T, Buscot F, Fischer M, Hancock C, Maier TS, Meiners T,
+Müller C, Obermaier E, Prati D, Socher SA, Sonnemann I, Wäschke N,
+Wubet T, Wurst S, Rillig MC. 2014. Choosing and using diversity indices:
+insights for ecological applications from the German Biodiversity Explora-
+tories. Ecol Evol 4:3514–3524. https://doi.org/10.1002/ece3.1155.
+34. McDonald D, Hyde E, Debelius JW, Morton JT, Gonzalez A, Ackermann G,
+Aksenov AA, Behsaz B, Brennan C, Chen Y, DeRight Goldasich L, Dorrestein
+PC, Dunn RR, Fahimipour AK, Gaffney J, Gilbert JA, Gogul G, Green JL,
+Hugenholtz P, Humphrey G, Huttenhower C, Jackson MA, Janssen S, Jeste
+DV, Jiang L, Kelley ST, Knights D, Kosciolek T, Ladau J, Leach J, Marotz C,
+Meleshko D, Melnik AV, Metcalf JL, Mohimani H, Montassier E, Navas-Molina
+J, Nguyen TT, Peddada S, Pevzner P, Pollard KS, Rahnavard G, Robbins-
+Pianka A, Sangwan N, Shorenstein J, Smarr L, Song SJ, Spector T, Swafford
+AD, Thackray VG, et al. 2018. American gut: an open platform for citizen sci-
+ence microbiome research. mSystems 3:e00031-18. https://doi.org/10.1128/
+mSystems.00031-18.
+35. He Y, Wu W, Zheng HM, Li P, McDonald D, Sheng HF, Chen MX, Chen ZH,
+Ji GY, Zheng ZD, Mujagond P, Chen XJ, Rong ZH, Chen P, Lyu LY, Wang X,
+Wu CB, Yu N, Xu YJ, Yin J, Raes J, Knight R, Ma WJ, Zhou HW. 2018. Re-
+gional variation limits applications of healthy gut microbiome reference
+ranges and disease models. Nat Med 24:1532–1535. https://doi.org/10
+.1038/s41591-018-0164-x.
+36. Uusitalo U, Liu X, Yang J, Aronsson CA, Hummel S, Butterworth M, Lernmark
+A, Rewers M, Hagopian W, She JX, Simell O, Toppari J, Ziegler AG, Akolkar B,
+Krischer J, Norris JM, Virtanen SM, TEDDY Study Group. 2016. Association of
+early exposure of probiotics and islet autoimmunity in the TEDDY study.
+JAMA Pediatr 170:20–28. https://doi.org/10.1001/jamapediatrics.2015.2757.
+37. Kovatcheva-Datchary P, Nilsson A, Akrami R, Lee YS, De Vadder F, Arora T,
+Hallen A, Martens E, Björck I, and, Bäckhed F. 2015. Dietary ﬁber-induced
+improvement in glucose metabolism is associated with increased abun-
+dance of Prevotella. Cell Metab 22:971–982. https://doi.org/10.1016/j
+.cmet.2015.10.001.
+38. Petersen LM, Bautista EJ, Nguyen H, Hanson BM, Chen L, Lek SH, Sodergren
+E, Weinstock GM. 2017. Community characteristics of the gut microbiomes
+of competitive cyclists. Microbiome 5:98. https://doi.org/10.1186/s40168-017
+-0320-4.
+39. Pulikkan J, Maji A, Dhakan DB, Saxena R, Mohan B, Anto MM, Agarwal N,
+Grace T, Sharma VK. 2018. Gut microbial dysbiosis in Indian children with
+autism spectrum disorders. Microb Ecol 76:1102–1114. https://doi.org/10
+.1007/s00248-018-1176-2.
+40. Finegold SM, Dowd SE, Gontcharova V, Liu C, Henley KE, Wolcott RD,
+Youn E, Summanen PH, Granpeesheh D, Dixon D, Liu M, Molitoris DR,
+Green JA 3rd. 2010. Pyrosequencing study of fecal microﬂora of autistic
+and control children. Anaerobe 16:444–453. https://doi.org/10.1016/j
+.anaerobe.2010.06.008.
+41. Kong XJ, Liu J, Li J, Kwong K, Koh M, Sukijthamapan P, Guo JJ, Sun ZJ,
+Song Y. 2020. Probiotics and oxytocin nasal spray as neuro-social-behav-
+ioral interventions for patients with autism spectrum disorders: a pilot
+randomized controlled trial protocol. Pilot Feasibility Stud 6:20. https://
+doi.org/10.1186/s40814-020-0557-8.
+42. Shivers CM, Jackson JB, McGregor CM. 2019. Functioning among typically
+developing siblings of individuals with autism spectrum disorder: a meta-
+analysis. Clin Child Fam Psychol Rev 22:172–196. https://doi.org/10.1007/
+s10567-018-0269-2.
+43. Schmidt TSB, Raes J, Bork P. 2018. The human gut microbiome: from asso-
+ciation to modulation. Cell 172:1198–1215. https://doi.org/10.1016/j.cell
+.2018.02.044.
+44. Halfvarson J, Brislawn CJ, Lamendella R, Vázquez-Baeza Y, Walters WA,
+Bramer LM, D’Amato M, Bonﬁglio F, McDonald D, Gonzalez A, McClure EE,
+Dunklebarger MF, Knight R, Jansson JK. 2017. Dynamics of the human gut
+microbiome in inﬂammatory bowel disease. Nat Microbiol 2:1–7. https://
+doi.org/10.1038/nmicrobiol.2017.4.
+Fouquier et al.
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+16
+
+45. Human Microbiome Project Consortium. 2012. Structure, function and di-
+versity of the healthy human microbiome. Nature 486:207–214. https://
+doi.org/10.1038/nature11234.
+46. Dickson RP, Erb-Downward JR, Freeman CM, McCloskey L, Beck JM,
+Huffnagle GB, Curtis JL. 2015. Spatial variation in the healthy human lung
+microbiome and the adapted island model of lung biogeography. Annals
+ATS 12:821–830. https://doi.org/10.1513/AnnalsATS.201501-029OC.
+47. Jones RB, Zhu X, Moan E, Murff HJ, Ness RM, Seidner DL, Sun S, Yu C, Dai
+Q, Fodor AA, Azcarate-Peril MA, Shrubsole MJ. 2018. Inter-niche and inter-
+individual variation in gut microbial community assessment using stool,
+rectal swab, and mucosal samples. Sci Rep 8:4139. https://doi.org/10
+.1038/s41598-018-22408-4.
+48. Caporaso JG, Lauber CL, Costello EK, Berg-Lyons D, Gonzalez A, Stombaugh
+J, Knights D, Gajer P, Ravel J, Fierer N, Gordon JI, Knight R. 2011. Moving pic-
+tures of the human microbiome. Genome Biol 12:R50. https://doi.org/10
+.1186/gb-2011-12-5-r50.
+49. Zitvogel L, Ma Y, Raoult D, Kroemer G, Gajewski TF. 2018. The microbiome
+in cancer immunotherapy: diagnostic tools and therapeutic strategies.
+Science 359:1366–1370. https://doi.org/10.1126/science.aar6918.
+50. Sappok T, Budczies J, Dziobek I, Bolte S, Dosen A, Diefenbacher A. 2014.
+The missing link: delayed emotional development predicts challenging
+behavior in adults with intellectual disability. J Autism Dev Disord
+44:786–800. https://doi.org/10.1007/s10803-013-1933-5.
+51. Cheng YS, Tseng PT, Chen YW, Stubbs B, Yang WC, Chen TY, Wu CK, Lin
+PY. 2017. Supplementation of omega 3 fatty acids may improve hyperac-
+tivity, lethargy, and stereotypy in children with autism spectrum disor-
+ders: a meta-analysis of randomized controlled trials. Neuropsychiatr Dis
+Treat 13:2531–2543. https://doi.org/10.2147/NDT.S147305.
+52. Le Chatelier E, Nielsen T, Qin J, Prifti E, Hildebrand F, Falony G, Almeida M,
+Arumugam M, Batto JM, Kennedy S, Leonard P, Li J, Burgdorf K, Grarup N,
+Jorgensen T, Brandslund I, Nielsen HB, Juncker AS, Bertalan M, Levenez F,
+Pons N, Rasmussen S, Sunagawa S, Tap J, Tims S, Zoetendal EG, Brunak S,
+Clement K, Dore J, Kleerebezem M, Kristiansen K, Renault P, Sicheritz-
+Ponten T, de Vos WM, Zucker JD, Raes J, Hansen T, Bork P, Wang J, Ehrlich
+SD, Pedersen O, MetaHIT consortium. 2013. Richness of human gut micro-
+biome correlates with metabolic markers. Nature 500:541–546. https://
+doi.org/10.1038/nature12506.
+53. Prehn-Kristensen A, Zimmermann A, Tittmann L, Lieb W, Schreiber S,
+Baving L, Fischer A. 2018. Reduced microbiome alpha diversity in young
+patients with ADHD. PLoS One 13:e0200728. https://doi.org/10.1371/
+journal.pone.0200728.
+54. Lloyd-Price J, Abu-Ali G, Huttenhower C. 2016. The healthy human micro-
+biome. Genome Med 8:51. https://doi.org/10.1186/s13073-016-0307-y.
+55. Jackson MA, Verdi S, Maxan ME, Shin CM, Zierer J, Bowyer RCE, Martin T,
+Williams FMK, Menni C, Bell JT, Spector TD, Steves CJ. 2018. Gut micro-
+biota associations with common diseases and prescription medications
+in a population-based cohort. Nat Commun 9:2655. https://doi.org/10
+.1038/s41467-018-05184-7.
+56. Cullen KW, Watson K, Zakeri I. 2008. Relative reliability and validity of the
+block kids questionnaire among youth aged 10 to 17 years. J Am Diet
+Assoc 108:862–866. https://doi.org/10.1016/j.jada.2008.02.015.
+57. Gilbert JA, Jansson JK, Knight R. 2014. The Earth microbiome project: suc-
+cesses and aspirations. BMC Biol 12:69. https://doi.org/10.1186/s12915
+-014-0069-1.
+58. Bolyen E, Rideout JR, Dillon MR, Bokulich NA, Abnet CC, Al-Ghalith GA,
+Alexander H, Alm EJ, Arumugam M, Asnicar F, Bai Y, Bisanz JE, Bittinger K,
+Brejnrod A, Brislawn CJ, Brown CT, Callahan BJ, Caraballo-Rodriguez AM,
+Chase J, Cope EK, Da Silva R, Diener C, Dorrestein PC, Douglas GM, Durall
+DM, Duvallet C, Edwardson CF, Ernst M, Estaki M, Fouquier J, Gauglitz JM,
+Gibbons SM, Gibson DL, Gonzalez A, Gorlick K, Guo J, Hillmann B, Holmes
+S, Holste H, Huttenhower C, Huttley GA, Janssen S, Jarmusch AK, Jiang L,
+Kaehler BD, Kang KB, Keefe CR, Keim P, Kelley ST, Knights D, et al. 2019.
+Reproducible, interactive, scalable and extensible microbiome data sci-
+ence using QIIME 2. Nat Biotechnol 37:852–857. https://doi.org/10.1038/
+s41587-019-0209-9.
+59. Rideout JR, Chase JH, Bolyen E, Ackermann G, Gonzalez A, Knight R,
+Caporaso JG. 2016. Keemei: cloud-based validation of tabular bioinfor-
+matics ﬁle formats in Google Sheets. Gigascience 5:27. https://doi.org/10
+.1186/s13742-016-0133-6.
+60. Wang Q, Garrity GM, Tiedje JM, Cole JR. 2007. Naive Bayesian classiﬁer
+for rapid assignment of rRNA sequences into the new bacterial taxon-
+omy. Appl Environ Microbiol 73:5261–5267. https://doi.org/10.1128/
+AEM.00062-07.
+61. Katoh K, Standley DM. 2013. MAFFT multiple sequence alignment soft-
+ware version 7: improvements in performance and usability. Mol Biol Evol
+30:772–780. https://doi.org/10.1093/molbev/mst010.
+62. Price MN, Dehal PS, Arkin AP. 2010. FastTree 2–approximately maximum-
+likelihood trees for large alignments. PLoS One 5:e9490. https://doi.org/
+10.1371/journal.pone.0009490.
+63. Vázquez-Baeza Y, Pirrung M, Gonzalez A, Knight R. 2013. EMPeror: a tool
+for visualizing high-throughput microbial community data. GigaScience
+2:16. https://doi.org/10.1186/2047-217X-2-16.
+64. Winter B. 2013. Linear models and linear mixed effects models in R with
+linguistic applications.
+The Gut Microbiome and Autism Spectrum Disorder
+March/April 2021
+Volume 6
+Issue 2
+e00848-20
+msystems.asm.org
+17

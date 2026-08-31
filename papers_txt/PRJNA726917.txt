@@ -1,0 +1,1255 @@
+cancers
+Article
+Gut Microbiota Dynamics during Chemotherapy in Epithelial
+Ovarian Cancer Patients Are Related to Therapeutic Outcome
+Federica D’Amico 1,2,*,†
+, Anna Myriam Perrone 1,3,4,†
+, Simone Rampelli 2
+, Sara Coluccelli 1,3
+,
+Monica Barone 1,2, Gloria Ravegnini 2
+, Marco Fabbrini 2
+, Patrizia Brigidi 1,4, Pierandrea De Iaco 1,3,4
+and Silvia Turroni 2,4
+
+
+Citation: D’Amico, F.; Perrone, A.M.;
+Rampelli, S.; Coluccelli, S.; Barone, M.;
+Ravegnini, G.; Fabbrini, M.; Brigidi, P.;
+De Iaco, P.; Turroni, S. Gut Microbiota
+Dynamics during Chemotherapy in
+Epithelial Ovarian Cancer Patients
+Are Related to Therapeutic Outcome.
+Cancers 2021, 13, 3999. https://
+doi.org/10.3390/cancers13163999
+Academic Editor: Paolo Nuciforo
+Received: 1 June 2021
+Accepted: 5 August 2021
+Published: 8 August 2021
+Publisher’s Note: MDPI stays neutral
+with regard to jurisdictional claims in
+published maps and institutional afﬁl-
+iations.
+Copyright: © 2021 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed
+under
+the
+terms
+and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+1
+Department of Medical and Surgical Sciences, University of Bologna, 40138 Bologna, Italy;
+myriam.perrone@aosp.bo.it (A.M.P.); sara.coluccelli2@unibo.it (S.C.); monica.barone@unibo.it (M.B.);
+patrizia.brigidi@unibo.it (P.B.); pierandrea.deiaco@unibo.it (P.D.I.)
+2
+Department of Pharmacy and Biotechnology, University of Bologna, 40126 Bologna, Italy;
+simone.rampelli@unibo.it (S.R.); gloria.ravegnini2@unibo.it (G.R.); m.fabbrini@unibo.it (M.F.);
+silvia.turroni@unibo.it (S.T.)
+3
+Division of Oncologic Gynecology, IRCCS Azienda Ospedaliero, University of Bologna, 40138 Bologna, Italy
+4
+Centro di Studio e Ricerca delle Neoplasie Ginecologiche (CSR), University of Bologna, 40138 Bologna, Italy
+*
+Correspondence: federica.damico8@unibo.it; Tel.: +39-051-2099727
+†
+These authors contributed equally to the work.
+Simple Summary: This pilot study on the trajectory of the gut microbiota (GM) in patients with
+epithelial ovarian cancer undergoing neoadjuvant and adjuvant chemotherapy highlighted peculiar
+dynamics associated with the therapeutic outcome. In particular, platinum-resistant patients showed
+a marked temporal reduction in GM diversity and increased instability with loss of health-associated
+taxa and increased proportions of lactate-producing microorganisms compared to those sensitive to
+platinum. These potential GM signatures of therapeutic failure are detectable within the ﬁrst half
+of chemotherapy cycles, suggesting that early integrated treatments also aimed at modulating GM
+could inﬂuence therapeutic outcome. Further studies in larger cohorts combining multiple omics
+and possibly animal models are urgently needed for in-depth mechanistic understanding.
+Abstract: Epithelial ovarian cancer (EOC) is one of the most lethal and silent gynecological tumors.
+Despite appropriate surgery and chemotherapy, relapse occurs in over half of patients with a poor
+prognosis. Recently, the gut microbiota (GM) was hypothesized to inﬂuence the efﬁcacy of anticancer
+therapies, but no data are available in EOC. Here, by 16S rRNA gene sequencing and inferred
+metagenomics, we proﬁled the GM of EOC patients at diagnosis and reconstructed its trajectory
+along the course of neoadjuvant or adjuvant chemotherapy up to follow-up. Compared to healthy
+subjects, the GM of EOC patients appeared unbalanced and severely affected by chemotherapy.
+Strikingly, discriminating patterns were identiﬁed in relation to the therapeutic response. Platinum-
+resistant patients showed a marked temporal reduction in GM diversity and increased instability
+with loss of health-associated taxa and increased proportions of Coriobacteriaceae and Biﬁdobacterium.
+Notably, most of these microorganisms are lactate producers, suggesting increased lactate production
+as supported by inferred metagenomics. In contrast, the GM of platinum-sensitive patients appeared
+overall more diverse and stable and enriched in lactate utilizers from the Veillonellaceae family. In
+conclusion, we identiﬁed potential GM signatures of therapeutic outcome in EOC patients, which
+could open up new opportunities for cancer prognosis and treatment.
+Keywords:
+gut microbiota; epithelial ovarian cancer; chemotherapy; neoadjuvant therapy;
+adjuvant therapy; platinum resistance; platinum sensitivity; lactate; 16S rRNA gene sequencing;
+inferred metagenomics
+Cancers 2021, 13, 3999. https://doi.org/10.3390/cancers13163999
+https://www.mdpi.com/journal/cancers
+
+Cancers 2021, 13, 3999
+2 of 20
+1. Introduction
+Epithelial ovarian cancer (EOC) is a relatively rare disease whose incidence rate is
+very high in western countries, such as Europe and North America, with eight cases out
+of 100,000 [1,2]. Currently, there is no established screening test for this disease, and
+this cancer represents the most lethal and silent gynecological tumor with diagnosis in
+advanced stages (III–IV) in about 65% of cases and a 5-year relative survival of only
+20–30% [3]. Primary tumors originate from the epithelium of the ovary, the fallopian tube,
+or the peritoneum and then spread to the peritoneal surfaces and viscera of the pelvis and
+the whole abdomen (carcinosis). The cancer’s spread by blood and lymphatic way is a
+rare event [4]. The standard therapeutic approach is surgical cytoreduction followed by
+ﬁrst-line standard chemotherapy with platinum and taxane compounds. When surgery
+is not possible for disease extent, neoadjuvant chemotherapy is an option to reduce the
+burden of the disease and achieve cytoreduction in responders; in non-responders, the
+prognosis is poor. Despite optimal surgery and appropriate ﬁrst-line chemotherapy, about
+70–80% of patients with EOC develop disease recurrence, and patients are candidates to
+new therapeutic opportunities, such as novel drug classes combined with different schemes
+of chemotherapy [5]. When EOC recurs, the prognosis is very poor. Recurrence occurs in
+about 23% of patients during or within 6 months after ﬁrst-line chemotherapy (platinum-
+resistant, PR) and 60% after 6 months (platinum-sensitive, PS). Progressively, PS patients
+experience shorter disease-free intervals, eventually becoming PR [6]. Pathogenesis of EOC
+is poorly understood. Risk factors are represented by age, late menopause, genetic factors
+(breast cancer gene (BRCA) mutation and Lynch syndrome), and environmental agents. The
+role of infections and inﬂammation in the pathogenesis of EOC is not completely elucidated;
+it is likely that inﬂammation and ovulation with changes in hormone levels lead to DNA
+damage by oxidative stress. Pelvic inﬂammatory disease, although not a recognized risk
+factor, is associated with EOC in several publications. The correlation between some
+agents such as Chlamydia, HPV, and cytomegalovirus infections was investigated, but it is
+difﬁcult to make any ﬁrm conclusion. Interestingly, studies by Banerjee et al. [7] proﬁled
+the EOC oncobiome, showing distinct viral, bacterial, and fungal signatures compared to
+matched and non-matched controls, including increased representation or unique detection
+of retroviridiae and HPV, several members of Proteobacteria and Firmicutes, yeasts, and
+zygomycetous fungi. Although it is not yet clear whether these microorganisms are actually
+involved in tumor pathogenesis, the manipulation of human microbiomes was recently
+advanced as a strategy to affect tumor progression and response to therapies [8–11]. In this
+scenario, special attention is paid to the gut microbiota (GM), i.e., the richest and the most
+diverse microbial community of the human holobiont closely linked to our health [12].
+Due to its ability to modulate immune responses and interfere with drug metabolism [13],
+GM is indeed a very hot topic in cancer research [14–16]. In particular, since the ﬁrst
+landmark studies in animal models [17,18], an ever-growing body of evidence indicates
+that peculiar GM proﬁles can improve the efﬁcacy of anticancer therapy while reducing
+side effects. These “more favorable” proﬁles appear to share greater diversity and greater
+proportions of health-associated microorganisms, mainly producers of short-chain fatty
+acids (SCFAs) [10,19]. However, the vast majority of studies were conducted in patients
+with hematological malignancies or melanoma, while, to date, no information is available
+on the possible role of GM in EOC.
+In an attempt to bridge this gap, here, we prospectively proﬁled the GM of 24 women
+with EOC through 16S rRNA gene sequencing and reconstructed its trajectories over the
+course of chemotherapy in relation to the therapeutic response (PR vs. PS). We recruited
+patients with high-grade papillary serous carcinoma, which is the most frequent histotype
+involved in carcinosis. Fecal samples were collected at diagnosis and before and after each
+chemotherapeutic cycle until follow-up over a period of about 1.5 years. The data herein
+generated strongly suggest that the GM dynamics during chemotherapy could serve as a
+prognostic biomarker and innovative therapeutic target for EOC.
+
+Cancers 2021, 13, 3999
+3 of 20
+2. Materials and Methods
+2.1. Patient Enrollment and Fecal Sampling
+Patients with EOC diagnosis referred to the Division of Oncologic Gynecology, IR-
+CCS Azienda Ospedaliero-Universitaria di Bologna (Bologna, Italy) were enrolled for a
+pilot longitudinal study on GM from diagnosis (T0) through chemotherapy treatment
+(pre and post each cycle performed every 3 weeks) until the follow-up. The local Ethical
+Committee of Area Vasta Emilia Romagna approved the study (CE Emilia Area Vasta N.
+122/2017/O/Tess). Written informed consent was obtained from each enrolled patient
+during the ﬁrst access to the Gynecologic Oncology Unit. Inclusion criteria were: (i) sus-
+picious or conﬁrmed ﬁrst diagnosis of ovarian cancer; (ii) patients treated at Gynecologic
+Oncology Unit; and (iii) patients available to collect stool samples at diagnosis, during
+treatment, and at follow-up. Patients with carcinosis or metastasis from other organs,
+inﬂammatory bowel disease, and chronic antibiotic intake were excluded from the study.
+All enrolled patients were clustered in two groups (12 vs. 12 subjects) depending on
+the therapeutic program: (i) women with moderate disease extension were treated by
+surgical cytoreduction followed by ﬁrst-line standard chemotherapy with platinum and
+taxane compounds (adjuvant group); (ii) patients with extensive disease were treated
+with neoadjuvant chemotherapy with platinum and taxane compounds before surgical
+cytoreduction (neoadjuvant group). Evaluable data were age, BMI, personal clinical history,
+histological types, International Federation of Gynecology and Obstetrics (FIGO) stage,
+number and doses of chemotherapy cycles, and surgical information including extension
+of disease (peritoneal cancer index, PCI) (Table 1). During the study, patients were asked to
+report any other concomitant therapies. At the end of both treatments (i.e., adjuvant and
+neoadjuvant chemotherapy), follow-up was performed as follows in order to detect relapse:
+CA 125 examination and clinical assessment every 4 months for the ﬁrst 2 years and then
+every 6 months for 5 years with a CT scan every 6 months. During the post-treatment reval-
+uations, the EOC subjects for both groups were further divided into two sub-groups based
+on the time elapsed between the last platinum intake and the diagnosis of relapse: (i) fewer
+than 6 months (platinum-resistant; PR), or (ii) more than 6 months (platinum-sensitive;
+PS). Fecal samples were collected at diagnosis from all patients (n = 24) and before and
+after each chemotherapy cycle (n = 344). Speciﬁcally, the last/ﬁrst stools were collected
+in the 3 days before/after each cycle. For follow-up, samples were taken every 3 months
+in all patients with no signs of relapse (n = 38). A total of 406 fecal samples were thus
+collected, stored at −80 ◦C, and shipped on dry ice to the Department of Pharmacy and
+Biotechnology, University of Bologna (Bologna, Italy) for GM analysis.
+2.2. Microbial DNA Extraction
+Two hundred and ﬁfty milligrams of fecal sample were used for microbial DNA
+extraction through a method combining bead-beating and column puriﬁcation, as described
+in Yu and Morrison [20]. The following modiﬁcations were introduced: 1 mL of lysis buffer
+(500 mM NaCl, 50 mM Tris-HCl, pH 8, 50 mM EDTA, and 4% SDS), four 3 mm glass beads,
+and 0.5 g of 0.1 mm zirconia beads (BioSpec Products, Bartlesville, OK, USA) were used
+to perform chemical and mechanical lysis of the samples in a FastPrep instrument (MP
+Biomedicals, Irvine, CA, USA) at 5.5 movements/s for 1 min, repeated three times [21].
+Samples were incubated at 95 ◦C for 15 min and then centrifuged at 13,000 rpm for 5 min.
+Subsequently, the supernatant was added with 10 M ammonium acetate and centrifuged
+for 10 min at 13,000 rpm. The supernatants were then incubated in ice for 30 min with one
+volume of isopropanol for nucleic acid precipitation. A washing step with 70% ethanol
+was performed, and the precipitated nucleic acids were resuspended in 100 µL of TE
+buffer (10 mM Tris-HCl, 1 mM EDTA pH 8.0). Two microliters of 10 mg/mL DNase-free
+RNase were then added, and the samples were incubated at 37 ◦C for 15 min. Finally,
+a column-based method was used for DNA puriﬁcation using the DNeasy Blood and Tissue
+Kit (QIAGEN, Hilden, Germany) as per manufacturer’s instructions. The yield and the
+
+Cancers 2021, 13, 3999
+4 of 20
+quality of the extracted DNA were assessed with a NanoDrop ND-1000 spectrophotometer
+(NanoDrop Technologies, Wilmington, DE, USA).
+Table 1. Patients’ characteristics.
+Patient ID
+Therapeutic
+Program
+Age
+(Years)
+BMI
+(kg/m2)
+FIGO
+Stage
+BRCA
+Gene
+Status
+Nr.
+Cycles
+PCI
+CA125 at
+Diagnosis
+(U/mL)
+Residual
+Disease
+(CC)
+PFS
+(Months)
+OS
+(Months)
+Follow-
+Up
+State
+Response
+to
+Platinum
+MiCrO 1
+neoadj
+51
+20
+IV
+WT
+15
+16
+1030
+CC-2
+1
+9
+DWD
+PR
+MiCrO 2
+neoadj
+68
+34
+IIIC
+WT
+6
+22
+1800
+CC-0
+10
+21
+DWD
+PR
+MiCrO 4
+neoadj
+71
+25
+III
+WT
+9
+16
+1256
+CC-0
+24
+39
+AWD
+PS
+MiCrO 6
+neoadj
+71
+21
+IIIC
+WT
+10
+20
+1200
+CC-1
+14
+21
+DWD
+PR
+MiCrO 8
+neoadj
+48
+21
+III
+BRCA1m
+6
+18
+999
+CC-0
+15
+16
+AWD
+PS
+MiCrO 9
+neoadj
+58
+24
+IV
+WT
+8
+25
+1100
+CC-0
+29
+30
+NED
+PS
+MiCrO 10
+neoadj
+56
+20
+IIIC
+WT
+9
+27
+2100
+CC-0
+12
+17
+DWD
+PR
+MiCrO 16
+neoadj
+55
+21
+III
+BRCA2m
+6
+25
+1050
+CC-0
+23
+23
+AWD
+PS
+MiCrO 23
+neoadj
+51
+20
+IIIC
+BRCA1m
+9
+21
+499
+CC-0
+18
+25
+AWD
+PS
+MiCrO 24
+neoadj
+61
+21
+III
+WT
+13
+24
+499
+CC-0
+13
+13
+NED
+PS
+MiCrO 25
+neoadj
+67
+20
+IIIC
+WT
+9
+27
+999
+CC-2
+16
+22
+AWD
+PR
+MiCrO 28
+neoadj
+48
+24
+IIIC
+BRCA1m
+6
+37
+1030
+CC-0
+12
+12
+DWD
+PR
+MiCrO 3
+adj
+69
+23
+IIIC
+WT
+6
+18
+1000
+CC-0
+8
+8
+NED
+PS
+MiCrO 5
+adj
+61
+23
+IIIC
+WT
+6
+17
+750
+CC-1
+14
+21
+AWD
+PS
+MiCrO 7
+adj
+57
+21
+IV
+WT
+6
+29
+1029
+CC-1
+10
+13
+DWD
+PR
+MiCrO 11
+adj
+67
+23
+IIIC
+BRCA1m
+6
+21
+1340
+CC-0
+11
+18
+AWD
+PR
+MiCrO 12
+adj
+43
+22
+IIB
+WT
+6
+3
+1000
+CC-0
+13
+13
+NED
+PS
+MiCrO 13
+adj
+53
+23
+IV
+WT
+8
+20
+850
+CC-2
+14
+14
+AWD
+PR
+MiCrO 17
+adj
+53
+19
+IV
+BRCA1m
+6
+18
+1000
+CC-0
+17
+18
+AWD
+PS
+MiCrO 19
+adj
+57
+20
+IC
+BRCA1/2m
+6
+0
+679
+CC-0
+15
+15
+NED
+PS
+MiCrO 22
+adj
+39
+20
+IV
+BRCA1m
+6
+30
+840
+CC-0
+18
+18
+AWD
+PS
+MiCrO 31
+adj
+68
+24
+IIIB
+BRCA1m
+6
+3
+350
+CC-0
+15
+15
+AWD
+PS
+MiCrO 33
+adj
+69
+25
+IIIC
+WT
+6
+22
+286
+CC-0
+12
+12
+NED
+PS
+MiCrO 39
+adj
+54
+32
+IIIC
+WT
+6
+11
+453
+CC-0
+10
+10
+NED
+PS
+Adj = adjuvant chemotherapy; AWD = alive with disease; BMI = body mass index; BRCAm = breast cancer gene mutation;
+CC = completeness cytoreduction; DWD = death with disease; FIGO = International Federation of Obstetrics and Gynecology; NED = no
+evidence of disease; Neoadj = neoadjuvant chemotherapy; OS = overall survival; PCI = peritoneal cancer index; PFS = progression-free
+survival; PR = platinum-resistant; PS = platinum-sensitive; WT = wild-type.
+2.3. 16S rRNA Gene Ampliﬁcation and Sequencing
+The V3–V4 hypervariable regions of the 16S rRNA gene were ampliﬁed with primers
+341F and 785R, including Illumina adapter overhang sequences, as described in
+Rampelli et al. [21]. For library preparation, the following steps were performed: magnetic
+bead-based amplicon clean-up (Agencourt AMPure XP, Beckman Coulter, Brea, CA, USA),
+limited-cycle PCR using Nextera technology to index libraries, and another clean-up as
+above. Indexed libraries were pooled at an equimolar concentration of 4 nM, denatured,
+and diluted to 5 pM prior to sequencing on an Illumina MiSeq platform with a 2 × 250 bp
+paired-end protocol per manufacturer’s instructions (Illumina, San Diego, CA, USA).
+2.4. Bioinformatics and Statistics
+All sequences were processed using a pipeline that combined PANDASeq [22] and
+QIIME 2 [23]. After ﬁltering the reads by length and quality, the DADA2 pipeline was used
+to bin the remaining reads into amplicon sequence variants (ASVs) [24]. Taxonomic classi-
+ﬁcation was performed using the VSEARCH algorithm [25] on the Greengenes database
+(May 2013 release). Chimeras were removed during the bioinformatic steps. Metagenome
+prediction of Greengenes-picked ASVs was performed with PICRUSt2 [26] using Meta-
+Cyc [27] as a reference for pathway annotation. Publicly available sequences of healthy
+women matched to EOC patients for several GM-associated confounding factors (i.e., age,
+BMI, and geography) were downloaded and used as a control. Sequences were from
+different cohorts to minimize study-related bias, speciﬁcally from: De Filippis et al. [28]
+(deposited in NCBI SRA: Bioproject ID SRP042234), Schnorr et al. [29] (Italian samples;
+MG-RAST database: project ID mgp12183), and Biagi et al. [30] (elderly samples; MG-RAST
+database: project ID mgp17761). Alpha diversity was assessed using the number of ob-
+served ASVs and the Simpson inverse index. Bray–Curtis and weighted and unweighted
+UniFrac distances were used to build principal coordinates analysis (PCoA) graphs. All
+statistical analyses were carried out with the R software. PCoA plots were generated
+using the “vegan” (Available online: http://www.cran.r-project.org/package=vegan/,
+accessed on 29 April 2020) and “Made4” [31] packages, and data separation was tested
+by a permutation test with pseudo-F ratio (function “Adonis” in “vegan”). To assess
+
+Cancers 2021, 13, 3999
+5 of 20
+differences in diversity and GM composition at different taxonomic levels among groups,
+Kruskal–Wallis test followed by post-hoc Wilcoxon test were used. Discriminating taxa
+and MetaCyc pathways between groups were identiﬁed through linear discriminant anal-
+ysis (LDA) effect size (LEfSe) algorithm [32]. Only taxa with LDA score > 2 at p < 0.05
+were considered discriminating. For the generation of co-abundance groups (CAGs), only
+bacterial genera present in at least 10% of the samples were considered. As previously
+shown in Claesson et al. [33], associations among genera were assessed using the Kendall
+correlation test, visualized using hierarchical Ward-linkage clustering based on Spearman
+correlation coefﬁcients, and used to deﬁne CAGs. Wiggum plot networks were created
+using Cytoscape software [34] with the circle size proportional to the relative bacterial
+abundance and the connection between nodes representing signiﬁcant Kendall correlations
+between genera (p < 0.05). Progression-free survival and overall survival according to GM
+were estimated using the Kaplan–Meier method, and comparisons were made using the
+log-rank test. As GM variables, alpha diversity (as number of observed ASVs) and relative
+abundance of discriminating taxa were considered, and the cohort was stratiﬁed using
+the median of each variable as previously shown [35,36]. As for the time-point, based on
+the differences that emerged between PR and PS patients, samples were selected halfway
+through the chemotherapy treatment (i.e., before cycle 7 for neoadjuvant therapy and
+before cycle 4 for adjuvant therapy) (see also Results). Power calculation was computed
+with micropower R package [37]; we found that the size of PS and PR groups allowed
+90% power to detect an ω2 of 0.003. When necessary, p values were corrected for multiple
+comparisons using the Benjamini–Hochberg method. A false discovery rate (FDR) ≤0.05
+was considered as statistically signiﬁcant. FDR ≤0.1 was considered as a trend.
+3. Results
+3.1. Study Cohort Description
+Twenty-four women affected by high-grade serous EOC were enrolled at the Division
+of Oncologic Gynecology, IRCCS Azienda Ospedaliero-Universitaria di Bologna, Bologna,
+Italy. Patient characteristics are shown in Table 1. The median age was 57 years (range,
+39–71) and body mass index (BMI) 22 kg/m2 (range, 19–34). Twenty-two (92%) patients
+experienced advanced FIGO stage (III–IV), and nine (37%) patients reported germinal
+BRCA mutation. All patients received a median of six cycles of carboplatin and taxane
+(range, 6–15), carcinomatosis was present in all patients except one case of stage IC, and
+peritoneal cancer index (PCI) showed a median of 20 (range, 0–37). Twelve patients
+received neoadjuvant chemotherapy because they were judged not optimally cytoreducible
+at diagnostic laparoscopy [5], and 12 received up-front surgery. No differences were found
+in age, BMI, FIGO stage, or BRCA mutation between the neoadjuvant and the adjuvant
+groups, although neoadjuvant-treated patients were characterized by higher PCI (median
+in neoadjuvant vs. adjuvant group, 23 vs. 18) (Wilcoxon test, p = 0.0044), number of cycles
+received (9 vs. 6) (p = 0.0477), and levels of CA 125 (1040 vs. 845) (p = 0.0486). In the
+neoadjuvant group, six patients were judged platinum-resistant (PR) and six platinum-
+sensitive (PS) according to relapse and residual disease after surgery. On the other hand,
+in the adjuvant group, three patients were grouped as PR and nine as PS. When we
+compared PR and PS patients, no differences in age, BMI, or number of chemotherapy
+cycles were observed, while PCI (median in PR vs. PS patients, 24.5 vs. 22.5) (p = 0.0579)
+and CA 125 (1115 vs. 1024.5) (p = 0.0023) levels tended to be or were higher in PR patients
+of the neoadjuvant group. Median progression-free survival (PFS) and overall survival
+(OS) in the whole cohort were 14 (range, 1–29) and 16 months (8–39), respectively.
+
+Cancers 2021, 13, 3999
+6 of 20
+For each patient, fecal sampling took place at several time-points starting from diag-
+nosis (T0), before and after each chemotherapy cycle (C, pre and post), and at follow-ups
+every 3 months from the end of therapy for a total of 406 fecal samples over a study period
+of approximately 1.5 years (Figure 1). Fecal samples were subjected to 16S rRNA gene
+sequencing, yielding 12,399,150 high-quality reads (mean ± SD, 30,540 ± 21,518).
+Figure 1. Study design. Schematic representation of fecal sampling for patients with epithelial ovarian cancer given
+neoadjuvant (top) or adjuvant (bottom) chemotherapy. Diamonds indicate sampling time-points, i.e., at diagnosis (T0),
+before and after each chemotherapy cycle (C), and at follow-ups every 3 months from the end of therapy. Chemotherapy
+courses were repeated every 3 weeks depending on the tumor response.
+3.2. The Gut Microbiota in EOC Patients at Diagnosis
+The GM of 24 EOC patients at diagnosis (T0) was proﬁled and compared with that of
+24 healthy women from previous studies [28–30] matched by several microbiota-associated
+confounding variables (i.e., age, BMI, and geography) [38]. No difference in alpha diver-
+sity was observed between two groups using the Simpson’s inverse index (Wilcoxon test,
+p = 0.3). In contrast, Bray–Curtis distance-based principal coordinates analysis (PCoA)
+showed signiﬁcant segregation between the GM of EOC patients and that of healthy
+subjects (permutation test with pseudo-F ratio, p = 0.001) (Figure 2A). Regarding the taxo-
+nomic composition, the GM of both patients and controls was dominated by the phylum
+Firmicutes (mean relative abundance in patients vs. controls, 68.8% vs. 73.9%) along
+with Bacteroidetes (11.2% vs. 15.1%), Actinobacteria (13.2% vs. 7.1%), and Proteobac-
+teria (4.6% vs. 1.9%) (Figure 2B). Consistent with the typical adult-like GM proﬁle [39],
+Ruminococcaceae (29.4% vs. 32.5%), Lachnospiraceae (18.3% vs. 32.5%), and Bacteroidaceae
+(6.3% vs. 11.7%) were the most abundant families. However, EOC patients were charac-
+terized by decreased proportions of Lachnospiraceae (Wilcoxon test, p < 0.001) as well as
+other families such as Biﬁdobacteriaceae, Clostridiaceae, Rikenellaceae, and Porphyromonadaceae
+(p ≤0.01). On the other hand, the EOC-related GM proﬁles were markedly enriched in
+Coriobacteriaceae (p < 0.001) (Figure 2C). Additionally, at the genus level, several differences
+emerged between the two groups (Figure 2D). In particular, compared to healthy subjects,
+the GM of EOC patients was enriched in Coriobacteriaceae members, Adlercreutzia and
+Collinsella (p ≤0.05), as well as in Lactococcus and Lachnobacterium (p ≤0.01), while it was
+depleted in several Lachnospiraceae genera such as Coprococcus, Blautia, Dorea, Lachnospira,
+and Roseburia along with Biﬁdobacterium (p ≤0.01).
+
+Cancers 2021, 13, 3999
+7 of 20
+Figure 2. The gut microbiota of EOC patients at diagnosis compared to healthy women. (A) PCoA based on Bray–Curtis
+dissimilarity between the genus-level proﬁles of 24 EOC patients and 24 healthy age/BMI-matched women living in the
+same geographical area (across Italy). A signiﬁcant separation between groups was found (permutation test with pseudo-F
+ratio, p = 0.001). Ellipses include 95% conﬁdence area based on the standard error of the weighted average of sample
+coordinates. (B) Pie charts showing the average relative abundance of major phyla (outer ring) and families (inner ring) in
+the gut microbiota of EOC patients and healthy women. Only taxa with relative abundance > 0.1% in at least one sample
+are shown. Relative abundance (mean ± SEM) of families (C) and genera (D) differentially represented between groups
+(Wilcoxon test, * for p ≤0.05; ** for p < 0.01; *** for p < 0.001). Only families with mean relative abundance > 0.5% in at least
+one of the two groups are shown.
+3.3. Gut Microbiota Dynamics in EOC Patients during Chemotherapy
+The dynamics of GM in 24 women with EOC were reconstructed during adjuvant and
+neoadjuvant treatments (12 vs. 12 patients) from baseline (T0) through each chemotherapy
+cycle (C, pre and post) until follow-up. For both patient groups, alpha diversity was found
+to ﬂuctuate over time with, in particular, a signiﬁcant reduction from the baseline during
+the ﬁrst few cycles of chemotherapy treatments (preC3 for the adjuvant group and preC4
+
+Cancers 2021, 13, 3999
+8 of 20
+for the neoadjuvant group) (Wilcoxon test, p ≤0.1) (Figure S1). PCoA based on weighted
+UniFrac distances showed no separation between groups nor within each group over time
+(permutation test with pseudo-F ratio, p > 0.05) but strong individuality, with samples
+from the same subject clustering nearby for both treatment groups (p = 0.001) (Figure S1).
+As previously shown at baseline, the GM was dominated by the phylum Firmicutes at
+all time-points considered regardless of the treatment group with varying proportions
+of Bacteroidetes, Actinobacteria, Proteobacteria, and Verrucomicrobia. Compared to T0,
+patients receiving neoadjuvant therapy showed a signiﬁcant increase in Actinobacteria
+over time (especially in samples preC4, postC6, and postC7), while those given adjuvant
+therapy showed a signiﬁcant reduction in Firmicutes in the ﬁrst few cycles (preC3 and
+postC4) (Wilcoxon test, p < 0.05). Consistent results were obtained at the family level with
+an increase over time in the relative abundance of Coriobacteriaceae in patients undergoing
+neoadjuvant chemotherapy accompanied by a reduction in Ruminococcaceae, especially
+Faecalibacterium and Ruminococcus, almost after every chemotherapy cycle (p < 0.05). For
+patients given adjuvant therapy, we mainly observed a reduction in Lachnospiraceae (preC5
+and preC7, p < 0.05) (Figure S2).
+3.4. Potential Gut Microbiota Signatures of Therapeutic Response
+Within each treatment group, patients were stratiﬁed by platinum sensitivity (PS) or
+resistance (PR) based on the time before relapses appeared (beyond or within 6 months of
+ﬁrst-line chemotherapy, respectively), and their GM proﬁles were followed over time. As
+discussed above for the whole cohort, an overall trend towards reduced alpha diversity
+in the ﬁrst treatment cycles was observed across all study groups (Figure 3A). This was
+particularly evident for PR patients receiving neoadjuvant therapy for whom GM diversity
+dropped dramatically before the C7 cycle (Wilcoxon test, p = 0.03). Interestingly, these
+low levels tended to persist over time unlike what was observed for PS patients given
+neoadjuvant therapy, whose values remained substantially high until follow-up. A similar
+pattern (i.e., almost no change in the PS group with greater ﬂuctuations in the PR group)
+was observed in EOC patients receiving adjuvant treatment. In particular, although not
+signiﬁcant, the lowest alpha diversity value for PR patients receiving adjuvant therapy was
+observed at about half of the treatment (i.e., preC4). Based on these considerations, the
+number of observed ASVs in preC7 samples for neoadjuvant therapy and preC4 samples
+for adjuvant treatment was used to evaluate associations with progression-free survival and
+overall survival in the whole cohort. As shown in the Kaplan–Meier curves of Figure 3B,
+higher diversity at these time-points tended to be associated with longer survival (both
+progression-free and overall) (log-rank test, p ≤0.1).
+As for beta diversity, no intra-group separation over time was evident in the weighted
+UniFrac-based PCoA plot (permutation test with pseudo-F ratio, p > 0.05), but there was
+in the samples segregated by therapeutic response, i.e., there was signiﬁcant separation
+between all samples from PR patients and those from PS patients for both treatment groups
+(neoadjuvant group: p = 0.009; adjuvant group: p = 0.001) (Figure S3). Noteworthy is that
+such a separation was not signiﬁcant at diagnosis (p > 0.05) (Figure S4). In order to further
+explore the GM structural variation, we calculated the weighted UniFrac distances between
+each time-point and the respective T0 for all PS and PR patients during both chemotherapy
+treatments (i.e., neoadjuvant vs. adjuvant) (Figure 4). Interestingly, the GM underwent
+more or less extensive ﬂuctuations depending on the study group. In particular, for PR
+patients undergoing neoadjuvant treatment, the distance from T0 increased before the C7
+cycle, then remained above the baseline inter-individual variation to drop only in the last
+time-points and in the follow-up. In contrast, the variations in the corresponding PS group
+were mostly lower than the inter-patient variability at T0. Similarly, for adjuvant treatment,
+the distance values for PR patients were often greater than the average inter-patient
+variation at baseline, while the GM variation in PS patients remained nearly constant over
+time. Taken together, these data suggest greater GM resistance to chemotherapy-related
+
+Cancers 2021, 13, 3999
+9 of 20
+perturbations for PS patients with greater temporal instability with loss of individual
+ﬁngerprint for PR patients.
+Figure 3. Dynamics of alpha diversity in EOC patients during chemotherapy based on therapeutic response and association
+with survival. (A) Boxplots showing the distribution of the number of observed ASVs during neoadjuvant (top) or adjuvant
+(bottom) chemotherapy. Patients were stratiﬁed by response to therapy: PR, platinum-resistant (left) vs. PS, platinum-
+sensitive (right). C, chemotherapy cycle. Wilcoxon test, * for p ≤0.05. (B) Kaplan–Meier curves for progression-free survival
+(left) and overall survival (right) in the whole cohort. EOC patients were stratiﬁed by higher or lower number of observed
+ASVs (relative to median) at the preC7 (for neoadjuvant therapy) or the preC4 (for adjuvant therapy) time-points. Log-rank
+test, p ≤0.1.
+
+Cancers 2021, 13, 3999
+10 of 20
+Figure 4. Dynamics of beta diversity in EOC patients during chemotherapy based on therapeutic response. Boxplots show
+the distribution of weighted UniFrac distances between each time-point and the respective T0 for each EOC patient during
+neoadjuvant (top) or adjuvant (bottom) chemotherapy. Patients were stratiﬁed by response to therapy: PR, platinum-
+resistant (left) vs. PS, platinum-sensitive (right). The mean inter-patient variability at baseline (i.e., T0) is depicted as a line
+in each plot. C, chemotherapy cycle.
+In an attempt to identify potential taxonomic markers of platinum response, a lin-
+ear discriminant analysis (LDA) effect size (LEfSe) analysis was performed (Figure 5).
+Members of Actinobacteria, including the Coriobacteriaceae family with Eggerthella and un-
+classiﬁed genera and Biﬁdobacterium, were found to discriminate for PR patients regardless
+of chemotherapy group (i.e., neoadjuvant vs. adjuvant). On the other hand, the GM of PS
+patients was discriminated by Veillonellaceae members (i.e., Veillonella, Megasphaera, and Dial-
+ister) as well as by Catenibacterium and Anaerotruncus. As for peculiarities of each treatment
+group, Bacteroidetes members (Bacteroides, Prevotella, and Parabacteroides), Faecalibacterium,
+and Acidaminococcus were characteristic of PS patients undergoing adjuvant chemotherapy,
+while Desulfovibrio, Paraprevotella, Anaerostipes, Sutterella, and Pseudoramibacter_Eubacterium
+were characteristic of those receiving the neoadjuvant treatment. Furthermore, the GM of
+PR patients of the neoadjuvant group was speciﬁcally discriminated by Serratia, Sarcina,
+Staphylococcus, Peptococcus, Haemophilus, Turicibacter, Streptococcus, and Collinsella, while
+
+Cancers 2021, 13, 3999
+11 of 20
+that of PR patients receiving adjuvant therapy was discriminated by Coprobacillus, Coprococ-
+cus, [Eubacterium], Dorea, and Dehalobacterium. The temporal dynamics of the main taxa
+identiﬁed as discriminating between PR and PS patients are reported in Figure S5. Among
+these, it is worth noting that the proportions of Coriobacteriaceae, especially Eggerthella, and
+Biﬁdobacterium were overall considerably higher in PR than in PS patients throughout the
+course of treatment. In contrast, Veillonellaceae members, Catenibacterium, and Anaerotruncus
+were poorly represented if not absent in the GM of PR patients at the different time-points
+while reaching high relative abundance values in PS patients during therapy. Consistently,
+Kaplan–Meier survival curves showed that higher relative abundance of Coriobacteriaceae
+halfway through the chemotherapy treatment was associated, albeit not signiﬁcantly, with
+lower survival probability, while an opposite trend was observed for Veillonellaceae (log-
+rank test, p ≤0.1) (Figure S6). It should be noted that all the taxa mentioned above were not
+differentially represented at baseline between PR and PS patients receiving neoadjuvant
+or adjuvant therapy (Wilcoxon test, p > 0.05) and that some differences, particularly the
+overabundance of Eggerthella in PR patients (follow-up vs. baseline, neoadjuvant group:
+p = 0.03) and Dialister in PS patients (adjuvant group: p = 0.1), persisted or tended to persist
+in the ﬁrst follow-up 3 months after the end of the therapy. Six months after the end of the
+treatments, the proportions of Dialister in PS patients who received adjuvant chemotherapy
+tended to remain higher (p = 0.1), while in PS patients of the neoadjuvant group, there
+were signiﬁcant or near-signiﬁcant increases in some PR-associated microbial signatures,
+i.e., Eggerthella (p = 0.1) and Adlercreutzia (p = 0.04) (Figure S7). Supporting an association
+between these potential GM signatures of platinum response and therapeutic outcome, 67%
+of PS patients who received neoadjuvant chemotherapy relapsed at 6 months of follow-up
+compared to 44% of PS patients of the adjuvant group (Table 1).
+To further explore the GM compositional variation in relation to the therapeutic
+response, we established co-abundance associations of genera and then clustered correlated
+taxa into co-abundance groups (CAGs) describing the GM structures found across the
+whole dataset (permutation multivariate analysis of variance, p < 0.05; see Figure S8). Four
+CAGs were identiﬁed and named based on the dominant (i.e., the most abundant) genus
+within each of them (Bacteroides, Collinsella, [Ruminococcus], and Faecalibacterium). The CAG
+relationships are shown as Wiggum plots in Figure 6. Regardless of the treatment group,
+PR patients were characterized by Collinsella CAG (cyan), especially the co-abundance of
+Biﬁdobacterium and Turicibacter, as well as by Eggerthella, belonging to the [Ruminococcus]
+CAG (dark blue). The Collinsella CAG was also represented in PS patients but with mostly
+distinct genera, including Veillonellaceae members. On the other hand, PS patients shared
+an overrepresentation of the Bacteroides CAG (brown) with co-abundance of Desulfovibrio,
+Odoribacter, Phascolarctobacterium, and Methanobrevibacter along with other treatment group-
+speciﬁc genera. Again, the Bacteroides CAG was also represented in PR patients, especially
+those receiving adjuvant therapy, but with much increased proportions of [Eubacterium] and
+Dehalobacterium. The Faecalibacterium CAG (green) with co-abundance of well-known SCFA
+producers such as Faecalibacterium, Lachnospira, Ruminococcus, Roseburia, and Coprococcus
+was mostly represented in the neoadjuvant treatment group regardless of response.
+
+Cancers 2021, 13, 3999
+12 of 20
+Figure 5. Potential taxonomic signatures of therapeutic response in EOC patients receiving neoadjuvant or adjuvant
+chemotherapy. Differentially represented taxa between platinum-sensitive (i.e., PS) and platinum-resistant (i.e., PR) EOC
+patients receiving neoadjuvant (A) or adjuvant (B) chemotherapy were identiﬁed by linear discriminant analysis (LDA)
+effect size (LEfSe) analysis. Left, LDA scores; right, cladograms. The logarithmic threshold for discriminative features was
+set to 2.0. See also Figure S5.
+
+Cancers 2021, 13, 3999
+13 of 20
+Figure 6. Co-abundance groups in the gut microbiota of EOC patients receiving neoadjuvant or adjuvant chemotherapy.
+Wiggum plots show the pattern of variation of the four identiﬁed co-abundance groups (CAGs) in EOC patients receiving
+neoadjuvant (top) or adjuvant (bottom) chemotherapy. Patients were stratiﬁed by response to therapy: PR, platinum-
+resistant (left) vs. PS, platinum-sensitive (right). CAGs were named according to the most abundant genera and color
+coded as follows: Bacteroides (brown), Collinsella (cyan), [Ruminococcus] (dark blue), and Faecalibacterium (green). Each genus
+is depicted as a node whose size is proportional to the over-abundance relative to background. Positive and signiﬁcant
+Kendall correlations between two or more genera are indicated with lines connecting the nodes (p < 0.05). The thickness of
+the lines was drawn in proportion to the correlation strength. See also Figure S8.
+3.5. Predicted Functional Proﬁling of the Gut Microbiota in EOC Patients during Chemotherapy
+In order to gain insights into the functional variation of the GM of EOC patients during
+chemotherapy, 16S rRNA gene sequencing data were used to predict GM functionalities
+through the PICRUSt2 pipeline [26]. A total of 129 MetaCyc pathways were identiﬁed by
+LEfSe as potential functional markers of response (Figure 7 and Table S1). In particular, in
+the adjuvant group, almost all of the discriminating functionalities (83.0% for PR patients
+and 73.2% for PS patients) belonged to the class of biosynthesis, i.e., they were involved in
+the synthesis of small molecules, macromolecules, and cell structure components (e.g., nu-
+cleotides, amino acids, vitamins, carbohydrates, fatty acids, and lipids). These biosynthetic
+capacities were also similarly represented between PR and PS patients from the neoadju-
+vant group but with lower overall values (37.9% for PR and 39.0% for PS patients). The
+rest of the discriminating functionalities were associated with the degradation of the same
+molecules or with the generation of energy precursors. Interestingly, among the predicted
+functions that discriminated for PR patients, we found pathways directly involved in
+fermentation to lactate (i.e., homolactic fermentation, heterolactic fermentation, mixed acid
+fermentation, Biﬁdobacterium shunt, hexitol fermentation to lactate, formate, ethanol, and
+acetate in the neoadjuvant group and pyruvate fermentation to acetate and lactate II in the
+
+Cancers 2021, 13, 3999
+14 of 20
+adjuvant group). In contrast, none of the inferred GM activities characteristic of PS patients
+were associated with lactate production for any of the chemotherapy regimens.
+Figure 7. Potential inferred metagenomics signatures of therapeutic response in EOC patients receiving neoadjuvant or adju-
+vant chemotherapy. Differentially represented inferred functions between platinum-sensitive (i.e., PS) and platinum-resistant
+(i.e., PR) EOC patients receiving neoadjuvant (A) or adjuvant (B) chemotherapy were identiﬁed by linear discriminant
+analysis (LDA) effect size (LEfSe) analysis. The logarithmic threshold for discriminative features was set to 2.0. See also
+Table S1 for MetaCyc pathways and corresponding superclasses.
+
+Cancers 2021, 13, 3999
+15 of 20
+4. Discussion
+As far as we know, for the ﬁrst time, we performed a prospective study on the proﬁle of
+GM of women with EOC and reconstructed its trajectory over the course of chemotherapy
+in relation to disease severity (and consequently to the treatment administered, neoadjuvant
+vs. adjuvant) and therapeutic response (PR vs. PS). As already observed in other tumor
+contexts [40–43], the GM of patients at baseline (i.e., before anti-cancer treatments) showed
+some unbalanced, potentially dysbiotic traits, compared to healthy subjects matched for
+several GM-associated confounding factors (i.e., age, sex, BMI, and geography). In particu-
+lar, EOC patients were depleted of most of the typically health-associated GM members,
+such as Blautia, Coprococcus, Lachnospira, Dorea, and Roseburia, all of which belong to the
+Lachnospiraceae family, as well as Biﬁdobacterium, a well-known commensal probiotic. It
+is widely recognized that these microorganisms produce SCFAs, i.e., key metabolites to
+maintain host metabolic, immunological, and neurological homeostasis [44,45], and their
+decrease probably represents a non-speciﬁc shared response to diseases, as recently dis-
+cussed [46]. On the other hand, EOC patients were particularly enriched in members of
+Coriobacteriaceae, including Adlercreutzia and especially Collinsella. As for the latter, it was
+recently associated with metabolic disorders [47,48] and suggested to play a role in altering
+intestinal permeability, contributing to a pro-inﬂammatory state through increased produc-
+tion of chemokines and IL-17A, even in other pathological contexts, such as rheumatoid
+arthritis [49]. It is also worth noting that Collinsella as well as other Coriobacteriaceae compo-
+nents were found to be overrepresented in the GM of some cancer patients, including those
+with higher grade breast and colorectal cancer [50,51]. Although we are still a long way
+from deﬁning “healthy” vs. “dysbiotic” microbiomes [52], all these characteristics could be
+associated with loss of intestinal homeostasis that, with adequate caution, could be linked
+to the development and/or the progression of various disorders.
+In line with the literature available on the effects of systemic anticancer therapy on
+GM in different types of cancer, including different chemotherapy agents and treatment
+settings [53], we found that chemotherapy further aggravated the GM imbalance of EOC
+patients with reduction of alpha diversity, further decline in the proportions of beneﬁcial
+microbes, such as Lachnospiraceae and Ruminococcaeae members, and a further increase in
+Coriobacteriaceae. However, the most striking ﬁndings emerged when the trajectories of
+GM were re-analyzed in relation to the therapeutic response. In fact, we observed that
+PR and PS patients underwent distinct dynamics of alpha and beta diversity and differed
+in the relative abundance trends of certain taxa. Speciﬁcally, a progressive reduction of
+alpha diversity was observed for PR patients, while in PS patients, the diversity values
+remained mostly stable and generally higher. Higher values of alpha diversity halfway
+through the chemotherapy treatment were associated with longer progression-free and
+overall survival in the whole cohort. Moreover, unlike PS patients, the GM of PR patients
+underwent considerable ﬂuctuations in terms of beta diversity mostly higher than the
+baseline inter-patient variability, thus highlighting a high degree of intra-patient temporal
+instability. It should be remembered that diversity and stability are essential ecological
+characteristics of GM [54] and are considered hallmarks of a healthy intestine and gener-
+ally good health, the loss of which is repeatedly associated with poor prognosis ranging
+from infectious complications to mortality [35,55]. From a taxonomic standpoint, the GM
+of PR patients preserved the overabundance of Coriobacteriaceae members—particularly
+Eggerthella—and exhibited a peculiar overrepresentation of Biﬁdobacterium over time regard-
+less of chemotherapy treatment group. It is worth noting that all of these microorganisms
+produce lactate as part of their metabolism [49,56,57], as also supported by inferred metage-
+nomics. Furthermore, Eggerthella is known to use arginine as an energy source with the
+production of ornithine [58], which in turn serves as a precursor for the biosynthesis of
+putrescine, spermidine, and spermine. In light of the established role of polyamines in mul-
+tiple oncogenic pathways [59], it is possible to speculate that the extra supply of precursors
+by Eggerthella might replenish the polyamine pool, thus contributing to tumor progression
+and therefore to therapy failure. As for Biﬁdobacterium, its overrepresentation in the GM of
+
+Cancers 2021, 13, 3999
+16 of 20
+PR patients apparently contrasts with the data available in the literature that indicate it
+as an immunotherapy-favorable microorganism [16,60]. However, some strains were also
+shown to promote immunotolerance via T-regulatory cells [61], which may be unfavorable
+in some cancer settings, such as EOC [62]. On the other hand, Veillonella, Megasphaera and
+Dialister, all lactate utilizers belonging to the Veillonellaceae family, along with the SCFA pro-
+ducers Catenibacterium and Anaerotruncus were distinctly associated with a more favorable
+platinum response (i.e., they were overabundant in PS patients). Lactate is a key element
+in tumor metabolism. Produced in copious amounts by cancer cells through increased
+aerobic glycolysis (the so-called Warburg effect), it is necessary for their self-sufﬁciency;
+it stimulates angiogenesis and tumor growth, promotes cell migration and metastasis,
+and contributes to immune escape by acidiﬁcation of the tumor microenvironment [63,64].
+On the other hand, as discussed above, lactate is also a common fermentation product of
+some GM members, although it is generally not detectable in feces, as it is absorbed by
+intestinal cells or used by lactate-consuming taxa. Among the latter, Veillonella was recently
+implicated in the disposal of exercise-induced lactate, which can cross to the gut lumen,
+thus becoming available for alternative catabolic routes [65]. It is therefore tempting to
+hypothesize that the aforementioned GM signatures of therapeutic response (i.e., increased
+representation of lactate-utilizing bacteria and reduced proportions of lactate producers
+and ability to ferment to lactate) are linked to the lactate cycle, altering its bioavailability
+and thus inﬂuencing tumor progression and the efﬁcacy of chemotherapy. It must be said
+that none of the discriminating microorganisms identiﬁed were differentially represented
+at the time of diagnosis between PR and PS patients, suggesting the existence of a critical
+time window during the chemotherapy treatment in which peculiar microbial networks are
+established that could inﬂuence the efﬁcacy of therapies. Not least, some potential micro-
+bial signatures of therapeutic failure appeared in the GM of PS patients of the neoadjuvant
+group in the follow-up (i.e., Adlercreutzia and Eggerthella overabundances) parallel to the
+onset of relapses, which further strengthens their relevance as possible prognostic markers.
+Despite the interesting results of this work, several limitations should be mentioned: the
+small sample size (especially the low number of PR patients receiving adjuvant chemother-
+apy), the inclusion of a single histotype (which limits the generalizability of our ﬁndings),
+the unsystematic sampling (for practical reasons, fecal samples were not collected at every
+time-point), and the inability to measure circulating lactate levels. Furthermore, although
+high-grade serous EOC is often associated with pelvic masses compressing the sigmoid
+and the rectum, thus leading to constipation and subocclusion, we did not systematically
+collect information on bowel movement quality, which is known to be among the main
+microbiota-associated confounding factors [38].
+5. Conclusions
+This pilot study highlighted distinct GM trajectories in EOC patients during chemother-
+apy treatment closely related to the therapeutic outcome. In particular, the potential GM
+signatures found suggest the possible involvement of certain GM members in regulating
+the levels of the oncometabolite lactate through enhanced production (lactagenesis) or
+disposal. This new evidence related to the GM-EOC relationship needs to be conﬁrmed in
+larger cohort studies involving multiple histological types with different chemosensitivity
+and prognosis, collection of various biological samples (including blood) and host meta-
+data, and possibly the combination of different approaches, including omics, functional
+analysis, and animal models, to uncover the role of intestinal microorganisms in favoring
+or, vice versa, worsening the clinical response to EOC therapy. Correlation vs. causation
+needs to be dissected as well.
+Supplementary Materials: The following are available online at https://www.mdpi.com/article/
+10.3390/cancers13163999/s1, Figure S1: Alpha and beta diversity in EOC patients during neoadju-
+vant or adjuvant chemotherapy, Figure S2: The compositional structure of the gut microbiota of EOC
+patients during neoadjuvant or adjuvant chemotherapy, Figure S3: Beta diversity in EOC patients
+stratiﬁed by therapeutic response during neoadjuvant and adjuvant chemotherapy, Figure S4: The gut
+
+Cancers 2021, 13, 3999
+17 of 20
+microbiota of EOC patients at diagnosis does not stratify by disease severity or therapeutic response,
+Figure S5: Temporal dynamics of the main discriminating taxa for platinum-resistant or platinum-
+sensitive EOC patients during neoadjuvant or adjuvant chemotherapy, Figure S6: Association of gut
+microbial taxa and survival in EOC patients receiving chemotherapy treatments, Figure S7: Variations
+in the potential gut microbial signatures of therapeutic response in the follow-up, up to 6 months after
+the end of therapy, Figure S8: Assignment of bacterial co-abundance groups (CAGs), Table S1: Meta-
+Cyc pathway and superclass information for the discriminating pathways between platinum-resistant
+and platinum-sensitive EOC patients receiving neoadjuvant or adjuvant chemotherapy.
+Author Contributions: Conceptualization, A.M.P., P.D.I., P.B. and S.T.; formal analysis, F.D., M.B.,
+S.C., G.R. and A.M.P.; data curation, F.D., S.R. and M.F.; writing—original draft preparation, F.D.,
+A.M.P. and S.T.; writing—review and editing, P.B. and P.D.I. All authors have read and agreed to the
+published version of the manuscript.
+Funding: This research received no external funding.
+Institutional Review Board Statement: The local Ethical Committee of Area Vasta Emilia Romagna
+approved the study (CE Emilia Area Vasta N. 122/2017/O/Tess).
+Informed Consent Statement: Informed consent was obtained from all subjects involved in the study.
+Data Availability Statement: Raw sequence reads of 16S rRNA gene sequencing were deposited in
+the National Center for Biotechnology Information Sequence Read Archive (NCBI SRA, BioProject:
+PRJNA726917).
+Acknowledgments: We would like to thank Federica Zinno and Emma Mannucci for the technical
+support during DNA extraction and 16S rRNA gene library preparation, Loto Onlus for the grant to
+Sara Coluccelli, and Stefano Friso for clinical data collection.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+References
+1.
+Harries, M.; Gore, M. Part I: Chemotherapy for epithelial ovarian cancer-treatment at ﬁrst diagnosis. Lancet Oncol. 2002, 3,
+529–536. [CrossRef]
+2.
+Jemal, A.; Thun, M.J.; Ries, L.A.; Howe, H.L.; Weir, H.K.; Center, M.M.; Ward, E.; Wu, X.C.; Eheman, C.; Anderson, R.; et al.
+Annual report to the nation on the status of cancer, 1975–2005, featuring trends in lung cancer, tobacco use, and tobacco control. J.
+Natl. Cancer Inst. 2008, 100, 1672–1694. [CrossRef]
+3.
+Perrone, A.M.; Dondi, G.; Lima, G.M.; Castellucci, P.; Tesei, M.; Coluccelli, S.; Gasparre, G.; Porcelli, A.M.; Nanni, C.; Fanti, S.;
+et al. Potential prognostic role of 18F-FDG PET/CT in invasive epithelial ovarian cancer relapse. A preliminary study. Cancers
+2019, 11, 713. [CrossRef]
+4.
+Prat, J.; D’Angelo, E.; Espinosa, I. Ovarian carcinomas: At least ﬁve different diseases with distinct histological features and
+molecular genetics. Hum. Pathol. 2018, 80, 11–27. [CrossRef] [PubMed]
+5.
+Fagotti, A.; Ferrandina, G.; Vizzielli, G.; Fanfani, F.; Gallotta, V.; Chiantera, V.; Costantini, B.; Margariti, P.A.; Gueli Alletti, S.;
+Cosentino, F.; et al. Phase III randomised clinical trial comparing primary surgery versus neoadjuvant chemotherapy in advanced
+epithelial ovarian cancer with high tumour load (SCORPION trial): Final analysis of peri-operative outcome. Eur. J. Cancer 2016,
+59, 22–33. [CrossRef] [PubMed]
+6.
+Guerra, F.; Paiano, A.; Migoni, D.; Girolimetti, G.; Perrone, A.M.; De Iaco, P.; Fanizzi, F.P.; Gasparre, G.; Bucci, C. Modulation
+of RAB7A protein expression determines resistance to cisplatin through late endocytic pathway impairment and extracellular
+vesicular secretion. Cancers 2019, 11, 52. [CrossRef]
+7.
+Banerjee, S.; Tian, T.; Wei, Z.; Shih, N.; Feldman, M.D.; Alwine, J.C.; Coukos, G.; Robertson, E.S. The ovarian cancer oncobiome.
+Oncotarget 2017, 8, 36225–36245. [CrossRef]
+8.
+Yu, J.; Feng, Q.; Wong, S.H.; Zhang, D.; Liang, Q.Y.; Qin, Y.; Tang, L.; Zhao, H.; Stenvang, J.; Li, Y.; et al. Metagenomic analysis
+of faecal microbiome as a tool towards targeted non-invasive biomarkers for colorectal cancer. Gut 2017, 66, 70–78. [CrossRef]
+[PubMed]
+9.
+Bullman, S.; Pedamallu, C.S.; Sicinska, E.; Clancy, T.E.; Zhang, X.; Cai, D.; Neuberg, D.; Huang, K.; Guevara, F.; Nelson, T.;
+et al. Analysis of Fusobacterium persistence and antibiotic response in colorectal cancer. Science 2017, 358, 1443–1448. [CrossRef]
+[PubMed]
+10.
+Helmink, B.A.; Khan, M.A.W.; Hermann, A.; Gopalakrishnan, V.; Wargo, J.A. The microbiome, cancer, and cancer therapy. Nat.
+Med. 2019, 25, 377–388. [CrossRef]
+11.
+Nejman, D.; Livyatan, I.; Fuks, G.; Gavert, N.; Zwang, Y.; Geller, L.T.; Rotter-Maskowitz, A.; Weiser, R.; Mallel, G.; Gigi, E.; et al.
+The human tumor microbiome is composed of tumor type-speciﬁc intracellular bacteria. Science 2020, 368, 973–980. [CrossRef]
+
+Cancers 2021, 13, 3999
+18 of 20
+12.
+Gilbert, J.A.; Blaser, M.J.; Caporaso, J.G.; Jansson, J.K.; Lynch, S.V.; Knight, R. Current understanding of the human microbiome.
+Nat. Med. 2018, 24, 392–400. [CrossRef]
+13.
+Roy, S.; Trinchieri, G. Microbiota: A key orchestrator of cancer therapy. Nat. Rev. Cancer 2017, 17, 271–285. [CrossRef]
+14.
+Finlay, B.B.; Goldszmid, R.; Honda, K.; Trinchieri, G.; Wargo, J.; Zitvogel, L. Can we harness the microbiota to enhance the efﬁcacy
+of cancer immunotherapy? Nat. Rev. Immunol. 2020, 20, 522–528. [CrossRef]
+15.
+Cheng, W.Y.; Wu, C.Y.; Yu, J. The role of gut microbiota in cancer treatment: Friend or foe? Gut 2020, 69, 1867–1876. [CrossRef]
+16.
+Roberti, M.P.; Yonekura, S.; Duong, C.P.M.; Picard, M.; Ferrere, G.; Tidjani Alou, M.; Rauber, C.; Iebba, V.; Lehmann, C.H.K.;
+Amon, L.; et al. Chemotherapy-induced ileal crypt apoptosis and the ileal microbiome shape immunosurveillance and prognosis
+of proximal colon cancer. Nat. Med. 2020, 26, 919–931. [CrossRef] [PubMed]
+17.
+Vétizou, M.; Pitt, J.M.; Daillère, R.; Lepage, P.; Waldschmitt, N.; Flament, C.; Rusakiewicz, S.; Routy, B.; Roberti, M.P.; Duong,
+C.P.; et al. Anticancer immunotherapy by CTLA-4 blockade relies on the gut microbiota. Science 2015, 350, 1079–1084. [CrossRef]
+[PubMed]
+18.
+Sivan, A.; Corrales, L.; Hubert, N.; Williams, J.B.; Aquino-Michaels, K.; Earley, Z.M.; Benyamin, F.W.; Lei, Y.M.; Jabri, B.; Alegre,
+M.L.; et al. Commensal Biﬁdobacterium promotes antitumor immunity and facilitates anti-PD-L1 efﬁcacy. Science 2015, 350,
+1084–1089. [CrossRef] [PubMed]
+19.
+Gopalakrishnan, V.; Helmink, B.A.; Spencer, C.N.; Reuben, A.; Wargo, J.A. The inﬂuence of the gut microbiome on cancer,
+immunity, and cancer immunotherapy. Cancer Cell 2018, 33, 570–580. [CrossRef]
+20.
+Yu, Z.; Morrison, M. Improved extraction of PCR-quality community DNA from digesta and fecal samples. Biotechniques 2004, 36,
+808–812. [CrossRef]
+21.
+Rampelli, S.; Guenther, K.; Turroni, S.; Wolters, M.; Veidebaum, T.; Kourides, Y.; Molnár, D.; Lissner, L.; Benitez-Paez, A.; Sanz, Y.;
+et al. Pre-obese children’s dysbiotic gut microbiome and unhealthy diets may predict the development of obesity. Commun. Biol.
+2018, 1, 222. [CrossRef]
+22.
+Masella, A.P.; Bartram, A.K.; Truszkowski, J.M.; Brown, D.G.; Neufeld, J.D. PANDAseq: Paired-end assembler for illumina
+sequences. BMC Bioinform. 2012, 13, 31. [CrossRef]
+23.
+Bolyen, E.; Rideout, J.R.; Dillon, M.R.; Bokulich, N.A.; Abnet, C.C.; Al-Ghalith, G.A.; Alexander, H.; Alm, E.J.; Arumugam, M.;
+Asnicar, F.; et al. Reproducible, interactive, scalable and extensible microbiome data science using QIIME 2. Nat. Biotechnol. 2019,
+37, 852–857. [CrossRef]
+24.
+Callahan, B.J.; McMurdie, P.J.; Rosen, M.J.; Han, A.W.; Johnson, A.J.; Holmes, S.P. DADA2: High-resolution sample inference
+from Illumina amplicon data. Nat. Methods 2016, 13, 581–583. [CrossRef]
+25.
+Rognes, T.; Flouri, T.; Nichols, B.; Quince, C.; Mahé, F. VSEARCH: A versatile open source tool for metagenomics. PeerJ 2016,
+4, e2584. [CrossRef]
+26.
+Douglas, G.M.; Maffei, V.J.; Zaneveld, J.R.; Yurgel, S.N.; Brown, J.R.; Taylor, C.M.; Huttenhower, C.; Langille, M.G.I. PICRUSt2 for
+prediction of metagenome functions. Nat. Biotechnol. 2020, 38, 685–688. [CrossRef] [PubMed]
+27.
+Caspi, R.; Billington, R.; Fulcher, C.A.; Keseler, I.M.; Kothari, A.; Krummenacker, M.; Latendresse, M.; Midford, P.E.; Ong, Q.;
+Ong, W.K.; et al. The MetaCyc database of metabolic pathways and enzymes. Nucleic Acids Res. 2018, 46, D633–D639. [CrossRef]
+[PubMed]
+28.
+Schnorr, S.L.; Candela, M.; Rampelli, S.; Centanni, M.; Consolandi, C.; Basaglia, G.; Turroni, S.; Biagi, E.; Peano, C.; Severgnini, M.;
+et al. Gut microbiome of the Hadza hunter-gatherers. Nat. Commun. 2014, 5, 3654. [CrossRef]
+29.
+De Filippis, F.; Pellegrini, N.; Vannini, L.; Jeffery, I.B.; La Storia, A.; Laghi, L.; Serrazanetti, D.I.; Di Cagno, R.; Ferrocino, I.; Lazzi,
+C.; et al. High-level adherence to a Mediterranean diet beneﬁcially impacts the gut microbiota and associated metabolome. Gut
+2016, 65, 1812–1821. [CrossRef]
+30.
+Biagi, E.; Franceschi, C.; Rampelli, S.; Severgnini, M.; Ostan, R.; Turroni, S.; Consolandi, C.; Quercia, S.; Scurti, M.; Monti, D.; et al.
+Gut microbiota and extreme longevity. Curr. Biol. 2016, 26, 1480–1485. [CrossRef] [PubMed]
+31.
+Culhane, A.C.; Thioulouse, J.; Perrière, G.; Higgins, D.G. MADE4: An R package for multivariate analysis of gene expression
+data. Bioinformatics 2005, 21, 2789–2790. [CrossRef]
+32.
+Segata, N.; Izard, J.; Waldron, L.; Gevers, D.; Miropolsky, L.; Garrett, W.S.; Huttenhower, C. Metagenomic biomarker discovery
+and explanation. Genome Biol. 2011, 12, R60. [CrossRef] [PubMed]
+33.
+Claesson, M.J.; Jeffery, I.B.; Conde, S.; Power, S.E.; O’Connor, E.M.; Cusack, S.; Harris, H.M.; Coakley, M.; Lakshminarayanan,
+B.; O’Sullivan, O.; et al. Gut microbiota composition correlates with diet and health in the elderly. Nature 2012, 488, 178–184.
+[CrossRef]
+34.
+Smoot, M.E.; Ono, K.; Ruscheinski, J.; Wang, P.L.; Ideker, T. Cytoscape 2.8: New features for data integration and network
+visualization. Bioinformatics 2011, 27, 431–432. [CrossRef]
+35.
+Peled, J.U.; Gomes, A.L.C.; Devlin, S.M.; Littmann, E.R.; Taur, Y.; Sung, A.D.; Weber, D.; Hashimoto, D.; Slingerland, A.E.;
+Slingerland, J.B.; et al. Microbiota as predictor of mortality in allogeneic hematopoietic-cell transplantation. N. Engl. J. Med. 2020,
+382, 822–834. [CrossRef]
+36.
+Wei, Z.; Cao, S.; Liu, S.; Yao, Z.; Sun, T.; Li, Y.; Li, J.; Zhang, D.; Zhou, Y. Could gut microbiota serve as prognostic biomarker
+associated with colorectal cancer patients’ survival? A pilot study on relevant mechanism. Oncotarget 2016, 7, 46158–46172.
+[CrossRef]
+
+Cancers 2021, 13, 3999
+19 of 20
+37.
+Kelly, B.J.; Gross, R.; Bittinger, K.; Sherrill-Mix, S.; Lewis, J.D.; Collman, R.G.; Bushman, F.D.; Li, H. Power and sample-size
+estimation for microbiome studies using pairwise distances and PERMANOVA. Bioinformatics 2015, 31, 2461–2468. [CrossRef]
+38.
+Vujkovic-Cvijin, I.; Sklar, J.; Jiang, L.; Natarajan, L.; Knight, R.; Belkaid, Y. Host variables confound gut microbiota studies of
+human disease. Nature 2020, 587, 448–454. [CrossRef] [PubMed]
+39.
+Integrative HMP (iHMP) Research Network Consortium. The Integrative Human Microbiome Project. Nature 2019, 569, 641–648.
+[CrossRef] [PubMed]
+40.
+Goedert, J.J.; Jones, G.; Hua, X.; Xu, X.; Yu, G.; Flores, R.; Falk, R.T.; Gail, M.H.; Shi, J.; Ravel, J.; et al. Investigation of the
+association between the fecal microbiota and breast cancer in postmenopausal women: A population-based case-control pilot
+study. J. Natl. Cancer Inst. 2015, 107, djv147. [CrossRef] [PubMed]
+41.
+Yu, T.; Guo, F.; Yu, Y.; Sun, T.; Ma, D.; Han, J.; Qian, Y.; Kryczek, I.; Sun, D.; Nagarsheth, N.; et al. Fusobacterium nucleatum
+promotes chemoresistance to colorectal cancer by modulating autophagy. Cell 2017, 170, 548–563.e16. [CrossRef] [PubMed]
+42.
+Akshintala, V.S.; Talukdar, R.; Singh, V.K.; Goggins, M. The gut microbiome in pancreatic disease. Clin. Gastroenterol. Hepatol.
+2019, 17, 290–295. [CrossRef] [PubMed]
+43.
+Ren, Z.; Li, A.; Jiang, J.; Zhou, L.; Yu, Z.; Lu, H.; Xie, H.; Chen, X.; Shao, L.; Zhang, R.; et al. Gut microbiome analysis as a tool
+towards targeted non-invasive biomarkers for early hepatocellular carcinoma. Gut 2019, 68, 1014–1023. [CrossRef]
+44.
+Koh, A.; De Vadder, F.; Kovatcheva-Datchary, P.; Bäckhed, F. From dietary ﬁber to host physiology: Short-chain fatty acids as key
+bacterial metabolites. Cell 2016, 165, 1332–1345. [CrossRef]
+45.
+Turroni, S.; Brigidi, P.; Cavalli, A.; Candela, M. Microbiota-host transgenomic metabolism, bioactive molecules from the Inside. J.
+Med. Chem. 2018, 61, 47–61. [CrossRef]
+46.
+Duvallet, C.; Gibbons, S.M.; Gurry, T.; Irizarry, R.A.; Alm, E.J. Meta-analysis of gut microbiome studies identiﬁes disease-speciﬁc
+and shared responses. Nat. Commun. 2017, 8, 1784. [CrossRef] [PubMed]
+47.
+Gomez-Arango, L.F.; Barrett, H.L.; Wilkinson, S.A.; Callaway, L.K.; McIntyre, H.D.; Morrison, M.; Dekker Nitert, M. Low dietary
+ﬁber intake increases Collinsella abundance in the gut microbiota of overweight and obese pregnant women. Gut Microbes 2018, 9,
+189–201. [CrossRef]
+48.
+Cancello, R.; Turroni, S.; Rampelli, S.; Cattaldo, S.; Candela, M.; Cattani, L.; Mai, S.; Vietti, R.; Scacchi, M.; Brigidi, P.; et al. Effect
+of short-term dietary intervention and probiotic mix supplementation on the gut microbiota of elderly obese women. Nutrients
+2019, 11, 3011. [CrossRef]
+49.
+Chen, J.; Wright, K.; Davis, J.M.; Jeraldo, P.; Marietta, E.V.; Murray, J.; Nelson, H.; Matteson, E.L.; Taneja, V. An expansion of rare
+lineage intestinal microbes characterizes rheumatoid arthritis. Genome Med. 2016, 8, 43. [CrossRef]
+50.
+Candela, M.; Turroni, S.; Biagi, E.; Carbonero, F.; Rampelli, S.; Fiorentini, C.; Brigidi, P. Inﬂammation and colorectal cancer, when
+microbiota-host mutualism breaks. World J. Gastroenterol. 2014, 20, 908–922. [CrossRef]
+51.
+Wu, A.H.; Tseng, C.; Vigen, C.; Yu, Y.; Cozen, W.; Garcia, A.A.; Spicer, D. Gut microbiome associations with breast cancer risk
+factors and tumor characteristics: A pilot study. Breast Cancer Res. Treat. 2020, 182, 451–463. [CrossRef] [PubMed]
+52.
+Shanahan, F.; Ghosh, T.S.; O’Toole, P.W. The healthy microbiome-What is the deﬁnition of a healthy gut microbiome? Gastroen-
+terology 2021, 160, 483–494. [CrossRef]
+53.
+Aarnoutse, R.; Ziemons, J.; Penders, J.; Rensen, S.S.; de Vos-Geelen, J.; Smidt, M.L. The clinical link between human intestinal
+microbiota and systemic cancer therapy. Int. J. Mol. Sci. 2019, 20, 4145. [CrossRef]
+54.
+Fassarella, M.; Blaak, E.E.; Penders, J.; Nauta, A.; Smidt, H.; Zoetendal, E.G. Gut microbiome stability and resilience: Elucidating
+the response to perturbations in order to modulate gut health. Gut 2021, 70, 595–605. [CrossRef] [PubMed]
+55.
+Galloway-Peña, J.R.; Smith, D.P.; Sahasrabhojane, P.; Wadsworth, W.D.; Fellman, B.M.; Ajami, N.J.; Shpall, E.J.; Daver, N.;
+Guindani, M.; Petrosino, J.F.; et al. Characterization of oral and gut microbiome temporal variability in hospitalized cancer
+patients. Genome Med. 2017, 9, 21. [CrossRef]
+56.
+Chan, R.C.; Mercer, J. First Australian description of Eggerthella lenta bacteraemia identiﬁed by 16S rRNA gene sequencing.
+Pathology 2008, 40, 409–410. [CrossRef] [PubMed]
+57.
+Pokusaeva, K.; Fitzgerald, G.F.; van Sinderen, D. Carbohydrate metabolism in Biﬁdobacteria. Genes Nutr. 2011, 6, 285–306.
+[CrossRef] [PubMed]
+58.
+Sperry, J.F.; Wilkins, T.D. Arginine, a growth-limiting factor for Eubacterium lentum. J. Bacteriol. 1976, 127, 780–784. [CrossRef]
+[PubMed]
+59.
+Casero, R.A., Jr.; Murray Stewart, T.; Pegg, A.E. Polyamine metabolism and cancer: Treatments, challenges and opportunities.
+Nat. Rev. Cancer 2018, 18, 681–695. [CrossRef]
+60.
+Wang, F.; Yin, Q.; Chen, L.; Davis, M.M. Biﬁdobacterium can mitigate intestinal immunopathology in the context of CTLA-4
+blockade. Proc. Natl. Acad. Sci. USA 2018, 115, 157–161. [CrossRef]
+61.
+Verma, R.; Lee, C.; Jeun, E.J.; Yi, J.; Kim, K.S.; Ghosh, A.; Byun, S.; Lee, C.G.; Kang, H.J.; Kim, G.C.; et al. Cell surface
+polysaccharides of Biﬁdobacterium biﬁdum induce the generation of Foxp3+ regulatory T cells. Sci. Immunol. 2018, 3, eaat6975.
+[CrossRef] [PubMed]
+62.
+Sato, E.; Olson, S.H.; Ahn, J.; Bundy, B.; Nishikawa, H.; Qian, F.; Jungbluth, A.A.; Frosina, D.; Gnjatic, S.; Ambrosone, C.; et al.
+Intraepithelial CD8+ tumor-inﬁltrating lymphocytes and a high CD8+/regulatory T cell ratio are associated with favorable
+prognosis in ovarian cancer. Proc. Natl. Acad. Sci. USA 2005, 102, 18538–18543. [CrossRef]
+
+Cancers 2021, 13, 3999
+20 of 20
+63.
+San-Millán, I.; Brooks, G.A. Reexamining cancer metabolism: Lactate production for carcinogenesis could be the purpose and
+explanation of the Warburg Effect. Carcinogenesis 2017, 38, 119–133. [CrossRef]
+64.
+de la Cruz-López, K.G.; Castro-Muñoz, L.J.; Reyes-Hernández, D.O.; García-Carrancá, A.; Manzo-Merino, J. Lactate in the
+regulation of tumor microenvironment and therapeutic approaches. Front. Oncol. 2019, 9, 1143. [CrossRef] [PubMed]
+65.
+Scheiman, J.; Luber, J.M.; Chavkin, T.A.; MacDonald, T.; Tung, A.; Pham, L.D.; Wibowo, M.C.; Wurth, R.C.; Punthambaker, S.;
+Tierney, B.T.; et al. Meta-omics analysis of elite athletes identiﬁes a performance-enhancing microbe that functions via lactate
+metabolism. Nat. Med. 2019, 25, 1104–1109. [CrossRef] [PubMed]

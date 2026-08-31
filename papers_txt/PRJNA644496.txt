@@ -1,0 +1,810 @@
+1
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  
+| https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports
+Metagenomic analysis of the gut 
+microbiome composition 
+associated with vitamin D 
+supplementation in Taiwanese 
+infants
+Wei‑Te Lei1,7, Kai‑Yao Huang2,3,7, Jhih‑Hua Jhong4, Chia‑Hung Chen3 & Shun‑Long Weng2,5,6*
+Early childhood is a critical stage for the foundation and development of the gut microbiome, large 
+amounts of essential nutrients are required such as vitamin D. Vitamin D plays an important role in 
+regulating calcium homeostasis, and deficiency can impair bone mineralization. In addition, most 
+people know that breastfeeding is advocated to be the best thing for a newborn; however, exclusively 
+breastfeeding infants are not easily able to absorb an adequate amount of vitamin D from breast 
+milk. Understanding the effects of vitamin D supplementation on gut microbiome can improve the 
+knowledge of infant health and development. A total of 62 fecal sample from healthy infants were 
+collected in Taiwan. Of the 62 infants, 31 were exclusively breastfed infants and 31 were mixed- or 
+formula-fed infants. For each feeding type, one subgroup of infants received 400 IU of vitamin D per 
+day, and the remaining infants received a placebo. In total, there are 15 breastfed and 20 formula-
+fed infants with additional vitamin D supplementation, and 16 breastfed and 11 formula-fed infants 
+belong to control group, respectively. We performed a comparative metagenomic analysis to 
+investigate the distribution and diversity of infant gut microbiota among different types of feeding 
+regimes with and without vitamin D supplementation. Our results reveal that the characteristics 
+of infant gut microbiota not only depend on the feeding types but also on nutrients intake, and 
+demonstrated that the vitamin D plays an important role in modulating the infant gut microbiota, 
+especially increase the proportion of probiotics in breast-fed infants.
+Vitamin D has aroused great interest based on the recognition that vitamin D deficiency can impair bone min-
+eralization, especially in high-risk groups, including infants, children, pregnant women and lactating mothers, 
+or ­elderly1–5. The most well-known function of vitamin D is to regulate the balance of calcium and phosphate 
+to maintain human bone health. Otherwise, vitamin D plays an important role in both the immune and car-
+diovascular systems, it is considered to be a kind of steroid ­hormone6. Several studies have revealed the high 
+prevalence of poor vitamin D status in school-age children around the ­world7–12, and few studies investigated 
+the nutritional vitamin D status of ­newborns13,14. The main reasons for low level of vitamin D in children are 
+without supplementary feeding and lack of outdoor sun ­exposure15. However, rickets and osteomalacia are 
+exactly caused by insufficient vitamin ­supplementation16–19. Besides, it can lead to a lack of calcium absorption 
+and affect phosphorus ­metabolism20, which increase the risk of cancer development, including multiple myeloma, 
+prostate cancer and ovarian ­cancer21. It also associated with immune system diseases, metabolic ­syndrome22, and 
+even complications of ­pregnancy19. The island of Taiwan lies across the Northern Tropic, which has more than 
+1,400 h of sunshine per year; however, these two evidences have shown that a substantial proportion of children 
+in Taiwan have suboptimal levels of vitamin D, and its relationship with various allergic ­diseases23,24. Evidence 
+OPEN
+1Department of Pediatrics, Hsinchu Mackay Memorial Hospital, Hsinchu City  300, Taiwan. 2Department of 
+Medicine, Mackay Medical College, New Taipei City  252, Taiwan. 3Department of Medical Research, Hsinchu 
+Mackay Memorial Hospital, Hsinchu City 300, Taiwan. 4Department of Computer Science and Engineering, Yuan 
+Ze University, Taoyuan City 320, Taiwan. 5Department of Obstetrics and Gynecology, Hsinchu Mackay Memorial 
+Hospital, Hsinchu City  300, Taiwan. 6Mackay Junior College of Medicine, Medicine, Nursing and Management 
+College, Taipei City  112, Taiwan. 7These authors contributed equally: Wei-Te Lei and Kai-Yao Huang. *email: 
+4467@mmh.org.tw
+2
+Vol:.(1234567890)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+has accumulated regarding the effects of vitamin D supplements during pregnancy on postpartum fetal vitamin D 
+­levels25,26, and other studies have described the association of vitamin D deficiency with many diseases in infants 
+such as skeletal integrity, bone mass, asthma, type 1 diabetes and impaired lung ­function27–30. Early childhood 
+is a critical stage for the foundation and development of both host and the gut microbiome, large amounts of 
+essential nutrients are required, including certain vitamins, minerals, protein, fats, water, and carbohydrates. 
+Dietary intake is one of the major determinants of health, it has been commonly assumed that breast milk is 
+the ideal food for infants by providing the combination of essential nutrients; however, vitamin D in breast 
+milk is often not enough to supply the nutrition need for ­infants31,32. The most widely accepted approach to get 
+additional vitamin D is through ­supplementation33. In order to prevent the vitamin D deficiency in infants, the 
+American Academy of Pediatrics (AAP) has updated the recommendations regarding vitamin D supplementa-
+tion, a minimum daily intake of 400 IU of vitamin D is necessary for ­infants34,35.
+The gastrointestinal microbiota plays a key role in human health, which participates in many important 
+biochemical reactions such as vitamin and other nutrients biosynthesis, metabolism of drug and xenobiotics, 
+regeneration of epithelial cells, storage of fats and mature of immune ­system36. Human gut microbiome can 
+help its hosts extract dietary energy more efficiently by providing metabolic activities within the ­intestine37,38. 
+Other recent studies have also suggested the diet and dietary supplements can influence the gut microbiota 
+composition, thereby changing the activity of gut microbiota and linking with obesity ­traits39–41. In recent years, 
+the relationship between human gut microbiome and health has been a topic of concern worldwide. The term 
+“brain-gut-microbiome axis” is used to refer to the role of the dynamic changes in the gut microbiota can alter 
+brain physiology and ­behavior42–44. There are increasing evidence showing that human gut microbiome not only 
+influences gastrointestinal tract within the loop system, but also the other organs or tissues, such as the brain, 
+lung, kidneys as well as in ­skin45–48. Human gut microbial ecology is dynamic in infancy, which has a significant 
+impact on the development of the digestive system and host immune system, and also associated with the allergic 
+diseases. Establishing the gut microbiota during infancy is a vital determinant of an individual’s life-long ­health49. 
+However, it is not clear yet whether the role of vitamin D in the infant gut microbiota. But a previous study found 
+that vitamin D involved in modulation of innate immunity by regulating the antimicrobial peptides (AMP)50, 
+and it has been demonstrated that the relative composition of the intestinal microbiota of mouse was influenced 
+by the level of AMP ­expression51. Therefore, it suggests that the composition of the intestinal microbiota could 
+be influenced by vitamin D status. To investigate the gut bacterial communities structure and diversity in host, 
+there are many studies used the 16S rRNA high-throughput sequencing to analyze the microbial community in 
+the gastrointestinal ­tract52–56, and even especially in the infant’s gastrointestinal ­tract57–62.
+Most people know that breastfeeding is advocated to be the best thing for a newborn; however, recent studies 
+have shown a large proportion of pregnant and breastfeeding mothers having suboptimal vitamin D status, these 
+women may not be able to support the breast milk with an adequate amount of vitamin ­D63–66. However, due 
+to the relationships between vitamin D status and gut microbiome signatures in infants have not been satisfac-
+torily examined. Therefore, the aim of this study was to determine the effect of vitamin D supplementation on 
+gut microbiome development in Taiwanese infants. We performed a comparative metagenomic analysis of fecal 
+samples to investigate the distribution and diversity of infant gut microbiota among different types of feeding 
+regimes with and without vitamin D supplementation.
+Methods
+Ethics approval and consent to participate. 
+This study was reviewed and approved by the Ethics Com-
+mittee of MacKay Memorial Hospital, Taiwan (No: 17MMHIS088e). All of the methods were performed in 
+accordance with relevant guidelines and regulations, including any relevant details. The written informed con-
+sent was provided by each parent of the infant, as approved by the Institutional Review Board.
+Study participants. 
+A total of 62 healthy infants have been recruited into the population who were born 
+at the Hsinchu Mackay memorial hospital in Taiwan, of which 29 are males and 33 are females (Table 1). All of 
+infants were recruited from birth to 4 months, and informed consent was obtained from all guardians. Of the 
+62 infants, 31 were exclusively breastfed infants (BFI) and 31 were mixed- or formula-fed infants (FFI). For each 
+feeding type, one subgroup of infants received 400 IU of vitamin D per day, and the remaining infants received 
+a placebo. In total, there are 15 breastfed (BFVD) and 20 formula-fed infants (FFVD) with additional vitamin D 
+supplementation, and 16 breastfed (BFCT) and 11 formula-fed infants (FFCT) belong to control group, respec-
+Table 1.   Characteristics of the study population, n = 62, given as median, interquartile ranges, or percentage.
+Characteristics
+Newborn
+1-month-old
+4-month-old
+Sex (M/F)
+29 / 33
+VD investigation (ng/mL)
+16.6 (8.5–36.5)
+–
+36.1 (4.1–109)
+Birth weight (kg)
+3.03 (2.04–3.86)
+4.2 (3.3–5.2)
+6.8 (5.3–8.4)
+Birth length (cm)
+50 (45–54)
+54 (47–58.1)
+63 (59.3–69)
+Exclusively breastfed
+31 (50.0%)
+31 (50.0%)
+27 (43.5%)
+Mixed fed
+26 (41.9%)
+26 (41.9%)
+22 (35.5%)
+Exclusively formula-fed
+5 (8.1%)
+5 (8.1%)
+13 (21.0%)
+3
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+tively, and the detailed information is shown Table S1. Infants were excluded if they had any other sources of 
+nutrition, dietary restrictions (e.g. hypoallergenic formula), consumed higher density formula (greater than 
+20 cal/ounce), had exposure to antibiotics, or had any gastrointestinal infection or disease that affected the 
+integrity of the intestinal mucosa.
+Fecal sample collection. 
+The fecal samples were obtained from healthy term infants delivered vaginally. 
+Guardians gave written informed consent for fecal samples of infants, and clinical data were also collected such 
+as demographic information, maternal and paternal age at infant’s birth, delivery method, height and weight 
+of infant, and maternal over-the-counter or prescription medications taken during pregnancy. Subsequently, 
+the fecal samples were collected by Sigma-Transwab (Medical Wire), and then were temporarily stored at -4 °C 
+before DNA extraction.
+DNA extraction and 16S ribosomal DNA sequencing. 
+With reference to our previous ­work67, 
+QIAamp DNA Stool Mini Kit (Qiagen) was used for DNA extraction of stool samples. The DNA was eluted with 
+Buffer AE and centrifuged, after which the DNA extract was stored at − 20 °C until further analysis. The PCR 
+primers were designed to amplify the V4 region of the bacterial 16S ribosomal DNA as described by Caporaso 
+et al.68. PCR amplification was performed in 2X Taq Master Mix (Thermo Scientific). Amplicons were purified 
+using the AMPure XP beads (Agencourt) and quantified using the Qubit dsDNA HS Assay Kit (Thermo Fisher 
+Scientific), all according to the respective manufacturers’ instructions. For V4 library preparation, Illumina 
+adapters were attached to the amplicons using the Illumina TruSeq DNA Sample Preparation v2 Kit. Purified 
+libraries were processed for cluster generation and sequencing using the MiSeq system.
+Quality control for 16S rDNA sequencing data. 
+To assess the composition of microbial communities 
+from clinical samples, the V3-V4 region of the bacterial 16S rRNA gene was amplified with barcoded primers 
+and sequenced as above.
+According to the specific barcodes at the 5′ end of the sequence, all of the sequencing reads were divided 
+into different samples. Paired-end sequences were generated by Illumina sequencing in FASTQ format, and the 
+corresponding paired-end reads can be merged into a fragment. The version 1.9.1 of the Quantitative Insights 
+Into Microbial Ecology (QIIME)69 pipeline (http://qiime​.org/index​.html) was applied for sequence quality assess-
+ment with the quality threshold is 19 (it meant Q20) and the ratio of mismatch is less than 10%. After filtering, 
+the bases at the end of the sequence with lower quality (< 20) would be trimmed, and the length of sequence 
+less than 100 nt were also excluded. Both forward- and reverse-sequencing reads after trimming that met the 
+criteria were retained for analysis.
+Taxonomy assignment. 
+Next, the filtered reads were taxonomically classified into OTU against the 
+GreenGenes database (release 2013–08) for analysis and metabolic potential of the microbial community. 
+Greengenes is a highly cited full-length 16S rRNA gene database in Bacteria and Archaea (https​://green​genes​
+.secon​dgeno​me.com/)70, since it is the default database in the pipeline. To taxonomically classify 16S rDNA 
+fragments, the filtered reads were classified into OTU (Operational taxonomic unit) against the database with 
+97% phylogenetic similarity, and the sequences classified as unknown were removed from further analysis. After 
+taxonomy assignment, an OTU table was generated that gives the number of reads per sample per OTU.
+Metagenome functional content prediction. 
+To further study the biological function of the metagen-
+omics, PICRUSt v1.1.4 (http://picru​st.githu​b.io/picru​st/)71 was used to predict the functional composition of 
+metagenomes bases on OTU table. Metabolic pathways analysis for the abundances of genes was performed 
+with reference to the KEGG ortholog groups (KOs). OTU data generated in QIIME for all 16S rRNA datasets 
+was used to prepare BIOM files formatted as input for PICRUSt and PICRUSt-predicted metagenomes based on 
+OTUs marker gene sequences were estimated using default parameters. We furthered our study through detec-
+tion of taxonomic clades, KEGG orthologs and KEGG modules that are significantly over/under-represented 
+(or differentially abundant) in the infant environments through statistical analyses carried out on the inferred 
+relative abundances.
+Identification of metagenomic biomarkers. 
+To identify differentially abundant features that can be 
+used as potential metagenomic biomarkers, the procedure of linear discriminant analysis (LDA) effect size was 
+employed through LEfSe v1.0 (https​://hutte​nhowe​r.sph.harva​rd.edu/galax​y/)72 to identify the specific KOs/
+microbes that were differentially distributed between two conditions. For this analysis, the value of 0.05 was set 
+for the alpha parameter significance threshold for the Krushkal-Wallis (KW) test and the log value of 1.0 was set 
+for the LDA score cut-off73.
+Statistical analysis. 
+The Shannon’s diversity index was calculated to determine the species richness as well 
+as the evenness of distribution in the community, and the Chao1 index was calculated to estimate the total num-
+ber of OTUs based on the actual observed species number. The differences between continuous variables in the 
+different groups were contrasted by the non-parametric test of Mann–Whitney for two groups, and by the test 
+of Kruskal–Wallis for more than two groups with a significant threshold of 0.05. In addition, one-way analysis of 
+similarity (non-parametric test ANOSIM) was performed to test for statistically significant differences between 
+the metagenomic profiles and p-values < 0.05 were considered to be significant.
+4
+Vol:.(1234567890)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+Availability of data and materials. 
+The supporting data are available to researchers in the NCBI Sequence 
+Read Archive, under study accession number PRJNA644496.
+Results
+Study population. 
+As shown in Table 1, the physical and feeding characteristics are listed and the detailed 
+information is reported in the Table S1, a total of 62 healthy individuals were enrolled, including 29 males and 33 
+females. Median serum concentration of 25-hydroxyvitamin D (25(OH)D) were 16.6 nanograms/milliliter (ng/
+mL) at the birth and 36.1 at 4-month-old of age. Nearly half of the mothers were exclusively breastfeeding at the 
+first day after birth, the mixed and formula-fed infants were 26 (41.9%) and 5 (8.1%), respectively. At the age of 
+4-month-old, 4 exclusively breastfed infants switched to mixed feeding, and 8 from mixed feeding to exclusively 
+formula feeding.
+The serum concentration of 25(OH)D is a biological indicator that can be used to determine whether a patient 
+is vitamin D deficient, while the normal concentration of vitamin D in newborn infants is above 20 ng/mL, and 
+less than 12 ng/mL indicates high risk of vitamin D ­deficiency74. The results of the statistical analysis of serum 
+25(OH)D concentrations are given in Table 2, the mean level in BFCT, BFVD, FFCT and FFVD groups were 
+17.4, 19.3, 15.1 and 15.4 ng/mL at the birth, respectively; additionally, a total of 9 (14.5%) infants had vitamin 
+D insufficiency and deficiency at the birth (Table S1). At the 4-month-old visit, the results of the vitamin D tests 
+showed that, except in the BFCT group, the infants tend to have higher serum levels (above 20 ng/mL) compared 
+to birth levels. From this, the evidence suggests that the supply of vitamin D from breast milk is limited. However, 
+note that the mean value from 19.3 up to 59.6 in the BFVD group during the period, and up to 50.8 ng/mL in the 
+FFVD group. The results indicated that there was a statistically significant difference (p-value < 0.0001) in serum 
+concentration of 25(OH)D between the infants with and without vitamin D supplementation.
+Comprehensive characterization of bacterial community composition in infants. 
+To charac-
+terize the infant gut microbiome with and without vitamin D supplements, 16S rRNA gene sequencing of was 
+used to investigate 62 fecal samples from healthy infants after a normal term pregnancy. The fecal samples were 
+collected longitudinally at birth (NB), 1 month (1 M) and 4 month (4 M) of age, and analyzed for the bacte-
+rial community constitutions. In total, 24,119,684 paired-end sequencing reads of high-quality sequences were 
+generated (average 129,675 reads per sample). After quality filtering, resulted in 20,163,971 (average 83.1%) 
+sequencing reads which used for further analysis. 18,343,693 reads (average 75.6%) were aligned to 16S rRNA 
+gene sequences with a similarity higher than 97%, these sequences were assigned to 7,432 OTUs and clustered 
+into 378 genera of 24 phyla.
+As shown in Fig. 1A (also see Table S2), the phylogenetic tree of representative sequences from dominant 
+OTUs which was created by Circos v0.64 (http://circo​s.ca/)75, indicating that the community structure of the 
+gut microbiota in Taiwanese infants aged between 0, 1 and 4 months. Firmicutes and Actinobacteria were the 
+most prevalent phyla, followed by Bacteroidetes and Proteobacteria; these results were consistent with previous 
+studies that infant gut microbiota is dominated by these ­bacteria60,76,77. Notable, the phylum of Proteobacteria 
+presented a higher proportion at the birth compared to other time points. Similar trend was observed by previous 
+study that the family Enterobacteriaceae of the phylum Proteobacteria was the dominant bacteria of the infant 
+gut microbiota in the first week of newborn life, which then decreases over time with a concomitant increase 
+of Bifidobacterium78.
+To better reveal the differences of the microbial communities among the different time points, Principal 
+Coordinate Analysis (PCoA) of unweighted ­UniFrac79 distances was performed to assess the beta diversity of 
+communities. The result showed that the gut bacteria composition differed significantly at the different time 
+points is shown in the Fig. 1B (ANOSIM, R = 0.742, p = 2.14E-05). The microbiota composition in the NB samples 
+was significantly different from that of the 1 M and 4 M groups, while the 1 M and 4 M samples were more similar 
+to each other, consistent with the observation in Fig. 1A and the previous research ­studies76,80.
+Additionally, biodiversity analysis was performed for comparing the richness and evenness of infant gut 
+microbial communities between the different time points. We found that the alpha diversity index strongly 
+reduced in infants during the period from birth to term age, while have no obvious change after 1 month (Fig. 1C, 
+Table 3, and also see Table S3). These findings suggest that the infant gut microbiota structure is instability and 
+dynamic at birth, and it is widely assumed that the early establishment of the infant gut microbiome has been 
+associated with numerous factors including the modes of delivery, the types of infant feeding, and probiotic and 
+prebiotic ­use81.
+Table 2.   Mean serum 25(OH)D levels of the infants with and without vitamin D supplementation. *25(OH)D: 
+25-hydroxyvitamin D; †Kruskal–Wallis test was used to measure variance in mode of diet.
+Exposure
+No. infants
+25(OH)D Level at NB, mean ± SD (ng/
+mL)
+p-value†
+25(OH)D Level at 4 M, mean ± SD (ng/
+mL)
+p-value†
+BFCT
+16
+17.4 ± 5.5
+0.1510
+15.5 ± 8.7
+ < 0.0001
+BFVD
+15
+19.3 ± 7.7
+59.6 ± 18.4
+FFCT
+11
+15.1 ± 5.7
+25.7 ± 3.5
+FFVD
+20
+15.4 ± 6.4
+50.8 ± 14.0
+5
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+Identification of the differences in gut microbial communities between breast‑ and formula‑fed 
+Infants. 
+To better identify the effects of different infant feeding regimes on the initial establishment of gut 
+microbiota, we analyzed the impact between breast and formula feeding in vaginally delivered infants. Of the 27 
+fecal samples from infants under different types of feeding without any other nutrients, 16 breastfed infants (BFI) 
+and 11 formula-fed infants (FFI) were available for the evaluation of microbial communities.
+As shown in Fig. 2A, the results revealed 3 main bacterial phyla in guts microbiota in both feeding groups 
+during the period from birth to 4 months of age, including Actinobacteria, Firmicutes and Proteobacteria. How-
+ever, no matter BFIs or FFIs, the family Bifidobacteriaceae belong to the phylum Actinobacteria which have the 
+highest relative abundance at 1 month and 4 months of age. In fact, several studies have indicated that a stable gut 
+microbiota is established after two big transitions in ­infancy82–84; the first transition results in Bifidobacteriaceae-
+dominant microbiota soon after birth, and the second transition results in the establishment of an adult-type 
+complex microbiome dominated by the phyla Bacteroidetes and Firmicutes during the weaning period until 
+three years of age. Interestingly, the results showed that the first transition of the gut microbiota in BFIs were 
+earlier than in FFIs.
+Besides, the log-transformed ratio of Firmicutes to Bacteroidetes (F/B) ratio in feces was measured for different 
+types of feeding, which shows that the ratio of BFI group was obviously higher than FFI group at 1 month, and 
+then greatly decrease at 4 months. Some studies have demonstrated that the higher F/B ratio in the gut micro-
+biota is associated with obesity and many diseases in ­human85,86. A previous study has suggested that breastfed 
+infants gain weight more rapidly than the formula-fed peers during the first 2–3 months of life and then taper 
+­off87, which is consistent with our observation shown in Fig. 2B.
+Figure 1.   Differences in the fecal microbial communities of newborns, 1 M and 4 M infants. (A) Representative 
+commensal gut microbial community in infants during first 4 months. The colored blocks outermost 
+indicate phyla and the heatmap circles show absolute abundances of each OTUs in the newborns, 1-month-old 
+and 4-month-old infants. The innermost neighbor-joining phylogenetic tree containing one representative of 
+each of the OTUs. (B) PCoA analysis plot based on unweighted UniFrac distances, each point represents the 
+microbiota of a single sample, and colors reflect metadata for that sample. (C) Comparison of bacterial diversity 
+across sample groups in Shannon’s diversity index and Chao1 index.
+6
+Vol:.(1234567890)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+To explore the difference in dominant bacterial community compositions between two feeding groups before 
+solids, Fig. 2C presents the relative abundance of OTUs at the phylum level in 4-month-old infants. Here, we 
+found that a high level of phylum Actinobacteria was observed in both groups, but there is no statistically sig-
+nificant difference between the two groups. Some strains of Bifidobacteriaceae family are considered as impor-
+tant ­probiotics88. The Bifidobacteria-dominated gut community provides colonization resistance to ­pathogens89, 
+enhances immune ­surveillance90, reduces ­inflammation91, and improves mucosal gut barrier ­function92. We also 
+observed that the phylum Firmicutes showed a significant difference (p-value = 0.02625) between the two groups, 
+FFIs have a significantly higher level of Firmicutes. Otherwise, a few studies have conducted that the family 
+Enterobacteriaceae belong to the phylum Proteobacteria were found to a slightly higher relative abundance in 
+breastfed ­infants93–96. Enterobacteriaceae are opportunistic pathogens but rarely produce human disease; however, 
+it could be a health risk to infants who use the contaminated ­products97. Principal Co-ordinate Analysis based on 
+unweighted UniFrac distance of the OTUs at 4-month-old of age showed that the samples clustered according to 
+BFI and FFI groups, and indicated that no significant differences existed between the two feeding types (Fig. 2D).
+The impact of vitamin D supplements on breastfed infant gut microbiota. 
+It has been known 
+that a low vitamin D concentration in human breast milk which causes bone weakness and a higher risk of 
+fracture in infants at birth. Due to the effects of vitamin D deficiency in breastfed infant gut microbiota are still 
+unknown. Here, we compared the gut microbial composition in the fecal samples of breastfed infants with and 
+without vitamin D supplementation at the 4 months of age (BFVD and BFCT group).
+Figure 3 (also see Table S4) show the bacterial taxonomy assignments at the genus level of two groups, we 
+observed that Bifidobacterium was the dominant genus across all samples of two groups, and the proportion 
+accounts for more than half of the total intestinal bacteria. It is worth noting that a significant correlation 
+between the proportion of Bifidobacterium and BFVD group, almost all the samples in the group contain a 
+higher proportion of Bifidobacterium than non-VD group, the proportion of Bifidobacterium in BFVD and 
+BFCT were 51.6% and 44.2% of average, respectively. Bifidobacterium is one of the most common probiotics in 
+the intestinal tract of mammals, which is a lactic acid bacteria (LAB)98,99. The population as the dominant group 
+in infant fecal microbiota and as a conserved feature during early gastrointestinal tract colonization that have 
+been demonstrated in previous ­studies100. Additionally, the genus Streptococcus (7.7% vs. 4.5%) and Lactobacil-
+lus (3.3% vs. 1.0%) also have higher abundance in BFVD versus BFCT group. In contrast, the genus Bacteroides 
+was observed with lower abundances in the BFVD group instead of pure breastfed infants without vitamin D 
+supplementation (7.9% vs. 15.4%).
+The Shannon’s diversity indexes for the BFVD and BFCT samples on each time point (during the period from 
+birth to 4 M of age) are shown in Fig. 4A (also see Table S3). The highest indices were shown in both of the two 
+groups at the birth, and subsequently decreased dramatically at the 1-month-old of age. When we compared 
+BFCT to BFVD in terms of the indexes at the 4-month-old, the former had a higher value than latter. It is worth 
+highlighting that the BFVD group had a higher F/B ratio than BFCT group especially at the 4-month-old of age 
+(Fig. 4B, also see Table S6). In general, the F/B ratio is considered a potential biomarker of pathological condi-
+tions in human ­health101,102, and some articles indicate that the ratio is directly related to the BMI ­centile103. The 
+Table 3.   Richness and diversity of fecal microbiota in infants, by early-life exposures. *Diversity was measured 
+by Shannon index, which evaluates both the number of species and evenness of each group. Richness was 
+measured by Chao1 score, which evaluates the number of different species present; †Mann–Whitney two-tailed 
+test was used to measure variance in sex, antibiotics treatment group, which Kruskal–Wallis test was used to 
+measure variance in mode of diet.
+Exposure
+No. infants
+Diversity index*, mean ± SD
+p-value†
+Richness score*, mean ± SD
+p-value†
+Overall
+62
+2.7 ± 1.3
+886.1 ± 636.1
+Sex
+Male
+29
+2.4 ± 1.2
+0.7091
+614.4 ± 645.4
+0.6029
+Female
+33
+2.4 ± 1.2
+623.4 ± 646.8
+Feeding type
+Breastfeeding (BF)
+31
+2.3 ± 1.2
+0.907
+573 ± 629.1
+0.1358
+Formula feeding (FF)
+31
+2.5 ± 1.2
+654.3 ± 980.5
+Diet at NB
+BFCT
+16
+4.7 ± 1.4
+0.5263
+1551 ± 642
+0.9696
+BFVD
+15
+4.8 ± 1.2
+1688.1 ± 727.6
+FFCT
+11
+4.7 ± 1.2
+1295.6 ± 980.5
+FFVD
+20
+4.6 ± 1.2
+1266.8 ± 694.6
+Diet at 4 M
+BFCT
+16
+1.9 ± 0.4
+0.0325
+478.6 ± 116.2
+0.4853
+BFVD
+15
+2.3 ± 0.6
+463.8 ± 118.2
+FFCT
+11
+2.8 ± 1.3
+607.7 ± 684
+FFVD
+20
+2.3 ± 0.6
+501.9 ± 130.5
+7
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+Figure 2.   Comparison of relative abundances of microbial taxa between breast- and formula-fed infants. (A) 
+Taxonomic distribution of bacterial communities at the family level (B) Box plot of log F/B ratio of the BFI and FFI 
+groups. (C) Relative abundances of bacterial phyla within fecal microbiota of BF and FF infants at 4-month-old of 
+age. (D) Principal Co-ordinate Analysis based on unweighted UniFrac distance of the OTUs in BFI and FFI samples 
+at 4-month-old of age. Pairwise comparisons using Mann–Whitney test. *P < 0.05. **P < 0.0005. ***P < 0.00001.
+Figure 3.   Taxonomic distribution of bacterial communities in fecal samples from breastfed infants with vitamin 
+D supplementation.
+8
+Vol:.(1234567890)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+median ratio of BFCT group significantly decreased at the 4 months is closely linked to the previous finding, the 
+breastfed infants only grow more rapidly in first 2–3 months of age and less rapidly after 3 months104.
+For further analysis, the relative OTU abundances of major bacteria phyla at 4-month-old were calculated 
+and shown in Fig. 4C. However, except Actinobacteria and Bacteroidetes, there were no significant differences 
+in relative abundance of Firmicutes, Bacteroidetes, Proteobacteria, Verrucomicrobia, and Fusobacteria between 
+two groups. Figure 4D shows the PCoA analysis of unweighted UniFrac distances was used to calculate pairwise 
+distances between the bacterial communities of BFVD and BFCT groups (R = 0.089, p = 0.047), it seems that the 
+infants’ vitamin D status was positively associated with the gut microbial community.
+Metabolic characterization and functional biomarkers in the fecal samples from breastfed 
+infants with vitamin D supplementation. 
+To understand the metabolic potential of vitamin D defi-
+ciency and identifying differentially abundant functional features, the PICRUSt tool was used to predict the 
+metagenome functional content of BFVD and BFCT groups. Predicting metagenomic function based on the 
+KEGG database by PICRUSt, a total of 23 KEGG metabolism pathway were predicted across all samples of the 
+two compared groups (Fig. 5, also see Table S7).
+Most of the pathways identified in the BFVD group are necessary for sustenance of life, including ABC trans-
+porters, Nucleotide metabolism, Ascorbate and aldarate metabolism, Dioxin degradation. It is worth noting that, 
+the results show that enriched levels of Retinol metabolism in BFVD groups, with implications in several essential 
+developmental processes such as vision, bone, and teeth (Table S7). On the contrary, in the case of the BFCT 
+group, most of the pathways identified were found to be involved in various kinds of biosynthesis and antibiotic 
+producing modules, such as Glycosphingolipid biosynthesis, Polyketide sugar unit biosynthesis, Biosynthesis of 
+Figure 4.   Comparison of relative abundances of microbial taxa between breastfed infants with and without 
+vitamin D supplementation. (A) Diversity and richness of bacterial communities in the BFCT and BFVD 
+groups. (B) Box plot of log F/B ratio of the BFCT and BFVD groups. (C) Relative abundances of bacterial phyla 
+within fecal microbiota of BFCT and BFVD infants at 4-month-old of age. (D) Principal Co-ordinate Analysis 
+based on unweighted UniFrac distance of the OTUs in BFCT and BFVD samples at 4-mont h-old of age. 
+Pairwise comparisons using Mann–Whitney test. *P < 0.05. **P < 0.0005. ***P < 0.00001.
+9
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+vancomycin group antibiotics, and Streptomycin biosynthesis. Finally, numerous modules describing metabolic 
+processes were identified to be over-represented in both two groups. All of these modules are essential in affect 
+microbial distribution, survival, and proliferation of microbes in the environment.
+Figure 5.   Inference of metagenomic functional content of gut microbiota from breastfed infants with vitamin 
+D supplementation.
+Figure 6.   Identification of the most differentially taxa between breastfed infants with vitamin D 
+supplementation.
+10
+Vol:.(1234567890)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+In addition, we also compared the fecal microbiota in BFCT and BFVD groups using LEfSe to identify 
+the specific bacterial taxa associated with vitamin D intake. The greatest differences in multiple levels of taxa 
+between the two communities were shown in taxonomic cladogram (Fig. 6). The result indicated the signifi-
+cantly decreased phylum Firmicutes and its genus can be one of the biomarkers of BFVD group, including the 
+genus Staphylococcus, Aerococcus and Bacillus; likewise, the genus Agrobacterium and Escherichia of the phylum 
+Proteobacteria can be the biomarker. In contrast, family Bifidobacteriaceae and Erysipelotrichaceae can be the 
+biomarkers of BFCT group.
+However, in BFCT group, due to a lack of some essential nutrients in breast milk such as vitamin D and iron, 
+these bacteria probably will not have a significant growth advantage in the environment already undergoing 
+natural selection. Ultimately, we observed that the gut microbiota normally exists in a stable state when vitamin 
+D sufficient, most of genes are known to involve in catabolism and anabolism pathways.
+Detections of associations of vitamin D supplementation in formula‑fed infants. 
+In order to 
+further ensure no matter what kind of feeding, whether the gut microbiota of formula-fed infants can be affected 
+through sufficient vitamin D intake. Hence, we compared the gut microbiota composition in formula-fed infants 
+with and without sufficient vitamin D (FFVD).
+Figure 7 shows the similar microbiota at the genus level, which consisted mainly of the phylum Actinobacteria 
+and its genus Bifidobacterium, and the genus Bacteroides were detected a higher proportion in part of samples 
+from both two groups. Unfortunately, there is no significant difference of gut microbiota profile between FFCT 
+and FFVD.
+As shown in Fig. 8A,B, based on previous observation in breastfed infant with sufficient vitamin D, while no 
+similar effects on gut microbiota composition and activity were observed in the FFVD group. However, this is 
+probably due to the formula milk contains a variety of nutrients like fat, phosphorus, sodium, potassium, iron, 
+calcium, zinc and multivitamin which is necessary for the growth of the child, as driving factors of gut microbiota 
+changes and have impact on health.
+Discussion
+The objective of this study was to investigate that the influence of vitamin D supplementation on gut microbiota 
+in breast- and formula-fed infants during the early months of a newborn’s life. Although many experts advocated 
+that breast milk is the best food for infants, but a lack of some essential nutrients (in particular vitamin D and 
+iron) that can affect growth and development of the child adversely, and even affect the gut microbiota compo-
+sition and function. Thus, we provide comprehensive metagenomic profiles of fecal samples to investigate the 
+distribution and diversity of infant gut microbiota among different types of feeding regimes with and without 
+vitamin D supplementation.
+Figure 7.   Taxonomic distribution of bacterial communities in fecal samples from formula-fed infants with 
+vitamin D supplementation.
+11
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+Metagenomic analysis results showed that the phylum Proteobacteria presented a higher proportion at the 
+birth. Subsequently, bacteria from Actinobacteria were the most abundant phylum present in both breast- and 
+formula-fed infants, which then decreases over time. Early than formula-fed infants, the proportion of family 
+Actinobacteria in the breastfed infants was significantly increased at 1-month-old of age, of particular interest 
+is the presence of the Bifidobacteria, considered probiotic microorganisms useful to the host for their beneficial 
+effects. It is worth noting that, no matter breastfeeding or formula feeding, with a sufficient level of vitamin D, 
+the gut microbiota normally exists in a stable state which are very similar to each other.
+Moreover, as shown in Fig. 9, the proportion of Bifidobacterium was positively correlated with that of circulat-
+ing vitamin D level in breastfed infants. Bifidobacterium, the probiotics can secrete the antimicrobial compounds 
+and metabolites to fight against the various diseases and gastrointestinal disorders. Meanwhile, the F/B ratio was 
+Figure 8.   Comparison of relative abundances of microbial taxa between formula-fed infants with and without 
+vitamin D supplementation. (A) Relative abundances of bacterial phyla within fecal microbiota of FFCT and 
+FFVD infants at 4-month-old of age. (B) Box plot of log F/B ratio of the FFCT and FFVD groups. Pairwise 
+comparisons using Mann–Whitney test. *P < 0.05. **P < 0.0005. ***P < 0.00001.
+Figure 9.   Linear regression results of abundance of Bifidobacterium and circulating vitamin D level.
+12
+Vol:.(1234567890)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+significantly negatively correlated with BMI at 4-month-old of age, especially in FFI groups as shown in Fig. 10 
+(FFCT: p-value = 0.003805, FFVD: p-value = 0.00428), and the phenomenon was possibly prevented by vitamin 
+D supplementation. Furthermore, the metabolic analysis profiles in breastfed infant with vitamin D deficiency 
+reveal that microbial communities live in highly competitive surroundings, because most of the pathways iden-
+tified were found to be involved in various kinds of antibiotic biosynthesis. However, since the formula milk 
+contains a variety of nutrients, we could not observe the similar effects above mentioned in formula-fed infants 
+with vitamin D supplementation.
+Our results reveal that the characteristics of infant gut microbiota not only depend on the feeding types but 
+also on nutrients intake, and demonstrated that the vitamin D plays an important role in modulating the human 
+gut microbiota, especially increase the proportion of probiotics in infants.
+Received: 2 September 2020; Accepted: 18 January 2021
+References
+	
+1.	 Prentice, A., Goldberg, G. R. & Schoenmakers, I. Vitamin D across the lifecycle: physiology and biomarkers. Am. J. Clin. Nutr. 
+88(2), 500S-506S (2008).
+	
+2.	 Cashman, K. D. et al. Vitamin D deficiency in Europe: pandemic?. Am. J. Clin. Nutr. 103(4), 1033–1044 (2016).
+	
+3.	 Hogler, W. Complications of vitamin D deficiency from the foetus to the infant: one cause, one prevention, but who’s responsibil-
+ity?. Best Pract. Res. Clin. Endocrinol. Metab. 29(3), 385–398 (2015).
+	
+4.	 Ginty, F. & Prentice, A. Can osteoporosis be prevented with dietary strategies during adolescence?. Br. J. Nutr. 92(1), 5–6 (2004).
+	
+5.	 Zhu, K. et al. Tracking of vitamin D status from childhood to early adulthood and its association with peak bone mass. Am. J. 
+Clin. Nutr. 106(1), 276–283 (2017).
+	
+6.	 Khammissa, R. A. G. et al. The biological activities of vitamin D and its receptor in relation to calcium and bone homeostasis, 
+cancer, immune and cardiovascular systems, skin biology, and oral health. Biomed. Res. Int. 2018, 9276380 (2018).
+	
+7.	 Neyestani, T. R. et al. High prevalence of vitamin D deficiency in school-age children in Tehran, 2008: a red alert. Public Health 
+Nutr. 15(2), 324–330 (2012).
+	
+8.	 Voortman, T. et al. Vitamin D deficiency in school-age children is associated with sociodemographic and lifestyle factors. J. 
+Nutr. 145(4), 791–798 (2015).
+	
+9.	 Liu, Y. et al. High prevalence of insufficient vitamin D intake and serum 25-hydroxyvitamin d in chinese school-age children: 
+a cross-sectional study. Nutrients 10(7), 822 (2018).
+	 10.	 Zhu, Z. et al. High prevalence of vitamin D deficiency among children aged 1 month to 16 years in Hangzhou, China. BMC 
+Public Health 12, 126 (2012).
+	 11.	 Al Shaikh, A. M. et al. Prevalence of vitamin D deficiency and calcium homeostasis in Saudi children. J. Clin. Res. Pediatr. 
+Endocrinol. 8(4), 461–467 (2016).
+	 12.	 Roh, Y. E. et al. Vitamin D deficiency in children aged 6 to 12 years: single center’s experience in Busan. Ann. Pediatr. Endocrinol. 
+Metab. 21(3), 149–154 (2016).
+	 13.	 Salameh, K. et al. Prevalence and risk factors for low vitamin D status among breastfeeding mother-infant dyads in an environ-
+ment with abundant sunshine. Int. J. Womens Health 8, 529–535 (2016).
+	 14.	 Almeida, A. C. F. et al. Do all infants need vitamin D supplementation?. PLoS ONE 13(4), e0195368 (2018).
+	 15.	 Mead, M. N. Benefits of sunlight: a bright spot for human health. Environ. Health Perspect. 116(4), A160–A167 (2008).
+	 16.	 Charoenngam, N., Shirvani, A. & Holick, M. F. Vitamin D for skeletal and non-skeletal health: What we should know. J. Clin. 
+Orthop. Trauma 10, 1082–1093 (2019).
+	 17.	 Thandrayen, K. & Pettifor, J. M. The roles of vitamin D and dietary calcium in nutritional rickets. Bone Rep. 8, 81–89 (2018).
+	 18.	 Pettifor, J. M. Vitamin D & /or calcium deficiency rickets in infants & children: a global perspective. Indian J. Med. Res. 127(3), 
+245–249 (2008).
+	 19.	 Paterson, C. R. & Ayoub, D. Congenital rickets due to vitamin D deficiency in the mothers. Clin. Nutr. 34(5), 793–798 (2015).
+Figure 10.   Linear regression results between BMI and F/B ratio at 4-month-old of age in 4 groups of diet.
+13
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+	 20.	 Prentice, A. Vitamin D deficiency: a global perspective. Nutr. Rev. 66(10 Suppl 2), S153–S164 (2008).
+	 21.	 Edlich, R. et al. Scientific documentation of the relationship of vitamin D deficiency and the development of cancer. J. Environ. 
+Pathol. Toxicol. Oncol. 28(2), 133–141 (2009).
+	 22.	 Pettifor, J. M., Thandrayen, K. & Thacher, T. D. Vitamin D Deficiency and Nutritional Rickets in Children. In Vitamin D (ed. 
+Feldman, D.) 179–201 (Elsevier, Amsterdam, 2018).
+	 23.	 Chiu, C. Y. et al. Maternal vitamin D levels are inversely related to allergic sensitization and atopic diseases in early childhood. 
+Pediatr. Allergy Immunol. 26(4), 337–343 (2015).
+	 24.	 Yao, T. C. et al. Suboptimal vitamin D status in a population-based study of Asian children: prevalence and relation to allergic 
+diseases and atopy. PLoS ONE 9(6), e99105 (2014).
+	 25.	 Mithal, A. & Kalra, S. Vitamin D supplementation in pregnancy. Indian J. Endocrinol. Metab. 18(5), 593–596 (2014).
+	 26.	 Specker, B. L. Does vitamin D during pregnancy impact offspring growth and bone?. Proc. Nutr. Soc. 71(1), 38–45 (2012).
+	 27.	 Hollis, B. W. & Wagner, C. L. Vitamin D and pregnancy: skeletal effects, nonskeletal effects, and birth outcomes. Calcif. Tissue 
+Int. 92(2), 128–139 (2013).
+	 28.	 Javaid, M. K. et al. Maternal vitamin D status during pregnancy and childhood bone mass at age 9 years: a longitudinal study. 
+Lancet 367(9504), 36–43 (2006).
+	 29.	 Marjamaki, L. et al. Maternal intake of vitamin D during pregnancy and risk of advanced beta cell autoimmunity and type 1 
+diabetes in offspring. Diabetologia 53(8), 1599–1607 (2010).
+	 30.	 Zosky, G. R. et al. Vitamin D deficiency at 16 to 20 weeks’ gestation is associated with impaired lung function and asthma at 6 
+years of age. Ann. Am. Thorac. Soc. 11(4), 571–577 (2014).
+	 31.	 Section on Breastfeeding. Breastfeeding and the use of human milk. Pediatrics 129(3), e827-41 (2012).
+	 32.	 James, D. C., Lessen, R. & American Dietetic Association. Position of the American Dietetic Association: promoting and sup-
+porting breastfeeding. J. Am. Diet Assoc. 109(11), 1926–1942 (2009).
+	 33.	 Nair, R. & Maseeh, A. Vitamin D: the “sunshine” vitamin. J. Pharmacol. Pharmacother. 3(2), 118–126 (2012).
+	 34.	 Gartner, L. M. et al. Prevention of rickets and vitamin D deficiency: new guidelines for vitamin D intake. Pediatrics 111(4 Pt 1), 
+908–910 (2003).
+	 35.	 Wagner, C. L. et al. Prevention of rickets and vitamin D deficiency in infants, children, and adolescents. Pediatrics 122(5), 
+1142–1152 (2008).
+	 36.	 Sun, J. Dietary vitamin D, vitamin D receptor, and microbiome. Curr. Opin. Clin. Nutr. Metab. Care 21(6), 471–474 (2018).
+	 37.	 Bull, M. J. & Plummer, N. T. Part 1: the human gut microbiome in health and disease. Integr. Med. (Encinitas) 13(6), 17–22 
+(2014).
+	 38.	 Jandhyala, S. M. et al. Role of the normal gut microbiota. World J. Gastroenterol. 21(29), 8787–8803 (2015).
+	 39.	 Iozzo, P. & Sanguinetti, E. Early dietary patterns and microbiota development: still a way to go from descriptive interactions to 
+health-relevant solutions. Front. Nutr. 5, 5 (2018).
+	 40.	 Moore, R. E. & Townsend, S. D. Temporal development of the infant gut microbiome. Open Biol. 9(9), 190128 (2019).
+	 41.	 Laursen, M. F. et al. Infant gut microbiota development is driven by transition to family foods independent of maternal obesity. 
+mSphere 1(1), e00069-15 (2016).
+	 42.	 Martin, C. R. et al. The brain–gut–microbiome axis. Cell Mol. Gastroenterol. Hepatol. 6(2), 133–148 (2018).
+	 43.	 Allen, A. P. et al. A psychology of the human brain-gut-microbiome axis. Soc. Personal. Psychol. Compass 11(4), e12309 (2017).
+	 44.	 Luna, R. A., Savidge, T. C. & Williams, K. C. The brain–gut–microbiome axis: what role does it play in autism spectrum disorder?. 
+Curr. Dev. Disord. Rep. 3(1), 75–81 (2016).
+	 45.	 Routy, B. et al. Gut microbiome influences efficacy of PD-1-based immunotherapy against epithelial tumors. Science 359(6371), 
+91–97 (2018).
+	 46.	 Routy, B. et al. The gut microbiota influences anticancer immunosurveillance and general health. Nat. Rev. Clin. Oncol. 15(6), 
+382–396 (2018).
+	 47.	 Gopalakrishnan, V. et al. Gut microbiome modulates response to anti-PD-1 immunotherapy in melanoma patients. Science 
+359(6371), 97–103 (2018).
+	 48.	 Matson, V. et al. The commensal microbiome is associated with anti-PD-1 efficacy in metastatic melanoma patients. Science 
+359(6371), 104–108 (2018).
+	 49.	 Tanaka, M. & Nakayama, J. Development of the gut microbiota in infancy and its impact on health in later life. Allergol. Int. 
+66(4), 515–522 (2017).
+	 50.	 Nijnik, A. & Hancock, R. E. The roles of cathelicidin LL-37 in immune defences and novel clinical applications. Curr. Opin. 
+Hematol. 16(1), 41–47 (2009).
+	 51.	 Salzman, N. H. et al. Enteric defensins are essential regulators of intestinal microbial ecology. Nat. Immunol. 11(1), 76–83 (2010).
+	 52.	 The Human Microbiome Project Consortium. Structure, function and diversity of the healthy human microbiome. Nature 
+486(7402), 207–214 (2012).
+	 53.	 Karlsson, F. H. et al. Gut metagenome in European women with normal, impaired and diabetic glucose control. Nature 498(7452), 
+99–103 (2013).
+	 54.	 Li, J. et al. An integrated catalog of reference genes in the human gut microbiome. Nat. Biotechnol. 32(8), 834–841 (2014).
+	 55.	 Qin, J. et al. A human gut microbial gene catalogue established by metagenomic sequencing. Nature 464(7285), 59–65 (2010).
+	 56.	 Qin, J. et al. A metagenome-wide association study of gut microbiota in type 2 diabetes. Nature 490(7418), 55–60 (2012).
+	 57.	 Adlerberth, I. et al. Reduced enterobacterial and increased staphylococcal colonization of the infantile bowel: an effect of hygienic 
+lifestyle?. Pediatr. Res. 59(1), 96–101 (2006).
+	 58.	 Palmer, C. et al. Development of the human infant intestinal microbiota. PLoS Biol. 5(7), e177 (2007).
+	 59.	 Dominguez-Bello, M. G. et al. Delivery mode shapes the acquisition and structure of the initial microbiota across multiple body 
+habitats in newborns. Proc. Natl. Acad. Sci. USA 107(26), 11971–11975 (2010).
+	 60.	 Koenig, J. E. et al. Succession of microbial consortia in the developing infant gut microbiome. Proc. Natl. Acad. Sci. USA 
+108(Suppl 1), 4578–4585 (2011).
+	 61.	 Yatsunenko, T. et al. Human gut microbiome viewed across age and geography. Nature 486(7402), 222–227 (2012).
+	 62.	 Subramanian, S. et al. Persistent gut microbiota immaturity in malnourished Bangladeshi children. Nature 510(7505), 417–421 
+(2014).
+	 63.	 Aghajafari, F. et al. The current recommended vitamin D intake guideline for diet and supplements during pregnancy is not 
+adequate to achieve vitamin D sufficiency for most pregnant women. PLoS ONE 11(7), e0157262 (2016).
+	 64.	 Kramer, C. K. et al. The persistence of maternal vitamin D deficiency and insufficiency during pregnancy and lactation irrespec-
+tive of season and supplementation. Clin. Endocrinol. (Oxf.) 84(5), 680–686 (2016).
+	 65.	 Gellert, S., Strohle, A. & Hahn, A. Breastfeeding woman are at higher risk of vitamin D deficiency than non-breastfeeding 
+women - insights from the German VitaMinFemin study. Int. Breastfeed. J. 12, 19 (2016).
+	 66.	 Wheeler, B. J. et al. A longitudinal study of 25-hydroxy vitamin D and parathyroid hormone status throughout pregnancy and 
+exclusive lactation in New Zealand mothers and their infants at 45 degrees S. Nutrients 10(1), 86 (2018).
+	 67.	 Weng, S. L. et al. Bacterial communities in semen from men of infertile couples: metagenomic sequencing reveals relationships 
+of seminal microbiota to semen quality. PLoS ONE 9(10), e110152 (2014).
+14
+Vol:.(1234567890)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+	 68.	 Caporaso, J. G. et al. Global patterns of 16S rRNA diversity at a depth of millions of sequences per sample. Proc. Natl. Acad. Sci. 
+USA 108(Suppl 1), 4516–4522 (2011).
+	 69.	 Caporaso, J. G. et al. QIIME allows analysis of high-throughput community sequencing data. Nat. Methods 7(5), 335–336 (2010).
+	 70.	 McDonald, D. et al. An improved Greengenes taxonomy with explicit ranks for ecological and evolutionary analyses of bacteria 
+and archaea. ISME J. 6(3), 610–618 (2012).
+	 71.	 Langille, M. G. et al. Predictive functional profiling of microbial communities using 16S rRNA marker gene sequences. Nat. 
+Biotechnol. 31(9), 814–821 (2013).
+	 72.	 Segata, N. et al. Metagenomic biomarker discovery and explanation. Genome Biol. 12(6), R60 (2011).
+	 73.	 Mukherjee, A. et al. Bioinformatic approaches including predictive metagenomic profiling reveal characteristics of bacterial 
+response to petroleum hydrocarbon contamination in diverse environments. Sci. Rep. 7(1), 1108 (2017).
+	 74.	 Tan, M. L., Abrams, S. A. & Osborn, D. A. Vitamin D supplementation for term breastfed infants to prevent vitamin D deficiency 
+and improve bone health. Cochrane Database Syst. Rev. 12, CD013046 (2020).
+	 75.	 Krzywinski, M. et al. Circos: an information aesthetic for comparative genomics. Genome Res. 19(9), 1639–1645 (2009).
+	 76.	 Backhed, F. et al. Dynamics and stabilization of the human gut microbiome during the first year of life. Cell Host Microbe 17(5), 
+690–703 (2015).
+	 77.	 Azad, M. B. et al. Gut microbiota of healthy Canadian infants: profiles by mode of delivery and infant diet at 4 months. CMAJ 
+185(5), 385–394 (2013).
+	 78.	 Arboleya, S. et al. Intestinal microbiota development in preterm neonates and effect of perinatal antibiotics. J. Pediatr. 166(3), 
+538–544 (2015).
+	 79.	 Lozupone, C. & Knight, R. UniFrac: a new phylogenetic method for comparing microbial communities. Appl. Environ. Microbiol. 
+71(12), 8228–8235 (2005).
+	 80.	 Thompson, A. L. et al. Milk- and solid-feeding practices and daycare attendance are associated with differences in bacterial 
+diversity, predominant communities, and metabolic and immune function of the infant gut microbiome. Front. Cell Infect. 
+Microbiol. 5, 3 (2015).
+	 81.	 Fouhy, F. et al. Composition of the early intestinal microbiota: knowledge, knowledge gaps and the use of high-throughput 
+sequencing to address these gaps. Gut Microbes 3(3), 203–220 (2012).
+	 82.	 Bergstrom, A. et al. Establishment of intestinal microbiota during early life: a longitudinal, explorative study of a large cohort 
+of Danish infants. Appl. Environ. Microbiol. 80(9), 2889–2900 (2014).
+	 83.	 Backhed, F. et al. Dynamics and stabilization of the human gut microbiome during the first year of life. Cell Host Microbe 17(6), 
+852 (2015).
+	 84.	 Dogra, S. et al. Rate of establishing the gut microbiota in infancy has consequences for future health. Gut Microbes 6(5), 321–325 
+(2015).
+	 85.	 Koliada, A. et al. Association between body mass index and Firmicutes/Bacteroidetes ratio in an adult Ukrainian population. 
+BMC Microbiol. 17(1), 120 (2017).
+	 86.	 Castaner, O. et al. The gut microbiome profile in obesity: a systematic review. Int. J. Endocrinol. 2018, 4095789 (2018).
+	 87.	 Nommsen-Rivers, L. A. & Dewey, K. G. Growth of breastfed infants. Breastfeed. Med. 4(Suppl 1), S45–S49 (2009).
+	 88.	 Ghouri, Y. A. et al. Systematic review of randomized controlled trials of probiotics, prebiotics, and synbiotics in inflammatory 
+bowel disease. Clin. Exp. Gastroenterol. 7, 473–487 (2014).
+	 89.	 Fukuda, S. et al. Bifidobacteria can protect from enteropathogenic infection through production of acetate. Nature 469(7331), 
+543–547 (2011).
+	 90.	 Sheil, B. et al. Role of interleukin (IL-10) in probiotic-mediated immune modulation: an assessment in wild-type and IL-10 
+knock-out mice. Clin. Exp. Immunol. 144(2), 273–280 (2006).
+	 91.	 Chichlowski, M. et al. Bifidobacteria isolated from infants and cultured on human milk oligosaccharides affect intestinal epithelial 
+function. J. Pediatr. Gastroenterol. Nutr. 55(3), 321–327 (2012).
+	 92.	 Yang, C. et al. Bifidobacterium in the gut microbiota confer resilience to chronic social defeat stress in mice. Sci. Rep. 7, 45942 
+(2017).
+	 93.	 Bender, J. M. et al. Maternal HIV infection influences the microbiome of HIV-uninfected infants. Sci Transl Med 8(349), 349ra100 
+(2016).
+	 94.	 Pannaraj, P. S. et al. Association between breast milk bacterial communities and establishment and development of the infant 
+gut microbiome. JAMA Pediatr. 171(7), 647–654 (2017).
+	 95.	 Sordillo, J. E. et al. Factors influencing the infant gut microbiome at age 3–6 months: findings from the ethnically diverse Vitamin 
+D Antenatal Asthma Reduction Trial (VDAART). J. Allergy Clin. Immunol. 139(2), 482–491 (2017).
+	 96.	 Azad, M. B. et al. Impact of maternal intrapartum antibiotics, method of birth and breastfeeding on gut microbiota during the 
+first year of life: a prospective cohort study. BJOG 123(6), 983–993 (2016).
+	 97.	 Estuningsih, S. et al. Enterobacteriaceae in dehydrated powdered infant formula manufactured in Indonesia and Malaysia. J. 
+Food Prot. 69(12), 3013–3017 (2006).
+	 98.	 Sonnenburg, J. L., Chen, C. T. & Gordon, J. I. Genomic and metabolic studies of the impact of probiotics on a model gut symbiont 
+and host. PLoS Biol. 4(12), e413 (2006).
+	 99.	 Pereira, D. I. & Gibson, G. R. Effects of consumption of probiotics and prebiotics on serum lipid levels in humans. Crit. Rev. 
+Biochem. Mol. Biol. 37(4), 259–281 (2002).
+	100.	 Salminen, S., Benno, Y. & de Vos, W. Intestinal colonisation, microbiota and future probiotics?. Asia Pac J Clin Nutr 15(4), 
+558–562 (2006).
+	101.	 Stephens, R. W., Arhire, L. & Covasa, M. Gut microbiota: from microorganisms to metabolic organ influencing obesity. Obesity 
+(Silver Spring) 26(5), 801–809 (2018).
+	102.	 Sweeney, T. E. & Morton, J. M. The human gut microbiome: a review of the effect of obesity and surgically induced weight loss. 
+JAMA Surg. 148(6), 563–569 (2013).
+	103.	 Fernandes, J. et al. Adiposity, gut microbiota and faecal short chain fatty acids are linked in adult humans. Nutr. Diabetes 4, e121 
+(2014).
+	104.	 Giugliani, E. R. J. Growth in exclusively breastfed infants. J. Pediatr. (Rio J.) 95(Suppl 1), 79–84 (2019).
+Author contributions
+S.L.W. and W.T.L. conceived and designed the experiments. K.Y.H., J.H.J. and C.H.C. performed the experiments. 
+K.Y.H. and J.H.J. analyzed the results. W.T.L. and K.Y.H. wrote the manuscript with revision by S.L.W. All authors 
+read and approved the final manuscript.
+Competing interests 
+The authors declare no competing interests.
+15
+Vol.:(0123456789)
+Scientific Reports |         (2021) 11:2856  | 
+https://doi.org/10.1038/s41598-021-82584-8
+www.nature.com/scientificreports/
+Additional information
+Supplementary Information The online version contains supplementary material available at https​://doi.
+org/10.1038/s4159​8-021-82584​-8.
+Correspondence and requests for materials should be addressed to S.-L.W.
+Reprints and permissions information is available at www.nature.com/reprints.
+Publisher’s note  Springer Nature remains neutral with regard to jurisdictional claims in published maps and 
+institutional affiliations.
+Open Access   This article is licensed under a Creative Commons Attribution 4.0 International 
+License, which permits use, sharing, adaptation, distribution and reproduction in any medium or 
+format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the 
+Creative Commons licence, and indicate if changes were made. The images or other third party material in this 
+article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the 
+material. If material is not included in the article’s Creative Commons licence and your intended use is not 
+permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from 
+the copyright holder. To view a copy of this licence, visit http://creat​iveco​mmons​.org/licen​ses/by/4.0/.
+© The Author(s) 2021

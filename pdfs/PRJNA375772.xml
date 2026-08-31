@@ -1,0 +1,2166 @@
+
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD with MathML3 v1.4 20241031//EN" "JATS-archivearticle1-4-mathml3.dtd">
+<article xml:lang="en" article-type="research-article" dtd-version="1.4"><processing-meta base-tagset="archiving" mathml-version="3.0" table-model="xhtml" tagset-family="jats"><restricted-by>pmc</restricted-by></processing-meta><front><journal-meta><journal-id journal-id-type="nlm-ta">mSystems</journal-id><journal-id journal-id-type="iso-abbrev">mSystems</journal-id><journal-id journal-id-type="pmc-domain-id">3105</journal-id><journal-id journal-id-type="pmc-domain">msys</journal-id><journal-id journal-id-type="nlm-id">101680636</journal-id><journal-id journal-id-type="publisher-id">msystems</journal-id><journal-title-group><journal-title>mSystems</journal-title></journal-title-group><issn pub-type="epub">2379-5077</issn><?publisher_abbrev asm?><publisher><publisher-name>American Society for Microbiology (ASM)</publisher-name></publisher></journal-meta><article-meta><article-id pub-id-type="pmcid">PMC10654077</article-id><article-id pub-id-type="pmcid-ver">PMC10654077.1</article-id><article-id pub-id-type="pmcaid">10654077</article-id><article-id pub-id-type="pmcaiid">10654077</article-id><article-id pub-id-type="pmid">37787561</article-id><article-id pub-id-type="doi">10.1128/msystems.00747-23</article-id><article-id pub-id-type="publisher-id">00747-23</article-id><article-id pub-id-type="publisher-id">msystems.00747-23</article-id><article-version article-version-type="pmc-version">1</article-version><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="biological-terms"><compound-subject><compound-subject-part content-type="code">bacteriology</compound-subject-part><compound-subject-part content-type="label">Bacteriology</compound-subject-part></compound-subject></subj-group></article-categories><title-group><article-title>Leveraging existing 16S rRNA microbial data to identify diagnostic biomarker in Chinese patients with gastric cancer: a systematic meta-analysis</article-title></title-group><contrib-group><contrib contrib-type="author"><contrib-id contrib-id-type="orcid" authenticated="false">https://orcid.org/0009-0006-1567-4237</contrib-id><name name-style="western"><surname>Chen</surname><given-names initials="J">Jijun</given-names></name><xref rid="aff1" ref-type="aff">
+<sup>1</sup>
+</xref><xref rid="aff2" ref-type="aff">
+<sup>2</sup>
+</xref><xref rid="aff3" ref-type="aff">
+<sup>3</sup>
+</xref><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Data curation" vocab-term-identifier="https://credit.niso.org/contributor-roles/data-curation/">Data curation</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Formal analysis" vocab-term-identifier="https://credit.niso.org/contributor-roles/formal-analysis/">Formal analysis</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Investigation" vocab-term-identifier="https://credit.niso.org/contributor-roles/investigation/">Investigation</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Methodology" vocab-term-identifier="https://credit.niso.org/contributor-roles/methodology/">Methodology</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Project administration" vocab-term-identifier="https://credit.niso.org/contributor-roles/project-administration/">Project administration</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Writing – original draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-original-draft/">Writing – original draft</role></contrib><contrib contrib-type="author"><name name-style="western"><surname>Nie</surname><given-names initials="S">Siru</given-names></name><xref rid="aff1" ref-type="aff">
+<sup>1</sup>
+</xref><xref rid="aff2" ref-type="aff">
+<sup>2</sup>
+</xref><xref rid="aff3" ref-type="aff">
+<sup>3</sup>
+</xref><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Formal analysis" vocab-term-identifier="https://credit.niso.org/contributor-roles/formal-analysis/">Formal analysis</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Methodology" vocab-term-identifier="https://credit.niso.org/contributor-roles/methodology/">Methodology</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Writing – review and editing" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-review-editing/">Writing – review and editing</role></contrib><contrib contrib-type="author"><name name-style="western"><surname>Qiu</surname><given-names initials="X">Xunan</given-names></name><xref rid="aff1" ref-type="aff">
+<sup>1</sup>
+</xref><xref rid="aff2" ref-type="aff">
+<sup>2</sup>
+</xref><xref rid="aff3" ref-type="aff">
+<sup>3</sup>
+</xref></contrib><contrib contrib-type="author"><name name-style="western"><surname>Zheng</surname><given-names initials="S">Shuwen</given-names></name><xref rid="aff1" ref-type="aff">
+<sup>1</sup>
+</xref><xref rid="aff2" ref-type="aff">
+<sup>2</sup>
+</xref><xref rid="aff3" ref-type="aff">
+<sup>3</sup>
+</xref></contrib><contrib contrib-type="author"><name name-style="western"><surname>Ni</surname><given-names initials="C">Chuxuan</given-names></name><xref rid="aff1" ref-type="aff">
+<sup>1</sup>
+</xref><xref rid="aff2" ref-type="aff">
+<sup>2</sup>
+</xref><xref rid="aff3" ref-type="aff">
+<sup>3</sup>
+</xref></contrib><contrib contrib-type="author" corresp="yes"><contrib-id contrib-id-type="orcid" authenticated="false">https://orcid.org/0000-0001-7858-4112</contrib-id><name name-style="western"><surname>Yuan</surname><given-names initials="Y">Yuan</given-names></name><xref rid="aff1" ref-type="aff">
+<sup>1</sup>
+</xref><xref rid="aff2" ref-type="aff">
+<sup>2</sup>
+</xref><xref rid="aff3" ref-type="aff">
+<sup>3</sup>
+</xref><xref rid="cor1" ref-type="corresp"/><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Supervision" vocab-term-identifier="https://credit.niso.org/contributor-roles/supervision/">Supervision</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Writing – review and editing" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-review-editing/">Writing – review and editing</role><email>yuanyuan@cmu.edu.cn</email></contrib><contrib contrib-type="author" corresp="yes"><contrib-id contrib-id-type="orcid" authenticated="false">https://orcid.org/0000-0002-0146-2165</contrib-id><name name-style="western"><surname>Gong</surname><given-names initials="Y">Yuehua</given-names></name><xref rid="aff1" ref-type="aff">
+<sup>1</sup>
+</xref><xref rid="aff2" ref-type="aff">
+<sup>2</sup>
+</xref><xref rid="aff3" ref-type="aff">
+<sup>3</sup>
+</xref><xref rid="cor2" ref-type="corresp"/><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Funding acquisition" vocab-term-identifier="https://credit.niso.org/contributor-roles/funding-acquisition/">Funding acquisition</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Supervision" vocab-term-identifier="https://credit.niso.org/contributor-roles/supervision/">Supervision</role><role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Writing – review and editing" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-review-editing/">Writing – review and editing</role><email>yhgong@cmu.edu.cn</email></contrib><aff id="aff1">
+<label>1</label>
+<institution-wrap><institution>Tumor Etiology and Screening Department of Cancer Institute and General Surgery, The First Hospital of China Medical University</institution></institution-wrap>, <city>Shenyang</city>, <state>Liaoning</state>, <country>China</country>
+</aff><aff id="aff2">
+<label>2</label>
+<institution-wrap><institution>Key Laboratory of Cancer Etiology and Prevention, Liaoning Education Department, The First Hospital of China Medical University</institution></institution-wrap>, <city>Shenyang</city>, <state>Liaoning</state>, <country>China</country>
+</aff><aff id="aff3">
+<label>3</label>
+<institution-wrap><institution>Key Laboratory of GI Cancer Etiology and Prevention, The First Hospital of China Medical University</institution></institution-wrap>, <city>Shenyang</city>, <state>Liaoning</state>, <country>China</country>
+</aff></contrib-group><contrib-group><contrib contrib-type="editor"><role>Editor</role><name name-style="western"><surname>Segata</surname><given-names initials="N">Nicola</given-names></name><aff>
+<institution-wrap><institution>Universita degli Studi di Trento</institution></institution-wrap>, <city>Trento</city>, <country>Italy</country>
+</aff></contrib></contrib-group><author-notes><corresp id="cor1">Address correspondence to Yuan Yuan, <email xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="mailto:yuanyuan@cmu.edu.cn">yuanyuan@cmu.edu.cn</email>
+</corresp><corresp id="cor2">Address correspondence to Yuehua Gong, <email xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="mailto:yhgong@cmu.edu.cn">yhgong@cmu.edu.cn</email>
+</corresp><fn fn-type="COI-statement"><p>The authors declare no conflict of interest.</p></fn></author-notes><pub-date publication-format="electronic" date-type="collection"><season>Sep-Oct</season><year>2023</year></pub-date><pub-date date-type="pub" publication-format="electronic"><day>03</day><month>10</month><year>2023</year></pub-date><volume>8</volume><issue>5</issue><issue-id pub-id-type="pmc-issue-id">449308</issue-id><elocation-id>e00747-23</elocation-id><history>
+<date date-type="received"><day>18</day><month>7</month><year>2023</year></date>
+<date date-type="accepted"><day>11</day><month>8</month><year>2023</year></date>
+</history><pub-history><event event-type="pmc-release"><date><day>03</day><month>10</month><year>2023</year></date></event><event event-type="pmc-live"><date><day>03</day><month>10</month><year>2023</year></date></event><event event-type="pmc-last-change"><date iso-8601-date="2025-08-29 19:25:16.947"><day>29</day><month>08</month><year>2025</year></date></event></pub-history><permissions><copyright-statement>Copyright © 2023 Chen et al.</copyright-statement><copyright-year>2023</copyright-year><copyright-holder>Chen et al.</copyright-holder><ali:free_to_read xmlns:ali="http://www.niso.org/schemas/ali/1.0/" start_date="2023-10-03"/><license><ali:license_ref xmlns:ali="http://www.niso.org/schemas/ali/1.0/" specific-use="textmining" content-type="ccbylicense">https://creativecommons.org/licenses/by/4.0/</ali:license_ref><license-p>This is an open-access article distributed under the terms of the <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International license</ext-link>.</license-p></license></permissions><self-uri xmlns:xlink="http://www.w3.org/1999/xlink" content-type="pmc-pdf" xlink:href="msystems.00747-23.pdf"><?pdf-name msystems.00747-23.pdf?><?pdf-size 2522507?><?pdf-md5 fbd331cb2690134c31ba4b5e20930e57?><?pdf-image-server-status NEVER_LOAD?><?pdf-cloudpmc-urn urn:app:a357/10654077/fbd331cb2690/msystems.00747-23.pdf?></self-uri><self-uri xmlns:xlink="http://www.w3.org/1999/xlink" content-type="pdf" xlink:href="msystems.00747-23.pdf"/><abstract abstract-type="primary"><title>ABSTRACT</title><p>Gastric cancer is the second most prevalent and deadly cancer in China. Microbiota play an important role in gastric tumorigenesis. However, the available microbial marker studies for gastric cancer do not have consistent results. We searched PubMed for 16S rRNA sequencing in relevant literature on Chinese patients from 1 January 2005 to 18 July 2022, and 16 original articles were finally obtained. Alpha diversity, beta diversity, and bacterial taxa were used to explore the differences in gastric microbiota. Linear discriminant analysis of effect size and a random forest model were used to find the combination of genera with the best diagnostic efficacy. <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Pseudomonas</italic>, <italic toggle="yes">Fusobacterium</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Peptostreptococcus</italic>, and <italic toggle="yes">Prevotella</italic> showed significant differences between gastric cancer and non-gastric cancer, but a single genus performed poorly in identifying patients with gastric cancer. However, a combination of genera <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Peptostreptococcus</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Pseudomonas</italic>, and <italic toggle="yes">Prevotella</italic> had excellent performance in screening gastric cancer with the median area under the curve values of 0.7525 (range: 0.5859–0.9350), 0.8818 (range: 0.7397–0.9533), and 0.7435 (range: 0.7131–0.8483) in the Matched, Unmatched, and Other groups, respectively. Therefore, the results indicated that this combination of genera has good diagnostic efficacy and wide applicability for patients with gastric cancer, which may provide new clues for the non-invasive diagnosis of gastric cancer.</p><sec><title>Importance</title><p>Gastric cancer is a significant and growing health problem in China. Studies have revealed significant differences in gastric microbiota between patients with gastric cancer and non-cancerous patients, suggesting that microbiota may play a role in tumorigenesis. In this meta-analysis, existing 16S rRNA microbial data were analyzed to find combinations consisting of five genera, which had good efficacy in distinguishing gastric cancer from non-cancerous patients in multiple types of samples. These results lend support to the use of microbial markers in detecting gastric cancer. Moreover, these biomarkers are plausible candidates for further mechanistic research into the role of the microbiota in tumorigenesis.</p></sec></abstract><kwd-group><title>KEYWORDS</title><kwd>16S rRNA</kwd><kwd>diagnostic biomarker</kwd><kwd>gastric cancer</kwd><kwd>meta-analysis</kwd></kwd-group><funding-group specific-use="FundRef"><award-group award-type="grant" id="award-1"><funding-source>
+<institution-wrap><institution>MOST | National Natural Science Foundation of China (NSFC)</institution></institution-wrap>
+</funding-source><award-id>81970501</award-id><principal-award-recipient>
+<name name-style="western"><surname>Gong</surname><given-names>Yuehua</given-names></name>
+</principal-award-recipient></award-group><award-group award-type="grant" id="award-2"><funding-source>
+<institution-wrap><institution>MOST | National Key Research and Development Program of China (NKPs)</institution></institution-wrap>
+</funding-source><award-id>2018YFC1311600</award-id><principal-award-recipient>
+<name name-style="western"><surname>Yuan</surname><given-names>Yuan</given-names></name>
+</principal-award-recipient></award-group><award-group award-type="grant" id="award-3"><funding-source>
+<institution-wrap><institution>Science and Technology Program of Shenyang</institution></institution-wrap>
+</funding-source><award-id>22-321-32-03</award-id><principal-award-recipient>
+<name name-style="western"><surname>Gong</surname><given-names>Yuehua</given-names></name>
+</principal-award-recipient></award-group></funding-group><counts><count count="8" count-type="supplementary-material"/><count count-type="authors" count="7"/><fig-count count="5"/><table-count count="3"/><ref-count count="45"/><page-count count="16"/><word-count count="7942"/></counts><custom-meta-group><custom-meta><meta-name>pmc-status-qastatus</meta-name><meta-value>0</meta-value></custom-meta><custom-meta><meta-name>pmc-status-live</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-status-embargo</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-status-released</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-open-access</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-olf</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-manuscript</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-legally-suppressed</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-has-pdf</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-has-supplement</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-pdf-only</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-suppress-copyright</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-is-real-version</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-is-scanned-article</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-preprint</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-in-epmc</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-license-ref</meta-name><meta-value>CC BY</meta-value></custom-meta><custom-meta><meta-name>cover-date</meta-name><meta-value>September/October 2023</meta-value></custom-meta></custom-meta-group></article-meta></front><body><sec sec-type="intro" id="s1"><title>INTRODUCTION</title><p>Gastric cancer (GC) remains an important cancer globally, ranking fifth in incidence and fourth in mortality. It is about twice as common in men as in women (<xref rid="B1" ref-type="bibr">1</xref>). East and Southeast Asia have some of the highest incidences of GC in the world, representing more than 60% of all GC cases in 2018 (<xref rid="B2" ref-type="bibr">2</xref>). In China, GC is the second most prevalent and second most deadly cancer, with mortality/morbidity (0.845) and 5-year prevalence (27.6/100,000) higher than in most developed countries (<xref rid="B3" ref-type="bibr">3</xref>). Since the discovery of <italic toggle="yes">Helicobacter pylori</italic> (<italic toggle="yes">Hp</italic>), the stomach is no longer considered a sterile environment and is thought to contain a complex ecosystem of multiple microorganisms. Microbial factors have been recognized as risk factors for GC and have received more attention recently. Studies have shown that microorganisms in the upper gastrointestinal tract can promote cancer by promoting inflammation (<xref rid="B4" ref-type="bibr">4</xref>) or by interacting with pathogens (<xref rid="B5" ref-type="bibr">5</xref>). Therefore, the exploration of microbiota-based GC diagnostic markers in the Chinese population is of great value for the identification, prevention, and treatment of GC.</p><p>16S rRNA is a component of the ribosomal 30S subunit that is highly conservative and specific in prokaryotes. Sequencing the variable region of 16S rRNA is currently the most common method for studying microorganism diversity. The use of 16S rRNA amplicon sequencing showed differences among the phyla <italic toggle="yes">Proteobacteria</italic> and <italic toggle="yes">Firmicutes</italic>, and the genera <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Prevotella</italic>, and <italic toggle="yes">Fusobacterium</italic> in cancerous and adjacent normal tissues of GC (<xref rid="B6" ref-type="bibr">6</xref>, <xref rid="B7" ref-type="bibr">7</xref>). However, some studies have reported regional differences in microbiota profiles, and the microorganisms responsible for GC may not be the same in different regions. A recent study including 110 Mongolian and 83 Han Chinese stool samples from healthy individuals showed that Mongolians have a more unique and diverse gut microbial community than Han Chinese, suggesting that the environment influences the microbial community (<xref rid="B8" ref-type="bibr">8</xref>). Nevertheless, there were significant differences in gastric mucosal microbial communities between patients with GC and healthy people in different studies from the Chinese population. For example, a study conducted in Xi'an and Inner Mongolia identified a combination of several operational taxonomic units (OTUs)—Peptostreptococcus_OTU16, Parvinomonas_OTU35, Streptococcus_OTU68, Dialister_OTU151, and Slackia_OTU174—with good results in diagnosing GC in gastric mucosal samples (<xref rid="B9" ref-type="bibr">9</xref>). In addition, a multicenter study in China, pooling samples from Beijing, Tianjin, Nanjing, Shanghai, Xiamen, and Guangzhou, found that the combination of the species <italic toggle="yes">Streptococcus anginosus</italic> and <italic toggle="yes">Streptococcus constellatus</italic> had high sensitivity and diagnostic efficacy in identifying patients with GC and could be used for GC screening (<xref rid="B10" ref-type="bibr">10</xref>). The differences in the results of the above studies based on Chinese populations may be explained by differences in sample sizes, controls, types, and the selection of sequencing platforms and variable regions among studies. This highlights the need for systematic analysis of microbial diagnostic markers for GC.</p><p>Based on this, we performed a meta-analysis using the existing 16S rRNA sequencing data published in previous articles to find microbial markers with diagnostic value for GC in the Chinese population. This study is of great significance for exploring microbial markers with a clinical diagnostic role for GC.</p></sec><sec sec-type="materials|methods" id="s2"><title>MATERIALS AND METHODS</title><sec id="s2-1"><title>Public data collection</title><p>We searched PubMed for 16S rRNA sequencing relevant literature of Chinese patients from 1 January 2005 to 18 July 2022 with the following search strategy: ((((microbiome OR microbial OR microbiota [MeSH Terms]) OR microflora OR bacterial OR dysbiosis) AND (gastric [MeSH Terms] OR stomach OR upper digestive tract OR upper gastrointestinal tract)) AND ((lesion OR cancer [MeSH Terms] OR neoplasia OR neoplasms OR malignancy OR tumor OR carcinoma OR adenocarcinoma OR premalignancy OR premalignant OR tumorigenesis OR carcinogenesis) OR intestinal metaplasia OR gastritis)) AND ((Chinese) OR (China)). Data were included according to the following criteria: the study population was a Chinese population containing GC and NGC [Non-GC, including distal normal control (NC), healthy control (HC), superficial gastritis (SG), and chronic gastritis (CG)], providing publicly available sequence and subgroup information. A total of 693 articles was obtained using the above search criteria, and after reviewing the titles and abstracts, 643 irrelevant articles were excluded. Among the remaining 50 articles, 37 irrelevant articles were excluded by reading the full text. In addition, three relevant studies were added manually by literature reading, and so 16 original articles were finally included (<xref rid="F1" ref-type="fig">Fig. 1</xref>).</p><fig position="float" fig-type="figure" id="F1" orientation="portrait"><label>Fig 1</label><caption><p>Study flow chart.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="msystems.00747-23.f001.jpg"><?image-name msystems.00747-23.f001.jpg?><?image-size 69289?><?image-md5 ca995239c5750cd38c361f23eadd7cd4?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 1259?><?image-original-width 1567?><?image-scaled-height 629?><?image-scaled-width 783?><?image-cloudpmc-urn urn:cdn:blobs/a357/10654077/ca995239c575/msystems.00747-23.f001.jpg?><?thumb-name msystems.00747-23.f001.gif?><?thumb-size 2045?><?thumb-md5 da012430b1bb94d179f366bd2736d640?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 80?><?thumb-scaled-width 99?><?thumb-cloudpmc-urn urn:cdn:blobs/a357/10654077/da012430b1bb/msystems.00747-23.f001.gif?></graphic></fig></sec><sec id="s2-2"><title>Data preprocessing</title><p>Raw sequence data and metadata were obtained from Sequence Read Archive (SRA; <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/sra" ext-link-type="uri">https://www.ncbi.nlm.nih.gov/sra</ext-link>) and European Nucleotide Archive (ENA; <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ebi.ac.uk/ena/browser/home" ext-link-type="uri">https://www.ebi.ac.uk/ena/browser/home</ext-link>). Quality checks were performed using FastQC and each data set was processed separately using QIIME2 (version 2021.2) (<xref rid="B11" ref-type="bibr">11</xref>). Single- or double-ended FASTQ files were imported to generate QIIME2 files. The double-ended data were merged using the q2-vsearch (<xref rid="B12" ref-type="bibr">12</xref>) plugin, and then the quality filter plugin was used to quality filter the merged or single-ended data, setting a minimum quality score of 20. Next, the connected and quality-filtered sequences were noise reduced using the Deblur noise reduction program (<xref rid="B13" ref-type="bibr">13</xref>) to obtain single sequence variants. Then we used the default parameters to annotate species by QIIME2 using a well-trained plain Bayesian classifier (99% similarity) (<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://github.com/QIIME2/q2-feature-classifier" ext-link-type="uri">https://github.com/QIIME2/q2-feature-classifier</ext-link>) (<xref rid="B14" ref-type="bibr">14</xref>) using Greengenes full-length reference sequences. Any sequences identified as members of the eukaryotic, archaeal, mitochondrial, chloroplast, and cyanobacterial lineages were removed.</p></sec><sec id="s2-3"><title>Community analysis</title><p>To elucidate species diversity between the NGC and GC, we performed alpha-diversity analysis using the QIIME2 platform. After excluding samples with &lt;1,000 reads, community richness, diversity, and evenness were expressed by observed features, Shannon index, and evenness index, respectively. In each data set, we used a rank transformation to ensure that the data obeyed a normal distribution. For the transformed data, we tested the hypothesis that the alpha diversity significantly differed between the NGC and GC groups using a linear mixed-effects model. We plotted sparse curves at the median sequencing depth for each data set to determine the stability of the alpha diversity results. We measured differences between individuals by calculating beta diversity (BrayCurtis distance, weighted unifrac distance, and unweighted unifrac distance) and used permutational multivariate ANOVA (PERMANOVA) to determine whether there were significant differences between NGC and GC patients.</p></sec><sec id="s2-4"><title>Linear discriminant analysis of effect size</title><p>We used linear discriminant analysis of effect size (LEfSe) (<xref rid="B15" ref-type="bibr">15</xref>) to assess how the microbiome varied with disease state. This determines the features most likely to explain differences between classes by coupling standard tests for statistical significance with additional tests encoding biological consistency and effect relevance. We used the Galaxy implementation of LEfSe (accessed on 20 March 2022; available at <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://huttenhower.sph.harvard.edu/galaxy" ext-link-type="uri">http://huttenhower.sph.harvard.edu/galaxy</ext-link>) with default options. Differences were evaluated by differentiating the threshold of the log-linear discriminant analysis (LDA) score of the features, which was set to 2.0.</p></sec><sec id="s2-5"><title>Random forest classification analysis</title><p>Incorporating the common differential genera obtained from the LEfSe. we constructed a random forest model using the R package randomForest (<xref rid="B16" ref-type="bibr">16</xref>). Each data set was randomly divided 7:3 into training and test data sets. For all models, ntree was set to 500, and mtry was set to the square root of the number of taxa within the model. The mean decline in accuracy (MDA) is a measure of the importance of each categorical unit to the overall model, and we obtained the overall importance ranking by normalizing the MDA values of the categorical units in each model (Z-transformation).</p></sec><sec id="s2-6"><title>Statistical analysis</title><p>SPSS version 22.0 (SPSS Inc., Chicago, IL, USA) was used for statistical analysis. GraphPad Prism 8.0 (GraphPad Software Inc., San Diego, CA, USA) was used for graphing. Mann-Whitney U test was used to check the alpha diversity parameter. Differences in colony structure between groups were calculated using Bray-Curtis distances, weighted unifrac distances, and unweighted unifrac distances, and PERMANOVA was performed using the Vegan package (v2.5.7) in R (version 4.1.2) to detect variability in beta diversity between groups. The LEfSe algorithm was used to identify specific microbial taxa and functions that differed significantly between groups. Differences with absolute LDA scores &gt;2.0 were considered significant. Random forest models were constructed using the randomForest package (v4.6.14). The ROC curves were plotted using the pROC (1.18.0) and ggplot2 (3.3.6) packages.</p></sec></sec><sec sec-type="results" id="s3"><title>RESULTS</title><sec id="s3-1"><title>Basic characteristics of the included data set</title><p>The 16 original articles have differences in DNA extraction, PCR primer, Sequence Region, and Sequence platform. The main methods used for DNA extraction are the QIAamp DNA Mini Kit and the QIAGEN DNeasy Kit. The most commonly used PCR primers are 515F/806R, followed by 338F/806R, 319F/806R, etc. In terms of Sequence Region, Regions V3-V4 and V4 are the most common, while the Illumina platform is used for sequencing, with Illumina MiSeq being the most common (<xref rid="T1 T2 T3" ref-type="table">Tables 1 to 3</xref>).</p><table-wrap position="float" id="T1" orientation="portrait"><label>TABLE 1</label><caption><p>Characteristics of the studies included in the Matched group</p></caption><table frame="hsides" rules="groups"><colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup><thead><tr><th align="left" valign="top" colspan="1" rowspan="1">ID</th><th align="left" valign="top" colspan="1" rowspan="1">Study</th><th align="left" valign="top" colspan="1" rowspan="1">Geographical location</th><th align="left" valign="top" colspan="1" rowspan="1">DNA extraction</th><th align="left" valign="top" colspan="1" rowspan="1">PCR primer</th><th align="left" valign="top" colspan="1" rowspan="1">Seq region</th><th align="left" valign="top" colspan="1" rowspan="1">Seq plat<xref rid="T1_FN7" ref-type="table-fn">
+<sup>
+<italic toggle="yes">g</italic>
+</sup>
+</xref>
+</th><th align="left" valign="top" colspan="1" rowspan="1">Samples</th><th align="left" valign="top" colspan="1" rowspan="1">Source of data</th><th align="left" valign="top" colspan="1" rowspan="1">Sample type</th><th align="left" valign="top" colspan="1" rowspan="1">Data included</th><th align="left" valign="top" colspan="1" rowspan="1">Data availability (accession no.)</th></tr></thead><tbody><tr><td align="left" valign="top" colspan="1" rowspan="1"/><td align="left" valign="top" colspan="1" rowspan="1">Tseng et al. (<xref rid="B17" ref-type="bibr">17</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Taizhong, Taiwan</td><td align="left" valign="top" colspan="1" rowspan="1">QIAGEN DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">27F<xref rid="T1_FN5" ref-type="table-fn">
+<sup>
+<italic toggle="yes">e</italic>
+</sup>
+</xref>/534R<xref rid="T1_FN6" ref-type="table-fn">
+<sup>
+<italic toggle="yes">f</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">V1–V3<xref rid="T1_FN8" ref-type="table-fn">
+<sup>
+<italic toggle="yes">h</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—6,<xref rid="T1_FN1" ref-type="table-fn">
+<sup>
+<italic toggle="yes">a</italic>
+</sup>
+</xref> NC—6,<xref rid="T1_FN2" ref-type="table-fn">
+<sup>
+<italic toggle="yes">b</italic>
+</sup>
+</xref> total—12</td><td align="left" valign="top" colspan="1" rowspan="1">SRA<xref rid="T1_FN4" ref-type="table-fn">
+<sup>
+<italic toggle="yes">d</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">×</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA282779/" ext-link-type="uri">PRJNA282779</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S1</td><td align="left" valign="top" colspan="1" rowspan="1">Yu et al. (<xref rid="B18" ref-type="bibr">18</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Taiyuan, Shanxi</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">NA</td><td align="left" valign="top" colspan="1" rowspan="1">V3–V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—80, NC—77, total—157</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA310127" ext-link-type="uri">PRJNA310127</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S2</td><td align="left" valign="top" colspan="1" rowspan="1">Liu et al,2018</td><td align="left" valign="top" colspan="1" rowspan="1">Hangzhou, Zhejiang</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">319F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V3</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—229, NC—230, total—459</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA428883" ext-link-type="uri">PRJNA428883</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S3</td><td align="left" valign="top" colspan="1" rowspan="1">Coker et al. (<xref rid="B9" ref-type="bibr">9</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Hohhot, Inner Mongolia</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—19, NC—17, total—36</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA375772" ext-link-type="uri">PRJNA375772</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S4</td><td align="left" valign="top" colspan="1" rowspan="1">Coker et al. (<xref rid="B9" ref-type="bibr">9</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Xi'an, Shanxi</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—20, NC—20, Total—40</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA375772" ext-link-type="uri">PRJNA375772</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S5</td><td align="left" valign="top" colspan="1" rowspan="1">Liu et al. (<xref rid="B19" ref-type="bibr">19</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Hangzhou, Zhejiang</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">319F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V3–V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina Miseq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—59, NC—60, total—119</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA508819" ext-link-type="uri">PRJNA508819</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S6</td><td align="left" valign="top" colspan="1" rowspan="1">Liu et al. (<xref rid="B19" ref-type="bibr">19</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Linxian, Henan</td><td align="left" valign="top" colspan="1" rowspan="1">Mobio PowerSoil DNA</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiniSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—36, NC—36, total—72</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA561290" ext-link-type="uri">PRJNA561290</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S7</td><td align="left" valign="top" colspan="1" rowspan="1">Chen et al. (<xref rid="B6" ref-type="bibr">6</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Shenyang, Liaoning</td><td align="left" valign="top" colspan="1" rowspan="1">DNA extraction standard pipeline (<xref rid="B20" ref-type="bibr">20</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">515F/907R</td><td align="left" valign="top" colspan="1" rowspan="1">V4–V5</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina Hiseq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—62, NC—62, total—124</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA532731" ext-link-type="uri">PRJNA532731</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S8</td><td align="left" valign="top" colspan="1" rowspan="1">Zhang et al. (<xref rid="B21" ref-type="bibr">21</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Hefei, Anhui</td><td align="left" valign="top" colspan="1" rowspan="1">CTAB method</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina NovaSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—33, NC—36, total—69</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA778008" ext-link-type="uri">PRJNA778008</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S9</td><td align="left" valign="top" colspan="1" rowspan="1">He et al. (<xref rid="B22" ref-type="bibr">22</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Nanchang, Jiangxi</td><td align="left" valign="top" colspan="1" rowspan="1">QIAGEN DNeasy Kit</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina Miseq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—57, NC—56, total—113</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA481413" ext-link-type="uri">PRJNA481413</ext-link>
+</td></tr></tbody></table><table-wrap-foot><fn id="T1_FN1"><label>
+<sup>
+<italic toggle="yes">a</italic>
+</sup>
+</label><p>GC, gastric cancer.</p></fn><fn id="T1_FN2"><label>
+<sup>
+<italic toggle="yes">b</italic>
+</sup>
+</label><p>NC, adjacent normal control.</p></fn><fn id="T1_FN3"><label>
+<sup>
+<italic toggle="yes">c</italic>
+</sup>
+</label><p>ENA, European Nucleotide Archive.</p></fn><fn id="T1_FN4"><label>
+<sup>
+<italic toggle="yes">d</italic>
+</sup>
+</label><p>SRA, Sequence Read Archive.</p></fn><fn id="T1_FN5"><label>
+<sup>
+<italic toggle="yes">e</italic>
+</sup>
+</label><p>F, forward (5′-3′) direction.</p></fn><fn id="T1_FN6"><label>
+<sup>
+<italic toggle="yes">f</italic>
+</sup>
+</label><p>R, reverse (3′-5′) direction.</p></fn><fn id="T1_FN7"><label>
+<sup>
+<italic toggle="yes">g</italic>
+</sup>
+</label><p>seq plat, sequencing platform.</p></fn><fn id="T1_FN8"><label>
+<sup>
+<italic toggle="yes">h</italic>
+</sup>
+</label><p>V1, V3, V4, and V5 are variable regions of the 16S rRNA gene.</p></fn></table-wrap-foot></table-wrap><table-wrap position="float" id="T2" orientation="portrait"><label>TABLE 2</label><caption><p>Characteristics of the studies included in the Unmatched group<xref rid="T2_FN3" ref-type="table-fn">
+<sup>
+<italic toggle="yes">c</italic>
+</sup>
+</xref>
+</p></caption><table frame="hsides" rules="groups"><colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup><thead><tr><th align="left" valign="top" colspan="1" rowspan="1">ID</th><th align="left" valign="top" colspan="1" rowspan="1">Study</th><th align="left" valign="top" colspan="1" rowspan="1">Geographical location</th><th align="left" valign="top" colspan="1" rowspan="1">DNA extraction</th><th align="left" valign="top" colspan="1" rowspan="1">PCR primer</th><th align="left" valign="top" colspan="1" rowspan="1">Seq region</th><th align="left" valign="top" colspan="1" rowspan="1">Seq plat</th><th align="left" valign="top" colspan="1" rowspan="1">Samples</th><th align="left" valign="top" colspan="1" rowspan="1">Source of data</th><th align="left" valign="top" colspan="1" rowspan="1">Sample type</th><th align="left" valign="top" colspan="1" rowspan="1">Data included</th><th align="left" valign="top" colspan="1" rowspan="1">Data availability (accession no.)</th></tr></thead><tbody><tr><td align="left" valign="top" colspan="1" rowspan="1"/><td align="left" valign="top" colspan="1" rowspan="1">Wang et al. (<xref rid="B23" ref-type="bibr">23</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Qingdao, Shandong</td><td align="left" valign="top" colspan="1" rowspan="1">QIAGEN DNeasy Blood and Tissue Kit</td><td align="left" valign="top" colspan="1" rowspan="1">8F<xref rid="T2_FN7" ref-type="table-fn">
+<sup>
+<italic toggle="yes">g</italic>
+</sup>
+</xref>/533R<xref rid="T2_FN8" ref-type="table-fn">
+<sup>
+<italic toggle="yes">h</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">V1–V3<xref rid="T2_FN9" ref-type="table-fn">
+<sup>
+<italic toggle="yes">i</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">454GS-FLX</td><td align="left" valign="top" colspan="1" rowspan="1">GC—6,<xref rid="T2_FN1" ref-type="table-fn">
+<sup>
+<italic toggle="yes">a</italic>
+</sup>
+</xref> CG—6,<xref rid="T2_FN2" ref-type="table-fn">
+<sup>
+<italic toggle="yes">b</italic>
+</sup>
+</xref> total—12</td><td align="left" valign="top" colspan="1" rowspan="1">SRA<xref rid="T2_FN6" ref-type="table-fn">
+<sup>
+<italic toggle="yes">f</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">×</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA289186" ext-link-type="uri">PRJNA289186</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S10</td><td align="left" valign="top" colspan="1" rowspan="1">Coker et al. (<xref rid="B9" ref-type="bibr">9</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Hohhot, Inner Mongolia</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—19, SG—55,<xref rid="T2_FN3" ref-type="table-fn">
+<sup>
+<italic toggle="yes">c</italic>
+</sup>
+</xref> total—74</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA375772" ext-link-type="uri">PRJNA375772</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S11</td><td align="left" valign="top" colspan="1" rowspan="1">Coker et al. (<xref rid="B9" ref-type="bibr">9</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Xi'an, Shanxi</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA Mini Kit</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—20, SG—54, total—74</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA375772" ext-link-type="uri">PRJNA375772</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S12</td><td align="left" valign="top" colspan="1" rowspan="1">Wang et al. (<xref rid="B24" ref-type="bibr">24</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Beijing</td><td align="left" valign="top" colspan="1" rowspan="1">QIAamp DNA</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—29, HC—30,<xref rid="T2_FN4" ref-type="table-fn">
+<sup>
+<italic toggle="yes">d</italic>
+</sup>
+</xref> CG—21, total—80</td><td align="left" valign="top" colspan="1" rowspan="1">ENA<xref rid="T2_FN5" ref-type="table-fn">
+<sup>
+<italic toggle="yes">e</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB26931" ext-link-type="uri">PRJEB26931</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S13</td><td align="left" valign="top" colspan="1" rowspan="1">Wang et al. (<xref rid="B24" ref-type="bibr">24</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Qingdao, Shandong</td><td align="left" valign="top" colspan="1" rowspan="1">QIAGEN DNeasy Tissue Kit</td><td align="left" valign="top" colspan="1" rowspan="1">338F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V3–V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina HiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—60, CG—30, total—90</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA313391" ext-link-type="uri">PRJNA313391</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S14</td><td align="left" valign="top" colspan="1" rowspan="1">Zhang et al. (<xref rid="B25" ref-type="bibr">25</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Nanjing, Jiangsu</td><td align="left" valign="top" colspan="1" rowspan="1">E.Z.N.A Stool DNA Kit</td><td align="left" valign="top" colspan="1" rowspan="1">338F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V3–V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq PE300</td><td align="left" valign="top" colspan="1" rowspan="1">GC—15, SG—17, total—32</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA634837" ext-link-type="uri">PRJNA634837</ext-link>
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA634837" ext-link-type="uri"/>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S15</td><td align="left" valign="top" colspan="1" rowspan="1">Li et al. (<xref rid="B26" ref-type="bibr">26</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Changchun, Jilin</td><td align="left" valign="top" colspan="1" rowspan="1">NA</td><td align="left" valign="top" colspan="1" rowspan="1">341F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V3–V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq PE250</td><td align="left" valign="top" colspan="1" rowspan="1">GC—15, CG—21, total—36</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA634837" ext-link-type="uri">PRJNA634837</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S16</td><td align="left" valign="top" colspan="1" rowspan="1">He et al. (<xref rid="B22" ref-type="bibr">22</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Nanchang, Jiangxi</td><td align="left" valign="top" colspan="1" rowspan="1">QIAGEN DNeasy Kit</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina Miseq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—57, SG—114, total—171</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric mucosa</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA481413" ext-link-type="uri">PRJNA481413</ext-link>
+</td></tr></tbody></table><table-wrap-foot><fn id="T2_FN1"><label>
+<sup>
+<italic toggle="yes">a</italic>
+</sup>
+</label><p>GC, gastric cancer.</p></fn><fn id="T2_FN2"><label>
+<sup>
+<italic toggle="yes">b</italic>
+</sup>
+</label><p>CG, chronic gastritis.</p></fn><fn id="T2_FN3"><label>
+<sup>
+<italic toggle="yes">c</italic>
+</sup>
+</label><p>SG, superficial gastritis.</p></fn><fn id="T2_FN4"><label>
+<sup>
+<italic toggle="yes">d</italic>
+</sup>
+</label><p>HC, healthy control.</p></fn><fn id="T2_FN5"><label>
+<sup>
+<italic toggle="yes">e</italic>
+</sup>
+</label><p>ENA, European Nucleotide Archive.</p></fn><fn id="T2_FN6"><label>
+<sup>
+<italic toggle="yes">f</italic>
+</sup>
+</label><p>SRA, Sequence Read Archive.</p></fn><fn id="T2_FN7"><label>
+<sup>
+<italic toggle="yes">g</italic>
+</sup>
+</label><p>F, forward (5′-3′) direction.</p></fn><fn id="T2_FN8"><label>
+<sup>
+<italic toggle="yes">h</italic>
+</sup>
+</label><p>R, reverse (3′-5′) direction; seq plat, sequencing platform.</p></fn><fn id="T2_FN9"><label>
+<sup>
+<italic toggle="yes">i</italic>
+</sup>
+</label><p>V1, V3, V4 are variable regions of the 16S rRNA gene.</p></fn></table-wrap-foot></table-wrap><table-wrap position="float" id="T3" orientation="portrait"><label>TABLE 3</label><caption><p>Characteristics of the studies included in the Other group</p></caption><table frame="hsides" rules="groups"><colgroup span="1"><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/><col span="1"/></colgroup><thead><tr><th align="left" valign="top" colspan="1" rowspan="1">ID</th><th align="left" valign="top" colspan="1" rowspan="1">Study</th><th align="left" valign="top" colspan="1" rowspan="1">Geographical location</th><th align="left" valign="top" colspan="1" rowspan="1">DNA extraction</th><th align="left" valign="top" colspan="1" rowspan="1">PCR primer</th><th align="left" valign="top" colspan="1" rowspan="1">Seq region</th><th align="left" valign="top" colspan="1" rowspan="1">Seq plat<xref rid="T3_FN7" ref-type="table-fn">
+<sup>
+<italic toggle="yes">g</italic>
+</sup>
+</xref>
+</th><th align="left" valign="top" colspan="1" rowspan="1">Samples</th><th align="left" valign="top" colspan="1" rowspan="1">Source of data</th><th align="left" valign="top" colspan="1" rowspan="1">Sample type</th><th align="left" valign="top" colspan="1" rowspan="1">Data included</th><th align="left" valign="top" colspan="1" rowspan="1">Data availability (accession no.)</th></tr></thead><tbody><tr><td align="left" valign="top" colspan="1" rowspan="1">S17</td><td align="left" valign="top" colspan="1" rowspan="1">Liu et al. (<xref rid="B19" ref-type="bibr">19</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Linxian, Henan</td><td align="left" valign="top" colspan="1" rowspan="1">Mobio PowerSoil DNA</td><td align="left" valign="top" colspan="1" rowspan="1">515F<xref rid="T3_FN5" ref-type="table-fn">
+<sup>
+<italic toggle="yes">e</italic>
+</sup>
+</xref>/806R<xref rid="T3_FN6" ref-type="table-fn">
+<sup>
+<italic toggle="yes">f</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiniSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—36,<xref rid="T3_FN1" ref-type="table-fn">
+<sup>
+<italic toggle="yes">a</italic>
+</sup>
+</xref> HC—36,<xref rid="T3_FN3" ref-type="table-fn">
+<sup>
+<italic toggle="yes">c</italic>
+</sup>
+</xref> total-72</td><td align="left" valign="top" colspan="1" rowspan="1">SRA<xref rid="T3_FN4" ref-type="table-fn">
+<sup>
+<italic toggle="yes">d</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric swab sample</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA561290" ext-link-type="uri">PRJNA561290</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S18</td><td align="left" valign="top" colspan="1" rowspan="1">Xu et al, 2020</td><td align="left" valign="top" colspan="1" rowspan="1">Hefei, Anhui</td><td align="left" valign="top" colspan="1" rowspan="1">E.Z.N.A. Soil DNA Kit</td><td align="left" valign="top" colspan="1" rowspan="1">341F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V3–V4<xref rid="T3_FN8" ref-type="table-fn">
+<sup>
+<italic toggle="yes">h</italic>
+</sup>
+</xref>
+</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina MiSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—181, HC—112, total—293</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Tongue coating</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA639445" ext-link-type="uri">PRJNA639445</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S19</td><td align="left" valign="top" colspan="1" rowspan="1">Zhang et al. (<xref rid="B21" ref-type="bibr">21</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Hefei, Anhui</td><td align="left" valign="top" colspan="1" rowspan="1">CTAB method</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina NovaSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—70, HC—70, total—140</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Oral swab sample</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA778008" ext-link-type="uri">PRJNA778008</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S20</td><td align="left" valign="top" colspan="1" rowspan="1">Zhang et al. (<xref rid="B21" ref-type="bibr">21</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Hefei, Anhui</td><td align="left" valign="top" colspan="1" rowspan="1">CTAB method</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina NovaSeq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—70, HC—49, total—119</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Stool</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA778008" ext-link-type="uri">PRJNA778008</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S21</td><td align="left" valign="top" colspan="1" rowspan="1">Qi et al. (<xref rid="B27" ref-type="bibr">27</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Taiyuan, Shanxi</td><td align="left" valign="top" colspan="1" rowspan="1">E.Z.N.A. Stool DNA Kit</td><td align="left" valign="top" colspan="1" rowspan="1">341F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V3–V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina Miseq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—116, HC—88, total—204</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Stool</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA478252" ext-link-type="uri">PRJNA478252</ext-link>
+</td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1">S22</td><td align="left" valign="top" colspan="1" rowspan="1">He et al. (<xref rid="B22" ref-type="bibr">22</xref>)</td><td align="left" valign="top" colspan="1" rowspan="1">Nanchang, Jiangxi</td><td align="left" valign="top" colspan="1" rowspan="1">QIAGEN DNeasy Kit</td><td align="left" valign="top" colspan="1" rowspan="1">515F/806R</td><td align="left" valign="top" colspan="1" rowspan="1">V4</td><td align="left" valign="top" colspan="1" rowspan="1">Illumina Miseq</td><td align="left" valign="top" colspan="1" rowspan="1">GC—28, SG—42,<xref rid="T3_FN2" ref-type="table-fn">
+<sup>
+<italic toggle="yes">b</italic>
+</sup>
+</xref> total—70</td><td align="left" valign="top" colspan="1" rowspan="1">SRA</td><td align="left" valign="top" colspan="1" rowspan="1">Gastric fluid</td><td align="left" valign="top" colspan="1" rowspan="1">√</td><td align="left" valign="top" colspan="1" rowspan="1">
+<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ncbi.nlm.nih.gov/bioproject/?term=PRJNA481413" ext-link-type="uri">PRJNA481413</ext-link>
+</td></tr></tbody></table><table-wrap-foot><fn id="T3_FN1"><label>
+<sup>
+<italic toggle="yes">a</italic>
+</sup>
+</label><p>GC, gastric cancer.</p></fn><fn id="T3_FN2"><label>
+<sup>
+<italic toggle="yes">b</italic>
+</sup>
+</label><p>SG, superficial gastritis.</p></fn><fn id="T3_FN3"><label>
+<sup>
+<italic toggle="yes">c</italic>
+</sup>
+</label><p>HC, healthy control.</p></fn><fn id="T3_FN4"><label>
+<sup>
+<italic toggle="yes">d</italic>
+</sup>
+</label><p>SRA, Sequence Read Archive.</p></fn><fn id="T3_FN5"><label>
+<sup>
+<italic toggle="yes">e</italic>
+</sup>
+</label><p>F, forward (5′-3′) direction.</p></fn><fn id="T3_FN6"><label>
+<sup>
+<italic toggle="yes">f</italic>
+</sup>
+</label><p>R, reverse (3′-5′) direction.</p></fn><fn id="T3_FN7"><label>
+<sup>
+<italic toggle="yes">g</italic>
+</sup>
+</label><p>seq plat, sequencing platform.</p></fn><fn id="T3_FN8"><label>
+<sup>
+<italic toggle="yes">h</italic>
+</sup>
+</label><p>V3 and V4 variable regions of the 16S rRNA gene.</p></fn></table-wrap-foot></table-wrap><p>We divided samples into three groups based on whether they originated from the same individual and sample type: Matched, Unmatched, and Other groups. A total of 10 gastric mucosal microbiome data were included in the Matched group. Of these, Tseng et al. (<xref rid="B17" ref-type="bibr">17</xref>) were excluded due to a small sample size and ultimately included nine data from eight studies (S1–S9): Yu et al. (<xref rid="B18" ref-type="bibr">18</xref>), Liu et al. (<xref rid="B28" ref-type="bibr">28</xref>), Coker et al. (<xref rid="B9" ref-type="bibr">9</xref>), Ling et al. (<xref rid="B19" ref-type="bibr">19</xref>), Liu et al. (<xref rid="B29" ref-type="bibr">29</xref>), Chen et al. (<xref rid="B6" ref-type="bibr">6</xref>), Zhang et al. (<xref rid="B21" ref-type="bibr">21</xref>), and He et al. (<xref rid="B22" ref-type="bibr">22</xref>). A total of 1,189 tissue samples were included in this group, of which 595 were GC samples and 594 were NGC samples (<xref rid="T1" ref-type="table">Table 1</xref>). A total of eight gastric mucosal microbiome studies were included in the Unmatched group. Of these, Wang et al. (<xref rid="B30" ref-type="bibr">30</xref>) were excluded due to small sample size and ultimately included seven data from six studies (S10–S16): Coker et al. (<xref rid="B9" ref-type="bibr">9</xref>), Wang et al. (<xref rid="B24" ref-type="bibr">24</xref>), Wang et al. (<xref rid="B31" ref-type="bibr">31</xref>), Zhang et al. (<xref rid="B25" ref-type="bibr">25</xref>), Li et al. (<xref rid="B26" ref-type="bibr">26</xref>), and He et al. (<xref rid="B22" ref-type="bibr">22</xref>). A total of 557 tissue samples were included in this group: 215 were GC samples and 342 were NGC samples (<xref rid="T2" ref-type="table">Table 2</xref>). The Other group included six data from five studies (S17–S22) and included microbiome data from gastric mucosal swab, oral swab, tongue coating, stool, and gastric fluid: Liu et al. (<xref rid="B29" ref-type="bibr">29</xref>), Xu et al. (<xref rid="B32" ref-type="bibr">32</xref>), Zhang et al. (<xref rid="B21" ref-type="bibr">21</xref>), Qi et al. (<xref rid="B27" ref-type="bibr">27</xref>), and He et al. (<xref rid="B22" ref-type="bibr">22</xref>). A total of 898 samples were included in this group: 501 were GC samples and 397 were NGC (<xref rid="T3" ref-type="table">Table 3</xref>).</p></sec><sec id="s3-2"><title>Community analysis showed significant differences in microbiota between GC and NGC</title><p>To explore the differences in gastric microbiota between GC and NGC, we compared the alpha diversity, beta diversity, and bacterial taxa of each data in the Matched, Unmatched, and Other groups after controlling for differences in study and variable regions. In the Matched group (S1–S9), evenness index, observed features, and Shannon index were significantly higher in the GC group (<italic toggle="yes">P</italic>-values 4.96E−03, 1.12E−04, and 3.27E−07, respectively) (<xref rid="F2" ref-type="fig">Fig. 2A and E</xref>; <xref rid="SuF5" ref-type="supplementary-material">Table S1</xref>). By contrast, in the Unmatched group (S10–S16), evenness and Shannon indexes were significantly lower in the GC group (<italic toggle="yes">P</italic>-value of 0.0074 and 0.0099, respectively), while observed features did not significantly differ between GC and NGC (<italic toggle="yes">P</italic> = 0.9337) (<xref rid="F2" ref-type="fig">Fig. 2C and E</xref>; <xref rid="SuF6" ref-type="supplementary-material">Table S2</xref>). The beta-diversity analysis showed significant differences between GC and NGC in most of the data (<xref rid="SuF8" ref-type="supplementary-material">Table S4</xref>). In terms of bacterial taxa, <italic toggle="yes">Proteobacteria</italic>, <italic toggle="yes">Firmicutes</italic>, and <italic toggle="yes">Bacteroidetes</italic> were the dominant phyla constituting the gastric mucosal microbial community. In addition, the phyla <italic toggle="yes">Cyanobacteria</italic>, <italic toggle="yes">Actinobacteria</italic>, and <italic toggle="yes">Fusobacteria</italic> showed high relative abundance for some data. Compared to the NGC, <italic toggle="yes">Proteobacteria</italic> were significantly lower in the GC group (<italic toggle="yes">P-</italic>value of 4.90E−12 in the Matched and 9.41E−08 in the Unmatched groups), <italic toggle="yes">Firmicutes</italic> were significantly higher in the GC group (<italic toggle="yes">P</italic>-value of 5.44E−09 in the Matched and 2.00E−06 in the Unmatched groups), while <italic toggle="yes">Bacteroidetes</italic> did not differ significantly between the two groups (<italic toggle="yes">P-</italic>value of 9.53E−02 in the Matched and 5.04E−02 in the Unmatched groups) (<xref rid="F2" ref-type="fig">Fig. 2B, D and F</xref>; <xref rid="SuF6" ref-type="supplementary-material">Table S2</xref>). The Other group contained several types of samples, with the bacterial taxa of patients with GC differing significantly between sample types (<xref rid="SuF1" ref-type="supplementary-material">Fig. S1</xref>; <xref rid="SuF7" ref-type="supplementary-material">Table S3</xref>).</p><fig position="float" fig-type="figure" id="F2" orientation="portrait"><label>Fig 2</label><caption><p>Community analysis between GC and NGC in the Matched and Unmatched groups. (<bold>A</bold>) Alpha-diversity indicators evenness index, observed features, and Shannon index in the Matched group of data in each group. (<bold>B</bold>) The microbiota composition of each data set in the Matched group. (<bold>C</bold>) Evenness index, observed features, and Shannon index in the Unmatched group of data in each group. (<bold>D</bold>) The microbiota composition of each data set in the Unmatched group. (<bold>E</bold>) Evenness index, observed features, and Shannon index in the Matched and Unmatched groups after controlling for variables with a linear mixed-effects model. (<bold>F</bold>) After controlling for variables with a linear mixed-effects model, the six most highly expressed phyla in the Matched and Unmatched groups.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="msystems.00747-23.f002.jpg"><?image-name msystems.00747-23.f002.jpg?><?image-size 184734?><?image-md5 157f2ef0e4ce0e2b4c590fe85425f2ad?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 1642?><?image-original-width 1920?><?image-scaled-height 657?><?image-scaled-width 768?><?image-cloudpmc-urn urn:cdn:blobs/a357/10654077/157f2ef0e4ce/msystems.00747-23.f002.jpg?><?thumb-name msystems.00747-23.f002.gif?><?thumb-size 5922?><?thumb-md5 410ab146838d97148a238658da75c51d?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 86?><?thumb-scaled-width 100?><?thumb-cloudpmc-urn urn:cdn:blobs/a357/10654077/410ab146838d/msystems.00747-23.f002.gif?></graphic></fig></sec><sec id="s3-3"><title>Six genera may have potential diagnostic biomarkers for distinguishing GC from NGC</title><p>Bacterial genera with significant differences between GC and NGC should have better efficacy in identifying patients with GC. Therefore, we performed LEfSe on the data from the Matched group to find microbial markers for GC. We summarized the results of LEfSe of data from S1 to S9 groups and selected genera that appeared in two or more data groups. The following eight genera were obtained: <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Pseudomonas</italic>, <italic toggle="yes">Fusobacterium</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Novosphingobium</italic>, <italic toggle="yes">Halomonas</italic>, <italic toggle="yes">Peptostreptococcus</italic>, and <italic toggle="yes">Prevotella</italic> (<xref rid="F3" ref-type="fig">Fig. 3</xref>). However, <italic toggle="yes">Novosphingobium</italic> and <italic toggle="yes">Halomonas</italic> could not be annotated in some of the Matched data, and so were excluded. Finally, six genera <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Pseudomonas</italic>, <italic toggle="yes">Fusobacterium</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Peptostreptococcus</italic>, and <italic toggle="yes">Prevotella</italic> were considered as potential diagnostic biomarkers for distinguishing GC from NGC.</p><fig position="float" fig-type="figure" id="F3" orientation="portrait"><label>Fig 3</label><caption><p>Eight genera obtained by LEfSe.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="msystems.00747-23.f003.jpg"><?image-name msystems.00747-23.f003.jpg?><?image-size 76110?><?image-md5 96aede1c62ae95517e9d68fd97d4bd81?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 988?><?image-original-width 2010?><?image-scaled-height 329?><?image-scaled-width 670?><?image-cloudpmc-urn urn:cdn:blobs/a357/10654077/96aede1c62ae/msystems.00747-23.f003.jpg?><?thumb-name msystems.00747-23.f003.gif?><?thumb-size 5415?><?thumb-md5 a3a08d6c61b12982edc52aa1aec8a070?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 80?><?thumb-scaled-width 162?><?thumb-cloudpmc-urn urn:cdn:blobs/a357/10654077/a3a08d6c61b1/msystems.00747-23.f003.gif?></graphic></fig></sec><sec id="s3-4"><title>A single genus not so well-diagnostic biomarkers for distinguishing GC from NGC</title><p>We explored the possibility of each of these six genera alone as diagnostic markers for GC. Given that <italic toggle="yes">Streptococcus</italic> was identified as a potential marker in many data in previous results, we first analyzed its diagnostic ability. In gastric mucosal tissue, the relative abundance of <italic toggle="yes">Streptococcus</italic> was significantly higher in most GC groups than in controls. The median area under the curve (AUC) value was 0.6575 (range: 0.4150–0.8669) in the Matched group (S1–S9) and 0.6706 (range: 0.4831–0.822) in the Unmatched group (S10–S16) (<xref rid="F4" ref-type="fig">Fig. 4A and B</xref>). The results were slightly better in the Unmatched than the Matched groups. In the Other group (S17–S22), the AUCs were 0.6394, 0.6781, and 0.7687 in one group of oral swab samples and two groups of stool samples, respectively, and less than 0.6 in the remaining types of samples (<xref rid="F4" ref-type="fig">Fig. 4C</xref>). However, <italic toggle="yes">Streptococcus</italic> did not show significant differences in the Other group. These results suggested not so well of <italic toggle="yes">Streptococcus</italic> as a diagnostic marker for GC for the majority of data. We supplemented the expression of six genera in all data sets NGC and GC groups, and also analyzed the diagnostic efficacy of the remaining five genera, with results generally similar to those of <italic toggle="yes">Streptococcus</italic>. Details are shown in <xref rid="SuF1" ref-type="supplementary-material">Fig. S2 and S3</xref>.</p><fig position="float" fig-type="figure" id="F4" orientation="portrait"><label>Fig 4</label><caption><p>Relative abundance, fold-change, and <italic toggle="yes">P</italic>-value of <italic toggle="yes">Streptococcus</italic> between the GC and NGC in each data set, and AUC of <italic toggle="yes">Streptococcus</italic> as a marker for diagnosis of GC. (<bold>A</bold>) Matched group. (<bold>B</bold>) Unmatched group. (<bold>C</bold>) Other group.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="msystems.00747-23.f004.jpg"><?image-name msystems.00747-23.f004.jpg?><?image-size 181367?><?image-md5 20ecb39d72106af1ac24ee22ca5ff58c?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 2444?><?image-original-width 2226?><?image-scaled-height 815?><?image-scaled-width 742?><?image-cloudpmc-urn urn:cdn:blobs/a357/10654077/20ecb39d7210/msystems.00747-23.f004.jpg?><?thumb-name msystems.00747-23.f004.gif?><?thumb-size 6000?><?thumb-md5 1b818c8d62816caaadd220facdc5c980?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 110?><?thumb-scaled-width 100?><?thumb-cloudpmc-urn urn:cdn:blobs/a357/10654077/1b818c8d6281/msystems.00747-23.f004.gif?></graphic></fig></sec><sec id="s3-5"><title>The best-performing combination of microbial diagnostic biomarkers obtained by random forest analysis</title><p>We constructed random forest models in each data set of the Matched group (S1–S9) and Z-transformed the resulting MDA values. The sum of the Z-score MDA results was ranked, and the total importance ranking of each genus in the model was obtained as follows (in order of decreasing importance): <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Peptostreptococcus</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Pseudomonas</italic>, <italic toggle="yes">Prevotella</italic>, and <italic toggle="yes">Fusobacterium</italic> (<xref rid="F5" ref-type="fig">Fig. 5A</xref>). In this model, <italic toggle="yes">Streptococcus</italic> was the most important factor, consistent with our LEfSe results. We obtained six combinations by progressively including genera based on importance ranking and validated the diagnostic efficacy of these combinations in the data set of the Matched group. The results showed that COM5 was the best-performing combination, with a median AUC value of 0.7525 (range: 0.5859–0.9350) (<xref rid="F5" ref-type="fig">Fig. 5B through D</xref>).</p><fig position="float" fig-type="figure" id="F5" orientation="portrait"><label>Fig 5</label><caption><p>Identifying the best-performing combination of microbial diagnostic biomarkers and validating their diagnostic capabilities. (<bold>A</bold>) Heatmap of MDA values obtained by random forest model after Z-transformation. (<bold>B</bold>) AUC values for each combination in the Matched group for each data set. (<bold>C</bold>) Genus composition in each combination. (<bold>D</bold>) ROC curves of COM5 in the Matched group for each data set. (<bold>E</bold>) ROC curves of COM5 in the Unmatched group for each data set. (<bold>F</bold>) ROC curves of COM5 in the Other group for each data set.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="msystems.00747-23.f005.jpg"><?image-name msystems.00747-23.f005.jpg?><?image-size 83628?><?image-md5 d4767089fca05ec97e507e05f3f30ac0?><?image-image-server-status LOAD_COMPLETED?><?image-original-height 1769?><?image-original-width 2847?><?image-scaled-height 442?><?image-scaled-width 711?><?image-cloudpmc-urn urn:cdn:blobs/a357/10654077/d4767089fca0/msystems.00747-23.f005.jpg?><?thumb-name msystems.00747-23.f005.gif?><?thumb-size 5674?><?thumb-md5 58a7fa4ef64eef0a2561afa5f8fd7209?><?thumb-image-server-status NEVER_LOAD?><?thumb-scaled-height 80?><?thumb-scaled-width 128?><?thumb-cloudpmc-urn urn:cdn:blobs/a357/10654077/58a7fa4ef64e/msystems.00747-23.f005.gif?></graphic></fig></sec><sec id="s3-6"><title>The best-performing combination of microbial diagnostic biomarkers verified in the unmatched and other group</title><p>To further explore the ability of the combination in screening patients with GC, we validated the combination COM5 in the Unmatched group (S13 excluded due to lack of <italic toggle="yes">Selenomonas</italic>) and the Other group (S17 excluded due to lack of <italic toggle="yes">Pseudomonas</italic> and S21 excluded due to lack of <italic toggle="yes">Pseudomonas</italic> and <italic toggle="yes">Selenomonas</italic>). Unexpectedly, the combination had an extremely high AUC in the Unmatched group with a median value of 0.8818 (range: 0.7397–0.9533) (<xref rid="F5" ref-type="fig">Fig. 5E</xref>). The AUC was also above 0.7 in all four types of sample data in the Other group, with values of 0.8483, 0.7131, 0.7650, and 0.7219, respectively (<xref rid="F5" ref-type="fig">Fig. 5F</xref>). These results suggested that the bacterial genera that are significantly different from NGC in GC mucosal tissues might also be used in the diagnosis of GC in oral swabs, tongue coating, feces, or gastric juice specimens.</p></sec></sec><sec sec-type="discussion" id="s4"><title>DISCUSSION</title><p>An increasing number of studies have found that microorganisms in the stomach other than <italic toggle="yes">Hp</italic> are closely associated with the development of GC. In this study, we performed a systematic meta-analysis using 16S rRNA sequencing data published in previous articles and identified the best-performing combination of microbial diagnostic biomarkers for distinguishing GC from NGC in Chinese patients. And this biomarker has good diagnostic efficiency in a variety of different types of samples, which has very important clinical value.</p><p>We first explored the basic characteristics of the flora in GC versus non-cancerous samples. The alpha diversity indicators (evenness index, Shannon index, and observed features) were elevated in GC from the Matched group, but the evenness and Shannon indexes were decreased in GC from the Unmatched group, after controlling factors. Current studies have not reached a consistent conclusion on the relationship between microbial diversity and gastric disease status, and Dai et al. showed that the diversity and abundance of gastric microbiota were higher in tumor tissues than in non-tumor tissues (<xref rid="B7" ref-type="bibr">7</xref>). However, the diversity and richness of peritumoral and tumor tissues were decreased in 276 patients with GC compared with non-tumor tissues (<xref rid="B28" ref-type="bibr">28</xref>). Our study may partly explain the inconsistent alpha diversity results in previous studies, which we speculated is related to the controls being from the same individual or different individuals.</p><p>LEfSe analysis indicated six genera<bold>,</bold>
+<italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Peptostreptococcus</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Pseudomonas</italic>, <italic toggle="yes">Prevotella</italic>, and <italic toggle="yes">Fusobacterium</italic>, may have potential diagnostic biomarkers for distinguishing GC from NGC. Interestingly, all these genera belong to oral microorganisms, which suggests that oral flora play important roles in the development of GC. <italic toggle="yes">Streptococcus</italic> is a common purulent Gram-positive coccus widely present in the human gastrointestinal tract and nasopharynx. Its elevation was seen in multiple types of samples from various gastrointestinal diseases, and its view as a pathogenic microorganism is widely accepted (<xref rid="B33" ref-type="bibr">33</xref>). <italic toggle="yes">Selenomonas</italic>, a Gram-negative genus, can be found in the oral cavity, stomach, and feces and is associated with colon cancer (<xref rid="B34" ref-type="bibr">34</xref>). <italic toggle="yes">Pseudomonas</italic>, a Gram-negative aerobic bacterium, is a common conditional pathogenic bacteria. It has been reported that the abundance of <italic toggle="yes">Pseudomonas</italic> in serum is high in both GC and normal groups (<xref rid="B35" ref-type="bibr">35</xref>). <italic toggle="yes">Prevotella</italic>, a genus of Gram-negative anaerobic bacteria, is found in multiple sites in the human body, including the oral cavity and gastrointestinal tract (<xref rid="B36" ref-type="bibr">36</xref>). <italic toggle="yes">Prevotella</italic> was enriched in GC tissue (<xref rid="B7" ref-type="bibr">7</xref>, <xref rid="B9" ref-type="bibr">9</xref>, <xref rid="B25" ref-type="bibr">25</xref>) and decreased in saliva (<xref rid="B37" ref-type="bibr">37</xref>), suggesting that translocation of <italic toggle="yes">Prevotella</italic> from the oral cavity to the gastrointestinal tract is a cause of gastric disease development. It has been suggested that <italic toggle="yes">Fusobacterium</italic> is present in the infected gastrointestinal tract (<xref rid="B38" ref-type="bibr">38</xref>), and this may stem from the selective translocation of <italic toggle="yes">Fusobacterium</italic> in the oral cavity (<xref rid="B39" ref-type="bibr">39</xref>). <italic toggle="yes">Fusobacterium</italic> has also been demonstrated to be associated with IBD and colorectal cancer (CRC) (<xref rid="B23" ref-type="bibr">23</xref>, <xref rid="B40" ref-type="bibr">40</xref>, <xref rid="B41" ref-type="bibr">41</xref>). <italic toggle="yes">Peptostreptococcus</italic> belongs to a group of Gram-positive anaerobic bacteria present in the gastrointestinal tract and vagina. Coker et al. identified <italic toggle="yes">Peptostreptococcus</italic> as an important genus for gastritis to GC development (<xref rid="B9" ref-type="bibr">9</xref>). The above results indicated that the six differential genera are closely associated with gastric diseases and have potential as microbial markers for GC diagnosis.</p><p>Next, we explored the possibility of each of these six genera alone as diagnostic markers for GC. The diagnostic value of <italic toggle="yes">Streptococcus</italic> performed well in some samples, but not others, as did the other five genera. Studies on <italic toggle="yes">Streptococcus</italic> as a diagnostic marker have been reported, for example, Zhou et al. diagnosed GC by detecting <italic toggle="yes">Streptococcus anginosus</italic> and <italic toggle="yes">Streptococcus constellatus</italic> in stool samples with AUC of 0.91 (<xref rid="B10" ref-type="bibr">10</xref>). Yu et al (<xref rid="B33" ref-type="bibr">33</xref>). explored <italic toggle="yes">Streptococcus</italic> as a marker of liver metastasis in GC with an AUC of 0.651. <italic toggle="yes">Streptococcus</italic> has also been reported to be significantly elevated in CRC (<xref rid="B42" ref-type="bibr">42</xref>, <xref rid="B43" ref-type="bibr">43</xref>), suggesting its potency as a diagnostic marker for gastrointestinal cancer. However, our meta-analysis did not verify the above results. We speculated that the reason may be that the cases in our study were from gastric mucosal tissue rather than fecal samples. This suggests that <italic toggle="yes">Streptococcus</italic> may have poor tissue specificity and diagnostic efficacy as a marker, so its feasibility as a single diagnostic marker for GC remains to be explored. The other five genera have been combined as diagnostic markers in previous studies (<xref rid="B32" ref-type="bibr">32</xref>, <xref rid="B37" ref-type="bibr">37</xref>, <xref rid="B44" ref-type="bibr">44</xref>), but no studies have investigated them as markers alone. Our study showed that these genera suffered from poor diagnostic efficacy when used alone as diagnostic markers for GC.</p><p>To find the marker combinations that performed best in the 16S RNA data of gastric mucosa, we constructed a random forest model in each of the Matched group data, and progressively added genera based on the order of importance to obtain six marker combinations, of which the combination consisting of five genera (<italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Peptostreptococcus</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Pseudomonas</italic>, and <italic toggle="yes">Prevotella</italic>) had the best diagnostic power with a median AUC value of 0.7525 (range: 0.5859–0.9350). In exploring the best combination of biomarkers, we found that the performance of each combination was excellent in the S3 data set, with AUC values of all the COMs signatures equal to 0.9. After analyzing the expression and diagnostic ability of single microbial genera, we believe that this may be due to two reasons. First, in S3, the expression levels of <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Peptostreptococcus</italic>, and <italic toggle="yes">Selenomonas</italic> in GC were significantly higher than those in NGC, and the differences were large. Second, <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Peptostreptococcus</italic>, and <italic toggle="yes">Selenomonas</italic> all had excellent diagnostic efficiency as single microbial genera in S3. Furthermore, we found that the COM5 had good diagnostic ability for the population in Hohhot, Inner Mongolia (S3 AUC = 0.935, S10 AUC = 0.934), which suggests that developing region-specific diagnostic biomarkers to improve diagnostic ability may be feasible. Then, the diagnostic value of this combination was verified with mucosal samples from the Unmatched group, and tongue, oral wipe, stool, and gastric fluid samples in Other group, and the median AUC value was up to 0.8818 (range: 0.7397–0.9533). However, there have been no reports using the combination of these five genera for GC diagnosis. These results indicated that this combination of genera has good diagnostic efficacy and wide applicability for patients with GC, which may open a door for the non-invasive diagnosis of GC.</p><p>In addition, there are some shortcomings in this study (<xref rid="B2" ref-type="bibr">2</xref>). The effect of <italic toggle="yes">Hp</italic> on gastric microbial community composition has been demonstrated (<xref rid="B45" ref-type="bibr">45</xref>), but in this study, it was not possible to subgroup <italic toggle="yes">Hp</italic> for a more precise analysis because of incomplete <italic toggle="yes">Hp</italic> data (<xref rid="B3" ref-type="bibr">3</xref>). The number of studies included in this meta-analysis was still small, and some did not have a large sample size, which may affect some of the results (<xref rid="B4" ref-type="bibr">4</xref>). There were insufficient data for other types of samples, such as oral and fecal samples with only one or two datasets each, giving insufficient validation strength. In the future, more informative and comprehensive studies are needed to verify the microbial diagnostic markers of GC obtained in this study.</p><p>In conclusion, leveraging existing 16S rRNA microbial data, we demonstrated the significant differences in gastric microbiota between GC and non-cancerous patients and obtained a combination of genera <italic toggle="yes">Streptococcus</italic>, <italic toggle="yes">Peptostreptococcus</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Pseudomonas,</italic> and <italic toggle="yes">Prevotella</italic> had excellent performance in screening GC with broad applicability and good diagnostic efficacy for the Chinese population. Our results would lend support to the use of microbial markers in detecting GC. Moreover, these biomarkers might also be plausible candidates for further mechanistic research into the role of the microbiota in tumorigenesis.</p></sec></body><back><ack><title>ACKNOWLEDGMENTS</title><p>Y.G. and Y.Y. conceived the study. J.C. drafted the manuscript and performed the analysis. J.C., X.Q., S.Z., and C.N. performed the literature search and collected the data. J.C. and S.N. contributed to drafting the manuscript and interpreting data. All authors read and approved the final manuscript.</p><p>This work was supported by the National Natural Science Foundation of China (Award No. 81970501), the National Key R and D Program of China (Grant 2018YFC1311600), and the Science and Technology Program of Shenyang (Award No. 22-321-32-03).</p><p>The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.</p></ack><sec sec-type="supplementary-material" id="s5-1"><title>SUPPLEMENTAL MATERIAL</title><p specific-use="print-only">The following material is available online at <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://doi.org/10.1128/msystems.00747-23" ext-link-type="uri">https://doi.org/10.1128/msystems.00747-23</ext-link>.</p><supplementary-material id="SuF1" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF1</object-id><label>Fig. S1</label><caption><title>msystems.00747-23-s0001.pdf</title><p>The alpha diversity indicators and microbial composition of each data set in the Other group.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0001.pdf" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0001.pdf?><?suppdata-size 733686?><?suppdata-md5 6e824e860cb939e17ff74bd22aa1c08a?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type pdf?><?suppdata-cloudpmc-urn urn:app:a357/10654077/6e824e860cb9/msystems.00747-23-s0001.pdf?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><supplementary-material id="SuF2" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF2</object-id><label>Fig. S2</label><caption><title>msystems.00747-23-s0002.pdf</title><p>The relative abundance of 6 genera in 22 data sets, NGC and GC groups.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0002.pdf" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0002.pdf?><?suppdata-size 1658107?><?suppdata-md5 fd1aacff9fa1ffd1f119c5bc1b7a19ff?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type pdf?><?suppdata-cloudpmc-urn urn:app:a357/10654077/fd1aacff9fa1/msystems.00747-23-s0002.pdf?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><supplementary-material id="SuF3" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF3</object-id><label>Fig. S3</label><caption><title>msystems.00747-23-s0003.pdf</title><p>AUC values of <italic toggle="yes">Peptostreptococcus</italic>, <italic toggle="yes">Selenomonas</italic>, <italic toggle="yes">Pseudomonas</italic>, <italic toggle="yes">Prevotella</italic>, and <italic toggle="yes">Fusobacterium</italic> in each data set.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0003.pdf" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0003.pdf?><?suppdata-size 224077?><?suppdata-md5 42dfdab60f7b125e632a3edd0ef2d462?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type pdf?><?suppdata-cloudpmc-urn urn:app:a357/10654077/42dfdab60f7b/msystems.00747-23-s0003.pdf?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><supplementary-material id="SuF4" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF4</object-id><label>Supplemental Legends</label><caption><title>msystems.00747-23-s0004.docx</title><p>Supplemental figure and table legends.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0004.docx" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0004.docx?><?suppdata-size 15518?><?suppdata-md5 7bfee63c787024c373f8e0043383941b?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type vnd.openxmlformats-officedocument.wordprocessingml.document?><?suppdata-cloudpmc-urn urn:app:a357/10654077/7bfee63c7870/msystems.00747-23-s0004.docx?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><supplementary-material id="SuF5" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF5</object-id><label>Table S1</label><caption><title>msystems.00747-23-s0005.xlsx</title><p>Alpha diversity and microbiota composition of studies included in the matched group.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0005.xlsx" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0005.xlsx?><?suppdata-size 27554?><?suppdata-md5 f956de9da19375960aa13f256b23b9d3?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type vnd.openxmlformats-officedocument.spreadsheetml.sheet?><?suppdata-cloudpmc-urn urn:app:a357/10654077/f956de9da193/msystems.00747-23-s0005.xlsx?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><supplementary-material id="SuF6" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF6</object-id><label>Table S2</label><caption><title>msystems.00747-23-s0006.xlsx</title><p>Alpha diversity and microbiota composition of studies included in the unmatched group.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0006.xlsx" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0006.xlsx?><?suppdata-size 24561?><?suppdata-md5 1bd7f863ac2ea04069a738cb0e48233f?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type vnd.openxmlformats-officedocument.spreadsheetml.sheet?><?suppdata-cloudpmc-urn urn:app:a357/10654077/1bd7f863ac2e/msystems.00747-23-s0006.xlsx?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><supplementary-material id="SuF7" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF7</object-id><label>Table S3</label><caption><title>msystems.00747-23-s0007.xlsx</title><p>Alpha diversity and microbiota composition of studies included in the other group.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0007.xlsx" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0007.xlsx?><?suppdata-size 22085?><?suppdata-md5 d0811972f4f8a33e99485ef073ea00af?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type vnd.openxmlformats-officedocument.spreadsheetml.sheet?><?suppdata-cloudpmc-urn urn:app:a357/10654077/d0811972f4f8/msystems.00747-23-s0007.xlsx?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><supplementary-material id="SuF8" position="float" content-type="local-data" orientation="portrait"><object-id pub-id-type="doi">10.1128/msystems.00747-23.SuF8</object-id><label>Table S4</label><caption><title>msystems.00747-23-s0008.xlsx</title><p>Comparison of community dissimilarity between individuals with GCs and NGCs as tested using PERMANOVA.</p></caption><media xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="msystems.00747-23-s0008.xlsx" position="float" orientation="portrait"><?suppdata-name msystems.00747-23-s0008.xlsx?><?suppdata-size 11234?><?suppdata-md5 51242398d7a64b9b1e229879519534cb?><?suppdata-image-server-status NEVER_LOAD?><?suppdata-mime-type application?><?suppdata-mime-sub-type vnd.openxmlformats-officedocument.spreadsheetml.sheet?><?suppdata-cloudpmc-urn urn:app:a357/10654077/51242398d7a6/msystems.00747-23-s0008.xlsx?><caption><p>Click here for additional data file.</p></caption></media></supplementary-material><p specific-use="online-only">ASM does not own the copyrights to Supplemental Material that may be linked to, or accessed through, an article. The authors have granted ASM a non-exclusive, world-wide license to publish the Supplemental Material files. Please contact the corresponding author directly for reuse. </p></sec><ref-list><title>REFERENCES</title><ref id="B1"><label>1</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Sung</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ferlay</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Siegel</surname>
+<given-names>RL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Laversanne</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Soerjomataram</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jemal</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bray</surname>
+<given-names>F</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Global Cancer Statistics 2020: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries</article-title>. <source>CA Cancer J Clin</source>
+<volume>71</volume>:<fpage>209</fpage>–<lpage>249</lpage>. doi:<pub-id pub-id-type="doi">10.3322/caac.21660</pub-id>
+<pub-id pub-id-type="pmid">33538338</pub-id></mixed-citation></ref><ref id="B2"><label>2</label><mixed-citation publication-type="book">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Ferlay</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ervik</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lam</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Colombet</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Mery</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Piñeros</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Znaor</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Soerjomataram</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bray</surname>
+<given-names>F</given-names>
+</string-name>
+</person-group>. <year>2018</year>. <article-title>Global cancer observatory: cancer today</article-title>. <publisher-loc>Lyon, France</publisher-loc>
+<publisher-name>International agency for research on cancer</publisher-name>
+</mixed-citation></ref><ref id="B3"><label>3</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Cao</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>HD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yu</surname>
+<given-names>YW</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>WQ</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Changing profiles of cancer burden worldwide and in China: a secondary analysis of the global cancer statistics 2020</article-title>. <source>Chin Med J (Engl)</source>
+<volume>134</volume>:<fpage>783</fpage>–<lpage>791</lpage>. doi:<pub-id pub-id-type="doi">10.1097/CM9.0000000000001474</pub-id>
+<pub-id pub-id-type="pmid">33734139</pub-id><pub-id pub-id-type="pmcid">PMC8104205</pub-id></mixed-citation></ref><ref id="B4"><label>4</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Kauppila</surname>
+<given-names>JH</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Selander</surname>
+<given-names>KS</given-names>
+</string-name>
+</person-group>. <year>2014</year>. <article-title>Toll-like receptors in esophageal cancer</article-title>. <source>Front Immunol</source>
+<volume>5</volume>:<fpage>200</fpage>. doi:<pub-id pub-id-type="doi">10.3389/fimmu.2014.00200</pub-id>
+<pub-id pub-id-type="pmid">24847326</pub-id><pub-id pub-id-type="pmcid">PMC4019875</pub-id></mixed-citation></ref><ref id="B5"><label>5</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Yang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chaudhary</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Baghdadi</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pei</surname>
+<given-names>Z</given-names>
+</string-name>
+</person-group>. <year>2014</year>. <article-title>Microbiome in reflux disorders and esophageal adenocarcinoma</article-title>. <source>Cancer J</source>
+<volume>20</volume>:<fpage>207</fpage>–<lpage>210</lpage>. doi:<pub-id pub-id-type="doi">10.1097/PPO.0000000000000044</pub-id>
+<pub-id pub-id-type="pmid">24855009</pub-id><pub-id pub-id-type="pmcid">PMC4120752</pub-id></mixed-citation></ref><ref id="B6"><label>6</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Chen</surname>
+<given-names>X-H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chu</surname>
+<given-names>A-N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gong</surname>
+<given-names>Y-H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yuan</surname>
+<given-names>Y</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>Mucosa-associated microbiota in gastric cancer tissues compared with non-cancer tissues</article-title>. <source>Front Microbiol</source>
+<volume>10</volume>:<fpage>1261</fpage>. doi:<pub-id pub-id-type="doi">10.3389/fmicb.2019.01261</pub-id>
+<pub-id pub-id-type="pmid">31231345</pub-id><pub-id pub-id-type="pmcid">PMC6560205</pub-id></mixed-citation></ref><ref id="B7"><label>7</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Dai</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yu</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dang</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Qin</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Teng</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ye</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jiang</surname>
+<given-names>H</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Interactions between gastric microbiota and metabolites in gastric cancer</article-title>. <source>Cell Death Dis</source>
+<volume>12</volume>:<fpage>1104</fpage>. doi:<pub-id pub-id-type="doi">10.1038/s41419-021-04396-y</pub-id>
+<pub-id pub-id-type="pmid">34819503</pub-id><pub-id pub-id-type="pmcid">PMC8613192</pub-id></mixed-citation></ref><ref id="B8"><label>8</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Liu</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cai</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Huang</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xi</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liang</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hou</surname>
+<given-names>Q</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhou</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Qin</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>H</given-names>
+</string-name>
+</person-group>. <year>2016</year>. <article-title>Unique features of ethnic Mongolian gut microbiome revealed by metagenomic analysis</article-title>. <source>Sci Rep</source>
+<volume>6</volume>:<elocation-id>34826</elocation-id>. doi:<pub-id pub-id-type="doi">10.1038/srep34826</pub-id>
+<pub-id pub-id-type="pmid">27708392</pub-id><pub-id pub-id-type="pmcid">PMC5052615</pub-id></mixed-citation></ref><ref id="B9"><label>9</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Coker</surname>
+<given-names>OO</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dai</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Nie</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cao</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Nakatsu</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>WK</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wong</surname>
+<given-names>SH</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sung</surname>
+<given-names>JJY</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yu</surname>
+<given-names>J</given-names>
+</string-name>
+</person-group>. <year>2018</year>. <article-title>Mucosal microbiome dysbiosis in gastric carcinogenesis</article-title>. <source>Gut</source>
+<volume>67</volume>:<fpage>1024</fpage>–<lpage>1032</lpage>. doi:<pub-id pub-id-type="doi">10.1136/gutjnl-2017-314281</pub-id>
+<pub-id pub-id-type="pmid">28765474</pub-id><pub-id pub-id-type="pmcid">PMC5969346</pub-id></mixed-citation></ref><ref id="B10"><label>10</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Zhou</surname>
+<given-names>C-B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pan</surname>
+<given-names>S-Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jin</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Deng</surname>
+<given-names>J-W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xue</surname>
+<given-names>J-H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ma</surname>
+<given-names>X-Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xie</surname>
+<given-names>Y-H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cao</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>Q</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xie</surname>
+<given-names>W-F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zou</surname>
+<given-names>X-P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sheng</surname>
+<given-names>J-Q</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>B-M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ren</surname>
+<given-names>J-L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>S-D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sun</surname>
+<given-names>Y-W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Meng</surname>
+<given-names>X-J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>J-X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cui</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>P-Q</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Guo</surname>
+<given-names>H-M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ding</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>X-N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>X-K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Qian</surname>
+<given-names>A-H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hou</surname>
+<given-names>L-D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>Y-X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Fang</surname>
+<given-names>J-Y</given-names>
+</string-name>
+</person-group>. <year>2022</year>. <article-title>Fecal signatures of Streptococcus anginosus and Streptococcus constellatus for noninvasive screening and early warning of gastric cancer</article-title>. <source>Gastroenterology</source>
+<volume>162</volume>:<fpage>1933</fpage>–<lpage>1947</lpage>. doi:<pub-id pub-id-type="doi">10.1053/j.gastro.2022.02.015</pub-id>
+<pub-id pub-id-type="pmid">35167866</pub-id></mixed-citation></ref><ref id="B11"><label>11</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Bolyen</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rideout</surname>
+<given-names>JR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dillon</surname>
+<given-names>MR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bokulich</surname>
+<given-names>NA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Abnet</surname>
+<given-names>CC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Al-Ghalith</surname>
+<given-names>GA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Alexander</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Alm</surname>
+<given-names>EJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Arumugam</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Asnicar</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bai</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bisanz</surname>
+<given-names>JE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bittinger</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Brejnrod</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Brislawn</surname>
+<given-names>CJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Brown</surname>
+<given-names>CT</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Callahan</surname>
+<given-names>BJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Caraballo-Rodríguez</surname>
+<given-names>AM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chase</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cope</surname>
+<given-names>EK</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Da Silva</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Diener</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dorrestein</surname>
+<given-names>PC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Douglas</surname>
+<given-names>GM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Durall</surname>
+<given-names>DM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Duvallet</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Edwardson</surname>
+<given-names>CF</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ernst</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Estaki</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Fouquier</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gauglitz</surname>
+<given-names>JM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gibbons</surname>
+<given-names>SM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gibson</surname>
+<given-names>DL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gonzalez</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gorlick</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Guo</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hillmann</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Holmes</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Holste</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Huttenhower</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Huttley</surname>
+<given-names>GA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Janssen</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jarmusch</surname>
+<given-names>AK</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jiang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kaehler</surname>
+<given-names>BD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kang</surname>
+<given-names>KB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Keefe</surname>
+<given-names>CR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Keim</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kelley</surname>
+<given-names>ST</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Knights</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Koester</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kosciolek</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kreps</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Langille</surname>
+<given-names>MGI</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lee</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ley</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>Y-X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Loftfield</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lozupone</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Maher</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Marotz</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Martin</surname>
+<given-names>BD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>McDonald</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>McIver</surname>
+<given-names>LJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Melnik</surname>
+<given-names>AV</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Metcalf</surname>
+<given-names>JL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Morgan</surname>
+<given-names>SC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Morton</surname>
+<given-names>JT</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Naimey</surname>
+<given-names>AT</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Navas-Molina</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Nothias</surname>
+<given-names>LF</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Orchanian</surname>
+<given-names>SB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pearson</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Peoples</surname>
+<given-names>SL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Petras</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Preuss</surname>
+<given-names>ML</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pruesse</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rasmussen</surname>
+<given-names>LB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rivers</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Robeson</surname>
+<given-names>MS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rosenthal</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Segata</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shaffer</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shiffer</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sinha</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Song</surname>
+<given-names>SJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Spear</surname>
+<given-names>JR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Swafford</surname>
+<given-names>AD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Thompson</surname>
+<given-names>LR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Torres</surname>
+<given-names>PJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Trinh</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tripathi</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Turnbaugh</surname>
+<given-names>PJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ul-Hasan</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>van der Hooft</surname>
+<given-names>JJJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Vargas</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Vázquez-Baeza</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Vogtmann</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>von Hippel</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Walters</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wan</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Warren</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Weber</surname>
+<given-names>KC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Williamson</surname>
+<given-names>CHD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Willis</surname>
+<given-names>AD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>ZZ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zaneveld</surname>
+<given-names>JR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhu</surname>
+<given-names>Q</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Knight</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Caporaso</surname>
+<given-names>JG</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>Reproducible, interactive, scalable and extensible microbiome data science using QIIME 2</article-title>. <source>Nat Biotechnol</source>
+<volume>37</volume>:<fpage>852</fpage>–<lpage>857</lpage>. doi:<pub-id pub-id-type="doi">10.1038/s41587-019-0252-6</pub-id>
+<pub-id pub-id-type="pmid">31341288</pub-id><pub-id pub-id-type="pmcid">PMC7015180</pub-id></mixed-citation></ref><ref id="B12"><label>12</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Rognes</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Flouri</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Nichols</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Quince</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Mahé</surname>
+<given-names>F</given-names>
+</string-name>
+</person-group>. <year>2016</year>. <article-title>VSEARCH: a versatile open source tool for metagenomics</article-title>. <source>PeerJ</source>
+<volume>4</volume>:<elocation-id>e2584</elocation-id>. doi:<pub-id pub-id-type="doi">10.7717/peerj.2584</pub-id>
+<pub-id pub-id-type="pmid">27781170</pub-id><pub-id pub-id-type="pmcid">PMC5075697</pub-id></mixed-citation></ref><ref id="B13"><label>13</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Amir</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>McDonald</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Navas-Molina</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kopylova</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Morton</surname>
+<given-names>JT</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zech Xu</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kightley</surname>
+<given-names>EP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Thompson</surname>
+<given-names>LR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hyde</surname>
+<given-names>ER</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gonzalez</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Knight</surname>
+<given-names>R</given-names>
+</string-name>
+</person-group>. <year>2017</year>. <article-title>Deblur rapidly resolves single-nucleotide community sequence patterns</article-title>. <source>mSystems</source>
+<volume>2</volume>:<elocation-id>e00191-16</elocation-id>. doi:<pub-id pub-id-type="doi">10.1128/mSystems.00191-16</pub-id>
+<pub-id pub-id-type="pmid">28289731</pub-id><pub-id pub-id-type="pmcid">PMC5340863</pub-id></mixed-citation></ref><ref id="B14"><label>14</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Bokulich</surname>
+<given-names>NA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kaehler</surname>
+<given-names>BD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rideout</surname>
+<given-names>JR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dillon</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bolyen</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Knight</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Huttley</surname>
+<given-names>GA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gregory Caporaso</surname>
+<given-names>J</given-names>
+</string-name>
+</person-group>. <year>2018</year>. <article-title>Optimizing taxonomic classification of marker-gene amplicon sequences with QIIME 2's q2-feature-classifier plugin</article-title>. <source>Microbiome</source>
+<volume>6</volume>:<elocation-id>90</elocation-id>. doi:<pub-id pub-id-type="doi">10.1186/s40168-018-0470-z</pub-id>
+<pub-id pub-id-type="pmid">29773078</pub-id><pub-id pub-id-type="pmcid">PMC5956843</pub-id></mixed-citation></ref><ref id="B15"><label>15</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Segata</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Izard</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Waldron</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gevers</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Miropolsky</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Garrett</surname>
+<given-names>WS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Huttenhower</surname>
+<given-names>C</given-names>
+</string-name>
+</person-group>. <year>2011</year>. <article-title>Metagenomic biomarker discovery and explanation</article-title>. <source>Genome Biol</source>
+<volume>12</volume>:<elocation-id>R60</elocation-id>. doi:<pub-id pub-id-type="doi">10.1186/gb-2011-12-6-r60</pub-id>
+<pub-id pub-id-type="pmid">21702898</pub-id><pub-id pub-id-type="pmcid">PMC3218848</pub-id></mixed-citation></ref><ref id="B16"><label>16</label><mixed-citation publication-type="book">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Liaw</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wiener</surname>
+<given-names>M</given-names>
+</string-name>
+</person-group>. <year>2002</year>. <article-title>Classification and Regression by RandomForest</article-title>. <publisher-name>R News</publisher-name>
+</mixed-citation></ref><ref id="B17"><label>17</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Tseng</surname>
+<given-names>C-H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lin</surname>
+<given-names>J-T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ho</surname>
+<given-names>HJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lai</surname>
+<given-names>Z-L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>C-B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tang</surname>
+<given-names>S-L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>C-Y</given-names>
+</string-name>
+</person-group>. <year>2016</year>. <article-title>Gastric microbiota and predicted gene functions are altered after subtotal gastrectomy in patients with gastric cancer</article-title>. <source>Sci Rep</source>
+<volume>6</volume>:<fpage>20701</fpage>. doi:<pub-id pub-id-type="doi">10.1038/srep20701</pub-id>
+<pub-id pub-id-type="pmid">26860194</pub-id><pub-id pub-id-type="pmcid">PMC4748256</pub-id></mixed-citation></ref><ref id="B18"><label>18</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Yu</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Torres</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hu</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Medrano-Guzman</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herrera-Goepfert</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Humphrys</surname>
+<given-names>MS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ding</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ravel</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Taylor</surname>
+<given-names>PR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Abnet</surname>
+<given-names>CC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Goldstein</surname>
+<given-names>AM</given-names>
+</string-name>
+</person-group>. <year>2017</year>. <article-title>Molecular characterization of the human stomach microbiota in gastric cancer patients</article-title>. <source>Front Cell Infect Microbiol</source>
+<volume>7</volume>:<fpage>302</fpage>. doi:<pub-id pub-id-type="doi">10.3389/fcimb.2017.00302</pub-id>
+<pub-id pub-id-type="pmid">28730144</pub-id><pub-id pub-id-type="pmcid">PMC5498480</pub-id></mixed-citation></ref><ref id="B19"><label>19</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Ling</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shao</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cheng</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yan</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Mei</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ji</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>X</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>Regulatory T cells and plasmacytoid dendritic cells within the tumor microenvironment in gastric cancer are correlated with gastric microbiota dysbiosis: a preliminary study</article-title>. <source>Front Immunol</source>
+<volume>10</volume>:<fpage>533</fpage>. doi:<pub-id pub-id-type="doi">10.3389/fimmu.2019.00533</pub-id>
+<pub-id pub-id-type="pmid">30936882</pub-id><pub-id pub-id-type="pmcid">PMC6433099</pub-id></mixed-citation></ref><ref id="B20"><label>20</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Godon</surname>
+<given-names>JJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zumstein</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dabert</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Habouzit</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Moletta</surname>
+<given-names>R</given-names>
+</string-name>
+</person-group>. <year>1997</year>. <article-title>Molecular microbial diversity of an anaerobic digestor as determined by small-subunit rDNA sequence analysis</article-title>. <source>Appl Environ Microbiol</source>
+<volume>63</volume>:<fpage>2802</fpage>–<lpage>2813</lpage>. doi:<pub-id pub-id-type="doi">10.1128/aem.63.7.2802-2813.1997</pub-id>
+<pub-id pub-id-type="pmid">9212428</pub-id><pub-id pub-id-type="pmcid">PMC168577</pub-id></mixed-citation></ref><ref id="B21"><label>21</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hu</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhong</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>Y</given-names>
+</string-name>
+</person-group>. <year>2022</year>. <article-title>Combined non-invasive prediction and new biomarkers of oral and fecal microbiota in patients with gastric and colorectal cancer</article-title>. <source>Front Cell Infect Microbiol</source>
+<volume>12</volume>:<elocation-id>830684</elocation-id>. doi:<pub-id pub-id-type="doi">10.3389/fcimb.2022.830684</pub-id>
+<pub-id pub-id-type="pmid">35663463</pub-id><pub-id pub-id-type="pmcid">PMC9161364</pub-id></mixed-citation></ref><ref id="B22"><label>22</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>He</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Peng</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhu</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ouyang</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xie</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hu</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ge</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhu</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lu</surname>
+<given-names>N</given-names>
+</string-name>
+</person-group>. <year>2022</year>. <article-title>Convergent dysbiosis of gastric mucosa and fluid microbiome during stomach carcinogenesis</article-title>. <source>Gastric Cancer</source>
+<volume>25</volume>:<fpage>837</fpage>–<lpage>849</lpage>. doi:<pub-id pub-id-type="doi">10.1007/s10120-022-01302-z</pub-id>
+<pub-id pub-id-type="pmid">35661945</pub-id></mixed-citation></ref><ref id="B23"><label>23</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Feng</surname>
+<given-names>Q</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liang</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jia</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Stadlmayr</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lan</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xia</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jie</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Su</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xiao</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Huber-Schönauer</surname>
+<given-names>U</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Niederseer</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Al-Aama</surname>
+<given-names>JY</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kristiansen</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Arumugam</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tilg</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Datz</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>J</given-names>
+</string-name>
+</person-group>. <year>2015</year>. <article-title>Gut microbiome development along the colorectal adenoma-carcinoma sequence</article-title>. <source>Nat Commun</source>
+<volume>6</volume>:<elocation-id>6528</elocation-id>. doi:<pub-id pub-id-type="doi">10.1038/ncomms7528</pub-id>
+<pub-id pub-id-type="pmid">25758642</pub-id></mixed-citation></ref><ref id="B24"><label>24</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Wang</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gao</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zeng</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>Q</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sun</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sun</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yan</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ren</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Guo</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Peng</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>Y</given-names>
+</string-name>
+</person-group>. <year>2020</year>. <article-title>Changes of the gastric mucosal microbiome associated with histological stages of gastric carcinogenesis</article-title>. <source>Front Microbiol</source>
+<volume>11</volume>:<elocation-id>997</elocation-id>. doi:<pub-id pub-id-type="doi">10.3389/fmicb.2020.00997</pub-id>
+<pub-id pub-id-type="pmid">32547510</pub-id><pub-id pub-id-type="pmcid">PMC7272699</pub-id></mixed-citation></ref><ref id="B25"><label>25</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cao</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>Z</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Alterations of gastric microbiota in gastric cancer and precancerous stages</article-title>. <source>Front Cell Infect Microbiol</source>
+<volume>11</volume>:<elocation-id>559148</elocation-id>. doi:<pub-id pub-id-type="doi">10.3389/fcimb.2021.559148</pub-id>
+<pub-id pub-id-type="pmid">33747975</pub-id><pub-id pub-id-type="pmcid">PMC7966516</pub-id></mixed-citation></ref><ref id="B26"><label>26</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Li</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhu</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tao</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xia</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sun</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cao</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chai</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ni</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shi</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>H</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Mucosal microbial microenvironment in early gastric neoplasia and non-neoplastic gastric disease</article-title>. <source>J Gastroenterol Hepatol</source>
+<volume>36</volume>:<fpage>3092</fpage>–<lpage>3101</lpage>. doi:<pub-id pub-id-type="doi">10.1111/jgh.15565</pub-id>
+<pub-id pub-id-type="pmid">34089623</pub-id></mixed-citation></ref><ref id="B27"><label>27</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Qi</surname>
+<given-names>Y-F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sun</surname>
+<given-names>J-N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ren</surname>
+<given-names>L-F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cao</surname>
+<given-names>X-L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dong</surname>
+<given-names>J-H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tao</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Guan</surname>
+<given-names>X-M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cui</surname>
+<given-names>Y-N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Su</surname>
+<given-names>W</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>Intestinal microbiota is altered in patients with gastric cancer from Shanxi province, China</article-title>. <source>Dig Dis Sci</source>
+<volume>64</volume>:<fpage>1193</fpage>–<lpage>1203</lpage>. doi:<pub-id pub-id-type="doi">10.1007/s10620-018-5411-y</pub-id>
+<pub-id pub-id-type="pmid">30535886</pub-id></mixed-citation></ref><ref id="B28"><label>28</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Liu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shao</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ji</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Mei</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cheng</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yan</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ling</surname>
+<given-names>Z</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>Alterations of gastric mucosal microbiota across different stomach microhabitats in a cohort of 276 patients with gastric cancer</article-title>. <source>EBioMedicine</source>
+<volume>40</volume>:<fpage>336</fpage>–<lpage>348</lpage>. doi:<pub-id pub-id-type="doi">10.1016/j.ebiom.2018.12.034</pub-id>
+<pub-id pub-id-type="pmid">30584008</pub-id><pub-id pub-id-type="pmcid">PMC6412016</pub-id></mixed-citation></ref><ref id="B29"><label>29</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Liu</surname>
+<given-names>AQ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Vogtmann</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shao</surname>
+<given-names>DT</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Abnet</surname>
+<given-names>CC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dou</surname>
+<given-names>HY</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Qin</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Su</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wei</surname>
+<given-names>WQ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>W</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>A comparison of biopsy and mucosal SWAB specimens for examining the microbiota of upper gastrointestinal carcinoma</article-title>. <source>Cancer Epidemiol Biomarkers Prev</source>
+<volume>28</volume>:<fpage>2030</fpage>–<lpage>2037</lpage>. doi:<pub-id pub-id-type="doi">10.1158/1055-9965.EPI-18-1210</pub-id>
+<pub-id pub-id-type="pmid">31519703</pub-id><pub-id pub-id-type="pmcid">PMC7294753</pub-id></mixed-citation></ref><ref id="B30"><label>30</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Wang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhou</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xin</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Geng</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tian</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dong</surname>
+<given-names>Q</given-names>
+</string-name>
+</person-group>. <year>2016</year>. <article-title>Bacterial overgrowth and diversification of microbiota in gastric cancer</article-title>. <source>Eur J Gastroenterol Hepatol</source>
+<volume>28</volume>:<fpage>261</fpage>–<lpage>266</lpage>. doi:<pub-id pub-id-type="doi">10.1097/MEG.0000000000000542</pub-id>
+<pub-id pub-id-type="pmid">26657453</pub-id><pub-id pub-id-type="pmcid">PMC4739309</pub-id></mixed-citation></ref><ref id="B31"><label>31</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Wang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xin</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhou</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tian</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Meng</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jiang</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dong</surname>
+<given-names>Q</given-names>
+</string-name>
+</person-group>. <year>2020</year>. <article-title>Gastric mucosa-associated microbial signatures of early gastric cancer</article-title>. <source>Front Microbiol</source>
+<volume>11</volume>:<elocation-id>1548</elocation-id>. doi:<pub-id pub-id-type="doi">10.3389/fmicb.2020.01548</pub-id>
+<pub-id pub-id-type="pmid">32733423</pub-id><pub-id pub-id-type="pmcid">PMC7358557</pub-id></mixed-citation></ref><ref id="B32"><label>32</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Xu</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xiang</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Teng</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lu</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhan</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>J</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Tongue coating bacteria as a potential stable biomarker for gastric cancer independent of lifestyle</article-title>. <source>Dig Dis Sci</source>
+<volume>66</volume>:<fpage>2964</fpage>–<lpage>2980</lpage>. doi:<pub-id pub-id-type="doi">10.1007/s10620-020-06637-0</pub-id>
+<pub-id pub-id-type="pmid">33044677</pub-id></mixed-citation></ref><ref id="B33"><label>33</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Yu</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jin</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhou</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shi</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lin</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ren</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>H</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Fecal Streptococcus alteration is associated with gastric cancer occurrence and liver metastasis</article-title>. <source>mBio</source>
+<volume>12</volume>:<elocation-id>e0299421</elocation-id>. doi:<pub-id pub-id-type="doi">10.1128/mBio.02994-21</pub-id>
+<pub-id pub-id-type="pmid">34872346</pub-id><pub-id pub-id-type="pmcid">PMC8649758</pub-id></mixed-citation></ref><ref id="B34"><label>34</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Allali</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Boukhatem</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bouguenouch</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hardi</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Boudouaya</surname>
+<given-names>HA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cadenas</surname>
+<given-names>MB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ouldim</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Amzazi</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Azcarate-Peril</surname>
+<given-names>MA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ghazal</surname>
+<given-names>H</given-names>
+</string-name>
+</person-group>. <year>2018</year>. <article-title>Gut microbiome of Moroccan colorectal cancer patients</article-title>. <source>Med Microbiol Immunol</source>
+<volume>207</volume>:<fpage>211</fpage>–<lpage>225</lpage>. doi:<pub-id pub-id-type="doi">10.1007/s00430-018-0542-5</pub-id>
+<pub-id pub-id-type="pmid">29687353</pub-id><pub-id pub-id-type="pmcid">PMC6096775</pub-id></mixed-citation></ref><ref id="B35"><label>35</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Dong</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pan</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zou</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xiao</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zheng</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>Y</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>Detection of microbial 16S rRNA gene in the serum of patients with gastric cancer</article-title>. <source>Front Oncol</source>
+<volume>9</volume>:<fpage>608</fpage>. doi:<pub-id pub-id-type="doi">10.3389/fonc.2019.00608</pub-id>
+<pub-id pub-id-type="pmid">31338330</pub-id><pub-id pub-id-type="pmcid">PMC6629868</pub-id></mixed-citation></ref><ref id="B36"><label>36</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Tett</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pasolli</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Masetti</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ercolini</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Segata</surname>
+<given-names>N</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Prevotella diversity, niches and interactions with the human host</article-title>. <source>Nat Rev Microbiol</source>
+<volume>19</volume>:<fpage>585</fpage>–<lpage>599</lpage>. doi:<pub-id pub-id-type="doi">10.1038/s41579-021-00559-y</pub-id>
+<pub-id pub-id-type="pmid">34050328</pub-id><pub-id pub-id-type="pmcid">PMC11290707</pub-id></mixed-citation></ref><ref id="B37"><label>37</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Huang</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gao</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yan</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Peng</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yu</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sun</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>Y</given-names>
+</string-name>
+</person-group>. <year>2021</year>. <article-title>Salivary microbiota for gastric cancer prediction: an exploratory study</article-title>. <source>Front Cell Infect Microbiol</source>
+<volume>11</volume>:<fpage>640309</fpage>. doi:<pub-id pub-id-type="doi">10.3389/fcimb.2021.640309</pub-id>
+<pub-id pub-id-type="pmid">33777850</pub-id><pub-id pub-id-type="pmcid">PMC7988213</pub-id></mixed-citation></ref><ref id="B38"><label>38</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Swidsinski</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dörffel</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Loening-Baucke</surname>
+<given-names>V</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Theissig</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rückert</surname>
+<given-names>JC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ismail</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rau</surname>
+<given-names>WA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gaschler</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Weizenegger</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kühn</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Schilling</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dörffel</surname>
+<given-names>WV</given-names>
+</string-name>
+</person-group>. <year>2011</year>. <article-title>Acute appendicitis is characterised by local invasion with Fusobacterium nucleatum/necrophorum</article-title>. <source>Gut</source>
+<volume>60</volume>:<fpage>34</fpage>–<lpage>40</lpage>. doi:<pub-id pub-id-type="doi">10.1136/gut.2009.191320</pub-id>
+<pub-id pub-id-type="pmid">19926616</pub-id></mixed-citation></ref><ref id="B39"><label>39</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Richardson</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ren</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rubinstein</surname>
+<given-names>MR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Taylor</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Friedman</surname>
+<given-names>RA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shen</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Han</surname>
+<given-names>YW</given-names>
+</string-name>
+</person-group>. <year>2020</year>. <article-title>Analysis of 16S rRNA genes reveals reduced Fusobacterial community diversity when translocating from saliva to GI sites</article-title>. <source>Gut Microbes</source>
+<volume>12</volume>:<fpage>1</fpage>–<lpage>13</lpage>. doi:<pub-id pub-id-type="doi">10.1080/19490976.2020.1814120</pub-id>
+<pub-id pub-id-type="pmcid">PMC7577115</pub-id><pub-id pub-id-type="pmid">33054632</pub-id></mixed-citation></ref><ref id="B40"><label>40</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Castellarin</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Warren</surname>
+<given-names>RL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Freeman</surname>
+<given-names>JD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dreolini</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Krzywinski</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Strauss</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Barnes</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Watson</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Allen-Vercoe</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Moore</surname>
+<given-names>RA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Holt</surname>
+<given-names>RA</given-names>
+</string-name>
+</person-group>. <year>2012</year>. <article-title>Fusobacterium nucleatum infection is prevalent in human colorectal carcinoma</article-title>. <source>Genome Res</source>
+<volume>22</volume>:<fpage>299</fpage>–<lpage>306</lpage>. doi:<pub-id pub-id-type="doi">10.1101/gr.126516.111</pub-id>
+<pub-id pub-id-type="pmid">22009989</pub-id><pub-id pub-id-type="pmcid">PMC3266037</pub-id></mixed-citation></ref><ref id="B41"><label>41</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Strauss</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kaplan</surname>
+<given-names>GG</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Beck</surname>
+<given-names>PL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rioux</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Panaccione</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Devinney</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lynch</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Allen-Vercoe</surname>
+<given-names>E</given-names>
+</string-name>
+</person-group>. <year>2011</year>. <article-title>Invasive potential of gut mucosa-derived Fusobacterium nucleatum positively correlates with IBD status of the host</article-title>. <source>Inflamm Bowel Dis</source>
+<volume>17</volume>:<fpage>1971</fpage>–<lpage>1978</lpage>. doi:<pub-id pub-id-type="doi">10.1002/ibd.21606</pub-id>
+<pub-id pub-id-type="pmid">21830275</pub-id></mixed-citation></ref><ref id="B42"><label>42</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Flemer</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Warren</surname>
+<given-names>RD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Barrett</surname>
+<given-names>MP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cisek</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Das</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jeffery</surname>
+<given-names>IB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hurley</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>O’Riordain</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shanahan</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>O’Toole</surname>
+<given-names>PW</given-names>
+</string-name>
+</person-group>. <year>2018</year>. <article-title>The oral microbiota in colorectal cancer is distinctive and predictive</article-title>. <source>Gut</source>
+<volume>67</volume>:<fpage>1454</fpage>–<lpage>1463</lpage>. doi:<pub-id pub-id-type="doi">10.1136/gutjnl-2017-314814</pub-id>
+<pub-id pub-id-type="pmid">28988196</pub-id><pub-id pub-id-type="pmcid">PMC6204958</pub-id></mixed-citation></ref><ref id="B43"><label>43</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Dinakaran</surname>
+<given-names>V</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Mandape</surname>
+<given-names>SN</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shuba</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pratap</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sakhare</surname>
+<given-names>SS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tabatabai</surname>
+<given-names>MA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Smoot</surname>
+<given-names>DT</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Farmer-Dixon</surname>
+<given-names>CM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kesavalu</surname>
+<given-names>LN</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Adunyah</surname>
+<given-names>SE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Southerland</surname>
+<given-names>JH</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gangula</surname>
+<given-names>PR</given-names>
+</string-name>
+</person-group>. <year>2018</year>. <article-title>Identification of specific oral and gut pathogens in full thickness colon of colitis patients: implications for colon motility</article-title>. <source>Front Microbiol</source>
+<volume>9</volume>:<fpage>3220</fpage>. doi:<pub-id pub-id-type="doi">10.3389/fmicb.2018.03220</pub-id>
+<pub-id pub-id-type="pmid">30666239</pub-id><pub-id pub-id-type="pmcid">PMC6330997</pub-id></mixed-citation></ref><ref id="B44"><label>44</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Xu</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xiang</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shi</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhan</surname>
+<given-names>Z</given-names>
+</string-name>
+</person-group>. <year>2019</year>. <article-title>Microbial biomarkers of common tongue coatings in patients with gastric cancer</article-title>. <source>Microb Pathog</source>
+<volume>127</volume>:<fpage>97</fpage>–<lpage>105</lpage>. doi:<pub-id pub-id-type="doi">10.1016/j.micpath.2018.11.051</pub-id>
+<pub-id pub-id-type="pmid">30508628</pub-id></mixed-citation></ref><ref id="B45"><label>45</label><mixed-citation publication-type="journal">
+<person-group person-group-type="author">
+<string-name name-style="western">
+<surname>Wang</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lu</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tao</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Deng</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ma</surname>
+<given-names>J</given-names>
+</string-name>
+</person-group>. <year>2022</year>. <article-title>Helicobacter pylori infection affects the human gastric microbiome, as revealed by metagenomic sequencing</article-title>. <source>FEBS Open Bio</source>
+<volume>12</volume>:<fpage>1188</fpage>–<lpage>1196</lpage>. doi:<pub-id pub-id-type="doi">10.1002/2211-5463.13390</pub-id>
+<pub-id pub-id-type="pmcid">PMC9157398</pub-id><pub-id pub-id-type="pmid">35243810</pub-id></mixed-citation></ref></ref-list></back></article>

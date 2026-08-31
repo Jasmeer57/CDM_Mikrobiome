@@ -1,0 +1,1146 @@
+Original Research Communications
+Using compositional principal component analysis to describe
+children’s gut microbiota in relation to diet and body composition
+Claudia Leong,1,2,3 Jillian J Haszard,4,5 Anne-Louise M Heath,1,6 Gerald W Tannock,3,6 Blair Lawley,3 Sonya L Cameron,7
+Ewa A Szymlek-Gay,8 Andrew R Gray,5 Barry J Taylor,7 Barbara C Galland,7 Julie A Lawrence,7 Anna Otal,3 Alan Hughes,3
+and Rachael W Taylor2
+1Department of Human Nutrition, University of Otago, Dunedin, New Zealand; 2Department of Medicine, University of Otago, Dunedin, New Zealand;
+3Department of Microbiology and Immunology, University of Otago, Dunedin, New Zealand; 4Division of Sciences, University of Otago, Dunedin, New
+Zealand; 5Centre for Biostatistics, University of Otago, Dunedin, New Zealand; 6Microbiome Otago, University of Otago, Dunedin, New Zealand; 7Department
+of Women’s and Children’s Health, University of Otago, Dunedin, New Zealand; and 8Institute for Physical Activity and Nutrition (IPAN), School of Exercise
+and Nutrition Sciences, Deakin University, Geelong, Australia
+ABSTRACT
+Background: Gut microbiota data obtained by DNA sequencing
+are complex and compositional because of large numbers of
+detectable taxa, and because microbiota characteristics are described
+in relative terms. Nutrition researchers use principal component
+analysis (PCA) to derive dietary patterns from food data. Although
+compositional PCA methods are not commonly used to describe
+patterns from complex microbiota data, this approach would be
+useful for identifying gut microbiota patterns associated with diet and
+body composition.
+Objectives: To use compositional PCA to describe the principal
+components (PCs) of gut microbiota in 5-y-old children and explore
+associations between microbiota components, diet, and BMI z-score.
+Methods: A fecal sample was provided by 319 children aged 5 y.
+Their primary caregiver completed a validated 123-item quantitative
+FFQ. Body composition was determined using DXA, and a BMI z-
+score was calculated. Compositional PCA identified characterizing
+taxa and weightings for calculation of gut microbiota PC scores at
+the genus level, and was examined in relation to diet and body size.
+Results: Three gut microbiota PCs were found. PC1 (negative
+loadings on uncultured Christensenellaceae and Ruminococcaceae)
+was related to lower BMI z-scores and longer duration of breast-
+feeding (per month) (β = −0.14; 95% CI: −0.26, −0.02; and β =
+0.02; 95% CI: 0.003, 0.34, respectively). PC2 (positive loadings
+on Fusicatenibacter and Bifidobacterium; negative loadings on
+Bacteroides) was associated with a lower intake of nuts, seeds, and
+legumes (β = −0.05 per gram; 95% CI: −0.09, −0.01). When
+adjusted for fiber intake, PC2 was also associated with higher BMI
+z-scores (β = 0.12; 95% CI: 0.01, 0.24). PC3 (positive loadings on
+Faecalibacterium, Eubacterium, and Roseburia) was associated with
+higher intakes of fiber (β = 0.02 per gram; 95% CI: 0.003, 0.04) and
+total nonstarch polysaccharides (β = 0.02 per gram; 95% CI: 0.003,
+0.04).
+Conclusions: Our results suggest that specific gut microbiota com-
+ponents determined using compositional PCA are associated with
+diet and BMI z-score. This trial was registered at clinicaltrials.gov
+as NCT00892983.
+Am J Clin Nutr 2019;0:1–9.
+Keywords:
+diet, gut microbiota, body composition, children,
+compositional analysis, principal component analysis
+Introduction
+Interest in the role the human gut microbiota plays in
+nutritional health is growing (1, 2), with dysbiosis (imbalance)
+of the gut microbiota community linked to obesity in adults (3,
+4). However, less is known about relations with childhood obesity
+(5). Although it is generally considered that an adult-like, stable,
+and more diverse gut microbiota is attained by ∼3 y of age
+(6–9), further changes appear to occur during childhood (10).
+The POI study was funded by the Health Research Council of New Zealand
+(08/374, 12/281, and 12/310) and the Southern District Health Board. CL is
+supported by the University of Otago Doctoral Scholarship. RWT is supported
+by a Fellowship from Karitane Products Society. The funding sources had
+no role in the design and conduct of the study; collection, management,
+analysis, or interpretation of the data; preparation, review, or approval of the
+manuscript; or the decision to submit the manuscript for publication.
+Supplemental Figures 1 and 2 and Supplemental Tables 1 and 2 are
+available from the “Supplementary data” link in the online posting of the
+article and from the same link in the online table of contents at https://acad
+emic.oup.com/ajcn/.
+Microbiota data described in the article will be made publicly and
+freely available without restriction at https://www.ncbi.nlm.nih.gov/biopr
+oject, NCBI SRA database accession number PRJNA528813. Other data
+described in the article and the code book, will be made available upon request
+to the corresponding author, pending approval.
+Address correspondence to RWT (e-mail: rachael.taylor@otago.ac.nz).
+Abbreviations used: F/B, Firmicutes/Bacteroidetes (ratio); FMI, fat mass
+index; NSP, nonstarch polysaccharide; OTU, operational taxonomic unit; PC,
+principal component; PCA, principal component analysis; POI, Prevention of
+Overweight in Infancy (study); RCT, randomized controlled trial.
+Received April 29, 2019. Accepted for publication October 7, 2019.
+First published online 0, 2019; doi: https://doi.org/10.1093/ajcn/nqz270.
+Am J Clin Nutr 2019;0:1–9. Printed in USA. Copyright © The Author(s) 2019.
+1
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+2
+Leong et al.
+Associations between the gut microbiota and health outcomes,
+particularly obesity, could therefore be different in growing
+children than in adults.
+In recent years the structure and statistical analysis of gut
+microbiota data obtained from DNA sequences have come under
+scrutiny. Due to the nature of sequencing technology these
+data are commonly expressed as relative abundance, which is
+the abundance of each taxon relative to the total abundance,
+expressed as a percentage or proportion. These data are therefore
+compositional because the bacterial taxa are codependent (i.e.,
+if the percentage of 1 bacterial taxon increases, the percentage
+of at least 1 other bacterial taxon has to decrease because by
+definition the sum must always be 100%). Traditional methods
+of statistical analysis, such as regression modeling, are not
+appropriate for such data because compositional data violate their
+assumptions, in particular the assumption that variables are not
+colinear (11–14).
+Nutrition researchers commonly use principal component
+analysis (PCA) to determine dietary patterns in an attempt to
+describe the complexity of human diets, rather than investigating
+single foods or nutrients (15). PCA is a dimension reduction
+technique that uses a linear combination of all inputted variables.
+With dietary pattern analyses, all participants receive a “score”
+for each pattern indicating how strongly they adhere to that
+pattern. In infants, we have previously identified a “vegetables
+and meat” pattern characterized by higher intakes of “vegeta-
+bles,” “meat, eggs, and beans,” and “fruit,” and lower intakes
+of “baby and toddler foods” (16). Although PCA has been used
+to investigate gut microbiota configuration, the compositional
+nature of these data has not always been appropriately handled
+(14), and the taxa characterizing each principal component
+(PC) are not generally stated. Instead, results of PCA are
+commonly interpreted by visualizing the variables (e.g., relative
+abundance of genera) in the same space using a biplot (17),
+without calculating scores for the components to undertake
+further statistical analyses. This could be a missed opportunity
+to discover whether different combinations of bacterial taxa are
+associated with diet or body composition.
+The aim of this study was to use compositional PCA to de-
+scribe gut microbiota in children aged 5 y and to explore relations
+between gut microbiota PCs and diet, BMI (kg/m2), and body
+composition. Secondary objectives included investigation of the
+relations between diet, BMI z-score, and body composition with
+alpha diversity (Shannon index) and the Firmicutes/Bacteroidetes
+(F/B) ratio.
+Methods
+Study design
+The study described is a cross-sectional analysis that used gut
+microbiota, dietary, anthropometric, and body composition data
+collected at 5 y of age from a randomized controlled trial (RCT),
+the Prevention of Overweight in Infancy (POI) study (18, 19).
+Participants
+Because protocol (18, 19) and main outcome (20, 21) articles
+have been published, only relevant information is provided in
+brief here. POI was a 4-arm RCT undertaken in Dunedin, New
+Zealand, from 2009 to 2015. The study aimed to determine
+whether additional education and support for parents regarding
+infant sleep (sleep group); food, activity, and breastfeeding (FAB
+group); or both (combination group), reduced excessive weight
+gain compared with usual care (control group) at the end of the
+intervention (2 y of age) and after 3 y of follow-up (5 y of age).
+All mothers who had booked into the only maternity hospital
+in Dunedin, New Zealand (>97% of all births), were invited to
+participate in mid to late pregnancy. Healthy, full-term infants
+were eligible, and 802 women agreed to participate (58% of those
+invited). At 5 y, participant retention was 69% (n = 557). Of
+these, 324 participants provided fecal samples, of whom 319 also
+provided complete dietary data and so were investigated in this
+study. The participant flowchart can be found in Supplemental
+Figure 1.
+The New Zealand Lower South Regional Ethics Committee
+(LRS/08/12/063) and University of Otago Human Ethics Com-
+mittee (12/274) approved the study, and written informed consent
+was obtained from all adult participants before randomization and
+before commencing the first follow-up visit at 3.5 y of age.
+Information on infant sex, birth weight, mode of delivery,
+parity, level of household deprivation (22), self-reported maternal
+prepregnancy height and weight, maternal education, and age
+were obtained from baseline questionnaires in pregnancy, and at
+birth.
+Gut microbiota data
+Parents were asked to collect ∼5 g of fecal sample from
+the child participant at 5 y of age. The sample was stored in
+the home freezer in study-provided freezer containers before
+collection by the study team. Samples were stored at −80◦C until
+DNA extraction. Fecal bacterial DNA was extracted from 250
+mg feces according to the manufacturer’s instructions (12,855–
+100 PowerSoil DNA Isolation Kit; Mo Bio). Amplification
+of the 16S rRNA gene V4 region, library preparation, and
+sequencing were carried out at Argonne National Laboratories
+(University of Chicago) using 2 × 250 base paired-end reads on
+an Illumina MiSeq instrument. After quality filtering, sequences
+were analyzed using a combination of QIIME version 1.9.1 (23)
+and VSEARCH version 1.9.5 (24). Sequences were clustered into
+operational taxonomic units (OTUs) by using closed-reference
+OTU picking against the SILVA version 123 database (25) using
+97% identity threshold. Relative abundance at the genus level was
+calculated by the summation of the raw OTU table based on the
+7-level taxonomy strings from the SILVA version 123 database.
+Alpha diversity for both richness and evenness was described
+using the Shannon index. The DNA sequence data have been
+deposited in the NCBI SRA database under BioProject accession
+number PRJNA528813.
+Dietary data
+Early dietary data on weeks of “exclusive” breastfeeding [i.e.,
+no other liquids or solids since birth (26)] and “any” breastfeeding
+were determined from feeding questionnaires completed by the
+mothers every 4 wk from when the infant was aged 3 to 27 wk.
+This allowed the determination of breastfeeding status and age at
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+Microbiota, diet, and body composition in children
+3
+introduction of solids to the nearest day. At 12, 18, 24, 42, and
+60 mo, mothers were asked if they were still breastfeeding (if
+they were breastfeeding in the previous questionnaire) and if not,
+the infant’s age when they stopped, to determine length of “any”
+breastfeeding.
+Dietary intake at 5 y of age was assessed using a validated
+quantitative 123-item FFQ designed to rank the intake of nutrients
+and food groups of interest to the gut microbiota over the past
+month in 5-y-old children (27). As outlined previously (27),
+the FFQ had acceptable relative validity (Spearman correlation
+coefficients with data from a 3-d weighed diet record were 0.32–
+0.38 for nutrients and 0.31–0.56 for food groups) for ranking
+children according to nutrient [energy, carbohydrate, fiber, total
+nonstarch polysaccharides (NSPs), and insoluble NSPs] and food
+group (i.e., “higher fiber, more healthy cereals,” “higher fiber,
+less healthy cereals,” “lower fiber, more healthy cereals,” “nuts
+and legumes,” “fruits,” “potatoes,” “dairy,” “yogurt,” and “meat,
+fish, eggs”) intakes.
+Body composition, BMI, and fat mass index z-score data
+At the 5-y time point, child height and weight were measured
+by trained researchers following the WHO protocols (28).
+BMI-for-age z-scores were calculated using the WHO growth
+standards (29), with overweight defined as a BMI z-score ≥1.036
+to <1.645, and obesity as ≥1.645 (cutoffs correspond to the
+85th and 95th percentiles of the study population). Fat mass
+and percentage of body fat were assessed by DXA. All DXA
+measurements were performed and analyzed by 1 experienced
+operator with a Lunar Prodigy scanner (software package 16.0;
+Lunar) using standard procedures (30). Fat mass index (FMI)
+was calculated as fat mass divided by height in meters squared.
+The FMI z-scores were then calculated for the study sample
+(31).
+Statistical analysis
+Data were analyzed using Stata software (Stata Statistical
+Software: Release 13; StataCorp LP). Figure 1 was generated us-
+ing GraphPad Prism (version 8; GraphPad Software). Statistical
+significance was indicated by P < 0.05, 2-sided for tests where
+this is an option.
+Student t tests (assuming equal variance) and chi-square tests
+were used to compare baseline variables between those who
+provided complete microbiota and dietary data, and those who
+did not (Table 1).
+To generate the gut microbiota PC scores, compositional PCA
+was used to determine the weightings given to each taxon in the
+calculation of the scores. These weightings are referred to as the
+loadings. There were 364 genera in the dataset and many of these
+had very low prevalence. To reduce the number of variables in
+the PCA, only those that were present in ≥75% of the participants
+were analyzed, resulting in 167 genera from the initial 364 genera
+for the 319 participants. The median (25th, 75th percentile)
+percentage of counts removed in this step was 0.09% (0.03%,
+0.3%). Because gut microbiota data are compositional in nature
+(11–14), centered log-ratios of each genus-level OTU to the
+geometric mean of all genus-level OTUs were used. Because this
+transformation does not work for zero values, zeros were replaced
+using the geometric Bayesian multiplicative method on actual
+counts in the zCompositions R package (32, 33). Sensitivity
+analyses of this zero-replacement method were carried out by
+comparing scree plots, characterizing taxa, loadings, and PC
+scores with the simpler method of adding a set value to all
+genus-level OTU counts (we used values ranging from 0.2 to
+2). PCA of the centered log-ratios was carried out, and a scree
+plot of eigenvalues was examined (Supplemental Figure 2) to
+determine how many components were most strongly indicated
+(3 were indicated). Orthogonal rotation of the components was
+undertaken. After this, each genus-level OTU had a “loading” for
+each component—simply, the loading represents the correlation
+with the component so that high loadings identify the variables
+that characterize the component. We described the 3 components
+with the centered log-ratio variables of the top 10 highest loading
+genera (positive or negative). The centered log-ratios describe
+the composition in terms of a genus relative to the geometric
+mean of all the genera in the sample. The centered log-ratios with
+the highest loadings were considered to identify the genera that
+characterized the patterns found using PCA, which were used in
+the further analysis.
+Scores for the 3 PCs were calculated by using the loadings
+for the (centered log-ratios of the) genera to create weighted
+scores of the original relative abundance measures (before zero-
+replacement). Every child participant was given a score for each
+of the 3 gut microbiota PCs. All 167 genera were used in the
+calculation of each gut microbiota PC, which is the sum of
+the loadings for each variable (genus) multiplied by the relative
+abundance of that genus. Hence, a child participant’s score
+for PC1 = (their loading of genus 1 on PC1 × their relative
+abundance of genus 1) + (their loading of genus 2 on PC1 × their
+relative abundance of genus 2) + … + (their loading of genus
+167 on PC1 × their relative abundance of genus 167). Similar
+calculations were done for PC2 and PC3, enabling scores for all
+3 PCs for every child. PC scores were standardized, resulting in
+the mean and SD for each PC being 0 and 1, respectively. All PC
+scores were consistent with a normal distribution.
+To describe the characterizing genera for each PC, the median
+relative abundance of the genera that had the top 10 largest
+absolute loadings along each PC for the corresponding centered
+log-ratio variables (positive or negative) for all (n = 319)
+participants was calculated and is displayed in Figure 1.
+Spearman correlations were used initially to screen for
+associations between diet and body composition variables
+and gut microbiota components (Table 2). Variables with the
+highest correlations (≥0.10) were then explored further with
+3 linear regression models as follows (Table 3): the first
+model was a multivariate model that examined the association
+of demographics reported at birth with each gut microbiota
+component at 5 y of age to identify demographic predictors
+and possible confounders; the second model examined the
+cross-sectional associations for each of the dietary components
+and BMI and FMI z-scores separately with each of the gut
+microbiota components, adjusted for demographic variables that
+were found to be confounders (P < 0.25) (34); the third model
+(data reported in the text only) included both BMI z-score
+with each of the dietary components to investigate whether
+any associations with the gut microbiota components were
+influenced by including dietary component variables in the
+model and vice versa. All models were adjusted for the 4 POI
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+4
+Leong et al.
+p_Firmicutes_f_Lachnospiraceae_g_Lachnoclostridium
+p_Actinobacteria_f_Coriobacteriaceae_g_Eggerthella
+p_Firmicutes_f_Ruminococcaceae_g_Flavonifractor
+p_Firmicutes_f_Ruminococcaceae_g_Drancourtella
+p_Firmicutes_f_Lachnospiraceae_g_Eisenbergiella
+p_Firmicutes_f_Christensenellaceae_g_Christensenellaceae R-7 group
+p_Firmicutes_f_Ruminococcaceae_g_Ruminococcaceae UCG-014
+p_Firmicutes_f_Lachnospiraceae_g_Coprococcus
+p_Firmicutes_f_Ruminococcaceae_g_Ruminococcaceae UCG-005
+p_Firmicutes_f_Ruminococcaceae_g_Ruminococcaceae NK4A214 group
+p_Actinobacteria_f_Bifidobacteriaceae_g_Bifidobacterium
+p_Firmicutes _f_ Lachnospiraceae_g_Fusicatenibacter
+p_Firmicutes_f_ Lachnospiraceae_g_Dorea
+p_Firmicutes_f_Peptostreptococcaceae_g_Peptoclostridium
+p_Firmicutes_f_Peptostreptococcaceae_g_Romboutsia
+p_Firmicutes_f_Lachnospiraceae_g_[Ruminococcus] torques group
+p_Firmicutes_f_Lachnospiraceae_g_[Eubacterium] hallii group
+p_Firmicutes_f_Bacteroidaceae_g_Bacteroides
+p_Firmicutes_f_Rikenellaceae_g_Alistipes
+p_Firmicutes_f_Ruminococcaceae_g_Ruminococcaceae UCG-003
+p_Firmicutes_f_Ruminococcaceae_g_Faecalibacterium
+p_Firmicutes _f_Lachnospiraceae_g_Eubacterium
+p_Firmicutes_f_Lachnospiraceae_g_Roseburia
+p_Firmicutes_f_Lachnospiraceae_g_Lachnospiraceae NK4A136 group 
+p_Firmicutes_f_ Lachnospiraceae_g_[Eubacterium] rectale group
+p_Firmicutes_f_Ruminococcaceae_g_Butyricicoccus
+p_Firmicutes_f_Lachnospiraceae_g_[Eubacterium] xylanophilum group
+p_Firmicutes_f_Lachnospiraceae_g_Ambiguous_taxa
+p_Firmicutes_f_Lachnospiraceae_g_Lachnospira
+p_Firmicutes_f_Pasteurellaceae_g_Haemophilus
+FIGURE 1
+The median (25th to 75th percentile) relative abundance of the top 10 characterizing genera of the 3 main gut microbiota principal components
+of 5-y-old children. Each genus (g) with its respective family (f) and phylum (p) is plotted. The bars show the median (25th, 75th percentile) relative abundance
+of the genus in the total study sample (n = 319). Black upward triangles represent the positive loadings and gray downward triangles represent the negative
+loadings.
+study groups. The results were presented as the estimate (β
+coefficient) and 95% CI for the difference in the predicted value
+of the outcome variable (i.e., gut microbiota PC scores) for
+each 1-unit difference in the predictor variable (i.e., diet or
+BMI or FMI z-score variables) or difference between categories
+(e.g., multiparous compared with primiparous). Residuals were
+plotted and visually assessed for homogeneity of variance and
+normality.
+For comparison with the literature, the Shannon index (which
+is a measure of alpha diversity that includes both richness
+and evenness) and the F/B ratio—the ratio of 2 predominant
+microbial phyla in the gut that have been associated with
+obesity (35)—were reported. The F/B ratio was calculated by
+dividing the relative abundance of the Firmicutes phylum over
+the relative abundance of the Bacteroidetes phylum. Spearman
+correlations and linear regression models were used to identify
+associations with diet and body composition variables as for the
+gut microbiota components.
+Results
+Table 1 compares the demographics of the participants who
+provided both diet and gut microbiota data at 5 y of age (n = 319)
+with those who did not (n = 483). Overall, mothers in the
+current analysis had a mean age of 33 y, a self-reported mean
+prepregnancy BMI of 24.6, and 85% had a postsecondary or
+higher education qualification. Twenty-one percent of the child
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+Microbiota, diet, and body composition in children
+5
+TABLE 1
+Characteristics of participants1
+Characteristic
+Whole sample
+(n = 802)
+Current study sample
+(n = 319)
+P2 (with vs without data)
+Child’s sex, n (%)
+0.346
+Female
+391 (49)
+149 (47)
+Male
+411 (51)
+170 (53)
+Child birth weight, g
+3551 ± 480
+3571 ± 473
+0.352
+Missing, n
+7
+1
+Child’s weight category at 5 y, n (%)
+0.223
+Overweight/obese3
+125 (23)
+67 (21)
+Normal
+422 (77)
+252 (79)
+Missing,4 n
+255
+0
+Maternal age at child’s birth, y
+31.6 ± 5.2
+33.2 ± 4.5
+<0.001
+Missing, n
+1
+0
+Maternal ethnicity, n (%)
+0.013
+White
+682 (85)
+277 (87)
+Maori
+46 (6)
+9 (3)
+Others
+74 (9)
+33 (10)
+Maternal parity, n (%)
+0.251
+Primiparous
+382 (48)
+144 (45)
+Multiparous
+420 (52)
+175 (55)
+Maternal education, n (%)
+<0.001
+Secondary or below
+193 (24)
+49 (16)
+Postsecondary or higher
+601 (76)
+268 (84)
+Missing, n
+8
+2
+Maternal prepregnancy BMI, kg/m2
+25.1 ± 5.0
+24.6 ± 4.5
+0.024
+Missing, n
+3
+0
+Household deprivation,5 n (%)
+0.005
+Low (1–3)
+276 (35)
+129 (41)
+Mid (4–7)
+350 (44)
+133 (42)
+High (8–10)
+168 (21)
+53 (17)
+Missing, n
+8
+4
+Mode of delivery, n (%)
+0.736
+Vaginal
+562 (72)
+223 (71)
+Cesarean
+222 (28)
+91 (29)
+Missing, n
+18
+5
+1Values are mean ± SD unless otherwise indicated.
+2P value compares the characteristics of the participants with diet and microbiota data (n = 319), and those without (n = 483), determined using t tests
+for continuous variables and chi-square tests for categorical variables.
+3Overweight/obese participants were those with BMI z-score ≥1.036 at 5 y.
+4557 participants were retained at 5 y, and 547 participants provided both weight and height measurements.
+5Determined using the New Zealand Index of Deprivation 2013. The Index combines 9 variables from the 2013 New Zealand National Census to
+provide a deprivation score for each meshblock (a geographical unit defined by Statistics New Zealand that contains on average ∼81 people). The score
+reflects the extent of material and social deprivation and is used to construct deciles from 1 (low deprivation) to 10 (high deprivation).
+participants were categorized as overweight or obese (BMI z-
+score ≥1.036). Most children (87%) were white, and were
+delivered by vaginal birth (71%). More than half of the children
+were male (53%) and had at least 1 sibling (55%). In total, 41%
+of households had low levels of deprivation, compared with the
+expected 30% (22). Compared with those who did not provide
+both diet and gut microbiota data, mothers of children who
+provided these data were generally older, better educated, had a
+lower prepregnancy BMI, and the children came from households
+with better socioeconomic status as defined by the New Zealand
+household deprivation score (22).
+Figure 1 describes the relative abundance of the genera that
+characterized the 3 main gut microbiota PCs identified by
+PCA. PC1 (7.8% of variance explained) was characterized by
+negative loadings of dominant genera Christensenellaceae R-7
+group and Ruminococcaceae UCG-014. PC2 (7.1% of variance
+explained) was characterized by negative loadings of dominant
+genus Bacteroides, and positive loadings of dominant genera
+Bifidobacterium and Fusicatenibacter. PC3 (7.1% of variance
+explained) was characterized by positive loadings of dominant
+genera Faecalibacterium, Eubacterium, and Roseburia.
+Sensitivity analyses for the zero-replacement showed that the
+characterizing genera, the loadings, and the PC scores were
+robust to the choice of zero-replacement method (data not
+shown).
+Correlations between PC scores were low, except that PC1
+scores were moderately correlated with PC3 scores (r = 0.37).
+When associations between these component scores and the
+dietary and body composition variables were determined 1
+at a time using Spearman correlations, PC1 and PC2 were
+monotonically associated with BMI z-score (Table 2). By
+contrast, PC3 was associated with the intakes of several nutrients
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+6
+Leong et al.
+TABLE 2
+Correlation of infant diet, nutrients at 5 y, food groups at 5 y, and body composition and BMI and FMI z-scores at 5 y, with gut microbiota PC
+scores at 5 y1
+Variable
+Median (25th, 75th)
+PC1
+PC2
+PC3
+Infant diet
+Exclusively breastfed, wk
+18 (2, 22)
+−0.03
+−0.04
+0.04
+Any breastfeeding, mo
+11.4 (6.5, 15.1)
+0.10
+−0.01
+0.06
+Age at introduction of solids,2 wk
+22 (20, 24)
+−0.01
+0.05
+−0.09
+Nutrients at 5 y
+Energy, kJ
+5957 (5081, 7196)
+0.02
+0.02
+0.08
+Carbohydrate, g
+176 (150, 215)
+−0.02
+−0.02
+0.07
+Fat, g
+52.7 (43.6, 65.0)
+0.06
+0.06
+0.07
+Protein, g
+57.7 (47.7, 70.5)
+0.04
+0.05
+0.10
+Total fiber, g
+18.0 (14.2, 22.2)
+−0.02
+−0.06
+0.15∗
+Total NSP, g
+14.6 (11.7, 18.2)
+−0.02
+−0.06
+0.15∗
+Insoluble NSP, g
+6.8 (5.5, 8.5)
+−0.04
+−0.03
+0.14∗
+Food groups at 5 y
+Higher fiber more healthy cereals, g
+85.7 (45.5, 126.4)
+−0.03
+−0.07
+0.10
+Lower fiber more healthy cereals, g
+87.3 (49.4, 135.9)
+0.06
+0.03
+0.00
+Higher fiber less healthy cereals, g
+16.2 (7.3, 30.1)
+0.07
+0.04
+0.08
+Nuts, seeds, legumes, g
+16.4 (5.2, 34)
+0.08
+−0.09
+0.14∗
+Fruits, g
+213 (140, 298)
+−0.03
+−0.08
+0.05
+Potatoes, g
+13.1 (7.8, 21.4)
+0.02
+0.07
+−0.06
+Dairy, g
+219 (127, 372)
+0.03
+0.03
+0.03
+Yogurt, g
+70.0 (33.6, 98.0)
+−0.01
+−0.05
+0.01
+Meat, fish, poultry, g
+78.8 (57.4, 105.8)
+0.04
+0.04
+0.11∗
+Body composition, and BMI and FMI z-scores at 5 y
+DXA fat,3 %
+15.2 (12.2, 18.4)
+−0.08
+0.05
+−0.01
+BMI z-score
+0.35 (−0.05, 0.93)
+−0.13∗
+0.12∗
+−0.06
+FMI z-score3
+−0.17 (−0.61, 0.39)
+−0.09
+0.06
+−0.01
+1Correlation compares the variables with gut microbiota PCs, determined using Spearman correlations. PC1 was characterized by negative loadings of
+dominant genera Christensenellaceae R-7 group and Ruminococcaceae UCG-014, PC2 was characterized by negative loadings of dominant genus
+Bacteroides and positive loadings of dominant genera Bifidobacterium and Fusicatenibacter, PC3 was characterized by positive loadings of dominant genera
+Faecalibacterium, Eubacterium, and Roseburia. ∗Significant, P < 0.05. FMI, fat mass index; NSP, nonstarch polysaccharide; PC, principal component.
+2Missing data for n = 14.
+3Missing data for n = 38.
+(fiber, total NSP, insoluble NSP) and food groups (“nuts, seeds,
+legumes” and “meat, fish, poultry”) (Table 2).
+When linear regression models were used to adjust for the 4
+POI study groups and the demographic variables that had been
+found to be confounders, that is, variables from the first model
+with P < 0.25 (parity for PC1, and household deprivation for
+PC3), statistically significant associations remained for: PC1 with
+BMI z-score and duration of any breastfeeding; PC2 with nuts,
+seeds, and legumes; and PC3 with the dietary components fiber
+and total NSP (Table 3).
+In the third model (data not shown) the impact of including
+both diet and BMI z-score variables was investigated. This did
+not result in any substantial changes in the associations between
+diet or body composition variables and gut microbiota PC scores
+except that the association between PC2 and higher BMI z-score
+was strengthened after adjustment for fiber intake (β = 0.12; 95%
+CI: 0.01, 0.24; P = 0.039).
+Alpha diversity described using the Shannon index had a mean
+of 5.6 ± 0.5. None of the nutrient intake variables were associated
+with alpha diversity. Higher intakes of “higher fiber, more healthy
+cereals” and “yogurt,” and lower intakes of “lower fiber, more
+healthy cereals,” were correlated with greater alpha diversity
+(Supplemental Table 1). However, following adjustment for the
+4 POI study groups in the model, only the negative relation
+with “lower fiber, more healthy cereals” remained statistically
+significant (Supplemental Table 2).
+Our data did not show a significant association between BMI
+z-score and the F/B ratio, either before (β = 3.8; 95% CI: −2.8,
+10.5; P = 0.260) or after (β = 2.7; 95% CI: −4.0, 9.5; P = 0.423)
+adjustment for the 4 POI study groups.
+Discussion
+Our study identified 3 gut microbiota PCs in 5-y-old New
+Zealand children: 1 associated with BMI z-score (PC1); 1
+associated with BMI z-score and 1 aspect of diet (PC2); and
+1 associated with several aspects of dietary intake, particularly
+those relating to fiber (PC3). The use of compositional PCA
+enabled the specific bacterial taxa characterizing each component
+to be identified, and the strength of their contribution to the PC to
+be used in the calculation of PC scores. In this rapidly growing
+area, we advocate for a statistical approach that nutritionists
+are familiar with: the use of PCA to describe patterns in
+complex dietary data. Although compositional PCA has been
+used previously (14), we propose an approach to determining
+gut microbiota components analogous to how dietary patterns
+are derived while also accounting for the compositional nature
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+Microbiota, diet, and body composition in children
+7
+TABLE 3
+Associations of gut microbiota PC scores with selected variables with adjustment for covariates in the models1
+PC1
+PC2
+PC3
+Variable
+Estimate (95% CI)
+P
+Estimate (95% CI)
+P
+Estimate (95% CI)
+P
+First model2
+Maternal parity
+Multiparous vs. primiparous
+−0.28 (−0.51, −0.06)
+0.015∗
+0.11 (−0.12, 0.33)
+0.359
+−0.06 (−0.28, 0.17)
+0.609
+Household deprivation
+Low (1–3)
+Reference
+Reference
+Reference
+Mid (4–7)
+−0.09 (−0.34, 0.15)
+0.450
+0.06 (−0.18, 0.31)
+0.615
+−0.35 (−0.60, −0.11)
+0.005∗
+High (8–10)
+−0.16 (−0.48, 0.17)
+0.343
+0.04 (−0.29, 0.37)
+0.807
+−0.23 (−0.56, 0.09)
+0.160
+Mode of delivery
+Cesarean vs. vaginal
+0.10 (−0.15, 0.34)
+0.445
+0.11 (−0.13, 0.36)
+0.366
+0.03 (−0.22, 0.27)
+0.837
+Second model3
+Any breastfeeding, mo
+0.02 (0.003, 0.03)
+0.012∗
+0.00 (−0.01, 0.02)
+0.835
+0.00 (−0.01, 0.01)
+0.967
+Protein, g
+0.00 (−0.004, 0.01)
+0.724
+0.00 (−0.01, 0.01)
+0.798
+0.00 (−0.001, 0.01)
+0.105
+Total fiber, g
+−0.01 (−0.02, 0.01)
+0.531
+−0.02 (−0.03, 0.004)
+0.121
+0.02 (0.003, 0.04)
+0.017∗
+Total NSP, g
+−0.01 (−0.03, 0.02)
+0.591
+−0.02 (−0.04, 0.005)
+0.115
+0.02 (0.003, 0.04)
+0.024∗
+Insoluble NSP, g
+−0.02 (−0.06, 0.03)
+0.461
+−0.03 (−0.08, 0.02)
+0.261
+0.04 (−0.001, 0.08)
+0.057
+Nuts, seeds, legumes, 10 g
+0.04 (−0.01, 0.08)
+0.097
+−0.05 (−0.09 −0.01)
+0.010∗
+0.04 (−0.01, 0.08)
+0.086
+Meat, fish, poultry, 10 g
+0.01 (−0.02, 0.03)
+0.685
+0.00 (−0.03, 0.03)
+0.938
+0.02 (−0.01, 0.05)
+0.122
+BMI z-score
+−0.14 (−0.26, −0.02)
+0.026∗
+0.11 (−0.01, 0.23)
+0.065
+−0.02 (−0.12, 0.09)
+0.782
+1Variables were selected based on Spearman correlations ≥0.10 from Table 2. PC1 was characterized by negative loadings of dominant genera
+Christensenellaceae R-7 group and Ruminococcaceae UCG-014, PC2 was characterized by negative loadings of dominant genus Bacteroides and positive
+loadings of dominant genera Bifidobacterium and Fusicatenibacter, PC3 was characterized by positive loadings of dominant genera Faecalibacterium,
+Eubacterium, and Roseburia. ∗Significant, P < 0.05. NSP, nonstarch polysaccharide; PC, principal component; POI, Prevention of Overweight in Infancy
+(study).
+2First model: all demographic variables in 1 multivariate model for each PC score (adjusted for 4 POI study groups).
+3Second model: diet and body composition variables separately in models for each PC score (adjusted for 4 POI study groups and other PC-dependent
+demographic confounders).
+of relative abundance data. To the best of our knowledge, our
+analysis of PCs in relation to diet and body composition has not
+been previously examined. We propose 3 key advantages to this
+approach.
+The first key advantage is the provision of meaningful
+summaries from large datasets that are sparse and complex in
+their correlation structure and require summation (36). Because
+gut microbiota data are compositional (12–14), a change in
+abundance of 1 bacterial taxon influences the relative abundance
+of other taxa. Such data violate the assumptions of traditional
+statistical methods. To be able to use such methods, log-ratio
+transformations must be performed. Centered log-ratios are an
+appropriate transformation for PCA because the vertices are no
+longer constrained to a constant summation but still present the
+proportion of the taxon in relation to the mean composition.
+When this transformation has taken place, PCA can be under-
+taken as usual and loadings for each component determined.
+The resultant PC scores produce convenient, noncompositional
+summary variables for gut microbiota.
+The second key advantage is that assigning every child
+a score for each component allows every child to be con-
+sidered in each analysis, compared with methods such as
+enterotyping, which assign a child to a single enterotype
+thereby limiting assessment to group comparisons. Using
+continuous PC variables allows assessment of relations with
+other variables across all participants, which increases statistical
+power and means that relations are being examined across
+the same participants rather than in different groups of people
+(37).
+The third key advantage is that our statistical approach was
+able to demonstrate associations between gut microbiota PCs
+and diet and BMI z-score. PC1 was negatively associated with
+BMI z-score even after adjustment for dietary variables, and
+PC2 was positively associated with BMI z-score after adjustment
+for fiber intake. This suggests that higher BMI z-scores were
+associated with lower relative abundance of Bacteroides and
+higher relative abundance of uncultured Christensenellaceae and
+Ruminococcaceae. Existing data examining these relations are
+mixed (38). Earlier work in children (39–41) has indicated
+that BMI z-scores are negatively associated with Bacteroides.
+Christensenellaceae has been associated with leanness in adults
+(42), but not in infants (43).
+PC3 was positively associated with a number of dietary
+components (fiber, total NSP, and “meat, fish, poultry” intake),
+independent of BMI z-score. Therefore, a higher intake of these
+dietary components is associated with more Faecalibacterium,
+Eubacterium, and Roseburia, independent of body weight. These
+3 genera are butyrate-producing bacteria (44), with butyrate being
+1 of the 3 main SCFAs produced by the gut microbiota. Butyrate
+from microbial sources is considered important for host colonic
+health because it acts as an energy source for the epithelial
+cells and has anti-inflammatory properties (45). The positive
+association with fiber and total NSP can probably be attributed
+to Faecalibacterium, Eubacterium, and Roseburia being genera
+that metabolize dietary plant polysaccharides (46, 47).
+There was a weak negative association between alpha diversity,
+as quantified by the Shannon index, and intake of “lower fiber,
+more healthy cereals” (which consists of food items such as
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+8
+Leong et al.
+white bread, white rice, and cornflakes), after adjustment for the
+4 POI study groups. This effect was small (β = −0.01; 95% CI:
+−0.01, −0.00), and because food groups are defined differently
+in different studies, direct comparisons cannot be made with the
+literature. However, assuming that a higher intake of “lower fiber,
+more healthy cereals” (associated in our data with lower alpha
+diversity) is associated with lower fiber intake in the diet overall,
+our finding agrees with other studies where lower fiber intake has
+been associated with lower alpha diversity (48, 49). However,
+our study does not support the relation between the commonly
+examined F/B ratio and BMI z-score. This reflects the findings of
+a recent meta-analysis that reported no significant difference in
+the F/B ratio between obese and normal weight individuals (50),
+but conflicts with some earlier work in children (51).
+The proportion of variance explained by the 3 components is
+low (22%), suggesting that although this method of summarizing
+microbiota data into “patterns” is a convenient way to summarize
+communities of taxa to explore relations with other variables,
+these patterns do not explain a large majority of the variation seen
+in gut microbiota data. This is a limitation of this data-driven
+method, and although our sample size (n = 319) is larger than
+most in this field (36) and is considered “good” for PCA, we have
+<2 observations per variable (n = 167), which is considered low
+(52).
+Strengths of the study include the use of an FFQ that has
+been validated for the nutrients and food groups of interest
+to the gut microbiota and the age group studied. In addition,
+the use of compositional analyses for the PCA reflects recent
+developments in statistical approaches to this type of data.
+There are 2 potential limitations of the compositional approach
+in this context. First, because the microbiota data sat in a
+different sample space to the rest of the data before the
+compositional transformation, there is the possibility of spurious
+results. Second, the large number of zeros in the dataset (mean
+percentage of zeros = 37 ± 9%) undermines the compositional
+approach to some degree, although we undertook sensitivity
+analyses for the zero-replacement. Inferences from this study are
+limited by the nonrepresentative nature of the sample (5-y-old
+New Zealand children from higher socioeconomic families were
+overrepresented so caution could be needed when generalizing to
+less advantaged families). In addition, a small number of potential
+confounders were investigated. Hence, we cannot rule out other
+potential confounding, including suppression effects, explaining
+our results. Because we used 16S rRNA gene sequencing,
+definitive species identification and the functionality of the gut
+microbiota present were not determined.
+Our study highlights that the gut microbiota in 5-y-old
+children can be described in terms of 3 different PCs, which are
+associated with diet and BMI z-score. Because our current data
+demonstrated that the proportion of variance explained by the PCs
+is low, we anticipate that there are other factors in relation to the
+components that we have not been able to identify. We encourage
+fellow researchers to use compositional PCA as a method for
+identifying further links between the gut, diet, and obesity, and
+for developing the next generation of research in which the impact
+on body composition of dietary interventions that modify the gut
+microbiota is determined.
+We thank the POI research staff in the Departments of Women’s and
+Children’s Health, and Medicine at the University of Otago.
+The authors’ responsibilities were as follows—RWT, BJT: served as
+Principal Investigators of POI; RWT, BJT, A-LMH, GWT, BCG, ARG, JAL:
+designed the project; CL, BL, SLC, AO, AH: conducted the research; CL,
+JJH: designed and undertook the statistical analyses; CL, JJH, A-LMH,
+RWT: wrote the first and subsequent drafts of the manuscript and had
+primary responsibility for final content; and all authors: critically revised the
+manuscript for important intellectual content, and read and approved the final
+manuscript. The authors report no conflicts of interest.
+References
+1. Nakayama J, Yamamoto A, Palermo-Conde LA, Higashi K, Sonomoto
+K, Tan J, Lee Y-K. Impact of westernized diet on gut microbiota in
+children on Leyte island. Front Microbiol 2017;8:197.
+2. De Filippo C, Cavalieri D, Di Paola M, Ramazzotti M, Poullet JB,
+Massart S, Collini S, Pieraccini G, Lionetti P. Impact of diet in shaping
+gut microbiota revealed by a comparative study in children from Europe
+and rural Africa. Proc Natl Acad Sci U S A 2010;107(33):14691–6.
+3. Bäckhed F, Fraser Claire M, Ringel Y, Sanders Mary E, Sartor RB,
+Sherman Philip M, Versalovic J, Young V, Finlay BB. Defining a
+healthy human gut microbiome: current concepts, future directions, and
+clinical applications. Cell Host Microbe 2012;12(5):611–22.
+4. Valdes AM, Walter J, Segal E, Spector TD. Role of the gut microbiota
+in nutrition and health. Br Med J 2018;361:k2179.
+5. Taylor MW. Devil in the detail: a closer look at childhood obesity and
+the gut microbiota. Environ Microbiol 2016;19(1):11–12.
+6. Tanaka M, Nakayama J. Development of the gut microbiota in infancy
+and its impact on health in later life. Allergol Int 2017;66(4):515–22.
+7. Yatsunenko T, Rey FE, Manary MJ, Trehan I, Dominguez-Bello MG,
+Contreras M, Magris M, Hidalgo G, Baldassano RN, Anokhin AP,
+et al. Human gut microbiome viewed across age and geography. Nature
+2012;486(7402):222–7.
+8. Koenig JE, Spor A, Scalfone N, Fricker AD, Stombaugh J, Knight
+R, Angenent LT, Ley RE. Succession of microbial consortia in
+the developing infant gut microbiome. Proc Natl Acad Sci U S A
+2011;108(Suppl 1):4578–85.
+9. Palmer C, Bik EM, DiGiulio DB, Relman DA, Brown PO. Development
+of the human infant intestinal microbiota. PLoS Biol 2007;5(7):e177.
+10. Hollister EB, Riehle K, Luna RA, Weidler EM, Rubio-Gonzales M,
+Mistretta T-A, Raza S, Doddapaneni HV, Metcalf GA, Muzny DM,
+et al. Structure and function of the healthy pre-adolescent pediatric gut
+microbiome. Microbiome 2015;3:36.
+11. Tsilimigras MCB, Fodor AA. Compositional data analysis of the
+microbiome: fundamentals, tools, and challenges. Ann Epidemiol
+2016;26(5):330–5.
+12. Quinn TP, Erb I, Richardson MF, Crowley TM. Understanding
+sequencing data as compositions: an outlook and review. Bioinformatics
+2018;34(16):2870–8.
+13. Gloor
+GB,
+Macklaim
+JM,
+Pawlowsky-Glahn
+V,
+Egozcue
+JJ.
+Microbiome datasets are compositional: and this is not optional.
+Front Microbiol 2017;8:2224.
+14. Gloor GB, Reid G. Compositional analysis: a valid approach to
+analyze microbiome high-throughput sequencing data. Can J Microbiol
+2016;62(8):692–703.
+15. Hu FB, Rimm E, Smith-Warner SA, Feskanich D, Stampfer MJ,
+Ascherio A, Sampson L, Willett WC. Reproducibility and validity of
+dietary patterns assessed with a food-frequency questionnaire. Am J
+Clin Nutr 1999;69(2):243–9.
+16. Mills VC, Skidmore PML, Watson EO, Taylor RW, Fleming EA,
+Heath A-LM. Relative validity and reproducibility of a food frequency
+questionnaire for identifying the dietary patterns of toddlers in New
+Zealand. J Acad Nutr Diet 2015;115(4):551–8.
+17. Meng C, Zeleznik OA, Thallinger GG, Kuster B, Gholami AM, Culhane
+AC. Dimension reduction techniques for the integrative analysis of
+multi-omics data. Brief Bioinform 2016;17(4):628–41.
+18. Taylor BJ, Heath A-LM, Galland BC, Gray AR, Lawrence JA, Sayers
+RM, Dale K, Coppell KJ, Taylor RW. Prevention of Overweight in
+Infancy (POI.nz) study: a randomised controlled trial of sleep, food and
+activity interventions for preventing overweight from birth. BMC Public
+Health 2011;11:942.
+19. Taylor RW, Heath A-LM, Galland BC, Cameron SL, Lawrence JA,
+Gray AR, Tannock GW, Lawley B, Healey D, Sayers RM, et al. Three-
+year follow-up of a randomised controlled trial to reduce excessive
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019
+Microbiota, diet, and body composition in children
+9
+weight gain in the first two years of life: protocol for the POI follow-up
+study. BMC Public Health 2016;16:771.
+20. Taylor BJ, Gray AR, Galland BC, Heath A-LM, Lawrence J, Sayers
+RM, Cameron S, Hanna M, Dale K, Coppell KJ, et al. Targeting sleep,
+food, and activity in infants for obesity prevention: an RCT. Pediatrics
+2017;139(3):e20162037.
+21. Taylor RW, Gray AR, Heath A-LM, Galland BC, Lawrence J, Sayers
+R, Healey D, Tannock GW, Meredith-Jones KA, Hanna M, et al.
+Sleep, nutrition, and physical activity interventions to prevent obesity
+in infancy: follow-up of the Prevention of Overweight in Infancy (POI)
+randomized controlled trial at ages 3.5 and 5 y. Am J Clin Nutr
+2018;108(2):228–36.
+22. Atkinson J, Salmond P, Crampton C. NZDep2013 Index of Deprivation
+user’s manual. Wellington: University of Otago; 2014.
+23. Caporaso JG, Kuczynski J, Stombaugh J, Bittinger K, Bushman FD,
+Costello EK, Fierer N, Pena AG, Goodrich JK, Gordon JI, et al. QIIME
+allows analysis of high-throughput community sequencing data. Nat
+Methods 2010;7(5):335–6.
+24. Rognes T, Flouri T, Nichols B, Quince C, Mahé F. VSEARCH: a
+versatile open source tool for metagenomics. PeerJ 2016;4:e2584.
+25. Quast C, Pruesse E, Yilmaz P, Gerken J, Schweer T, Yarza P, Peplies
+J, Glöckner FO. The SILVA ribosomal RNA gene database project:
+improved data processing and web-based tools. Nucleic Acids Res
+2013;41:D590–6.
+26. World Health Organization. Exclusive breastfeeding for optimal
+growth, development and health of infants [Internet]. [cited February
+26, 2019]. WHO; 2019. Available from: https://www.who.int/elena/titl
+es/exclusive_breastfeeding/en/.
+27. Leong C, Taylor R, Haszard J, Fleming E, Tannock G, Szymlek-Gay
+E, Cameron S, Yu R, Carter H, Chee L, et al. Relative validity and
+reproducibility of a food frequency questionnaire to assess nutrients
+and food groups of relevance to the gut microbiota in young children.
+Nutrients 2018;10(11):1627.
+28. de Onis M, Onyango AW, Van den Broeck J, Chumlea CW, Martorell
+R. Measurement and standardization protocols for anthropometry used
+in the construction of a new international growth reference. Food Nutr
+Bull 2004;25(1):S27–36.
+29. WHO Multicentre Growth Reference Study Group. WHO child growth
+standards based on length/height, weight and age. Acta Paediatr
+2006;450(Suppl):76–85.
+30. Taylor RW, Jones IE, Williams SM, Goulding A. Evaluation of
+waist circumference, waist-to-hip ratio, and the conicity index as
+screening tools for high trunk fat mass, as measured by dual-energy
+X-ray absorptiometry, in children aged 3–19 y. Am J Clin Nutr
+2000;72(2):490–5.
+31. Weber DR, Moore RH, Leonard MB, Zemel BS. Fat and lean BMI
+reference curves in children and adolescents and their utility in
+identifying excess adiposity compared with BMI and percentage body
+fat. Am J Clin Nutr 2013;98(1):49–56.
+32. Martín-Fernández J-A, Hron K, Templ M, Filzmoser P, Palarea-
+Albaladejo J. Bayesian-multiplicative treatment of count zeros in
+compositional data sets. Statistical Modelling 2014;15(2):134–58.
+33. Palarea-Albaladejo
+J,
+Martín-Fernández
+JA.
+zCompositions—R
+package for multivariate imputation of left-censored data under
+a compositional approach. Chemometr Intell Lab Syst 2015;143:
+85–96.
+34. Mickey RM, Greenland S. The impact of confounder selection criteria
+on effect estimation. Am J Epidemiol 1989;129(1):125–37.
+35. Ley RE, Turnbaugh PJ, Klein S, Gordon JI. Human gut microbes
+associated with obesity. Nature 2006;444:1022.
+36. Xia Y, Sun J, Chen DG. Statistical analysis of microbiome data with R.
+Singapore: Springer Nature Singapore Pte Ltd; 2018.
+37. Knights D, Ward TL, McKinlay CE, Miller H, Gonzalez A,
+McDonald D, Knight R. Rethinking “enterotypes”. Cell Host Microbe
+2014;16(4):433–7.
+38. Castaner O, Goday A, Park Y-M, Lee S-H, Magkos F, Shiow S-ATE,
+Schröder H. The gut microbiome profile in obesity: a systematic review.
+Int J Endocrinol 2018;2018:4095789.
+39. Hu H-J, Park S-G, Jang HB, Choi M-G, Park K-H, Kang JH, Park SI,
+Lee H-J, Cho S-H. Obesity alters the microbial community profile in
+Korean adolescents. PLoS One 2015;10(7):e0134333.
+40. Jang HB, Choi M-K, Kang JH, Park SI, Lee H-J. Association of dietary
+patterns with the fecal microbiota in Korean adolescents. BMC Nutr
+2017;3:20.
+41. Riva A, Borgo F, Lassandro C, Verduci E, Morace G, Borghi E,
+Berry D. Pediatric obesity is associated with an altered gut microbiota
+and discordant shifts in Firmicutes populations. Environ Microbiol
+2017;19(1):95–105.
+42. Goodrich JK, Waters
+JL, Poole
+AC, Sutter
+JL, Koren O,
+Blekhman R, Beaumont M, Van Treuren W, Knight R, Bell
+JT,
+et al. Human genetics shape the gut microbiome. Cell 2014;159(4):
+789–99.
+43. Tun HM, Bridgman SL, Chari R, Field CJ, Guttman DS, Becker AB,
+Mandhane PJ, Turvey SE, Subbarao P, Sears MR, et al. Roles of
+birth mode and infant gut microbiota in intergenerational transmission
+of overweight and obesity from mother to offspring. JAMA Pediatr
+2018;172(4):368–77.
+44. Louis P, Flint HJ. Diversity, metabolism and microbial ecology of
+butyrate-producing bacteria from the human large intestine. FEMS
+Microbiol Lett 2009;294(1):1–8.
+45. Hamer HM, Jonkers D, Venema K, Vanhoutvin S, Troost FJ, Brummer
+RJ. Review article: the role of butyrate on colonic function. Aliment
+Pharmacol Ther 2008;27(2):104–19.
+46. David LA, Maurice CF, Carmody RN, Gootenberg DB, Button JE,
+Wolfe BE, Ling AV, Devlin AS, Varma Y, Fischbach MA, et al. Diet
+rapidly and reproducibly alters the human gut microbiome. Nature
+2014;505(7484):559–63.
+47. Zhang T, Yang Y, Liang Y, Jiao X, Zhao C. Beneficial effect of
+intestinal fermentation of natural polysaccharides. Nutrients 2018;
+10(8):1055.
+48. Leong C, Haszard JJ, Lawley B, Otal A, Taylor RW, Szymlek-Gay EA,
+Fleming EA, Daniels L, Fangupo LJ, Tannock GW, et al. Mediation
+analysis as a means of identifying dietary components that affect the
+fecal microbiota of infants weaned by modified baby-led, compared
+to traditional, approaches. Appl Environ Microbiol 2018;84(18):
+e00914–18.
+49. Laursen MF, Andersen LBB, Michaelsen KF, Mølgaard C, Trolle E,
+Bahl MI, Licht TR. Infant gut microbiota development is driven by
+transition to family foods independent of maternal obesity. mSphere
+2016;1(1):e00069.
+50. Walters WA, Xu Z, Knight R. Meta-analyses of human gut
+microbes associated with obesity and IBD. FEBS Lett 2014;588(22):
+4223–33.
+51. Hou Y-P, He Q-Q, Ouyang H-M, Peng H-S, Wang Q, Li J, Lv X-F,
+Zheng Y-N, Li S-C, Liu H-L, et al. Human gut microbiota associated
+with obesity in Chinese children and adolescents. Biomed Res Int
+2017;2017:7585989.
+52. Johnstone IM, Titterington DM. Statistical challenges of high-
+dimensional data. Philos Trans A Math Phys Eng Sci 2009;
+367(1906):4237–53.
+Downloaded from https://academic.oup.com/ajcn/advance-article-abstract/doi/10.1093/ajcn/nqz270/5621516 by guest on 12 November 2019

@@ -168,3 +168,16 @@ paper_claims/_multi_ner_runs/mapping_run2*.log
 !README.md
 !requirements.txt
 info.md
+
+# --- Publication Release: un-ignore paper corpus, PDFs, and CDM outputs ---
+# Papers corpus (444 .txt files)
+!papers_txt/
+!papers_txt/**
+# PDFs and XMLs (436 files)
+!pdfs/
+!pdfs/**
+# CDM output: ontology, database, catalogue, provenance (LFS-tracked for >100MB)
+!paper_claims/_multi_ner_runs/cdm_output/
+!paper_claims/_multi_ner_runs/cdm_output/**
+!paper_claims/_multi_ner_runs/cdm_output/enhanced/
+!paper_claims/_multi_ner_runs/cdm_output/enhanced/**

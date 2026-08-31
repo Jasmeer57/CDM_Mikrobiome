@@ -1,0 +1,1407 @@
+Dynamic Colonization of Microbes and Their Functions after
+Fecal Microbiota Transplantation for Inﬂammatory Bowel
+Disease
+Nathaniel D. Chu,a,b,c Jessica W. Crothers,d Le T. T. Nguyen,a,b Sean M. Kearney,a,b Mark B. Smith,e Zain Kassam,e Cheryl Collins,d
+Ramnik Xavier,a,f Peter L. Moses,d
+Eric J. Alma,b,c,f
+aCenter for Microbiome Informatics and Therapeutics, Broad Institute, Cambridge, Massachusetts, USA
+bDepartment of Biological Engineering, Massachusetts Institute of Technology, Cambridge, Massachusetts, USA
+cGraduate Program in Microbiology, Massachusetts Institute of Technology, Cambridge, Massachusetts, USA
+dLarner College of Medicine, University of Vermont, Burlington, Vermont, USA
+eFinch Therapeutics, Somerville, Massachusetts, USA
+fBroad Institute, Cambridge, Massachusetts, USA
+ABSTRACT
+For fecal microbiota transplantation (FMT) to be successful in immune dis-
+eases like inﬂammatory bowel disease, it is assumed that therapeutic microbes and
+their beneﬁcial functions and immune interactions must colonize a recipient patient
+and persist in sufﬁcient quantity and for a sufﬁcient period of time to produce a clinical
+beneﬁt. Few studies, however, have comprehensively proﬁled the colonization and per-
+sistence of transferred microbes along with the transfer of their microbial functions and
+interactions with the host immune system. Using 16S, metagenomic, and immunoglob-
+ulin A (IgA) sequencing, we analyzed hundreds of longitudinal microbiome samples
+from a randomized controlled trial of 12 patients with ulcerative colitis who received
+fecal transplant or placebo for 12 weeks. We uncovered diverse competitive dynamics
+among donor and patient strains, showing that persistence of transferred microbes is
+far from static. Indeed, one patient experienced a dramatic loss of donor bacteria
+10weeks into the trial, coinciding with a bloom of pathogenic bacteria and worsening
+symptoms. We evaluated the transfer of microbial functions, including desired ones,
+such as butyrate production, and unintended ones, such as antibiotic resistance. By
+proﬁling bacteria coated with IgA, we identiﬁed bacteria associated with inﬂammation
+and found that microbial interactions with the host immune system can be transferred
+across people, which could play a role in gut microbiome therapeutics for immune-
+related diseases. Our ﬁndings shed light on the colonization dynamics of gut microbes
+and their functions in the context of FMT to treat a complex disease—information that
+may provide a foundation for developing more-targeted therapeutics.
+IMPORTANCE Fecal microbiota transplantation (FMT)—transferring fecal microbes
+from a healthy donor to a sick patient—has shown promise for gut diseases such as
+inﬂammatory bowel disease. Unlike pharmaceuticals, however, fecal transplants are
+complex mixtures of living organisms, which must then interact with the microbes
+and immune system of the recipient. We sought to understand these interactions by
+tracking the microbes of 12 inﬂammatory bowel disease patients who received fecal
+transplants for 12 weeks. We uncovered a range of dynamics. For example, one
+patient experienced successful transfer of donor bacteria, only to lose them after
+10 weeks. We similarly evaluated transfer of microbial functions, including how they
+interacted with the recipient’s immune system. Our ﬁndings shed light on the colo-
+nization dynamics of gut microbes, as well as their functions in the context of FMT
+—information that may provide a critical foundation for the development of more-
+targeted therapeutics.
+Citation Chu ND, Crothers JW, Nguyen LTT,
+Kearney SM, Smith MB, Kassam Z, Collins C,
+Xavier R, Moses PL, Alm EJ. 2021. Dynamic
+colonization of microbes and their functions
+after fecal microbiota transplantation for
+inﬂammatory bowel disease. mBio 12:e00975-
+21. https://doi.org/10.1128/mBio.00975-21.
+Editor Laurie E. Comstock, Brigham and
+Women’s Hospital/Harvard Medical School
+Copyright © 2021 Chu et al. This is an open-
+access article distributed under the terms of
+the Creative Commons Attribution 4.0
+International license.
+Address correspondence to Eric J. Alm,
+ejalm@mit.edu.
+Received 24 May 2021
+Accepted 9 June 2021
+Published 20 July 2021
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+®
+mbio.asm.org
+1
+RESEARCH ARTICLE
+
+KEYWORDS 16S RNA, bacteria, competition, fecal microbiota transplant,
+immunoglobulins, inﬂammatory bowel disease, metagenomics, microbiome
+B
+uoyed by early success in recurrent Clostridium difﬁcile infections (1, 2), researchers
+are exploring whether fecal microbiota transplantation (FMT)—the transfer of
+entire fecal microbial communities from a healthy donor to a sick patient—can treat
+other microbiome-associated conditions. One of the most promising candidates is
+inﬂammatory bowel disease (IBD), a chronic condition characterized by periods of
+relapse (i.e., “ﬂares”) and remission, which suggests that longitudinal dynamics are key
+to understanding and treating the disease (3). Compared with healthy individuals,
+patients suffering from IBD (ulcerative colitis or Crohn’s disease) have distinct gut mi-
+crobial communities (4, 5). Thus, it has been hypothesized that manipulation of the gut
+microbiome and its interactions with the gut immune system might improve patient
+symptoms. Clinical trials have demonstrated that FMT is moderately effective in
+patients with ulcerative colitis (UC), but the factors driving patient response or nonres-
+ponse remain unknown (6).
+It is broadly believed that the therapeutic element of FMT is microbes and their
+functions (7, 8). Many commensal bacteria are thought to promote gut and immune
+health, for example, by the production of butyrate, which plays metabolic (9), regula-
+tory (10), and immune roles (11–14) in supporting the gut epithelium. But not all mi-
+crobial functions are beneﬁcial. Fecal transplant material is rigorously screened for
+pathogens, and large clinical studies have demonstrated fecal transplant’s broad safety
+(1), but the upsurge of antibiotic resistance has raised concerns that fecal transplants
+could transfer potentially deleterious microbial functions as well (15).
+In addition to autonomous functions of the microbes themselves, the microbes’
+interactions with the gut immune system may also play key roles in disease progres-
+sion or treatment. A host’s immune system interacts with gut bacteria by responding
+to bacterial metabolites (12, 14), sensing direct contact between host epithelium and
+bacteria (16), and coating bacteria with immunoglobulin A (IgA)—the main antibody
+produced in the gut and other mucosal tissues (17). These interactions play a pivotal
+role in the formation and maintenance of the host’s immune system (18, 19). Since
+many microbiome-associated diseases—including IBD—are of immune origin, the gut
+microbiome’s immune function might be the most directly related to host health.
+Despite excitement around applying fecal transplantation to IBD, no studies have
+comprehensively evaluated (i) which microbes transfer and persist across hosts, (ii) the
+microbial functions that accompany them, or (iii) whether immune functions of gut
+bacteria also transfer from donor to recipient. Previous reports of fecal transplants in
+IBD patients observed variable colonization by bacterial taxa from donors to recipients
+but did not categorize the functions and immune interactions that were also trans-
+ferred (20–23). Furthermore, most of these studies used minimal sampling (e.g., single
+time points before and after a single fecal transplant) and so could not show how
+transferred bacteria and functions varied over time. Particularly in the case of chronic,
+inﬂammatory diseases such as IBD, understanding the longitudinal dynamics of trans-
+ferred microbes and functions would advance our ability to determine why FMT works
+for some patients and not others and help pave the way for more-targeted therapies.
+We comprehensively proﬁled the colonization dynamics of microbes and functions
+from a small randomized controlled clinical trial of 12 patients who had mild to moder-
+ate ulcerative colitis and were treated with FMT (24). By bringing together analysis of
+microbial taxa, strains, functions, and immune interaction in this focused clinical
+cohort, we sought to deeply understand colonization in a limited number of patients
+and reveal some of these dynamics in the context of a complex disease.
+RESULTS
+Study design. We obtained samples from a small clinical cohort recruited at the
+University of Vermont Medical Center (24). In brief, two fecal transplant donors were
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+2
+
+chosen for high stool butyrate content—measured by gas chromatography—because
+loss of butyrate-producing microbes has been associated with inﬂammation and IBD
+(25). After a course of broad-spectrum antibiotics (oral pills: 250 mg of ciproﬂoxacin
+twice daily and 500 mg of metronidazole three times daily for 7 days) and a standard
+bowel preparation, patients received colonoscopic delivery (120 ml at a concentration
+of 1 g of stool/2.5 ml in the cecum and terminal ileum), followed by 12 weeks of daily
+capsules, of either fecal transplant material (550ml of FMT capsule or ;0.5 g of stool
+from one of our two donors) or placebo (sham colonoscopic and capsule FMT
+designed to visually mimic FMT; summarized in Fig. 1a and Fig. S1 in the supplemental
+material; for details, see Crothers et al. [24]). The choice of antibiotic pretreatment with
+two transplant delivery methods was intended to maximize each patient’s exposure to
+donor material and to increase the likelihood that donor bacteria would successfully
+colonize their new host (24). A subset of fecal transplant recipients (n = 4) received cap-
+sule fecal transplant material from an alternate donor for 4 weeks in the middle of the
+clinical trial, after which they returned to taking material from their original donor
+(Fig. 1a), providing an opportunity to test whether a previously established microbial
+community could be inﬁltrated by new bacteria from low-dosage capsules. Near-
+weekly preserved stool samples were collected by mail from these patients during the
+trial and an 18-week follow-up. At four time points (baseline before antibiotics and 4,
+12, and 18 weeks after fecal transplant), fresh stool samples were also collected during
+clinical check-ins from a subset of patients (n = 8, see the supplemental material).
+We sequenced DNA from these stool samples at the Broad Institute (Cambridge,
+MA) using 16S ribosomal DNA (rDNA) sequencing and shotgun metagenomic sequenc-
+ing, producing data sets comprising an average of ;250,000 16S rDNA sequences and
+;30.5 million metagenomic DNA sequences per sample (see Table S1). (Table S1 and
+all other supplementary tables are available at https://github.com/nathanieldchu/uc
+_fmt/tree/master/supplemental_materials.) To identify the abundance of different
+amplicon sequence variants (ASVs, akin to a bacterial species), we processed the 16S
+rDNA sequences using QIIME 2 (26) and DADA2 (27). To track the abundance of bacte-
+rial species, we processed the metagenomic sequences using Metaphlan2 (28). We did
+not observe any signiﬁcant differences in overall microbial diversity metrics between
+stool samples collected in the clinic versus by mail (see Fig. S1f) and further found that
+both 16S and metagenomic sequencing resulted in highly correlated data sets across
+samples (Mantel test using Spearman’s correlation: r = 0.837, P , 0.001).
+Fecal microbiota transplantation shifts the gut microbiome of UC patients.
+Global diversity metrics indicated robust transfer and persistent colonization of donor
+bacteria in patients who received a fecal transplant. From our PCoA analysis of beta di-
+versity, we found that each patient’s samples tended to cluster (permutational multi-
+variate analysis of variance [PERMANOVA] pseudo-F = 9.55, P , 0.001), samples from
+both donors clustered together (PERMANOVA pseudo-F = 3.00, P , 0.001), and patient-
+to-patient differences drove most of the variance in both 16S and metagenomic analy-
+ses (Fig. 1b; see also Fig. S2a and b). The gut microbiomes of fecal transplant recipients
+clearly shifted toward the donor’s microbiome community during the trial, as indicated
+by the decreasing Bray-Curtis distance from donor samples; those of placebo-treated
+patients did not (Fig. 1c; see also Fig. S2d). This difference persisted for the ;150-day
+trial period, although not for every transplant patient. Crothers et al. (24) categorized
+three patients receiving fecal transplants as “responders” because they showed con-
+sistent clinical, endoscopic and histologic evidence of disease improvement (Fig. 1; see
+also Table S6) and categorized the other patients as “nonresponders” (24). Although
+the clinical cohort was not large enough for robust analysis comparing these patient
+populations, we observed no qualitative difference in donor similarity between the
+groups (see Fig. S2h to m). Indeed, individual patients had divergent trajectories during
+the clinical trial, with many patients experiencing a strong shift in their gut microbiota
+in response to antibiotics, and then patients appeared to variously shift back to their
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+3
+
+a
+Fecal microbiota transplantation
+12
+Antibiotics
+Placebo
+n = 6
+n = 6*
+Daily capsule
+Colonoscopic
+delivery
+Patients with mild 
+to moderate 
+ulcerative colitis
+0
+–1
+Weekly mail sampling
+Fresh sampling in clinic
+18 weeks
+[. . .]
+Four patients received 
+capsules from alternate donor
+b
+Mean, Donor am
+Mean, Donor az
+Mean distance
+between donors
+Placebo (mean
+highlighted)
+FMT (mean 
+highlighted)
+Antibiotics
+Capsule FMT
+or placebo
+*
+p < 0.05
+d
+Bray-Curtis distance 
+from donor samples
+0.6
+0.8
+1.0
+0
+25
+50
+75
+100
+125
+150
+* *********
+*
+e
+Shannon diversity
+0
+25
+50
+75
+100
+125
+150
+0
+2
+4
+*
+f
+Days after fecal transplant
+Bray-Curtis distance
+from baseline
+0
+25
+50
+75
+100
+125
+150
+0.5
+1.0
+FMT N
+FMT E
+FMT W
+FMT P
+FMT A
+FMT F
+Placebo Y
+Placebo B
+Placebo V
+Placebo T
+Placebo I
+Placebo G
+Donor am
+Donor az
+0.2
+0.0
+0.2
+0.4
+PCoA 1 (18%)
+0.4
+0.2
+0.0
+0.2
+0.4
+PCoA 2 (7%)
+Bray-Curtis on 16S rDNA
+Donor
+samples
+Sample from 
+ne
+ples during 
+biotics
+Samples during FMT treatment
+FMT N
+c
+FIG 1 Fecal transplants resulted in global transfer and persistence of donor strains. (a) Design of the clinical trial and sampling. *, One
+placebo-treated patient had worsening symptoms and dropped out of the trial at 8 weeks. (b) Principal-coordinate analysis (PCoA) based on
+Bray-Curtis distance using 16S. Donor samples clustered on the left side. (c) Example patient trajectory over the course of the trial. Many
+patients demonstrated a strong shift in their gut microbiota in response to antibiotics and then an altered microbiota during and after FMT
+treatment (see Fig. S3). (d) Time series of each patient’s mean Bray-Curtis distance from the donor samples according to 16S data. FMT
+patients (blue) shifted toward donor communities (lower values on y axis). Bold lines and conﬁdence intervals (95%) reﬂect the mean across
+patients. Lines for individual patients appear in the background. Asterisks indicate a signiﬁcant difference between fecal transplant and
+placebo patients by a Mann-Whitney U test P , 0.05. Regions of the graph colored as in Fig. 1. (e) Alpha diversity (Shannon index) of 16S
+proﬁles indicated little difference between fecal transplant and placebo recipients. (f) Similarly, the two treatment groups showed similar
+extents of community change when compared against their baseline samples by Bray-Curtis distance of 16S data. See also Fig. S2.
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+4
+
+initial community structure, shift toward the donors, or even settle in a new commu-
+nity composition (see Fig. S3).
+Unlike previous studies, ours did not ﬁnd greater alpha diversity in fecal transplant
+versus placebo recipients. Shannon index and richness in 16S and metagenomic data
+were similar in both treatment groups over the study period (Fig. 1d; see also Fig. S2e
+and f), as was the change in bacterial community from baseline samples, according to
+the Bray-Curtis distance (Fig. 1e; see also Fig. S2g). The similarities between these
+groups appear to be driven by sizable shifts in the microbiomes of placebo patients
+(Fig. 1e), which resulted in microbiome community shifts comparable to those of FMT
+recipients. These results contrast with multiple studies’ reports of increased diversity
+and change in gut microbiome composition in fecal transplant recipients compared
+with placebo recipients in diseases such as C. difﬁcile infection (29, 30). Although it is
+possible that our cohort was too small for us to observe a signiﬁcant difference
+between placebo and FMT patients, the results exemplify how FMT and even antibiot-
+ics can have varied effects in different diseases.
+Transferred microbial taxa exhibited varied dynamics in fecal transplant
+recipients. With such frequent sampling, we could next proﬁle not only the microbial
+taxa that colonized transplant recipients but also their downstream dynamics, both of
+which likely underpin clinical response.
+As in previous studies (31, 32), different patients in the trial varied in their coloniza-
+tion rates—that is, the number and frequency of donor bacteria that successfully trans-
+ferred from donor to patient (Fig. 2a; see also Fig. S4 and Materials and Methods). We
+categorized bacteria in each patient’s samples by their putative sources, including
+those shared by the donor and patient before FMT (“Shared,” gray lines), those
+detected only in the patient’s baseline samples (“Patient,” orange lines), those detected
+only in the donor samples (“Donor,” blue lines), and those not detected (“Unknown,”
+yellow lines) (Fig. 2a; see also Fig. S4a). This ﬁnal category potentially included newly
+colonized bacteria from the environment, as well as endogenous patient bacteria that
+were under our detection limit. At the resolution of metagenomic bacterial species
+and 16S ASVs, the proportion of bacteria transferred from the donor varied from 15 to
+85% of a patient’s microbiome after fecal transplant (blue lines in Fig. 2a; see also
+Fig. S4a). Patients with larger numbers of donor-transferred bacteria were sometimes
+patients with fewer bacteria shared with the donor, but not always (e.g., FMT E and
+FMT P; Fig. S4b). Transferred bacteria spanned phylogenetic diversity, and almost all
+donor bacteria from one donor (referred to here as “Donor am”)—whose stool was
+transplanted into four recipients—were found to colonize at least one patient (see
+Table S4).
+Our analysis of longitudinal sampling further demonstrated that patients varied
+greatly in their ability to maintain colonized bacteria over time (Fig. 2). Most patients
+showed a period of initial colonization after fecal transplantation therapy began, followed
+by maintenance of transferred bacteria during the daily capsule delivery period and for
+months thereafter (Fig. 2a). In contrast, patient FMT A had robust colonization of donor
+bacteria early in treatment—in fact more so than any other patient—but later lost many
+of these bacteria (Fig. 2a). These colonized-then-lost bacteria included a number of ASVs
+of the genera Bacteroides, Faecalibacterium, Ruminococcus, and others (see Table S3). We
+categorized transferred ASVs in each patient as persistent or temporary colonizers on the
+basis of whether an ASV was present in follow-up samples (Fig. 1a). We found that differ-
+ent patients had different frequencies of these two types (Fig. 2b; see also Fig. S4c).
+Patient FMT A clearly had mostly temporary colonizers, but even patients with largely per-
+sistent colonization had taxa that colonized only temporarily.
+Patient FMT A provides an intriguing clinical case: a sharp decrease in transferred
+donor bacteria coincided with a bloom of E. coli and associated virulence factors in this
+patient’s gut (Fig. 2c). In fact, the data suggested that the loss of donor bacteria may
+have preceded the bloom. Furthermore, these changes appeared to track clinical out-
+comes (Fig. 2c). The patient reported feeling better during the early stages of treat-
+ment (week 4)—as measured by the standardized, clinically validated Inﬂammatory
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+5
+
+Bowel Disease Questionnaire (IBDQ) that summarizes the patient’s symptoms over four
+domains of functioning and well-being (33)—but later reported worsening of symp-
+toms (a ﬂare at week 12), which required administration of a steroid (prednisone)
+(Fig. 2c). In addition, other clinical measures taken only at the beginning and the end
+of the trial (Mayo score, UCEIS, histology, lactoferrin, and calprotectin) also indicated a
+deterioration of disease over the course of the trial (see Table S6). Although we can
+only speculate whether the Escherichia coli bloom or the symptomatic change was the
+cause or the effect of losing donor bacteria, this case exempliﬁes the variability of bac-
+terial persistence after FMT. We acknowledge that a single clinical case does not neces-
+sarily reﬂect a broader pattern, but we speculate that perhaps monitoring persistence
+of colonizing donor bacteria may help predict FMT treatment outcomes.
+FIG 2 Longitudinal sampling of the microbiome revealed variable maintenance of donor bacteria. (a) Tracking bacterial
+sources identiﬁed bacteria transferred from donor to recipient, as well as an invasion of bacteria of unknown origin. Each
+time-series plot indicates the fraction of total ASVs (by 16S sequencing) identiﬁed as from the patient, from the donor,
+shared by the patient and donor, or from an unknown source. IBDQ scores reported by each patient are shown above
+each plot. Lower scores reﬂect worse disease, and higher scores reﬂect better health. Scores from patients in remission are
+usually above 170 to 190. Regions of the graph colored as in Fig. 1. (b) Fecal transplant recipients had various frequencies
+of persistent (retained at 18-week follow-up sampling after FMT) and temporary (not retained at 18-week follow-up)
+colonization of donor bacteria according to 16S data. (c) After an initial period of robust colonization, patient FMT A lost a
+majority of transferred donor bacteria; this loss coincided with a bloom of E. coli and accompanying virulence factors
+(based on metagenomic data) and a worsening of clinical symptoms. See also Fig. S4.
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+6
+
+Capsule delivery from an alternate donor introduced novel taxa into an
+established community. By looking at the subset of patients who took capsules from
+an alternate donor partway through the study (Fig. 1a), we were able to ask whether
+changing donor material resulted in additional colonization by new microbes after a new
+gut microbiome had been established. Although the vast majority of newly colonized
+bacteria came from the original donor used for colonoscopic delivery and the ﬁrst month
+of capsules, we were nonetheless able to identify evidence of novel bacteria colonizing
+from the alternate donor (see Fig. S4d). These results suggest that even after transplanta-
+tion and establishment of a donor microbial community, UC patients remain receptive to
+further colonization and persistence of bacteria from additional donors.
+The balance of conspeciﬁc donor, patient, and environmental strains ﬂuctuated
+between dominance and parity. We then sought to proﬁle the dynamics of individual
+strains within bacterial species to understand how conspeciﬁc strains (strains of the
+same bacterial species) from the donor, patient, and environment compete and coexist
+in treated patients. Previous reports have demonstrated that recipient and donor
+strains of the same bacterial species can coexist within fecal transplant recipients. Our
+analysis of frequent longitudinal samples allowed us to ask how the dynamics of this
+coexistence unfold over time. In particular, we sought to determine whether donor
+strains could dominate over patient strains—which, because they are endogenous,
+may have a competitive advantage—and whether the competitive balance of strains
+changes over time.
+We used two complementary strategies to evaluate the contributions of different
+strains to the resulting bacterial community in each patient: a ﬂexible genome
+approach (high speciﬁcity, lower sensitivity) and a single-nucleotide-polymorphism
+(SNP) approach using StrainFinder (medium speciﬁcity, medium sensitivity) (31). We
+focused on bacterial species with high abundance and thus sufﬁcient sequence read
+depth for robust analysis (Fig. 3a). Our ﬂexible genome approach used read depth of
+ﬂexible genomic regions to identify strains with identical gene content (34) and
+achieved high strain speciﬁcity by using full genome information. This approach can
+positively identify matches between samples with the same dominant strains (e.g.,
+strain A versus strain A), but it cannot identify matches between samples that contain
+mixtures of strains (e.g., strain A versus strains A and B). Thus, a “mismatch” is consid-
+ered ambiguous, since the two samples might contain entirely distinct strains or a mix
+of shared and distinct strains, resulting in lower sensitivity. Sample comparisons there-
+fore had three different outcomes: strain match (green in Fig. 3), ambiguous (gray),
+and insufﬁcient abundance or read coverage (red).
+Using this ﬂexible genome approach, we ﬁrst conﬁrmed that our methodology pro-
+vided intuitively reasonable results by testing a number of control comparisons (e.g.,
+donor samples did not match patient baseline samples, Fig. S5). We then compared
+samples from fecal transplant recipients to the donor’s samples and identiﬁed many
+matches between donor and patient samples after the start of FMT, indicating that the
+dominant strain in a given patient sample was the same as in the donor (Fig. 3a to d;
+see also Fig. S5c). We observed strain dynamics that fell into patterns determined by
+two factors: colonization (Did the donor strain colonize the recipient? No, temporarily,
+or persistently) and dominance (Did the donor strain become the dominant strain in
+the recipient? No, temporarily, or persistently). These factors resulted in six observed
+patterns, of which we provide examples in Fig. 3a.
+1.
+Persistent colonization and dominance. The donor strain colonized after a fecal
+transplant, came to dominate the strain community, and persisted as the
+dominant strain throughout the trial. In Fig. 3a to e, this pattern appears as
+green circles that begin after fecal transplant and persist throughout the trial.
+2.
+Temporary colonization and dominance. The same as pattern 1, but all strains
+were subsequently lost or undetected. In Fig. 3a to e, this pattern appears as
+green circles that dwindle to red dots.
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+7
+
+FIG 3 Tracking conspeciﬁc microbial strains revealed a range of competition dynamics. (a) Examples of plots
+for ﬂexible genome analysis, which fell into six patterns determined by colonization and dominance. Green
+circles indicate a strain match between patient sample and donor sample, gray circles indicate ambiguous
+strain identity, and red circles indicate insufﬁcient read depth for analysis. The size of the circle reﬂects the
+median read depth across the genome for that sample. (b to e) Flexible genome plots for Bacteroides vulgatus
+(b), B. uniformis (c), B. dorei (d), and F. prausnitzii (e). (f to i) In cases of ambiguous strain identities, we analyzed
+the individual contributions of strain haplotypes using StrainFinder for F. prausnitzii (f), B. uniformis (g), B. dorei
+(h), and B. vulgatus (i). The y axes represent the frequency of different strain haplotypes for a given species,
+normalized by the median read depth across all marker genes for that species (see Materials and Methods). See
+also Fig. S5.
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+8
+
+3.
+Persistent colonization and temporary dominance. The same as pattern 1, but at
+later time points, another strain from the patient or from an unknown source
+became equally or more abundant than the donor strain. In Fig. 3a to e, this
+pattern appears as green circles that are later replaced by grey circles.
+4.
+Ambiguous persistent colonization. Strains of this bacteria persistently colonized
+the patient, but it is unknown if those strains were from the donor, patient, or
+environment. In Fig. 3a to e, this pattern appears as grey circles that persist
+throughout the trial.
+5.
+Ambiguous temporary colonization. Strains of this bacteria temporarily colonized
+the patient, but it is unknown if those strains were from the donor, patient, or
+environment. In Fig. 3a to e, this pattern appears as grey circles that dwindle to
+red dots.
+6.
+No colonization. In Fig. 3a to e, this pattern appears as red dots.
+We observed examples of each of these patterns, indicating the range of competi-
+tive dynamics among strains that can unfold after fecal transplant. Many Bacteroides
+species were successful in persistently and dominantly colonizing (pattern 1), including
+B. vulgatus (patients E, W, and F), B. dorei (patients E and W), and B. uniformis (patient
+E) (Fig. 3b to d). The same bacteria in other patients persistently colonized but only
+temporarily dominated the patient community (pattern 2), including B. vulgatus in
+patient P, B. dorei in patients P and F, and B. uniformis in patients W and P. One patient
+(N) appeared to be more resistant to colonization by donor Bacteroides species, nearly
+always showing a mix of strains (pattern 4 or 6). We also observed temporary coloniza-
+tion and dominance for B. ovatus and B. caccae in fewer patients (see Fig. S5c). With
+regard to Faecalibacterium prausnitzii—a commensal bacterium thought to be related
+to gut health and negatively correlated with IBD (25)—some patients exhibited persis-
+tent colonization and dominance of a donor strain (pattern 1, patient E), others were
+only temporarily dominated by the donor strains (pattern 3, patients P and N), and still
+others adopted strains that came from both the donor and unknown sources (Fig. 3e).
+In cases of ambiguous matches, our ﬂexible genome analysis could not deﬁne the
+contributions of individual strains from different sources, leaving some competitive dy-
+namics undeﬁned. For example, a donor strain of B. dorei temporarily dominated the
+community of patient F, but later strain matching gave ambiguous results, which could
+mean that the donor strain disappeared from the community or that it coexisted with
+another strain (Fig. 3d). Consequently, to observe individual contributions of strains in
+mixed communities, our second approach reconstructed SNP haplotypes using
+StrainFinder, allowing us to distinguish contributions of strains from donor, recipient,
+and unknown sources over time. Although the sensitivity of StrainFinder allows us to
+quantify individual strains, its dependence on marker genes makes it less speciﬁc than
+our ﬂexible genome approach (31). Because StrainFinder requires high sequencing
+depth to properly model strains, we combined longitudinal samples (n = 1 to 5 sam-
+ples) into ﬁve time points (see Methods and Methods and Fig. 3).
+We found that donor and patient strains frequently coexisted, even after tempo-
+rary dominance by the donor strain. We ﬁrst conﬁrmed that the results from
+StrainFinder aligned with our ﬂexible genome analysis, as shown for F. prausnitzii in
+FMT N and FMT E (Fig. 3e). In the case of FMT A and FMT F, we observed that by the
+end of the clinical trial, strains of unknown origin largely displaced those from the
+donor (Fig. 3e). The dominant strains of some species (F. prausnitzii in FMT P and B.
+dorei and B. vulgatus in FMT N) were shared between the donor and patient (Fig. 3f
+to i). If we assume it is unlikely that two unrelated individuals carry identical strains,
+these results indicate that even high-resolution methods like StrainFinder depend
+on marker genes and cannot always resolve unique strains. For B. dorei in FMT F and
+B. uniformis and B. vulgatus in FMT A, donor strains temporarily dominated, with
+strains of unknown origin appearing in the patients’ follow-up samples (Fig. 3g to i).
+We observed a similar variety of competitive dynamics in other abundant species
+(see Fig. S5f to i).
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+9
+
+Taken together, these results demonstrate not only that donor and recipient strains
+can coexist (32) but also that the balance of this coexistence changes over time. In
+many cases, donor strains were able to outcompete endogenous patient strains, but
+this dominance was dynamic, with donor and patient strains often competing with
+strains from unknown and possibly environmental sources later in the trial.
+Fecal transplants transferred beneﬁcial microbial functions that varied across
+time. Beyond the microbes themselves, the functions those microbes perform in the
+gut ecosystem may be important to restoring gut health. Therefore, we tracked coloni-
+zation by functional genes implicated in maintaining health. We observed the transfer
+from donor to patient of genes involved in complex carbohydrate metabolism (glyco-
+side hydrolase, Fig. 4a; see also Fig. S6a), mucin digestion (Fig. 4b; see also Fig. S6b),
+and butyrate production (Fig. 4c; see also Fig. S6c), and many of these genes persisted
+in their new hosts. These transferred genes included genes from health-associated
+commensals, such as F. prausnitzii and Bacteroides (see Table S5) (25, 35). Like the
+microbes themselves, these functional genes were transferred at different rates and
+had variable dynamics across patients (Fig. 4), and these dynamics largely mirrored
+patterns of microbial colonization (Fig. 2).
+Overall, fecal transplant recipients showed greater richness in glycoside hydrolase
+genes than did placebo-treated patients, suggesting increased capacity to digest die-
+tary polysaccharides (Fig. 4f). On the other hand, fecal transplant recipients showed
+similar levels of butyrate biosynthesis (Fig. 4g) and mucin digestion genes (Fig. 4h).
+This, although donors were chosen for high butyrate production—reﬂected in high di-
+versity of butyrate biosynthesis genes in donor samples (Fig. 4c, dashed lines)—fecal
+transplant did not result in wholesale transfer of these genes; transplant recipients had
+similar butyrate gene diversity compared with their baseline samples and with pla-
+cebo-treated patients. Two fecal transplant recipients—but no placebo-treated
+patients—reached comparably high butyrate gene diversity, but these changes were
+temporary. Thus, fecal transplants can effectively transfer beneﬁcial microbial functions
+across hosts but may not result in persistent colonization or an overall increase in the
+diversity of genes related to those functions.
+Fecal transplants also transferred antibiotic resistance and virulence factors.
+Not all microbial functions transferring to fecal transplant recipients are beneﬁcial.
+Although, clinically, fecal transplants can effectively clear patients of antibiotic-resistant
+infections, debate continues as to whether the therapy could introduce novel resist-
+ance genes, with negative clinical effects (15). We observed the transfer from donors to
+patients of numerous antibiotic resistance genes—including those for resistance to all
+major classes of antibiotics—and many of these genes were maintained for the full trial
+period (Fig. 4d; see also Fig. S6d, blue lines). Nevertheless, we found that the resulting
+diversity and abundance of antibiotic resistance genes in fecal transplant recipients
+did not exceed those in our healthy donors (Fig. 4i; see also Fig. S7a and b) and that
+transferred resistance genes were generally outnumbered by endogenous ones
+(Fig. 4d). Thus, although the transfer of resistance genes results unavoidably from the
+complexity of this therapy, no clinical or bioinformatic evidence indicates that fecal
+transplants increase the overall risk of antibiotic resistance. Indeed, many case reports
+suggest that FMT can help rid patients of antibiotic-resistant infections (36, 37).
+In addition, we found that antibiotics triggered a short-lived increase in speciﬁc an-
+tibiotic resistance genes across all patients (Methods, Fig. 4k), regardless of treatment.
+Speciﬁcally, the abundance of quinolone resistance genes increased immediately after
+antibiotics, likely reﬂecting selection pressure from ciproﬂoxacin, a quinolone (Fig. 4k).
+These increases were not maintained over time (see Fig. S7c); neither did we observe
+temporary or lasting increases in other classes of antibiotic resistance (see Fig. S7c) or
+antibiotic resistance overall (see Fig. S7a and b). During the clinical trial, placebo-
+treated patients also had a greater burden of tetracycline and aminoglycoside resist-
+ance genes than did fecal transplant recipients during the clinical trial period, although
+these levels were not appreciably higher than in baseline samples (see Fig. S7d and e).
+We tracked the resistance proﬁles of taxa that included clinically signiﬁcant pathogens
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+10
+
+FIG 4 Bacterial functions also transferred across human hosts. We tracked the transfer of bacterial functions using shortBRED and
+curated databases (see Materials and Methods). (a to e) We observed colonization and persistence of functional genes in
+transplant recipients for glycoside hydrolase (GH) (a), mucin degradation (b), butyrate biosynthesis (c), antimicrobial resistance (d),
+and virulence factor (e) genes. Shown are plots for three of our transplant recipients (see Fig. S6). We also examined overall
+diversity of these genes compared with placebo-treated patients. (f to i) Fecal transplant recipients showed higher diversity of
+glycoside hydrolase genes (f) but not of mucin degradation genes (g), butyrate biosynthesis genes (h), or antimicrobial resistance
+genes (i). (j) Placebo patients had slightly higher diversity of virulence factors, but the difference was not signiﬁcant. Asterisks
+indicate signiﬁcant difference between fecal transplant and placebo recipients as determined by a Student t test P , 0.05. (k)
+Many placebo and transplant recipients exhibited an increase in abundance of quinolone resistance genes in the 10 days after the
+administration of antibiotics. Lines are colored by the change in resistance. Line color reﬂects the change, with red lines
+indicating an increase, and blue lines indicating no change or a decrease. Also see Fig. S6.
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+11
+
+and found that these resistance proﬁles generally followed the abundances of their
+bacterial host, with many resistance proﬁles peaking shortly after the administration of
+antibiotics (see Fig. S7f).
+Similar to antibiotic resistance, we observed the transfer of virulence factors.
+Despite a lower incidence of virulence factor genes in donors than in patients (Fig. 4j),
+we observed colonization and persistence of such genes, which made up a signiﬁcant
+portion of the virulence factor pool (Fig. 4e; see also Fig. S6e, blue lines). Many patients
+exhibited an increase in the abundance of virulence factors during or shortly after anti-
+biotics (see Fig. S6f). Two patients had an inordinate burden of virulence factors,
+including the patient FMT A, who had a bloom of E. coli, and patient placebo V (see
+Fig. S6g). Patient placebo V’s health declined during the trial (see Table S6), and this
+patient had one of the most dramatic microbial turnovers in response to antibiotics
+(see Fig. S8)—resulting in a microbiome dominated by newly acquired Proteobacteria
+and associated virulence factors from unknown sources (see Fig. S6h). In sum, although
+we observed the transfer and persistence of donor-derived virulence factors and anti-
+biotic-resistance genes, these transfers were modest and often outweighed by the en-
+dogenous microbial community’s own virulence and resistance.
+IgA coating of gut microbes identiﬁed shared immune interactions with
+commensal and IBD-associated bacteria. In the context of IBD, interaction with the
+host immune system is perhaps the most important microbial function. Although it is
+reasonable to expect that transferring microbes would also transfer their endogenous
+metabolic capacities, it is much less certain whether transferred bacteria will elicit simi-
+lar immune interactions—particularly adaptive immune responses—in a new host with
+a different immune system.
+To begin understanding host response to transferred gut bacteria, we used immu-
+noglobulin A sequencing (IgA-seq) to proﬁle bacteria coated with IgA antibodies (17).
+Secretory IgA is the primary antibody of mucosal surfaces, including the gastrointesti-
+nal, respiratory, and urinary tracts (38). Thought to act primarily by blocking proteins
+on the surface of invading pathogens, IgA has more recently been suggested to play a
+role in facilitating mucosal colonization by commensal bacteria (39, 40). Although bac-
+teria interact with the host immune system in many ways (e.g., via excreted metabo-
+lites [12] or direct contact with the epithelium [16]), we used IgA-seq as a proxy for
+bacterial immune function and interactions because IgA coating is one of the few
+markers of immune interactions that can be measured in vivo and at high throughput
+for bacteria in stool samples. To identify IgA-coated and -uncoated bacteria, we used
+ﬂuorescence-activated cell sorting (FACS) to separate these fractions of gut micro-
+biome samples, and we 16S-sequenced the fractions (;50,000 cells per fraction) to a
+median depth of 165,000 reads. We calculated IgA coating scores for each bacterium
+as the log-fold change in abundance of that bacterium in the IgA-coated and IgA-
+uncoated fractions, such that a positive value indicated high IgA coating and a nega-
+tive value indicated low IgA coating. To quantify similarity in IgA coating between sam-
+ples, we calculated the Pearson correlation of IgA coating scores across all bacterial
+ASVs.
+If IgA coating of different bacteria were the same across all patients and donors,
+then the likelihood of successful transfer of IgA coating would be very high. We there-
+fore ﬁrst sought to determine whether overall IgA coating of bacterial ASVs differed
+among patients. We found that IgA coating scores of bacteria in two samples taken at
+different time points from one of our healthy donors were highly correlated (Pearson
+r = 0.7, P , 1e225) (Fig. 5a). To further explore the consistency of this result, we per-
+formed IgA-seq using a magnetic bead protocol (see Materials and Methods) on stool
+samples from three time points from six different healthy donors (see Fig. S9a and b).
+We found that in the majority of cases, these healthy subjects had similar IgA coating
+at different times (Pearson r . 0.7), although for a couple of samples this pattern did
+not hold, potentially suggesting that IgA coating of bacteria in apparently healthy sub-
+jects may vary occasionally over time. We then compared the mean IgA coating in
+samples from Donor am with the mean IgA coating scores across all patients’ baseline
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+12
+
+FIG 5 IgA coating of the gut microbiome revealed broad patterns of microbiome IgA coating and host-speciﬁc
+IgA responses. IgA enrichment of different bacteria was highly correlated across different samples from a
+healthy donor (a) and even well correlated between the same donor and the patients’ baseline samples (b). In
+panels a and b, each point is a bacterial ASV, and the x and y axes represent the IgA coating score of that ASV
+in different samples. (c) Phylogenetic tree containing bacteria that were identiﬁed as reliably IgA coated across
+patients (inner red circles), IgA uncoated across patients (blue circles), or variably IgA coated or uncoated either
+across patients or within a patient across time (outer purple circles). Tree branches are colored by phylum, and
+branch lengths do not reﬂect evolutionary distance. (d) Relative abundance of Ruminococcus gnavus in our
+patient cohort. (e) Correlations of IgA enrichment in shared and transferred bacteria indicated stronger
+correlation in transferred bacteria, which are more likely to be exact matching strains. (f) This pattern was
+observed in all patients receiving transplants from Donor am. See also Fig. S9.
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+13
+
+samples and found moderate correlation (Pearson r = 0.43, P , 1e29, Fig. 5b). The
+strength of this correlation (donor samples versus baseline samples) for individual
+patients, however, varied considerably (Pearson r = 0.1 to 0.7, Fig. S9c and d), indicating
+that bacterial IgA coating can vary greatly across patients. This ﬁnding raised the pros-
+pect that transferred bacteria may not retain immune interactions across hosts. Some
+studies have suggested that IgA might target blooming or abundant bacteria to pro-
+mote homeostasis (41, 42), but we did not observe a correlation between a bacterium’s
+IgA coating and its abundance, variance, or bimodality (see Fig. S9e to h).
+We then sought to identify bacteria that were strongly IgA coated or uncoated
+across all patients and samples, because perhaps these bacteria would display similar
+immune interactions when transferred across hosts. Indeed, we found 28 bacterial
+ASVs (P , 0.0001 by a permutation test) that were reliably and strongly IgA coated
+across patients and within patients through time, including before and after FMT (see
+Materials and Methods). These bacteria were a phylogenetically diverse group compris-
+ing organisms from all major phyla (Fig. 5c; see also Table S7), including known com-
+mensals (e.g., Bacteroides) and many taxa that transferred from donors to fecal trans-
+plant recipients (e.g., Bacteroides and Lachnospiraceae; see Table S7). We also identiﬁed
+some Proteobacteria (including known opportunistic pathogens) and Ruminococcus
+gnavus—as well as the closely related R. torques—as reliably IgA coated in patients
+and donors (Fig. 5c; see also Fig. S10 and Table S7). Although we did not observe R.
+gnavus transfer from donors to patients, we found signiﬁcant blooms of this bacterium
+(up to 40% relative abundance) in our patient cohort; the species was essentially
+absent in our donors (Fig. 5d). This ﬁnding is in keeping with those of other research
+groups, who have reported that R. gnavus blooms speciﬁcally in patients with IBD (43).
+These results further suggest that R. gnavus might play a role in immune dysregulation
+in IBD, likely warranting additional study.
+Bacteria that were reliably uncoated by IgA across patients (n = 14, P , 0.0001 by a
+permutation test) were less phylogenetically diverse and tended to represent known
+commensals. All of these bacteria were Firmicutes, including known butyrate producers
+and immuno-modulatory taxa like Faecalibacterium, Alistipes, Roseburia, Oscillibacter,
+Butyricicoccus, and other Lachnospiraceae species (Fig. 5c; see also Table S7). On the ba-
+sis of these results, we hypothesize that being uncoated by IgA may be more speciﬁc
+than being coated. Together, these data hint that bacteria eliciting strong or very low
+IgA responses across individuals could play important roles in regulating host gut im-
+munity and that in some cases transferring these bacteria can replicate microbe-host
+immune interactions in a new host.
+Strain speciﬁcity revealed the transfer of host immune interactions in fecal
+transplant. We observed a ﬁnal category of diverse bacteria that were sometimes IgA
+coated and sometimes uncoated across different individuals or even within the same
+individual across time (Fig. 5c; see also Fig. S10 and Table S7). If conﬁrmed, such vari-
+able immune effects across patients could complicate FMT treatment, which currently
+assumes the transfer of microbial functions from donors to patients. If the same
+microbe can elicit an IgA response in one person while avoiding it in another—which
+may lead to proinﬂammatory or anti-inﬂammatory responses (44)—then FMT may be
+less effective and less predictable than assumed at transferring immune function.
+We hypothesized that variable IgA responses could stem from two processes: (i) di-
+vergent host immune responses or (ii) strain speciﬁcity of IgA coating. If the second
+process were responsible, a given bacterium would be IgA coated or uncoated
+because each patient would be responding differently to different strains of bacteria
+with identical 16S sequences, the genetic marker for our IgA-seq data. But each of
+these patients would nevertheless respond in the same way to the exact same strain,
+and thus transfer of the same strain across patients would transfer a similar IgA
+response.
+To establish the role of strain speciﬁcity in explaining variably IgA-coated bacteria,
+we examined two bacterial subsets in fecal transplant recipients: bacteria that were
+shared by donor and patient and bacteria that transferred from the donor to the
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+14
+
+patient after a fecal transplant (see Materials and Methods). Thus, for each bacterial
+16S sequence, the ﬁrst subset included a potential mix of donor and patient strains,
+while the second subset likely contained only one strain from the donor that then
+transferred to the patient. We found that the subset of strains transferred from the do-
+nor (exact strain matches) had higher correlations of IgA coating scores than bacteria
+shared between the donor and recipient (mixed strains) (Fig. 5e); this pattern held
+across three patients who received fecal transplants from a single donor (Fig. 5f).
+These results suggest that exactly matching strains may trigger more-similar
+immune responses than do mixed strains with identical 16S sequences, indicating that
+variable IgA coating of bacteria could in part be explained by strain speciﬁcity.
+Although in one patient the correlation of IgA coating scores of exactly matching
+strains was still weak (Pearson r = 0.3), this ﬁnding further established that immune
+functions of transferred microbes may be broadly replicated in fecal transplant recipi-
+ents, bolstering the prospects of engineering the gut microbiome to modulate host
+immunity and disease.
+DISCUSSION
+Microbial strains exhibit a range of colonization dynamics. Our results illustrated
+a range of microbes and functions that can persistently colonize fecal transplant recipi-
+ents. Only a small subset of rare bacteria appeared to never transfer (see Table S4), sug-
+gesting that essentially all bacteria can be transferred between people. This ﬁnding
+reafﬁrms that the gut microbiome can be clinically engineered by transplanting whole
+gut microbial communities. It remains unknown, however, whether more-targeted
+therapeutics using synthetic communities will show the same ability to colonize recipi-
+ent hosts.
+For fecal transplants or other targeted microbial therapeutics to have a clinical
+effect, colonized microbes must persist at sufﬁcient abundance. We observed a variety
+of fates of colonizing microbes in each patient over time—from wholesale colonization
+and persistence of new taxa to ﬂeeting passage of individual strains. A signiﬁcant frac-
+tion of microbes that colonized recipients for multiple weeks later disappeared, suggest-
+ing that even though many bacteria can colonize a patient temporarily, competition,
+nutritional requirements, or immune system interactions may hamper persistence. This
+problem might be addressed by administering fecal transplants along with other treat-
+ments aimed at maintaining colonized bacteria (e.g., prebiotics and maintenance therapy)
+(42, 45, 46).
+Coexisting conspeciﬁc strains also showed a range of competitive dynamics: in
+some patients donor strains dominated endogenous strains, while in others, endoge-
+nous strains remained more abundant. Competitive dynamics like these may contrib-
+ute to variable clinical responses to whole-gut microbiota transplantation and are likely
+to play an even greater role in more-targeted microbial therapeutics, whose efﬁcacy
+hinges on the dynamics of a small number of strains.
+In addition, patient FMT A offered an example of how patient health can affect the
+colonization of donor bacteria. After more than a month of stable colonization, this
+patient lost a large portion of transferred strains in a short period, which coincided
+with—or potentially preceded—a bloom in pathogenic bacteria and severe worsening
+of symptoms. This dramatic decline warns us that continued patient monitoring may
+be needed to maintain treatment efﬁcacy, particularly with chronic diseases like IBD.
+Patients who lose colonized donor bacteria could be retreated, restarting the clock on
+donor-strain persistence and intended clinical effect. Furthermore, although it remains
+unknown which of these shifts came ﬁrst—loss of donor bacteria, bloom of pathogens,
+or worsening of symptoms—the progressive unfolding of these events raises the possi-
+bility that real-time tracking of patient microbiomes may enable early intervention and
+prevention of IBD ﬂares.
+Microbial and immune functions transfer across human hosts. We found that
+speciﬁc beneﬁcial functions transferred from donors to patients and could also persist.
+Many gut microbiome studies have focused on the beneﬁts of butyrate production, for
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+15
+
+example, and we were able to track the transfer of butyrate production genes from do-
+nor to patient. But even after receiving new butyrate genes from a donor, fecal trans-
+plant recipients did not show higher butyrate gene diversity compared to placebo-
+treated patients. This observation suggests that it may be difﬁcult to increase overall
+genetic capacity for butyrate production via fecal transplants. Of course, the diversity
+of genes related to a function does not necessarily reﬂect the activity of those bio-
+chemical pathways or the resulting amount of butyrate in the colon. Indeed, best-prac-
+tice methods to measure clinically relevant butyrate production are not well estab-
+lished, since butyrate is continually produced by the microbiome and absorbed by the
+epithelium. Instead, it may be more fruitful to focus on which butyrate-producing
+organisms are present (Are some microbes more productive than others?) and which
+nutrients (e.g., dietary ﬁbers) are available to those bacteria. Examining how coloniza-
+tion, persistence, and environmental context alter the activity of transferred gut bacte-
+ria is likely to bring us closer to understanding the pharmacokinetics of gut micro-
+biome engineering.
+We found that fecal transplants can also transfer unintended functions (e.g., antibi-
+otic-resistance genes and virulence factors). To date, no evidence suggests that such
+unintended transfers have appreciable clinical effects (1, 47), but possibilities must be
+considered, particularly since antibiotic resistance can transfer among gut bacterial
+species (47, 48). Although it is probably impossible to purge an intact fecal community
+of all antibiotic resistance, targeted microbial therapeutics may be able to minimize or
+avoid it.
+In the context of IBD, the function most critical to transfer and persist in the patient
+is the gut microbiome’s immune function. Our identiﬁcation of numerous reliably and
+strongly IgA-coated or -uncoated bacteria across all patients and donors indicated
+retention of immune interactions across hosts. Strongly IgA-coated bacteria included
+IBD-associated bacteria (R. gnavus and E. coli), as well as known commensals
+(Bacteroides and Blautia)—a ﬁnding that complicates the frameworks of research sug-
+gesting that IgA-coated bacteria are largely pathogenic and inﬂammatory (17, 38). It
+may be that IgA coats any bacterium colonizing the gut mucosa, whether friend or foe.
+This speculation ﬁts with recent reports of Bacteroides commensals using IgA to colo-
+nize the mucosa (39) and with the observation that IgA and gut bacteria tend to con-
+centrate in the outer layers of mucus in mice (49).
+Furthermore, we established that IgA coating of bacteria can be transferred across
+human hosts, leading us to speculate that transferring gut microbes may be broadly
+effective in triggering speciﬁc and nonspeciﬁc IgA coating and immune pathways.
+Because IgA can be polyreactive—a single immunoglobulin can recognize multiple
+antigens (50)—this transfer may not reﬂect a speciﬁc adaptive immune response of
+the recipient host but, at minimum, reﬂects that the transferred microbe retained the
+same IgA coating. In addition to bacteria that were reliably IgA-coated or -uncoated,
+many bacteria were variably IgA coated across patients, hinting that potential host
+speciﬁcity of immune interactions could complicate clinical responses to fecal trans-
+plants. We found that this variability was in part due to the strain speciﬁcity of IgA
+coating: strains that transferred from donor to patient tended to have similar patterns
+of IgA coating. This speciﬁcity seems to contrast with previous reports of polyreactive
+IgA activity in the mouse small intestine (50). It is highly unlikely that this signal
+resulted from the IgA coating of bacteria in the daily capsules, because of their small
+dosage (one capsule per day) and the necessity for those bacteria to pass through the
+small and large intestines.
+It is further possible that a donor’s immune context may play a role in the transfer
+of IgA coating from donor to patient, either because of donor-speciﬁc immune
+responses or other donor-speciﬁc factors like diet or microbial community. For exam-
+ple, a particular bacterial strain might express different surface receptors depending
+on the nutrients in a host’s diet, which may then alter what would otherwise be identi-
+cal immune interactions (44). We further speculate that an IgA-coated bacterium from
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+16
+
+a donor, transferred into a patient, may retain its IgA coating, not because the patient
+innately coats that bacterium but because the patient’s immune system “learns” the
+coating pattern from the donor’s IgA. In such a scenario, IgA coating and immune func-
+tion may display an “inertia” when transferred between hosts. Additional study into
+the immune factors that generate transferable and variable IgA responses would illu-
+minate our ability to manipulate host immunity via the gut microbiome.
+In summary, our study offers a ﬁrst look at the dynamics of colonization and persist-
+ence of microbes, their metabolic functions, and their immune functions in UC patients
+treated with FMT. Our dense time series analysis revealed surprising complexity in mi-
+crobial transfer and emphasized that for chronic diseases like IBD, continuing patient
+care may be necessary to maintain newly colonized bacteria. Our observations of
+broad transfer of microbes and their functions further demonstrate the power of FMT
+to alter a patient’s gut microbiome and begin to set the stage for developing targeted
+drugs that introduce and maintain speciﬁc microbes and functions to treat disease.
+MATERIALS AND METHODS
+Clinical cohort and sample collection. We obtained samples from a clinical cohort recruited at the
+University of Vermont Medical center in Burlington, VT (24). Patients collected approximately weekly
+stool samples at home or in the clinic, storing samples in RNAlater solution (Thermo Fisher) and mailing
+them to a processing facility at OpenBiome in Somerville, MA. During clinical evaluations at University of
+Vermont Medical Center, fresh stool samples were also collected at baseline and at 4, 12, and 18 weeks
+after the initiation of FMT. Fecal samples were either produced during the clinical visit or less than 24 h
+before the appointment. The latter samples were kept in a fridge and then transported on wet ice to the
+clinic. At the clinic, fresh samples were then mixed with a glycerol buffer (1 PBS [phosphate-buffered
+saline], 25% glycerol, 0.05% L-cysteine) and stored at 280°C (24).
+DNA extraction and sequencing. We triple-washed RNAlater from samples in 1 PBS and extracted
+DNA using a MoBio Powersoil DNA extraction kit. 16S rDNA libraries were prepared and sequenced by
+the Broad Institute Genomic Platform, using the Earth Microbiome Project protocols and paired-end
+250-bp reads on an Illumina MiSeq (51). Shotgun metagenomic libraries were likewise prepared by the
+Broad Institute using Nextera protocols and sequenced on an Illumina NextSeq.
+IgA sequencing. Samples were processed as described previously (17). We centrifuged glycerol-
+stored stool samples at 50  g at 4°C for 15 min and then washed them three times in 1 ml PBS/1% BSA
+at 8,000  g for 5 min. We collected the presort fraction as 20ml after resuspension before the ﬁnal wash
+and stored the washed samples at 280°C. We then resuspended the cell pellet in 25ml of 20% normal
+rat serum (Jackson ImmunoResearch) in PBS/1% bovine serum albumin (BSA) and incubated the samples
+for 20 min on ice. After incubation, we added 25ml of 1:12.5 a-mouse-IgA-PE (eBioscience; clone mA-
+6E1) to each sample and incubated samples on ice for 30 min. Finally, we washed samples three times in
+1 ml PBS/1% BSA, resuspended them in PBS/1% BSA, and transferred them to blue ﬁlter-cap tubes (VWR
+21008-948) for ﬂow sorting. We sorted an average of 50,000 cells from the IgA-positive and IgA-negative
+bacteria into sterile microcentrifuge tubes on the BD FACSAria II at the MIT Koch Institute Flow
+Cytometry Core (Cambridge, MA). We then centrifuged the samples, removed the supernatants, and
+resuspended the pellets in a ﬁnal volume of 10ml of sheath ﬂuid. Samples were stored at 280°C until
+DNA library prep, in which 2ml (;10,000 cells) was used directly as the template for PCR.
+Data analysis. We analyzed 16S data using Qiime2 (26), DADA2 (27), and custom Python scripts. We
+assigned taxonomic labels to 16S sequences using the SILVA database (52). We quantiﬁed the abun-
+dance of microbial species from shotgun metagenomic sequencing using MetaPhlAn2 (28). To visualize
+changes in alpha and beta diversity, we calculated the mean values of samples within 5-day windows
+and compared these values across treatments using a Mann-Whitney U test.
+To track the sources of various bacteria, we deﬁned all bacteria observed in any of a patient’s base-
+line samples and in the donor sample as “Shared,” all other bacteria present in baseline samples as
+“Patient,” all bacteria absent from baseline but shared with the donor as “Donor,” and ﬁnally all others as
+“Unknown.” We deﬁned “persistent” colonization as a bacterium (ASV or metagenomic species) that
+transferred exclusively from a donor and appeared in at least three samples after the initiation of FMT
+and remained present in at least one follow-up sample at ;18 weeks after initial transplant. We deﬁned
+“temporary” colonization similarly, except that such bacteria did not appear in any follow-up samples.
+Assigning sources using this strategy has its limitations. Because many strains within common bacte-
+rial taxa have identical 16S sequences, 16S-based techniques may register many unique strains as a sin-
+gle ASV. For example, in the case of E. coli, all transplant and placebo-treated patients and the donors
+shared a single E. coli ASV, but it is highly unlikely that every patient in fact shared the same E. coli strain.
+Thus, our strategy may occasionally falsely identify the source of a given ASV. Consequently, we focused
+on the overall frequency (occurrences) of ASVs from different sources, instead of the abundance of each
+ASV. This approach minimizes the signal from highly abundant but potentially incorrectly identiﬁed
+ASVs, since it weights all ASVs equally.
+To quantify the transfer of bacterial functions, we used ShortBRED (53) to determine the abundances
+of genetic functions of interest, including butyrate biosynthesis (54), mucin degradation (55), glycoside
+hydrolase activity (56), antimicrobial resistance (57), and virulence factors (58). We quantiﬁed the
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+17
+
+abundance of quinolone resistance in baseline samples and in the 10 days immediately after antibiotics
+stopped, and we compared these abundances using a Mann-Whitney U test. We visualized the abun-
+dance of genetic functions in FMT and placebo patients using the same ﬁve-day windows as described
+above. We identiﬁed the sources of antibiotic resistance genes and virulence factors in the same way we
+identiﬁed bacterial sources.
+To quantify the transfer of strains, we used two strategies: one based on ﬂexible genome content
+and the other on single-nucleotide variants. For the ﬁrst, we used a strategy similar to that described
+previously (34). Brieﬂy, we mapped metagenomic reads from each sample to reference genomes for
+each species using BWA (59) and quantiﬁed the number of reads mapping to each unique 1,000-bp seg-
+ment of the reference sequence. To compare the strains in two samples, we then compared the read
+depths in each sample across all 1,000-bp segments. We identiﬁed a strain match as those comparisons
+for which no segment with a read depth greater than the median for that sample was entirely absent
+from the other sample (Fig. S5). Comparisons that did not meet these criteria were called ambiguous.
+Comparisons where either sample had a median read depth less than 5 were not considered because of
+insufﬁcient abundance and read depth. To reconstruct the individual contributions of strain haplotypes,
+we used StrainFinder (31). To build the input alignments for StrainFinder, we used BWA (59) to align
+metagenomic reads from each sample to a database of AMPHORA genes (60)—a set of single-copy, uni-
+versally carried bacterial genes—from various gut bacteria. We used SAMtools (61) to tally the nucleo-
+tide identities found at each position and ﬁltered stringently to remove reads with poor mapping qual-
+ity, rare alleles, and sites with inordinate read depth. To provide greater depth of reads to StrainFinder’s
+maximum-likelihood model, we combined reads from samples across our time series as described
+above. We considered only genomes with a median read depth exceeding 50 in at least two samples.
+StrainFinder outputs the relative contributions of different strains to the abundance of a given species,
+so we normalized these values using the median read depth in each sample to better reﬂect the relative
+abundances of each strain across samples.
+To understand host-immune interactions, we analyzed 16S data from IgA-seq using Deblur (62). We
+calculated IgA coating scores as the log2-fold change between the IgA-coated and -uncoated fractions.
+We observed that IgA coating scores somewhat followed a normal distribution (see Fig. S6f); thus, for
+each sample, we categorized strongly IgA-coated or -uncoated bacteria as those bacteria that were
+more or less than the mean 6 1 standard deviation. To identify bacteria that were reliably IgA coated or
+uncoated across all samples or across all patients, we used a one sample t test, with an FDR-adjusted P
+value of ,0.1. We further evaluated whether these reliably IgA-coated or -uncoated ASVs were statisti-
+cally signiﬁcant by a permutation test, in which we randomly shufﬂed the ASV labels in each sample
+10,000 times and counted the occurrences of the same or higher number of reliably IgA-coated or
+-uncoated ASVs. We constructed a phylogenetic tree of 16S sequences using FastTree (63) and visualized
+it using iTOL (64).
+Data availability. We deposited raw sequence ﬁles of 16S, metagenomic, and IgA-sequencing
+results in NCBI’s SRA database (BioProject PRJNA475599). Metadata are included as supplementary
+tables which can be found at the accompanying GitHub repository (https://github.com/nathanieldchu/
+uc_fmt/tree/master/supplemental_materials). Additional 16S ASV tables and metagenomic species
+tables, as well as the code used to generate the ﬁgures and analyses, can be found at https://github
+.com/nathanieldchu/uc_fmt.
+SUPPLEMENTAL MATERIAL
+Supplemental material is available online only.
+FIG S1, PDF ﬁle, 0.1 MB.
+FIG S2, TIF ﬁle, 2.1 MB.
+FIG S3, PDF ﬁle, 2.1 MB.
+FIG S4, PDF ﬁle, 0.3 MB.
+FIG S5, PDF ﬁle, 1.3 MB.
+FIG S6, PDF ﬁle, 0.7 MB.
+FIG S7, TIF ﬁle, 1.8 MB.
+FIG S8, PDF ﬁle, 0.04 MB.
+FIG S9, TIF ﬁle, 1.9 MB.
+FIG S10, PDF ﬁle, 0.1 MB.
+ACKNOWLEDGMENTS
+We thank the people at OpenBiome for their collaboration on this clinical trial. We
+are grateful to the BioMicroCenter at MIT and Microbial Omics Core at the Broad
+Institute for their assistance with library preparation and sequencing. We thank Ellen W.
+Chu for substantive and editorial feedback on the manuscript.
+This study was supported by funding from the Center for Microbiome Informatics
+and Therapeutics. We also thank the National Science Foundation GRFP for supporting
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+18
+
+N.D.C. Funders had no role in study design, data collection and analysis, decision to
+publish, or preparation of the manuscript.
+N.D.C., J.W.C., L.T.T.N., M.B.S., Z.K., P.L.M., and E.J.A. designed the study. J.W.C. and P.L.M.
+coordinated patient recruitment, treatment, and sampling. M.B.S. and Z.K. coordinated
+fecal microbiota transplant production and delivery to the clinic. N.D.C., J.W.C., L.T.T.N.,
+M.B.S., and Z.K. coordinated sample collection. N.D.C. and L.T.T.N. coordinated data
+generation. S.M.K. performed IgA-seq experiments. N.D.C. analyzed the data. N.D.C. wrote
+the ﬁrst draft of the manuscript with substantive input from all authors.
+E.J.A. is a cofounder and shareholder of Finch Therapeutics, a company that
+specializes in microbiome-targeted therapeutics. P.L.M. is a Medical Director at Takeda
+Pharmaceutical Company. M.B.S. is a cofounder and CEO of Finch Therapeutics. Z.K. is a
+cofounder and Executive Vice President of Finch Therapeutics.
+REFERENCES
+1. Kassam Z, Lee CH, Yuan Y, Hunt RH. 2013. Fecal microbiota transplanta-
+tion for Clostridium difﬁcile infection: systematic review and meta-analysis.
+Am J Gastroenterol 108:500–508. https://doi.org/10.1038/ajg.2013.59.
+2. van Nood E, Vrieze A, Nieuwdorp M, Fuentes S, Zoetendal EG, de Vos WM,
+Visser CE, Kuijper EJ, Bartelsman JFWM, Tijssen JGP, Speelman P, Dijkgraaf
+MGW, Keller JJ. 2013. Duodenal infusion of donor feces for recurrent Clos-
+tridium difﬁcile. N Engl J Med 368:407–415. https://doi.org/10.1056/
+NEJMoa1205037.
+3. Lix LM, Graff LA, Walker JR, Clara I, Rawsthorne P, Rogala L, Miller N,
+Ediger J, Pretorius T, Bernstein CN. 2008. Longitudinal study of quality of
+life and psychological functioning for active, ﬂuctuating, and inactive dis-
+ease patterns in inﬂammatory bowel disease. Inﬂamm Bowel Dis
+14:1575–1584. https://doi.org/10.1002/ibd.20511.
+4. Morgan XC, Tickle TL, Sokol H, Gevers D, Devaney KL, Ward DV, Reyes JA,
+Shah SA, LeLeiko N, Snapper SB, Bousvaros A, Korzenik J, Sands BE, Xavier
+RJ, Huttenhower C. 2012. Dysfunction of the intestinal microbiome in
+inﬂammatory bowel disease and treatment. Genome Biol 13:R79. https://
+doi.org/10.1186/gb-2012-13-9-r79.
+5. Halfvarson J, Brislawn CJ, Lamendella R, Vázquez-Baeza Y, Walters WA,
+Bramer LM, D’Amato M, Bonﬁglio F, McDonald D, Gonzalez A, McClure EE,
+Dunklebarger MF, Knight R, Jansson JK. 2017. Dynamics of the human gut
+microbiome in inﬂammatory bowel disease. Nat Microbiol 2:17004.
+https://doi.org/10.1038/nmicrobiol.2017.4.
+6. Paramsothy S, Paramsothy R, Rubin DT, Kamm MA, Kaakoush NO, Mitchell
+HM, Castaño-Rodríguez N. 2017. Faecal microbiota transplantation for
+inﬂammatory bowel disease: a systematic review and meta-analysis. J
+Crohns Colitis 11:1180–1199. https://doi.org/10.1093/ecco-jcc/jjx063.
+7. Kelly CR, Kahn S, Kashyap P, Laine L, Rubin D, Atreja A, Moore T, Wu G.
+2015. Update on fecal microbiota transplantation 2015: indications, meth-
+odologies, mechanisms, and outlook. Gastroenterology 149:223–237.
+https://doi.org/10.1053/j.gastro.2015.05.008.
+8. Ott SJ, Waetzig GH, Rehman A, Moltzau-Anderson J, Bharti R, Grasis JA,
+Cassidy L, Tholey A, Fickenscher H, Seegert D, Rosenstiel P, Schreiber S.
+2017. Efﬁcacy of sterile fecal ﬁltrate transfer for treating patients with
+Clostridium difﬁcile infection. Gastroenterology 152:799–811.e7. https://
+doi.org/10.1053/j.gastro.2016.11.010.
+9. Donohoe DR, Garge N, Zhang X, Sun W, O’Connell TM, Bunger MK,
+Bultman SJ. 2011. The microbiome and butyrate regulate energy metabo-
+lism and autophagy in the mammalian colon. Cell Metab 13:517–526.
+https://doi.org/10.1016/j.cmet.2011.02.018.
+10. Inan MS, Rasoulpour RJ, Yin L, Hubbard AK, Rosenberg DW, Giardina C.
+2000. The luminal short-chain fatty acid butyrate modulates NF-kB activ-
+ity in a human colonic epithelial cell line. Gastroenterology 118:724–734.
+https://doi.org/10.1016/S0016-5085(00)70142-9.
+11. Chang PV, Hao L, Offermanns S, Medzhitov R. 2014. The microbial metab-
+olite butyrate regulates intestinal macrophage function via histone
+deacetylase inhibition. Proc Natl Acad Sci U S A 111:2247–2252. https://
+doi.org/10.1073/pnas.1322269111.
+12. Furusawa Y, Obata Y, Fukuda S, Endo TA, Nakato G, Takahashi D,
+Nakanishi Y, Uetake C, Kato K, Kato T, Takahashi M, Fukuda NN, Murakami
+S, Miyauchi E, Hino S, Atarashi K, Onawa S, Fujimura Y, Lockett T, Clarke
+JM, Topping DL, Tomita M, Hori S, Ohara O, Morita T, Koseki H, Kikuchi J,
+Honda K, Hase K, Ohno H. 2013. Commensal microbe-derived butyrate
+induces
+the
+differentiation of
+colonic
+regulatory T
+cells.
+Nature
+504:446–450. https://doi.org/10.1038/nature12721.
+13. Säemann MD, Böhmig GA, Österreicher CH, Burtscher H, Parolini O,
+Diakos C, Stöckl J, Hörl WH, Zlabinger GJ. 2000. Anti-inﬂammatory effects
+of sodium butyrate on human monocytes: potent inhibition of IL-12 and
+upregulation of IL-10 production. FASEB J 14:2380–2382. https://doi.org/
+10.1096/fj.00-0359fje.
+14. Arpaia N, Campbell C, Fan X, Dikiy S, van der Veeken J, deRoos P, Liu H,
+Cross JR, Pfeffer K, Coffer PJ, Rudensky AY. 2013. Metabolites produced
+by commensal bacteria promote peripheral regulatory T-cell generation.
+Nature 504:451–455. https://doi.org/10.1038/nature12726.
+15. Millan B, Park H, Hotte N, Mathieu O, Burguiere P, Tompkins TA, Kao D,
+Madsen KL. 2016. Fecal microbial transplants reduce antibiotic-resistant
+genes in patients with recurrent Clostridium difﬁcile infection. Clin Infect
+Dis 62:1479–1486. https://doi.org/10.1093/cid/ciw185.
+16. Ivanov II, Atarashi K, Manel N, Brodie EL, Shima T, Karaoz U, Wei D,
+Goldfarb KC, Santee CA, Lynch SV, Tanoue T, Imaoka A, Itoh K, Takeda K,
+Umesaki Y, Honda K, Littman DR. 2009. Induction of intestinal Th17 cells
+by segmented ﬁlamentous bacteria. Cell 139:485–498. https://doi.org/10
+.1016/j.cell.2009.09.033.
+17. Palm NW, de Zoete MR, Cullen TW, Barry NA, Stefanowski J, Hao L,
+Degnan PH, Hu J, Peter I, Zhang W, Ruggiero E, Cho JH, Goodman AL,
+Flavell RA. 2014. Immunoglobulin A coating identiﬁes colitogenic bacte-
+ria in inﬂammatory bowel disease. Cell 158:1000–1010. https://doi.org/10
+.1016/j.cell.2014.08.006.
+18. de Agüero MG, Ganal-Vonarburg SC, Fuhrer T, Rupp S, Uchimura Y, Li H,
+Steinert A, Heikenwalder M, Hapfelmeier S, Sauer U, McCoy KD,
+Macpherson AJ. 2016. The maternal microbiota drives early postnatal
+innate immune development. Science 351:1296–1302. https://doi.org/10
+.1126/science.aad2571.
+19. Schwartz S, Friedberg I, Ivanov IV, Davidson LA, Goldsby JS, Dahl DB,
+Herman D, Wang M, Donovan SM, Chapkin RS. 2012. A metagenomic
+study of diet-dependent interaction between gut microbiota and host in
+infants reveals differences in immune response. Genome Biol 13:r32.
+https://doi.org/10.1186/gb-2012-13-4-r32.
+20. Moayyedi P, Surette MG, Kim PT, Libertucci J, Wolfe M, Onischi C,
+Armstrong D, Marshall JK, Kassam Z, Reinisch W, Lee CH. 2015. Fecal
+microbiota transplantation induces remission in patients with active ul-
+cerative colitis in a randomized controlled trial. Gastroenterology
+149:102–109.e6. https://doi.org/10.1053/j.gastro.2015.04.001.
+21. Paramsothy S, Kamm MA, Kaakoush NO, Walsh AJ, van den Bogaerde J,
+Samuel D, Leong RWL, Connor S, Ng W, Paramsothy R, Xuan W, Lin E,
+Mitchell HM, Borody TJ. 2017. Multidonor intensive faecal microbiota
+transplantation for active ulcerative colitis: a randomised placebo-con-
+trolled trial. Lancet Lond Engl 389:1218–1228. https://doi.org/10.1016/
+S0140-6736(17)30182-4.
+22. Rossen NG, Fuentes S, van der Spek MJ, Tijssen JG, Hartman JHA, Duﬂou
+A, Löwenberg M, van den Brink GR, Mathus-Vliegen EMH, de Vos WM,
+Zoetendal EG, D’Haens GR, Ponsioen CY. 2015. Findings from a random-
+ized controlled trial of fecal transplantation for patients with ulcerative
+colitis. Gastroenterology 149:110–118. https://doi.org/10.1053/j.gastro
+.2015.03.045.
+23. Costello SP, Hughes PA, Waters O, Bryant RV, Vincent AD, Blatchford P,
+Katsikeros R, Makanyanga J, Campaniello MA, Mavrangelos C, Rosewarne
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+19
+
+CP, Bickley C, Peters C, Schoeman MN, Conlon MA, Roberts-Thomson IC,
+Andrews JM. 2019. Effect of fecal microbiota transplantation on 8-week
+remission in patients with ulcerative colitis: a randomized clinical trial.
+JAMA 321:156–164. https://doi.org/10.1001/jama.2018.20046.
+24. Crothers J, Chu N, Nguyen LTT, Phillips M, Collins C, Fortner K, Del Rio R,
+Lavoie B, Callas P, Velez M, Elliott R, Wong WF, Vo E, Wilcox R, Smith M,
+Kassam Z, Budd R, Alm E, Mawe G, Moses P. Daily, oral FMT for long-term
+maintenance therapy in ulcerative colitis: results of a single-center, pro-
+spective, randomized pilot study. BMC Gastroenterology, in press.
+25. Sokol H, Pigneur B, Watterlot L, Lakhdari O, Bermúdez-Humarán LG,
+Gratadoux J-J, Blugeon S, Bridonneau C, Furet J-P, Corthier G, Grangette C,
+Vasquez N, Pochart P, Trugnan G, Thomas G, Blottière HM, Doré J, Marteau
+P, Seksik P, Langella P. 2008. Faecalibacterium prausnitzii is an anti-inﬂam-
+matory commensal bacterium identiﬁed by gut microbiota analysis of
+Crohn disease patients. Proc Natl Acad Sci U S A 105:16731–16736. https://
+doi.org/10.1073/pnas.0804812105.
+26. Bolyen E, Rideout JR, Dillon MR, Bokulich NA, Abnet C, Al-Ghalith GA,
+Alexander H, Alm EJ, Arumugam M, Asnicar F, Bai Y, Bisanz JE, Bittinger
+K, Brejnrod A, Brislawn CJ, Brown CT, Callahan BJ, Caraballo-Rodríguez
+AM, Chase J, Cope E, Silva RD, Dorrestein PC, Douglas GM, Durall DM,
+Duvallet C, Edwardson CF, Ernst M, Estaki M, Fouquier J, Gauglitz JM,
+Gibson DL, Gonzalez A, Gorlick K, Guo J, Hillmann B, Holmes S, Holste
+H, Huttenhower C, Huttley G, Janssen S, Jarmusch AK, Jiang L, Kaehler
+B, Kang KB, Keefe CR, Keim P, Kelley ST, Knights D, Koester I, Kosciolek
+T, et al. 2018. QIIME 2: reproducible, interactive, scalable, and extensi-
+ble microbiome data science. PeerJ Inc https://peerj.com/preprints/
+27295.
+27. Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJA, Holmes SP.
+2016. DADA2: high-resolution sample inference from Illumina amplicon
+data. Nat Methods 13:581–583. https://doi.org/10.1038/nmeth.3869.
+28. Truong DT, Franzosa EA, Tickle TL, Scholz M, Weingart G, Pasolli E, Tett A,
+Huttenhower C, Segata N. 2015. MetaPhlAn2 for enhanced metagenomic
+taxonomic proﬁling. Nat Methods 12:902–903. https://doi.org/10.1038/
+nmeth.3589.
+29. Staley C, Kelly CR, Brandt LJ, Khoruts A, Sadowsky MJ. 2016. Complete
+microbiota engraftment is not essential for recovery from recurrent Clos-
+tridium difﬁcile infection following fecal microbiota transplantation. mBio
+7:e01965-16. https://doi.org/10.1128/mBio.01965-16.
+30. Kelly CR, Khoruts A, Staley C, Sadowsky MJ, Abd M, Alani M, Bakow B,
+Curran P, McKenney J, Tisch A, Reinert SE, Machan JT, Brandt LJ. 2016.
+Effect of fecal microbiota transplantation on recurrence in multiply recur-
+rent Clostridium difﬁcile infection: a randomized trial. Ann Intern Med
+165:609–616. https://doi.org/10.7326/M16-0271.
+31. Smillie CS, Sauk J, Gevers D, Friedman J, Sung J, Youngster I, Hohmann EL,
+Staley C, Khoruts A, Sadowsky MJ, Allegretti JR, Smith MB, Xavier RJ, Alm
+EJ. 2018. Strain tracking reveals the determinants of bacterial engraft-
+ment in the human gut following fecal microbiota transplantation. Cell
+Host Microbe 23:229–240. https://doi.org/10.1016/j.chom.2018.01.003.
+32. Li SS, Zhu A, Benes V, Costea PI, Hercog R, Hildebrand F, Huerta-Cepas J,
+Nieuwdorp M, Salojärvi J, Voigt AY, Zeller G, Sunagawa S, de Vos WM,
+Bork P. 2016. Durable coexistence of donor and recipient strains after
+fecal microbiota transplantation. Science 352:586–589. https://doi.org/10
+.1126/science.aad8852.
+33. Guyatt G, Mitchell A, Irvine EJ, Singer J, Williams N, Goodacre R, Tompkins
+C. 1989. A new measure of health status for clinical trials in inﬂammatory
+bowel disease. Gastroenterology 96:804–810. https://doi.org/10.1016/
+0016-5085(89)90905-0.
+34. Brito IL, Gurry T, Zhao S, Huang K, Young SK, Shea TP, Naisilisili W, Jenkins
+AP, Jupiter SD, Gevers D, Alm EJ. 2019. Transmission of human-associated
+microbiota along family and social networks. Nat Microbiol 4:964–971.
+https://doi.org/10.1038/s41564-019-0409-6.
+35. Duvallet C, Gibbons SM, Gurry T, Irizarry RA, Alm EJ. 2017. Meta-analysis
+of gut microbiome studies identiﬁes disease-speciﬁc and shared
+responses. Nat Commun 8. https://doi.org/10.1038/s41467-017-01973-8.
+36. Dubberke ER, Mullane KM, Gerding DN, Lee CH, Louie TJ, Guthertz H,
+Jones C. 2016. Clearance of vancomycin-resistant enterococcus concomi-
+tant with administration of a microbiota-based drug targeted at recurrent
+Clostridium difﬁcile infection. Open Forum Infect Dis 3:ofw133. https://doi
+.org/10.1093/oﬁd/ofw133.
+37. Wei Y, Gong J, Zhu W, Guo D, Gu L, Li N, Li J. 2015. Fecal microbiota trans-
+plantation restores dysbiosis in patients with methicillin resistant Staphy-
+lococcus aureus enterocolitis. BMC Infect Dis 15:265. https://doi.org/10
+.1186/s12879-015-0973-1.
+38. Pabst O. 2012. New concepts in the generation and functions of IgA. Nat
+Rev Immunol 12:821–832. https://doi.org/10.1038/nri3322.
+39. Donaldson GP, Ladinsky MS, Yu KB, Sanders JG, Yoo BB, Chou W-C,
+Conner ME, Earl AM, Knight R, Bjorkman PJ, Mazmanian SK. 2018. Gut
+microbiota utilize immunoglobulin A for mucosal colonization. Science
+360:795–800. https://doi.org/10.1126/science.aaq0926.
+40. McLoughlin K, Schluter J, Rakoff-Nahoum S, Smith AL, Foster KR. 2016.
+Host selection of microbiota via differential adhesion. Cell Host Microbe
+19:550–559. https://doi.org/10.1016/j.chom.2016.02.021.
+41. Peterson DA, McNulty NP, Guruge JL, Gordon JI. 2007. IgA response to
+symbiotic bacteria as a mediator of gut homeostasis. Cell Host Microbe
+2:328–339. https://doi.org/10.1016/j.chom.2007.09.013.
+42. Kearney SM, Gibbons SM, Erdman SE, Alm EJ. 2018. Orthogonal dietary
+niche enables reversible engraftment of a gut bacterial commensal. Cell
+Rep 24:1842–1851. https://doi.org/10.1016/j.celrep.2018.07.032.
+43. Hall AB, Yassour M, Sauk J, Garner A, Jiang X, Arthur T, Lagoudas GK,
+Vatanen T, Fornelos N, Wilson R, Bertha M, Cohen M, Garber J, Khalili H,
+Gevers D, Ananthakrishnan AN, Kugathasan S, Lander ES, Blainey P,
+Vlamakis H, Xavier RJ, Huttenhower C. 2017. A novel Ruminococcus gna-
+vus clade enriched in inﬂammatory bowel disease patients. Genome Med
+9:103. https://doi.org/10.1186/s13073-017-0490-5.
+44. Wegorzewska MM, Glowacki RWP, Hsieh SA, Donermeyer DL, Hickey CA,
+Horvath SC, Martens EC, Stappenbeck TS, Allen PM. 2019. Diet modulates
+colonic T cell responses by regulating the expression of a Bacteroides the-
+taiotaomicron antigen. Sci Immunol 4:eaau9079. https://doi.org/10.1126/
+sciimmunol.aau9079.
+45. Shepherd ES, DeLoache WC, Pruss KM, Whitaker WR, Sonnenburg JL.
+2018. An exclusive metabolic niche enables strain engraftment in the
+gut microbiota. Nature 557:434–438. https://doi.org/10.1038/s41586
+-018-0092-4.
+46. Sonnenburg ED, Zheng H, Joglekar P, Higginbottom SK, Firbank SJ,
+Bolam DN, Sonnenburg JL. 2010. Speciﬁcity of polysaccharide use in in-
+testinal bacteroides species determines diet-induced microbiota altera-
+tions. Cell 141:1241–1252. https://doi.org/10.1016/j.cell.2010.05.005.
+47. Wang S, Xu M, Wang W, Cao X, Piao M, Khan S, Yan F, Cao H, Wang B. 2016.
+Systematic review: adverse events of fecal microbiota transplantation. PLoS
+One 11:e0161174. https://doi.org/10.1371/journal.pone.0161174.
+48. Smillie CS, Smith MB, Friedman J, Cordero OX, David LA, Alm EJ. 2011.
+Ecology drives a global network of gene exchange connecting the human
+microbiome. Nature 480:241–244. https://doi.org/10.1038/nature10571.
+49. Rogier EW, Frantz AL, Bruno MEC, Kaetzel CS. 2014. Secretory IgA is con-
+centrated in the outer layer of colonic mucus along with gut bacteria.
+Pathogens 3:390–403. https://doi.org/10.3390/pathogens3020390.
+50. Bunker JJ, Erickson SA, Flynn TM, Henry C, Koval JC, Meisel M, Jabri B,
+Antonopoulos DA, Wilson PC, Bendelac A. 2017. Natural polyreactive IgA
+antibodies coat the intestinal microbiota. Science 358:eaan6619. https://
+doi.org/10.1126/science.aan6619.
+51. Caporaso JG, Lauber CL, Walters WA, Berg-Lyons D, Lozupone CA,
+Turnbaugh PJ, Fierer N, Knight R. 2011. Global patterns of 16S rRNA diver-
+sity at a depth of millions of sequences per sample. Proc Natl Acad Sci
+108:4516–4522. https://doi.org/10.1073/pnas.1000080107.
+52. Quast C, Pruesse E, Yilmaz P, Gerken J, Schweer T, Yarza P, Peplies J,
+Glöckner FO. 2013. The SILVA ribosomal RNA gene database project:
+improved data processing and web-based tools. Nucleic Acids Res 41:
+D590–D596. https://doi.org/10.1093/nar/gks1219.
+53. Kaminski J, Gibson MK, Franzosa EA, Segata N, Dantas G, Huttenhower C.
+2015. High-speciﬁcity targeted functional proﬁling in microbial commun-
+ities with ShortBRED. PLoS Comput Biol 11:e1004557. https://doi.org/10
+.1371/journal.pcbi.1004557.
+54. Vital M, Karch A, Pieper DH. 2017. Colonic butyrate-producing commun-
+ities in humans: an overview using omics data. mSystems 2:e00130-17.
+https://doi.org/10.1128/mSystems.00130-17.
+55. Ravcheev DA, Thiele I. 2017. Comparative genomic analysis of the human
+gut microbiome reveals a broad distribution of metabolic pathways for
+the degradation of host-synthetized mucin glycans and utilization of
+mucin-derived monosaccharides. Front Genet 8:111. https://doi.org/10
+.3389/fgene.2017.00111.
+56. Lombard V, Golaconda Ramulu H, Drula E, Coutinho PM, Henrissat B.
+2014. The carbohydrate-active enzymes database (CAZy) in 2013. Nucleic
+Acids Res 42:D490–D495. https://doi.org/10.1093/nar/gkt1178.
+57. Jia B, Raphenya AR, Alcock B, Waglechner N, Guo P, Tsang KK, Lago BA,
+Dave BM, Pereira S, Sharma AN, Doshi S, Courtot M, Lo R, Williams LE, Frye
+JG, Elsayegh T, Sardar D, Westman EL, Pawlowski AC, Johnson TA, Brinkman
+FSL, Wright GD, McArthur AG. 2017. CARD 2017: expansion and model-
+Chu et al.
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+20
+
+centric curation of the comprehensive antibiotic resistance database.
+Nucleic Acids Res 45:D566–D573. https://doi.org/10.1093/nar/gkw1004.
+58. Chen L, Zheng D, Liu B, Yang J, Jin Q. 2016. VFDB 2016: hierarchical and
+reﬁned dataset for big data analysis—10 years on. Nucleic Acids Res 44:
+D694–D697. https://doi.org/10.1093/nar/gkv1239.
+59. Li H, Durbin R. 2010. Fast and accurate long-read alignment with Bur-
+rows-Wheeler transform. Bioinformatics 26:589–595. https://doi.org/10
+.1093/bioinformatics/btp698.
+60. Wu M, Eisen JA. 2008. A simple, fast, and accurate method of phylogenomic
+inference. Genome Biol 9:R151. https://doi.org/10.1186/gb-2008-9-10-r151.
+61. Li H, Handsaker B, Wysoker A, Fennell T, Ruan J, Homer N, Marth G,
+Abecasis G, Durbin R, 1000 Genome Project Data Processing Subgroup.
+2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics
+25:2078–2079. https://doi.org/10.1093/bioinformatics/btp352.
+62. Amir A, McDonald D, Navas-Molina JA, Kopylova E, Morton JT, Xu ZZ,
+Kightley EP, Thompson LR, Hyde ER, Gonzalez A, Knight R. 2017. Deblur rap-
+idly resolves single-nucleotide community sequence patterns. mSystems 2:
+e00191-16. https://doi.org/10.1128/mSystems.00191-16.
+63. Price MN, Dehal PS, Arkin AP. 2010. FastTree 2: approximately maximum-
+likelihood trees for large alignments. PLoS One 5:e9490. https://doi.org/
+10.1371/journal.pone.0009490.
+64. Letunic I, Bork P. 2019. Interactive Tree Of Life (iTOL) v4: recent updates
+and new developments. Nucleic Acids Res 47:W256–W259. https://doi
+.org/10.1093/nar/gkz239.
+Dynamics of Fecal Transplant in IBD
+®
+July/August 2021
+Volume 12
+Issue 4
+e00975-21
+mbio.asm.org
+21

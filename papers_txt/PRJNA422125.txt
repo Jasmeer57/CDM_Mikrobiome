@@ -1,0 +1,821 @@
+ 
+ 
+MUCIN DEGRADATION NICHE AS A DRIVER OF MICROBIOME 
+COMPOSITION AND AKKERMANSIA MUCINIPHILA ABUNDANCE IN A 
+DYNAMIC GUT MODEL IS DONOR INDEPENDENT  
+ 
+Van Herreweghen Florence1, De Paepe Kim1, Roume Hugo2, Kerckhof Frederiek-Maarten1, 
+Van de Wiele Tom11 
+ 
+1. Center for Microbial Ecology and Technology (CMET), Ghent University, Ghent, 
+Belgium 
+2. National Institute for Agricultural Research (INRA), Paris, France 
+Key words: Simulator of the Human Intestinal Microbial Ecosystem (SHIME), Mucin, pH, 
+human colonic bacteria, microbiota, inter-individual variability 
+ 
+This study demonstrates that host glycan presence, rather than colonic pH is a more important 
+driver of microbiome and exceeds differences in microbiome composition between 
+individuals. 
+Abstract 
+Akkermansia muciniphila, an abundant mucin degrading intestinal bacterium, has been correlated 
+with human health in various studies. The in vitro SHIME model was used to reach a mechanistic 
+understanding of A. muciniphila’s colonization preferences and its response to environmental 
+parameters such as colon pH and mucins. These insight can help to identify the optimal conditions for 
+                                                          
+1 Corresponding author: Tom van de Wiele 
+Coupure Links 653, 9000 Ghent, Belgium 
+T: +32 (0)9 264 59 76 
+F: / 
+Tom.vandewiele@ugent.be 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+successful in vivo application. After a period of mucin deprivation, we found that mucin 
+supplementation resulted in significantly different microbial communities, with more Akkermansia, 
+Bacteroides and Ruminococcus. Mucin treatment accounted for 26% of the observed variation in the 
+microbial community at OTU level (p=0.001), whereas the donor effect was limited (8%) (p=0.035), 
+indicating mucins to constitute an important ecological niche shaping the microbiota composition. 
+The effect of colonic pH had a less profound impact on the microbiome with both pH and donor 
+origin explaining around 10% of the variability in the dataset. Yet, higher simulated colonic pH had a 
+positive impact on Akkermansia abundance while short chain fatty acid analysis displayed a 
+preference for propionate production with higher colonic pH. Our results show that mucins as 
+nutritional resource are a more important modulator of the gut microbiome than colon pH as 
+environmental factor. 
+Introduction 
+Akkermansia muciniphila is a mucin-degrading member of the human gut microbiota and over the 
+past decade its abundance has been linked with gut health (Collado et al., 2007, Png et al., 2010, 
+Wang et al., 2011, Zhang et al., 2013). In a study with obese mice on a high-fat diet, it was shown 
+that administration of A. muciniphila reversed insulin resistance, dyslipidemia, metabolic 
+endotoxemia and fat mass gain (Everard et al., 2013). Plovier et al. (2017) discovered that the 
+beneficial effects are at least partly due to a specific outer membrane protein. Apart from oral 
+administration of A. muciniphila, uptake of dietary compounds such as fish oil and cranberry extract 
+also increased A. muciniphila abundances and led to healthier mice (Anhe et al., 2015, Caesar et al., 
+2015). Other studies have shown an increased abundance of A. muciniphila in subjects with colon 
+cancer, which might be explained by the overexpression of certain mucin types in colon cancer (Weir 
+et al., 2013, Borges-Canha et al., 2015). Considering the various and far-reaching consequences of 
+changes in microbial community composition and activity, there is a need to investigate the many 
+forces that shape the microbial community, including various nutrient sources, antimicrobial 
+compounds, ionic conditions and gut pH (Duncan et al., 2009). 
+One dominant factor that influences the gut microbial community composition is the influx of glycans 
+into the colon, both from diet and host mucosal secretions. As opposed to dietary glycans that vary 
+in composition and supply, the host derived glycans from the mucus layer present a more continuous 
+source of nutrients. Mucin glycans are composed of O-glycosylated, and to a lesser extent N-
+glycosylated, protein backbones, with glycosyl chains of 2-12 monosaccharides, consisting of mainly 
+galactose, fucose, N-acetylgalactosamine, N-acetylglucosamine, mannose and sialic acid (Lai et al., 
+2009). Continuous mucin production by the goblet cells and mucus desquamation contribute both to 
+mucin presence in the mucus layer as in the lumen of the colon (Atuma et al., 2001, Faure et al., 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+2002, Johansson, 2012). Previously, it was thought that mucin degradation was detrimental for gut 
+health but it is now clear that it is part of a normal turn-over process (Norin et al., 1985). Due to the 
+complexity of the mucin structure and the variation in glycosylation, a wide variety of specific 
+enzymes are needed for its degradation, such as galactosidase, sialidase, fucosidase and N-
+acetylgalactosaminidase (Tailford et al., 2015). This means that only few species have the enzymatic 
+capacity for initiating partial or full mucin degradation, including A. muciniphila, Bacteroides 
+thetaiotaomicron, B. fragilis, Ruminococcus gnavus, R. torques, Bifidobacterium bifidum (Hoskins et 
+al., 1985, Martens et al., 2008, Png et al., 2010, Marcobal et al., 2011, Berry et al., 2013). 
+Degradation of mucins leads to the release of less complex carbohydrates and the production of 
+organic acids like acetate, lactate and propionate, some of which can be used by other bacteria, as 
+part of a microbial food chain, to produce butyrate or other end products. The presence and the 
+activity of mucin degrading species in the mucus layer, close to the host cells, may have strong 
+effects, both positive and negative, on gut health. The role of mucins in microbial community 
+dynamics and host-microbe interactions therefore requires further study.  
+Using SHIME as a dynamic model of the human gut and a human microbial inoculum with high 
+reported Akkermansia abundance (Van den Abbeele et al., 2011, Van den Abbeele et al., 2012, Van 
+den Abbeele et al., 2013), we previously showed that mucin is a profound parameter impacting 
+colonization ability of Akkermansia. Additionally, its ability to colonize different in vitro colon regions 
+was also highly dependent on the prevailing pH (Van Herreweghen et al., 2017). 
+Colonic pH is determined by host secretions and microbial fermentation products, such as pH-
+lowering by short chain fatty acid (SCFA) synthesis. In the proximal colon, pH is slightly lower 
+compared to the distal colon, due to active carbohydrate fermentation leading to high amounts of 
+SCFA (Macfarlane et al., 1992). Besides the effect on the microbiota, pH also influences bile acid 
+solubility and cation availability (Scholz-Ahrens & Schrezenmeir, 2007). Information about the impact 
+of colonic pH towards the residing microbiota is rare and in the context of determining growth 
+optimum mostly focused on the effect towards single species (Walker et al., 2005, Duncan et al., 
+2009). 
+As our previous work only explored the effect of mucin and pH towards A. muciniphila in one 
+microbial background (=microbial inoculum from 1 human donor) (Van Herreweghen et al., 2017), 
+the current study aims at testing the biological reproducibility of our previous findings. SHIME 
+experiments were performed to study the effect of pH and the presence or absence of a host-glycan 
+degradation niche in colon compartments separately inoculated with the microbiota from eight 
+donors. This enabled us to elucidate whether the gut microbial response and A. muciniphila 
+colonization sensitivity to changes in mucin glycans and pH is dependent on the microbial 
+background or not.  
+Materials and methods 
+Chemicals, growth media and bacterial strains 
+Chemicals were obtained from Sigma (Bornem, Belgium), unless stated otherwise. The nutritional 
+medium for the SHIME consisted of (in g L-1) Arabic gum (1.0), starch (4) (Anco, Roeselare, Belgium), 
+xylan (1.0), pectin (2.0), D-(+)-glucose (0.4), yeast extract (3.0) (Oxoid Ltd., Basingstoke, Hampshire, 
+UK), peptone (1.0) (Oxoid Ltd., Basingstoke, Hampshire, UK), and commercial pig gastric mucin Type 
+II (4.0). The monosaccharide composition of mucin was (in g (100g DM)-1): L-arabinose (0.05), D-
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+xylose (0.04), D-mannose (0.28), D-galactose (7.47) and D-glucose (1.95). This medium was 
+autoclaved and acidified with 37% HCl to pH 2.0. The pancreatic juice contained (in g L-1) NaHCO3 
+(12.5), bile salts (6.0) (Difco, Bierbeek, Belgium) and pancreatin (0.9). 
+Faecal samples were collected from healthy donors between the age of 25-35 and prepared within 
+1h according to standard procedures (Molly et al., 1993). In short, aliquots (20 g) of freshly voided 
+faecal samples were diluted and homogenized with 100 mL 0.1 M phosphate buffer (8.8 g L-1 K2HPO4 
+and 6.8 g L-1 KH2PO4, pH 6.8) containing 1 g L-1 sodium thioglycolate as reducing agent. After removal 
+of the particulate material by centrifugation (2 min, 500 g) the faecal suspension was used as 
+inoculum. 
+Long-term dynamic in vitro gut model for the luminal colon microbiota (SHIME) 
+The long-term colonization of A. muciniphila within a mixed human gut microbiota was assessed in 
+the dynamic in vitro gut model, SHIME® (ProDigest-Ghent University, Ghent, Belgium). The model 
+consists of multiple compartments that simulate the stomach, the small intestine and the colon 
+regions (Van den Abbeele et al., 2010). Each anaerobic compartment was continuously stirred at 
+37°C and flushed with N2 (15 min/day) to ensure anaerobic conditions after sampling. On day 0, the 
+colon compartments were filled with nutritional medium and inoculated with 40 mL of 20% (w/v) 
+faecal slurry. Following an overnight static incubation of the colon compartments (16h), the stomach 
+and small intestine compartments operate on the fill-and-draw principle, with peristaltic pumps 
+adding nutritional medium and pancreatic juice three times a day and gradually emptying the small 
+intestine compartment into the colon compartments after gastro-intestinal digestion. The volume in 
+the colon compartments is kept constant by the simultaneous fluid flow in and out of compartments 
+(Possemiers et al., 2004). Samples were taken from the vessels, daily before new feed entered the 
+colon compartments. 
+Two SHIME experiments were performed in this study. The set-up of the mucin experiment, which 
+evaluates the effect of mucin deprivation and subsequent supplementation, is shown in Figure 1. 
+Eight colon vessels, with a retention time of 40 hours and a pH between 6.6-6.9 (distal colon pH), 
+were inoculated with the fecal suspension of eight donors. After supplementing a mucin-free 
+nutritional medium during the first 8 days, 8 g L-1 mucin  was delivered to the proximal colon vessel 
+on day 8, and from day 9 to 11, 4 g L-1 mucin were supplied. The set-up of the second experiment, 
+the pH experiment, is shown in Figure 2. Here eight colon vessels were inoculated with the faecal 
+suspension of four donors, with four colon vessels being kept at pH 6.6-6.9 (high pH, distal colon pH) 
+and four at pH 5.6-5.9 (low pH, proximal colon pH). All colon vessels had the same retention time 
+(40h) and were fed normal nutritional medium during 11 days. This experiment was repeated with 
+four different donors so that in total the pH experiment was carried out with eight fecal inocula.  
+Samples were taken for SCFA analysis, as described previously (Andersen et al., 2014) and for DNA 
+extraction (Geirnaert et al., 2015) so 16S rRNA gene amplicon sequencing (Illumina MiSeq) (De Paepe 
+et al., 2017)d and A. muciniphila qPCR quantification (Collado et al., 2007) could be performed. 
+Microbial community analysis 
+DNA-extraction was performed by a combination of chemical and mechanical lysis through a bead 
+beating step as reported by Geirnaert (2015). As starting material, the pellet obtained after 
+centrifuging 1 mL of luminal sample at 5,000 g for 10 min was used. The DNA quality was verified on 
+a 1.5 % (w/v) agarose gel. 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Total bacterial 16S rRNA gene and the species-specific 16S rRNA gene of A. muciniphila was 
+quantified with qPCR on 100- and 10- fold diluted DNA extracts, respectively, using a StepOnePlus 
+Real-Time PCR system (Applied Biosystems, Carlsbad, CA). Primers for total bacteria (338F 
+ACTCCTACGGGAGGCAGCAG, 518R ATTACCGCGGCTGCTGG) were used with the following cycling 
+program: 3 min at 95°C followed by 40 cycles of 1 min at 95°C, 40 s at 56°C and 40 s at 72°C (Ovreas 
+et al., 1997). A. muciniphila specific primers (AM1 GAGCACGTGAAGGTGGGGAC, AM2 
+CCTTGCGGTTGGCTTCAGAT) were used with the following cycling program: 5 min at 95°C followed by 
+40 cycles of 15 s at 95°C, 40 s at 60°C and 30 s at 72°C and a final extension at 72°C for 5 min (Collado 
+et al., 2007). The results of the A. muciniphila qPCR are shown as relative abundance, normalized to 
+the total bacterial count. The qPCR mix consisted of 14.19 µL sterile nuclease-free water (Sigma-
+aldrich, St. Louis, MO, US) and 2.5 µL Taq buffer (10x, with KCl) containing 0.025 units Recombinant 
+Taq DNA-polymerase µL−1, 0.2 mM dNTP Mix, 1.5 mM MgCl2 (Fermentas Molecular Biology Tools, 
+Waltham, MA, US), 0.2 µM Primer F, 0.2 µM Primer R, 0.05 µg µL−1 BSA (Roche Applied Science, 
+Penzberg, Germany) and 0.125 µL 20 x SYBR green (1:500 diluted from a 10 000 x SYBR green I 
+nucleic acid stain concentrate in DMSO, Sigma Aldrich, St. Louis, MO, US). For each sample, 5 µL 
+diluted DNA extract was added to 20 µL PCR-mix in technical triplicate in a qPCR plate and for each 
+qPCR assay, standard curves were created by a 10-fold dilution series of DNA of a plasmid containing 
+the targeted 16S rRNA gene fragment.  
+The bacterial community after 4, 8 and 11 days of incubation in the mucin experiment and after 4 
+and 11 days of the pH experiment was assessed using amplicon sequencing of the 16S rRNA gene (De 
+Paepe et al., 2017). DNA samples were sent out to LGC Genomics (Teddington, Middlesex, UK) for 
+library preparation and sequencing on an Illumina Miseq platform, as described by De Paepe et al. 
+(2017). The V3-V4 region of the 16S rRNA gene was amplified by PCR using primers (341F 
+CCTACGGGNGGCWGCAG, 785R GACTACHVGGGTATCTAAKCC) derived from Klindworth et al. (2013), 
+with a slight modification to the reverse primer by introducing another degenerated position (K) to 
+make it more universal. The sequencing data has been submitted to the NCBI (National Center for 
+Biotechnology Information) database under accession code SRP126579. The mothur software 
+package (v.1.39.5) and guidelines were used to process the amplicon data generated by LGC 
+Genomics and taxonomy assignment was obtained according to the RDP version 14 and silva.nr_v119 
+database, as described in detail by De Paepe et al. (2017) .   
+Statistical analysis 
+All statistical analysis were performed in R, version 3.2.2.  
+To visualize differences in microbial community composition between donors and conditions (mucin 
+deprived vs. rich and high vs. low pH), the most abundant genera were visualized in bargraphs 
+(Figures 3 and 8) and ordination and clustering techniques were applied. Additionally, the relative 
+abundance of some relevant genera, either significantly affected or abundantly present, were plotted 
+separately to improve interpretability (Figures S3 and S10). For these purposes, the shared file was 
+further processed to remove operational taxonomic units (OTU’s) with too low abundance according 
+to the arbitrary cut-off’s described by McMurdie &  Holmes (2014). An OTU is defined in this 
+manuscript as a collection of sequences, that are found to be more than 97% similar to one another 
+in the V3-V4 region of their 16S rRNA gene after applying hierarchical clustering (Schloss et al., 2009, 
+Schloss & Westcott, 2011, Wang et al., 2012, Chen et al., 2013). To deal with differences in sampling 
+depth, proportional data transformed on the common scale to the lowest number of reads was used 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+(McMurdie & Holmes, 2014). A table with the most abundant OTUs classified to the species level 
+using both RDP Seqmatch tool and NCBI BLAST is given in Table S1.   
+Principle Coordinate Analysis (PCoA; package stats) was conducted based on the abundance-based 
+Jaccard dissimilarity matrix (package vegan and visualized with ggplot2 (Cox, 2001, Anderson et al., 
+2006, Ramette, 2007, Oksanen, 2016) (Figures 5 and 10). This procedure was repeated on OTU and 
+genus level focusing on both the comparison between the donors and between the applied 
+conditions. On the genus level, weighed averages of genera abundances were a posteriori added to 
+the ordination plot using the wascores function in vegan (Oksanen, 2016). To confirm the trends, 
+observed data was clustered by means of an Unweighed Pair-Grouped Method using arithmetic 
+Averages (UPGMA) clustering method (Maechler, 2016). The significance of observed group 
+separations was assessed with a Permutational Multivariate Analysis of Variance (PERMANOVA) 
+using distance matrixes (package vegan) (Oksanen, 2016). Prior to this formal hypothesis testing, the 
+assumption of similar multivariate dispersions was evaluated, using betadisper function (package 
+vegan).  
+Interpretation of the results is preceded by a permutation test of the db RDA results to confirm that a 
+relationship exists between the response data and the exploratory variables. Using the same 
+principle, the significance of the first two constrained axis was evaluated. The constrained fraction of 
+the variance, explained by the exploratory variables is adjusted by applying a subtractive procedure 
+(Peres-Neto et al., 2006, Borcard et al., 2011). The results of the db RDA were visualized in a type 2 
+scaling correlation triplot (Figures S4 and S10 and Tables S3 and S5). The two first canonical axes 
+were annotated with the proportional constrained eigenvalues. Site scores were displayed as 
+weighed sums of species and the factor levels of the habitat explanatory variable were represented 
+as centroids. In order to improve readability of the graph, the number of OTUs represented as 
+vectors in the triplot were limited to the most relevant taxa. 
+In order to find statistically significant differences in species abundance between the different 
+conditions (mucin deprived vs. rich and high vs. low pH) the DESeq package was applied (α=0.01) as 
+suggested by McMurdie &  Holmes (2014) and results are shown in Figures 4 and 9 (Love et al., 
+2014). The factors mucin and pH were used in the design formula. Log2 fold change and p-values for 
+the significant different genera are given in Tables S2 and S4. 
+The abundance data of bacterial community at OTU level was used to construct the co-occurrence 
+networks in a similar fashion as described in De Vrieze et al. (2016). Co-occurrence networks were 
+built with similarity-based techniques, using Pearson correlation for OTU absolute abundance data in 
+a pair-wise manner. The threshold of p-values was set at 0.05 for all networks construction. The 
+threshold of coefficient correlation coefficients (r) for all network was set to 0.70 (positive 
+interactions) and -0.70 (negative interactions). The data from the mucin experiment (eight donors) at 
+day 4, 8 and 11 as well as from the pH experiment (eight donors, high and low) at day 11 were used 
+to construct the five co-occurrence networks (Figures S5-S7 and Figures S12-S13) to reveal the 
+succession patterns of the interaction among microorganisms over time in presence of mucin or 
+through value of pH.  
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Results 
+Impact of mucin addition on the bacterial community structure 
+The mucin experiment studied the effect of mucin deprivation and mucin supplementation on the 
+bacterial community of eight donors, as shown in the experimental set up (Figure 1). 
+Amplicon sequencing of the 16S rRNA gene was performed on samples taken at the end of the mucin 
+deprivation period (day 8) and at the end of the mucin supplementation period (day 11). The relative 
+abundances of the most abundant genera are shown in Figure 3. The addition of mucin to the feed 
+clearly induced changes to the bacterial community and increased the microbial diversity (p<0.01) 
+(Figure S1), but total bacterial count, as measured by qPCR, remained stable (Figure S2). For some 
+genera the shifts in relative abundance were apparent for all eight donors, such as the increase in the 
+relative abundance of the Bacteroides, Parabacteroides and Ruminococcus genera and a decrease in 
+the relative abundance of the genera Escherichia/Shigella (Figure 3, Figure S3). Other observed shifts 
+were more dependent on donor, emphasizing the importance of studying inter-individual variability. 
+For example, the relative abundance of Clostridium cluster XIVa was increased in donors 1, 6,7, and 8 
+but decreased in donors 4 and 5 (Figure 3, Figure S3). DESeq hypothesis testing was performed, 
+which showed the significantly (p<0.01) affected genera over all eight donors by supplementation of 
+mucin (Figure 4). This analysis showed that for example the DESeq normalized abundance of 
+Akkermansia, Bacteroides, Ruminocuccus and Sutterella were significantly increased in the mucin rich 
+bacterial community whereas the abundance of the Escherichia/Shigella and Roseburia genera was 
+significantly decreased by the addition of mucin (Figure 4, Table S2, Figure S3).  
+PCoA analyses at the genus level (Figure 5) revealed that the bacterial communities clustered 
+together based on mucin enrichment or mucin deprivation, and not based on donor. The cluster of 
+mucin-deprived and mucin-rich bacterial communities were significantly different from each other, 
+as confirmed by Permutational Multivariate Analysis of Variance (p=0.001). The mucin-deprived 
+bacterial community was characterized by, among others, representatives of the genera Roseburia 
+and Esherichia/Shigella while the mucin-rich bacterial community was characterized by a higher 
+relative abundance of representatives of the genera Ruminococcus, Bacteroides, Parabacteroides and 
+Akkermansia. 
+To quantify and distinguish between donor and treatment effects a partial distance based rda 
+analysis was performed, showing that mucin treatment accounted for 26% of the observed variation 
+in the microbial community at OTU level (p=0.001), whereas the donor effect was limited (8%) 
+(p=0.035) (Table S1; Figure S4). 
+Co-occurrence network analysis was performed on the bacterial communities at day 4, day 8 and at 
+day 11 (Figures S5-S7). Comparing the networks at day 4 and day 8 showed a reduction in network 
+complexity during mucin deprivation, with a decrease in edge to node ratio from 2.22 at day 4 to 
+1.34 at day 8 and a decrease in interaction clusters. Upon mucin administration, the network 
+complexity increased with an edge to node ratio of 1.34 at day 8 to 1.87 at day 11 and an increase in 
+interaction clusters was observed. Also, A. muciniphila appeared in the center of an interaction 
+cluster after mucin supplementation, which might indicate that it became a ‘hub’ or keystone species 
+in the mucin rich bacterial community. 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Akkermansia muciniphila is a known mucin degradation specialist and was in previous experiments 
+shown to strongly respond to mucin supplementation (Ottman et al., 2017). In this study, qPCR 
+analysis revealed that for six out of the eight donors (1,3,4,5,7,8), A. muciniphila abundances 
+decreased during mucin deprivation and increased rapidly as soon as mucin was supplemented to 
+the feed, with an average increase of 1.2*104 (± 2*103) (n=6) (Figure 6). This response was 
+independent of the abundance of A. muciniphila at the beginning of the experiment, since in the case 
+of donor 3, A. muciniphila abundance was below the quantification limit at the start the experiment, 
+but upon mucin supplementation, its relative abundance increased ten thousand fold. Donor 2, on 
+the other hand, started with a higher initial abundance of A. muciniphila but did not respond to the 
+mucin treatment. The relative abundance of A. muciniphila in donors 2 and 6 were close or under the 
+qPCR detection limit and also with 16S rRNA gene sequencing no A. muciniphila was detected. 
+The relative abundance of the SCFA produced during the mucin experiment did not vary much 
+between the donors, with an average of 70% (± 3%) acetate, 21% propionate (±3%) and 7% (±2%) 
+butyrate (Figure 7). During mucin deprivation, there was a significant decrease in proportional and 
+absolute concentrations of acetate (p<0.01) and butyrate (p<0.01) levels but addition of mucin to the 
+feed did not significantly impact the SCFA composition (p>0.05). No difference could be observed 
+between the SCFA profile for donors with an A. muciniphila response to the mucin treatment 
+(1,3,4,5,7,8) compared to the donors without this response (2 and 6), so the increase in 
+A. muciniphila did not affect the SCFA profiles of these responsive donors in the in vitro gut model.  
+ 
+Impact of pH on the bacterial community structure 
+The pH experiment (Figure 2) was set up to investigate whether the colonization preference of 
+A. muciniphila for the distal colon due to its high pH, is dependent on initial A. muciniphila 
+abundances and/or on the composition of the bacterial community.  
+16S rRNA gene amplicon sequencing showed that the differences between the bacterial communities 
+at high (6.6-6.9) and low pH (5.6-5.9) were dependent on the donor (Figure 8, Figure S10). 
+Bacteroides spp. was more abundant at high pH in donor 4, more abundant at low pH in donor 5 and 
+7 and equally abundant at both pH ranges in the other donors. Clostridium cluster XIVa species were 
+less abundant at low pH in donors 1,3,4 and 6 but more abundant at high pH in donors 2 and 5 
+(Figure 8, Figure S10). A. muciniphila on the other hand, was, when detected, always more abundant 
+at high pH (Figure 8). Microbial diversity in the communities was similar at high and low pH (p>0.05) 
+as was the total bacterial count (Figure S7 and S8). Using DESeq hypothesis testing, genera were 
+identified that were significantly different in abundance between low and high pH over all eight 
+donors (Figure 9). Most pronounced differences were higher relative abundances of Akkermansia, 
+Escherichia/Shigella and Ruminococcus at high pH (Figure 9, Table S4, Figure S10). A PCoA biplot 
+showed both donor and pH acted as determining factors for bacterial community composition, with 
+clustering of the communities according to pH, while maintaining high variability between donors 
+(Figure 10). To quantify and distinguish between donor and pH effects a partial distance based rda 
+analysis was performed, showing that pH (10%) and donor (9%) effects were limited but significant 
+(p=0.006, resp. p=0.046) (Figure S11 and Table S5). 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Co-occurrence network analysis at day 11 resulted in a high and low pH network (Figures S12-S13). 
+Both networks were of similar complexity with an edge to node ratio of 1.49 for the low pH co-
+occurrence network and of 1.56 for the high pH network. 
+qPCR analysis of A. muciniphila relative abundances over time, showed that for all donors except 
+one, A. muciniphila colonized the distal colon compartment at high pH (6.6-6.9) more abundantly 
+than at low pH (5.6-5.9) (p=0.02), with average relative abundances of 2.33*10-2 (± 2.2*10-2) and 
+6.76*10-6 (±1.28*10-5 ) respectively. This difference was not observed for donor A, where 
+A. muciniphila abundances were very low at both low and high pH (Figure 11). pH also impacted the 
+fermentation activity, with high pH values resulting in significantly more acetate and propionate and 
+low pH values resulting in more butyrate (p<0.01). Yet, no significant differences in branched SCFA 
+were observed (Figure 12). Only for donor A at low pH a proportionally higher propionate level was 
+observed than at high pH. Overall, there was a higher total SCFA production at high pH compared to 
+low pH (p<0.01). 
+Discussion 
+Our finding that mucins as nutritional resource are a more important modulator of the gut 
+microbiome than colon pH as environmental factor indicates that mucin degradation represents a 
+relevant ecological niche shaping the composition of the simulated colon microbiota. With 
+(relatively) higher levels of Akkermansia, Bacteroides, Ruminococcus, Sutterella and Arthrobacter, the 
+cluster of mucin-rich bacterial communities was significantly different from the mucin-deprived 
+communities. Microbiome variation explained by mucin presence (26%) exceeded the variability in 
+microbiome composition that is explained by donor (8%), whereas the variance explained by the 
+environmental factor (pH) did not (10% resp., 9%). This finding was characterized by a high biological 
+reproducibility across the microbiota from 8 human donors. In spite of the increased nutritional 
+value of the feed (addition of mucin) the total bacterial count remained constant, indicating that the 
+carrying capacity of the in vitro colon ecosystem had been reached. This was also illustrated by the 
+increase in above-mentioned genera corresponding with a decrease of for example Roseburia and 
+Escherichia/Shigella. The addition of mucin and the change it caused in the bacterial community 
+composition did not coincide with a change in SCFA production profile. Rather than an increase in 
+microbial metabolic activity this could indicate that mucin supplementation induces a shift in 
+microbial metabolism from fiber degradation during the mucin deprivation period to proportionally 
+more mucin degradation during the mucin supplementation period. Changing the profile of substrate 
+degradation is not a common trait across all members of the microbiota, but primarily reserved for 
+‘glycan-generalists’ like Bacteroides species. These have broad glycan-degradation abilities, both diet- 
+and host-derived, and they can change their metabolism upon changing nutrient availability (Salyers 
+et al., 1977, Marcobal et al., 2011, Koropatkin et al., 2012, Marcobal et al., 2013). It was already 
+shown in germfree mice, fed a high fat/low fiber diet and colonized with E. rectale and 
+B. thetaiotaomicron, that B. thetaiotaomicron changes its metabolism to mucin degradation 
+(Mahowald et al., 2009). In our study however, the fiber content remained constant and mucin was 
+supplemented as an additional energy source. This indicates some Bacteroides spp. to have a 
+preference for mucin degradation compared to fiber degradation. The higher abundances of 
+Akkermansia and Ruminococcus in the mucin rich community are expected since A. muciniphila 
+specialized in mucin degradation and several Ruminococcus spp. are known to degrade mucin, 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+although the extent of the degradation varies between species and strains (Png et al., 2010, Berry et 
+al., 2013, Crost et al., 2013). 
+A. muciniphila has been mentioned in multiple studies as correlated with human health and as a 
+potential probiotic, with recently promising results for the treatment of diabetes and obesity (Plovier 
+et al., 2017). In this study, the abundance of Akkermansia spp. was specifically influenced by the 
+mucin treatment, as demonstrated with a specific qPCR assay and 16S rRNA gene sequencing, with a 
+decrease in abundance during mucin deprivation and a sharp increase during mucin 
+supplementation. Akkermansia spp. are known as mucin degrading specialists (Berry et al., 2013), as 
+reflected by the high percentage of mucin-consumption related functions encoded in the small 
+genome of Akkermansia, as opposed to Bacteroides (Marcobal et al., 2013). Due to its specialization 
+in mucin degradation it is expected that Akkermansia abundances would decrease when no mucin in 
+available and respond rapidly to mucin supplementation. This was already shown for one donor with 
+specifically high Akkermansia abundance in a previous study (Van Herreweghen et al., 2017). In the 
+present study we show a similar response of Akkermansia to the mucin treatment in 6 out of 8 
+donors. Importantly, this response is independent of Akkermansia’s initial abundance. However, the 
+strength of the increase in abundance does vary between donors and this might be due to the 
+presence of other bacteria that can compete for the mucin degradation. Moreover, several studies 
+have suggested that bacteria adjust their metabolism depending on the identity of other bacteria in 
+the environment (Sonnenburg et al., 2006, Mahowald et al., 2009). This was exemplified by Png et al. 
+(2010) who showed that A. muciniphila grown on mucins in co-culture with non-mucolytic B. fragilis, 
+was less abundant and degraded less mucins compared to monoculture. So it is possible that some 
+species have the ability to discourage A. muciniphila from thriving on mucins, without actually 
+competing for the mucins. Our results show the dependence of A. muciniphila on mucin and thus 
+future in vivo (probiotic) applications of A. muciniphila might benefit from prebiotics that show 
+resemblance to mucin structures or compounds that can increase the mucin concentration, to 
+ensure abundant colonization. Promising results regarding the former strategy have already been 
+obtained by (Ottman et al., 2015) who demonstrated Akkermansia’s capacity to grow on human milk 
+oligosaccharides. Biotechnological production of (fucosylated) human milk oligosaccharides is already 
+a possibility (Petschacher & Nidetzky, 2016, Soetaert, 2016) and given the structural similarity 
+biotechnological production of mucin glycans, and resulting prebiotic applications, might not be too 
+far in the future? Additionally, certain fibers are capable of altering the secretion dynamic of colonic 
+mucus and could increase mucus turnover (Brownlee et al., 2007). Besides better protective 
+properties of the mucus layer by enhanced exclusion of trapped bacteria, this would increase mucin 
+released by desquamation. We posit here that this increase in mucin could be an endogenous 
+prebiotic-like treatment, stimulating mucin degradation without harming the mucus layer. In a rat 
+study, prebiotic treatment with inulin was posited to increase levels of ceacal mucin, which were 
+degraded along the colon and increased fecal A. muciniphila abundance (Van den Abbeele et al., 
+2011). Of course, more research is necessary as the expected increase in mucolytic bacteria might be 
+a risk for mucus layer structure and gut homeostasis. 
+Co-occurrence networks showed a decreased complexity in network structure during mucin 
+deprivation, which increased again after mucin supplementation. This increased complexity in co-
+occurrence network clusters may be an indication of mucin structural complexity requiring enhanced 
+cross-feeding interactions between bacteria in order to consume it as a nutritional resource. Cross-
+feeding between A. muciniphila and butyrate producing bacteria was already shown, however no 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+increased butyrate production after mucin supplementation was observed in our experiment (Belzer 
+et al., 2017). In contrast, the co-occurrence networks of the pH experiment, showed no difference in 
+complexity between high pH (6.6-6.9) and low pH (5.6-5.9). In contrast to mucin, the effect of colonic 
+pH had a less profound impact in the microbiome with donor origin explaining most of the variability 
+in the dataset an among others Bacteroides, Clostridium cluster XIVa and Parabacteroides preference 
+for high or low pH varied between the donors. To our knowledge, previous studies did not address 
+these inter-individual differences in response to pH, although not many studies have been done 
+regarding the impact of pH variation on specific bacteria within different complex microbial 
+communities.  
+Some interesting observations were noted: Bacteroides species typically display lower growth rates 
+at pH values lower than 6.5 and even become undetectable at pH lower than 5.5 (Walker et al., 2005, 
+Duncan et al., 2009). However, this study showed Bacteroides species from donors 5 and 7 to have a 
+preference for pH 5.6-5.9 over pH 6.6-6.9 . Secondly, members from the Clostridium cluster XIVa 
+were previously shown to better tolerate lower pH and to profit from the decrease in Bacteroides by 
+exploiting the available nutrients and increasing in numbers (Duncan et al., 2009). In our study, this 
+trade-off between Bacteroides and Clostridium cluster XIVa was not visible, but at the phylum level, 
+Firmicutes abundance was higher at low pH and Bacteroidetes at high pH for all donors except donor 
+5. Thirdly, some differences in community composition between high and low pH were consistent for 
+all donors. The increased relative abundance of Escherichia/Shigella, Ruminococcus and Akkermansia 
+at high pH and of Bifidobacterium at low pH are supportive of previous findings (Roe et al., 1998, 
+Walker et al., 2005, Duncan et al., 2009, Van Herreweghen et al., 2017). The sensitivity of A. 
+muciniphila to slightly acidic pH causes it to preferentially colonizes the distal colon, where the pH is 
+closer to neutral. Biotherapeutic application of A. muciniphila may thus need to consider protection 
+from pH until arrival at more neutral pH. The metabolic differences (SCFA profile) between high and 
+low pH were apparent for all the donors and show more butyrate at low pH and more propionate 
+and acetate at high pH. Butyrate production by human gut microbes typically occurs at the expense 
+of acetate. Our findings are in line with previous studies (Walker et al., 2005, Van Herreweghen et al., 
+2017) but the metabolic profile can only partially be linked to the bacterial composition. For 
+example, the increased propionate production at high pH may be due to higher amounts of 
+propionate-producing Akkermansia and Ruminococcus species (Derrien et al., 2004, Crost et al., 
+2013). Faecalibacterium might contribute to the higher butyrate concentration at low pH, but 
+butyrate producing Clostridium cluster XIVa was not more abundant at low pH in every donor. Thus 
+the pH might affect the metabolic activity of certain species more than their actual abundance. 
+Indeed, while the metabolic profile shows clear differences between low and high pH and almost no 
+variations between donors, the clustering of the bacterial communities according to pH is less clear, 
+and much more subjected to donor variability. 
+Inter-individual variability is a hallmark of microbiome composition in the human gut. While many 
+factors shape the microbiome over time, our study demonstrates that mucin presence, rather than 
+colonic pH is a more important driver of microbiome composition. Microbiome variation explained 
+by mucin presence even exceeds the variability in microbiome composition that is commonly 
+observed between individuals. The addition of host-glycans results in microbial communities with 
+higher abundance of Akkermansia, while simultaneously increasing the complexity of the co-
+occurrence networks and potentially making A. muciniphila a key player. Our previous findings of 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Akkermansia taking clear benefit from mucin presence and higher colonic pH (Van Herreweghen et 
+al., 2017), holds true for different biological backgrounds from different donors.  
+ 
+Acknowledgements 
+F.V.H. is a doctoral research fellow supported by the Agency for Innovation by Science and 
+Technology (Grant number 131774).  
+The authors would like to thank Jana De Bodt and Tim Lacoere for the technical support, Kim de 
+Paepe for the support in analyzing the Illumina data and for the statistical support.Bibliograpghy 
+ 
+Andersen SJ, Hennebel T, Gildemyn S, Coma M, Desloover J, Berton J, Tsukamoto J, Stevens C & 
+Rabaey K (2014) Electrolytic Membrane Extraction Enables Production of Fine Chemicals from 
+Biorefinery Sidestreams. Environ Sci Technol 48: 7135-7142. 
+Anderson MJ, Ellingsen KE & McArdle BH (2006) Multivariate dispersion as a measure of beta 
+diversity. Ecol Lett 9: 683-693. 
+Anhe FF, Roy D, Pilon G, et al. (2015) A polyphenol-rich cranberry extract protects from diet-induced 
+obesity, insulin resistance and intestinal inflammation in association with increased Akkermansia spp. 
+population in the gut microbiota of mice. Gut 64: 872-883. 
+Atuma C, Strugala V, Allen A & Holm L (2001) The adherent gastrointestinal mucus gel layer: 
+thickness and physical state in vivo. Am J Physiol-Gastr L 280: G922-G929. 
+Belzer C, Chia LW, Aalvink S, Chamlagain B, Piironen V, Knol J & de Vos WM (2017) Microbial 
+Metabolic Networks at the Mucus Layer Lead to Diet-Independent Butyrate and Vitamin B12 
+Production by Intestinal Symbionts. MBio 8. 
+Berry D, Stecher B, Schintlmeister A, et al. (2013) Host-compound foraging by intestinal microbiota 
+revealed by single-cell stable isotope probing. Proceedings of the National Academy of Sciences 110: 
+4720-4725. 
+Borcard D, Gillet F & Legendre P (2011) Numerical ecology with R. Springer, New York. 
+Borges-Canha M, Portela-Cidade JP, Dinis-Ribeiro M, Leite-Moreira AF & Pimentel-Nunes P (2015) 
+Role of colonic microbiota in colorectal carcinogenesis: A systematic review. Rev Esp Enferm Dig 107: 
+659-671. 
+Brownlee IA, Havler ME, Dettmar PW, Allen A & Pearson JP (2007) Colonic mucus: secretion and 
+turnover in relation to dietary fibre intake. Proceedings of the Nutrition Society 62: 245-249. 
+Caesar R, Tremaroli V, Kovatcheva-Datchary P, Cani PD & Backhed F (2015) Crosstalk between Gut 
+Microbiota and Dietary Lipids Aggravates WAT Inflammation through TLR Signaling. Cell Metab 22: 
+658-668. 
+Chen W, Zhang CK, Cheng YM, Zhang SW & Zhao HY (2013) A Comparison of Methods for Clustering 
+16S rRNA Sequences into OTUs. Plos One 8. 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Collado MC, Derrien M, Isolauri E, de Vos WM & Salminen S (2007) Intestinal Integrity and 
+Akkermansia muciniphila, a Mucin-Degrading Member of the Intestinal Microbiota Present in Infants, 
+Adults, and the Elderly. Applied and Environmental Microbiology 73: 7767-7770. 
+Cox TF (2001) Multidimensional scaling used in multivariate statistical process control. J Appl Stat 28: 
+365-378. 
+Crost EH, Tailford LE, Le Gall G, Fons M, Henrissat B & Juge N (2013) Utilisation of Mucin Glycans by 
+the Human Gut Symbiont Ruminococcus gnavus Is Strain-Dependent. Plos One 8. 
+De Paepe K, Kerckhof FM, Verspreet J, Courtin CM & Van de Wiele T (2017) Inter-individual 
+differences determine the outcome of wheat bran colonization by the human gut microbiome. 
+Environ Microbiol 19: 3251-3267. 
+De Vrieze J, Raport L, Roume H, Vilchez-Vargas R, Jauregui R, Pieper DH & Boon N (2016) The full-
+scale anaerobic digestion microbiome is represented by specific marker populations. Water Res 104: 
+101-110. 
+Derrien M, Vaughan EE, Plugge CM & de Vos WM (2004) Akkermansia muciniphila gen. nov., sp nov., 
+a human intestinal mucin-degrading bacterium. Int J Syst Evol Micr 54: 1469-1476. 
+Duncan SH, Louis P, Thomson JM & Flint HJ (2009) The role of pH in determining the species 
+composition of the human colonic microbiota. Environ Microbiol 11: 2112-2122. 
+Everard A, Belzer C, Geurts L, et al. (2013) Cross-talk between Akkermansia muciniphila and intestinal 
+epithelium controls diet-induced obesity. Proceedings of the National Academy of Sciences of the 
+United States of America 110: 9066-9071. 
+Faure M, Moennoz D, Montigon F, Fay LB, Breuille D, Finot PA, Ballevre O & Boza J (2002) 
+Development of a rapid and convenient method to purify mucins and determine their in vivo 
+synthesis rate in rats. Anal Biochem 307: 244-251. 
+Geirnaert A (2015) Probiotic potency of butyrate-producing bacteria for modulating the microbiome 
+and epithelial barrier in inflammatory bowel disease. PhD Thesis, Ghent University. 
+Geirnaert A, Wang J, Tinck M, et al. (2015) Interindividual differences in response to treatment with 
+butyrate-producing Butyricicoccus pullicaecorum 25-3(T) studied in an in vitro gut model. Fems 
+Microbiol Ecol 91. 
+Hoskins LC, Agustines M, Mckee WB, Boulding ET, Kriaris M & Niedermeyer G (1985) Mucin 
+Degradation in Human-Colon Ecosystems - Isolation and Properties of Fecal Strains That Degrade Abh 
+Blood-Group Antigens and Oligosaccharides from Mucin Glycoproteins. J Clin Invest 75: 944-953. 
+Johansson MEV (2012) Fast Renewal of the Distal Colonic Mucus Layers by the Surface Goblet Cells as 
+Measured by In Vivo Labeling of Mucin Glycoproteins. Plos One 7. 
+Klindworth A, Pruesse E, Schweer T, Peplies J, Quast C, Horn M & Glockner FO (2013) Evaluation of 
+general 16S ribosomal RNA gene PCR primers for classical and next-generation sequencing-based 
+diversity studies. Nucleic Acids Res 41: e1. 
+Koropatkin NM, Cameron EA & Martens EC (2012) How glycan metabolism shapes the human gut 
+microbiota. Nature Reviews Microbiology 10: 323-335. 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Kozich JJ, Westcott SL, Baxter NT, Highlander SK & Schloss PD (2013) Development of a dual-index 
+sequencing strategy and curation pipeline for analyzing amplicon sequence data on the MiSeq 
+Illumina sequencing platform. Appl Environ Microbiol 79: 5112-5120. 
+Lai SK, Wang YY, Wirtz D & Hanes J (2009) Micro- and macrorheology of mucus. Adv Drug Deliver Rev 
+61: 86-100. 
+Love MI, Huber W & Anders S (2014) Moderated estimation of fold change and dispersion for RNA-
+seq data with DESeq2. Genome Biol 15. 
+Macfarlane GT, Gibson GR & Cummings JH (1992) Comparison of Fermentation Reactions in Different 
+Regions of the Human Colon. J Appl Bacteriol 72: 57-64. 
+Maechler MR, P.; Struyf, A.; Hubert, M.; Hornik, K. (2016) cluster: Cluster Analysis Basics and 
+Extensions. R package version 2.0.4. p.^pp. 
+Mahowald MA, Rey FE, Seedorf H, et al. (2009) Characterizing a model human gut microbiota 
+composed of members of its two dominant bacterial phyla. Proceedings of the National Academy of 
+Sciences of the United States of America 106: 5859-5864. 
+Marcobal A, Southwick AM, Earle KA & Sonnenburg JL (2013) A refined palate: Bacterial consumption 
+of host glycans in the gut. Glycobiology 23: 1038-+. 
+Marcobal A, Barboza M, Sonnenburg ED, et al. (2011) Bacteroides in the Infant Gut Consume Milk 
+Oligosaccharides via Mucus-Utilization Pathways. Cell Host Microbe 10: 507-514. 
+Martens EC, Chiang HC & Gordon JI (2008) Mucosal Glycan Foraging Enhances Fitness and 
+Transmission of a Saccharolytic Human Gut Bacterial Symbiont. Cell Host Microbe 4: 447-457. 
+McMurdie PJ & Holmes S (2014) Waste not, want not: why rarefying microbiome data is 
+inadmissible. PLoS Comput Biol 10: e1003531. 
+Molly K, Vande Woestyne M & Verstraete W (1993) Development of a 5-step multi-chamber reactor 
+as a simulation of the human intestinal microbial ecosystem. Appl Microbiol Biotechnol 39: 254-258. 
+Norin KE, Gustafsson BE, Lindblad BS & Midtvedt T (1985) The Establishment of Some Microflora 
+Associated Biochemical Characteristics in Feces from Children during the 1st Years of Life. Acta 
+Paediatr Scand 74: 207-212. 
+Oksanen JB, G.; Friendly, M.; Kindt, R.; Legendre, P.; McGlinn, D.; Minchin, PR.; O'Hara, RB.; Simpson, 
+GL.; Solymos, P.; Stevens, H.; Szoecs, E.; Wagner, H. (2016) Community Ecology Package. R package 
+version 2.4-0. p.^pp. https://CRAN.R-project.org/package=vegan. . 
+Ottman N, Davids M, Martin R, Knol J, Smidt H, de Vos M & Belzer C (2015) Mucolytic activity of 
+Akkermansia muciniphila enables human milk degradation and growth. Host immunostimulation and 
+substrate utilization of the gut symbiont Akkermansia muciniphila. 
+Ottman, N., Davids, M., Suarez-Diez, M., Boeren, S., Schaap, P.J., Martins Dos Santos, V.A.P., Smidt, 
+H., Belzer, C. and de Vos, W.M., 2017. Genome-Scale Model and Omics Analysis of Metabolic 
+Capacities of Akkermansia muciniphila Reveal a Preferential Mucin-Degrading Lifestyle. Appl Environ 
+Microbiol 83. 
+Ovreas L, Forney L, Daae FL & Torsvik V (1997) Distribution of bacterioplankton in meromictic Lake 
+Saelenvannet, as determined by denaturing gradient gel electrophoresis of PCR-amplified gene 
+fragments coding for 16S rRNA. Appl Environ Microbiol 63: 3367-3373. 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Peres-Neto PR, Legendre P, Dray S & Borcard D (2006) Variation partitioning of species data matrices: 
+Estimation and comparison of fractions. Ecology 87: 2614-2625. 
+Petschacher B & Nidetzky B (2016) Biotechnological production of fucosylated human milk 
+oligosaccharides: Prokaryotic fucosyltransferases and their use in biocatalytic cascades or whole cell 
+conversion systems. J Biotechnol 235: 61-83. 
+Plovier H, Everard A, Druart C, et al. (2017) A purified membrane protein from Akkermansia 
+muciniphila or the pasteurized bacterium improves metabolism in obese and diabetic mice. Nat Med 
+23: 107-113. 
+Png CW, Linden SK, Gilshenan KS, Zoetendal EG, McSweeney CS, Sly LI, McGuckin MA & Florin THJ 
+(2010) Mucolytic Bacteria With Increased Prevalence in IBD Mucosa Augment In Vitro Utilization of 
+Mucin by Other Bacteria. Am J Gastroenterol 105: 2420-2428. 
+Possemiers S, Verthe K, Uyttendaele S & Verstraete W (2004) PCR-DGGE-based quantification of 
+stability of the microbial community in a simulator of the human intestinal microbial ecosystem. 
+Fems Microbiol Ecol 49: 495-507. 
+Ramette A (2007) Multivariate analyses in microbial ecology. Fems Microbiol Ecol 62: 142-160. 
+Roe AJ, McLaggan D, Davidson I, O'Byrne C & Booth IR (1998) Perturbation of anion balance during 
+inhibition of growth of Escherichia coli by weak acids. J Bacteriol 180: 767-772. 
+Salyers AA, Vercellotti JR, West SE & Wilkins TD (1977) Fermentation of mucin and plant 
+polysaccharides by strains of Bacteroides from the human colon. Appl Environ Microbiol 33: 319-322. 
+Schloss PD & Westcott SL (2011) Assessing and improving methods used in operational taxonomic 
+unit-based approaches for 16S rRNA gene sequence analysis. Appl Environ Microbiol 77: 3219-3226. 
+Schloss PD, Westcott SL, Ryabin T, et al. (2009) Introducing mothur: open-source, platform-
+independent, community-supported software for describing and comparing microbial communities. 
+Appl Environ Microbiol 75: 7537-7541. 
+Scholz-Ahrens KE & Schrezenmeir J (2007) Inulin and oligofructose and mineral metabolism: The 
+evidence from animal trials. J Nutr 137: 2513s-2523s. 
+Soetaert W (2016) HUMAN MILK OLIGOSACCHARIDES: HOW TO PRODUCE THEM? Journal of 
+Pediatric Gastroenterology and Nutrition 63: S44-S45. 
+Sonnenburg JL, Chen CT & Gordon JI (2006) Genomic and metabolic studies of the impact of 
+probiotics on a model gut symbiont and host. PLoS Biol 4: e413. 
+Tailford LE, Crost EH, Kavanaugh D & Juge N (2015) Mucin glycan foraging in the human gut 
+microbiome. Front Genet 6. 
+Van den Abbeele P, Belzer C, Goossens M, Kleerebezem M, De Vos WM, Thas O, De Weirdt R, 
+Kerckhof F-M & Van de Wiele T (2013) Butyrate-producing Clostridium cluster XIVa species 
+specifically colonize mucins in an in vitro gut model. ISME J 7: 949-961. 
+Van den Abbeele P, Roos S, Eeckhaut V, et al. (2012) Incorporating a mucosal environment in a 
+dynamic gut model results in a more representative colonization by lactobacilli. Microbial 
+biotechnology 5: 106-115. 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+Van den Abbeele P, Gérard P, Rabot S, et al. (2011) Arabinoxylans and inulin differentially modulate 
+the mucosal and luminal gut microbiota and mucin-degradation in humanized rats. Environ Microbiol 
+13: 2667-2680. 
+Van den Abbeele P, Grootaert C, Marzorati M, et al. (2010) Microbial community development in a 
+dynamic gut model is reproducible, colon-region specific and selects for Bacteroidetes and 
+Clostridium cluster IX. Appl Environ Microbiol 76: 5237–5246. 
+Van Herreweghen F, Van den Abbeele P, De Mulder T, et al. (2017) In vitro colonisation of the distal 
+colon by Akkermansia muciniphila is largely mucin and pH dependent. Benef Microbes 8: 81-96. 
+Walker AW, Duncan SH, Leitch ECM, Child MW & Flint HJ (2005) pH and peptide supply can radically 
+alter bacterial populations and short-chain fatty acid ratios within microbial communities from the 
+human colon. Applied and Environmental Microbiology 71: 3692-3700. 
+Wang L, Christophersen CT, Sorich MJ, Gerber JP, Angley MT & Conlon MA (2011) Low Relative 
+Abundances of the Mucolytic Bacterium Akkermansia muciniphila and Bifidobacterium spp. in Feces 
+of Children with Autism. Applied and Environmental Microbiology 77: 6718-6721. 
+Wang X, Cai Y, Sun Y, Knight R & Mai V (2012) Secondary structure information does not improve 
+OTU assignment for partial 16s rRNA sequences. ISME J 6: 1277-1280. 
+Weir T, Marschke RF, Brown RJ, et al. (2013) Fecal metabolome and microflora differences between 
+colorectal cancer patients and healthy adults. J Clin Oncol 31. 
+Zhang X, Shen D, Fang Z, Jie Z, Qiu X, Zhang C, Chen Y & Ji L (2013) Human gut microbiota changes 
+reveal the progression of glucose intolerance. PLoS One 8: e71108. 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 1: Experimental set-up of the Simulator of the Human Intestinal Microbial Ecosystem (SHIME) 
+system for the mucin experiment. 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 2: Experimental set-up of the SHIME system for the pH experiment. 
+ 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 3: 16S rRNA sequencing results of the mucin experiment where mucin-free feed was fed until 
+day 8, after which 8g/L (day 8) and 4g/L (day 9-11) mucin was added to the feed. Overview of the 
+relative abundance (%) of the total bacterial community of the 13 most abundant genera in the 
+SHIME colon vessels inoculated with the fecal sample of 8 different donors at the end of the mucin 
+deprivation (day 8) and mucin supplementation (day 11). “Other” refers to the remainder of relative 
+abundance at the genus level which are summed together. 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 4: Boxplots of the relative abundance of bacterial genera that are significantly different, as 
+determined with DESeq hypothesis testing, between the mucin deprived community (day 8) and the 
+mucin rich community (day 11) over all eight donors (p<0.01). 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 5: A PCoA biplot revealed a distinct mucin rich (circles) and mucin deprived (squares) microbial 
+community for all 8 donors (colors). Weighted average scores of the most abundant genera 
+characteristic of the mucin deprived and mucin rich bacterial community were a posteriori projected. 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 6: Log (base 10) scaled relative abundance of A. muciniphila over total bacteria over time 
+(days), measured with qPCR. SHIME vessels (inoculated with fecal inoculum from donors 1-8) were 
+fed mucin free SHIME feed during 8 days (dotted line), after which mucin was supplemented to the 
+feed (4g L-1) (full line). Light red dots indicate values below the quantification limit. Technical 
+variation was never higher than 3%. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 7: Proportional values of short chain fatty acids acetate, propionate, butyrate and branched 
+SCFA (BSCFA), produced overt time (days). SHIME vessels (inoculated with fecal inoculum from 
+donors 1-8) were fed mucin free SHIME feed during 8 days, after which mucin was supplemented to 
+the feed (4g L-1). 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+Figure 8: Relative abundances at the genus level of the pH experiment at day 11. Colon vessels, 
+inoculated with fecal inoculum from donors A-H,  were kept at high pH (6.6-6.9) or at low pH (5.6-
+5.9) for 11 days after inoculation. Overview of the relative abundance (%) of the total community of 
+the 13 most abundant genera in the SHIME colon vessels at day 11. ). “Other” refers to the 
+remainder of relative abundance at the genus level which are summed together. 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 9: Boxplots of the relative abundance of genera that are significantly different, determined 
+with DESeq hypothesis testing, between the colon vessel at high and low pH at day 11 over all eight 
+donors (α=0.01). 
+ 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+ 
+Figure 10: A PCoA biplot of the microbial community  at high pH (squares) and low pH (circles) for all 
+8 donors (colours) at day 11. 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+Figure 11: Log (base 10) scaled Relative abundance of A. muciniphila compared to total bacteria over 
+time (days), measured with qPCR. SHIME vessels (inoculated with fecal inoculum from donors A-H) 
+were kept at either high pH (6.6-6.9), shown as the full line, or at low pH (5.6-5.9), shown as the 
+dotted line. Technical variation was never higher than 3%. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018
+ 
+ 
+ 
+Figure 12: Proportional values of short chain fatty acids acetate, propionate, butyrate and branched 
+SCFA, produced over time (days). SHIME vessels (inoculated with fecal inoculum from donors A-H) 
+were kept at either high pH (6.6-6.9) or low pH (5.6-5.9). 
+ 
+Downloaded from https://academic.oup.com/femsec/advance-article-abstract/doi/10.1093/femsec/fiy186/5101425 by Bukkyo University Library user on 22 September 2018

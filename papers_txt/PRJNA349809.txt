@@ -1,0 +1,1220 @@
+M I C R O B I O M E
+2017 © The Authors,
+some rights reserved;
+exclusive licensee
+American Association
+for the Advancement
+of Science.
+IgA-coated E. coli enriched in Crohn’s
+disease spondyloarthritis promote
+TH17-dependent inflammation
+Monica Viladomiu,1* Charles Kivolowitz,1* Ahmed Abdulhamid,1 Belgin Dogan,2 Daniel Victorio,1
+Jim G. Castellanos,1 Viola Woo,1 Fei Teng,3 Nhan L. Tran,3 Andrew Sczesnak,4 Christina Chai,1
+Myunghoo Kim,5 Gretchen E. Diehl,5 Nadim J. Ajami,5 Joseph F. Petrosino,5 Xi K. Zhou,6
+Sergio Schwartzman,7 Lisa A. Mandl,7 Meira Abramowitz,8 Vinita Jacob,8 Brian Bosworth,9
+Adam Steinlauf,8 Ellen J. Scherl,8 Hsin-Jung Joyce Wu,3 Kenneth W. Simpson,2 Randy S. Longman1,8†
+Peripheral spondyloarthritis (SpA) is a common extraintestinal manifestation in patients with active inflammatory
+bowel disease (IBD) characterized by inflammatory enthesitis, dactylitis, or synovitis of nonaxial joints. However,
+a mechanistic understanding of the link between intestinal inflammation and SpA has yet to emerge. We evaluated
+and functionally characterized the fecal microbiome of IBD patients with or without peripheral SpA. Coupling the
+sorting of immunoglobulin A (IgA)–coated microbiota with 16S ribosomal RNA–based analysis (IgA-seq) revealed
+a selective enrichment in IgA-coated Escherichia coli in patients with Crohn’s disease–associated SpA (CD-SpA)
+compared to CD alone. E. coli isolates from CD-SpA–derived IgA-coated bacteria were similar in genotype and
+phenotype to an adherent-invasive E. coli (AIEC) pathotype. In comparison to non-AIEC E. coli, colonization of
+germ-free mice with CD-SpA E. coli isolates induced T helper 17 cell (TH17) mucosal immunity, which required
+the virulence-associated metabolic enzyme propanediol dehydratase (pduC). Modeling the increase in mucosal
+and systemic TH17 immunity we observed in CD-SpA patients, colonization of interleukin-10–deficient or K/BxN
+mice with CD-SpA–derived E. coli lead to more severe colitis or inflammatory arthritis, respectively. Collectively,
+these data reveal the power of IgA-seq to identify immunoreactive resident pathosymbionts that link mucosal
+and systemic TH17-dependent inflammation and offer microbial and immunophenotype stratification of CD-SpA
+that may guide medical and biologic therapy.
+INTRODUCTION
+Inflammatory bowel disease (IBD) reflects a spectrum of intestinal
+disorders, principally Crohn’s disease (CD) and ulcerative colitis (UC),
+characterized by a dysregulated immune response to environmental
+and microbial antigens in genetically susceptible individuals (1). Al-
+though the characteristics of intestinal inflammation define the IBD
+phenotype, extraintestinal manifestations (EIMs) of IBD frequently
+revealdistinct features underlying the immune disorder. IBD-associated
+spondyloarthritis (SpA), which includes both axial spinal inflammation
+and peripheraljoint manifestationsof synovitis, dactylitis, and enthesitis,
+is one of the most common EIMs of IBD (2). Peripheral manifestations
+alone carry a prevalence of 20% in CD and 10% in UC, predominantly
+affecting joints of the lowerlimbs (3). Clinicalevidence linking intestinal
+inflammation with SpA (3–5) implicates the intestine as the source of
+aberrant systemic joint inflammation (6, 7). The independent identifi-
+cation of genetic variants in the IL23R locus in both IBD (8) and SpA (9)
+reinforces the biologic underpinnings of this association by highlighting
+a potential shared role for interleukin-23 (IL-23)–dependent inflam-
+mation. Collectively, these data suggest that stratification of IBD using
+clinical EIM phenotypes may offer a strategy to define markers of dis-
+ease that will improve diagnostic and therapeutic approaches to IBD.
+Although a mechanistic understanding of the link between intestinal
+inflammation and SpA has yet to emerge, notable alterations in the
+intestinal microbiome of IBD patients compared to non-IBD controls—
+including a consistent reduction in taxa diversity and expansion of
+Enterobacteriaceae in new onset CD (10)—have implicated a role for
+the microbiome as the antigenic stimulus driving systemic inflamma-
+tion. Seminal work supporting a role for the microbiome in systemic
+arthritis was performed using human lymphocyte antigen (HLA)–B27
+transgenic rats that develop both spontaneous intestinal inflammation
+and arthritis (11). Animals reared under germ-free conditions failed to
+develop inflammatory disease, whereas the reintroduction of normal
+luminal bacteria (including Bacteroides spp.) was sufficient to trigger
+inflammation (12). Consistent with a role for intestinal microbiota in
+these animal models, early studies in ankylosing spondylitis (AS)
+patients observed an increased frequency of Klebsiella pneumoniae
+in fecal samples (13) coupled with cellular and humoral immunity to
+K. pneumoniae antigens (14). More recent studies using current tech-
+nology for microbial sequencing have defined unique microbial com-
+munities in inflammatory arthritis, including distinct microbiomes
+in AS (15) and rheumatoid arthritis (16, 17). Recent characterization of
+the microbiome in psoriatic arthritis revealed decreased bacterial diver-
+sity similar to that seen in active IBD (18), but the microbiome in IBD-
+associated SpA has not been well characterized.
+Compositional analysis of the microbiome does not necessarily re-
+flect the impact of the microbiome on host immunity. To address this
+limitation, a recently developed technique, which couples the sorting
+1Jill Roberts Institute for Research in Inflammatory Bowel Disease (IBD), Weill Cornell
+Medicine, New York, NY 10021, USA. 2College of Veterinary Medicine, Cornell Univer-
+sity, Ithaca, NY 14853, USA. 3Department of Immunobiology, University of Arizona,
+Tucson, AZ 85719, USA. 4Department of Bioengineering, University of California,
+Berkeley, Berkeley, CA 94709, USA. 5Alkek Center for Metagenomics and Microbiome
+Research, Department of Molecular Virology and Microbiology, Baylor College of
+Medicine, Houston, TX 77030, USA. 6Division of Biostatistics and Epidemiology, Weill
+Cornell Medical College, New York, NY 10065, USA. 7Hospital for Special Surgery, New
+York, NY 10021, USA. 8Jill Roberts Center for IBD, Weill Cornell Medicine, New York,
+NY 10021, USA. 9Department of Medicine, New York University School of Medicine,
+New York, NY 10016, USA.
+*These authors contributed equally to this work.
+†Corresponding author. Email: ral2006@med.cornell.edu
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+1 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+of immunoglobulin A (IgA)–coated microbiota with 16S ribosomal
+RNA (rRNA) sequencing (called IgA-seq), focuses analysis on micro-
+biota identified by the immune system (19). These analyses highlight
+the dominant IgA response to keystone species, such as segmented
+filamentous bacterium (SFB) in mice, that make up a small fraction of
+the total microbiome yet exert a profound effect on IL-23– and T helper
+17 cell (TH17)–dependent mucosal and systemic immunity (20, 21).
+Recent studies in both mouse models (22) and humans (19, 23) re-
+vealed the ability of IgA-coated microbiota to serve as pathosymbionts
+that can exacerbate disease phenotype. Fecal samples from IBD patients
+have increased levels of IgA-bound microbes (24). Moreover, systemic
+seroreactivity to microbial-derived antigens in patients with CD (25)
+suggests active immunorecognition of microbial dysbiosis; however,
+thefunctionalimmune relevance of the IBDmicrobiometodisease phe-
+notype is still emerging.
+Although a causative microbe has not been identified in IBD,
+clinical cohorts consistently report the expansion of Enterobacteriaceae
+in active CD (10, 26–28). These Enterobacteriaceae include a unique
+pathotype of Escherichia coli designated as adherent-invasive E. coli
+(AIEC) (29). Although these AIEC strains lack virulence factors asso-
+ciated with diarrheagenic E. coli, they can adhere to and invade cultured
+intestinal epithelial cells and replicate in macrophages (30, 31). Genet-
+ically, AIEC resemble extraintestinal pathogenic E. coli and harbor
+genes (including pduC and lpfA) that have been linked to invasion
+and intracellular persistence (32, 33).
+Given the overlapping genetic variation in the IL23R locus in both
+IBD (8) and SpA (9) cohorts, IL-23–responsive lymphocytes may
+underlie a potential shared immunopathogenesis. A large component
+of these IL-23–responsive lymphocytes are CD4+ TH17 cells that ex-
+press the transcription factor RORgt, produce the cytokine IL-17, and
+play a critical role in promoting homeostasis at the mucosal barrier
+(34); however, in genetically susceptible animal models, microbial acti-
+vation of TH17 cells by the mouse commensal SFB (21, 35) is sufficient
+to drive pathogenic systemic inflammation (20, 36).
+Here, we investigated the hypothesis that functional analysis of the
+endogenous IgA-bound microbial repertoire in IBD-SpA will both
+stratify disease phenotype and provide insight into the immunopatho-
+genesis. Compositional and functional analysis of the gut microbiome
+identified a significant expansion of IgA-coated E. coli, genotypically
+and functionally characterized as AIEC. Given our findings of systemic
+TH17 activation in patients with CD-SpA reported here, gnotobiotic
+mice and mouse models of systemic TH17-dependent inflammatory
+arthritis were used to evaluate the role for CD-SpA–derived E. coli in
+linking mucosal and systemic immunity.
+RESULTS
+Clinical and microbial parameters define CD-associated
+peripheral SpA
+To test the hypothesis that clinical and microbial biomarkers correlate
+with IBD-SpA, we established a prospective cohort of 59 IBD patients
+with or without peripheral SpA [defined by the Assessment of Spondy-
+loArthritis international Society (ASAS) criteria]. To control for micro-
+biome alterations associated with disease activity, antibiotic exposure,
+and intestinal surgery, we only included patients with active disease
+[defined by Harvey-Bradshaw Index (HBI) > 4 or modified UC-DAI
+(disease activity index) > 2], who were off antibiotics for at least 8 weeks,
+and with an intact ileocecal valve (table S1). Only CD patients with ileal
+or ileocolonic disease (L1 or L3 disease by Montreal classification; table
+S2) were included to target a clinical phenotype previously associated
+with changes in the microbiome (27). Furthermore, all patients were
+HLA-B27−to avoid potential overlap with axial SpA. Groups were
+matched for age, sex, body mass index, and intestinal disease activity
+indexes (table S1). Toevaluate the clinicalutility of the Bath Ankylosing
+Spondylitis Disease Activity Index (BASDAI)—a six-question, patient-
+reported, clinically validated tool for assessing disease activity in AS
+(37)—in identifying joint inflammation in IBD-associated peripheral
+SpA, we recorded BASDAI scores for all patients at time of sample
+collection. BASDAI differentiated SpA from non-SpA for both CD
+and UC (Fig. 1A and table S1). Using a cutoff of >4 to indicate disease,
+BASDAI provided 83% specificity compared to the ASAS-defined di-
+agnosis (38). In contrast, no significant differences were observed be-
+tween the cohorts in conventional serologic markers of disease activity
+including erythrocyte sedimentation rate, complement-reactive pro-
+tein, vitamin D level, and hemoglobin.
+To determine whether differences in the intestinal microbiota
+segregate individuals with IBD compared to IBD-SpA, we performed
+16S rRNA sequencing of fecal DNA (all samples sequenced with
+>6500 reads per sample; fig. S1A). Although the a-diversity metrics
+[including operational taxonomic units (OTUs) observed, Chao1, and
+Shannon entropy] revealed a contraction in diversity in CD compared
+to UC samples (fig. S1B) similar to previous reports (27), no differences
+in diversity were noted between SpA and non-SpA groups (fig. S1B).
+Subjects were clustered using principal coordinate analysis (PCoA) with
+Bray-Curtis distances, which showed significant differentiation be-
+tween CD and UC cohorts (P = 0.03), but no significant segregation
+between SpA and non-SpA groups (P = 0.17; Fig. 1B). The most dis-
+criminative axis largely reflected the abundance of Proteobacteria in
+these samples. Composite phyla and family-level relative abundances
+revealed an expansion of Proteobacteria and Enterobacteriaceae, re-
+spectively, in subjects with CD-SpA compared to CD (Fig. 1C). No dif-
+ferences in specific taxa were observed between UC and UC-SpA
+cohorts. Although analysis of genus-level relative abundances did not
+reveal any differences between CD and CD-SpA, linear regression
+analysis of BASDAI and relative bacterial abundance in patients with
+CD-SpA revealed a positive correlation with both Proteobacteria and
+Enterobacteriaceae abundance (Fig. 1D). Increase in Proteobacteria
+abundance has been reported to correlate with intestinal disease sever-
+ity in new onset CD (10, 30); however, in this cohort of patients with
+active L1/L3 CD, intestinal disease activity as measured by HBI was
+not sufficient to map this correlation by linear regression (Fig. 1E).
+Although we used rigorous exclusion criteria to limit confounders, im-
+munomodulator therapy varied in our patient cohort. Stratification by
+immunomodulator therapy (including thiopurines and biologics) did
+not account for differences in a diversity, b diversity, or taxonomic
+abundances in either CD or UC (fig. S2).
+IgA-seq reveals immunoreactive E. coli in CD-SpA
+Although our compositional analysis revealed differential abundance
+of microbial communities, these analyses do not necessarily reflect the
+immunological impact of these microbiota. Moreover, although no
+significant differences in genus- or taxa-level abundance between CD
+and CD-SpA cohorts were seen in our compositional analysis, we hy-
+pothesized that distinct immunologically reactive microbiota differen-
+tiate CD-SpA. To detect microbiota eliciting an immune response, we
+labeledandsortedIgA-coated(IgA+)andnoncoated(IgA−)bacteriafrom
+fecal homogenates of CD patients profiled above (IgA-seq; Fig. 2A).
+Similar to previous reports (19) and consistent with a recent report
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+2 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+suggesting that IgA responses primarily target commensal bacteria of
+the small intestine (39), the proportion of intestinal bacteria coated with
+IgA was increased in CD compared to healthy donors; however, no
+significant difference was seen in IgA coating between CD-SpA and
+CD (Fig. 2B). Of the 40 CD samples used for 16S rRNA sequencing,
+30 samples (14 CD and 16 CD-SpA) were available for IgA-seq. Rare-
+faction at a sample depth of 1100 reads per sample left 23 samples (10 CD
+and 13 CD-SpA) for subsequent analysis (fig. S3). Similar to composi-
+tional analysis, evaluation of the presort population also revealed sig-
+nificantly increased relative abundance of Proteobacteria in CD-SpA
+compared to CD, but no significant differences at the genus level
+were observed (fig. S4). Although we did not observe significant differ-
+ences in a- or b-diversity between IgA−and IgA+ microbial community
+(fig. S5), subject-level variance dominated PCoA analysis of b-diversity
+(P = 0.001; fig. S5B).
+Analysis of the differential relative abundance of taxa at the phylum,
+family (fig. S6), and genus level (Fig. 2C) from the IgA−and IgA+ mi-
+crobial communities revealed significant enrichment of Escherichia/
+Shigella in the IgA+ fraction of patients with CD-SpA. To identify bacte-
+ria enriched in either the IgA+ or IgA−fraction in CD, CD-SpA, or
+both, we used an average IgA-coating index (ICI) (23) of >0.1 or <−0.1,
+respectively (Fig. 2D). The ICI analysis revealed enrichment of
+Eubacterium coprostanoligenes in the IgA+ fraction from both CD
+and CD-SpA; however, similar to the analysis of the relative abundance
+data, only Escherichia/Shigella ICI score revealed differential enrich-
+ment in the IgA+ fraction of CD-SpA. Pseudomonas (CD-predominant),
+Fig. 1. Clinical and microbial markers segregate CD and CD-SpA. (A) BASDAI was calculated for each subject. *P < 0.01, ANOVA (B) Subjects were clustered using
+PCoA with Bray-Curtis distances. Gray circles represent taxa abundance. P value estimates calculated by Monte Carlo permutation test are indicated for CD versus UC
+and No SpA versus SpA. (C) Relative abundances of top four phyla (top panel) and families (bottom panel) are shown for No SpA (green) and SpA (orange). Box plots
+reflect 25 and 75% confidence interval, and horizontal line reflects median. *P < 0.05, Mann-Whitney. (D and E) Correlation between abundance of Proteobacteria is
+plotted against clinical joint disease activity score (BASDAI) (D) or CD activity (HBI) (E). Linear regression analysis and adjusted P values are shown for both (D) and (E).
+For all panels, CD, n = 15; CD-SpA, n = 25; UC, n = 10; UC-SpA, n = 9.
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+3 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+Eubacterium hallii (CD-predominant), Lachnospiraceae UCG008 (CD
+and CD-SpA), and Clostridium sensu stricto (CD-SpA–predominant)
+were enriched in the IgA−fraction. Escherichia/Shigella ICI linearly
+correlated with joint disease activity measured by BASDAI for patients
+with CD-SpA but did not correlate for
+patients with CD alone (Fig. 2E).
+CD-SpA E. coli isolates are AIEC and
+initiate epithelial immunity
+To determine the pathotype of the IgA-
+coated E. coli in CD-SpA, we generated
+patient-derived isolates from three CD-
+SpA donors with the highest Escherichia
+ICIscore.Randomamplifiedpolymorphic
+DNA polymerase chain reaction (PCR)
+identified 15 unique isolates from these
+three CD-SpA–derived libraries (table S3).
+PCR for phylogroup and key microbial
+virulence-associated genes revealed hier-
+archical clustering of all of these isolates
+with phylogroup B2 mouse (NC101) and
+CD-derived(LF82)AIECisolatescompared
+to a CD-derived non-AIEC E. coli strain
+(T75) (Fig. 3A and table S3) (30). E. coli
+clones were also derived from the IgA-
+coated fraction from three CD patients
+with the highest ICI score. Virulence-
+associated genes were less frequent in
+CD-derivedisolatesincludingpduC,which
+was present in 11 of 15 CD-SpA–derived
+isolates, but only 4 of 15 CD-derived iso-
+lates (table S3). Functional analysis of all
+CD-SpA–derived isolates revealed a high
+level ofadherence and invasion of Caco-2
+monolayers as well as persistence after
+macrophage invasion in vitro, consistent
+withtheircharacterizationasAIEC(Fig.3,
+BandC,andfig.S7).Thecompletegenome
+of the B2 phylotype, CD-SpA–derived
+E. coli isolate 2A, which is used in subse-
+quent experiments, was sequenced using
+Pacific Biosciences and assembled de novo
+into three contigs. The complete circular
+genome was4,991,385base pairsinlength
+and most closely aligned to prototypical
+AIEC LF82 (fig. S8).
+To evaluate the function of a represen-
+tative CD-SpA–derived E. coli isolate 2A
+in vivo, we colonized 6- to 8-week-old
+germ-free C57BL/6 mice with E. coli 2A
+and assessed colonization by quantitative
+PCR (qPCR) 10 days later (fig. S9A). Sim-
+ilar to previous studies, AIEC did not
+induce overt intestinal disease in gnotobi-
+otic C57BL/6 mice despite robust coloni-
+zation (fig. S9B); however, real-time PCR
+of the terminal ileum epithelium revealed
+induction of resistin-like b (Retnlb) and
+serum amyloid A1 (SAA1) (Fig. 3D), con-
+sistent with adhesion to the epithelial surface (21). To directly assess
+attachment to the epithelium in vivo, we performed fluorescence in situ
+hybridization (FISH) of the terminal ileum 5 days after colonization
+(Fig. 3E). Although CD-derived non-AIEC E. coli control T75 did not
+Fig. 2. IgA-coated microbiota in CD-SpA are enriched for E. coli. (A) The IgA-coated sort strategy is shown. Fecal
+homogenate was filtered, blocked, and stained with cell-permeable DNA dye Syto BC and isotype or anti-IgA antibody.
+Samples were gated on the basis of forward scatter (FSC) and side scatter (SSC). (B) Percentage of IgA-coated bacteria
+in fecal homogenate for individuals grouped by disease status. *P < 0.05, **P < 0.01, ANOVA. CD, n = 11; CD-SpA, n =
+15. (C) Relative abundance of the top 10 most abundant taxa by genus are shown grouped by IgA−(blue) or IgA+ (red) and
+faceted by CD or CD-associated SpA (CD-SpA). Box plots reflect 25 and 75% confidence interval, and horizontal line reflects
+median. *P <0.05, Mann-Whitney (D)IgA coating index(ICI)wascalculatedforalltaxa as −[log(IgA+)−log(IgA−)]/[log(IgA+) +
+log(IgA−)]. Taxa with IgA index of >0.1 or <−0.01 are shown. CD (n = 10) and CD-SpA (n = 13). *P < 0.05, Mann-Whitney.
+(E) Correlation between ICI and clinical joint disease activity (BASDAI) is shown for both CD (square) and CD-SpA
+(orange circle). Linear regression analysis reveals a significant correlation for CD-SpA (P = 0.03). For (C) to (E), CD, n = 10;
+CD-SpA, n = 13.
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+4 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+penetrate the mucus layer, CD-SpA E. coli 2A was broadly adherent to
+the epithelial mucosa.
+CD-SpA–derived AIEC promote mucosal TH17 immunity
+To evaluate the ability of CD-SpA–derived AIEC to promote TH17 mu-
+cosalimmunity, we colonized6- to 8-week-oldgerm-freeC57BL/6mice
+with E. coli 2A. At 10 days after colonization, the production of IL-17
+was higher in colonic CD4+ T cells from E. coli 2A–colonized mice
+compared to a non-AIEC control T75 (Fig. 4, A and B), although both
+isolates robustly and equivalently colonized the intestine (fig. S9A). No
+significant change in interferon-g (IFN-g) production was observed.
+Consistent with the increase in IL-17+ CD4+ T cells, RORgt+ CD4+
+T cells were increased in both the small intestinal (fig. S10, A and B) and
+colonic lamina propria (Fig. 4C) of mice colonized with E. coli 2A.
+Similar to other intestinal symbionts (40), both CD-SpA E. coli 2A and
+non-AIEC E. coli T75 were sufficient to induce RORgt/Foxp3+ CD4+
+T cells (Fig. 4D); however, E. coli 2A induced significantly more Foxp3−
+RORgt CD4+ T cells (Fig. 4E). E. coli 2A induced TH17 polarization in
+the small intestinal lamina propria to a similar level seen after mono-
+colonization with SFB (fig. S10, A and B). Finally, to evaluate the ability
+of isolate 2A to induce TH17 immunity under non-gnotobiotic
+conditions, we challenged SFB-negative C57BL/6 weanlings with isolate
+2A or T75. Similar to the monocolonization experiments, colonization
+with isolate 2A was sufficient to induce RORgt CD4+ T cells compared
+to animals colonized with T75 (fig. S10C). Thus, even in the presence of
+other commensal microbiota, CD-SpA–derived AIEC isolates induced
+robust TH17 polarization.
+In addition to TH17 cells, group 3 innate lymphoid cells (ILCs) also
+respond to IL-23 and produce IL-22 (41). To investigate the effect of
+E. coli isolate 2A on ILCs, we profiled colonic, lineage-negative,
+CD127+ innate lymphocytes by intracellular cytokine staining after
+phorbol 12-myristate 13-acetate (PMA)/ionomycin stimulation. E. coli
+2A induced significant IL-22 production by ILCs, but no significant
+change in IFN-g production was observed (Fig. 4F and fig. S11, A and
+B). No differences were observed in the dendritic cell populations, CD8+
+T cells, or T follicular helper cells in the Peyer’s patches after colo-
+nization with CD-SpA isolate 2A or T75 (fig. S12).
+To evaluate the ability of additional CD-SpA– and CD-derived E. coli
+isolates to induce TH17 polarization, we used CD-SpA–derived isolates
+I2, C3, and 2A as well as CD-derived isolates L10, S7, and B4 (table S3)
+to colonize germ-free C57BL/6 mice. At 10 days after colonization, both
+isolate 2A (CD-SpA) and C3 (CD-SpA) induced significantly more
+TH17 polarization compared to control non-AIEC E. coli T75 (Fig. 4G).
+No significant induction of TH17 was observed after colonization with
+CD-derived isolates or CD-SpA isolate I2. Notably, isolate 2A and C3
+both contain AIEC virulence-associated genes, including iroN, ratA,
+and pduC (table S3), which are not present in isolate I2, suggesting that
+genetic heterogeneity impacts the effect on mucosal immunity.
+Recent reports suggest that mucosal adherence is a critical feature
+in microbial induction of TH17 cells (42, 43). Genetic deletion of the
+Intimin gene (eae), essential for epithelial attachment of Citrobacter
+rodentium and Enterohemorrhagic E. coli O157, resulted in decreased
+induction of TH17 (42). Although eae is not present in AIEC, pduC,
+which encodes the large subunit of propanediol dehydratase, allows
+AIEC to forage within the mucus layer using fucose-derived propane-
+diol as an alternate carbon source and provides a competitive metabolic
+advantage for epithelial adherence (33, 44). To evaluate the role for
+pduC in AIEC induction of intestinal TH17 cells, we generated pduC-
+deficient (DpduC) AIEC using the l red recombinase system (33) in a
+mouse-derived AIEC CUMT8, which only contains virulence-associated
+factors lpf and pduC. Similar to isolates 2A and C3, colonization with
+CUMT8 induced robust TH17 polarization (Fig. 4, H and I). At 10 days
+after colonization, all strains efficiently and equivalently colonized the
+intestine (fig. S13); however, deletion of pduC resulted in a significant
+decrease in colonic TH17 induction, which was restored with genetic
+complementation (DpduC + pduC) (Fig. 4, H and I). Although the
+presence of pduC alone was not sufficient to promote TH17 cell induc-
+tion in CD-derived isolates lacking additional virulence factors (Fig. 4G),
+these results identify pduC as a critical component of AIEC’s capacity
+to induce TH17 barrier immunity.
+IL-10 and IL-23 regulate the effects of CD-SpA AIEC in
+DSS-induced colitis
+Although colonization of wild-type (WT) germ-free mice did not in-
+duce intestinal histopathological abnormalities (fig. S9B), we sought
+to evaluate the effect of colonization with CD-SpA E. coli 2A during
+colitis. Recent data suggest that lymphoid tissue–resident commensal bac-
+teria, which promote both TH17 and ILC3 immunity, protect host tissue
+from dextran sulfate sodium (DSS) via IL-10 (45). To test the protective
+Fig. 3. CD-SpA–derived AIEC initiate epithelial immunity. (A) The presence
+(gray) or absence (black) of AIEC-associated virulence factors genes was determined
+by PCR for E. coli isolates T75 (non-AIEC), CUMT8 and NC101 (mouse-derived AIEC),
+LF82 (human-derived AIEC), and CD-SpA isolate 2A. Hierarchical clustering was per-
+formed using average linkage clustering and Pearson correlation distance metric.
+(B) Invasion of Caco-2 cells by E. coli isolates was assessed by gentamicin protection
+assay. The mean colony-forming units (CFU) per milliliter is presented. *P < 0.05, **P <
+0.01. (C) Survival in J774 macrophages by E. coli isolates was assessed by gentamicin
+protection assay. The percentage of input CFU recovered after gentamicin protection
+in J774 macrophages is shown. SEM is shown for each group. *P < 0.05, **P < 0.01,
+t test. All samples were run in triplicate with n = 3 to 5 biological replicates for each
+group. (D) qPCR analysis of Retnlb and SAA1 expression by ileal epithelial cells 5 days
+after colonization with specific pathogen–free (SPF) microbiota, CD-SpA E. coli 2A,
+non-AIEC T75, or media control. Bar graph represents the geometric mean for four
+to eight mice per group from two independent experiments. Error bars represent
+SEM. *P < 0.05, **P < 0.01, ***P < 0.001, ANOVA. (E) FISH of ileal mucosa 5 days after
+monocolonization with E. coli isolate T75 or 2A. Nuclei are stained with 4′,6-diamidino-
+2-phenylindole (blue), and E. coli are stained with a 16S rRNA probe (red). Tissue auto-
+fluorescence is in green. Yellow box indicates inset displayed in the right panel.
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+5 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+Fig. 4. CD-SpA AIEC promote mucosal TH17 immunity. (A to F) Germ-free C57BL/6 mice were colonized with 2 × 109 CFU of CD-SpA–derived E. coli isolate 2A or
+nonadherent E. coli T75 and analyzed after 10 days. Data presented are one of five total experiments with at least three mice per experimental group (A to F). Error bars represent
+SEM. P values indicated, ANOVA. (A) Live, CD4+ T cells were identified by flow cytometry using a lymphocyte FSC gate and CD4+, b T cell receptor (TCRb) expression. Intracellular
+cytokine staining was used to evaluateIL-17 and IFN-g after 4-hour stimulationwithPMA/ionomycin withbrefeldin A. (B) Total number of IL-17– and IFN-g–producing CD4+ T cells
+per colon for each experimental group. Bar graphs represent geometric mean for three mice per group. (C) Flow cytometry of live, CD4+ T cells was used to evaluate RORgt and
+Foxp3 expression in colonic lamina propria. (D) Total number of RORgt or RORgt/Foxp3 CD4+ T cells per colon is shown in media gavage (null), CD-SpA E. coli 2A, or T75 colonized
+mice. Bar graph represents geometric mean of three mice per group. (E) Ratio of RORgt+ cells: Foxp3+RORgt+ CD4+ T cells in the colonic lamina propria of mice colonized with the
+indicated bacteria. Bar graphs represent geometric mean of the ratio. (F) Total number of live, lineage-negative (CD19, CD3, CD11b, and TCRgd), CD127+ innate cells producing
+IL-22 in the colonic lamina propria. (G) Noncolonized (null, gray); non-AIEC E. coli T75 (hatched); CD-derived isolates L10, S7, and B4 (white); CD-SpA–derived isolates I2, C3, and
+2A (black); and mouse SFB or AIEC CUMT8 (hatched) were used to colonize germ-free C57BL/6 mice and analyzed after 10 days. Flow cytometry of live, CD4+ T cells was used to
+evaluate IL-17 expression in colonic lamina propria cells after 4-hour stimulation with PMA/ionomycin with brefeldin A. Bar graphs represent geometric mean of at least three
+mice per group. Error bars represent SEM. P values indicated, ANOVA. (H and I) Germ-free C57BL/6 micewere colonized with 2 × 109 CFU of mouse-derived AIEC isolate CUMT8,
+CUMT8:DpduC, or the complemented strain CUMT8:DpduC + pduC and analyzed after 10 days. Flow cytometry of live, CD4+ T cells was used to evaluate IL-17 and IFN-g
+expression in colonic lamina propria cells after 4-hour stimulation with PMA/ionomycin with brefeldin A (I). Total number of RORgt+ CD4+ T cells per colon for each exper-
+imental group was evaluated (I). Bar graphs represent geometric mean of at least three mice per group from one of three total experiments. Error bars represent SEM. P values
+indicated, ANOVA. *P < 0.05, **P < 0.01, ***P < 0.001.
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+6 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+ability of CD-SpA–derived AIEC, we induced colitis with DSS in 6- to
+8-week-old gnotobiotic C57BL/6 mice monocolonized with CD-SpA
+E. coli 2A or control media. Whereas germ-free mice rapidly and
+uniformly succumbed to DSS-induced colitis by day 9, E. coli 2A and
+T75 colonization were sufficient to rescue these mice (fig. S14). qPCR
+analysis of Il10 expression in lamina propria mononuclear cells from
+monocolonized mice revealed a significant increase in gnotobiotic mice
+colonized with isolate 2A compared to T75 (Fig. 5A). To evaluate the
+role for this IL-10 induction in regulating the balance of TH17 immu-
+nity, we colonized germ-free IL-10–deficient mice with E. coli 2A or
+control media. In the absence of IL-10, we found a significant reduction
+in the RORgt/Foxp3+ CD4+ T cells and a more robust induction of TH17
+cells and IL-17/IFN-g–producing CD4+ T cells (Fig. 5B). Although no
+spontaneous colitis or histological effect was seen at the basal state
+[consistent with the resistance of IL-10–deficient mice on a C57BL/6
+background to develop spontaneous colitis (46)], exposure of IL-10–
+deficient mice to DSS after colonization with E. coli 2A resulted in
+reduced survival compared to those mice gavaged with media or non-
+AIEC T75 (Fig. 5C). DSS-treated IL-10–deficient mice colonized with
+E. coli 2A developed more severe colonic inflammation compared to
+noncolonized controls or mice colonized with non-AIEC E. coli iso-
+late T75 (Fig. 5D). Similar to basal state analysis, colonization with
+E. coli 2A before DSS-induced colitis resulted in increased production
+of both IL-17 and IL-17/IFN-g+ CD4+ T cells (Fig. 5E). These find-
+ings support the notion that CD-SpA E. coli 2A, like other AIEC, is a
+pathosymbiont that can opportunistically drive intestinal inflammation
+in a genetically susceptible host.
+Although DSS-induced colitis is considered a non–T cell–dependent
+colitis, IL-23 contributes to disease severity in a T cell–sufficient animal
+(47). To assess the contribution of IL-23–dependent colitis in our IL-
+10–deficient model, we treated the mice with anti–IL-23 blocking
+antibody after induction of colitis with DSS. IL-23 blockade rescued
+the mice from the reduced survival (Fig. 5F), and blockade resulted in a
+reduction in both IL-17 and IL-17/IFN-g+ CD4+ T cells (Fig. 5G). Col-
+lectively, in the genetically susceptible IL-10–deficient background, CD-
+SpA–derived AIEC promote IL-23–dependent inflammatory colitis.
+Intestinal colonization with CD-SpA–derived AIEC induces
+systemic TH17 immunity and promotes joint inflammation
+An increase in TH17 cells has been shown in CD patients with active
+ileal disease (48, 49). To evaluate mucosal TH17 cells in patients with
+CD-SpA, we phenotyped CD4+ T cells in ileal biopsies from patients
+with CD or CD-SpA undergoing endoscopic evaluation with active
+ileitis. Analysis of cytokine expression revealed a significant increase
+in IL-17 production from patients with CD-SpA compared to CD
+alone (Fig. 6A). No differences were seen in the expression of Foxp3
+or IFN-g levels. To evaluate systemic immunity in our patient cohort,
+we measured inflammatory serum cytokine levels. Targeted multiplex
+analysis of inflammatory cytokines revealed a significant increase in
+IL-17A and IFN-g, but no difference in tumor necrosis factor–a (TNFa)
+were observed (Fig. 6B). These mucosal and systemic data reveal a TH17
+immunophenotype in our CD-SpA cohort.
+To evaluate the systemic recognition of luminal AIEC in patients
+with CD-SpA, we determined IgG seroreactivity to E. coli antigens.
+As previously described (50), the binding of total serum IgG from pa-
+tients with or without SpA to E. coli was evaluated by flow cytometry.
+Patients with CD-SpA showed increased, titratable IgG seroreactivity
+to E. coli antigens but no increased reactivity against Bacteroides, in
+comparison to matched CD controls (Fig. 6C). This specific systemic
+seroreactivity to E. coli antigens supports the potential role for AIEC in
+breaking the compartmentalization of the intestinal immune response
+to luminal microbes and promoting systemic TH17 immunophenotype
+in CD-SpA.
+Given the systemic TH17 activation observed in CD-SpA, we sought
+to evaluate the ability of CD-SpA isolate 2A to support systemic TH17
+immunity in vivo. To test whether colonization with E. coli 2A induces
+systemic immunity, we evaluated the induction of antigen-specific
+splenic CD4+ T cell response by ELISPOT after monocolonization
+Fig. 5. CD-SpA E. coli 2A exacerbates DSS-induced colitis in IL-10–deficient
+mice. (A) qPCR analysis of Il10 expression in lamina propria mononuclear cells
+from monocolonized mice 5 days after colonization with CD-SpA E. coli 2A, T75,
+or no colonization control. Bar graphs represent geometric mean for five to six
+mice per group from two independent experiments. Error bars represent the SEM.
+*P < 0.05, **P < 0.01, t test. (B) Germ-free WT and IL-10−/−mice were colonized with
+2 × 109 CFU of AIEC isolate 2A. Two weeks after colonization, flow cytometry of live,
+CD4+ T cells was used to evaluate RORgt and Foxp3 expression as well as IL-17 and
+IFN-g expression in colonic lamina propria cells after 4-hour stimulation with PMA/
+ionomycin with brefeldin A. Mean percentages are shown for each experimental
+group, and error bars reflect SEM. Data are a composite of two independent
+experiments with four to six animals per group. (C to E) Germ-free IL-10−/−mice
+were colonized with 2 × 109 CFU of CD-SpA–derived AIEC isolate 2A, non-AIEC
+T75, or media control. Ten days after colonization, mice were exposed to 2% DSS
+adlibitum for 7 days.(C) Percent survivalafter DSS administration isshown. 2A, n = 15;
+T75, n = 8; media, n = 13. *P < 0.05, log-rank test. (D) Colonic histopathology score on
+day 10 after DSS exposure. Mean and SEM are shown. *P < 0.05, **P < 0.01, ANOVA.
+(E) Flow cytometry was used to evaluate RORgt and Foxp3 expression and IL-17 and
+IFN-g cytokine production in live, CD4+ T cells from the colonic laminapropria. *P < 0.05,
+**P < 0.01, ***P < 0.001. (F and G) IL-10−/−mice monoassociated with AIEC isolate 2A
+were treated with anti–IL-23 orisotype control on day 1 and day 4 after DSS exposure.
+(F) Percent survival after DSS administration is shown. Isotype, n = 8; anti–IL-23, n = 8.
+*P < 0.05, log-rank test. (G) Flow cytometry was used to evaluate RORgt and Foxp3
+expression andIL-17andIFN-g cytokine production in live, CD4+ T cells fromthe colonic
+lamina propria. Mean percentages are shown for each experimental group (n = 5), and
+error bars reflect SEM. Data are from one of three independent experiments. *P < 0.05,
+**P < 0.01, ANOVA.
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+7 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+in C57BL/6 mice. Similar to SFB, colonization with E. coli 2A primed a
+systemic, antigen-specific TH17 response (Fig. 6D). To evaluate whether
+colonization with E. coli 2A was sufficient to induce inflammatory
+arthritis, we used a mouse model of arthritis (K/BxN) (20). Previous
+reports have shown the dependence of this model on TH17 cell induc-
+tion and demonstrated the sufficiency of TH17-inducing microbiota
+to support disease. To test the sufficiency of E. coli 2A in promoting
+inflammatory arthritis, we colonized SPF K/BxN mice with E. coli 2A,
+and ankle thickness was measured after colonization. Within 6 days,
+significant differences in ankle thickness were apparent and increased
+up to 10 days after colonization (Fig. 6E). Similar to colonization in
+gnotobiotic mice, we noted significant TH17 cell expansion in both the
+spleen and small intestinal lamina propria compared to controls (Fig. 6,
+F and G). Colonization with CD-SpA E. coli 2A led to an increase in IgA+
+B cells in both the spleen and Peyer’s patches (Fig. 6, H and I), IgG1+ GC
+B cells in the spleen (Fig. 6J), and anti-GPI titers (Fig. 6K) compared to
+T75 control. Collectively, these data support the ability of IgA-coated
+AIEC that are enriched in patients with CD-SpA to support systemic
+TH17 inflammatory disease.
+DISCUSSION
+The immunologic relevance of compositional changes in the micro-
+biome to disease phenotype remains a major question in the study of
+human disease. Initial studies introducing new approaches to identify
+immunogenic components of the microbiome, including IgA-seq (19)
+and BugFACS (23), identified intestinal pathosymbionts within a
+microbial community that promote disease under specific genetic or
+environmental circumstances. Our identification here of IgA-coated
+E. coli as a pathosymbiont in CD-SpA shows that these technologies
+can be applied more broadly to help stratify complex clinical pheno-
+types, particularly those in which antigenic stimuli from the intestine
+are thought to be a key component. Although previous studies in HLA-
+B27 transgenic rats and mouse models revealed a role for luminal
+microbes in supporting systemic inflammatory arthritis, our results
+now identify AIEC as a pathosymbiont in CD-associated SpA.
+Our analysis identified the enriched IgA-coated E. coli in CD-SpA as
+an AIEC pathotype, but AIEC are present in the microbiome of healthy
+controls and CD patients without SpA. Our experimental models
+highlight two features of the host-pathogen interaction that must be
+considered to understand the specificity of pathogenetic mechanisms
+of AIEC in SpA, namely, host susceptibility and strain variability.
+First, although the microbial activation of the IL-23 pathway plays
+a critical role in maintaining homeostasis and promoting mucosal
+healing,TH17cellactivationmayactasadouble-edgedswordbypromot-
+ing the inflammatory response in cases of environmental or host genetic
+susceptibility to inflammatory disease (47). Similar to SFB protection
+from C. rodentium–induced colitis (21) or lymphoid tissue–resident
+Fig. 6. CD-SpA E. coli 2A colonization promotes arthritis in K/BxN mice and models the systemic TH17 immunophenotype seen in CD-SpA patients. (A) CD4+
+T cells from ileal biopsies of CD patients with (n = 8) and without SpA (n = 11) were analyzed for IL-17 or IFN-g production after PMA/ionomycin stimulation for 4 hours
+in the presence of brefeldin A. Bar graph represents geometric mean. Error bars represent SEM. *P < 0.05, t test. (B) Serum cytokines were quantified by bead array
+(BioLegend). *P < 0.05, two-tailed t test with Bonferroni correction. CD, n = 10; CD-SpA, n = 13. (C) E. coli 2A–specific (triangle) or Bacteroides vulgatus–specific (circle) IgG titers
+determined by bacterial surface staining with serum from CD patients with (black, n = 10) or without (white, n = 10) SpA. Mean fluorescence intensity (MFI) index (MFI IgG/MFI
+isotype) is shown for indicated serum dilution. Error bars represent SEM. *P < 0.05, ANOVA. (D) CD4+ T cells were purified from the spleen of gnotobiotic mice colonized with or
+without AIEC 2A or SFB and restimulated with the indicated fecal antigen. Antigen-specific IL-17 production was measured by enzyme-linked immunospot (ELISPOT). Data are
+a composite of two independent experiments with three to six mice per group performed in triplicate. Bars indicate geometric mean, and error bars reflect SEM. *P < 0.05,
+ANOVA. (E to K) Antibiotic-pretreated SFB-free K/BxN mice were gavaged with media control (n = 5), AIEC 2A (n = 13), T75 (n = 11), or SFB (n = 9) and analyzed on day 10.
+(E) Ankle thickening was measured daily after gavage. *P < 0.05, ANOVA. (F and G) Percentage of live, CD4+ T cells that produce IL-17 (TH17 cells) inboth the spleen (F) and small
+intestinal lamina propria (G). (H and I) Percentage of IgA+ cells within the total, live CD19+ B cell gate of the spleen (H) or Peyer’s patches (I). (J) Percentage of IgG1+ cells within
+the total, liveCD19+ germinal center(GC) B cells (Fas+ PNA+) inthe spleen. (K) Anti-glycosylphosphatidylinositol (GPI) titerat day 10 aftergavage. Bars indicate geometric mean,
+and error bars reflect SEM. *P < 0.05, **P < 0.01, ANOVA. Data from (E) to (K) are a composite of three independent experiments.
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+8 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+commensal bacteria protection from DSS-induced colitis (45), CD-
+SpA–derived AIEC protect against acute injury and death from DSS-
+induced colitis in WT mice. Resident microbiota, including AIEC,
+induce colonic RORgt/Foxp3+ CD4+ T cells, which play an important
+role in restraining inflammatory colitis (40). Consistent with the pro-
+tective effect illustrated by our data, a higher Enterobacteriaceae ICI
+in 6-month-old infants correlated with better nutritional status (23).
+Thus, in situations of nutritional sufficiency or immunocompetence,
+the response to Enterobacteriaceae may have coevolved to protect the
+host; however, persistent nutritional deficiency (23) or genetic sus-
+ceptibility (modeled in IL-10–deficient and K/BxN mice) evokes mal-
+adaptive responses, which, in turn, promote more severe inflammatory
+TH17 disease. Likewise, our data link the shared genetic susceptibility in
+the IL23R locus in both CD and SpA (9) with increased systemic E. coli
+seroreactivity and TH17 inflammatory cytokines. With the recent ap-
+proval of IL-23 blockade therapy for CD, the clinical phenotype of
+peripheral SpA may help stratify an immunophenotype in a susceptible
+host that may benefit from targeted anti–IL-23 therapy.
+Second, unique strain-specific features of epithelial cell attachment
+are critical in dictating the immune outcome. Epithelial cell attachment
+is a critical feature of the mouse commensal SFB and is required to
+induceTH17immunity (42).Arecentreport, whichidentifiedthe ability
+of the human commensal Bifidobacterium adolescentis to induce TH17
+cells, similarly requires attachment to the intestinal epithelium despite
+triggering epithelial transcriptional changes distinct from those induced
+by SFB (51). In human fecal samples, PCR detection of virulence genes
+eae and aggR required for adherence of enteropathogenic and enteroag-
+gregative E. coli, respectively, identified individuals witha higher Entero-
+bacteriaceae ICI and impaired nutritional status (23). eae-dependent
+attachment to the epithelial cell barrier is a critical determinant of TH17
+induction by C. rodentium and Enterohemorrhagic E. coli O157 (42).
+CD-SpA–associated E. coli are distinct from Enteropathogenic E. coli
+and C. rodentium in that they lack type III secretion system effectors
+(including eae), and aggR associated with diarrheagenic Entero-
+bacteriaceae; however, most of the CD-SpA E. coli isolates expressed
+the AIEC virulence-associated gene pduC. The metabolic advantage
+provided by propanediol dehydratase promotes epithelial cell adhe-
+sion seen in both clinical and environmental AIEC isolates containing
+pduC (33, 44). This requirement of pduC for AIEC induction of TH17
+cells in the lamina propria offers a potential targetable link of microbial
+metabolic capacity to TH17-dependent mucosal immunity.
+Despite the role of pathosymbionts, such as AIEC, as keystone
+species, dynamic interactions with other commensals may modulate
+the immunopathology. In mouse models of gut barrier disruption,
+diverse microbial community members, including Bacteroidetes, were
+required for the pathogenic effect of Enterobacteriaceae isolated from
+nutritionally deficient individuals, whereas Akkermansia is protective
+(23). The outcome of these microbial interactions may depend on
+environmental context. Although reduced levels of Akkermansia
+muciniphila in both IBD and metabolic disease (52, 53) support an
+anti-inflammatory role for this mucin-degrading microbe, recent data
+revealed a positive correlation of A. muciniphila ICI with arthritis sever-
+ity in the HLA-B27 rat model (22). The interaction of AIEC with other
+intestinal pathosymbionts may offer a more complete understanding of
+its impact on mucosal immunity and inflammation.
+Our study has important limitations. First, our immunophenotype
+and microbiome results reflect findings in an HLA-B27−peripheral
+IBD-SpA cohort. Despite increased IL-23 in intestinal tissue, previous
+reports of axial SpA did not show an increase in ileal IL-17 (54).
+Moreover, HLA-B27 has been reported to alter the intestinal micro-
+biome (55), and further studies are needed to evaluate the microbiome
+in HLA-B27+ axial and peripheral IBD-SpA. Second, no composition-
+al changes were noted between UC and UC-SpA patients suggesting
+that other environmental or genetic factors may account for peripheral
+SpA in UC. Third, strain variability even within AIEC isolates can be
+diverse. Although our analysis primarily reflects colonization with
+CD-SpA isolate 2A and shows dependence on pduC, additional iso-
+lates and genetic elements may also contribute to systemic TH17 in-
+flammatory disease. Finally, our study does not address the immune
+response within the inflamed joint. Although previous studies have
+highlighted a potential role for molecular mimicry in microbial induc-
+tion of SpA (56), indirect support of alternative IL-23–dependent
+immune effector cells (57) still need to be characterized in IBD-SpA.
+These results highlight the functional implication of IgA-coated
+E. coli enriched in CD-SpA and identify a TH17 immunophenotype
+characteristic of this EIM. This mechanistic link between intestinal
+microbiota and systemic inflammation may underlie the clinical effica-
+cy of sulfasalazine in peripheral joint symptoms (58). While anti-TNFa
+therapy improves axial symptoms in patients with active CD (59), our
+data highlight the activation of the IL-23/IL-17 pathway in CD patients
+with peripheral symptoms. Although blockade of IL-17A yielded
+disappointing results in the overall treatment of CD, the lack of clinical
+response correlated with the absence of polymorphisms in genes asso-
+ciated with TH17 immunity (60). With the recent approval of anti–IL-23
+therapy for CD, our data now offer a method of clinical, microbial, and
+immunophenotyping of CD-SpA that can be used to guide precision
+medical and biologic therapy.
+MATERIALS AND METHODS
+Study design
+A prospective cohort of IBD patients was evaluated for SpA at the Jill
+Roberts Center for IBD under Institutional Review Board–approved
+protocol (1103011578) at Weill Cornell Medicine (WCM). The over-
+all objective of this observational study was to determine differences in
+microbial composition in IBD patients with SpA compared to IBD
+patients without SpA. On the basis of preliminary and published data,
+25 subjects per group were required to detect a 10% difference rela-
+tive abundance of Proteobacteria. Subjects between the ages of 18
+and 80 with biopsy-proven active ileal or ileocolonic (CD, HBI > 4)
+or UC (modified UC-DAI > 2), with or without clinical evidence of
+peripheral SpA assessed by a rheumatologist (according to the ASAS
+guidelines) (61), were recruited. All subjects were free of other rheu-
+matic disease, HLA-B27−, and off antibiotics (including sulfasalazine)
+for at least 8 weeks at enrollment and had an intact colon and ileocecal
+valve. All patients completed the BASDAI—a clinically validated exam
+for disease activity in AS (37)—and a 44-point joint assessment. Fresh
+fecalsamplesandserumwere obtained andstored at −80°Cuntilfurther
+analyses. For patients undergoing endoscopic evaluation, cells isolated
+from mucosal biopsies were obtained and stored at −160°C until further
+analyses. Sequencing and immune cell analyses were performed blinded
+with respect to patient phenotype.
+BugFACS
+Aspreviously described (19), 100mg offecalcontentswashomogenized
+in phosphate-buffered saline (PBS) on ice. Clarified supernatants were
+washed in PBS/1% bovine serum albumin and incubated with blocking
+buffer (20% normal mouse serum in PBS) for 20 min. Samples were
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+9 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+subsequently stained with mouse anti-human IgA (IS11-8E10) or
+isotype (Mouse IgG1) and sorted on FACS Aria (BD Biosciences).
+Samples were costained for nucleic acids with SYTO BC (Invitrogen).
+Animal models
+Mice.
+Germ-free C57BL/6 WT and IL-10−/−mice were bred and maintained
+at WCM. K/BxN mice were generated by crossing KRN TCR trans-
+genic mice on the B6 background with nonobese diabetic mice and
+maintained at the Universityof Arizona. Alltreatments were in accord-
+ance with WCM and the University of Arizona Institutional Animal
+Care and Use Committee guidelines.
+Colonization of germ-free mice.
+For monocolonization experiments, 6- to 8-week-old germ-free mice
+were gavaged with 2 × 109 CFU log-phase bacteria grown under
+anaerobic conditions in peptone yeast glucose liquid media (Anaerobe
+Systems). 16S rRNA qPCR of fecal content– and cecal content–derived
+DNA was used to confirm colonization. For K/BxN colonization ex-
+periments, 3-week-old SPF K/BxN mice were treated with ampicillin
+(1g/liter), neomycin(1g/liter), andmetronidazole (1g/liter)for10days.
+Aftera 1-day washout, the mice were then gavaged withmediaor2× 109
+CFU of AIEC 2A daily for 3 days. Ankle thickness was measured daily
+after bacterial gavage, and tissues were collected 10 days after bacterial
+challenge for flow cytometry analysis.
+Statistics
+Analysis and visualization of microbiome communities was conducted
+in R, using the phyloseq package (62) to import sample data and calcu-
+late a- and b-diversity metrics. For microbiome analysis, significance
+of relative abundance was calculated using the nonparametric Mann-
+Whitney test. Principal coordinate plots used the Monte Carlo permu-
+tation test to estimate the P values. All P values were adjusted for
+multiple comparisons with the false discovery rate algorithm. Correla-
+tion between two continuous variables was determined with linear
+regression models, where P values indicate the probability that the slope
+of the regression line is zero. Significance of categoricalvariables, suchas
+gene expression, cell populations, or histology, was calculated by t test
+for comparison of two groups and two-way ANOVA for comparison of
+more than two groups. The significance of survivalcurveswasdetermined
+by log-rank test.
+SUPPLEMENTARY MATERIALS
+www.sciencetranslationalmedicine.org/cgi/content/full/9/376/eaaf9655/DC1
+Materials and Methods
+Fig. S1. a- and b-diversity metrics of 16S rRNA compositional data.
+Fig. S2. a- and b-diversity metrics stratified by immunomodulator exposure.
+Fig. S3. 16S rRNA IgA-seq sample rarefaction.
+Fig. S4. Relative abundance by phylum, family, and genus in the presort fraction.
+Fig. S5. a- and b-diversity of 16S rRNA IgA-seq data.
+Fig. S6. Relative abundance by phylum and family in the sorted IgA+ and IgA−fractions.
+Fig. S7. CD-SpA–derived, IgA-coated E. coli isolates are AIEC.
+Fig. S8. Circular genome map of CD-SpA–derived E. coli isolate 2A.
+Fig. S9. Colonization of germ-free C57BL/6 mice with CD-SpA E. coli 2A.
+Fig. S10. CD-SpA E. coli 2A induces TH17 mucosal immunity.
+Fig. S11. CD-SpA E. coli 2A induces ILC3 mucosal immunity.
+Fig. S12. Characterization of dendritic cells, CD8+ T cells, and Tfh.
+Fig. S13. Assessment of colonization.
+Fig. S14. CD-SpA AIEC 2A protects WT mice against DSS.
+Table S1. Demographics, clinical parameters, and disease activity indexes of study subjects.
+Table S2. Montreal classification of CD cohort.
+Table S3. AIEC marker genes in reference strains and clonal isolates from CD and CD-SpA patients.
+References (63–70)
+REFERENCES AND NOTES
+1. E. M. DeFilippis, R. Longman, M. Harbus, K. Dannenberg, E. J. Scherl, Crohn’s disease:
+Evolution, epigenetics, and the emerging role of microbiome-targeted therapies.
+Curr. Gastroenterol. Rep. 18, 13 (2016).
+2. R. S. Longman, E. J Scherl, in Medical Therapy of Ulcerative Colitis, G. Lichtenstein, Ed.
+(Springer Science, 2015).
+3. R. Peluso, M. N. D. Di Minno, S. Iervolino, F. Manguso, G. Tramontano, P. Ambrosino,
+C. Esposito, A. Scalera, F. Castiglione, R. Scarpa, Enteropathic spondyloarthritis: From
+diagnosis to treatment. Clin. Dev. Immunol. 2013, 631408 (2013).
+4. J. A. Bargen, Complications and sequelae of chronic ulcerative colitis. Ann. Intern. Med. 3,
+335–352 (1929).
+5. H. Mielants, E. M. Veys, M. Devos, C. C. Stefan, S. Goemaere, L. Declercq, L. Schatteman,
+D. Elewaut, The evolution of spondyloarthropathies in relation to gut histology. I. Clinical
+Aspects. J. Rheumatol. 22, 2266–2272 (1995).
+6. L. Van Praet, L. Jans, P. Carron, P. Jacques, E. Glorieus, R. Colman, H. Cypers,
+H. Mielants, M. De Vos, C. Cuvelier, F. Van den Bosch, D. Elewaut, Degree of bone marrow
+oedema in sacroiliac joints of patients with axial spondyloarthritis is linked to gut
+inflammation and male sex: Results from the GIANT cohort. Ann. Rheum. Dis. 73,
+1186–1189 (2014).
+7. L. Van Praet, F. E. Van den Bosch, P. Jacques, P. Carron, L. Jans, R. Colman, E. Glorieus,
+H. Peeters, H. Mielants, M. De Vos, C. Cuvelier, D. Elewaut, Microscopic gut inflammation
+in axial spondyloarthritis: A multiparametric predictive model. Ann. Rheum. Dis. 72,
+414–417 (2013).
+8. R. H. Duerr, K. D. Taylor, S. R. Brant, J. D. Rioux, M. S. Silverberg, M. J. Daly, A. H. Steinhart,
+C. Abraham, M. Regueiro, A. Griffiths, T. Dassopoulos, A. Bitton, H. Yang, S. Targan,
+L. W. Datta, E. O. Kistner, L. P. Schumm, A. T. Lee, P. K. Gregersen, M. M. Barmada,
+J. I. Rotter, D. L. Nicolae, J. H. Cho, A genome-wide association study identifies IL23R as an
+inflammatory bowel disease gene. Science 314, 1461–1463 (2006).
+9. Wellcome Trust Case Control; Australo-Anglo-American Spondylitis Consortium (TASC),
+P. R. Burton, D. G. Clayton, L. R. Cardon, N. Craddock, P. Deloukas, A. Duncanson,
+D. P. Kwiatkowski, M. I. McCarthy, W. H. Ouwehand, N. J. Samani, J. A. Todd, P. Donnelly,
+J. C. Barrett, D. Davison, D. Easton, D. M. Evans, H. T. Leung, J. L. Marchini, A. P. Morris,
+C. C. Spencer, M. D. Tobin, A. P. Attwood, J. P. Boorman, B. Cant, U. Everson, J. M. Hussey,
+J. D. Jolley, A. S. Knight, K. Koch, E. Meech, S. Nutland, C. V. Prowse, H. E. Stevens,
+N. C. Taylor, G. R. Walters, N. M. Walker, N. A. Watkins, T. Winzer, R. W. Jones,
+W. L. McArdle, S. M. Ring, D. P. Strachan, M. Pembrey, G. Breen, D. St Clair, S. Caesar,
+K. Gordon-Smith, L. Jones, C. Fraser, E. K. Green, D. Grozeva, M. L. Hamshere,
+P. A. Holmans, I. R. Jones, G. Kirov, V. Moskivina, I. Nikolov, M. C. O’Donovan, M. J. Owen,
+D. A. Collier, A. Elkin, A. Farmer, R. Williamson, P. McGuffin, A. H. Young, I. N. Ferrier,
+S. G. Ball, A. J. Balmforth, J. H. Barrett, T. D. Bishop, M. M. Iles, A. Maqbool, N. Yuldasheva,
+A. S. Hall, P. S. Braund, R. J. Dixon, M. Mangino, S. Stevens, J. R. Thompson, F. Bredin,
+M. Tremelling, M. Parkes, H. Drummond, C. W. Lees, E. R. Nimmo, J. Satsangi,
+S. A. Fisher, A. Forbes, C. M. Lewis, C. M. Onnie, N. J. Prescott, J. Sanderson,
+C. G. Matthew, J. Barbour, M. K. Mohiuddin, C. E. Todhunter, J. C. Mansfield, T. Ahmad,
+F. R. Cummings, D. P. Jewell, J. Webster, M. J. Brown, M. G. Lathrop, J. Connell,
+A. Dominiczak, C. A. Marcano, B. Burke, R. Dobson, J. Gungadoo, K. L. Lee,
+P. B. Munroe, S. J. Newhouse, A. Onipinla, C. Wallace, M. Xue, M. Caulfield, M. Farrall,
+A. Barton; Biologics in RA Genetics and Genomics Study Syndicate (BRAGGS) Steering
+Committee, I. N. Bruce, H. Donovan, S. Eyre, P. D. Gilbert, S. L. Hilder, A. M. Hinks,
+S. L. John, C. Potter, A. J. Silman, D. P. Symmons, W. Thomson, J. Worthington,
+D. B. Dunger, B. Widmer, T. M. Frayling, R. M. Freathy, H. Lango, J. R. Perry, B. M. Shields,
+M. N. Weedon, A. T. Hattersley, G. A. Hitman, M. Walker, K. S. Elliott, C. J. Groves,
+C. M. Lindgren, N. W. Rayner, N. J. Timpson, E. Zeggini, M. Newport, G. Sirugo,
+E. Lyons, F. Vannberg, A. V. Hill, L. A. Bradbury, C. Farrar, J. J. Pointon, P. Wordsworth,
+M. A. Brown, J. A. Franklyn, J. M. Heward, M. J. Simmonds, S. C. Gough, S. Seal; Breast
+Cancer Susceptibility Collaboration (UK), M. R. Stratton, N. Rahman, M. Ban, A. Goris,
+S. J. Sawcer, A. Compston, D. Conway, M. Jallow, M. Newport, G. Sirugo, K. A. Rockett,
+S. J. Bumpstead, A. Chaney, K. Downes, M. J. Ghori, R. Gwilliam, S. E. Hunt, M. Inouye,
+A. Keniry, E. King, R. McGinnis, S. Potter, R. Ravindrarajah, P. Whittaker, C. Widden,
+D. Withers, N. J. Cardin, D. Davison, T. Ferreira, J. Pereira-Gale, I. B. Hallgrimsdo’ttir,
+B. N. Howie, Z. Su, Y. Y. Teo, D. Vukcevic, D. Bentley, M. A. Brown, A. Compston,
+M. Farrall, A. S. Hall, A. T. Hattersley, A. V. Hill, M. Parkes, M. Pembrey, M. R. Stratton,
+S. L. Mitchell, P. R. Newby, O. J. Brand, J. Carr-Smith, S. H. Pearce, R. McGinnis, A. Keniry,
+P. Deloukas, J. D. Reveille, X. Zhou, A. M. Sims, A. Dowling, J. Taylor, T. Doan, J. C. Davis,
+L. Savage, M. M. Ward, T. L. Learch, M. H. Weisman, M. Brown, Association scan of
+14,500 nonsynonymous SNPs in four diseases identifies autoimmunity variants. Nat.
+Genet. 39, 1329–1337 (2007).
+10. D. Gevers, S. Kugathasan, L. A. Denson, Y. Vázquez-Baeza, W. Van Treuren,
+B. Ren, E. Schwager, D. Knights, S. J. Song, M. Yassour, X. C. Morgan, A. D. Kostic,
+C. Luo, A. González, D. McDonald, Y. Haberman, T. Walters, S. Baker, J. Rosh,
+M. Stephens, M. Heyman, J. Markowitz, R. Baldassano, A. Griffiths, F. Sylvester, D. Mack,
+S. Kim, W. Crandall, J. Hyams, C. Huttenhower, R. Knight, R. J. Xavier, The
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+10 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+treatment-naive microbiome in new-onset Crohn’s disease. Cell Host Microbe 15,
+382–392 (2014).
+11. J. D. Taurog, R. E. Hammer, Experimental spondyloarthropathy in HLA-B27 transgenic rats.
+Clin. Rheumatol. 15 (suppl. 1), 22–27 (1996).
+12. H. C. Rath, H. H. Herfarth, J. S. Ikeda, W. B. Grenther, T. E. Hamm Jr., E. Balish, J. D. Taurog,
+R. E. Hammer, K. H. Wilson, R. B. Sartor, Normal luminal bacteria, especially Bacteroides
+species, mediate chronic colitis, gastritis, and arthritis in HLA-B27/human beta2
+microglobulin transgenic rats. J. Clin. Invest. 98, 945–953 (1996).
+13. P. Cowling, R. Ebringer, D. Cawdell, M. Ishii, A. Ebringer, C-reactive protein, ESR, and
+klebsiella in ankylosing spondylitis. Ann. Rheum. Dis. 39, 45–49 (1980).
+14. P. Cowling, R. Ebringer, A. Ebringer, Association of inflammation with raised serum IgA in
+ankylosing spondylitis. Ann. Rheum. Dis. 39, 545–549 (1980).
+15. M.-E. Costello, F. Ciccia, D. Willner, N. Warrington, P. C. Robinson, B. Gardiner, M. Marshall,
+T. J. Kenna, G. Triolo, M. A. Brown, Intestinal dysbiosis in ankylosing spondylitis. Arthritis
+Rheumatol. 2014, 10.1002/art.38967(2014).
+16. J. U. Scher, A. Sczesnak, R. S. Longman, N. Segata, C. Ubeda, C. Bielski, T. Rostron,
+V. Cerundolo, E. G. Pamer, S. B. Abramson, C. Huttenhower, D. R. Littman, Expansion of
+intestinal Prevotella copri correlates with enhanced susceptibility to arthritis. Elife 2,
+e01202 (2013).
+17. X. Zhang, D. Zhang, H. Jia, Q. Feng, D. Wang, D. Liang, X. Wu, J. Li, L. Tang, Y. Li, Z. Lan,
+B. Chen, Y. Li, H. Zhong, H. Xie, Z. Jie, W. Chen, S. Tang, X. Xu, X. Wang, X. Cai, S. Liu, Y. Xia,
+J. Li, X. Qiao, J. Y. Al-Aama, H. Chen, L. Wang, Q. J. Wu, F. Zhang, W. Zheng, Y. Li, M. Zhang,
+G. Luo, W. Xue, L. Xiao, J. Li, W. Chen, X. Xu, Y. Yin, H. Yang, J. Wang, K. Kristiansen, L. Liu,
+T. Li, Q. Huang, Y. Li, J. Wang, The oral and gut microbiomes are perturbed in rheumatoid
+arthritis and partly normalized after treatment. Nat. Med. 21, 895–905 (2015).
+18. J. U. Scher, C. Ubeda, A. Artacho, M. Attur, S. Isaac, S. M. Reddy, S. Marmon, A. Neimann,
+S. Brusca, T. Patel, J. Manasson, E. G. Pamer, D. R. Littman, S. B. Abramson, Decreased
+bacterial diversity characterizes the altered gut microbiota in patients with psoriatic
+arthritis, resembling dysbiosis in inflammatory bowel disease. Arthritis Rheumatol. 67,
+128–139 (2015).
+19. N. W. Palm, M. R. de Zoete, T. W. Cullen, N. A. Barry, J. Stefanowski, L. Hao, P. H. Degnan,
+J. Hu, I. Peter, W. Zhang, E. Ruggiero, J. H. Cho, A. L. Goodman, R. A. Flavell,
+Immunoglobulin A coating identifies colitogenic bacteria in inflammatory bowel disease.
+Cell 158, 1000–1010 (2014).
+20. H.-J. Wu, I. I. Ivanov, J. Darce, K. Hattori, T. Shima, Y. Umesaki, D. R. Littman, C. Benoist,
+D. Mathis, Gut-residing segmented filamentous bacteria drive autoimmune arthritis via
+T helper 17 cells. Immunity 32, 815–827 (2010).
+21. II Ivanov, K. Atarashi, N. Manel, E. L. Brodie, T. Shima, U. Karaoz, D. Wei, K. C. Goldfarb,
+C. A. Santee, S. V. Lynch, T. Tanoue, A. Imaoka, K. Itoh, K. Takeda, Y. Umesaki, K. Honda,
+D. R. Littman, Induction of intestinal Th17 cells by segmented filamentous bacteria.
+Cell 139, 485–498 (2009).
+22. M. Asquith, P. Stauffer, S. Davin, C. Mitchell, M. P. Lin, J. T. Rosenbaum, Perturbed mucosal
+immunity and dysbiosis accompany clinical disease in a rat model of spondyloarthritis.
+Arthritis Rheumatol. 68, 2151–2162 (2016).
+23. A. L. Kau, J. D. Planer, J. Liu, S. Rao, T. Yatsunenko, I. Trehan, M. J. Manary, T.-C. Liu,
+T. S. Stappenbeck, K. M. Maleta, P. Ashorn, K. G. Dewey, E. R. Houpt, C.-S. Hsieh,
+J. I. Gordon, Functional characterization of IgA-targeted bacterial taxa from
+undernourished Malawian children that produce diet-dependent enteropathy. Sci. Transl.
+Med. 7, 276ra224 (2015).
+24. L. A. van der Waaij, F. G. Kroese, A. Visser, G. F. Nelis, B. D. Westerveld, P. L. Jansen,
+J. O. Hunter, Immunoglobulin coating of faecal bacteria in inflammatory bowel disease.
+Eur. J. Gastroenterol. Hepatol. 16, 669–674 (2004).
+25. E. J. Scherl, R. S. Longman, Biomarkers stratify disease phenotype and therapeutic
+response in inflammatory bowel disease. Eur. Gastroenterol. Hepatol. Rev. 7, 224–228
+(2012).
+26. I. Mukhopadhya, R. Hansen, E. M. El-Omar, G. L. Hold, IBD—What role do Proteobacteria
+play? Nat. Rev. Gastroenterol. Hepatol. 9, 219–230 (2012).
+27. B. Willing, J. Halfvarson, J. Dicksved, M. Rosenquist, G. Jarnerot, L. Engstrand, C. Tysk,
+J. K. Jansson, Twin studies reveal specific imbalances in the mucosa-associated
+microbiota of patients with ileal Crohn’s disease. Inflamm. Bowel Dis. 15, 653–660 (2009).
+28. D. N. Frank, A. L. St. Amand, R. A. Feldman, E. C. Boedeker, N. Harpaz, N. R. Pace,
+Molecular-phylogenetic characterization of microbial community imbalances in human
+inflammatory bowel diseases. Proc. Natl. Acad. Sci. U.S.A. 104, 13780–13785 (2007).
+29. N. Rolhion, A. Darfeuille-Michaud, Adherent-invasive Escherichia coli in inflammatory
+bowel disease. Inflamm. Bowel Dis. 13, 1277–1283 (2007).
+30. M. Baumgart, B. Dogan, M. Rishniw, G. Weitzman, B. Bosworth, R. Yantiss, R. H. Orsi,
+M. Wiedmann, P. McDonough, S. G. Kim, D. Berg, Y. Schukken, E. Scherl, K. W. Simpson,
+Culture independent analysis of ileal mucosa reveals a selective increase in invasive
+Escherichia coli of novel phylogeny relative to depletion of Clostridiales in Crohn’s disease
+involving the ileum. ISME J. 1, 403–418 (2007).
+31. B. Dogan, E. Scherl, B. Bosworth, R. Yantiss, C. Altier, P. L. McDonough, Z. D. Jiang,
+H. L. Dupont, P. Garneau, J. Harel, M. Rishniw, K. W. Simpson, Multidrug resistance is
+common in Escherichia coli associated with ileal Crohn’s disease. Inflamm. Bowel Dis. 19,
+141–150 (2012).
+32. S. Miquel, E. Peyretaillade, L. Claret, A. de Vallée, C. Dossat, B. Vacherie, E. Zineb,
+B. Segurens, V. Barbe, P. Sauvanet, C. Neut, J.-F. Colombel, C. Medigue, F. J. M. Mojica,
+P. Peyret, R. Bonnet, A. Darfeuille-Michaud, Complete genome sequence of Crohn’s
+disease-associated adherent-invasive E. coli strain LF82. PLOS ONE 5, 10.1371/journal.
+pone.0012714 (2010).
+33. B. Dogan, H. Suzuki, D. Herlekar, R. B. Sartor, B. J. Campbell, C. L. Roberts, K. Stewart,
+E. J. Scherl, Y. Araz, P. P. Bitar, T. Lefébure, B. Chandler, Y. H. Schukken, M. J. Stanhope,
+K. W. Simpson, Inflammation-associated adherent-invasive Escherichia coli are
+enriched in pathways for use of propanediol and iron and M-cell translocation.
+Inflamm. Bowel Dis. 20, 1919–1932 (2014).
+34. R. S. Longman, Y. Yang, G. E. Diehl, S. V. Kim, D. R. Littman, Microbiota: Host interactions in
+mucosal homeostasis and systemic autoimmunity. Cold Spring Harb. Symp. Quant. Biol.
+78, 193–201 (2013).
+35. V. Gaboriau-Routhiau, S. Rakotobe, E. Lécuyer, I. Mulder, A. Lan, C. Bridonneau, V. Rochet,
+A. Pisi, M. De Paepe, G. Brandi, G. Eberl, J. Snel, D. Kelly, N. Cerf-Bensussan, The key role of
+segmented filamentous bacteria in the coordinated maturation of gut helper T cell
+responses. Immunity 31, 677–689 (2009).
+36. Y. K. Lee, J. S. Menezes, Y. Umesaki, S. K. Mazmanian, Microbes and health sackler
+colloquium: Proinflammatory T-cell responses to gut microbiota promote experimental
+autoimmune encephalomyelitis. Proc. Natl. Acad. Sci. U.S.A. 108 (suppl. 1), 4615–4622 (2010).
+37. A. Calin, J. P. Nakache, A. Gueguen, H. Zeidler, H. Mielants, M. Dougados, Defining disease
+activity in ankylosing spondylitis: Is a combination of variables (Bath Ankylosing Spondylitis
+Disease Activity Index) an appropriate instrument? Rheumatology 38, 878–882 (1999).
+38. M. Rudwaleit, D. van der Heijde, R. Landewe, N. Akkoc, J. Brandt, C. T. Chou, M. Dougados,
+F. Huang, J. Gu, Y. Kirazli, F. Van den Bosch, I. Olivieri, E. Roussou, S. Scarpato,
+I. J. Sørensen, R. Valle-Oñate, U. Weber, J. Wei, J. Sieper, The Assessment of
+SpondyloArthritis International Society classification criteria for peripheral
+spondyloarthritis and for spondyloarthritis in general. Ann. Rheum. Dis. 70, 25–31 (2011).
+39. J. J. Bunker, T. M. Flynn, J. C. Koval, D. G. Shaw, M. Meisel, B. D. McDonald, I. E. Ishizuka,
+A. L. Dent, P. C. Wilson, B. Jabri, D. A. Antonopoulos, A. Bendelac, Innate and
+adaptive humoral responses coat distinct commensal bacteria with immunoglobulin
+A. Immunity 43, 541–553 (2015).
+40. E. Sefik, N. Geva-Zatorsky, S. Oh, L. Konnikova, D. Zemmour, A. M. McGuire, D. Burzyn,
+A. Ortiz-Lopez, M. Lobera, J. Yang, S. Ghosh, A. Earl, S. B. Snapper, R. Jupp, D. Kasper,
+D. Mathis, C. Benoist, MUCOSAL IMMUNOLOGY. Individual intestinal symbionts induce a
+distinct population of RORg+ regulatory T cells. Science 349, 993–997 (2015).
+41. G. F. Sonnenberg, D. Artis, Innate lymphoid cells in the initiation, regulation and
+resolution of inflammation. Nat. Med. 21, 698–708 (2015).
+42. K. Atarashi, T. Tanoue, M. Ando, N. Kamada, Y. Nagano, S. Narushima, W. Suda, A. Imaoka,
+H. Setoyama, T. Nagamori, E. Ishikawa, T. Shima, T. Hara, S. Kado, T. Jinnohara, H. Ohno,
+T. Kondo, K. Toyooka, E. Watanabe, S.-i. Yokoyama, S. Tokoro, H. Mori, Y. Noguchi,
+H. Morita, I. I. Ivanov, T. Sugiyama, G. Nuñez, J. G. Camp, M. Hattori, Y. Umesaki, K. Honda,
+Th17 cell induction by adhesion of microbes to intestinal epithelial cells. Cell 163,
+367–380 (2015).
+43. T. Sano, W. Huang, J. A. Hall, Y. Yang, A. Chen, S. J. Gavzy, J.-Y. Lee, J. W. Ziel, E. R. Miraldi,
+A. I. Domingos, R. Bonneau, D. R. Littman, An IL-23R/IL-22 circuit regulates epithelial
+serum amyloid a to promote local effector Th17 responses. Cell 163, 381–393 (2015).
+44. C. Vignaroli, L. Di Sante, G. Magi, G. M. Luna, A. Di Cesare, S. Pasquaroli, B. Facinelli,
+F. Biavasco, Adhesion of marine cryptic Escherichia isolates to human intestinal epithelial
+cells. ISME J. 9, 508–515 (2015).
+45. T. C. Fung, N. J. Bessman, M. R. Hepworth, N. Kumar, N. Shibata, D. Kobuley, K. Wang,
+C. G. Ziegler, J. Goc, T. Shima, Y. Umesaki, R. B. Sartor, K. V. Sullivan, T. D. Lawley,
+J. Kunisawa, H. Kiyono, G. F. Sonnenberg, Lymphoid-tissue-resident commensal bacteria
+promote members of the IL-10 cytokine family to establish mutualism. Immunity 44,
+634–646 (2016).
+46. C. S. Eun, Y. Mishima, S. Wohlgemuth, B. Liu, M. Bower, I. M. Carroll, R. B. Sartor, Induction
+of bacterial antigen-specific colitis by a simplified human microbiota consortium in
+gnotobiotic interleukin-10−/−mice. Infect. Immun. 82, 2239–2246 (2014).
+47. J. H. Cox, N. M. Kljavin, N. Ota, J. Leonard, M. Roose-Girma, L. Diehl, W. Ouyang, N. Ghilardi,
+Opposing consequences of IL-23 signaling mediated by innate and adaptive cells in
+chemically induced colitis in mice. Mucosal Immunol. 5, 99–109 (2012).
+48. F. Zorzi, I. Monteleone, M. Sarra, E. Calabrese, I. Marafini, M. Cretella, S. Sedda, L. Biancone,
+F. Pallone, G. Monteleone, Distinct profiles of effector cytokines mark the different phases
+of Crohn’s disease. PLOS ONE 8, e54562 (2013).
+49. J. Li, A. Ueno, M. Fort Gasia, J. Luider, T. Wang, C. Hirota, H. B. Jijon, M. Deane, M. Tom,
+R. Chan, H. W. Barkema, P. L. Beck, G. G. Kaplan, R. Panaccione, J. Qian, M. Iacucci,
+X. Gui, S. Ghosh, Profiles of lamina propria T helper cell subsets discriminate between
+ulcerative colitis and Crohn’s disease. Inflamm. Bowel Dis. 22, 1779–1792 (2016).
+50. E. Slack, S. Hapfelmeier, B. Stecher, Y. Velykoredko, M. Stoel, M. A. E. Lawson,
+M. B. Geuking, B. Beutler, T. F. Tedder, W.-D. Hardt, P. Bercik, E. F. Verdu, K. D. McCoy,
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+11 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+A. J. Macpherson, Innate and adaptive immunity cooperate flexibly to maintain
+host-microbiota mutualism. Science 325, 617–620 (2009).
+51. T. G. Tan, E. Sefik, N. Geva-Zatorsky, L. Kua, D. Naskar, F. Teng, L. Pasman, A. Ortiz-Lopez,
+R. Jupp, H. J. Wu, D. L. Kasper, C. Benoist, D. Mathis, Identifying species of symbiont
+bacteria from the human gut that, alone, can induce intestinal Th17 cells in mice. Proc.
+Natl. Acad. Sci. U.S.A. 113, E8141–E8150 (2016).
+52. M. Derrien, C. Belzer, W. M. de Vos, Akkermansia muciniphila and its role in regulating host
+functions. Microb. Pathog. 2016, 10.1016/j.micpath.2016.02.005 (2016).
+53. M. Yassour, M. Y. Lim, H. S. Yun, T. L. Tickle, J. Sung, Y.-M. Song, K. Lee, E. A. Franzosa,
+X. C. Morgan, D. Gevers, E. S. Lander, R. J. Xavier, B. W. Birren, G. Ko, C. Huttenhower,
+Sub-clinical detection of gut microbial biomarkers of obesity and type 2 diabetes.
+Genome Med. 8, 17 (2016).
+54. F. Ciccia, M. Bombardieri, A. Principato, A. Giardina, C. Tripodo, R. Porcasi, S. Peralta,
+V. Franco, E. Giardina, A. Craxi, C. Pitzalis, G. Triolo, Overexpression of interleukin-23, but
+not interleukin-17, as an immunologic signature of subclinical intestinal inflammation in
+ankylosing spondylitis. Arthritis Rheum. 60, 955–965 (2009).
+55. P. Lin, M. Bach, M. Asquith, A. Y. Lee, L. Akileswaran, P. Stauffer, S. Davin, Y. Pan,
+E. D. Cambronne, M. Dorris, J. W. Debelius, C. L. Lauber, G. Ackermann, Y. V. Baeza,
+T. Gill, R. Knight, R. A. Colbert, J. D. Taurog, R. N. Van Gelder, J. T. Rosenbaum,
+HLA-B27 and human b2-microglobulin affect the gut microbiota of transgenic rats.
+PLOS ONE 9, e105684 (2014).
+56. T. Rashid, A. Ebringer, Autoimmunity in rheumatic diseases is induced by
+microbial infections via crossreactivity or molecular mimicry. Autoimmune Dis.
+2012, 539282 (2012).
+57. F. Ciccia, G. Guggino, A. Rizzo, L. Saieva, S. Peralta, A. Giardina, A. Cannizzaro, G. Sireci,
+G. De Leo, R. Alessandro, G. Triolo, Type 3 innate lymphoid cells producing IL-17 and IL-22
+are expanded in the gut, in the peripheral blood, synovial fluid and bone marrow of
+patients with ankylosing spondylitis. Ann. Rheum. Dis. 74, 1739–1747 (2015).
+58. D. O. Clegg, D. J. Reda, M. H. Weisman, W. D. Blackburn, J. J. Cush, G. W. Cannon,
+M. L. Mahowald, H. R. Schumacher Jr., T. Taylor, E. Budiman-Mak, M. R. Cohen, F. B. Vasey,
+M. E. Luggen, E. Mejias, S. L. Silverman, R. Makkena, F. P. Alepa, J. Buxbaum,
+C. M. Haakenson, R. H. Ward, B. J. Manaster, R. J. Anderson, J. R. Ward, W. G. Henderson,
+Comparison of sulfasalazine and placebo in the treatment of ankylosing spondylitis.
+A Department of Veterans Affairs Cooperative Study. Arthritis Rheum. 39, 2004–2012
+(1996).
+59. S. Generini, R. Giacomelli, R. Fedi, A. Fulminis, A. Pignone, G. Frieri, A. Del Rosso, A. Viscido,
+B. Galletti, M. Fazzi, F. Tonelli, M. Matucci-Cerinic, Infliximab in spondyloarthropathy
+associated with Crohn’s disease: An open study on the efficacy of inducing and
+maintaining remission of musculoskeletal and gut manifestations. Ann. Rheum. Dis. 63,
+1664–1669 (2004).
+60. W. Hueber, B. E. Sands, S. Lewitzky, M. Vandemeulebroecke, W. Reinisch, P. D. Higgins,
+J. Wehkamp, B. G. Feagan, M. D. Yao, M. Karczewski, J. Karczewski, N. Pezous, S. Bek,
+G. Bruin, B. Mellgard, C. Berger, M. Londei, A. P. Bertolino, G. Tougas, S. P. Travis;
+Secukinumab in Crohn’s Disease Study Group, Secukinumab, a human anti-IL-17A
+monoclonal antibody, for moderate to severe Crohn’s disease: Unexpected results of a
+randomised, double-blind placebo-controlled trial. Gut 61, 1693–1700 (2012).
+61. J. Braun, R. van den Berg, X. Baraliakos, H. Boehm, R. Burgos-Vargas, E. Collantes-Estevez,
+H. Dagfinrud, B. Dijkmans, M. Dougados, P. Emery, P. Geher, M. Hammoudeh, R. D. Inman,
+M. Jongkees, M. A. Khan, U. Kiltz, T. Kvien, M. Leirisalo-Repo, W. P. Maksymowych,
+I. Olivieri, K. Pavelka, J. Sieper, E. Stanislawska-Biernat, D. Wendling, S. Özgocmen,
+C. van Drogen, B. van Royen, D. van der Heijde, 2010 update of the ASAS/EULAR
+recommendations for the management of ankylosing spondylitis. Ann. Rheum. Dis. 70,
+896–904 (2011).
+62. P. J. McMurdie, S. Holmes, phyloseq: An R package for reproducible interactive analysis
+and graphics of microbiome census data. PLOS ONE 8, e61217 (2013).
+63. Human Microbiome Project Consortium, Structure, function and diversity of the healthy
+human microbiome. Nature 486, 207–214 (2012).
+64. C.-S. Chin, D. H. Alexander, P. Marks, A. A. Klammer, J. Drake, C. Heiner, A. Clum,
+A. Copeland, J. Huddleston, E. E. Eichler, S. W. Turner, J. Korlach, Nonhybrid, finished
+microbial genome assemblies from long-read SMRT sequencing data. Nat. Methods 10,
+563–569 (2013).
+65. R. K. Aziz, D. Bartels, A. A. Best, M. DeJongh, T. Disz, R. A. Edwards, K. Formsma, S. Gerdes,
+E. M. Glass, M. Kubal, F. Meyer, G. J. Olsen, R. Olson, A. L. Osterman, R. A. Overbeek,
+L. K. McNeil, D. Paarmann, T. Paczian, B. Parrello, G. D. Pusch, C. Reich, R. Stevens,
+O. Vassieva, V. Vonstein, A. Wilke, O. Zagnitko, The RAST Server: Rapid annotations using
+subsystems technology. BMC Genomics 9, 75 (2008).
+66. A. L. Delcher, K. A. Bratke, E. C. Powers, S. L. Salzberg, Identifying bacterial genes and
+endosymbiont DNA with Glimmer. Bioinformatics 23, 673–679 (2007).
+67. I. Grin, D. Linke, GCView: The genomic context viewer for protein homology searches.
+Nucleic Acids Res. 39, W353–W356 (2011).
+68. U. Erben, C. Loddenkemper, K. Doerfel, S. Spieckermann, D. Haller, M. M. Heimesaat,
+M. Zeitz, B. Siegmund, A. A. Kühl, A guide to histomorphological evaluation of intestinal
+inflammation in mouse models. Int. J. Clin. Exp. Pathol. 7, 4557–4576 (2014).
+69. G. E. Diehl, R. S. Longman, J.-X. Zhang, B. Breart, C. Galan, A. Cuesta, S. R. Schwab,
+D. R. Littman, Microbiota restricts trafficking of bacteria to mesenteric lymph nodes by
+CX3CR1hi cells. Nature 494, 116–120 (2013).
+70. F. Teng, C. N. Klinger, K. M. Felix, C. P. Bradley, E. Wu, N. L. Tran, Y. Umesaki, H.-J. J. Wu, Gut
+microbiota drive autoimmune arthritis by promoting differentiation and migration of
+Peyer’s patch T follicular helper cells. Immunity 44, 875–888 (2016).
+Acknowledgments: We thank D. Artis, D. Littman, and S. Lipkin for helpful comments and
+discussion; R. Pinedo for technical assistance with gnotobiotic husbandry; and G. Putzel for
+bioinformatics help. Funding: This work was supported by grants from the NIH [K08
+DK099381 (R.S.L.), R56AI107117 (H.-J.J.W.), and RO1AI107117 (H.-J.J.W.)], Crohn’s and Colitis
+Foundation of America (#323814 to B.D. and K.W.S.), NSF Research Fellowship (1144247
+to A. Sczesnak), the Southwest Clinic and Research Institute Fund (H.-J.J.W.), the Center for
+Advanced Digestive Care/Jill Roberts Institute for Research in Inflammatory Bowel Disease
+(R.S.L.), Charina Endowment Fund (R.S.L.), and New York Crohn’s Disease Foundation (R.S.L.).
+Author contributions: R.S.L., C.C., L.A.M., S.S., M.A., V.J., A. Steinlauf, B.B., and E.J.S. designed
+the clinical cohort, collected the clinical samples, and analyzed the clinical data. R.S.L, M.V.,
+C.K., A.A., D.V., J.G.C., V.W., M.K., G.E.D., B.D., K.W.S., F.T., N.L.T., X.K.Z., and H.-J.J.W. designed
+and analyzed the experiments. A. Sczesnak, G.E.D., N.J.A., J.F.P., R.S.L., and M.V. analyzed the
+16S rRNA data. R.S.L, M.V., C.K., J.G.C., K.W.S., and H.-J.J.W. wrote and edited the manuscript.
+Competing interests: The authors declare that they have no competing interests. Data and
+materials availability: The sequencing data used for this study have been deposited at
+National Center for Biotechnology Information BioProject ID PRJNA349809.
+Submitted 16 May 2016
+Resubmitted 12 August 2016
+Accepted 27 December 2016
+Published 8 February 2017
+10.1126/scitranslmed.aaf9655
+Citation: M. Viladomiu, C. Kivolowitz, A. Abdulhamid, B. Dogan, D. Victorio, J. G. Castellanos,
+V. Woo, F. Teng, N. L. Tran, A. Sczesnak, C. Chai, M. Kim, G. E. Diehl, N. J. Ajami, J. F. Petrosino,
+X. K. Zhou, S. Schwartzman, L. A. Mandl, M. Abramowitz, V. Jacob, B. Bosworth, A. Steinlauf,
+E. J. Scherl, H.-J. J. Wu, K. W. Simpson, R. S. Longman, IgA-coated E. coli enriched in Crohn’s
+disease spondyloarthritis promote TH17-dependent inflammation. Sci. Transl. Med. 9, eaaf9655
+(2017).
+S C I E N C E T R A N S L A T I O N A L M E D I C I N E | R E S E A RC H A R T I C L E
+Viladomiu et al., Sci. Transl. Med. 9, eaaf9655 (2017)
+8 February 2017
+12 of 12
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 
+10.1126/scitranslmed.aaf9655]
+ (376), . [doi:
+9
+Science Translational Medicine 
+(February 8, 2017) 
+Hsin-Jung Joyce Wu, Kenneth W. Simpson and Randy S. Longman 
+Vinita Jacob, Brian Bosworth, Adam Steinlauf, Ellen J. Scherl,
+Zhou, Sergio Schwartzman, Lisa A. Mandl, Meira Abramowitz, 
+K.
+Kim, Gretchen E. Diehl, Nadim J. Ajami, Joseph F. Petrosino, Xi 
+Teng, Nhan L. Tran, Andrew Sczesnak, Christina Chai, Myunghoo
+Belgin Dogan, Daniel Victorio, Jim G. Castellanos, Viola Woo, Fei 
+Monica Viladomiu, Charles Kivolowitz, Ahmed Abdulhamid,
+17-dependent inflammation
+H
+promote T
+ enriched in Crohn's disease spondyloarthritis
+E. coli
+IgA-coated 
+ 
+Editor's Summary
+ 
+ 
+ 
+17 phenotype they induce could bring relief to patients.
+H
+patients, such as stiffness and spinal pain. Precise targeting of these types of bacteria or reversing the T
+17-driven inflammation that leads to extraintestinal complications in Crohn's disease
+H
+systemic T
+worsened development of colitis and arthritis in mouse models, this pathosymbiont may be causing a 
+17 immunity and
+H
+. As colonization with this bacterium induced systemic T
+Escherichia coli
+of 
+. discovered that the immune systems of these patients are more likely to recognize a certain kind
+et al
+systems. A subset of Crohn's disease patients also experience painful spondyloarthritis, and Viladomiu 
+The influence of the gut microbiome extends beyond the intestines and can modulate many host
+Pathosymbiont perturbation of immune homeostasis
+This information is current as of February 8, 2017. 
+The following resources related to this article are available online at http://stm.sciencemag.org. 
+Article Tools
+http://stm.sciencemag.org/content/9/376/eaaf9655
+article tools: 
+Visit the online version of this article to access the personalization and
+Materials
+Supplemental
+http://stm.sciencemag.org/content/suppl/2017/02/06/9.376.eaaf9655.DC1
+"Supplementary Materials"
+Permissions
+http://www.sciencemag.org/about/permissions.dtl
+Obtain information about reproducing this article: 
+ is a registered trademark of AAAS.
+Medicine
+Science Translational
+Association for the Advancement of Science; all rights reserved. The title 
+Science, 1200 New York Avenue, NW, Washington, DC 20005. Copyright 2017 by the American
+weekly, except the last week in December, by the American Association for the Advancement of 
+ (print ISSN 1946-6234; online ISSN 1946-6242) is published
+Science Translational Medicine
+ on February 8, 2017
+http://stm.sciencemag.org/
+Downloaded from 

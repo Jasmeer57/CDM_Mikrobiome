@@ -1,0 +1,1342 @@
+ORIGINAL RESEARCH
+published: 12 August 2021
+doi: 10.3389/fmicb.2021.713234
+Edited by:
+George Tsiamis,
+University of Patras, Greece
+Reviewed by:
+Tarique Hussain,
+Nuclear Institute for Agriculture
+and Biology, Pakistan
+Ashok Kumar Sharma,
+Cedars Sinai Medical Center,
+United States
+*Correspondence:
+Kattayoun Kordy
+Kattayoun.Kordy@Novartis.com
+Specialty section:
+This article was submitted to
+Systems Microbiology,
+a section of the journal
+Frontiers in Microbiology
+Received: 22 May 2021
+Accepted: 20 July 2021
+Published: 12 August 2021
+Citation:
+Kordy K, Li F, Lee DJ,
+Kinchen JM, Jew MH,
+La Rocque ME, Zabih S, Saavedra M,
+Woodward C, Cunningham NJ,
+Tobin NH and Aldrovandi GM (2021)
+Metabolomic Predictors
+of Non-alcoholic Steatohepatitis
+and Advanced Fibrosis in Children.
+Front. Microbiol. 12:713234.
+doi: 10.3389/fmicb.2021.713234
+Metabolomic Predictors of
+Non-alcoholic Steatohepatitis and
+Advanced Fibrosis in Children
+Kattayoun Kordy1,2*, Fan Li3, David J. Lee3, Jason M. Kinchen4, Michael H. Jew5,
+Maria Eduarda La Rocque6, Sara Zabih3, Monica Saavedra3, Cora Woodward3,
+Nicole J. Cunningham3, Nicole H. Tobin3 and Grace M. Aldrovandi3
+1 Pediatric Gastroenterology, Children’s Hospital of Los Angeles, Los Angeles, CA, United States, 2 Department of Pediatrics,
+University of Southern California, Los Angeles, CA, United States, 3 Department of Pediatrics, University of California,
+Los Angeles, Los Angeles, CA, United States, 4 Metabolon, Inc., Morrisville, NC, United States, 5 Keck School of Medicine,
+University of Southern California, Los Angeles, CA, United States, 6 Faculty of Medical Sciences, State University of Rio
+de Janeiro, Rio de Janeiro, Brazil
+Non-alcoholic fatty liver disease (NAFLD) is the leading cause of chronic liver disease
+in western countries both in children and adults. Metabolic dysregulation associated
+with gut microbial dysbiosis may inﬂuence disease progression from hepatic steatosis
+to inﬂammation and subsequent ﬁbrosis. Using a multi-omics approach, we proﬁled
+the oral and fecal microbiome and plasma metabolites from 241 predominantly Latino
+children with non-alcoholic steatohepatitis (NASH), non-alcoholic fatty liver (NAFL), and
+controls. Children with more severe liver pathology were dysbiotic and had increased
+gene content associated with lipopolysaccharide biosynthesis and lipid, amino acid
+and carbohydrate metabolism. These changes were driven by increases in Bacteroides
+and concomitant decreases of Akkermansia, Anaerococcus, Corynebacterium, and
+Finegoldia. Non-targeted mass spectrometry revealed perturbations in one-carbon
+metabolism, mitochondrial dysfunction, and increased oxidative stress in children with
+steatohepatitis and ﬁbrosis. Random forests modeling of plasma metabolites was
+highly predictive of non-alcoholic steatohepatitis (NASH) (97% accuracy) and hepatic
+ﬁbrosis, steatosis and lobular inﬂammation (93.8% accuracy), and can differentiate
+steatohepatitis from simple steatosis (90.0% accuracy). Multi-omics predictive models
+for disease and histology ﬁndings revealed perturbations in one-carbon metabolism,
+mitochondrial dysfunction, and increased oxidative stress in children with steatohepatitis
+and ﬁbrosis. These results highlight the promise of non-invasive biomarkers for the
+growing epidemic of fatty liver disease.
+Keywords: microbiome, pediatrics, NAFLD, NASH, multiomics
+INTRODUCTION
+Non-alcoholic fatty liver disease (NAFLD) is the leading cause of chronic liver disease in western
+countries both in children and adults (Lazo et al., 2013). The search for reliable non-invasive
+biomarkers and therapeutic targets has become progressively more urgent as non-alcoholic
+steatohepatitis (NASH), the most severe form of NAFLD, is quickly becoming the leading cause
+Frontiers in Microbiology | www.frontiersin.org
+1
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+of liver transplantation (Estes et al., 2018). Intestinal microbiota
+are implicated as a critical factor in the pathogenesis of NAFLD,
+but the impact of bacterial metabolism on the liver requires
+further elucidation. NAFLD is a multi-factorial condition that
+is intimately linked to obesity and insulin resistance. This
+metabolic imbalance leads to an excessive accumulation of
+hepatic fat resulting in non-alcoholic fatty liver (NAFL). In
+the setting of lipid-laden hepatocytes, fatty acid metabolites
+cause oxidative stress and a cascade of necroinﬂammation
+and ﬁbrosis leading to NASH (Neuschwander-Tetri, 2010).
+Increasingly, these pathologic processes are being identiﬁed
+in childhood and progress during adulthood. Prevalence
+varies by ethnicity with Latinos disproportionately aﬀected,
+possibly due to alterations in hepatic lipid catabolism and
+genetic
+polymorphisms
+(Saab
+et
+al.,
+2016).
+Non-invasive
+methods identifying NASH antecedents in childhood provide
+opportunities to intervene while avoiding confounding factors
+introduced by aging, alcohol use, concomitant medications,
+and comorbidities.
+Microbiota are implicated in the development of metabolic
+derangements and inﬂammation that contribute to hepatic
+steatosis and progression to steatohepatitis (Ley et al., 2006;
+Leung et al., 2016; Loomba et al., 2017). Gut microbes
+dynamically
+produce,
+degrade,
+and
+modulate
+metabolites
+that communicate with the host, inﬂuencing the immune
+response, systemic metabolism, and inﬂammation (Rooks
+and
+Garrett,
+2016).
+Alterations
+in
+intestinal
+microbiota
+or
+dysbiosis
+can
+lead
+to
+changes
+in
+insulin
+sensitivity,
+free
+fatty
+acid
+production,
+and
+disruption
+of
+intestinal
+barrier integrity. The subsequent translocation of bacterial
+products,
+including
+lipopolysaccharide,
+into
+the
+portal
+circulation and activation of toll-like receptors promotes
+inﬂammation and ﬁbrosis of the liver (Henao-Mejia et al., 2012;
+Pedersen et al., 2016).
+Given the importance of dysbiosis and microbial metabolism
+in
+NAFLD,
+we
+sought
+to
+deﬁne
+microbiome-derived
+biochemicals and metagenomic functions inﬂuencing hepatic
+metabolism and pathologic injury. In this study, we curated
+the oral and gut microbiota together with serum and fecal
+metabolites from Latino-predominant children with clinical
+NAFL and biopsy-proven NASH compared to high and normal
+weight controls without liver disease. Using a multi-omics
+approach, we identiﬁed microbial-metabolite perturbations
+inﬂuencing a number of pathways including oxidative stress,
+one-carbon metabolism, tricarboxylic acid (TCA) cycle, lipid and
+amino acid metabolism. These ﬁndings provide key insights for
+the development of non-invasive biomarkers for the diagnosis
+of NASH and histologic features, as well as identiﬁcation
+of potential therapeutic targets of hepatic injury worthy of
+further investigation.
+MATERIALS AND METHODS
+Study Population
+Children and adolescents were recruited at Children’s Hospital
+Los Angeles (CHLA) between September 2016 and June 2017. All
+participants or their legal guardians provided written informed
+consent and/or assent. This study protocol was approved by the
+CHLA Institutional Review Board (approval number: CHLA-15-
+00395). Four cohorts were recruited: healthy individuals with
+normal BMI (<85th percentile) and alanine aminotransferase
+(ALT) < 2x ULN (“normal BMI control”); overweight and
+obese individuals with BMI ≥85th percentile and ALT < 2x
+ULN (“high BMI control”); overweight and obese individuals
+with clinically-deﬁned NAFL as elevated ALT ≥2x ULN per
+current practice guidelines (Vos et al., 2017) (ALT ≥50 IU/L
+males, ≥44 IU/L females) (“NAFL”); overweight and obese
+individuals with NASH based on NAFLD activity score (NAS)
+on clinically-indicated percutaneous liver biopsy as proposed
+by Kleiner et al. (2005) (“NASH”). Subjects in the latter
+three groups may have had liver imaging to characterize
+steatosis. All histology was reviewed and scored by a single
+pediatric pathologist blinded to clinical and laboratory data.
+Clinical data was curated from electronic medical records
+at the nearest time point to specimen collection, including
+concomitant diagnoses, anthropometrics, medications including
+any history of vitamin E or metformin, laboratory studies,
+histology, and imaging. In a few cases, liver transaminases had
+normalized at the data collection timepoint. There were no
+dietary restrictions for any subjects, and none of the children
+received antibiotics for at least 3 months prior to study entry.
+Children were considered to have type 2 diabetes if they had
+either HbA1C ≥6.5%, fasting serum glucose ≥126 mg/dL,
+or existing clinical diagnosis of type 2 diabetes (Bullard et al.,
+2013). They were classiﬁed as prediabetes if they had either
+fasting serum glucose between 100 mg/dL and 125 mg/dL or
+HbA1c ≥5.7% and <6.5%.
+Sample Collection
+Stool samples, rectal swabs, oral swabs, and peripheral blood were
+collected. Swabs and stool were frozen neat and stored at −80◦C
+within 6 h of collection. Blood was separated into plasma and
+PBMC, and was frozen within 6 h of collection.
+Microbial Proﬁling
+Targeted sequencing of the V4 region of the 16S rRNA gene
+was performed as previously described on all subjects’ fecal
+and oral samples (Caporaso et al., 2012). DADA2 was used for
+error correction, sequence inference, and chimera ﬁltering with
+default settings (Callahan et al., 2016). Taxonomic classiﬁcation
+was performed using the RDP naïve Bayesian classiﬁer as
+implemented in the “dada2” R package. Diversity and ordination
+analyses were performed using the “phyloseq” R package
+(version 1.20.0).
+Metabolic Proﬁling
+Non-targeted ultra high-performance liquid chromatography/
+tandem
+mass
+spectrometry
+(UHPLC-MS/MS)
+of
+known
+biochemicals was conducted on rectal swabs and plasma
+in
+subsets
+of
+each
+cohort
+with
+well-deﬁned
+complete
+clinical and laboratory features [“normal BMI,” N = 20;
+“high BMI,” N = 20; “NAFL,” N = 25; “NASH,” N = 15
+(plasma),
+N
+=
+20
+(fecal)].
+Metabolomics
+analyses
+were
+Frontiers in Microbiology | www.frontiersin.org
+2
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+conducted
+by
+Metabolon
+Inc.,
+R⃝
+according
+to
+published
+methods
+(Ryals et al., 2007;
+Long et al., 2017).
+Rectal
+swabs
+were normalized to mass.
+Shotgun Metagenomics
+To further characterize functional pathways potentially related to
+metabolites and microbiota, whole genome shotgun sequencing
+was performed from fecal samples in a subset of NASH (N = 20)
+and control (N = 20) subjects who had metabolomic proﬁling to
+an average depth of 38,984,068 ± 12,462,099 reads per sample.
+Adapter trimming and quality ﬁltering were performed using
+trim galore, host sequences were removed using kneadData,
+and taxonomic classiﬁcation was performed with Kraken (v0.15-
+beta). Functional proﬁling was performed using HUMAnN2.
+Diﬀerentially abundant pathways were identiﬁed using the
+“DESeq2” R package (version 1.16.1). FishTaco (version 1.1.1)
+was used to identify taxonomic drivers of functional shifts in the
+NASH microbiome.
+Statistical Analysis
+Zero-inﬂated negative binomial (ZINB) regression (“pscl”
+package version 1.4.9) and ordinary linear regression were
+utilized to identify speciﬁc taxa and compounds associated with
+variables of interest. All p-values were corrected for multiple
+testing using the Benjamini–Hochberg FDR method. An adjusted
+p-value < 0.1 was considered signiﬁcant. Random forests
+classiﬁcation models were built using the “randomForest” R
+package (version 4.6-12) with genus-level relative abundances or
+normalized metabolite levels, age, sex, and BMI as covariates.
+Random forests is an ensemble classiﬁer method that is
+relatively robust to outliers and overﬁtting, and can be used
+to perform feature selection on the basis of importance scores
+(Statnikov et al., 2013). Taxa present at less than 1% relative
+abundance in less than 10% of the samples were excluded to
+reduce the size of the feature set. Mean importance scores
+were computed for each covariate using 100 permutations
+and 10,000 trees per forest. A sparse model was constructed
+by including all covariates with a mean importance greater
+than 0.001, up to a maximum of 30. Receiver-operator
+characteristic (ROC) curves were drawn using the “ROCR” R
+package (v1.0-7). RF model performance was measured via
+several methods including classiﬁcation accuracy, area under
+the ROC curve (AUC) for binary classiﬁcation models, and
+Matthews correlation coeﬃcient (MCC) for both binary and
+multiclass models. Binary and multiclass Matthews correlation
+coeﬃcients (MCC) were computed using the “mltools” R package
+(Gorman, 2018).
+Multi-Omics Modeling
+Multi-omics models for disease cohort and histology ﬁndings
+were built by combining features from the 16S rRNA proﬁling
+of the gut and oral compartments as well as metabolic proﬁling
+from rectal swabs and plasma on a subset of n = 79 subjects
+(Table 1) for whom all four assays were performed. Genus-
+level relative abundances and normalized metabolite levels were
+used as in the separate models, and age, sex, and BMI were
+included as covariates.
+RESULTS
+Progressive Metabolic Derangements in
+Children With Worsening Non-alcoholic
+Fatty Liver Disease
+Two-hundred forty-one predominantly Latino subjects (89%),
+56% male, ages 5–21 years were enrolled in the study. The normal
+body mass index (BMI) (N = 54), high BMI (N = 80), and
+NAFL (N = 86) groups had median ages of 12, 11, and 12 years,
+respectively. The NASH (N = 21) group was slightly older with
+a median age of 13 years (p = 0.008). While controlling for BMI,
+the degree of increased transaminases and prevalence of diabetes
+signiﬁcantly increased in subjects with worsening liver disease
+(p < 0.001). A striking 23% of children with steatohepatitis had
+diabetes mellitus (hemoglobin A1C ≥6.5) and an additional 23%
+had prediabetes, which corroborate reports of children with type
+2 diabetes having an increased likelihood of NASH (Newton et al.,
+2016). All subjects with NASH were Latinos with a median ALT of
+122 U/L (range 19-982 U/L), signiﬁcantly higher than the NAFL
+group (median ALT 65 U/L) and control groups (median ALT
+26-29 U/L). The AST/ALT ratio decreased to 0.66–0.67 with fatty
+liver disease compared to controls without liver injury (1.0–1.29)
+(p < 0.001).
+Biopsy-proven NASH subjects had a median NAFLD Activity
+Score of 5 (range 3–7). They all had portal inﬂammation
+and ﬁbrosis: two-thirds with mild ﬁbrosis (F 1–2), one-third
+with moderate to advanced ﬁbrosis (F 3–4), and one 8-year
+old subject had cirrhosis. Two-thirds of high BMI and NAFL
+subjects and 78% of NASH subjects had dyslipidemia, either
+isolated hypertriglyceridemia or low HDL or both. A few
+subjects with NAFL were empirically treated with vitamin E
+(17.4%) and/or metformin (1.2%), while a larger proportion
+of children with NASH received these medications (33.3%
+and 28.6%, respectively) at some point during their treatment
+history. Table 1 shows the demographic, clinical and biochemical
+characteristics of the four cohorts. Table 2 provides detailed
+histology on the 23 subjects with liver biopsies, 21 of whom were
+diagnosed with NASH and 2 with NAFL.
+Oral and Fecal Microbial Signatures of
+Progressive Liver Disease
+Gut
+microbiome
+proﬁling
+using
+16S
+rRNA
+sequencing
+revealed
+weak
+but
+statistically
+signiﬁcant
+segregation
+by
+cohort (PERMANOVA R2 = 0.02, p = 0.009, Figure 1A
+and Supplementary Table 1). Advanced liver disease was
+associated with an increasing Bacteroidetes:Firmicutes ratio (KW
+p = 0.001) and decreasing alpha diversity (KW p = 3.06e-06)
+(Figure 1B). Random forests classiﬁcation with genus-level
+relative abundances as well as age, sex, and BMI as covariates
+revealed a marginal ability to separate the four cohorts [46.7%
+accuracy, Matthew’s correlation coeﬃcient (MCC) = 0.27], but
+pairwise classiﬁcation models against the normal BMI baseline
+achieved excellent accuracies (Figure 1C). At the genus level, the
+relative abundance of Corynebacterium (Z = −6.75, padj = 1e-09)
+was signiﬁcantly decreased in NASH subjects relative to normal
+controls, while relative abundances of Fusobacterium (Z = 4.74,
+Frontiers in Microbiology | www.frontiersin.org
+3
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+TABLE 1 | Baseline characteristics and multi-omic sampling for the 241 subjects enrolled in the study.
+Normal BMI
+High BMI
+NAFL
+NASH
+p-value
+Demographics
+Total N
+54
+80
+86
+21
+Age, median (range)
+12 (5–20)
+11 (6–18)
+12 (7–19)
+13 (8–21)
+0.008
+5–11 (%)
+24 (44.4)
+47 (58.8)
+36 (41.9)
+7 (33.3)
+12–17 (%)
+28 (51.9)
+32 (40.0)
+36 (53.5)
+12 (57.1)
+18–21 (%)
+2 (3.7)
+1 (1.2)
+4 (4.7)
+2 (9.5)
+Male N (%)
+24 (44.4)
+45 (56.2)
+53 (61.6)
+14 (66.7)
+0.18
+Hispanic N (%)
+47 (87.0)
+68 (85.0)
+78 (90.7)
+21 (100)
+0.23
+Anthropometric, median
+BMI (kg/m2) (range)
+18.2 (13.2–24.0)
+28.4 (19.2–55.1)
+32 (18.8–48.4)
+33 (21.5–51.7)
+<0.001
+BMI z-score (range)
+0.17 (−1.78–1.27)
+2.99 (0.60–16.90)
+3.15 (0.58–6.05)
+3.12 (1.76–5.73)
+<0.001
+Liver enzymes, median (range)
+ALTb U/L
+26 (18–41)
+29 (8–48)
+65 (8–391)
+122 (19–982)
+<0.001
+ASTc U/L
+32 (21–52)
+30.5 (14–49)
+41.5 (15–174)
+64 (23–639)
+<0.001
+AST/ALT
+1.29 (0.59–2)
+1 (0.57–2.38)
+0.66 (0.3–1.88)
+0.67 (0.4–1.26)
+<0.001
+Laboratory studies
+Hemoglobin A1C, mean
+5.55
+5.5
+5.5
+5.7
+0.47
+Triglycerides mg/dL, median
+67.5
+133
+142.5
+141
+<0.001
+HDLd mg/dL, median
+47
+38
+40
+38
+0.006
+Hypertriglyceridemia and abnormal HDL, N (%)
+1 (1.8)
+29 (36.3)
+33 (38.4)
+11 (52.4)
+<0.001
+Clinical N (%)
+Prediabetes
+2 (3.7)
+17 (21.3)
+22 (25.6)
+4 (19)
+0.004
+Type II DM
+0 (0)
+2 (2.5)
+0 (0)
+5 (23.8)
+<0.001
+Vitamin E
+0 (0)
+1 (1.3)
+15 (17.4)
+7 (33.3)
+<0.001
+Metformin
+0 (0)
+3 (3.8)
+1 (1.2)
+6 (28.6)
+<0.001
+Multi-omic Sampling (total N)
+16Se, Oral Swab
+54
+80
+86
+21
+241
+16S, Rectal Swab
+54
+80
+86
+21
+241
+Shotgun Metagenomics, Rectal Swab
+20
+0
+0
+20
+40
+Metabolomics, Plasma
+20
+20
+25
+15
+80
+Metabolomics, Fecal
+20
+20
+25
+20
+85
+Multi-omics, combined
+19
+20
+25
+15
+79
+aSD, standard deviation; bALT, alanine aminotransferase; cAST, aspartate aminotransferase;
+dHDL, high-density lipoprotein;e16S, 16S rRNA gene sequencing.
+padj = 7.24e-05) and Finegoldia (Z = 2.79, padj = 0.059) were
+increased in NASH (Figure 1D). Corynebacterium relative
+abundance was also negatively associated with levels of ALT,
+AST, and GGT (Supplementary Table 2). A similar analysis
+at the species level showed slightly better multiclass predictive
+accuracy (47.5%, MCC = 0.27, Supplementary Figure 1), but
+failed to identify any speciﬁc bacterial species after correction for
+multiple comparisons.
+Oral microbiome proﬁling also showed distinct communities
+by cohort (PERMANOVA R2 = 0.02, p = 0.003, Supplementary
+Figure 2 and Supplementary Table 1), but did not reveal any
+signiﬁcant diﬀerences in the Bacteroidetes:Firmicutes ratio or
+alpha diversity. Multiclass classiﬁcation using oral microbial
+composition as well as age, sex, and BMI performed better
+than gut microbial composition at cohort separation (54.1%
+accuracy, MCC = 0.36), but no genera were signiﬁcantly
+diﬀerent in NASH. Intriguingly, species-level analysis of the
+oral microbiome showed higher predictive accuracy (60.3%,
+MCC = 0.44, Supplementary Figure 2) and identiﬁed a
+number of signiﬁcantly increased bacterial species including
+unclassiﬁed Streptococcus (p < 0.01) and Haemophilus inﬂuenzae
+(p = 0.09) in NASH.
+Histologic steatosis was associated with increases of fecal
+Holdemania (Z = 14.93, padj < 2.2e-16) and oral Alloprevotella
+(Z = 4.27, padj = 0.001), Prevotella (Z = 2.69, padj = 0.07),
+and Veillonella (Z = 3.62, padj = 0.007). Subjects with advanced
+ﬁbrosis had increases in fecal Finegoldia (Z = 2.67, padj = 0.072)
+and Faecalibacterium (Z = 2.76, padj = 0.069) (Figure 1E), and
+oral Veillonella (Z = 3.62, padj = 0.007) and Prevotella (Z = 2.69,
+padj = 0.07) (Supplementary Figure 2).
+Microbial Metagenome-Encoded
+Metabolic Alterations in NASH
+Recent work has highlighted the importance of understanding
+both the functional shifts as well as taxonomic alterations in
+various disease processes. We performed shotgun metagenomic
+sequencing on a subset of normal BMI controls (N = 20) and
+NASH (N = 20) subjects to characterize the taxonomic and
+functional diﬀerences in intestinal microbial communities.
+Only a few diﬀerences in microbial composition were observed
+(Supplementary
+Figure
+3
+and
+Supplementary
+Table
+4;
+PERMANOVA R2 = 0.05, p = 0.09), however, changes in
+speciﬁc bacteria (Supplementary Table 4) were associated
+Frontiers in Microbiology | www.frontiersin.org
+4
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+TABLE 2 | Histology of a subset (N = 23) of subjects with NAFLD on liver biopsy.
+Histology
+Binned variables
+N
+NASa
+0–2
+Mild
+2
+3–4
+Advanced
+7
+≥5
+14
+Median (range)
+5 (2–7)
+Steatosis
+0
+1
+1
+1
+7
+2
+2
+10
+3
+3
+5
+Median (range)
+2 (0–3)
+Lobular Inﬂammation
+0
+Mild
+1
+1
+8
+2
+Advanced
+14
+3
+0
+Median (range)
+2 (0–2)
+Portal Inﬂammation
+Yes
+Yes
+22
+No
+No
+1
+Ballooning
+0
+Mild
+0
+1
+15
+2
+Advanced
+8
+Median (range)
+1 (1–2)
+Fibrosis
+0–2
+Mild
+15
+3–4
+Advanced
+8
+Median (range)
+2 (1–4)
+Cirrhosis
+Yes
+Yes
+1
+No
+No
+22
+aNAS, NAFLD Activity Score.
+with signiﬁcant enrichment of genes associated with lipid
+metabolism, amino acid metabolism, carbohydrate metabolism,
+and lipopolysaccharide (LPS) biosynthesis. These functional
+shifts were associated with predominant increases of Bacteroides
+species as well as decreases in Akkermansia muciniphila,
+Anaerococcus prevotii, Corynebacterium sp., and Finegoldia
+magna (Supplementary Figure 4).
+Diﬀerential abundance analysis of functional metagenomic
+pathways
+using
+a
+negative
+binomial
+model
+suggested
+downregulation of L-methionine (padj = 0.18), L-threonine
+(padj = 0.18), sulfur amino acid biosynthesis pathways and
+anaerobic metabolism (Supplementary Table 5).
+Metabolic and Multi-Omic Signatures of
+Progressive Fatty Liver Disease
+To
+assess
+changes
+associated
+with
+NAFL
+and
+NASH,
+metabolomics analysis of plasma and rectal swabs was performed
+on a subset of subjects (N = 85) drawn from all four cohorts
+(20–25 subjects per cohort). We identiﬁed and quantiﬁed 832
+and 730 compounds in plasma and fecal samples, respectively.
+t-SNE projection and PERMANOVA of plasma metabolite
+proﬁles revealed moderate separation between the four cohorts
+(Figure 2A
+and
+Supplementary Table 6,
+PERMANOVA
+R2 = 0.054, p = 0.001) as well as a signiﬁcant BMI-mediated
+eﬀect (PERMANOVA R2 = 0.027, p = 0.001). Random forests
+classiﬁcation using normalized plasma metabolite levels as well
+as age, sex, and BMI as covariates yielded a predictive accuracy
+of 61.3% (MCC = 0.48) whereas random chance would be
+expected to yield 25% (Figures 2B,C). To isolate the eﬀect of
+liver disease from BMI, we also constructed binary classiﬁers
+for NAFL (80.4% accuracy, MCC = 0.61) and NASH (97%
+accuracy, MCC = 0.94) compared to the high BMI control
+and NASH vs. NAFL (90% accuracy, MCC = 0.78) (Figure 3).
+The top biochemicals contributing to group separation were
+predominantly lipids and amino acids.
+Metabolites
+signiﬁcantly
+associated
+with
+steatohepatitis
+included biochemicals involved in metabolism for energy,
+importantly
+alpha-ketoglutarate,
+glutathione
+synthesis,
+markers of oxidative stress, methionine, phosphatidylinositol,
+phosphatidylcholine, amino acids, tryptophan, sphingolipids,
+and purine (Supplementary Figure 5). Metabolites associated
+with NAFL included those involved with metabolism of primary
+bile acid, fatty acid, glutathione, and tryptophan. Interestingly,
+two subjects with a clinical diagnosis of NAFL were misclassiﬁed
+by the model as NASH driven by increased abundance of
+alpha-ketoglutarate and N-acetylmethionine (Figure 4).
+Downregulation of biomarkers of one-carbon metabolism
+in the mitochondria was observed in both our metagenomic
+and metabolomics analysis of NASH subjects. Amino acids
+that feed one-carbon metabolism serine and glycine were
+signiﬁcantly decreased in the NASH cohort (p = 0.002)
+and methionine-derivatives choline and cysteine were also
+decreased (Figure 2C). Oxidative stress is reﬂected by signiﬁcant
+alterations in γ-glutamyl-amino acids, cysteine-glutathione
+disulﬁde, thioproline, serine, glycine and N-acetylmethionine in
+our NASH cohort. Furthermore, four plasma metabolites were
+predictive across the multiclass, NASH vs. high BMI control,
+and NASH vs. NAFL models: alpha-ketoglutarate, cysteine-
+glutathione disulﬁde, N-acetylmethionine, and citrulline. These
+metabolites were not present in the model separating NAFL
+from high BMI control (Supplementary Table 7), and were
+also signiﬁcantly associated with levels of AST, ALT, and GGT
+(Supplementary Table 8).
+Similar analyses using fecal metabolite proﬁles showed
+generally weaker classiﬁcation performance for the multiclass
+(50.6% accuracy, MCC = 0.33), NAFL (69.6% accuracy,
+MCC = 0.37), and NASH (74.4% accuracy, MCC = 0.49) models
+(Supplementary Figures 6, 7). A multi-omic model including gut
+and oral microbial proﬁles as well as plasma and fecal metabolites
+yielded slightly improved predictive accuracy for disease cohort
+(overall accuracy of 64.6% vs. 61.3% for plasma metabolites
+alone) (Figure 5). This improvement was likely due to the
+inclusion of a single fecal metabolite 1−(1−enyl−stearoyl)−GPE
+(P−18:0), an antioxidant with a role in lipid metabolism (Ilievski
+et al., 2016; Rebholz et al., 2018; Gu et al., 2020), which
+increased with disease progression. Analogous binary classiﬁers
+Frontiers in Microbiology | www.frontiersin.org
+5
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+FIGURE 1 | Gut microbiome composition in progressive fatty liver disease. (A) Principal coordinates analysis (PCoA) plot of gut microbiota composition using
+Bray-Curtis distances. Ellipses show 95% conﬁdence regions. (B) Boxplots show signiﬁcantly decreased Shannon diversity (KW p = 3.06e-06) (top) and increased
+log-transformed Bacteroidetes to Firmicutes ratio (KW p = 0.001) (bottom) with advancing liver disease. Pairwise comparisons using a Wilcoxon test are indicated
+along the top. *p < 0.05, **p < 0.01, and ***p < 0.001. (C) Receiver operating characteristic (ROC) curves of binary random forests (RF) classiﬁcation models for
+each group as indicated vs. “normal BMI” baseline. (D) Distribution of BMI and genus-level relative abundances for the features selected in the multiclass RF model
+(violin plots). RF model importance values are shown as shaded boxes. Red text denotes genera identiﬁed as signiﬁcantly altered in zero inﬂated negative binomial
+(ZINB) regression models. (E) Importance values for RF models of liver histology ﬁndings. Positive (red) and negative (blue) values indicate genera that are increased
+and decreased with higher grades of each ﬁnding, respectively. Asterisks (*) denote genera that are also signiﬁcant (p < 0.1) in ZINB regression analyses.
+Frontiers in Microbiology | www.frontiersin.org
+6
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+FIGURE 2 | Plasma metabolite signatures of progressive fatty liver disease. (A) T-distributed stochastic neighbor embedding (t-SNE) plot of plasma metabolite
+proﬁles. Ellipses show 95% conﬁdence regions for each cohort. (B) Receiver operating characteristic (ROC) curves of binary RF classiﬁcation models for each group
+as indicated vs. “Normal BMI” baseline. (C) Distribution of BMI and metabolite values for the features selected in the multiclass RF model (violin plots). RF model
+importance values are shown as shaded boxes with darker colors denoting higher mean importance. Red text denotes metabolites identiﬁed as signiﬁcantly altered
+in linear regression models. (D) Heatmap of importance values for RF models of liver histology ﬁndings. Positive (red) and negative (blue) values indicate metabolites
+that are increased and decreased with higher grades of each ﬁnding, respectively.
+for NAFL and NASH vs. high BMI controls, and for NASH vs.
+NAFL also yielded small improvements in model performance.
+Interestingly, the relative abundance of Prevotella in the oral
+compartment was an important predictor for NASH, consistent
+with previous reports of elevated oral Prevotella in adults with
+NASH (Bashiardes et al., 2016; Figure 5).
+Frontiers in Microbiology | www.frontiersin.org
+7
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+FIGURE 3 | Plasma metabolite binary classiﬁcation models against “high BMI” or “NAFL” baselines. (A) ROC curves of binary RF models for each comparison as
+indicated. (B) Forest plot of linear regression coefﬁcients (“Estimate”) for features selected in the binary NAFL vs. NASH plasma metabolite RF model. Positive (red)
+and negative (blue) coloring denotes metabolites signiﬁcantly increased and decreased in NASH relative to NAFL, respectively. Error bars show standard errors of the
+regression coefﬁcients. RF model importance values are shown as shaded boxes.
+Metabolites Predict Steatosis, Lobular
+Inﬂammation, and Fibrosis in Fatty Liver
+Disease
+A set of random forest (RF) classiﬁcation models for steatosis,
+lobular inﬂammation, and ﬁbrosis using the plasma metabolite
+proﬁles as predictors of the histologic ﬁndings were constructed
+(Supplementary Table 9). For steatosis, 15 metabolites were
+selected via cross-validation including mannose sugar monomer,
+peptide (gamma-glutamyl amino acid), androgenic steroids
+(androstenediol), and a number of components in lipid
+metabolism (Figure 2D). Fourteen important predictors for
+lobular
+inﬂammation
+included
+amino
+acids
+(tryptophan,
+glutamine), vitamin B6 metabolism, and components of fatty
+acid and lysophospholipid metabolism (Figure 2D). These
+RF models achieved a high predictive accuracy of 93.7% with
+MCC = 0.909 and 0.870 for steatosis and lobular inﬂammation,
+respectively. Only a single mild steatosis subject, driven by lipids
+heptenedioate (C7:1-DC) and linoleoylcarnitine (C18:2), and a
+single mild lobular inﬂammation subject, driven by tryptophan
+betaine and sulfate, were misclassiﬁed with higher grades of these
+histological features (Supplementary Figure 8).
+Fibrosis had a metabolic signature consisting of 16 metabolites
+with high predictive accuracy (93.7% accuracy, MCC = 0.882)
+with biochemicals relevant to inﬂammation (Figure 2D). Overall,
+subjects with advanced ﬁbrosis had signiﬁcantly higher plasma
+lipids—in particular, sphingolipids and ceramides—and indole-
+3-carboxylic acid compared to individuals with mild ﬁbrosis
+(0–2). Furthermore, sphingolipids were important predictors
+for both ﬁbrosis and NASH: behenoyl dihydrosphingomyelin
+was present both in the RF model of ﬁbrosis and the model
+diﬀerentiating NASH and NAFL; N-stearoyl-sphingosine and
+glycosyl N-stearoyl-sphingosine was predictive of ﬁbrosis and
+separated NASH from high BMI controls. Only a single subject
+labeled with mild ﬁbrosis (0–2) was misclassiﬁed as advanced
+ﬁbrosis, driven by increased ceramide (d18:1/20:0, d16:1/22:0,
+d20:1/18:0) (Supplementary Figure 8).
+DISCUSSION
+Fatty liver disease, the hepatic manifestation of metabolic
+syndrome, may begin in childhood and can progress to
+cirrhosis and end-stage liver disease in adulthood, posing
+a serious public health threat. The ability to distinguish
+these individuals and intervene prior to the development of
+advanced liver disease is critically important. Our analyses
+of oral and rectal microbial communities, metagenomics
+and metabolomics in well-characterized Latino-predominant
+children comprehensively identify predictors of NASH and
+histologic injury. We identiﬁed potential microbial contributions
+to altered functional pathways and characterized perturbations
+of metabolites likely contributing to disease pathogenesis
+through oxidative stress. Furthermore, we identiﬁed panels of
+plasma metabolites that can non-invasively identify NASH and
+ﬁbrosis with high predictive accuracy similar to the accuracy
+of complex multi-omic models and performing better than
+taxonomy alone. These ﬁndings increase our understanding of
+the pathogenesis of pediatric fatty liver disease and suggest
+potential non-invasive diagnostic markers and therapeutic targets
+for NASH and ﬁbrosis.
+The progressive dysbiosis and lower alpha diversity in our
+cohort of children with NASH correlated with increasing
+dyslipidemia, insulin resistance, fatty liver disease severity
+Frontiers in Microbiology | www.frontiersin.org
+8
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+FIGURE 4 | Plasma metabolite drivers of disease cohort misclassiﬁcation. Ground truth classes based on original clinical diagnosis are shown along the x-axis,
+predicted classes are shown as the indicated colors, and each point represents one individual. For example, three subjects in the NAFL group who were
+misclassiﬁed as NASH (purple points in the “NAFL” x-axis group) show elevated levels of alpha-ketoglutarate consistent with the NASH proﬁle.
+and advanced ﬁbrosis. NASH was associated with signiﬁcant
+increases in oral Streptococcus and gut Fusobacterium with
+concomitant decreases in gut Corynebacterium. Interestingly,
+Corynebacterium produces lipases that release antibacterial free
+fatty acids from host lipids which ultimately regulate surrounding
+bacterial species (Bomar et al., 2016); its depletion in NASH may
+contribute to distinct alterations of the surrounding microbial
+community. Oral dysbiosis is emerging as a potential source of
+systemic inﬂammation and cirrhosis (Qin et al., 2014; Acharya
+et al., 2017). Indeed, advanced ﬁbrosis in children was associated
+with increased oral Veillonella and Prevotella. In adults with
+cirrhosis, oral Veillonella and Prevotella are presumed to seed
+the intestinal microbiome and are correlated with progression of
+ﬁbrosis (Qin et al., 2014).
+In children with NASH, we observed increases in genes
+associated with upregulation of lipid, carbohydrate and amino
+acid metabolism and LPS biosynthesis. Taxon level contributions
+to these shifts were driven by increases of Bacteroides and
+depletion of Akkermansia, Anaerococcus, Corynebacterium and
+Finegoldia. The upregulation of LPS in children with NASH has
+been reported by others (Alisi et al., 2010; Schwimmer et al.,
+2019), and linked with progression to NASH via stimulation
+of toll-like receptor (Ruiz et al., 2007; Verdam et al., 2011;
+Roh and Seki, 2013; Sharifnia et al., 2015; Carpino et al.,
+2019). We hypothesize that early microbial predominance of
+Bacteroides in childhood along with loss of Corynebacterium,
+Akkermansia and Anaerococcus with their role in stabilizing the
+surrounding bacterial communities and the gut epithelial barrier
+may lead to functional changes that enable the progression of
+fatty liver disease.
+Untargeted metabolomics proﬁling, in conjunction with
+metagenomic
+analysis,
+has
+shown
+signiﬁcant
+promise
+as biomarkers of fatty liver disease progression in other
+pediatric cohorts (Zhu et al., 2013; Del Chierico et al., 2017;
+Khusial et al., 2019). We identiﬁed plasma metabolite signatures
+that distinguished those who had progressed to NASH with
+higher predictive accuracy than taxonomic diﬀerences alone.
+Our ﬁndings underscore the roles of alpha-ketoglutarate,
+cysteine-glutathione
+disulﬁde,
+and
+N-acetylmethionine
+in
+NASH progression (Supplementary Figure 9). Upregulation
+of alpha-ketoglutarate is one of the most important metabolite
+predictors of NASH in our cohort and likely reﬂects the oxidative
+stress associated with the development of steatohepatitis from
+steatosis. Alpha-ketoglutarate is a derivative of glutamate that
+generates ATP in the TCA cycle, and serves as a substrate for
+intracellular glutathione (GSH) synthesis and turnover (Gaggini
+et al., 2018). In fatty liver disease, enhanced generation of
+reactive oxygen species leads to altered availability of GSH,
+a hepatic antioxidant that is perturbed in both humans and
+animal models of NASH (Nobili et al., 2005). The increased
+alpha-ketoglutarate in our children with NASH is likely an
+adaptive response to increased metabolic and oxidative stress
+in the liver. Moreover, we observed upregulation of gamma-
+glutamyltransferase (GGT), an enzyme that transaminates
+GSH, which likely reﬂects increased glutathione demand in
+the presence of hepatic inﬂammation and oxidative stress
+(Gaggini et al., 2018).
+Current imaging and biomarker technologies have yet to
+demonstrate suﬃcient sensitivity and speciﬁcity to replace
+liver biopsy for distinguishing between simple steatosis and
+steatohepatitis as well as for staging ﬁbrosis. Furthermore,
+though several studies have found elevated alpha-ketoglutarate
+in NASH, this biomarker alone has been unable to distinguish
+individuals with NAFL from the approximately one-third that
+will progress to NASH (Aragones et al., 2016). Using unbiased
+high-throughput metabolomics, we identiﬁed a panel of serum
+metabolite signatures of fatty liver disease and liver histology.
+Machine learning models identiﬁed key pathways predictive
+Frontiers in Microbiology | www.frontiersin.org
+9
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+FIGURE 5 | Multi-omic classiﬁcation models using metabolomics and 16S microbiome proﬁling data. (A) Distribution of BMI and standardized values for the features
+selected in the multiclass multi-omic RF model (violin plots). RF model importance values are shown as shaded boxes with darker colors denoting higher mean
+importance. Text in brackets denote the source of each selected feature (plasma or fecal metabolite). (B) Distribution of standardized values for the features selected
+in the NAFL vs. NASH multi-omic RF model (violin plots). Text in brackets denote the source of each selected feature.
+of NASH (predictive accuracy 97.1%), NAFL (80.4%) and
+histologically-conﬁrmed pathologic injury (93.7%) in children
+and adolescents. We were able to distinguish NAFL from NASH
+with 90% accuracy using a combination of 15 metabolites
+including alpha-ketoglutarate, cysteine-glutathione disulﬁde, and
+N-acetylmethionine.
+Frontiers in Microbiology | www.frontiersin.org
+10
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+Interestingly,
+one
+9
+year-old
+obese
+Latina
+girl
+with
+dyslipidemia and pre-diabetes HgbA1C of 6.0 was clinically
+diagnosed with NAFL based on increased transaminases (ALT
+143 U/L, AST 88 U/L, GGT 99 U/L) and steatosis on ultrasound.
+However, her plasma metabolite proﬁle was most consistent
+with NASH, with substantially elevated alpha-ketoglutarate and
+decreased N-acetylmethionine (Figure 4). Indeed, 8 months
+after enrolling in the study, the subject underwent a liver
+biopsy that demonstrated histology consistent with NASH. It
+is uncertain whether the subject had undiagnosed NASH at
+enrollment, given the lack of biopsy at that time, though this
+is likely given her biochemical and clinical risk factors and the
+fact that only 18% of children have histologic progression to
+NASH over the course of 1–2 years (Xanthakos et al., 2017).
+This particular example demonstrates the powerful utility of
+our metabolite panel for the diagnosis of steatohepatitis, and
+the high predictive accuracy for monitoring fatty liver disease
+progression. Our study builds upon recent multi-omics studies of
+fatty liver disease in adult cohorts and highlights key diﬀerences
+in non-invasive biomarker proﬁles of NASH and ﬁbrosis that
+may be speciﬁc to the pediatric population (Qin et al., 2010;
+Bajaj et al., 2015; Boursier et al., 2016; Loomba et al., 2017;
+Schwimmer et al., 2019).
+A major limitation of this study is the small sample size of
+biopsy-proven NASH with histology. It is possible that some
+subjects classiﬁed as NAFL may have NASH, but have not
+yet undergone a diagnostic liver biopsy; as research-related
+liver biopsy pose ethical and medical risks, decision to biopsy
+remained with the patient’s clinician based on practice guidelines.
+Such cases would likely yield conservative performance estimates
+for our predictive models due to the unknown variation
+introduced by these misclassiﬁcation events. The homogenous
+population may potentially limit generalizability. Some of the
+ﬁndings may reﬂect diﬀerences in BMI, although this was
+likely mitigated by inclusion of children with high BMI and
+normal aminotransaminases as the baseline for many of the
+analyses. Finally, our ﬁndings are strictly correlative; further
+studies deﬁning the mechanisms by which gut microbiota
+and their metabolic activities mediate fatty liver disease
+are necessary to establish a causal relationship. Longitudinal
+sampling of at-risk youths across a spectrum of disease stages
+may help diﬀerentiate causal drivers of progression from
+underlying variance in genetic makeup or other predisposing
+factors. Despite these limitations, this study is to the best
+of our knowledge the largest cohort of Latino children and
+adolescents across the spectrum of fatty liver disease including
+biopsy-proven NASH. Our cohorts were well phenotyped,
+balanced in gender, and have been characterized by multiple
+-omics methods to yield a rich and detailed set of potential
+biomarkers and therapeutic targets. Large, multi-center, multi-
+ethnic studies are needed to validate the eﬀect of microbiome-
+derived signatures and metabolites on fatty liver disease and
+progression of ﬁbrosis.
+In
+conclusion,
+our
+ﬁndings
+highlight
+perturbations
+of
+the
+oral
+and
+intestinal
+microbiota,
+imply
+microbial
+metagenomic
+alterations
+of
+metabolism,
+and
+identify
+distinctive metabolites associated with hepatic derangements
+in children with fatty liver disease. The ability of our
+classiﬁcation models to predict disease classes as well as
+histologic ﬁndings supports the utility of metabolite proﬁling
+to function as a non-invasive method for prediction of
+NASH and ﬁbrosis. Furthermore, the key biochemical and
+functional pathways identiﬁed in our models may represent
+clinically
+important
+therapeutic
+targets
+in
+a
+multi-prong
+approach to manage the spectrum of fatty liver disease
+starting in youth.
+DATA AVAILABILITY STATEMENT
+The datasets presented in this study can be found in online
+repositories. The names of the repository/repositories and
+accession number(s) can be found below: https://www.ncbi.
+nlm.nih.gov/, PRJNA480711 and http://doi.org/10.5281/zenodo.
+1467544.
+ETHICS STATEMENT
+The studies involving human participants were reviewed and
+approved by CHLA Institutional Review Board, CHLA-15-00395.
+Written informed consent to participate in this study was
+provided by the participants’ legal guardian/next of kin.
+AUTHOR CONTRIBUTIONS
+KK, GA, NT, and FL analyzed the overall results data, wrote and
+edited the manuscript, and responsible for the ﬁnal manuscript
+content. FL and DL performed statistical and bioinformatic
+analysis of the NGS data and edited the manuscript. JK reviewed
+and edited the ﬁnal manuscript. KK and GA designed the
+research (project conception, development of research plan, and
+study oversight). KK, NC, MJ, and ML performed recruitment
+and collection of biological specimens and clinical data. SZ,
+MS, and CW performed NGS. All authors approved the ﬁnal
+draft submission.
+FUNDING
+This study was supported in part by the NIH K12 Child Health
+Research Career Development Award (HD052954), the Saban
+Research Institute CTU Pilot Data Support Grant (RRI010486),
+and the University of Southern California CTSI Voucher
+Award (RGP010363). Overall support for the International
+Maternal Pediatric Adolescent AIDS Clinical Trials Network
+(IMPAACT) was provided by the National Institute of Allergy
+and Infectious Diseases (NIAID) with co-funding from the
+Eunice Kennedy Shriver National Institute of Child Health and
+Human Development (NICHD) and the National Institute of
+Mental Health (NIMH), all components of the National Institutes
+of Health (NIH), under Award Numbers UM1AI068632
+(IMPAACT LOC), UM1AI068616 (IMPAACT SDMC) and
+UM1AI106716 (IMPAACT LC), and by NICHD contract number
+HHSN275201800001I.
+Frontiers in Microbiology | www.frontiersin.org
+11
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+ACKNOWLEDGMENTS
+The authors would like to thank volunteers, their families,
+and their medical providers for participating in this study and
+S. Zhou, S. Martinez, and A. Ryan.
+SUPPLEMENTARY MATERIAL
+The Supplementary Material for this article can be found
+online
+at:
+https://www.frontiersin.org/articles/10.3389/fmicb.
+2021.713234/full#supplementary-material
+REFERENCES
+Acharya, C., Sahingur, S. E., and Bajaj, J. S. (2017). Microbiota, cirrhosis, and
+the emerging oral-gut-liver axis. JCI Insight 2:e94416. doi: 10.1172/jci.insight.
+94416
+Alisi, A., Manco, M., Devito, R., Piemonte, F., and Nobili, V. (2010). Endotoxin and
+plasminogen activator inhibitor-1 serum levels associated with nonalcoholic
+steatohepatitis in children. J. Pediatr. Gastroenterol. Nutr. 50, 645–649. doi:
+10.1097/MPG.0b013e3181c7bdf1
+Aragones, G., Auguet, T., Berlanga, A., Guiu-Jurado, E., Martinez, S., Armengol,
+S., et al. (2016). Increased circulating levels of alpha-ketoglutarate in morbidly
+obese women with non-alcoholic fatty liver disease. PLoS One 11:e0154601.
+doi: 10.1371/journal.pone.0154601
+Bajaj, J. S., Betrapally, N. S., Hylemon, P. B., Heuman, D. M., Daita, K., White,
+M. B., et al. (2015). Salivary microbiota reﬂects changes in gut microbiota in
+cirrhosis with hepatic encephalopathy. Hepatology 62, 1260–1271. doi: 10.1002/
+hep.27819
+Bashiardes, S., Shapiro, H., Rozin, S., Shibolet, O., and Elinav, E. (2016). Non-
+alcoholic fatty liver and the gut microbiota. Mol. Metab. 5, 782–794. doi: 10.
+1016/j.molmet.2016.06.003
+Bomar, L., Brugger, S. D., Yost, B. H., Davies, S. S., and Lemon, K. P. (2016).
+Corynebacterium accolens releases antipneumococcal free fatty acids from
+human nostril and skin surface triacylglycerols. MBio 7:e01725–15. doi: 10.
+1128/mBio.01725-15
+Boursier, J., Mueller, O., Barret, M., Machado, M., Fizanne, L., Araujo-Perez,
+F., et al. (2016). The severity of nonalcoholic fatty liver disease is associated
+with gut dysbiosis and shift in the metabolic function of the gut microbiota.
+Hepatology 63, 764–775. doi: 10.1002/hep.28356
+Bullard, K. M., Saydah, S. H., Imperatore, G., Cowie, C. C., Gregg, E. W., Geiss,
+L. S., et al. (2013). Secular changes in U.S. Prediabetes prevalence deﬁned by
+hemoglobin A1c and fasting plasma glucose: national health and nutrition
+examination surveys, 1999-2010. Diabetes Care 36, 2286–2293. doi: 10.2337/
+dc12-2563
+Callahan, B. J., McMurdie, P. J., Rosen, M. J., Han, A. W., Johnson, A. J., and
+Holmes, S. P. (2016). DADA2: high-resolution sample inference from Illumina
+amplicon data. Nat. Methods 13, 581–583. doi: 10.1038/nmeth.3869
+Caporaso, J. G., Lauber, C. L., Walters, W. A., Berg-Lyons, D., Huntley, J., Fierer,
+N., et al. (2012). Ultra-high-throughput microbial community analysis on the
+Illumina HiSeq and MiSeq platforms. ISME J. 6, 1621–1624. doi: 10.1038/ismej.
+2012.8
+Carpino, G., Del Ben, M., Pastori, D., Carnevale, R., Baratta, F., Overi, D.,
+et al. (2019). Increased liver localization of lipopolysaccharides in human and
+experimental non-alcoholic fatty liver disease. Hepatology 72, 470–485. doi:
+10.1002/hep.31056
+Del Chierico, F., Nobili, V., Vernocchi, P., Russo, A., Stefanis, C., Gnani, D., et al.
+(2017). Gut microbiota proﬁling of pediatric nonalcoholic fatty liver disease
+and obese patients unveiled by an integrated meta-omics-based approach.
+Hepatology 65, 451–464. doi: 10.1002/hep.28572
+Estes, C., Razavi, H., Loomba, R., Younossi, Z., and Sanyal, A. J. (2018). Modeling
+the epidemic of nonalcoholic fatty liver disease demonstrates an exponential
+increase in burden of disease. Hepatology 67, 123–133. doi: 10.1002/hep.29466
+Gaggini, M., Carli, F., Rosso, C., Buzzigoli, E., Marietti, M., Della Latta, V.,
+et al. (2018). Altered amino acid concentrations in NAFLD: impact of
+obesity and insulin resistance. Hepatology 67, 145–158. doi: 10.1002/hep.2
+9465
+Gorman, B. (2018). mltools. Available online at: https://github.com/ben519/mltools
+(accessed April 27, 2018).
+Gu, X., Li, C., He, J., Li, S., Bazzano, L. A., Kinchen, J. M., et al. (2020).
+Serum metabolites associate with lipid phenotypes among bogalusa heart study
+participants. Nutr. Metab. Cardiovasc. Dis. 30, 777–787. doi: 10.1016/j.numecd.
+2020.01.004
+Henao-Mejia, J., Elinav, E., Jin, C., Hao, L., Mehal, W. Z., Strowig, T., et al.
+(2012). Inﬂammasome-mediated dysbiosis regulates progression of NAFLD
+and obesity. Nature 482, 179–185. doi: 10.1038/nature10809
+Ilievski, V., Kinchen, J. M., Prabhu, R., Rim, F., Leoni, L., Unterman, T. G.,
+et al. (2016). Experimental periodontitis results in prediabetes and metabolic
+alterations in brain, liver and heart: global untargeted metabolomic analyses.
+J. Oral Biol. 3:10.13188/2377-987X.1000020. doi: 10.13188/2377-987X.1000020
+Khusial, R. D., Cioﬃ, C. E., Caltharp, S. A., Krasinskas, A. M., Alazraki, A., Knight-
+Scott, J., et al. (2019). Development of a plasma screening panel for pediatric
+nonalcoholic fatty liver disease using metabolomics. Hepatol. Commun. 3,
+1311–1321. doi: 10.1002/hep4.1417
+Kleiner, D. E., Brunt, E. M., Van Natta, M., Behling, C., Contos, M. J., Cummings,
+O. W., et al. (2005). Design and validation of a histological scoring system for
+nonalcoholic fatty liver disease. Hepatology 41, 1313–1321. doi: 10.1002/hep.
+20701
+Lazo, M., Hernaez, R., Eberhardt, M. S., Bonekamp, S., Kamel, I., Guallar, E.,
+et al. (2013). Prevalence of nonalcoholic fatty liver disease in the United States:
+the third national health and nutrition examination survey, 1988-1994. Am. J.
+Epidemiol. 178, 38–45. doi: 10.1093/aje/kws448
+Leung, C., Rivera, L., Furness, J. B., and Angus, P. W. (2016). The role of the
+gut microbiota in NAFLD. Nat. Rev. Gastroenterol. Hepatol. 13, 412–425. doi:
+10.1038/nrgastro.2016.85
+Ley, R. E., Turnbaugh, P. J., Klein, S., and Gordon, J. I. (2006). Microbial ecology:
+human gut microbes associated with obesity. Nature 444, 1022–1023. doi: 10.
+1038/4441022a
+Long, T., Hicks, M., Yu, H. C., Biggs, W. H., Kirkness, E. F., Menni, C., et al. (2017).
+Whole-genome sequencing identiﬁes common-to-rare variants associated
+with human blood metabolites. Nat. Genet. 49, 568–578. doi: 10.1038/n
+g.3809
+Loomba, R., Seguritan, V., Li, W., Long, T., Klitgord, N., Bhatt, A., et al. (2017).
+Gut microbiome-based metagenomic signature for non-invasive detection of
+advanced ﬁbrosis in human nonalcoholic fatty liver disease. Cell Metab. 25,
+1054–1062.e5. doi: 10.1016/j.cmet.2017.04.001
+Neuschwander-Tetri, B. A. (2010). Hepatic lipotoxicity and the pathogenesis
+of nonalcoholic steatohepatitis: the central role of nontriglyceride fatty acid
+metabolites. Hepatology 52, 774–788. doi: 10.1002/hep.23719
+Newton, K. P., Hou, J., Crimmins, N. A., Lavine, J. E., Barlow, S. E., Xanthakos,
+S. A., et al. (2016). Prevalence of type 2 diabetes and prediabetes in children
+with nonalcoholic fatty liver disease. JAMA Pediatr. 170:e161971. doi: 10.1001/
+jamapediatrics.2016.1971
+Nobili, V., Pastore, A., Gaeta, L. M., Tozzi, G., Comparcola, D., Sartorelli, M. R.,
+et al. (2005). Glutathione metabolism and antioxidant enzymes in patients
+aﬀected by nonalcoholic steatohepatitis. Clin. Chim. Acta 355, 105–111. doi:
+10.1016/j.cccn.2004.12.022
+Pedersen, H. K., Gudmundsdottir, V., Nielsen, H. B., Hyotylainen, T., Nielsen, T.,
+Jensen, B. A., et al. (2016). Human gut microbes impact host serum metabolome
+and insulin sensitivity. Nature 535, 376–381. doi: 10.1038/nature18646
+Qin, J., Li, R., Raes, J., Arumugam, M., Burgdorf, K. S., Manichanh, C., et al. (2010).
+A human gut microbial gene catalogue established by metagenomic sequencing.
+Nature 464, 59–65. doi: 10.1038/nature08821
+Qin, N., Yang, F., Li, A., Prifti, E., Chen, Y., Shao, L., et al. (2014). Alterations of
+the human gut microbiome in liver cirrhosis. Nature 513, 59–64. doi: 10.1038/
+nature13568
+Rebholz, C. M., Lichtenstein, A. H., Zheng, Z., Appel, L. J., and Coresh, J. (2018).
+Serum untargeted metabolomic proﬁle of the Dietary Approaches to Stop
+Hypertension (DASH) dietary pattern. Am. J. Clin. Nutr. 108, 243–255. doi:
+10.1093/ajcn/nqy099
+Frontiers in Microbiology | www.frontiersin.org
+12
+August 2021 | Volume 12 | Article 713234
+
+Kordy et al.
+Metabolomic Predictors of Pediatric NASH
+Roh, Y.-S., and Seki, E. (2013). Toll-like receptors in alcoholic liver disease,
+non-alcoholic steatohepatitis and carcinogenesis. J. Gastroenterol. Hepatol. 28,
+38–42. doi: 10.1111/jgh.12019
+Rooks, M. G., and Garrett, W. S. (2016). Gut microbiota, metabolites and host
+immunity. Nat. Rev. Immunol. 16, 341–352. doi: 10.1038/nri.2016.42
+Ruiz, A. G., Casafont, F., Crespo, J., Cayon, A., Mayorga, M., Estebanez, A., et al.
+(2007). Lipopolysaccharide-binding protein plasma levels and liver TNF-alpha
+gene expression in obese patients: evidence for the potential role of endotoxin
+in the pathogenesis of non-alcoholic steatohepatitis. Obes. Surg. 17, 1374–1380.
+doi: 10.1007/s11695-007-9243-7
+Ryals, J., Lawton, K., Stevens, D., and Milburn, M. (2007). Metabolon, Inc.
+Pharmacogenomics 8, 863–866. doi: 10.2217/14622416.8.7.863
+Saab, S., Manne, V., Nieto, J., Schwimmer, J. B., and Chalasani, N. P. (2016).
+Nonalcoholic fatty liver disease in latinos. Clin. Gastroenterol. Hepatol. 14, 5–12.
+doi: 10.1016/j.cgh.2015.05.001
+Schwimmer, J. B., Johnson, J. S., Angeles, J. E., Behling, C., Belt, P. H., Borecki,
+I., et al. (2019). Microbiome signatures associated with steatohepatitis and
+moderate to severe ﬁbrosis in children with nonalcoholic fatty liver disease.
+Gastroenterology 157, 1109–1122. doi: 10.1053/j.gastro.2019.06.028
+Sharifnia, T., Antoun, J., Verriere, T. G., Suarez, G., Wattacheril, J., Wilson,
+K. T., et al. (2015). Hepatic TLR4 signaling in obese NAFLD. Am. J.
+Physiol. Gastrointest. Liver Physiol. 309, G270–G278. doi: 10.1152/ajpgi.00304.
+2014
+Statnikov, A., Henaﬀ, M., Narendra, V., Konganti, K., Li, Z., Yang, L., et al.
+(2013). A comprehensive evaluation of multicategory classiﬁcation methods for
+microbiomic data. Microbiome 1:11. doi: 10.1186/2049-2618-1-11
+Verdam, F. J., Rensen, S. S., Driessen, A., Greve, J. W., and Buurman,
+W. A. (2011). Novel evidence for chronic exposure to endotoxin in human
+nonalcoholic steatohepatitis. J. Clin. Gastroenterol. 45, 149–152. doi: 10.1097/
+MCG.0b013e3181e12c24
+Vos, M. B., Abrams, S. H., Barlow, S. E., Caprio, S., Daniels, S. R., Kohli, R.,
+et al. (2017). NASPGHAN clinical practice guideline for the diagnosis and
+treatment of nonalcoholic fatty liver disease in children: recommendations
+from the expert committee on NAFLD (ECON) and the north american
+society of pediatric gastroenterology, hepatology and nutrition (NASPGHAN).
+J. Pediatr. Gastroenterol. Nutr. 64, 319–334. doi: 10.1097/MPG.00000000000
+01482
+Xanthakos, S., Lavine, J., Yates, K., Schwimmer, J., Molleston, J., Rosenthal, P.,
+et al. (2017). “Natural history of nonalcoholic fatty liver disease in children,”
+in Proceedings of the AASLD Annual Meeting. Washington, DC.
+Zhu, L., Baker, S. S., Gill, C., Liu, W., Alkhouri, R., Baker, R. D., et al. (2013).
+Characterization of gut microbiomes in nonalcoholic steatohepatitis (NASH)
+patients: a connection between endogenous alcohol and NASH. Hepatology 57,
+601–609. doi: 10.1002/hep.26093
+Author Disclaimer: The content is solely the responsibility of the authors and does
+not necessarily represent the oﬃcial views of the NIH.
+Conﬂict of Interest: KK performed this work while at CHLA and is currently
+aﬃliated with Novartis. JK was aﬃliated with Metabolon Inc., his expertise was
+sought to review the ﬁnal manuscript after all analyses and interpretation were
+complete.
+The remaining authors declare that the research was conducted in the absence of
+any commercial or ﬁnancial relationships that could be construed as a potential
+conﬂict of interest.
+Publisher’s Note: All claims expressed in this article are solely those of the authors
+and do not necessarily represent those of their aﬃliated organizations, or those of
+the publisher, the editors and the reviewers. Any product that may be evaluated in
+this article, or claim that may be made by its manufacturer, is not guaranteed or
+endorsed by the publisher.
+Copyright © 2021 Kordy, Li, Lee, Kinchen, Jew, La Rocque, Zabih, Saavedra,
+Woodward, Cunningham, Tobin and Aldrovandi. This is an open-access article
+distributed under the terms of the Creative Commons Attribution License (CC BY).
+The use, distribution or reproduction in other forums is permitted, provided the
+original author(s) and the copyright owner(s) are credited and that the original
+publication in this journal is cited, in accordance with accepted academic practice. No
+use, distribution or reproduction is permitted which does not comply with these terms.
+Frontiers in Microbiology | www.frontiersin.org
+13
+August 2021 | Volume 12 | Article 713234

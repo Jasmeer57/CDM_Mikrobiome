@@ -1,0 +1,625 @@
+Evaluation of the Effect of Storage Methods on Fecal, Saliva,
+and Skin Microbiome Composition
+Clarisse Marotz,a Kellen J. Cavagnero,a,d Se Jin Song,b Daniel McDonald,a Stephen Wandro,b Greg Humphrey,a
+MacKenzie Bryant,a Gail Ackermann,a Edgar Diaz,a
+Rob Knighta,b,c
+aDepartment of Pediatrics, University of California San Diego, La Jolla, California, USA
+bCenter for Microbiome Innovation, University of California San Diego, La Jolla, California, USA
+cDepartment of Computer Science and Engineering, University of California San Diego, La Jolla, California, USA
+dDepartment of Dermatology, University of California San Diego, La Jolla, California, USA
+Clarisse Marotz and Kellen J. Cavagnero contributed equally to this work. Author order was determined by submission organization and formatting time.
+ABSTRACT
+As the number of human microbiome studies expand, it is increasingly
+important to identify cost-effective, practical preservatives that allow for room tempera-
+ture sample storage. Here, we reanalyzed 16S rRNA gene amplicon sequencing data
+from a large sample storage study published in 2016 and performed shotgun metage-
+nomic sequencing on remnant DNA from this experiment. Both results support the ini-
+tial ﬁndings that 95% ethanol, a nontoxic, cost-effective preservative, is effective at pre-
+serving samples at room temperature for weeks. We expanded on this analysis by
+collecting a new set of fecal, saliva, and skin samples to determine the optimal ratio of
+95% ethanol to sample. We identiﬁed optimal collection protocols for fecal samples
+(storing a fecal swab in 95% ethanol) and saliva samples (storing unstimulated saliva in
+95% ethanol at a ratio of 1:2). Storing skin swabs in 95% ethanol reduced microbial
+biomass and disrupted community composition, highlighting the difﬁculties of low bio-
+mass sample preservation. The results from this study identify practical solutions for
+large-scale analyses of fecal and oral microbial communities.
+IMPORTANCE Expanding our knowledge of microbial communities across diverse envi-
+ronments includes collecting samples in places far from the laboratory. Identifying cost-
+effective preservatives that will enable room temperature storage of microbial com-
+munities for sequencing analysis is crucial to enabling microbiome analyses across
+diverse populations. Here, we validate ﬁndings that 95% ethanol efﬁciently preserves
+microbial composition at room temperature for weeks. We also identiﬁed the optimal
+ratio of 95% ethanol to sample for stool and saliva to preserve both microbial load and
+composition. These results provide rationale for an accessible, nontoxic, cost-effective
+solution that will enable crowdsourcing microbiome studies, such as The Microsetta
+Initiative, and lower the barrier for collecting diverse samples.
+KEYWORDS 16S rRNA gene amplicon sequencing, benchmarking, metagenomics,
+microbiome, preservation
+N
+ext generation sequencing has enabled an unprecedented view of human-associ-
+ated microbial communities. This insight has been leveraged to improve under-
+standing of how such communities contribute to human health. Many investigations
+focus on the gut, using fecal samples as a proxy for the intestinal microbiome, but skin
+and oral samples are also commonly collected for human microbiome analysis. To
+comprehensively understand human-associated microbiomes, samples have been
+acquired from healthy and diseased patients in the clinical setting (1), indigenous peo-
+ples in the ﬁeld (2), and individuals across the globe through community science
+Citation Marotz C, Cavagnero KJ, Song SJ,
+McDonald D, Wandro S, Humphrey G, Bryant
+M, Ackermann G, Diaz E, Knight R. 2021.
+Evaluation of the effect of storage methods on
+fecal, saliva, and skin microbiome composition.
+mSystems 6:e01329-20. https://doi.org/10
+.1128/mSystems.01329-20.
+Editor Robert G. Beiko, Dalhousie University
+Copyright © 2021 Marotz et al. This is an
+open-access article distributed under the terms
+of the Creative Commons Attribution 4.0
+International license.
+Address correspondence to Rob Knight,
+robknight@ucsd.edu.
+Simple 95% EtOH preserves fecal and
+saliva samples for microbiome analysis for at
+least 8 weeks at room temperature.
+Received 18 December 2020
+Accepted 23 March 2021
+Published 27 April 2021
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+1
+RESEARCH ARTICLE
+
+efforts (3–5). In the clinic, samples are typically frozen immediately at 220°C or below
+until nucleic acid extraction and sequencing, the gold standard in the microbiome ﬁeld.
+However, beyond the clinic, immediate freezing is often not possible, thus leading to the
+use of preservatives. Importantly, there is currently no standard protocol for microbiome
+preservation. Identifying a cost-effective, practical solution to microbiome sample preser-
+vation could help reduce the barrier to collecting specimens from geographic locations
+that contain high microbial diversity but are vastly underrepresented (6).
+Numerous studies have aimed to understand how fecal storage affects microbiome
+composition (7–10). In 2016, our group reported one of the largest investigations thus
+far (11). We performed 16S rRNA gene amplicon sequencing on over 1,200 samples,
+which included fecal samples from 15 individuals subjected to six preservatives, six
+storage temperatures, and four time points. Our analysis revealed that composition
+was well maintained over time and across temperatures when samples were stored in
+95% ethanol.
+In the last 4 years, microbiome sequencing techniques and the computational tools
+to analyze next generation sequencing data have advanced considerably. Here, we
+aimed to improve the understanding of how storage affects microbiome composition
+using state-of-the-art methods. First, we reanalyzed our original 16S rRNA gene ampli-
+con sequencing data set using a high-resolution exact sequence variant method (12,
+13). Next, to further increase resolution (14), we performed shallow shotgun metage-
+nomic sequencing on archived DNA from our original study. Results from these studies
+conﬁrmed our original conclusion that 95% ethanol is efﬁcacious in preserving fecal
+microbiome integrity. Finally, we extended our study of 95% ethanol to investigate
+optimal sample collection protocols for fecal, saliva, and skin samples.
+RESULTS
+95% EtOH is an efﬁcient room temperature preservative for microbiome
+analyses. We ﬁrst set out to determine the effect of sample storage on fecal microbial
+composition. To that end, we reanalyzed 16S rRNA gene amplicon sequencing (16S) data
+from our previous storage study (11). Because shotgun metagenomic sequencing pro-
+vides deeper characterization of microbial communities and does not necessarily repro-
+duce results from 16S analyses (14), we also performed shotgun metagenomic sequencing
+on remaining nucleic acid extracts. In the prior study, fecal samples had been obtained
+from 15 subjects (10 humans and 5 dogs) and subjected to six different preservative con-
+ditions (no preservative [None], 70% ethanol [EtOH], 95% ethanol, RNAlater, OMNIgene
+GUT [OMNI], and FTA cards [FTA]), up to six different temperature conditions (ambient,
+220°C, 220°C after 1week, 4°C, freeze-thaw, and heat), and up to four time points (fresh,
+1week, 4weeks, and 8 weeks).
+We assessed phylogenetically informed beta-diversity in our shotgun metagenomic
+sequencing data set using a curated microbial phylogenetic tree (15) (see Materials
+and Methods). In both 16S (see Fig. S1A in the supplemental material) and shotgun
+data sets (Fig. 1A), weighted UniFrac beta-diversity was driven primarily by subject and
+subject species, rather than by whether samples were stored or not, or by speciﬁc stor-
+age method. This ﬁnding held true across six different beta-diversity metrics (see
+Table S1 in the supplemental material).
+To determine which storage method induced the least amount of change in fecal
+microbiome composition, we compared weighted UniFrac distances between each sub-
+ject’s fresh and stored samples. As expected, immediate sample freezing (–20°C) resulted
+in the least change across conditions with both shotgun (Fig. 1B) and reprocessed 16S
+data (Fig. S1B). As in our original 16S analysis (11), samples left unﬁxed or preserved in
+70% ethanol exhibited the greatest compositional change with storage, while 95% etha-
+nol, FTA, OMNI-gene GUT, and RNAlater minimized changes in composition.
+To identify potential changes in the relative abundance of speciﬁc taxonomic
+clades, we compared the relative abundance of each genus in each subject’s sample
+processed fresh versus 8 weeks out for each preservative (Fig. 1C, Fig. S1C). As
+expected, the correlation between fresh and 8-week samples was markedly reduced
+Marotz et al.
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+2
+
+FIG 1 Effect of storage on fecal microbiome composition with shallow shotgun metagenomic sequencing. (A) Beta-diversity of shotgun
+metagenomic sequencing data estimated with weighted UniFrac, colored by participants. Diamonds represent fresh samples. (B) Weighted UniFrac
+(Continued on next page)
+95% Ethanol Is a Robust, Cost-Effective Preservative
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+3
+
+without the use of a ﬁxative—unless the sample was immediately frozen (–20°C).
+Samples stored in 95% ethanol, FTA, and OMNI-gene GUT had similarly tight taxo-
+nomic correlations across conditions, while 70% ethanol-treated samples correlated
+relatively poorly under several conditions.
+Previous reports have shown microbial blooms occur over time in fecal samples
+without the use of preservatives (11, 16). Therefore, we determined the percentage of
+taxa with a greater than 10-fold change in relative abundance over time for each
+stored sample. As expected, microbial blooms occurred in samples unﬁxed and stored
+ambiently, and blooming was prevented by immediately freezing (Fig. 1D, Fig. S1D). As
+in our previous report, we found that samples stored in 70% ethanol contained similar
+levels of blooming organisms to unﬁxed samples, whereas samples stored in 95% etha-
+nol, OMNI-gene GUT, FTA, and RNAlater contained levels of blooming organisms simi-
+lar to those of immediately frozen samples.
+As with composition, differences in Shannon and Simpson alpha-diversity across
+storage times were largest when samples were unﬁxed or stored in 70% EtOH, and
+smallest when stored in 95% EtOH, OMNI-gene GUT, FTA, and RNAlater (Fig. S2). To
+determine the ability to correctly classify samples after preservation, we trained a ran-
+dom forest sample classiﬁer on subjects’ fresh samples (none, fresh, and ambient) and
+determined the accuracy of the classiﬁer in predicting the subject from which each
+stored sample was derived for each storage condition. The classiﬁer was nearly perfect
+at predicting sample donors across storage methods (Fig. S3). Of the few misclassiﬁed
+samples, most were not immediately frozen or ﬁxed in 95% ethanol.
+Collectively, our ﬁndings indicate that 95% ethanol, OMNI-gene GUT, FTA, and
+RNAlater are effective fecal microbiome preservatives. In our view, 95% ethanol is the
+most practical as it is nontoxic and cost-effective. Because our reanalyzed 16S data and
+shotgun metagenomic data were highly consistent (Fig. S4, Mantel Spearman
+correlation = 0.75), we performed a follow-up experiment with 16S rRNA gene ampli-
+con sequencing to determine the optimal sample to 95% ethanol ratio for sample
+collection.
+Optimizing the ratio of 95% ethanol preservative to sample. To determine the
+optimal ratio of 95% EtOH to fecal sample for microbiome analyses, fecal samples from
+12 participants were divided into seven categories for comparison (Fig. 2A); a fecal
+sample was swabbed following the American Gut Project protocol (4) and immediately
+frozen, a 1-g aliquot of the fecal sample was frozen immediately with no preservative,
+a 1-g aliquot of fecal sample was stored in 1 ml, 2 ml, or 5 ml of 95% ethanol and left at
+room temperature, or a fecal swab was stored in 1 ml of 95% ethanol and left at room
+temperature, and sample was extracted from the swab or remaining 95% ethanol
+eluent.
+Microbial load was evaluated via quantitative PCR (qPCR) of the 16S rRNA gene.
+Fecal swabs stored in 95% ethanol and extracted from the swab head had the closest
+amount of microbial load to the gold standard out of all the samples stored at room
+temperature (Fig. 2B). Principal coordinate analysis (PCoA) calculated with weighted
+UniFrac revealed that samples tended to cluster by host subject rather than storage
+method (Fig. 2C). Permutational multivariate analysis of variance (PERMANOVA) analy-
+sis across all distance metrics tested conﬁrmed that beta-diversity was more strongly
+driven by host subject rather than storage method (Table S2). The relative abundance
+of each genus was compared between the gold standard (swab immediately frozen)
+and each storage method. Relative abundances of all storage methods were signiﬁ-
+cantly correlated with the gold standard (Fig. 2D), and swab stored in 95% ethanol had
+one of the strongest correlations (Pearson R = 0.973).
+FIG 1 Legend (Continued)
+distances between stored samples and baseline samples (fresh, ambient) for each preservative. (C) Pearson correlation where each point represents
+a genus with the relative abundance in the fresh fecal samples on the x axis and the relative abundance in the stored fecal sample stored for
+8 weeks on the y axis, with each plot series representing a different storage temperature. Both axes are presented in log base 10 scale. (D) Fraction
+of taxa with greater than 10-fold change relative to fresh samples for each storage condition.
+Marotz et al.
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+4
+
+Next, we applied the same experimental design to oral microbiome samples.
+Twelve participants provided unstimulated saliva samples which were stored in seven
+different ways for comparison (Fig. 3A). A saliva sample was swabbed following the
+American Gut Project (AGP) protocol (4) and immediately frozen, a 500-ml aliquot of
+the saliva sample was frozen immediately with no preservative, a 500-ml aliquot of sa-
+liva sample was stored in 0.5 ml, 1 ml, or 2 ml of 95% ethanol and left at room tempera-
+ture, or a saliva swab was stored in 1 ml of 95% ethanol and left at room temperature,
+and a sample was extracted from the swab or remaining 95% ethanol eluent.
+qPCR analysis revealed that saliva samples stored in 95% ethanol at a ratio of 1:1 or 2:1
+had the closest amount of microbial load to the gold standard out of all the samples stored
+at room temperature (Fig. 3B). Saliva swabs stored in 95% ethanol had signiﬁcantly lower
+16S rRNA gene copies whether the sample was extracted from the swab head or the rem-
+nant 95% ethanol. Similar to fecal samples, PCoA of the saliva samples revealed that beta-
+diversity was more strongly driven by host subject rather than storage method across all
+distance metrics (Fig. 3C, Table S2). The genus-level relative abundances of all storage
+methods were signiﬁcantly correlated with the gold standard (Fig. 3D), and saliva samples
+were stored in 95% ethanol at a ratio of 1:1 (Pearson R=0.88), 2:1 (Pearson R=0.89), and
+4:1 (Pearson R=0.91) had the strongest correlations.
+Finally, we applied the same experimental design to skin microbiome samples. Twelve
+participants provided triplicate skin swabs each from their forehead and right palm, which
+were then stored in three different ways for comparison (Fig. 4A). Skin swabs were either
+FIG 2 Identifying optimal collection protocol for fecal samples in 95% ethanol. (A) Experimental design. Fecal samples were
+collected from 12 participants, and each was divided into seven groups; the fecal sample was swabbed (step 1) or 1 g aliquoted
+(step 2) and immediately frozen in 280°C. The remaining samples were stored at different ratios with 95% ethanol and kept at
+room temperature for 1 week; 1 g feces in either 1 ml (step 3), 2 ml (step 4), or 5 ml (step 5) of 95%ethanol, or fecal sample
+swabbed and stored in 1 ml 95% ethanol. After 1 week, DNA was extracted from each sample (and for the swab in ethanol, the
+swab [step 6] and remaining ethanol [step 7] were independently extracted). (B) qPCR on the extracted DNA using primers
+against the 16S rRNA gene normalized to the frozen swab. (C) Beta-diversity calculated with unweighted UniFrac and colored by
+participant. (D) Pearson correlation of genus relative abundance in each sample compared to the frozen swab. Error bars
+represent standard errors of the means across the 12 participants.
+95% Ethanol Is a Robust, Cost-Effective Preservative
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+5
+
+immediately frozen or stored in 1ml 95% ethanol and left at room temperature, and sam-
+ple was extracted from the swab or remaining 95% ethanol eluent.
+qPCR analysis revealed that both forehead and palm swab samples stored in 95% etha-
+nol had signiﬁcantly reduced microbial loads compared to swabs stored at 280°C without
+preservative (Fig. 4B). Similar to saliva and fecal samples, beta-diversity was most strongly
+driven by storage method across all distance metrics calculated (Fig. 4C, Table S2). The ge-
+nus-level relative abundances were correlated better with the gold standard in forehead
+samples extracted from swab (Pearson R=0.94) than ethanol (Pearson R=0.70). This held
+true for palm samples (swab extraction Pearson R=0.78, ethanol extraction Pearson
+R=0.61), although these correlated less well than forehead samples (Fig. 4D).
+DISCUSSION
+Efﬁcient, cost-effective preservatives for microbiome analyses are increasingly im-
+portant as the scientiﬁc community expands sampling efforts to include more diverse
+communities and organisms. Here, we used a state-of-the-art denoising tool to reana-
+lyze amplicon sequencing data from a large comparative study (11). We also generated
+shotgun metagenomic sequencing on these remnant samples. Both the updated 16S
+sequencing results and the shotgun metagenomics validated our previous ﬁnding that
+95% ethanol performs well to preserve microbiome samples when immediate, consist-
+ent freezing is not an option.
+FIG 3 Identifying optimal collection protocol for saliva samples in 95% ethanol. (A) Experimental design. Unstimulated saliva
+samples were collected from 12 participants, and each was divided into seven groups. The saliva sample was swabbed (step 1) or
+500ml aliquoted (step 2) and immediately frozen in 280°C. The remaining samples were stored at different ratios with 95%
+ethanol and kept at room temperature for 1 week: 500ml saliva in either 0.5 ml (step 3), 1 ml (step 4), or 2 ml (step 5) of 95%
+ethanol, or saliva sample was swabbed and stored in 1 ml of 95% ethanol. After 1 week, DNA was extracted from each sample
+(and for the swab in ethanol, the swab [step 6] and remaining ethanol [step 7] were independently extracted). (B) qPCR on the
+extracted DNA using primers against the 16S rRNA gene normalized to the frozen swab. (C) Beta-diversity calculated with
+weighted UniFrac and colored by participant. (D) Pearson correlation of genus relative abundance in each sample compared to
+the frozen swab. Error bars represent standard errors of the means across the 12 participants.
+Marotz et al.
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+6
+
+We performed follow-up experiments to determine the optimal ratio of sample to
+95% EtOH for different sample types, including fecal, saliva, and skin samples. For fecal
+samples, storing a swab of feces in 95% EtOH and extracting from the fecal swab pro-
+vided the best recovery of biomass and high ﬁdelity of microbial composition com-
+pared to the gold standard of freezing. For saliva samples, the best solution was stor-
+ing liquid saliva at a ratio of 1:2 with 95% EtOH. Skin sample preservation did not work
+nearly as well at retaining biomass or microbial composition as saliva and fecal sam-
+ples. One reason could be that the primers targeting the V4 region of the 16S rRNA
+gene used in this study are suboptimal for skin amplicon sequencing (17); therefore,
+these results may need to be validated via shotgun metagenomic sequencing.
+However, this is complicated because skin samples are extremely low biomass and
+contain a high percentage of host DNA (18), underscoring the difﬁculty of designing a
+standardized skin sample collection method for high-throughput analysis.
+Together, our ﬁndings support the use of 95% EtOH for fecal and saliva sample
+preservation for downstream microbiome sequencing analyses. These results will
+guide collection protocols and improve our ability to collect samples for microbiome
+analysis when immediate freezing is not available.
+MATERIALS AND METHODS
+Validation of Song et al. study with updated techniques.
+(i) Shotgun metagenomic sequencing. Remnant genomic DNA (gDNA) from Song et al. (11) was
+used for shotgun metagenomic sequencing as previously described (19). Brieﬂy, gDNA was quantiﬁed
+with Quant-iT PicoGreen double-stranded DNA (dsDNA) assay kit (ThermoFisher Scientiﬁc), and 1 ng of
+FIG 4 Identifying optimal collection protocol for skin samples in 95% ethanol. (A) Experimental design. Forehead and right palm
+skin swabs were collected from 12 participants, and each was divided into three groups; one swab was immediately frozen in
+280°C (step 1). The second swab was stored in 95% ethanol and kept at room temperature. After 1 week, DNA was extracted
+from the frozen swab, the swab in ethanol the swab (step 2) and remaining ethanol (step 3). (B) qPCR on the extracted DNA
+using primers against the 16S rRNA gene normalized to the frozen swab for both the palm (left) and forehead (right) samples. (C)
+Beta-diversity calculated with unweighted UniFrac and colored by participants. Diamonds represent forehead swabs, and spheres
+represent palm swabs (D) Pearson correlation of genus relative abundance in each sample compared to the frozen swab. Error
+bars represent standard errors of the means across the 12 participants.
+95% Ethanol Is a Robust, Cost-Effective Preservative
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+7
+
+input DNA was used in a 1:10 miniaturized Kapa HyperPlus protocol. For samples with less than 1 ng
+DNA, a maximum volume of 3.5ml input was used. Equimolar amounts of each sample were pooled,
+and the library was size selected for fragments between 300 and 700 bp on the Sage Science PippinHT.
+The pooled library was sequenced as a paired-end 150-cycle run on an Illumina HiSeq2500 v2 run at the
+University of California San Diego (UCSD) IGM Genomics Center.
+(ii) Shotgun metagenomic and 16S analysis. Shallow shotgun metagenomic reads were aligned
+using SHOGUN (20) with the default settings against the Web of Life database (https://github.com/
+qiyunzhu/woltka) and clustered using the genome operational taxonomic unit (gOTU) pipeline (https://
+github.com/qiyunzhu/woltka). For 16S rRNA gene amplicon sequencing (16S), reads were demulti-
+plexed, quality control ﬁltered, and trimmed to 100 nucleotides (nt) using Qiita (study identiﬁer [ID]
+10934). Reads were then denoised into amplicon sequence variants using Deblur v1.1.0 (13). Fragments
+were inserted into the Greengenes 13.8 reference phylogeny (21) using SEPP (22) with QIIME 2’s (23) q2-
+fragment-insertion plugin (24). QIIME 2 version 2019.7 was used throughout our validation of the Song
+et al. study.
+(iii) Diversity measures. 16S and shotgun metagenomic data were ﬁrst rareﬁed to 10,000 and
+250,000 reads, respectively. Alpha-diversity (Shannon, Simpson) and beta-diversity (unweighted UniFrac
+[25], weighted UniFrac, Bray Curtis, Jaccard, Aitchison [26], robust principal component analysis [RPCA]
+[27]) were calculated using the QIIME 2’s q2-diversity plugins “alpha-group-signiﬁcance” and “beta-
+group-signiﬁcance,” respectively. EMPeror (28) plots were visualized using QIIME2 view. To understand
+the effect of each preservative on bacterial composition and diversity, we plotted the weighted UniFrac
+distance and Shannon diversity difference between individuals’ preserved samples and nonpreserved,
+fresh samples.
+(iv) Relative abundance analyses. To determine sample relative abundance, reads were ﬁrst classi-
+ﬁed by taxon using the QIIME 2 plugin q2-feature-classiﬁer (29) with the “classify-sklearn” action against
+the default Greengenes 13.8 classiﬁer, and then collapsed to genus level using the QIIME 2 plugin q2-
+taxa with the “collapse” action. For each preservative and storage temperature, genus level relative
+abundances from fresh samples were plotted against 8-week-old samples, and Pearson correlation coef-
+ﬁcients were calculated. To determine the impact of each preservative on microbial bloom formation
+over time, the fraction of taxa with greater than 10-fold change relative to fresh samples was calculated
+for each preservative (at ambient temperature) at each time point. As a control, the fraction of taxa with
+greater than 10-fold change relative to fresh samples was calculated for frozen samples at each time
+point.
+(v) Sample classiﬁcation. A supervised learning approach was used to determine whether stored
+samples were similar enough to fresh samples to predict the donor of each stored sample. We trained a
+model on fresh replicate samples (six per individual) and determined the model’s ability to accurately
+classify individuals for each storage condition. To that end, we utilized the QIIME 2’s q2-sample-classiﬁer
+(30) plugin with the “classify-samples” action.
+(vi) Procrustes analysis. To directly compare the beta-diversity of the 16S and shotgun data sets,
+we used the QIIME 2 q2-diversity plugin with the “procrustes-analysis” action using unweighted UniFrac
+data.
+95% ethanol ratio optimization experiments.
+(i) Sample collection and storage. We recruited 12 participants under institutional review board
+(IRB) 150275 to provide stool, saliva, and skin samples for the sample collection protocol optimization
+portion of this study. For stool samples, full fecal specimens were collected into commode specimen col-
+lection tubs (Fisher Scientiﬁc, catalog number 02-544-208) and were processed for storage within 1 h of
+collection; one gram of feces stored at 280°C, one fecal swab (BD Sterile Falcon Swube, catalog number
+220090) stored at 280°C, one gram of feces stored in either 1 ml, 2 ml, or 5 ml of 95% EtOH at room tem-
+perature, and one fecal swab in 1 ml of 95% EtOH at room temperature. For saliva samples, participants
+were asked to provide 4 ml of saliva into a sterile 15-ml conical tube. All saliva samples were vortexed
+well and processed for storage within 1 h of collection; 0.5 ml stored at –80°C, saliva swab (BD Sterile
+Falcon Swube, catalog number 220090) stored at –80°C, 0.5 ml saliva stored in either 0.5 ml, 1 ml, or 2 ml
+95% EtOH, and one saliva swab stored in 1 ml of 95% EtOH at room temperature. For skin samples, par-
+ticipants were asked to rub a dry, double-headed swab (BD Sterile Falcon Swube, catalog number
+220090) against their right palm for 30 s. One swab head was immediately frozen at –80°C, and the other
+was stored in 1 ml of 95% EtOH. This process was repeated on the forehead. All samples were extracted
+7 or 8 days after sample collection as described below.
+(ii) gDNA extraction and 16S rRNA gene amplicon sequencing. Samples were extracted using the
+Qiagen PowerSoil MagAttract DNA kit as previously described (31). For swab samples, the entire swab
+head was broken off into the extraction vial. For the 95% EtOH eluent samples, 400ml was added to the
+extraction vial. For all other samples (fecal or saliva aliquots in 95% EtOH), the sample was swabbed and
+the head broken off into the extraction vial. 16S rRNA gene ampliﬁcation was performed according to
+the Earth Microbiome Project protocol (32). Brieﬂy, Illumina primers with unique reverse primer barcodes
+(33) were used to amplify the V4 region of the 16S rRNA gene (515fbc-806r [34]). Ampliﬁcation was per-
+formed in a miniaturized volume (35), with single reactions per sample (36). Equal volumes of each
+amplicon were pooled, and the library was sequenced on the Illumina MiSeq sequencing platform with
+a MiSeq reagent kit v2 and paired-end 150-bp cycles. Raw data and associated feature tables are publicly
+available in Qiita (qiita.ucsd.edu) as study ID 12610.
+(iii) Microbial load assessment via qPCR. To estimate microbial load, sample gDNA was evaluated
+in triplicate with KAPA Universal qPCR Master Mix (catalog number KK4828) using the Bakt 341F-805R
+primers (Bakt_341f [59-CCTACGGGNGGCWGCAG-39] and Bakt_805R [59-GACTACHVGGGTATCTAATCC-39])
+Marotz et al.
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+8
+
+(37). Ampliﬁcation was performed in triplicate 10-ml reaction mixtures each containing 5ml KAPA
+MasterMix, 0.5ml primer mix containing 5mM forward and reverse primers, 2ml gDNA, and 2.5ml H2O.
+The PCR mix was cycled through the following temperatures on a Bio-Rad CFX real-time PCR system: (i)
+95 for 5 min; (ii) 40 cycles with 1 cycle consisting of 95°C for 30 s and 60°C for 30 s; and (iii) 4°C hold. The
+median value of the triplicate reactions was normalized to the value for the gold standard (frozen swab)
+for each sample.
+Data availability. Data are publicly available in Qiita (38) under study IDs 10394 (validation of Song
+et al.) and 12610 (95% EtOH sample collection study) and through the European Nucleotide Archive
+under study ID PRJEB42056.
+SUPPLEMENTAL MATERIAL
+Supplemental material is available online only.
+FIG S1, TIF ﬁle, 2.1 MB.
+FIG S2, TIF ﬁle, 1.7 MB.
+FIG S3, TIF ﬁle, 2.6 MB.
+FIG S4, TIF ﬁle, 1 MB.
+TABLE S1, XLSX ﬁle, 0.01 MB.
+TABLE S2, XLSX ﬁle, 0.01 MB.
+ACKNOWLEDGMENTS
+We thank Qiyun Zhu for his assistance in performing the shotgun metagenomic
+taxonomy alignment.
+C.M. was funded by NIDCR NRSA F31 Fellowship 1F31DE028478-01. K.J.C. is
+supported by NIH grant T32 DK007202.
+REFERENCES
+1. Wu W-K, Chen C-C, Panyod S, Chen R-A, Wu M-S, Sheen L-Y, Chang S-C.
+2019. Optimization of fecal sample processing for microbiome study —
+the journey from bathroom to bench. J Formos Med Assoc 118:545–555.
+https://doi.org/10.1016/j.jfma.2018.02.005.
+2. Schnorr SL, Candela M, Rampelli S, Centanni M, Consolandi C, Basaglia G,
+Turroni S, Biagi E, Peano C, Severgnini M, Fiori J, Gotti R, De Bellis G,
+Luiselli D, Brigidi P, Mabulla A, Marlowe F, Henry AG, Crittenden AN. 2014.
+Gut microbiome of the Hadza hunter-gatherers. Nat Commun 5:3654.
+https://doi.org/10.1038/ncomms4654.
+3. Falony G, Joossens M, Vieira-Silva S, Wang J, Darzi Y, Faust K, Kurilshikov
+A, Bonder MJ, Valles-Colomer M, Vandeputte D, Tito RY, Chaffron S,
+Rymenans L, Verspecht C, De Sutter L, Lima-Mendez G, D’hoe K,
+Jonckheere K, Homola D, Garcia R, Tigchelaar EF, Eeckhaudt L, Fu J,
+Henckaerts L, Zhernakova A, Wijmenga C, Raes J. 2016. Population-level
+analysis of gut microbiome variation. Science 352:560–564. https://doi
+.org/10.1126/science.aad3503.
+4. McDonald D, Hyde E, Debelius JW, Morton JT, Gonzalez A, Ackermann G,
+Aksenov AA, Behsaz B, Brennan C, Chen Y, Goldasich LD, Dorrestein PC,
+Dunn RR, Fahimipour AK, Gaffney J, Gilbert JA, Gogul G, Green JL,
+Hugenholtz P, Humphrey G, Huttenhower C, Jackson MA, Janssen S, Jeste
+DV, Jiang L, Kelley ST, Knights D, Kosciolek T, Ladau J, Leach J, Marotz C,
+Meleshko D, Melnik AV, Metcalf JL, Mohimani H, Montassier E, Navas-
+Molina J, Nguyen TT, Peddada S, Pevzner P, Pollard KS, Rahnavard G,
+Robbins-Pianka A, Sangwan N, Shorenstein J, Smarr L, Song SJ, Spector T,
+Swafford AD, Thackray VG, Thompson LR, et al. 2018. American Gut: an
+open platform for citizen science microbiome research. mSystems 3:
+e00031-18. https://doi.org/10.1128/mSystems.00031-18.
+5. Gevers D, Knight R, Petrosino JF, Huang K, McGuire AL, Birren BW, Nelson
+KE, White O, Methé BA, Huttenhower C. 2012. The Human Microbiome
+Project: a community resource for the healthy human microbiome. PLoS
+Biol 10:e1001377. https://doi.org/10.1371/journal.pbio.1001377.
+6. Almeida A, Nayfach S, Boland M, Strozzi F, Beracochea M, Shi ZJ, Pollard
+KS, Sakharova E, Parks DH, Hugenholtz P, Segata N, Kyrpides NC, Finn
+RD. 2021. A uniﬁed catalog of 204,938 reference genomes from the
+human gut microbiome. Nat Biotechnol 39:105–114. https://doi.org/10
+.1038/s41587-020-0603-3.
+7. Ilett EE, Jørgensen M, Noguera-Julian M, Daugaard G, Murray DD, Helleberg M,
+Paredes R, Lundgren J, Sengeløv H, MacPherson C. 2019. Gut microbiome com-
+parability of fresh-frozen versus stabilized-frozen samples from hospitalized
+patients using 16S rRNA gene and shotgun metagenomic sequencing. Sci
+Rep 9:13351. https://doi.org/10.1038/s41598-019-49956-7.
+8. Penington JS, Penno MAS, Ngui KM, Ajami NJ, Roth-Schulze AJ, Wilcox SA,
+Bandala-Sanchez E, Wentworth JM, Barry SC, Brown CY, Couper JJ,
+Petrosino JF, Papenfuss AT, Harrison LC, ENDIA Study Group. 2018. Inﬂu-
+ence of fecal collection conditions and 16S rRNA gene sequencing at two
+centers on human gut microbiota analysis. Sci Rep 8:4386. https://doi
+.org/10.1038/s41598-018-22491-7.
+9. Carruthers LV, Moses A, Adriko M, Faust CL, Tukahebwa EM, Hall LJ,
+Ranford-Cartwright LC, Lamberton PHL. 2019. The impact of storage con-
+ditions on human stool 16S rRNA microbiome composition and diversity.
+PeerJ 7:e8133. https://doi.org/10.7717/peerj.8133.
+10. Chen Z, Hui PC, Hui M, Yeoh YK, Wong PY, Chan MCW, Wong MCS, Ng SC,
+Chan FKL, Chan PKS. 2019. Impact of preservation method and 16S rRNA
+hypervariable region on gut microbiota proﬁling mSystems 4:e00271-18.
+https://doi.org/10.1128/mSystems.00271-18.
+11. Song SJ, Amir A, Metcalf JL, Amato KR, Xu ZZ, Humphrey G, Knight R.
+2016. Preservation methods differ in fecal microbiome stability, affecting
+suitability for ﬁeld studies. mSystems 1:e00021-16. [CrossRef] https://doi
+.org/10.1128/mSystems.00021-16.
+12. Callahan BJ, McMurdie PJ, Holmes SP. 2017. Exact sequence variants
+should replace operational taxonomic units in marker-gene data analysis.
+ISME J 11:2639–2643. https://doi.org/10.1038/ismej.2017.119.
+13. Amir A, McDonald D, Navas-Molina JA, Kopylova E, Morton JT, Zech Xu Z,
+Kightley EP, Thompson LR, Hyde ER, Gonzalez A, Knight R. 2017. Deblur
+rapidly resolves single-nucleotide community sequence patterns. mSys-
+tems 2:e00191-16. https://doi.org/10.1128/mSystems.00191-16.
+14. Laudadio I, Fulci V, Palone F, Stronati L, Cucchiara S, Carissimi C. 2018.
+Quantitative assessment of shotgun metagenomics and 16S rDNA ampli-
+con sequencing in the study of human gut microbiome. OMICS
+22:248–254. https://doi.org/10.1089/omi.2018.0013.
+15. Zhu Q, Mai U, Pfeiffer W, Janssen S, Asnicar F, Sanders JG, Belda-Ferre P,
+Al-Ghalith GA, Kopylova E, McDonald D, Kosciolek T, Yin JB, Huang S,
+Salam N, Jiao J-Y, Wu Z, Xu ZZ, Cantrell K, Yang Y, Sayyari E, Rabiee M,
+Morton JT, Podell S, Knights D, Li W-J, Huttenhower C, Segata N, Smarr L,
+Mirarab S, Knight R. 2019. Phylogenomics of 10,575 genomes reveals evo-
+lutionary proximity between domains Bacteria and Archaea. Nat Com-
+mun 10:5477. https://doi.org/10.1038/s41467-019-13443-4.
+16. Amir A, McDonald D, Navas-Molina JA, Debelius J, Morton JT, Hyde E,
+Robbins-Pianka A, Knight R. 2017. Correcting for microbial blooms in fecal
+95% Ethanol Is a Robust, Cost-Effective Preservative
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+9
+
+samples during room-temperature shipping. mSystems 2:e00199-16.
+https://doi.org/10.1128/mSystems.00199-16.
+17. Meisel JS, Hannigan GD, Tyldsley AS, SanMiguel AJ, Hodkinson BP, Zheng
+Q, Grice EA. 2016. Skin microbiome surveys are strongly inﬂuenced by ex-
+perimental design. J Invest Dermatol 136:947–956. https://doi.org/10
+.1016/j.jid.2016.01.016.
+18. Bjerre RD, Hugerth LW, Boulund F, Seifert M, Johansen JD, Engstrand L.
+2019. Effects of sampling strategy and DNA extraction on human skin
+microbiome investigations. Sci Rep 9:17287. https://doi.org/10.1038/
+s41598-019-53599-z.
+19. Sanders JG, Nurk S, Salido RA, Minich J, Xu ZZ, Zhu Q, Martino C, Fedarko M,
+Arthur TD, Chen F, Boland BS, Humphrey GC, Brennan C, Sanders K, Gaffney
+J, Jepsen K, Khosroheidari M, Green C, Liyanage M, Dang JW, Phelan VV,
+Quinn RA, Bankevich A, Chang JT, Rana TM, Conrad DJ, Sandborn WJ, Smarr
+L, Dorrestein PC, Pevzner PA, Knight R. 2019. Optimizing sequencing proto-
+cols for leaderboard metagenomics by combining long and short reads. Ge-
+nome Biol 20:226. https://doi.org/10.1186/s13059-019-1834-9.
+20. Hillmann B, Al-Ghalith GA, Shields-Cutler RR, Zhu Q, Gohl DM, Beckman
+KB, Knight R, Knights D. 2018. Evaluating the information content of
+shallow shotgun metagenomics. mSystems 3:00069-18. https://doi.org/
+10.1128/mSystems.00069-18.
+21. McDonald D, Price MN, Goodrich J, Nawrocki EP, DeSantis TZ, Probst A,
+Andersen GL, Knight R, Hugenholtz P. 2012. An improved Greengenes
+taxonomy with explicit ranks for ecological and evolutionary analyses of
+bacteria and archaea. ISME J 6:610–618. https://doi.org/10.1038/ismej
+.2011.139.
+22. Mirarab S, Nguyen N, Warnow T. 2012. SEPP: SATé-enabled phylogenetic
+placement. Pac Symp Biocomput 2012:247–258. https://doi.org/10.1142/
+9789814366496_0024.
+23. Bolyen E, Rideout JR, Dillon MR, Bokulich NA, Abnet CC, Al-Ghalith GA,
+Alexander H, Alm EJ, Arumugam M, Asnicar F, Bai Y, Bisanz JE, Bittinger K,
+Brejnrod A, Brislawn CJ, Brown CT, Callahan BJ, Caraballo-Rodríguez AM,
+Chase J, Cope EK, Da Silva R, Diener C, Dorrestein PC, Douglas GM, Durall
+DM, Duvallet C, Edwardson CF, Ernst M, Estaki M, Fouquier J, Gauglitz JM,
+Gibbons SM, Gibson DL, Gonzalez A, Gorlick K, Guo J, Hillmann B, Holmes
+S, Holste H, Huttenhower C, Huttley GA, Janssen S, Jarmusch AK, Jiang L,
+Kaehler BD, Kang KB, Keefe CR, Keim P, Kelley ST, Knights D, Koester I, et
+al. 2019. Reproducible, interactive, scalable and extensible microbiome
+data science using QIIME 2. Nat Biotechnol 37:852–857. https://doi.org/10
+.1038/s41587-019-0209-9.
+24. Janssen S, McDonald D, Gonzalez A, Navas-Molina JA, Jiang L, Xu ZZ,
+Winker K, Kado DM, Orwoll E, Manary M, Mirarab S, Knight R. 2018. Phylo-
+genetic placement of exact amplicon sequences improves associations
+with clinical information. mSystems 3:e00021-18. https://doi.org/10.1128/
+mSystems.00021-18.
+25. Lozupone C, Knight R. 2005. UniFrac: a new phylogenetic method for com-
+paring microbial communities. Appl Environ Microbiol 71:8228–8235.
+https://doi.org/10.1128/AEM.71.12.8228-8235.2005.
+26. Pawlowsky-Glahn V, Egozcue JJ, Tolosana-Delgado R. 2015. Modeling and
+analysis of compositional data. John Wiley & Sons, Chichester, United
+Kingdom.
+27. Martino C, Morton JT, Marotz CA, Thompson LR, Tripathi A, Knight R,
+Zengler K. 2019. A novel sparse compositional technique reveals microbial
+perturbations. mSystems 4:e00016-19. https://doi.org/10.1128/mSystems
+.00016-19.
+28. Vázquez-Baeza Y, Pirrung M, Gonzalez A, Knight R. 2013. EMPeror: a tool
+for visualizing high-throughput microbial community data. GigaScience
+2:16. https://doi.org/10.1186/2047-217X-2-16.
+29. Bokulich NA, Kaehler BD, Rideout JR, Dillon M, Bolyen E, Knight R, Huttley
+GA, Gregory Caporaso J. 2018. Optimizing taxonomic classiﬁcation of
+marker-gene amplicon sequences with QIIME 2’s q2-feature-classiﬁer plu-
+gin. Microbiome 6:90. https://doi.org/10.1186/s40168-018-0470-z.
+30. Bokulich NA, Dillon MR, Bolyen E, Kaehler BD, Huttley GA, Caporaso JG.
+2018. q2-sample-classiﬁer: machine-learning tools for microbiome classi-
+ﬁcation and regression. J Open Res Softw 3:934. https://doi.org/10.21105/
+joss.00934.
+31. Marotz C, Amir A, Humphrey G, Gaffney J, Gogul G, Knight R. 2017. DNA
+extraction for streamlined metagenomics of diverse environmental sam-
+ples. Biotechniques 62:290–293. https://doi.org/10.2144/000114559.
+32. Thompson LR, Sanders JG, McDonald D, Amir A, Ladau J, Locey KJ, Prill RJ,
+Tripathi A, Gibbons SM, Ackermann G, Navas-Molina JA, Janssen S,
+Kopylova E, Vázquez-Baeza Y, González A, Morton JT, Mirarab S, Zech Xu
+Z, Jiang L, Haroon MF, Kanbar J, Zhu Q, Jin Song S, Kosciolek T, Bokulich
+NA, Leﬂer J, Brislawn CJ, Humphrey G, Owens SM, Hampton-Marcell J,
+Berg-Lyons D, McKenzie V, Fierer N, Fuhrman JA, Clauset A, Stevens RL,
+Shade A, Pollard KS, Goodwin KD, Jansson JK, Gilbert JA, Knight R, Earth
+Microbiome Project Consortium. 2017. A communal catalogue reveals
+Earth’s multiscale microbial diversity. Nature 551:457–463. https://doi
+.org/10.1038/nature24621.
+33. Caporaso JG, Lauber CL, Walters WA, Berg-Lyons D, Huntley J, Fierer N,
+Owens SM, Betley J, Fraser L, Bauer M, Gormley N, Gilbert JA, Smith G,
+Knight R. 2012. Ultra-high-throughput microbial community analysis on
+the Illumina HiSeq and MiSeq platforms. ISME J 6:1621–1624. https://doi
+.org/10.1038/ismej.2012.8.
+34. Walters W, Hyde ER, Berg-Lyons D, Ackermann G, Humphrey G, Parada A,
+Gilbert JA, Jansson JK, Caporaso JG, Fuhrman JA, Apprill A, Knight R. 2016.
+Improved bacterial 16S rRNA gene (V4 and V4-5) and fungal internal tran-
+scribed spacer marker gene primers for microbial community surveys.
+mSystems 1:e00009-15. https://doi.org/10.1128/mSystems.00009-15.
+35. Minich JJ, Humphrey G, Benitez RAS, Sanders J, Swafford A, Allen EE,
+Knight R. 2018. High-throughput miniaturized 16S rRNA amplicon library
+preparation reduces costs while preserving microbiome integrity. mSys-
+tems 3:e00166-18. https://doi.org/10.1128/mSystems.00166-18.
+36. Marotz C, Sharma A, Humphrey G, Gottel N, Daum C, Gilbert JA, Eloe-
+Fadrosh E, Knight R. 2019. Triplicate PCR reactions for 16S rRNA gene
+amplicon sequencing are unnecessary. Biotechniques 67:29–32. https://
+doi.org/10.2144/btn-2018-0192.
+37. Klindworth A, Pruesse E, Schweer T, Peplies J, Quast C, Horn M, Glöckner
+FO. 2013. Evaluation of general 16S ribosomal RNA gene PCR primers for
+classical and next-generation sequencing-based diversity studies. Nucleic
+Acids Res 41:e1. https://doi.org/10.1093/nar/gks808.
+38. Gonzalez A, Navas-Molina JA, Kosciolek T, McDonald D, Vázquez-Baeza Y,
+Ackermann G, DeReus J, Janssen S, Swafford AD, Orchanian SB, Sanders
+JG, Shorenstein J, Holste H, Petrus S, Robbins-Pianka A, Brislawn CJ, Wang
+M, Rideout JR, Bolyen E, Dillon M, Caporaso JG, Dorrestein PC, Knight R.
+2018. Qiita: rapid, web-enabled microbiome meta-analysis. Nat Methods
+15:796–798. https://doi.org/10.1038/s41592-018-0141-9.
+Marotz et al.
+March/April 2021
+Volume 6
+Issue 2
+e01329-20
+msystems.asm.org
+10

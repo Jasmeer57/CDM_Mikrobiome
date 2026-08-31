@@ -1,0 +1,683 @@
+Projection of Gut Microbiome Pre- and Post-Bariatric Surgery To
+Predict Surgery Outcome
+Meirav Ben Izhak,a Adi Eshel,b Ruti Cohen,c Liora Madar-Shapiro,c Hamutal Meiri,c Chaim Wachtel,c Conrad Leung,d
+Edward Messick,d Narisra Jongkam,d Eli Mavor,e Shimon Sapozhnikov,e* Nitsan Maharshak,f Subhi Abu-Abeid,g Avishai Alis,h
+Ilanit Mahler,h,i* Aviel Meoded,j Shai Meron Eldar,f Omry Koren,b
+Yoram Louzounk
+aThe Mina and Everard Goodman Faculty of Life Sciences, Bar-Ilan University, Ramat-Gan, Israel
+bAzrieli Faculty of Medicine, Bar Ilan University, Safed, Israel
+cHY-Laboratories Ltd., Rehovot, Israel
+dGENEWIZ, South Plainﬁeld, New Jersey, USA
+eBariatric Surgery Unit, Surgery Division, Kaplan Medical Center, Rehovot, Israel
+fIBD Unit and Bacteriotherapy Clinic, Department of Gastroenterology and Liver Diseases, Tel Aviv Medical Center and Sackler School of Medicine, Tel Aviv University, Tel
+Aviv, Israel
+gBariatric Surgery Unit, General Surgery Department, Tel-Aviv Medical Center and Sackler School of Medicine, Tel Aviv University, Tel Aviv, Israel
+hDepartment of Internal Medicine C, Beilinson Hospital, Rabin Medical Center, Petach Tikva, Israel
+iBariatric Surgery, Asuta Medical Center, Ramat Ha'Chayal, Tel Aviv, Israel
+jBariatric Surgery Unit, The Baruch Padeh Medical Center, Poria, Israel
+kDepartment of Mathematics, Bar-Ilan University, Ramat Gan, Israel
+ABSTRACT
+Bariatric surgery is often the preferred method to resolve obesity and dia-
+betes, with ;800,000 cases worldwide yearly and high outcome variability. The ability
+to predict the long-term body mass index (BMI) change following surgery has impor-
+tant implications for individuals and the health care system in general. Given the tight
+connection between eating habits, sugar consumption, BMI, and the gut microbiome,
+we tested whether the microbiome before any treatment is associated with different
+treatment outcomes, as well as other intakes (high-density lipoproteins [HDL], triglycer-
+ides, etc.). A projection of the gut microbiome composition of obese (sampled before
+and after bariatric surgery) and lean patients into principal components was performed,
+and the relation between this projection and surgery outcome was studied. The projec-
+tion revealed three different microbiome proﬁles belonging to lean, obese, and obese
+individuals who underwent bariatric surgery, with the postsurgery microbiome more
+different from the lean microbiome than the obese microbiome. The same projection
+allowed for a prediction of BMI loss following bariatric surgery, using only the presur-
+gery microbiome. The microbial changes following surgery were an increase in the rela-
+tive abundance of Proteobacteria and Fusobacteria and a decrease in Firmicutes. The gut
+microbiome can be decomposed into main components depicting the patient's devel-
+opment and predicting in advance the outcome. Those may be translated into the bet-
+ter clinical management of obese individuals planning to undergo metabolic surgery.
+IMPORTANCE BMI and diabetes can affect the gut microbiome composition. Bariatric
+surgery has large variabilities in the outcome. The microbiome was previously shown
+to be a good predictor for multiple diseases. We analyzed here the gut microbiome
+before and after bariatric surgery and showed the following. (i) The microbiome
+before surgery can be used to predict surgery outcomes. (ii) The postsurgery micro-
+biome drifts further away from the lean microbiome than the microbiome of the
+presurgery obese patients. These results can lead to a microbiome-based presurgery
+decision whether to perform surgery.
+KEYWORDS bariatric surgery, machine learning, obesity
+Citation Ben Izhak M, Eshel A, Cohen R, Madar-
+Shapiro L, Meiri H, Wachtel C, Leung C, Messick
+E, Jongkam N, Mavor E, Sapozhnikov S,
+Maharshak N, Abu-Abeid S, Alis A, Mahler I,
+Meoded A, Meron Eldar S, Koren O, Louzoun Y.
+2021. Projection of gut microbiome pre- and
+post-bariatric surgery to predict surgery
+outcome. mSystems 6:e01367-20. https://doi
+.org/10.1128/mSystems.01367-20.
+Editor Nicholas Chia, Mayo Clinic
+Copyright © 2021 Ben Izhak et al. This is an
+open-access article distributed under the terms
+of the Creative Commons Attribution 4.0
+International license.
+Address correspondence to Yoram Louzoun,
+louzouy@math.biu.ac.il.
+* Present address: Shimon Sapozhnikov,
+Bariatric and Endoscopic Surgery, Rabin
+Medical Center, Petach Tikva, Israel; Ilanit
+Mahler, Bariatric and Endoscopic Surgery,
+Rabin Medical Center, Petach Tikva, Israel.
+Received 7 January 2021
+Accepted 20 April 2021
+Published 8 June 2021
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+1
+RESEARCH ARTICLE
+
+T
+he human body is colonized by a wide variety of microorganisms, commonly
+referred to as the human microbiota. The gut microbiota is a complex ecosystem,
+which provides major functions to the host, such as regulation of metabolism, immune
+system modulation, and protection against pathogens (1, 2). The microbiome is
+strongly associated with host weight and sugar consumption, and as such, it serves as
+a proxy for nutrition and life habits and may also inﬂuence them. Such life habits may
+inﬂuence the total body mass and body mass index (BMI) in normal conditions, as well
+as after bariatric surgery.
+Obesity and diabetes are world pandemics (3). Approximately 8 to 10% of the pop-
+ulation develop complications of morbid obesity (BMI . 35), frequently coupled to
+some form of diabetes. According to the WHO, of the 57 million deaths in 2008 world-
+wide, 1.3 million were due to metabolic disorders, particularly those associated with
+obesity (3). Recently, the gut microbiome of obese individuals has been shown to differ
+from the microbiome of lean subjects (4). Experimental fecal transplants to mice dem-
+onstrated that transplantation of microbiome from obese individuals into lean mice
+turned them obese (5), showing the importance of the gut microbiome in regulating
+body weight. Opposite studies of turning obese mice into lean mice have not been
+successful, but one study demonstrated that certain bacteria can prevent weight gain
+in mice (6). Also, there have been reports of bacterial signatures which are correlated
+with metabolic disorders. For example, type 2 diabetes progression was characterized
+by a decrease in Biﬁdobacteria and Verrucomicrobiae levels. Moreover, Akkermansia
+muciniphila has been associated with reduced weight and insulin sensitivity improve-
+ment both in mouse models and humans (7).
+The introduction of bariatric surgery as a method for losing weight has been rapidly
+adopted as the most efﬁcient method for weight loss and for reducing blood sugar lev-
+els (8); however, it has drawbacks, including a range of possible complications from
+nutrition deﬁciencies to the occurrence of life-threatening conditions and an immense
+diversity in the weight loss rate and its maintenance (9). A few studies have shown
+microbiome changes after bariatric surgery. A recent systematic review (10) summarized
+the ﬁnding of 9 human studies and 12 animal studies and described an increase in the
+relative abundance of four major phyla: Proteobacteria, Fusobacteria, Bacteroidetes, and
+Verrucomicrobia as opposed to a decrease in the phylum Firmicutes. The dominant genera
+that changed were Faecalibacterium, Lactobacillus, and Coprococcus. An interesting ﬁnd-
+ing was the increase in microbial diversity postsurgery (11). One of the mechanisms pro-
+posed for the effectiveness of bariatric surgeries is the changes in microbiome that inﬂu-
+ence the bile acids composition leading to metabolic improvement (12, 13). This can also
+occur the other way around, changes in bile acids, pH, and hormone levels lead to a
+change in the microbiome that affects energy homeostasis (14). However, the real poten-
+tial of the microbiome as a tool not only for monitoring the procedure’s outcomes but
+rather predicting them in advance has not been explored. An attempt to study and test
+this potential can result in an essential tool that will assist in the decision whether to sug-
+gest to the patient to perform such surgery or to adopt a microbiome intervention
+approach as a part of the surgery preparative regimen.
+RESULTS AND DISCUSSION
+To test the possibility of predicting bariatric surgery outcome, we analyzed 265 fecal
+samples from two main groups of patients: obese individuals who underwent bariatric
+surgery and naturally lean individuals. For the obese patients (BMI. 35), we sampled the
+microbiome at ﬁve time points (see Fig. S1 in the supplemental material)—one at enroll-
+ment (A, 66 samples), 3 weeks after a low carbohydrate diet, and immediately before the
+operation (B, 58 samples), and three time points following the surgery (2 weeks [C, 23
+samples], 3 months [D, 22 samples], and 6 months [E, 9 samples]). Not all individuals were
+sampled at all time points. These were compared to 83 lean control individuals (BMI,
+19 to 25) (for all details, see Materials and Methods). We collected BMI and sugar
+A1C information for the same patients in late time points up to a year and a half
+Ben Izhak et al.
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+2
+
+postsurgery to track their weight loss and the remission of diabetes. The obese indi-
+viduals had Sleeve, Omega Loop, and Roux-en-Y surgeries, with an approximately
+equal fraction (Fig. 1).
+Bariatric surgery signiﬁcantly improved patients’ metabolic state. The lean pop-
+ulation was younger and had more females compared to the population who under-
+went surgery (36 6 12 years versus 48 6 12 and 50% males versus 29%). Overall, the
+patients’ mean BMI was reduced from 43.3 6 6.8 (mean 6 standard deviation [SD]) to
+27.8 6 1.5, which represents an average loss of 84.7% overweight (compared to BMI of
+25), blood sugar levels were reduced from hemoglobin A1C of 6.5 6 0.4 to 5.8 6 0.75
+or from blood sugar levels of 125 6 11 g/dl to 95.4 6 10, triglyceride levels decreased
+from 183 6 20 mg/dl to 102 6 13. All parameters described are signiﬁcantly (P , 0.001)
+lower from their starting point and not different from those of the lean controls (Fig. 1).
+16S data processing steps. The gut microbiome of all donors was analyzed using
+16S rRNA gene sequences (emphasizing the 16SMetaVx.V2) (15), and feature tables
+were produced using QIIME2 (16). If a feature was present in only some of the samples,
+it was given a value of 0 in all other samples. The feature tables were then merged to
+the genus level. Taxa appearing in less than ﬁve samples (each sample is from one
+time point from one host) were removed. The resulting values had a scale-free distribu-
+tion, which often masks large changes in relative frequencies of rare bacteria. To han-
+dle that, we log transformed all feature values and added a small constant value (0.1)
+to avoid a log of zero values. This allows for a narrower distribution of values (Fig. 2D).
+The results were then z-scored. Finally, given the very high correlation between the rel-
+ative abundance of different bacteria (Fig. 2E), we projected the z-scored bacterial
+expression levels at all time points and in the lean population to principal components,
+which capture most of the variance in the bacterial diversity (Fig. 2F).
+The aim of the ﬁrst step was to homogenize the description level and reduce the
+dimension. Since multiple features are associated with the same bacteria and some
+features are associated with different levels of classiﬁcation, we averaged all features
+FIG 1 Distribution of age, gender, height, weight, BMI, A1C, glucose and triglyceride levels, and HDL and LDL levels at the samples taken in each group
+and time point (H is lean. All other samples are obese before [A and B] or after surgery [C, D, E, 1 year {1y}, 1.5y]. The time point codes are detailed in the
+bottom right part of the ﬁgure (W, week; M, month; Y, year).
+Microbiome Projection in Bariatric Surgery
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+3
+
+associated with the same species in each donor (Fig. 2A to C). It is important to note
+that while information is lost in the process, such a process is essential for the follow-
+ing machine learning. We have previously demonstrated, in multiple microbiome-
+based machine-learning studies (17–21), that averaging over all features representing
+the same genus or species improved the prediction accuracy.
+Microbiome-based classiﬁcation allows distinction between groups. The projec-
+tion on the ﬁrst principal vectors (principal component 1 [PC1], PC2, PC4, and PC5)
+delineates axes separating the obese individuals from the lean individuals (Fig. 3A and
+B). The clear separation of the projections on the ﬁrst PCs agrees with observed major
+differences in the microbiome of lean and obese individuals. The large BMI difference
+between groups (BMI . 35 in obese versus BMI of ,25 in lean) is translated to a large
+difference in the microbiome.
+However, the cohort was composed of two populations of lean individuals: the
+untreated lean, and the lean as a result of surgery or diet. We tested whether diet or
+bariatric surgery pushes the microbiome back toward the lean proﬁle. The results were
+surprisingly opposite (Fig. 3B). The distance between the projection on the ﬁrst PC of
+the postdiet and postsurgery and the lean proﬁle kept increasing and reached a maxi-
+mum after a year.
+We projected back the correlations between the PC and the state/BMI to the origi-
+nal features and found bacteria that are correlated with BMI (PC1, PC2, PC4, and PC5;
+Fig. 4A to D, respectively), the features that change signiﬁcantly after surgery com-
+pared to before surgery (Fig. 4E) and the features that are over- and underrepresented
+in obese individuals compared to healthy individuals (Fig. 4F).
+The large difference between these projections allowed for a simple classiﬁcation
+even with a linear support vector machine (SVM) of lean versus obese and pre- versus
+postsurgery samples (Fig. 3C and D). The main contributions to both classiﬁers were
+from PC1, PC1 to PC5 for the healthy (H) versus obese (O) (Fig. 3E for contribution and
+Fig. 4A to D for composition). Note that higher test area under curve (AUC) could be
+obtained by nonlinear classiﬁers. However, the linear classiﬁer gave a clear picture of
+the contribution of each PC to the microbiome development.
+FIG 2 Outline of analysis (from top left to top right and then from bottom right to bottom left). First, the Fastq sequences are quality controlled. The good
+quality sequences are translated to features using QIIME2. To homogenize the description level, the feature levels belonging to the same genus in a given
+sample are averaged to the genus level. (Bottom) The sample distribution is heavy-tailed. It is thus log transformed with a minimal value (0.1) added to
+each feature level to avoid log of zero values. The results are then z scored by removing the average and dividing by the standard deviation of each
+sample. The dimension of the z-scores is further reduced using PCA. The ﬁrst eight PCs explain approximately 50% of the total variance (bottom left panel).
+Ben Izhak et al.
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+4
+
+To test for possible confounding effects, we assessed whether the observed
+changes in the proﬁle may result from age or gender or whether they are related to
+the total BMI. There was a limited correlation with age, and no signiﬁcant correlations
+with gender and age of all other PCs (Fig. 5A and B).
+Surgery outcome prediction model. We next tested whether the same decompo-
+sition can be used to predict a future change in BMI. We performed an L1 (Lasso)
+regression of the projection on the ﬁrst PCs of the A point and the change in BMI
+between point A and 6/18 months after surgery. The prediction was performed using
+only presurgery and prediet (point A) samples and tested using a leave-one-out (LOO)
+methodology, and the Spearman correlations on the test values between the predicted
+change and the observed change (on the LOO test), as well as the area under curve of
+a predictor of whether a patient will have a more/less than average reduction in BMI.
+The AUC and correlations are signiﬁcant for both points (Fig. 5C and D). The AUC and
+correlation for 12 months (12M) are also above random but do not reach signiﬁcance
+(data not shown). When looking at which features are contributing to weight loss at
+6 months, PC1 and PC5 were the only contributors (Fig. 5E). Note that the prediction
+was based on the microbiome presurgery, so that these results could not be an effect
+of surgery type.
+Another possible candidate to affect the microbiome is the sugar level. We tested
+the correlation between the projections on the principal component analysis (PCA)
+and the A1C. Indeed, a negative correlation is found between A1C and PC6 (Fig. 5F).
+This correlation might be used for predicting diabetes in healthy subjects both from
+risk groups and in general.
+Postsurgery microbiome’s dynamics. To better understand the microbiome’s dy-
+namics following surgery, we tracked the development of the main phyla, following
+FIG 3 (A) Spearman correlation between BMI of samples and the eight highest variance PCs. ***, **, and * represent signiﬁcance levels of 0.001, 0.01, and
+0.05, respectively (in this and all following ﬁgures). PC2, PC4, and PC5 are the most correlated with BMI. (B) Projection of the signiﬁcant PCs on the
+different stages. One can see in all PCs a clear difference between the H and obese states. Following surgery, the projection is farther away from the H
+state than before. Note that we do not have microbiome samples from the latest time points. TP, time point. (C to E) Receiver operating characteristic
+(ROC) curve of linear SVM classiﬁcation using the projections on the ﬁrst 8 PCs of the H versus O and within the O group before versus after surgery (C
+and D) and the resulting weights (E).
+Microbiome Projection in Bariatric Surgery
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+5
+
+diet and surgery. The main observed changes are the increase in Proteobacteria and
+Fusobacteria frequency and the decrease in Firmicutes (Fig. S2). Within Proteobacteria,
+Beta- and Gammaproteobacteria were the main elevated classes, while in Firmicutes,
+Bacilli increased over time following surgery (Fig. S3).
+We next tested which bacteria are associated with changes in other bacteria. To
+compute that, we performed a correlation between the change in each bacterial log
+frequency versus the other bacterium’s value. For example, given two time points,
+compute the correlation between the log frequency of bacterium x at time point 1 and
+the change in log frequency between time points 1 and 2 of bacterium y. We deﬁne a
+feature correlated with a positive/negative change in another feature to have a posi-
+tive/negative interaction with this feature, leading to an interaction network (Fig. S4).
+For example, the presence of members of the family Pasteurellaceae at a given time
+point has a negative inﬂuence on the presence of members of the families
+Ruminococcaceae, Xanthomonadaceae, Pasteurellaceae and members of the Bacilli class
+at a later time point. Such a network demonstrates how dynamic the microbiome is
+from one point to the next and how the presence of certain taxa inﬂuences their
+increase/decrease in abundance in the next time point. Further research is needed to
+tease out the biological mechanisms behind these multiple interactions.
+Conclusions. To summarize, we have shown that the decomposition of the relative
+bacterial frequency (as represented by log value) represents different aspects of the
+donors. This decomposition highlights that people who lost weight after bariatric sur-
+gery have a very different microbiome composition compared to people who are “natu-
+rally” lean. Furthermore, the more weight they lose, the more their microbiome proﬁle
+differs not only from their starting proﬁle as obese but also from naturally lean people.
+Some of the effects of bariatric surgery are changes in bile acid metabolism and
+gastric pH (14). These changes may in turn inﬂuence the microbiota. When analyzing
+the microbial dynamics pre- and postsurgery, we observed a dramatic increase in the
+Proteobacteria and Fusobacteria phyla which ﬁt previous observations (22–33).
+Proteobacteria are known to increase in disease states and to have proinﬂammatory
+FIG 4 (A to D) Bacterial composition of PC1, PC2, PC4, and PC5. (E and F) Weights of linear SVM classiﬁer for H versus O and before versus after surgery.
+Only the top 15% of features are presented (based on their absolute weights).
+Ben Izhak et al.
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+6
+
+characteristics (34). However, in the case of bariatric surgery, Tremaroli et al. and others
+have attributed this increase to changes in the pH that follow the surgery in humans,
+mice, and rats (22, 26, 35–38). The increase in Fusobacteria resulted from an increase in
+the relative abundance of Fusobacterium. Recently, Ilhan et al. reported that an increase
+in levels of Fusobacterium following surgery was negatively correlated with levels of pri-
+mary bile acids such as glycocholic acid, taurodeoxycholic acid, glycochenodeoxycholic
+acid, and taurochenodeoxycholic acid and secondary bile acids such as glycodeoxycholic
+acid, taurolithocholic acid, glycolithocholic acid, hyodeoxycholic acid, taurodeoxycholic acid,
+and lithocholic acid (39). As in our study, the increase in Proteobacteria and Fusobacteria per-
+sisted 1 year postsurgery as reported by Palleja et al. (27).
+Moreover, one can predict in advance whether surgery will succeed in reducing BMI
+and whether a subject has diabetes using only presurgery samples. The PCs are deter-
+mined by the composition of the studied populations, and the analysis of different
+populations may highlight different possible projections of the microbiome composi-
+tion. Given the large fraction of people regaining weight postsurgery, such a tool to
+aid decisions can be crucial. Note that the current prediction is purely based on the
+microbiome, as it is the main focus of this analysis. For clinical applications, other
+meta-information could be used to improve the decision.
+MATERIALS AND METHODS
+Patients and regulation. Patients were enrolled in the obesity control/bariatric surgery clinics of
+four medical centers in Israel – Kaplan Medical Center (KMC), Rabin Medical Center (RMC), Tel Aviv
+Medical Center (TMC), and Poria Medical Center (PMC) during December 2015 to November 2018. The
+ethics committees of each of the respective medical centers approved the study and its amendments,
+and each patient and control signed written informed consent. Inclusion criteria were: ages 18 to 70, no
+FIG 5 (A and B) Correlation of age, gender (represented as 0 for male and 1 for female) and BMI with the PC. (C and D) ROC curves of future BMI change
+based only on the PC at point A. The binary predicted change is above or below the median change. The ROC curves for above and below median change
+in BMI, using a LASSO regression and a LOO validation. C is for 6 months and D is for 18 months postsurgery. The ﬁrst P value is the ROC curve P value
+compared with AUC of 1,000 scrambling of the predicted values. The second P is the Spearman correlation P value between predicted and actual change.
+(E) Average regression weights over all LOO learning sessions. The only nonzero coefﬁcients are the ﬁfth PC for 18M and the ﬁrst PC for the 6M. (B to F)
+Average weights of coefﬁcients in the LASSO regression for plots C and D over all LOO predictions. In all plots, * and ** represent signiﬁcance levels of P ,
+0.05 and P , 0.01, respectively.
+Microbiome Projection in Bariatric Surgery
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+7
+
+antibiotic treatment in the 2 months before enrollment, no previous bariatric or major gut/stomach
+operation. One-third of the patients had diabetes (type 1 and type 2) and were treated with either insu-
+lin (type 1) or other drugs (metformin or others). Patients with ulcers who were treated by proton pump
+inhibitors (PPI) were not enrolled.
+Naturally lean control individuals were deﬁned as having a BMI of 19 to 25 and are healthy controls
+recruited from the same population. The controls had no diabetes (hemoglobin A1C , 5.0), BMI of 19 to
+25, and had no major medical and endocrine complications. Obese individuals had BMI values of 35 and
+above, with and without active diabetes type 1 or 2 that is treated with medications. A total of 83 lean
+control and 66 obese individuals were tested at multiple time points.
+Naturally lean control individuals gave one fecal, blood, and urine sample. Obese/diabetic people
+gave ﬁve samples of each at the following time points: time of enrollment (group A), 3 weeks after a low
+carbohydrate diet and immediately before the operation (group B), 2 weeks (group C), 3 and 6 months
+after the operation (groups D and E, respectively). In all visits, the patients' weight, blood, and urine test
+results, medications, and general health issues were noted. The obese group also provided weight val-
+ues and blood test results at 1 and 1.5 years after the operation. At the time of analysis, not all patients
+had completed their course of testing and evaluation.
+Blood tests included the standard complete blood count (CBC) test list and the blood biochemistry
+test following 12-h fasting (of relevance here triglycerides, low-density lipoproteins [LDL], high-density
+lipoproteins [HDL], blood glucose). Also, patients provide samples for the standard hemoglobin A1C
+(HbA1C) test.
+DNA extraction. Fecal samples were stored in Flora prep tubes (Admera Health, NJ, USA) with a pro-
+prietary bacterial DNA preservation medium, allowing for storage at room temperature. The samples
+were brought into the next generation sequencing (NGS) lab within 1 to 2 days after collection and were
+subjected to DNA extraction, puriﬁcation, and cleaning. DNA was extracted from the stool sample using
+the PowerSoil DNA extraction kit (MoBio, Carlsbad, CA) according to the manufacturer’s instructions.
+Puriﬁed DNA was used for PCR ampliﬁcation of the variable V3 and V4 regions (using MetaVx.2 system
+developed with GENEWIZ (Plainﬁeld, NJ) of the 16S rRNA gene as was previously described in U.S. patent
+9,745611 and by Caporaso et al. (40). Amplicons were puriﬁed using AMPure magnetic beads (Beckman
+Coulter, Brea, CA) and subsequently quantiﬁed using Qubit double-stranded DNA (dsDNA) quantiﬁca-
+tion kit (Invitrogen, Carlsbad, CA). Equimolar amounts of DNA from individual samples were pooled and
+sequenced using the Illumina MiSeq platform and V2 500 cycle kit.
+DNA ampliﬁcation. Brieﬂy, the ampliﬁcation method includes using multiple sets of overlapping pri-
+mers and the generation of multiple frame-shifted amplicons, which increase taxonomically diverse
+sequence ampliﬁcation. The primers used in the present work are listed in Table 1 and are designed to
+amplify the variable regions V3 and V4 of the bacterial 16S rRNA. As can be seen from Table 1 of U.S. pat-
+ent 9,745,611, these primers are capable of amplifying sequences from bacterial gut microbiome to
+identify rare species which may be difﬁcult to amplify by similar kits based on 16S rRNA V4 region
+sequence ampliﬁcation. The use of this procedure enabled the identiﬁcation of bacterial taxonomic enti-
+ties below 0.2% of the population and the detection of rare species.
+Microbiome analysis. Microbial communities were analyzed using QIIME2 (16). Single-end sequen-
+ces were demultiplexed by per-sample barcodes and error corrected by Divisive Amplicon Denoising
+Algorithm (DADA2) (41), primers were trimmed off, and single-end reads were truncated to $160 bp.
+Feature sequences were aligned against Greengenes database v13_8 (42) with a similarity of 99% or
+greater for taxonomic annotation. Finally, the following contaminants have been removed from the fea-
+ture table: Thermi, S24-7, and Chloroplast (43). The feature tables represent the frequency of each repre-
+sentative feature in each sample.
+Normalization. Features were merged to the genus level by averaging over all features assigned to
+the same genus. Given the large variation in feature values, we transformed these values to z scores by
+adding a small value to each feature level (0.1) and calculating the 10-basis log of each value. Statistical
+Whitening was then performed on the table, by removing the average and dividing by the standard
+deviation of each feature.
+TABLE 1 Primer sequences
+Primer
+Sequencea
+SEQ ID no.b
+U341F-p5
+ACACTCTTTCCCTACACGACGCTCTTCCGATC TNCCTACGGGRSGCAGCA
+1
+E343F-p5
+ACACTCTTTCCCTACACGACGCTCTTCCGATC TNTACGGRAGGCAGCAG
+2
+E347F-p5
+ACACTCTTTCCCTACACGACGCTCTTCCGATC TNGGAGGCAGCAGTRRGGAAT
+3
+E347F-p5-n
+ACACTCTTTCCCTACACGACGCTCTTCCGATC TNNGGAGGCAGCAGTRRGGAAT
+4
+A349F-p5
+ACACTCTTTCCCTACACGACGCTCTTCCGATC TNGYGCASCAGKCGMGAA
+5
+E802R-p7
+GACTGGAGTTCAGACGTGTGCTCTTCCGATC TNTACNVGGGTATCTAATCC
+6
+E803R-p7
+GACTGGAGTTCAGACGTGTGCTCTTCCGATC TNCTACCRGGGTATCTAATCC
+7
+P803R-p7
+GACTGGAGTTCAGACGTGTGCTCTTCCGATC TNCTACCRGGGTATCTAAGCC
+8
+E806R-p7
+GACTGGAGTTCAGACGTGTGCTCTTCCGATC TNGGACTACHVGGGTWTCTAAT
+9
+A806R-p7
+GACTGGAGTTCAGACGTGTGCTCTTCCGATC TNGGACTACVSGGGTATCTAAT
+10
+U805R-p7
+GACTGGAGTTCAGACGTGTGCTCTTCCGATC TNGACTACHVGGGTATCTAATCC
+11
+U805R-p7-n
+GACTGGAGTTCAGACGTGTGCTCTTCCGATC TNNGACTACHVGGGTATCTAATCC
+12
+aAccording to IUPAC nucleotide code: K is G/T, M is A/C, R is A/G, Y is C/T, S is C/G, W is A/T, V is A/C/G, H is A/C/T, and N is A/G/C/T.
+bSequence identiﬁcation number.
+Ben Izhak et al.
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+8
+
+Machine learning. Supervised learning was performed on the normalized and merged version of
+the 16S rRNA feature table to recognize patterns in the data. Principal component analysis (PCA) was
+performed using Python version 3.5 and its package sklearn. A two-tailed P value of less than 0.05 was
+considered to indicate statistical signiﬁcance. A LASSO regression was performed over the projection of
+the normalized features on the principal components (PCs) of the PCA to predict future BMI change.
+Leave-one-out cross-validation method was performed. More complex methods were not used to limit
+overﬁtting, given the limited number of samples.
+Statistical analysis. All correlations studied here are Spearman correlations. P values of ROC curves
+are computed using scrambling the classes (positives or negative) of the samples and computing the
+AUC of 1,000 scrambles. The real AUC was compared to the 1,000 scrambles. Benjamini Hochberg cor-
+rection was performed when multiple correlations were computed for each PC (for example when corre-
+lating age with PCs of microbiome projection).
+Microbiome dynamics. To understand the microbiome dynamics, we used two analysis methods. In
+the stand-alone method, we merged features to the phylum level and then tracked the changes within
+each phylum and within each class in each phylum. We then detected class with a consistent trend in
+time.
+In the network analysis, we computed the regression of each relative change in each log expression
+level of each bacterium over the value of all other bacteria. Formally, given log-normalized bacterial fre-
+quencies (xi;t) for bacterium i in time point t, we deﬁned yi;t ¼ xi;t11  xi;t and performed a regression
+yi;t 
+X
+b jixj;t. We used only the coefﬁcients that were signiﬁcant at the P = 0.05 level after a
+Bonferroni multiple measurement correction. We then produced a network out of all signiﬁcant coefﬁ-
+cients, where bji is represented by an edge between i and j. There was one main (weak) connectivity
+component. We then presented as a network all bacteria belonging to this main component.
+Data availability. 16S data have been deposited at EBI with accession number ERP122895.
+SUPPLEMENTAL MATERIAL
+Supplemental material is available online only.
+FIG S1, TIF ﬁle, 0.1 MB.
+FIG S2, TIF ﬁle, 0.3 MB.
+FIG S3, TIF ﬁle, 0.4 MB.
+FIG S4, TIF ﬁle, 0.2 MB.
+ACKNOWLEDGMENTS
+This work was supported by U.S.-Israel bi-national Research and Development Fund
+(FIRD-F) project 1459 (R.C., L.M.S., H.M., and C.L.).
+We thank Diana Bluvshtein, Manar Hadad, and Natali Ogo for their help as clinical
+nurses involved in data collection and patient enrollment.
+Ethics approval and consent to participate were as follows: Kaplan Medical Center,
+0068-15-KMC; Rabin Medical Center, 0088-16-RMC; Tel Aviv Medical Center, 0548-16-
+TLV; Poria Medical Center, 0057-18-POR.
+These results are part of patent PCT WO 2020/016893 A1.
+REFERENCES
+1. Spor A, Koren O, Ley R. 2011. Unravelling the effects of the environment
+and host genotype on the gut microbiome. Nat Rev Microbiol 9:279–290.
+https://doi.org/10.1038/nrmicro2540.
+2. Korem T, Zeevi D, Zmora N, Weissbrod O, Bar N, Lotan-Pompan M, Avnit-
+Sagi T, Kosower N, Malka G, Rein M, Suez J, Goldberg BZ, Weinberger A,
+Levy AA, Elinav E, Segal E. 2017. Bread affects clinical parameters and indu-
+ces gut microbiome-associated personal glycemic responses. Cell Metabo-
+lism 25:1243–1253.e5. https://doi.org/10.1016/j.cmet.2017.05.002.
+3. World Health Organization. 2014. Global status report on noncommuni-
+cable diseases 2014. World Health Organization, Geneva, Switzerland.
+4. Turnbaugh PJ, Ley RE, Mahowald MA, Magrini V, Mardis ER, Gordon JI. 2006.
+An obesity-associated gut microbiome with increased capacity for energy
+harvest. Nature 444:1027–1031. https://doi.org/10.1038/nature05414.
+5. Ridaura VK, Faith JJ, Rey FE, Cheng J, Duncan AE, Kau AL, Grifﬁn NW,
+Lombard V, Henrissat B, Bain JR, Muehlbauer MJ, Ilkayeva O, Semenkovich
+CF, Funai K, Hayashi DK, Lyle BJ, Martini MC, Ursell LK, Clemente JC, Van
+Treuren W, Walters WA, Knight R, Newgard CB, Heath AC, Gordon JI. 2013.
+Gut microbiota from twins discordant for obesity modulate metabolism
+in mice. Science 341:1241214. https://doi.org/10.1126/science.1241214.
+6. Goodrich JK, Waters JL, Poole AC, Sutter JL, Koren O, Blekhman R,
+Beaumont M, Van Treuren W, Knight R, Bell JT, Spector TD, Clark AG, Ley
+RE. 2014. Human genetics shape the gut microbiome. Cell 159:789–799.
+https://doi.org/10.1016/j.cell.2014.09.053.
+7. Chakaroun RM, Massier L, Kovacs P. 2020. Gut microbiome, intesti-
+nal permeability, and tissue bacteria in metabolic disease: perpe-
+trators or bystanders? Nutrients 12:1082. https://doi.org/10.3390/
+nu12041082.
+8. Brethauer SA, Aminian A, Romero-Talamas H, Batayyah E, Mackey J,
+Kennedy L, Kashyap SR, Kirwan JP, Rogula T, Kroh M, Chand B,
+Schauer PR. 2013. Can diabetes be surgically cured? Long-term met-
+abolic effects of bariatric surgery in obese patients with type 2 dia-
+betes mellitus. Ann Surg 258:628–637. https://doi.org/10.1097/SLA
+.0b013e3182a5034b.
+9. Ma IT, Madura JA. 2015. Gastrointestinal complications after bariatric sur-
+gery. Gastroenterol Hepatol 11:526–535.
+10. Guo Y, Huang ZP, Liu CQ, Qi L, Sheng Y, Zou DJ. 2018. Modulation of the
+gut microbiome: a systematic review of the effect of bariatric surgery. Eur
+J Endocrinol 178:43–56. https://doi.org/10.1530/EJE-17-0403.
+11. Davies NK, O’Sullivan JM, Plank LD, Murphy R. 2019. Altered gut micro-
+biome after bariatric surgery and its association with metabolic beneﬁts:
+a systematic review. Surg Obes Relat Dis 15:656–665. https://doi.org/10
+.1016/j.soard.2019.01.033.
+Microbiome Projection in Bariatric Surgery
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+9
+
+12. Albaugh VL, Banan B, Ajouz H, Abumrad NN, Flynn CR. 2017. Bile acids
+and bariatric surgery. Mol Aspects Med 56:75–89. https://doi.org/10
+.1016/j.mam.2017.04.001.
+13. Debedat J, Amouyal C, Aron-Wisnewsky J, Clement K. 2019. Impact of
+bariatric surgery on type 2 diabetes: contribution of inﬂammation and
+gut microbiome? Semin Immunopathol 41:461–475. https://doi.org/10
+.1007/s00281-019-00738-3.
+14. Ulker I, Yildiran H. 2019. The effects of bariatric surgery on gut microbiota
+in patients with obesity: a review of the literature. Biosci Microbiota Food
+Health 38:3–9. https://doi.org/10.12938/bmfh.18-018.
+15. Huang J, Zhou Z, Duan H, Wu X, Li S. 29 August 2017. Methods and kits
+for identifying microorganisms in a sample. U.S. patent 9745611.
+16. Bolyen E, Rideout JR, Dillon MR, Bokulich NA, Abnet CC, Al-Ghalith GA,
+Alexander H, Alm EJ, Arumugam M, Asnicar F, Bai Y, Bisanz JE, Bittinger K,
+Brejnrod A, Brislawn CJ, Brown CT, Callahan BJ, Caraballo-Rodriguez AM,
+Chase J, Cope EK, Da Silva R, Diener C, Dorrestein PC, Douglas GM, Durall DM,
+Duvallet C, Edwardson CF, Ernst M, Estaki M, Fouquier J, Gauglitz JM, Gibbons
+SM, Gibson DL, Gonzalez A, Gorlick K, Guo J, Hillmann B, Holmes S, Holste H,
+Huttenhower C, Huttley GA, Janssen S, Jarmusch AK, Jiang L, Kaehler BD, Kang
+KB, Keefe CR, Keim P, Kelley ST, Knights D, Koester I, et al. 2019. Reproducible,
+interactive, scalable and extensible microbiome data science using QIIME 2.
+Nat Biotechnol 37:852–857. https://doi.org/10.1038/s41587-019-0209-9.
+17. Nunberg M, Werbner N, Neuman H, Bersudsky M, Braiman A, Ben-
+Shoshan M, Ben Izhak M, Louzoun Y, Apte RN, Voronov E, Koren O. 2018.
+Interleukin 1a-deﬁcient mice have an altered gut microbiota leading to
+protection from dextran sodium sulfate-induced colitis. mSystems 3:
+e00213-17. https://doi.org/10.1128/mSystems.00213-17.
+18. van der Giessen J, Binyamin D, Belogolovski A, Frishman S, Tenenbaum-
+Gavish K, Hadar E, Louzoun Y, Peppelenbosch MP, van der Woude CJ, Koren
+O. 2020. Modulation of cytokine patterns and microbiome during preg-
+nancy in IBD. Gut 69:473–486. https://doi.org/10.1136/gutjnl-2019-318263.
+19. Shouval R, Eshel A, Dubovski B, Kuperman AA, Danylesko I, Fein JA, Fried
+S, Geva M, Kouniavski E, Neuman H, Armon-Omer A, Shahien R, Muller E,
+Noecker C, Borenstein E, Louzoun Y, Nagler A, Koren O. 2020. Patterns of
+salivary microbiota injury and oral mucositis in recipients of allogeneic
+hematopoietic stem cell transplantation. Blood Adv 4:2912–2917. https://
+doi.org/10.1182/bloodadvances.2020001827.
+20. Goldberg MR, Mor H, Magid Neriya D, Magzal F, Muller E, Appel MY,
+Nachshon L, Borenstein E, Tamir S, Louzoun Y, Youngster I, Elizur A, Koren
+O. 2020. Microbial signature in IgE-mediated food allergies. Genome Med
+12:92. https://doi.org/10.1186/s13073-020-00789-4.
+21. Uzan-Yulzari A, Morr M, Tareef-Nabwani H, Ziv O, Magid-Neriya D, Armoni
+R, Muller E, Leibovici A, Borenstein E, Louzoun Y, Shai A, Koren O. 2020.
+The intestinal microbiome, weight, and metabolic changes in women
+treated by adjuvant chemotherapy for breast and gynecological malig-
+nancies. BMC Med 18:281. https://doi.org/10.1186/s12916-020-01751-2.
+22. Zhang H, DiBaise JK, Zuccolo A, Kudrna D, Braidotti M, Yu Y,
+Parameswaran P, Crowell MD, Wing R, Rittmann BE, Krajmalnik-Brown R.
+2009. Human gut microbiota in obesity and after gastric bypass. Proc Natl
+Acad Sci U S A 106:2365–2370. https://doi.org/10.1073/pnas.0812600106.
+23. Kong LC, Tap J, Aron-Wisnewsky J, Pelloux V, Basdevant A, Bouillot JL, Zucker
+JD, Dore J, Clement K. 2013. Gut microbiota after gastric bypass in human obe-
+sity: increased richness and associations of bacterial genera with adipose tis-
+sue genes. Am J Clin Nutr 98:16–24. https://doi.org/10.3945/ajcn.113.058743.
+24. Graessler J, Qin Y, Zhong H, Zhang J, Licinio J, Wong ML, Xu A, Chavakis T,
+Bornstein AB, Ehrhart-Bornstein M, Lamounier-Zepter V, Lohmann T, Wolf
+T, Bornstein SR. 2013. Metagenomic sequencing of the human gut micro-
+biome before and after bariatric surgery in obese patients with type 2 dia-
+betes: correlation with inﬂammatory and metabolic parameters. Pharma-
+cogenomics J 13:514–522. https://doi.org/10.1038/tpj.2012.43.
+25. Ward EK, Schuster DP, Stowers KH, Royse AK, Ir D, Robertson CE, Frank DN,
+Austin GL. 2014. The effect of PPI use on human gut microbiota and weight
+loss in patients undergoing laparoscopic Roux-en-Y gastric bypass. Obes
+Surg 24:1567–1571. https://doi.org/10.1007/s11695-014-1275-1.
+26. Tremaroli V, Karlsson F, Werling M, Stahlman M, Kovatcheva-Datchary P,
+Olbers T, Fandriks L, Le Roux CW, Nielsen J, Backhed F. 2015. Roux-en-Y
+gastric bypass and vertical banded gastroplasty induce long-term
+changes on the human gut microbiome contributing to fat mass regula-
+tion. Cell Metab 22:228–238. https://doi.org/10.1016/j.cmet.2015.07.009.
+27. Palleja A, Kashani A, Allin KH, Nielsen T, Zhang C, Li Y, Brach T, Liang S,
+Feng Q, Jorgensen NB, Bojsen-Moller KN, Dirksen C, Burgdorf KS, Holst JJ,
+Madsbad S, Wang J, Pedersen O, Hansen T, Arumugam M. 2016. Roux-en-
+Y gastric bypass surgery of morbidly obese patients induces swift and
+persistent changes of the individual gut microbiota. Genome Med 8:67.
+https://doi.org/10.1186/s13073-016-0312-1.
+28. Campisciano G, Cason C, Palmisano S, Giuricin M, Rizzardi A, Croce LS, De
+Manzini N, Comar M. 2018. Bariatric surgery drives major rearrangements
+of the intestinal microbiota including the bioﬁlm composition. Front Bio-
+sci 10:495–505. https://doi.org/10.2741/e836.
+29. Sanchez-Alcoholado L, Gutierrez-Repiso C, Gomez-Perez AM, Garcia-
+Fuentes E, Tinahones FJ, Moreno-Indias I. 2019. Gut microbiota adapta-
+tion after weight loss by Roux-en-Y gastric bypass or sleeve gastrectomy
+bariatric surgeries. Surg Obes Relat Dis 15:1888–1895. https://doi.org/10
+.1016/j.soard.2019.08.551.
+30. Lee CJ, Florea L, Sears CL, Maruthur N, Potter JJ, Schweitzer M, Magnuson
+T, Clark JM. 2019. Changes in gut microbiome after bariatric surgery ver-
+sus medical weight loss in a pilot randomized trial. Obes Surg
+29:3239–3245. https://doi.org/10.1007/s11695-019-03976-4.
+31. Palmisano S, Campisciano G, Silvestri M, Guerra M, Giuricin M,
+Casagranda B, Comar M, de Manzini N. 2020. Changes in gut microbiota
+composition after bariatric surgery: a new balance to decode. J Gastroint-
+est Surg 24:1736–1746. https://doi.org/10.1007/s11605-019-04321-x.
+32. Al Assal K, Prifti E, Belda E, Sala P, Clement K, Dao MC, Dore J, Levenez F,
+Taddei CR, Fonseca DC, Rocha IM, Balmant BD, Thomas AM, Santo MA, Dias-
+Neto E, Setubal JC, Zucker JD, Belarmino G, Torrinhas RS, Waitzberg DL.
+2020. Gut microbiota proﬁle of obese diabetic women submitted to Roux-
+en-Y gastric bypass and its association with food intake and postoperative
+diabetes remission. Nutrients 12:278. https://doi.org/10.3390/nu12020278.
+33. Shen N, Caixas A, Ahlers M, Patel K, Gao Z, Dutia R, Blaser MJ, Clemente JC,
+Laferrere B. 2019. Longitudinal changes of microbiome composition and mi-
+crobial metabolomics after surgical weight loss in individuals with obesity.
+Surg Obes Relat Dis 15:1367–1373. https://doi.org/10.1016/j.soard.2019.05.038.
+34. Pitlik SD, Koren O. 2017. How holobionts get sick—toward a unifying scheme
+of disease. Microbiome 5:64. https://doi.org/10.1186/s40168-017-0281-7.
+35. Paganelli FL, Luyer M, Hazelbag CM, Uh HW, Rogers MRC, Adriaans D,
+Berbers RM, Hendrickx APA, Viveen MC, Groot JA, Bonten MJM, Fluit AC,
+Willems RJL, Leavis HL. 2019. Roux-Y gastric bypass and sleeve gastrec-
+tomy directly change gut microbiota composition independent of sur-
+gery type. Sci Rep 9:10979. https://doi.org/10.1038/s41598-019-47332-z.
+36. Li JV, Ashraﬁan H, Bueter M, Kinross J, Sands C, Le Roux CW, Bloom SR,
+Darzi A, Athanasiou T, Marchesi JR, Nicholson JK, Holmes E. 2011. Meta-
+bolic surgery profoundly inﬂuences gut microbial-host metabolic cross-
+talk. Gut 60:1214–1223. https://doi.org/10.1136/gut.2010.234708.
+37. Patrone V, Vajana E, Minuti A, Callegari ML, Federico A, Loguercio C,
+Dallio M, Tolone S, Docimo L, Morelli L. 2016. Postoperative changes in
+fecal bacterial communities and fermentation products in obese patients
+undergoing bilio-intestinal bypass. Front Microbiol 7:200. https://doi.org/
+10.3389/fmicb.2016.00200.
+38. Shao Y, Ding R, Xu B, Hua R, Shen Q, He K, Yao Q. 2017. Alterations of gut
+microbiota after Roux-en-Y gastric bypass and sleeve gastrectomy in
+Sprague-Dawley rats. Obes Surg 27:295–302. https://doi.org/10.1007/
+s11695-016-2297-7.
+39. Ilhan ZE, DiBaise JK, Dautel SE, Isern NG, Kim YM, Hoyt DW, Schepmoes
+AA, Brewer HM, Weitz KK, Metz TO, Crowell MD, Kang DW, Rittmann BE,
+Krajmalnik-Brown R. 2020. Temporospatial shifts in the human gut micro-
+biome and metabolome after gastric bypass surgery. NPJ Bioﬁlms Micro-
+biomes 6:12. https://doi.org/10.1038/s41522-020-0122-5.
+40. Caporaso JG, Lauber CL, Walters WA, Berg-Lyons D, Huntley J, Fierer N,
+Owens SM, Betley J, Fraser L, Bauer M. 2012. Ultra-high-throughput mi-
+crobial community analysis on the Illumina HiSeq and MiSeq platforms.
+ISME J 6:1621. https://doi.org/10.1038/ismej.2012.8.
+41. Callahan BJ, McMurdie PJ, Rosen MJ, Han AW, Johnson AJ, Holmes SP.
+2016. DADA2: high-resolution sample inference from Illumina amplicon
+data. Nat Methods 13:581–583. https://doi.org/10.1038/nmeth.3869.
+42. DeSantis TZ, Hugenholtz P, Larsen N, Rojas M, Brodie EL, Keller K, Huber T,
+Dalevi D, Hu P, Andersen GL. 2006. Greengenes, a chimera-checked 16S
+rRNA gene database and workbench compatible with ARB. Appl Environ
+Microbiol 72:5069–5072. https://doi.org/10.1128/AEM.03006-05.
+43. Weyrich LS, Farrer AG, Eisenhofer R, Arriola LA, Young J, Selway CA,
+Handsley-Davis M, Adler CJ, Breen J, Cooper A. 2019. Laboratory contami-
+nation over time during low-biomass sample analysis. Mol Ecol Resour
+19:982–996. https://doi.org/10.1111/1755-0998.13011.
+Ben Izhak et al.
+May/June 2021
+Volume 6
+Issue 3
+e01367-20
+msystems.asm.org
+10

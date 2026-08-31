@@ -1,0 +1,704 @@
+pmcMicrob GenomMicrob Genom3160microgen101671820mgenMicrobial Genomics2057-5858Microbiology SocietyPMC8767333PMC8767333.1876733387673333491386110.1099/mgen.0.0007410007411Research ArticlesPathogens and EpidemiologyContext-aware genomic surveillance reveals hidden transmission of a carbapenemase-producing Klebsiella pneumoniae
+
+http://mgen.microbiologyresearch.org
+https://orcid.org/0000-0002-8970-5204ViehwegerAdrian
+1
+*https://orcid.org/0000-0001-8987-2355BlumenscheitChristian
+2
+LippmannNorman
+1
+https://orcid.org/0000-0002-4033-6639WyresKelly L.
+3
+https://orcid.org/0000-0002-7199-3957BrandtChristian
+4
+HansJörg B.
+5
+https://orcid.org/0000-0001-7090-8717HölzerMartin
+6
+https://orcid.org/0000-0003-4371-9659IrberLuiz
+7
+GatermannSören
+5
+https://orcid.org/0000-0001-6942-5785LübbertChristoph
+8
+https://orcid.org/0000-0001-8157-2753PletzMathias W.
+4
+HoltKathryn E.
+3
+
+9
+KönigBrigitte
+1
+
+
+1​
+Institute of Medical Microbiology and Virology, University Hospital Leipzig, Leipzig, Germany
+
+
+2​
+ZBS 6: Proteomics and Spectroscopy, Robert Koch Institute, Berlin, Germany
+
+
+3​
+Department of Infectious Diseases, Central Clinical School, Monash University, Melbourne, Australia
+
+
+4​
+Institute for Infectious Diseases and Infection Control, Jena University Hospital, Jena, Germany
+
+
+5​
+National Reference Center for multidrug-resistant Gram-negative bacteria, Department for Medical Microbiology, Ruhr-University Bochum, Bochum, Germany
+
+
+6​
+Methodology and Research Infrastructure, MF1 Bioinformatics, Robert Koch Institute, Berlin, Germany
+
+
+7​
+Department of Population Health and Reproduction, University of California, Davis, Davis, California, USA
+
+
+8​
+Division of Infectious Diseases and Tropical Medicine, Department of Medicine II, University Hospital Leipzig, Leipzig, Germany
+
+
+9​
+Department of Infection Biology, London School of Hygiene and Tropical Medicine, London, UK
+
+*Correspondence: Adrian Viehweger, adrian.viehweger@medizin.uni-leipzig.de
+202116122021712398817000741
+0572021
+04112021
+161220211901202202092025© 2021 The Authors2021https://creativecommons.org/licenses/by/4.0/This is an open-access article distributed under the terms of the Creative Commons Attribution License.Genomic surveillance can inform effective public health responses to pathogen outbreaks. However, integration of non-local data is rarely done. We investigate two large hospital outbreaks of a carbapenemase-carrying 
+
+Klebsiella pneumoniae
+
+ strain in Germany and show the value of contextual data. By screening about 10 000 genomes, over 400 000 metagenomes and two culture collections using in silico and in vitro methods, we identify a total of 415 closely related genomes reported in 28 studies. We identify the relationship between the two outbreaks through time-dated phylogeny, including their respective origin. One of the outbreaks presents extensive hidden transmission, with descendant isolates only identified in other studies. We then leverage the genome collection from this meta-analysis to identify genes under positive selection. We thereby identify an inner membrane transporter (ynjC) with a putative role in colistin resistance. Contextual data from other sources can thus enhance local genomic surveillance at multiple levels and should be integrated by default when available.genomic surveillancemeta-analysisantimicrobial resistanceKPCplasmidscolistinpmc-status-qastatus0pmc-status-liveyespmc-status-embargonopmc-status-releasedyespmc-prop-open-accessyespmc-prop-olfnopmc-prop-manuscriptnopmc-prop-legally-suppressednopmc-prop-has-pdfyespmc-prop-has-supplementyespmc-prop-pdf-onlynopmc-prop-suppress-copyrightnopmc-prop-is-real-versionnopmc-prop-is-scanned-articlenopmc-prop-preprintnopmc-prop-in-epmcyespmc-license-refCC BYOpenAccessEmbargo0Data SummaryAll data and metadata used in the analyses have been deposited with the Open Science Foundation (OSF) under project ID n78q3. Extensive metadata on all samples used in the analyses is available there and in the Supplementary Material (Table S1, available in the online version of this article), including curated phenotype data on colistin resistance (Table S2). In addition, all genomes collected specifically for this study have been deposited with NCBI GenBank under project ID PRJNA742413. For all contextual genome data, please refer to the corresponding studies (Table S1). Table S3 presents all genomes excluded manually from the analysis (see Methods). Table S4 holds isolate feature annotations from kleborate such as sequence type and a selection of resistance determinants. Table S5 provides metadata for all genomes that did not pass the tiered quality protocol (see Methods) and were thus not included in the analyses.Impact StatementUsually, hospital outbreaks are analysed in isolation. However, here we demonstrate how to screen publicly available genomes, metagenomes and culture isolates. We place a local multidrug-resistant bla
+KPC-2 -carrying strain of 
+
+Klebsiella pneumoniae
+
+ in a larger genomic context. This context provides important details about the origin and distribution of the outbreak-causing strain and reveals hidden transmission far from where the outbreak occurred. Contextual genomes can also facilitate inquiries into genomic determinants of resistance. We demonstrate this by identifying a new putative target for colistin resistance, an antibiotic of last resort, thereby using the collected data to move beyond the local outbreak in a step-function improvement.IntroductionMultiresistant strains of 
+
+Klebsiella pneumoniae
+
+ (Kp) are a global health threat [1]. Among all known resistance mechanisms, carbapenemases are one of the most concerning, as carbapenem antibiotics are considered a last-line drug. These enzymes are typically encoded on mobile genetic elements such as the Tn4401 transposon [2], which mediates transfer between plasmids [3] and bacterial species [4]. Furthermore, the prevalence of carbapenemase-producing Kp has increased in recent years [5], leaving only few antibiotics such as colistin to treat those cases. Such pathogen spread can be prevented by molecular surveillance and derived public health measures: isolate genomes reveal transmission routes by accumulating characteristic mutations, from which ancestry can be inferred through time-dated phylogeny [6].While it has become standard practice to reconstruct such phylogenies of within-hospital outbreaks [5, 7], few studies assess ‘contextual’ information, i.e. genome sequences from isolates that were not part of the local outbreak but closely related. From a public health perspective, this is suboptimal. While many larger hospitals run screening programmes to detect the carriage of resistant strains on admission [8, 9], peripheral institutions rarely do. However, there is a significant transfer of patients, e.g. from operation theatre to rehabilitation centre or from one country to another. For an outbreak investigation with only local scope, these boundary-crossing transmission events remain hidden.Here we reanalyze a large outbreak at the University Hospital Leipzig (UHL) from 2010 to 2013 [10] in light of new data from a nearby institution, which experienced an outbreak with a closely related, albeit non-descending, strain. We performed a genomic meta-analysis to link both outbreaks, discovering hundreds of related genomes distributed across 28 different studies. We identify the likely sources of both outbreaks and illustrate hidden transmission across study boundaries. Only the integration of data from several sources provided a ‘complete picture’. However, we highlight several obstacles that need to be addressed before cross-boundary genomic surveillance can work in practice.Beyond epidemiology, we show how outbreak meta-analyses can generate new hypotheses about host adaptation and antimicrobial resistance: the genomes under study underly similar selective pressures, such as treatment with colistin, an antibiotic of last resort. Thus, recurring mutations in the same gene(s) but across different genomes can signal putative causes for an observed phenotype, such as colistin resistance [11]. For colistin, several such inducible genomic changes have been described that mediate resistance [12]. Nevertheless, the exact mechanisms remain incompletely understood and seem to be multifactorial [13]. We show how contextual data can be leveraged to generate hypotheses about putative factors contributing to colistin resistance.MethodsCulture and sequencingAll samples were streaked on CHROMagar KPC chromogenic agar plates (CHROMagar, Paris, France). KPC carriage of isolates was confirmed using PCR. In total, 142 Kp-1 isolates had been collected from 105 patients in a previous investigation [10] and were complemented in the present study with an additional ten isolates discovered using PCR screening of two culture collections (see below) and 13 samples collected from Kp-2. All of the isolates were sequenced using short reads (Illumina). Short-read sequencing for isolates from other studies is described in the respective publications (Table S1). For genomes sequenced for the current study, a read length of 150 bases (paired-end) was used on an Illumina MiSeq sequencer. The libraries were constructed using a previously established protocol [14]. For the current study, 28 Kp-1 samples were additionally sequenced using long reads (Nanopore) to enable hybrid assembly (see below). DNA extraction for Nanopore sequencing and quality control was done as reported elsewhere [15]. Care must be taken, especially for Nanopore sequencing, not to damage the extracted DNA to achieve a sizeable median fragment length (target 8 kb) for sequencing to be effective. Nanopore sequencing was performed using the MinION sequencer and the 1D ligation library kit (LSK109) on an R9.4 flow cell (all Oxford Nanopore Technologies, ONT).
+In silico screening of isolate and metagenomesThrough screening, our aim was to collect as many genomes as possible with a putative relation to the outbreak clone Kp-1, yielding a total of 9409 genomes. From NCBI RefSeq, we retrieved all 9163 genomes that were labelled as 
+
+Klebsiella pneumoniae
+
+ (Taxonomy ID: 573, last accessed 1 August 2020) [16]. In a comprehensive literature search using the search terms ‘KPC, 
+
+Klebsiella pneumoniae
+
+, outbreak’ we identified 80 genomes from various studies that had only deposited reads with NCBI SRA, and which we reassembled for this study (see below).For metagenomic search, we screened about 400 000 metagenomic read sets in a reduced representation known as MinHash signature [17] using wort (no version, unpublished, github.com/dib-lab/wort). These read sets represent a random sample from the entire NCBI SRA corpus, which we were limited to when this analysis took place (last accessed 1 June 2020). Hashing was performed using sourmash (v3.5) [18]. As the query we used the Kp-1 index genome (k=51, sampling rate 0.001) and manually reviewed all 15 hits reported with a threshold 0.01 Jaccard similarity, a measure that approximates average nucleotide identity (ANI) [17]. Most hits were synthetic consortia of microbes, assembled for an undetermined experimental purpose. Three hits were repeat stool samples from a single person, and we continued our analysis with the earliest sample (see Results).Strain-specific screening PCRWe then screened two culture collections (National Reference Centre for multidrug-resistant Gram-negative bacteria, Bochum, and Department of Medical Microbiology and Virology, Leipzig) for related isolates using a strain-specific marker PCR, designed using a proprietary, pangenome-based algorithm (nanozoo GmbH). Each 50 µl PCR reaction contained 10 µl template DNA, 2 µl 10 nM primer mix for each primer (primer 1: ATGCGTCCACGAAGAATTAT; primer 2: CATCGCCAAGATACTGTACA), 25 µl 2× polymerase master mix (Superfi II, Invitrogen) and 11 µl ultra-pure water. Thermal cycling consisted of initial denaturation at 98 C for 1 min followed by 35 cycles of denaturation at 98 C for 20 s, annealing at 55 C for 20 s, extension at 72 C for 1 min, followed by final extension at 72 C for 5 min.Data processingUnless otherwise stated, default parameters were used. Of the 9409 collected genome assemblies, 1461 passed a minimum Jaccard similarity of 0.97 compared to the Kp-1 index genome (15.5 %, parameters: k-mer size 51 nt, scale 0.001). Jaccard similarity was computed using sourmash (see above). In a subsequent filtering step, 415 (4.4 %) were included for tree construction based on a minimum in silico DNA–DNA-hybridization threshold of 99.98 % computed using FastANI (v1.32) [19] as well as a minimum genome length of 5 Mb and an alignment of 90 % of the query genome to the Kp-1 index isolate (completed, circular), excluding all extra-chromosomal sequences. This alignment was performed using minimap2 (v2.17-r941) [20] with the asm5 option for an expected sequence divergence of 0.1 %. This sequential approach allows for laxer but computationally efficient methods with fewer constraints to screen many genomes in the beginning. Subsequently, the selection is refined using more computationally expensive methods. We conservatively removed 16 samples from the timetree because they did not fit the estimated molecular clock model, likely due to unidentified recombination (Table S3).Isolates where only short reads could be obtained were assembled using shovill (v1.1.0, unpublished, github.com/tseemann/shovill). Metagenomic reads were preprocessed using fastp (v0.20.1) [21] and assembled using megahit (v1.2.9) [22]. All contigs with a minimum length of 2 kb were then mapped to the reference genome (Kp-1 index patient, VA13414, Table S1) using minimap2 (see above). The Nanopore sequencing data were basecalled using Albacore (v2.3.2, available from Oxford Nanopore Technologies) and adapters removed using Porechop (v0.2.3, unpublished, github.com/rrwick/Porechop). Genome hybrid assembly using long and short reads was performed using Unicycler (v0.4.6) [23].Genome annotation was performed using prokka (v1.14.6) [24]. Annotation of 
+
+Klebsiella
+
+-specific features was done using kleborate (v0.4.0-beta) [25]. Plasmids were annotated using abricate (v1.0.1, unpublished, github.com/tseemann/abricate) using the plasmidfinder database (version 2021-01-13) [26]. Antimicrobial resistance genes were annotated using the same programme with the Comprehensive Antibiotic Resistance Database (CARD, v3.1.2) [27]. Genes from toxin-antitoxin systems were searched using mmseqs2 (v12-113e3) [28] against the Toxin-Antitoxin Database (TADB) (v2) [29]. Phages were annotated using uv (v0.1, unpublished, github.com/phiweger/uv). Recombinant regions were annotated using gubbins (v2.4.1) [30]. Single nucleotide variant (SNV) calling was performed using the snippy workflow (v4.6.0, unpublished, github.com/tseemann/snippy), which proved the most accurate programme in a recent benchmark study [7]. Note that SNV calling was based on the assemblies of all samples in our collection; where only reads could be obtained from the literature, we assembled the data first (see above). In short, snippy simulates reads from input genomes and maps them to the provided reference using bwa (v0.7.17-r1188) [31], before calling variants with freebayes (v1.3.2, unpublished, github.com/freebayes/freebayes). Putative recombinant, repetitive and prophage regions were masked before SNV calling. Sites with SNVs were extacted using snp-sites (v2.5.1) [32].Reconstruction of time-dated phylogenyA time-dated phylogeny was calculated using timetree (v0.7.6) [33], a maximum-likelihood-based approach starting from a core-genome SNV alignment. The derived mutation rate was scaled by the total genome size. Homoplasy was assessed using the treetime homoplasy function. The final tree and associated metadata were visualized using the microreact webservice [34]. Bootstrap support values were extracted from the guide tree, a prerequisite of the timetree, and calculated with raxml-ng (v0.9.0) [35].Analysis of genomic variantsA genome-wide association study was performed using pyseer (v1.3.7) [36] and included the aggregation of mutations across genes in a burden test [37]. Gene-set enrichment was performed using the Gene Ontology webservice (last accessed 1 April 2021) [38, 39]. Positive selection was assessed by first aligning all sequences for a particular gene using nextalign (no version, unpublished, github.com/nextstrain/nextclade). The multiple sequence alignment was then analysed using the BUSTED algorithm [40] as part of the HyPhy suite (v2.5.31) [41]. In silico folding of proteins was done using the trRosetta model (no version) [42].Plasmid containment and plasmid gene contentFor plasmid containment, we first calculated one MinHash signature (target, T) for each of the four plasmids found in the Kp-1 index isolate, again using sourmash (k=21, scaled=100). Next, we sketched all isolate genomes (query, Q) with the same parameters. MinHash containment can then be calculated as the size of the union over the size of the target 
+∣T∣∩∣Q∣∣T∣
+. In other words, how much of each Kp-1 plasmid is contained in a query isolate genome, ranging from 0 (no containment) to 1 (all sampled k-mers are contained, i.e. target and query likely contain the same plasmid).To explain the choice of k-mer size and sampling rate in MinHash-based genome similarity and containment calculations further: Generally, the larger the k-mer size, the more stringent the comparison, because as variation increases between two sequences, fewer k-mers are shared when fixing k to any particular value. For the genome filtering (see above), we thus chose a community-standard value for k to compare closely related sequences on the taxonomic scale of ‘strain’ (k=51). Species-level comparisons are usually conducted with k set to 31. Note that such values derive from experiments [17, 43], but there are no canonical values, and one has to experiment given the individual use case. For the plasmid containment analysis, we relaxed the k-mer size to 21 bases, which is commonly used to compare sequences where one expects more genetic variation, roughly at the level of ‘genera’ [43]. We justify this setting because compared to bacterial chromosomes, plasmids can present more genetic variation [44]. More genetic diversity requires a smaller k-mer size to approximate ANI accurately [17].The sampling rate affects how many k-mers are sampled. The higher the rate, the more sensitive similarity and containment calculations are, but the less computationally efficient. Based on our experience and in line with values commonly used by the community, we typically use sampling rates of 1 in 10 000 for large metagenomes, 1 in 1000 for bacterial genomes, and 1 in 100 for small genomes and genomic elements like viruses and plasmids. We roughly target to sample at least 400 k-mers per sequence as this has been shown to suffice for average nucleotide identity (ANI) estimation [17].Pangenome reconstruction for plasmids from hybrid assemblies (‘plasmidome’, n=28) was done using panaroo (v1.2.8) [45]. This resulted in a set of genes, each one representing an orthologous gene cluster. After translation into protein sequence, we searched for these genes in all outbreak genomes using mmseqs2 (v12-113e3) [28], resulting in a presence–absence matrix (Fig. 2b).Results
+In silico and PCR-based screening identifies hundreds of outbreak-related, contextual genomesFrom 2010 to 2013, UHL experienced a large outbreak of a multiresistant, bla
+KPC-2-carrying Kp strain (hereafter referred to as ‘Kp-1’) of sequence type ST258, characterized by capsule type KL106 and O antigen (lipopolysaccharide, LPS) serotype O2v2. Overall, 105 patients were affected, and it took a multidisciplinary team many months to contain it [10] (Fig. S1). In 2018, we received 13 isolates from a bla
+KPC-2 Kp outbreak from the University Hospital Jena, located about 80 km from UHL (‘Kp-2’). We hypothesized that these were related to the Kp-1 outbreak at UHL due to the spatiotemporal proximity. A comparison of two genomes from Kp-1 and Kp-2, isolated from the respective index cases, showed that they were closely related. Kp-2 had the same sequence type (ST258), capsule type (KL106) and serotype (O2v2) as Kp-1. The genomes differed in only 69 SNVs, without larger rearrangements or differences in gene content. While within-hospital Kp outbreaks have been estimated to differ by fewer than 21 SNVs [5], we are unaware of recommendations for isolates further apart in space and time. Therefore, more ‘contextual’ genomes were needed to populate the genomic distance between Kp-1 and 2 and to fill the genomic ‘gap’. We, therefore, performed a comprehensive, multimodal screening, consisting of (1) a comprehensive literature search including manual extraction of genomes and metadata, (2) an in vitro screening of two German culture collections and (3) an in silico screening of publicly available genomic and metagenomic datasets.In total, we obtained 9409 Kp genomes. Of those, 142 were collected during the Kp-1 outbreak from 105 patients [10], and 28 isolates were randomly selected for additional long-read sequencing (Nanopore) to obtain accurate plasmid reconstructions. The sampling aimed to uniformly represent all branches of the Kp-1 outbreak phylogeny. No long-read sequencing was performed on Kp-2 isolates, as we only obtained them later on in the analysis. A further ten isolates were identified in two culture collections through PCR-based screening using strain-specific primers (see Methods). The local UHL collection holds several hundred multiresistant Gram-negative bacteria, all recruited from the hospital over the last 20 years. The second collection is the German National Reference Center for multidrug-resistant Gram-negative bacteria in Bochum and holds an order of magnitude more isolates, which are subject to a standardized characterization. Sequencing of the ten isolates confirmed that all were closely related to Kp-1. The primers were designed using a proprietary algorithm (nanozoo GmbH) to recognize Kp-1 and close relatives but not other Kp strain genomes, e.g. different sequence types. Interestingly, the algorithm selected a putative intact prophage region as the most specific PCR template, and >99 % of genomes closely related to Kp-1 and selected for further analyses (see below) contained the target. Thus, even though phages are mobile, they can be remarkably stable across decades and still be used as effective markers [46].The remaining 9257 genomes were collected from public sources. The majority was retrieved from NCBI RefSeq [16]. However, 80 isolate read datasets were only identified through a literature survey, as they did not have an associated genome assembly deposited. In addition, extensive metadata were extracted where available. Furthermore, we searched the index Kp-1 isolate in a k-mer database of over 400 000 metagenomic read datasets (SRA, NCBI, see Methods). We identified a single sample from an unpublished study of ICU patient colonization (NCBI, project ID PRJNA561398) where we could recover a closely related, metagenome-assembled Kp genome.From the collected 9409 genomes, we wanted to select the ones most similar to the Kp-1 index genome. Altogether, 415 genomes (4.4 %) passed a tiered quality-control protocol (see Methods), resulting in a collection of high-quality genomes (ANI >99.98 %, alignment to Kp-1 index isolate >90 %) for further analyses. The 415 accepted genomes represent isolate and metagenomic read data, from a total of 28 studies and 16 countries (Fig. 1a, b, Table S1). Sequence type, capsule type and serotype of most selected isolates closely match Kp-1 (ST258, KL106, O2v2). Isolation dates span 15 years, from 2006 to 2018. Most isolates were recruited from European countries, particularly Germany and Greece. All but one isolate were clinical; that one was isolated from wastewater (NCBI, project ID PRJNA579879) [47]. Unfortunately, the metadata on isolation sources was sparse, and we did not collect this information for further analyses. Our impression, however, was that roughly half of the isolates were obtained through some kind of screening effort. Additional metadata, including data sources and associated publications, where available, can be found in Table S1.Fig. 1.Geographic distribution of the genomes under study. (a) Location of isolation sources in Europe. Circle size is proportional to the number of genomes collected from this location. Leaves were coloured by country code. In the detailed map to the right, genomes found in Crete are shown (bottom). Our index patient was hospitalized in nearby Rhodes (star), and endemic transmission across these islands, which are connected by boat, is plausible. (b) Distribution of countries from which isolates were collected. Only countries with more than five isolates are depicted.Time-dated phylogeny resolves outbreak origin and reveals hidden transmissionWe observed 69 SNVs between the genomes of Kp-1 and Kp-2. However, relating isolates based on mutation rates alone can be misleading because rates of Kp are variable and thus difficult to estimate [48–50]. Therefore, to see whether Kp-2 descended from Kp-1, we constructed a time-dated phylogeny based on an alignment of 3720 core SNV sites (total alignment length 5 384 856 sites) from the 415 genomes in our filtered collection (Fig. 2). This phylogeny clearly shows that Kp-2 is not a direct descendant of Kp-1. The tree topology did not change when we fixed it to mutation rates reported in the literature instead of estimating the mutation rate from the data.Fig. 2.Time-dated phylogeny of 415 bla
+KPC-2 carrying Kp genomes and associated metadata blocks. For interactive exploration see visualization in microreact [34] (https://microreact.org/project/6bBfAYXswvY691LfbVytLT). (a) A timetree reveals how both outbreak strains, Kp-1 and Kp-2 (black arrows), most likely originated from southern and northern Greece (red arrows), respectively. Two scales are provided: SNV distance (left) and a timeline depicting year of isolation (right). In the leftmost metadata block columns, read from left to right, genomes are marked that have been identified using our strain-specific screening PCR. The second column indicates which study they were recruited from (white is our study, all of the other 28 colours are study-specific, see Table S1). The next four columns show the sequence type (purple is ST258), capsule type (turquoise is KL106), O antigen (LPS) type (purple is O2v2), and carbapenemase variant (‘Bla Carb’, yellow is bla
+KPC-2, other colours indicate either combinations with other carbapenemases like OXA or other KPC variants, see interactive plot). Note how the majority of genomes that pass our tiered filtering approach are homogenous in these features (see also Table S4). The following metadata block shows what fraction of each of the four plasmids in the Kp-1 index genome is contained in each isolate genome from our collection. Containment values range from 0 (blue, no containment) to 1 (orange, Kp-1 plasmid is wholly contained in the query isolate). (b) Matrix indicates presence (yellow) or absence (purple) of plasmid genes (columns) for each genome (row) in the phylogenetic tree. (c) Alignment of genes around the bla
+KPC-2 locus between the two plasmids IncFIB(pQil) (top) and IncX3 (bottom) shows a transposition event that allows shedding of IncFIB(pQil) while maintaining bla
+KPC-2 on the IncX3 plasmid, likely increasing host fitness. Transposed sequence in light green, bla
+KPC-2 in dark green. The 5 bp target site duplications (bold sequence) indicate that Tn4401 (green sequence) moved through transposition rather than recombination [58].The index patient’s travel history and symptom onset led to the hypothesis that the origin of the Kp-1 outbreak was a Kp strain imported from Rhodes, an island in southern Greece and a popular tourist location for German travellers. After being acutely hospitalized there, the patient was transferred to UHL, where bla
+KPC-2 was detected for the first time in the patient’s medical history. A Greek origin seemed plausible because of the travel and the high prevalence of carbapenemase-carrying strains in Greece [51]. However, this hypothesis could not be substantiated with this data alone, and no supporting isolate genomes from Greece were available [10]. We identified several closely related genomes from Crete [52], a neighbouring island of Rhodes (see detailed map in Fig. 1a), which populate the timetree around the time of the start of the Kp-1 outbreak (Fig. 2a, black arrow ‘Kp-1’). With frequent travel by boat between these islands, it is plausible that an ancestor of Kp-1 was circulating in this region. Interestingly, the originating strain for the Kp-2 outbreak also seems to have come from Greece, albeit from northern provinces. Here, we could identify closely related genomes from two studies [5, 53] (Fig. 2a, black arrow ‘Kp-2’). We even identified a third transmission from Greece to mainland Europe, with a strain from northern Greece causing an outbreak in the Netherlands [54] (Fig. 2a, green arrow). The authors of the corresponding study did not identify this origin because they limited their investigation to local cases, supporting our argument for an integrative approach across study borders. All nodes in the tree where these transmissions out of Greece appeared had over 95 % bootstrap support. However, it is important to consider potential sampling bias when inferring origins. While we identified many samples from Greece (Fig. 1b), the screening methods were blind towards genome origin and considered an exhaustive set of Kp genomes. Furthermore, several studies have described the high prevalence of carbapenemase-carrying Kp in southern Europe [51]. Therefore, we argue that the large number of Greek samples likely represents the true distribution of bla
+KPC-2 Kp and is not an artefact of sampling bias, though it cannot be ruled out completely.Shortly after the outbreak onset, a systematic screening of patients on hospital admission was established. From then on, we did not detect any new Kp-1 isolates on admission but only after, which argues against a re-importation from Greece. In many cases, a causal transmission chain could be reconstructed [10]. As the Kp-1 outbreak unfolded, local health authorities assumed that the outbreak was likely not limited to one hospital. They based their assessment on the long duration and the large number of patients involved in the outbreak, with frequent transfers to and from the hospital as a tertiary care centre. While these factors make non-local transmission more likely, no evidence was available to support this hypothesis. Surprisingly, we identified 13 isolates that were collected outside of UHL, but are part of the Kp-1 outbreak (Fig. 2a, Table S2). Most of them come from the same federal state that UHL is in, but several were isolated in other states hundreds of kilometres away. We did not detect descendant isolates of the Kp-1 outbreak in other countries. The Kp-2 outbreak seems to have been contained within the affected hospital, as no published genomes were found in other places. On an international level, the data supports repeated introduction of KPC-carrying Kp strains from Greece, likely due to it being a popular travel site. In fact, travel-related carbapenemase-producing Enterobacterales have been recognized as an important source of resistance transmission [55]. The above described hidden transmission events would not have been observed without integration of data across study borders, and illustrate the value of our approach.Carbapenemase preservation in spite of frequent plasmid changesPlasmids serve many functions, but a central one is as a gene-delivery platform [44]. Their payload is manifold, and here includes the bla
+KPC-2 carbapenemase. However, to the host genome, plasmids can come at a considerable fitness cost, which creates pressure to remove them unless they provide a selection advantage [44]. At the same time, plasmids resist removal through, e.g. toxin-antitoxin systems and compete with rivalling plasmids [44]. In search of persistence in the host, frequent changes to the genetic material of plasmids can be observed [56]. In the Kp-1 index genome, we found four types of circular plasmid using Nanopore-based hybrid assembly: IncFIB(Kpn3), IncX3, ColRNAl and IncFIB(pQil), the latter carrying bla
+KPC-2.Plasmid reconstruction is often difficult for short-read-based assemblies due to assembly fragmentation. Thus, comparing plasmids between isolates usually means comparing sets of putative plasmid contigs. However, if any set is incomplete, such an analysis can be misleading. We, therefore, decided to use the newly sequenced, hybrid-assembled, circular plasmid reconstructions from the Kp-1 index genome as a reference and determined what fraction of these plasmids was contained in any of the 142 Kp-1 isolates that Kaiser et al. sequenced in 2017 (Fig. 2a) [10]. Containment here refers to MinHash containment (see Methods). To complement this data, we aggregated the plasmid-encoded gene content (‘plasmid pangenome’) across 28 Nanopore-sequenced isolates, leveraging the superior ability of this technology to reconstruct plasmids. We then determined whether these genes were present in all members of our isolate collection (Fig. 2b). The contextual genomes show repeat loss of IncFIB(pQil) (109 Kb) in phylogenetically distinct isolates, which likely constitute independent events (Fig. 2b). Interestingly, besides bla
+KPC-2 and the extended-spectrum beta-lactamase (ESBL) TEM, we also found a toxin-antitoxin system on IncFIB(pQil) (vagC and vagD [57]), which can prevent the host from shedding the plasmid. Nevertheless, we observed the complete loss of IncFIB(pQil) during the Kp-1 outbreak. About one-third of the Kp-1 outbreak genomes were affected, initially confusingly so because this plasmid carried the bla
+KPC-2 carbapenemase. However, we found one isolate with two bla
+KPC-2 copies, one on IncFIB(pQil) and IncX3 (43 Kb), respectively. The only other resistance gene on IncX3 was the SHV ESBL. As bla
+KPC-2 is carried on the Tn4401 transposon, it could be copied from IncFIB(pQil) to IncX3 (Fig. 2c). Tn4401 moving between plasmids was the result of transposition and not recombination, which can be inferred from 5 bp target site duplications (Fig. 2c) [58]. After this transposition event, the host could discard the IncFIB(pQil) plasmid, which likely confers a fitness advantage, but retain bla
+KPC-2 simultaneously.Contextual genomes reveal positive selection of virulence and resistance genesModified lipopolysaccharides often cause colistin and, more generally, polymyxin resistance (PR). They result in a positive charge to the bacterial membrane that repels polymyxins [12]. Several proteins are involved, though ‘the exact mode of action of polymyxins still remains unclear’ [12]. For 171 of the 415 genomes in our collection (41.2 %), we were able to assess from the original records and publications whether the isolate was colistin-resistant or not (Table S2). Where minimum inhibitory concentration (MIC) measurements were available, breakpoints by the EUCAST committee (v11) were used to classify isolates into colistin sensitive and resistant.We found several known genes involved in PR to be mutated. Overall, 60 of the 171 isolates (35.1 %) with phenotype data were colistin-resistant. In 39 out of these 60 cases (65 %) we found a truncated or missing mgrB gene product, a negative regulator of the PhoPQ signalling system [59]. Interestingly, we detected an incomplete mgrB gene product in eight isolates reported as colistin-sensitive. mgrB-mediated resistance can occur rapidly: in the Kp-1 outbreak, we identified three different mgrB loss-of-function mutations (Fig. S2). Furthermore, we found frequent truncations in pmrB and non-synonymous but not truncating or missense mutations in phoQ (17 UM) and phoP (9 UM), all regulatory proteins involved in LPS modification [60]. These ‘canonical genes’ [59] cause PR by acting on the outer membrane. We did not detect the plasmid-encoded mcr-1 gene, which encodes a transferase that modifies lipid A and thereby causes PR [12].To identify other genomic regions associated with PR, we first performed a genome-wide association study (GWAS) based on SNVs, small insertions and deletions. This analysis did not return a significant result after correcting for population structure (P>0.05), neither when considering each SNV individually nor when aggregating SNVs over genes in a so-called burden test [37]. This failure might be due to technical limitations of GWAS, especially in light of few genomes [61] or strong population structure [62, 63]. Furthermore, while single SNVs can induce colistin resistance [64], PR is generally assumed to be a polygenic phenomenon [12]. To test which genes were mutated more than expected, we first aggregated unique haplotypes for each gene across all genomes, similar to a burden test [37]. To conservatively correct for population structure, we counted mutations only once per position in the reference genome. Recombinant sites, putative phages and sites within repetitive sequences were excluded. This procedure would not detect convergent evolution where mutations arise in the same position in two different clades. However, we did not detect any homoplastic mutations outside of recombinant regions. At a mutation rate of 0.68 per Mb per year and 5.5 million bases' genome size, we expect about four mutations per year in the Kp genomes under study. Consequently, most of the roughly 4000 genes in the genome remain unaltered, even in the ten years our genome collection is distributed across (Fig. 3b). Conversely, if we observe more mutations than expected in a gene, this might indicate evolutionary selection.Fig. 3.Positive selection of the inner membrane ABC transporter permease ynjC. (a) Multiple sequence alignment of representative haplotypes of the nucleotide sequence of ynjC. Most mutations occur between positions 75 to 730, which includes both transmembrane and topological domains. Three of those haplotypes lead to premature stop codons. (b) Distribution of unique mutations observed in all genes. As expected by the estimated mutation rate of 0.68 mutations per Mb per year, most genes remain unchanged over the ten years that our study covers. Several genes, however, accrue over 20 unique mutations across 415 genomes. (c) Three-dimensional (3D) protein structure of the ynjC permease. In the centre is the pore through which small molecules are shuttled. (d) 3D protein structure of a truncated form of the protein [same orientation as (c)], created through a premature stop codon. Clearly, the channel structure is lost, and the protein is likely dysfunctional.We, therefore, ranked genes by the number of unique mutations (UM) per gene. We define unique mutations as specific to a single gene and position. We used the number of UMs per gene as a heuristic to rank and prioritize genes for further analyses. Note that if an isolate presents a mutation at a particular position in some gene like gyrA, all descendants will likely share this mutation. However, we only count this mutation as a single UM for gyrA; only mutations in other positions in the gene would increase the UM count after that. A gene-set enrichment of all genes with 10 UMs (n=15) showed two overrepresented biological processes. For one, the phosphorelay signal transduction system was enriched (19.8-fold, P=0.001) [65], which is known to be implicated in PR [12]. Furthermore, genes associated with nitrate assimilation were enriched (41.8-fold, P=0.001), which to our knowledge has neither been described nor could we assess the biological significance of this finding.We tested the top-ranking genes with the highest number of unique mutations for gene-wide evidence of episodic positive selection. For each candidate gene, we used a random-effects framework to pool evidence across multiple sites and thereby increase statistical power [40]. All genes discussed hereafter exhibited significant positive selection (dN/dS>1, likelihood-ratio test, P=0.05). We found two positively selected genes that affect virulence: the transcriptional activator cadC (18 UM) has been linked to increased Kp colonization [66] and fimH (16 UM) is a critical virulence factor in urinary tract infection, a common complication of Kp colonization [67]. Note that fimH has a direct role in epithelial binding, and allele switching via homologous recombination is common [68].Recently, colistin has also been found to target the inner cytoplasmic membrane [69]. Interestingly, we identified a highly mutated inner-membrane ABC transporter permease [70] under strong positive selection (all detected mutations non-synonymous), named ynjC (21 UM, Uniprot, P76224). Proteins of this group utilize ATP to import many small molecules such as nutrients and antibiotics [71–73]. Mutations in permeases have been shown to ‘lock’ the transporter in one of its two states [74, 75], such as inward-facing [76], disrupting the shuttle function [77]. Additionally, we found three mutations that caused premature stop codons and subsequent dysfunctional proteins (Fig. 3c, d). Most mutations accumulate in a region between residues 75 to 730, spanning both transmembrane and topological domains (Fig. 3a). In 12 isolates with ynjC mutations, 7 (58.3 %) were resistant to colistin; however, for none of the haplotypes with premature stop codons, phenotype data could be obtained, and future functional validation is needed. Nevertheless, ABC family transporters have been proposed to transport nascent core-lipid A molecules across the inner membrane [78], with a putative effect on colistin resistance. They have also been proposed as an antibiotic target [79]. We thus argue that the ynjC permease could have a role in PR.DiscussionGenomic surveillance is a powerful public health tool to reduce the spread of resistant bacteria. We show that genomic meta-analysis of outbreak genomes can provide important contextual information when interpreting local outbreaks. To construct the context, we employed both in vitro and in silico search methods to aggregate more than 400 genomes to supplement the local outbreak under investigation, screening more than 10 000 genomes and nearly half a million metagenomes in the process. As a result, we discovered critical epidemiologic details that would have been missed in a traditional outbreak study focusing on local data only. For example, we determined the likely source of the Kp-1 outbreak, its relation to an outbreak at a nearby institution, and it being an instance of the repeated introduction of bla
+KPC-2 Kp isolates into mainland Europe from Greece. We also identified isolates from other studies that are direct descendants of Kp-1.We then illustrated the plasmid dynamics across our genome collection. We found frequent loss of genetic material associated with IncFIB(pQil)-type plasmids, even though they often carry the bla
+KPC-2 gene. We resolved this paradox by showing how bla
+KPC-2 can still be preserved in the host: the carrier transposon is first transferred to another plasmid before IncFIB(pQil) removal from the host. Such spread of KPC genes between plasmids over short time scales has been documented previously [80, 81].Besides phylogenomic insights, our context-enriched genome collection informs about adaptation to selective pressure. For one, we found several positively selected genes that are known to mediate, e.g. colistin resistance. We also discovered positive selection of the inner-membrane transporter ynjC together with an overrepresentation of mutated gene copies in colistin-resistant isolates. However, future experiments will have to validate if an effect on colistin resistance can indeed be shown, e.g. by introducing loss-of-function mutations using CRISPR [59].The pathogens in our filtered dataset can be assumed to be under similar selective pressures, as all but one were isolated from hospital patients. All isolates carry a carbapenemase, where few antibiotics such as colistin remain as a rational treatment option, sometimes combined with rifampicin for synergy [82]. Based on standard clinical practice, we argue that many patients will have received colistin to either decolonize them or treat an infection. Kp colonization has been described as a risk factor for subsequent infection [83], and colonization can persist for years [84], increasing the chance of infection. Indeed, it is likely that Kp isolates will evolve to facilitate long-term carriage. In the Kp-1 outbreak, about half the patients with bla
+KPC-2 detection presented with clinical disease, mainly pneumonia, and sepsis, and were subsequently treated with colistin either alone or in combination [8]. We assume that these numbers apply to other hospitals as well. In the absence of infection, decolonization is sometimes attempted using colistin. While we observed low efficacy and rapid resistance induction [85], colistin continues to be used for decolonization [86]. In the metadata collected in this study, we did not find any treatment descriptions other than anecdotal ones.Many genomes in our collection were assembled using different and often insufficiently documented methods. It is thus possible that observed mutations are technical artefacts. However, most genomes were reconstructed from accurate short reads. Therefore, we think the effect of spurious SNVs (in contrast to structural variants, which are a problem with this method) is negligible. However, it must be taken into account as a potential source of error. We also chose a conservative approach to control for unobserved effects other than technical error, such as geography, or sampling site, limiting our analyses to unique mutations and only counting mutations once per gene and locus across the entire dataset.Colistin resistance can be unstable and transient [87]. Also, colistin resistance can be observed in the absence of explanatory genetic changes [88]. A genome-wide association study (GWAS) of this trait is thus challenging, and in fact, our analysis did not yield any significant target that could predict colistin resistance. The heterogeneous genome collection also complicates the GWAS. Because we often start from pre-assembled genomes, we have no control over the sequencing and assembly process. Similarly, we have no way to check the accuracy of the sparse metadata. Also, we completely lack data on which drugs or other selective pressures most isolates have undergone and can only infer them. Thus, our GWAS using contextual genomes was limited in its explanatory power.Several components are still missing until we can analyse putative outbreak genomes in a real-time, integrated surveillance system. The main bottleneck, counter-intuitively, is not sequencing but data management and bioinformatics [89]. For example, there is no common repository for bacterial outbreak metadata in active use by the community. We manually aggregated metadata from 28 studies, which frequently involved squinting at low-resolution images to extract, e.g. data on colistin resistance. For most genomes, important information besides the year and country of isolation was missing. Without this metadata, the sequenced genomes cannot easily be integrated into any analysis other than the one they were originally sequenced for. This could be aided in the short term if authors published Supplementary Material giving genome accessions alongside all relevant isolate data, genotypes and phenotypes explored in the study.Also, more sophisticated tools for outbreak genome sharing are needed [90]. Most outbreak studies appear 1 to 2 years after the outbreak took place (personal observation). However, by then, the value of the results is primarily academic. Only prospective data analysis [91] in real-time would enable a practical outbreak response. A recent example of this is nextstrain, where the virus genomics community converged on a set of protocols and databases [92], which allowed a data-driven public health response. When combined with real-time sequencing of bacterial genomes [93], this set of technologies could substantially improve outbreak response.Our metagenomic screening returned an isolate closely related to Kp-1, sampled on a different continent. Generally, we think that metagenomic screening for isolates of interest holds great promise. The construction of the required index for an entire read collection such as the NCBI SRA is challenging, as is the design of an easy search interface. However, once operational, such a system allows resistance and virulence tracking in, e.g. mobile genetic elements across species and habitats, which is especially relevant for pathogen outbreak investigations.Supplementary DataSupplementary material 1Click here for additional data file.Supplementary material 2Click here for additional data file.Supplementary material 3Click here for additional data file.Supplementary material 4Click here for additional data file.Supplementary material 5Click here for additional data file.Supplementary material 6Click here for additional data file.Funding informationThis work is funded in part by the Gordon and Betty Moore Foundation’s Data-Driven Discovery Initiative through Grants GBMF4551 to C. Titus Brown.AcknowledgementsThe authors would like to thank Professor A.C. Rodloff for extensive discussion of the manuscript. The authors would also like to thank T. Kaiser (Institute of Laboratory Medicine, Clinical Chemistry und Molecular Diagnostics, University Hospital Leipzig) and K. Finstermeier (Max Planck Unit for the Science of Pathogens, Berlin) for access to and guidance through the collected Kp-1 outbreak metadata.Author contributionsA.V. designed the study. A.V., C.Bl. and N.L. performed all laboratory work. A.V. and J.B.H. screened isolates using PCR, A.V. and C.Bl. implemented Nanopore sequencing. A.V., C.Bl. and N.L. collected metadata. A.V., C.Bl., N.L., K.L.W., C.Br., L.I. and M.H. conducted data analysis. B.K. supervised the work. All authors interpreted the results, wrote the text, created the figures and approved the submitted paper.Conflicts of interestA.V. has received travel expenses to speak at Oxford Nanopore meetings. A.V., C.Br. and M.H. are co-founders of nanozoo GmbH and hold shares in the company.Ethical statementThis retrospective study was performed in accordance with the ethical guidelines of the 1964 Declaration of Helsinki and its later amendments and was approved by the local ethics committee (University of Leipzig, register no. 411-1211032013). The need for informed consent was waived according to the ethics approval.Abbreviations: ANI, average nucleotide identity; ESBL, extended-spectrum beta-lactamase; GWAS, genome-wide association study; ICU, intensive care unit; Kp, Klebsiella pneumoniae; MIC, minimum inhibitory concentration; PR, polymyxin resistance; UHJ, University Hospital Jena; UHL, University Hospital Leipzig; UM, unique mutations.All supporting data, code and protocols have been provided within the article or through supplementary data files. Five supplementary tables and two supplementary figures are available with the online version of this article.References1
+HoltKE
+WertheimH
+ZadoksRN
+BakerS
+WhitehouseCA
+
+et al
+
+Genomic analysis of diversity, population structure, virulence, and antimicrobial resistance in Klebsiella pneumoniae, an urgent threat to public healthProc Natl Acad Sci U S A2015112E35748110.1073/pnas.150104911226100894PMC45002642
+Munoz-PriceLS
+QuinnJP
+The spread of Klebsiella pneumoniae carbapenemases: a tale of strains, plasmids, and transposonsClin Infect Dis2009491739174110.1086/648078198867963
+BrandtC
+ViehwegerA
+SinghA
+PletzMW
+WibbergD
+
+et al
+
+Assessing genetic diversity and similarity of 435 KPC-carrying plasmidsSci Rep201991122310.1038/s41598-019-47758-531375735PMC66778914
+SidjabatHE
+SilveiraFP
+PotoskiBA
+Abu-ElmagdKM
+Adams-HaduchJM
+
+et al
+
+Interspecies spread of Klebsiella pneumoniae carbapenemase gene in a single patientClin Infect Dis2009491736173810.1086/648077198867955
+DavidS
+ReuterS
+HarrisSR
+GlasnerC
+FeltwellT
+
+et al
+
+Epidemic of carbapenem-resistant Klebsiella pneumoniae in Europe is driven by nosocomial spreadNat Microbiol201941919192910.1038/s41564-019-0492-831358985PMC72443386
+LamMMC
+WickRR
+WattsSC
+CerdeiraLT
+WyresKL
+
+et al
+
+A genomic surveillance framework and genotyping tool for Klebsiella pneumoniae and its related species complexNat Commun20211210.1038/s41467-021-24448-3PMC8263825342341217
+BushSJ
+FosterD
+EyreDW
+ClarkEL
+De MaioN
+
+et al
+
+Genomic diversity affects the accuracy of bacterial single-nucleotide polymorphism-calling pipelinesGigascience20209giaa00710.1093/gigascience/giaa00732025702PMC70028768
+DucombleT
+FaucheuxS
+HelbigU
+KaisersUX
+KönigB
+
+et al
+
+Large hospital outbreak of KPC-2-producing Klebsiella pneumoniae: investigating mortality and the impact of screening for KPC-2 with polymerase chain reactionJ Hosp Infect20158917918510.1016/j.jhin.2014.11.012256232049
+AmbrettiS
+BassettiM
+ClericiP
+PetrosilloN
+TumiettoF
+
+et al
+
+Screening for carriage of carbapenem-resistant enterobacteriaceae in settings of high endemicity: a position paper from an italian working group on CRE infectionsAntimicrob Resist Infect Control2019813610.1186/s13756-019-0591-631423299PMC669323010
+KaiserT
+FinstermeierK
+HäntzschM
+FaucheuxS
+KaaseM
+
+et al
+
+Stalking a lethal superbug by whole-genome sequencing and phylogenetics: Influence on unraveling a major hospital outbreak of carbapenem-resistant Klebsiella pneumoniae
+Am J Infect Control201846545910.1016/j.ajic.2017.07.0222893548111
+LübbertC
+FaucheuxS
+Becker-RuxD
+LaudiS
+DürrbeckA
+
+et al
+
+Rapid emergence of secondary resistance to gentamicin and colistin following selective digestive decontamination in patients with KPC-2-producing Klebsiella pneumoniae: a single-centre experienceInt J Antimicrob Agents20134256557010.1016/j.ijantimicag.2013.08.0082410022812
+PoirelL
+JayolA
+NordmannP
+Polymyxins: Antibacterial activity, susceptibility testing, and resistance mechanisms encoded by plasmids or chromosomesClin Microbiol Rev20173055759610.1128/CMR.00064-1628275006PMC535564113
+PittME
+ElliottAG
+CaoMD
+GanesamoorthyD
+KaraiskosI
+
+et al
+
+Multifactorial chromosomal variants regulate polymyxin resistance in extensively drug-resistant Klebsiella pneumoniae
+Microb Genom2018410.1099/mgen.0.000158PMC58850102943160514
+MeyerM
+KircherM
+Illumina sequencing library preparation for highly multiplexed target capture and sequencingCold Spring Harb Protoc20102010pdb.prot544810.1101/pdb.prot54482051618615
+WickRR
+JuddLM
+GorrieCL
+HoltKE
+Completing bacterial genome assemblies with multiplex MinION sequencingMicrob Genom20173e00013210.1099/mgen.0.00013229177090PMC569520916
+LiW
+O’NeillKR
+HaftDH
+DiCuccioM
+ChetverninV
+et al
+RefSeq: expanding the prokaryotic genome annotation pipeline reach with protein family model curationNucleic Acids Res202149D1020D102810.1093/nar/gkaa110533270901PMC777900817
+OndovBD
+TreangenTJ
+MelstedP
+MalloneeAB
+BergmanNH
+
+et al
+
+Mash: fast genome and metagenome distance estimation using MinHashGenome Biol20161713210.1186/s13059-016-0997-x27323842PMC491504518
+PierceNT
+IrberL
+ReiterT
+BrooksP
+BrownCT
+Large-scale sequence comparisons with sourmashF1000Res20198100610.12688/f1000research.19675.131508216PMC672003119
+JainC
+Rodriguez-RLM
+PhillippyAM
+KonstantinidisKT
+AluruS
+High throughput ANI analysis of 90K prokaryotic genomes reveals clear species boundariesNat Commun20189511410.1038/s41467-018-07641-930504855PMC626947820
+LiH
+Minimap2: pairwise alignment for nucleotide sequencesBioinformatics2018343094310010.1093/bioinformatics/bty19129750242PMC613799621
+ChenS
+ZhouY
+ChenY
+GuJ
+fastp: an ultra-fast all-in-one FASTQ preprocessorBioinformatics201834i884i89010.1093/bioinformatics/bty56030423086PMC612928122
+LiD
+LiuCM
+LuoR
+SadakaneK
+LamTW
+MEGAHIT: an ultra-fast single-node solution for large and complex metagenomics assembly via succinct de bruijn graphBioinformatics2015311674167610.1093/bioinformatics/btv0332560979323
+WickRR
+JuddLM
+GorrieCL
+HoltKE
+Unicycler: Resolving bacterial genome assemblies from short and long sequencing readsPLoS Comput Biol201713e100559510.1371/journal.pcbi.100559528594827PMC548114724
+SeemannT
+Prokka: rapid prokaryotic genome annotationBioinformatics2014302068206910.1093/bioinformatics/btu1532464206325
+LamMMC
+WickRR
+WyresKL
+HoltKE
+Genomic surveillance framework and global population structure for Klebsiella pneumoniae
+bioRxiv202026
+CarattoliA
+ZankariE
+García-FernándezA
+Voldby LarsenM
+LundO
+et al
+In silico detection and typing of plasmids using plasmid finder and plasmid multilocus sequence typingAntimicrob Agents Chemother2014583895390310.1128/AAC.02412-1424777092PMC406853527
+JiaB
+RaphenyaAR
+AlcockB
+WaglechnerN
+GuoP
+et al
+CARD 2017: expansion and model-centric curation of the comprehensive antibiotic resistance databaseNucleic Acids Res201745D566D57310.1093/nar/gkw100427789705PMC521051628
+SteineggerM
+SödingJ
+MMseqs2 enables sensitive protein sequence searching for the analysis of massive data setsNat Biotechnol2017351026102810.1038/nbt.39882903537229
+XieY
+WeiY
+ShenY
+LiX
+ZhouH
+
+et al
+
+TADB 2.0: an updated database of bacterial type II toxin-antitoxin lociNucleic Acids Res201846D749D75310.1093/nar/gkx103329106666PMC575326330
+CroucherNJ
+PageAJ
+ConnorTR
+DelaneyAJ
+KeaneJA
+
+et al
+
+Rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences using gubbinsNucleic Acids Res201543e1510.1093/nar/gku119625414349PMC433033631
+LiH
+DurbinR
+Fast and accurate short read alignment with burrows-wheeler transformBioinformatics2009251754176010.1093/bioinformatics/btp32419451168PMC270523432
+PageAJ
+TaylorB
+DelaneyAJ
+SoaresJ
+SeemannT
+
+et al
+
+SNP-sites: rapid efficient extraction of SNPs from multi-FASTA alignmentsMicrob Genom20162e00005610.1099/mgen.0.00005628348851PMC532069033
+SagulenkoP
+PullerV
+NeherRA
+Tree time: Maximum-likelihood phylodynamic analysisVirus Evol20184vex04210.1093/ve/vex04229340210PMC575892034
+ArgimónS
+AbudahabK
+GoaterRJE
+FedosejevA
+BhaiJ
+et al
+Microreact: visualizing and sharing data for genomic epidemiology and phylogeographyMicrob Genom20162e00009310.1099/mgen.0.00009328348833PMC532070535
+KozlovAM
+DarribaD
+FlouriT
+MorelB
+StamatakisA
+RAxML-NG: a fast, scalable and user-friendly tool for maximum likelihood phylogenetic inferenceBioinformatics2019354453445510.1093/bioinformatics/btz30531070718PMC682133736
+LeesJA
+GalardiniM
+BentleySD
+WeiserJN
+CoranderJ
+pyseer: a comprehensive tool for microbial pangenome-wide association studiesBioinformatics2018344310431210.1093/bioinformatics/bty53930535304PMC628912837
+LeeS
+AbecasisGR
+BoehnkeM
+LinX
+Rare-variant association analysis: study designs and statistical testsAm J Hum Genet20149552310.1016/j.ajhg.2014.06.00924995866PMC408564138
+ConsortiumGO
+The gene ontology resource: enriching a GOld mineNucleic Acids Res202149D325D33410.1093/nar/gkaa111333290552PMC777901239
+MiH
+MuruganujanA
+EbertD
+HuangX
+ThomasPD
+PANTHER version 14: more genomes, a new PANTHER GO-slim and improvements in enrichment analysis toolsNucleic Acids Res201947D419D42610.1093/nar/gky103830407594PMC632393940
+MurrellB
+WeaverS
+SmithMD
+WertheimJO
+MurrellS
+et al
+Gene-wide identification of episodic selectionMol Biol Evol2015321365137110.1093/molbev/msv03525701167PMC440841741
+SpielmanSJ
+WeaverS
+ShankSD
+MagalisBF
+LiM
+et al
+Evolution of viral genomes: Interplay between selection, recombination, and other forcesMethods Mol Biol2019191042746810.1007/978-1-4939-9074-0_143127867342
+YangJ
+AnishchenkoI
+ParkH
+PengZ
+OvchinnikovS
+
+et al
+
+Improved protein structure prediction using predicted interresidue orientationsProc Natl Acad Sci U S A20201171496150310.1073/pnas.191467711731896580PMC698339543
+KoslickiD
+FalushD
+JanssonJK
+MetaPalette: a k-mer painting approach for metagenomic taxonomic profiling and quantification of novel strain variationmSystems20161e00020-1610.1128/mSystems.00020-1627822531PMC506976344
+Rodríguez-BeltránJ
+DelaFuenteJ
+León-SampedroR
+MacLeanRC
+San MillánÁ
+Beyond horizontal gene transfer: the role of plasmids in bacterial evolutionNat Rev Microbiol20211934735910.1038/s41579-020-00497-13346916845
+Tonkin-HillG
+MacAlasdairN
+RuisC
+WeimannA
+HoreshG
+
+et al
+
+Producing polished prokaryotic pangenomes with the panaroo pipelineGenome Biol20202118010.1186/s13059-020-02090-432698896PMC737692446
+Rezaei JavanR
+Ramos-SevillanoE
+AkterA
+BrownJ
+BrueggemannAB
+Prophages and satellite prophages are widespread in streptococcus and may play a role in pneumococcal pathogenesisNat Commun201910485210.1038/s41467-019-12825-y31649284PMC681330847
+SurleacM
+Czobor BarbuI
+ParaschivS
+PopaLI
+GheorgheI
+et al
+Whole genome sequencing snapshot of multi-drug resistant Klebsiella pneumoniae strains from hospitals and receiving wastewater treatment plants in southern romaniaPLoS One202015e022807910.1371/journal.pone.022807931999747PMC699200448
+DuchêneS
+HoltKE
+WeillFX
+Le HelloS
+HawkeyJ
+et al
+Genome-scale rates of evolutionary change in bacteriaMicrob Genom20162e00009410.1099/mgen.0.00009428348834PMC532070649
+JoussetAB
+BonninRA
+Rosinski-ChupinI
+GirlichD
+CuzonG
+et al
+A 4.5-year within-patient evolution of a colistin-resistant Klebsiella pneumoniae carbapenemase-producing K. pneumoniae sequence type 258Clin Infect Dis2018671388139410.1093/cid/ciy2932968833950
+GibsonB
+Eyre-WalkerA
+Investigating evolutionary rate variation in bacteriaJ Mol Evol20198731732610.1007/s00239-019-09912-531570957PMC685840551
+Munoz-PriceLS
+PoirelL
+BonomoRA
+SchwaberMJ
+DaikosGL
+et al
+Clinical epidemiology of the global expansion of Klebsiella pneumoniae carbapenemasesLancet Infect Dis20131378579610.1016/S1473-3099(13)70190-723969216PMC467366752
+BathoornE
+TsioutisC
+da Silva VoorhamJM
+ScoulicaEV
+IoannidouE
+et al
+Emergence of pan-resistance in KPC-2 carbapenemase-producing Kklebsiella pneumoniae in Crete, Greece: a close callJ Antimicrob Chemother2016711207121210.1093/jac/dkv4672681748853
+MeletisG
+ChatzopoulouF
+FragkouliA
+AlexandridouM
+MavrovouniotisI
+et al
+Whole-genome sequencing study of KPC-encoding Kklebsiella pneumoniae isolated in Greek private laboratories from non-hospitalised patientsJ Glob Antimicrob Resist202020788110.1016/j.jgar.2019.07.0273139053654
+ZhouK
+LokateM
+DeurenbergRH
+TepperM
+ArendsJP
+et al
+Use of whole-genome sequencing to trace, control and characterize the regional expansion of extended-spectrum β-lactamase producing ST15 Klebsiella pneumoniae
+Sci Rep201662084010.1038/srep2084026864946PMC474998755
+LübbertC
+StraubeL
+SteinC
+MakarewiczO
+SchubertS
+et al
+Colonization with extended-spectrum beta-lactamase-producing and carbapenemase-producing enterobacteriaceae in international travelers returning to GermanyInt J Med Microbiol201530514815610.1016/j.ijmm.2014.12.0012554726556
+StohrJ
+VerweijJJ
+BuitingAGM
+RossenJWA
+KluytmansJ
+et al
+Within-patient plasmid dynamics in Klebsiella pneumoniae during an outbreak of a carbapenemase-producing Klebsiella pneumoniaePLoS One202015e023331310.1371/journal.pone.023331332421705PMC723358657
+PullingerGD
+LaxAJ
+A salmonella dublin virulence plasmid locus that affects bacterial growth under nutrient-limited conditionsMol Microbiol199261631164310.1111/j.1365-2958.1992.tb00888.x149539158
+CuzonG
+NaasT
+NordmannP
+Functional characterization of tn4401, a tn3-based transposon involved in blaKPC gene mobilizationAntimicrob Agents Chemother2011555370537310.1128/AAC.05202-1121844325PMC319503059
+McConvilleTH
+AnnavajhalaMK
+GiddinsMJ
+MacesicN
+HerreraCM
+et al
+CrrB positively regulates High-Level polymyxin resistance and virulence in Klebsiella pneumoniae
+Cell Rep20203310831310.1016/j.celrep.2020.10831333113377PMC765623260
+JayolA
+NordmannP
+BrinkA
+PoirelL
+Heteroresistance to colistin in Klebsiella pneumoniae associated with alterations in the PhoPQ regulatory systemAntimicrob Agents Chemother2015592780278410.1128/AAC.05055-1425733503PMC439480661
+SaberMM
+ShapiroBJ
+Benchmarking bacterial genome-wide association study methods using simulated genomes and phenotypesMicrob Genom2020610.1099/mgen.0.000337PMC72000593210071362
+BartonN
+HermissonJ
+NordborgM
+Why structure mattersElife20198e4538010.7554/eLife.4538030895925PMC642856563
+SulJH
+MartinLS
+EskinE
+Population structure in genetic studies: Confounding factors and mixed modelsPLoS Genet201814e100730910.1371/journal.pgen.100730930589851PMC630770764
+JayolA
+PoirelL
+BrinkA
+VillegasMV
+YilmazM
+et al
+Resistance to colistin associated with a single amino acid change in protein PmrB among Klebsiella pneumoniae isolates of worldwide originAntimicrob Agents Chemother2014584762476610.1128/AAC.00084-1424914122PMC413604265
+HochJA
+VarugheseKI
+Keeping signals straight in phosphorelay signal transductionJ Bacteriol20011834941494910.1128/JB.183.17.4941-4949.200111489844PMC9536766
+HsiehPF
+LinHH
+LinTL
+WangJT
+CadC regulates cad and tdc operons in response to gastrointestinal stresses and enhances intestinal colonization of Klebsiella pneumoniae
+J Infect Dis2010202526410.1086/6530792049705667
+StahlhutSG
+ChattopadhyayS
+StruveC
+WeissmanSJ
+AprikianP
+et al
+Population variability of the FimH type 1 fimbrial adhesin in Klebsiella pneumoniae
+J Bacteriol20091911941195010.1128/JB.00601-0819151141PMC264836568
+PaulS
+LinardopoulouEV
+BilligM
+TchesnokovaV
+PriceLB
+et al
+Role of homologous recombination in adaptive diversification of extraintestinal Escherichia coli
+J Bacteriol201319523124210.1128/JB.01524-1223123908PMC355383669
+SabnisA
+HagartKL
+KlöcknerA
+BecceM
+EvansLE
+et al
+Colistin kills bacteria by targeting lipopolysaccharide in the cytoplasmic membraneElife202110e6583610.7554/eLife.6583633821795PMC809643370
+SchneiderE
+HunkeS
+ATP-binding-cassette (ABC) transport systems: functional and structural aspects of the ATP-hydrolyzing subunits/domainsFEMS Microbiol Rev19982212010.1111/j.1574-6976.1998.tb00358.x964064471
+McDanielC
+SuS
+PanmaneeW
+LauGW
+BrowneT
+et al
+A putative ABC transporter permease is necessary for resistance to acidified nitrite and EDTA in pseudomonas aeruginosa under aerobic and anaerobic planktonic and biofilm conditionsFront Microbiol2016729110.3389/fmicb.2016.0029127064218PMC481731472
+GreeneNP
+KaplanE
+CrowA
+KoronakisV
+Antibiotic resistance mediated by the MacB ABC transporter family: A structural and functional perspectiveFront Microbiol2018995010.3389/fmicb.2018.0095029892271PMC598533473
+KaralewitzAA
+MillerSI
+Multidrug-resistant Acinetobacter baumannii chloramphenicol resistance requires an inner membrane permeaseAntimicrob Agents Chemother201862e00513-1810.1128/AAC.00513-1829891596PMC610584674
+AbramsonJ
+SmirnovaI
+KashoV
+VernerG
+IwataS
+et al
+The lactose permease of Escherichia coli: overall structure, the sugar-binding site and the alternating access model for transportFEBS Lett20035559610110.1016/s0014-5793(03)01087-11463032675
+GuanL
+MirzaO
+VernerG
+IwataS
+KabackHR
+Structural determination of wild-type lactose permeaseProc Natl Acad Sci U S A2007104152941529810.1073/pnas.070768810417881559PMC200055176
+ZhanHQ
+NajmiM
+LinK
+AluriS
+FiserA
+et al
+A proton-coupled folate transporter mutation causing hereditary folate malabsorption locks the protein in an inward-open conformationJ Biol Chem2020295156501566110.1074/jbc.RA120.01475732893190PMC766798177
+Sahin-TóthM
+FrillingosS
+LawrenceMC
+KabackHR
+The sucrose permease of Escherichia coli: functional significance of cysteine residues and properties of a cysteine-less transporterBiochemistry2000396164616910.1021/bi000124o1082169078
+ZhouZ
+WhiteKA
+PolissiA
+GeorgopoulosC
+RaetzCR
+Function of Escherichia coli MsbA, an essential ABC family transporter, in lipid a and phospholipid biosynthesisJ Biol Chem1998273124661247510.1074/jbc.273.20.12466957520479
+GarmoryHS
+TitballRW
+ATP-binding cassette transporters are targets for the development of antibacterial vaccines and therapiesInfect Immun2004726757676310.1128/IAI.72.12.6757-6763.200415557595PMC52911680
+StoesserN
+PhanHTT
+SealeAC
+AikenZ
+ThomasS
+et al
+Genomic epidemiology of complex, multispecies, plasmid-borne bla KPC carbapenemase in enterobacterales in the united kingdom from 2009 to 2014Antimicrob Agents Chemother202064e02244-1910.1128/AAC.02244-1932094139PMC717964181
+DavidS
+CohenV
+ReuterS
+SheppardAE
+GianiT
+et al
+Integrated chromosomal and plasmid sequence analyses reveal diverse modes of carbapenemase gene spread among Klebsiella pneumoniae
+Proc Natl Acad Sci U S A2020117250432505410.1073/pnas.200340711732968015PMC758722782
+TasciniC
+TagliaferriE
+GianiT
+LeonildiA
+FlamminiS
+et al
+Synergistic activity of colistin plus rifampin against colistin-resistant KPC-producing Klebsiella pneumoniae
+Antimicrob Agents Chemother2013573990399310.1128/AAC.00179-1323752510PMC371973683
+GorrieCL
+MircetaM
+WickRR
+EdwardsDJ
+ThomsonNR
+et al
+Gastrointestinal carriage is a major reservoir of Klebsiella pneumoniae infection in intensive care patientsClin Infect Dis20176520821510.1093/cid/cix27028369261PMC585056184
+LübbertC
+LippmannN
+BuschT
+KaisersUX
+DucombleT
+et al
+Long-term carriage of Klebsiella pneumoniae carbapenemase-2-producing K pneumoniae after a large single-center outbreak in germanyAm J Infect Control20144237638010.1016/j.ajic.2013.12.0012467956385
+LübbertC
+FaucheuxS
+Becker-RuxD
+LaudiS
+DürrbeckA
+et al
+Rapid emergence of secondary resistance to gentamicin and colistin following selective digestive decontamination in patients with KPC-2-producing Klebsiella pneumoniae: a single-centre experienceInt J Antimicrob Agents20134256557010.1016/j.ijantimicag.2013.08.0082410022886
+JanssenAB
+van HoutD
+BontenMJM
+WillemsRJL
+van SchaikW
+Microevolution of acquired colistin resistance in enterobacteriaceae from ICU patients receiving selective decontamination of the digestive tractJ Antimicrob Chemother2020753135314310.1093/jac/dkaa3053271265987
+LeeJY
+ParkYK
+ChungES
+NaIY
+KoKS
+Evolved resistance to colistin and its loss due to genetic reversion in pseudomonas aeruginosaSci Rep201662554310.1038/srep2554327150578PMC485870688
+KapelN
+CaballeroJD
+Craig MacLeanR
+Localized hypermutation drives the evolution of unstable colistin resistance in pseudomonas aeruginosabioRxiv202110.1101/2021.08.10.45586989
+HodcroftEB
+De MaioN
+LanfearR
+MacCannellDR
+MinhBQ
+et al
+Want to track pandemic variants faster? Fix the bioinformatics bottleneckNature2021591303310.1038/d41586-021-00525-x3364951190
+ViehwegerA
+BrandtC
+HölzerM
+DarkQ: Continuous genomic monitoring using message queuesF1000Res202110:99810.12688/f1000research.54255.191
+KwongJC
+MercouliaK
+TomitaT
+EastonM
+LiHY
+et al
+Prospective whole-genome sequencing enhances national surveillance of listeria monocytogenesJ Clin Microbiol20165433334210.1128/JCM.02344-1526607978PMC473317992
+HadfieldJ
+MegillC
+BellSM
+HuddlestonJ
+PotterB
+et al
+Nextstrain: real-time tracking of pathogen evolutionBioinformatics2018344121412310.1093/bioinformatics/bty40729790939PMC624793193
+SteinigE
+DuchêneS
+AgluaI
+GreenhillA
+FordR
+et al
+Phylodynamic modelling of bacterial outbreaks using nanopore sequencingbioRxiv202110.1101/2021.04.30.442218

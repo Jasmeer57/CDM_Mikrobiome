@@ -1,0 +1,1703 @@
+ORIGINAL RESEARCH
+published: 20 March 2020
+doi: 10.3389/fmicb.2020.00383
+Edited by:
+Thomas Dandekar,
+Julius Maximilian University
+of Würzburg, Germany
+Reviewed by:
+Oskar Karlsson Lindsjö,
+Swedish University of Agricultural
+Sciences, Sweden
+Gianni Panagiotou,
+Leibniz Institute for Natural Product
+Research and Infection Biology,
+Germany
+*Correspondence:
+Xiang Zhang
+zhangxiangﬁne@gmail.com;
+zhx_51@163.com
+Hongzhi Xu
+xuhongzhi@xmu.edu.cn
+Jianlin Ren
+renjianl@xmu.edu.cn
+†These authors have contributed
+equally to this work
+Specialty section:
+This article was submitted to
+Infectious Diseases,
+a section of the journal
+Frontiers in Microbiology
+Received: 15 March 2019
+Accepted: 20 February 2020
+Published: 20 March 2020
+Citation:
+Chen Z, Xie Y, Zhou F, Zhang B,
+Wu J, Yang L, Xu S, Stedtfeld R,
+Chen Q, Liu J, Zhang X, Xu H and
+Ren J (2020) Featured Gut
+Microbiomes Associated With the
+Progression of Chronic Hepatitis B
+Disease. Front. Microbiol. 11:383.
+doi: 10.3389/fmicb.2020.00383
+Featured Gut Microbiomes
+Associated With the Progression of
+Chronic Hepatitis B Disease
+Zhangran Chen1,2,3†, Yurou Xie1,2†, Fei Zhou2, Bangzhou Zhang1,2, Jingtong Wu1,2,
+Luxi Yang4, Shuangbin Xu5, Robert Stedtfeld6, Qiongyun Chen1,2, Jingjing Liu2,
+Xiang Zhang1*, Hongzhi Xu1,2* and Jianlin Ren1,2*
+1 Department of Gastroenterology, Zhongshan Hospital Xiamen University, Xiamen, China, 2 Institute for Microbial Ecology,
+School of Medicine, Xiamen University, Xiamen, China, 3 College of Chemistry and Chemical Engineering, Xiamen University,
+Xiamen, China, 4 School of Life Sciences, Xiamen University, Xiamen, China, 5 Fisheries College, Jimei University, Xiamen,
+China, 6 Civil and Environmental Engineering, Michigan State University, East Lansing, MI, United States
+Dysbiosis of gut microbiota during the progression of HBV-related liver disease is not
+well understood, as there are very few reports that discuss the featured bacterial
+taxa in different stages. The aim of this study was to reveal the featured bacterial
+species whose abundances are directly associated with HBV disease progression,
+that is, progression from healthy subjects to, chronic HBV infection, chronic hepatitis
+B to liver cirrhosis. Approximately 400 fecal samples were collected, and 97 samples
+were subjected to 16S rRNA gene sequencing after age and BMI matching. Compared
+with the healthy individuals, signiﬁcant gut microbiota alterations were associated with
+the progression of liver disease. LEfSe results showed that the HBV infected patients
+had higher Fusobacteria, Veillonella, and Haemophilus abundance while the healthy
+individuals had higher levels of Prevotella and Phascolarctobacterium. Indicator analysis
+revealed that 57 OTUs changed as the disease progressed, and their combination
+produced an AUC value of 90% (95% CI: 86–94%) between the LC and non-LC
+groups. In addition, the abundances of OTU51 (Dialister succinatiphilus) and OTU50
+(Alistipes onderdonkii) decreased as the disease progressed, and these results were
+further veriﬁed by qPCR. The LC patients had the higher bacterial network complexity,
+which was accompanied with a lower abundance of potential beneﬁcial bacterial taxa,
+such as Dialister and Alistipes, while they had a higher abundance of pathogenic species
+within Actinobacteria. The compositional and network changes in the gut microbiota
+in varied CHB stages, suggest the potential contributions of gut microbiota in CHB
+disease progression.
+Keywords: hepatitis B virus, gut dysbiosis, cooccurrence network, liver cirrhosis, random forest
+INTRODUCTION
+Hepatitis B virus (HBV) infection is a global epidemic public health issue (3.5% of the
+global population have been infected), which may be accompanied by ongoing low-grade liver
+inﬂammation (Lavanchy et al., 2004; Ott et al., 2012). HBV infection progresses through several
+clinical phases depending on liver injury: chronic HBV infection (HBVI), chronic hepatitis B (CHB)
+and liver cirrhosis (LC).
+Frontiers in Microbiology | www.frontiersin.org
+1
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+The gut microbiota is the largest group of microorganisms
+living in the human body and is composed of bacteria, archaea,
+virus fungi, and protist; the microbiota has been found to be
+closely related to health (Ray, 2012; Tripathi et al., 2018). Because
+of the gut-liver circulation via the gut-microbiota-liver axis,
+nutrients, bacterial products/toxins and metabolites from the gut
+enters the liver, which play important roles in the progression
+of liver disease (Wiest et al., 2017). Previous studies indicate
+that compositional changes of the gut microbiota are closely
+related to chronic liver diseases, such as non-alcoholic fatty
+liver disease (NAFLD) (Bibbò et al., 2018; Hoyles et al., 2018;
+Ponziani et al., 2018), non-alcoholic steatohepatitis (NASH)
+(Yamada et al., 2017; Bomhof et al., 2018; Ye et al., 2018),
+alcoholic liver disease (ALD) (Hartmann et al., 2018; Shao et al.,
+2018; Stärkel et al., 2018), hepatic encephalopathy (HE) (Tilg
+et al., 2016; Mancini et al., 2018), cirrhosis (Garcia-Tsao and
+Wiest, 2004; Bajaj et al., 2018a; Guo et al., 2018), hepatocellular
+carcinoma (HCC) (Zamparelli et al., 2017), and HBV infection.
+Increasing evidence suggests that the gut microbiota has
+evolved as a new important player in the pathogenesis of
+hepatitis B virus-induced chronic liver disease. A variety of gut
+commensals, such as Faecalibacterium prausnitzii, Enterococcus
+faecalis, Enterobacteriaceae, Biﬁdobacteria, and lactic acid
+bacteria (Lactobacillus, Pediococcus, Leuconostoc, and Weissella),
+are known to be diﬀerent in the intestine of HBV cirrhotic
+patients (Lu et al., 2011). We have previously induced hepatitis
+B virus e-Antigen (HBeAg) clearance in patients with positive
+HBeAg after undergoing long-term antiviral therapy through
+several fecal microbiota transplantation (FMT) treatments, which
+were accompanied by signiﬁcant changes in the microbiota
+composition (Ren et al., 2017). However, how microbiome
+proﬁles change during the transition from healthy to HBVI,
+CHB, and LC conditions remains to be further investigated
+to determine potential therapeutic microbiome-targets in the
+future that can reverse or remiss HBV infections to less
+severe conditions. Consequently, the systematic monitoring of
+HBV infected patients to reveal unique bacterial taxa that can
+postpone disease course during severe hepatic deterioration, is of
+great importance.
+Based on the above consideration, our study focused on
+the gut microbiota of 21 healthy individuals and 76 chronic
+HBV infected patients with HBVI, CHB, or LC through high
+throughput 16S rRNA gene sequencing. Our objectives were to:
+(i) elucidate shifts in the microbial community structure and
+diversity along with the HBV infection process, (ii) determine
+indicator and diﬀerential bacterial taxa for HBV infection
+progression and the drivers that correlate with them and test the
+existence of them in clinical samples, and (iii) probe into the gut
+microbial network features that are associated with disease stages.
+MATERIALS AND METHODS
+Clinical Trial Number
+This project was approved by the Ethics Committee of
+Xiamen University (Permit Number ID: XMU-IRB-2018001) and
+registered in ClinicalTrials.gov (ID: NCT03587467). This study
+was performed in accordance with the approved guidelines. All
+participants provided informed consent, and the study protocol
+conformed to the ethical guidelines of the Declaration of Helsinki
+(World Medical Association, 2008).
+Healthy Individuals
+A total of 21 age- and BMI-matched Chinese healthy individuals
+were enrolled at Zhongshan Hospital, aﬃliated with Xiamen
+University (Xiamen, China), from December 2017 to May 2018.
+The inclusion criteria were as follows: (a) alcohol free history
+or alcohol consumption less than 140 g per week in males, less
+than 70 g per week in females; (b) smooth and soft stool that
+was sausage or snake shaped, and (c) voluntary participation
+in this study. The exclusion criteria were as follows: (a)
+symptoms of digestive system disorders, such as hematochezia,
+constipation, abdominal distention, abdominal pain, diarrhea,
+and jaundice within 1 month; (b) abnormal results of several
+tests, including: routine blood, liver function, renal function,
+blood fat, fasting blood glucose, HBsAg, routine fecal and fecal
+occult blood tests; (c) an enteritis diagnosis within 1 month;
+(d) chronic obstructive pulmonary disease, renal insuﬃciency
+and other systemic diseases; (e) autoimmune disease; (f) chronic
+fatigue syndrome and neuropsychic disease; (g) a history of
+antibiotic, microecological preparation, gastrointestinal motility
+medicine, laxative, weight loss drug, glucose lowering, blood
+fat regulation, glucocorticoid, or immunosuppressant treatment
+within 1 month; (h) history of organic diseases in the digestive
+system, such as gastrointestinal polyposis, ulcers, cirrhosis, and
+malignancies; (i) history of gastrointestinal surgery; or (j) a
+family history of diabetes, hypertension, coronary heart disease,
+metabolic syndrome, etc.
+Enrolled Patients and Study Design
+A total of 76 age and BMI-matched patients with chronic hepatitis
+B virus (HBV) infection were enrolled at Xiamen University
+(Xiamen, China) from December 2017 to May 2018. As HBV
+infection progresses chronically through several clinical stages
+that are determined by liver damage, the HBV infected patients
+were grouped into HBV infection (HBVI, n = 23), chronic
+hepatitis B (CHB, n = 28) and liver cirrhosis (LC, n = 25)
+groups. The inclusion criteria for these groups were (a) alcohol
+free history or alcohol consumption less than 140 g per week
+in males and, less than 70 g per week in females; and (b) they
+meet the diagnostic criteria for chronic hepatitis B according to
+the “EASL 2017 Clinical Practice Guidelines on the management
+of hepatitis B virus infection.” The exclusion criteria for the
+HBVI, CHB and LC groups were: (a) a history of antibiotic,
+microecological preparation, gastrointestinal motility medicine,
+weight loss drug, glucose lowering, blood fat regulation, and
+glucocorticoid or immunosuppressant treatment within 1 month;
+(b) other causes of liver disease such as NAFLD, autoimmune
+liver disease, hepatitis A, hepatitis C, hepatitis D, hepatitis
+E and liver parasite infection; (c) chronic fatigue syndrome
+and neuropsychic disease; (d) a history of gastrointestinal
+surgery; or (e) a family history of diabetes, hypertension,
+coronary heart disease, metabolic syndrome, etc. The LC patients
+received the following tests: computed tomography (CT) alone
+Frontiers in Microbiology | www.frontiersin.org
+2
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+(n = 9), magnetic resonance imaging (MRI) alone (n = 2),
+ultrasonography alone (n = 3), CT plus MRI (n = 3), CT plus
+ultrasonography (n = 3), MRI plus ultrasonography (n = 1), CT
+plus MRI plus ultrasonography (n = 4).
+Fecal Sample Collection and DNA
+Extraction
+Fecal samples from healthy individuals and HBV infected
+patients were collected on the day of the medical examination
+and
+immediately
+frozen
+at
+−80◦C.
+DNA
+was
+extracted
+from approximately 0.25 g of the fecal samples using the
+QIAamp PowerFecal DNA Kit (Qiagen, DE) according to the
+manufacturer’s instructions1. The purity and concentration
+of the isolated DNAs were assessed using spectrophotometry
+(MultiskanTM GO, Thermo Fisher Scientiﬁc, United States).
+The DNA extracts were also evaluated for quality using agarose
+(1.5%) gel electrophoresis in 1 × Tris-Acetate-EDTA buﬀer.
+DNA samples were stored at −20◦C before being used as
+templates for next-generation sequencing library preparation.
+PCR Ampliﬁcation and Sequencing
+Library Preparation
+The
+V3-V4
+hypervariable
+region
+of
+the
+bacterial
+16S
+ribosomal RNA (rRNA) gene was ampliﬁed from the DNA
+samples
+with
+the
+barcoded
+forward
+primers
+341F
+(5′-
+CCTACGGGNBGCASCAG-3′)
+and
+the
+reverse
+primers
+806R
+(5′-GGACTACNVGGGTWTCTAAT-3′)
+using
+KAPA
+HIFI HotStart ReadyMix (KAPA Biosystems, United States).
+The PCR thermocycler conditions were as follows: initial
+denaturation at 95◦C for 3 min; 30 cycles of denaturation at
+95◦C for 20 s, annealing at 60◦C for 30 s, and extension at
+72◦C for 30 s; and a ﬁnal extension at 72◦C for 10 min. The
+PCR products were puriﬁed using an AxyPrep PCR Cleanup
+Kit (Axygen, United States) according to the manufacturer’s
+protocol. The puriﬁed PCR products were eluted, and their DNA
+concentrations were determined with a Qubit 3.0 Fluorometer
+(Thermo Fisher Scientiﬁc Inc., Waltham, MA, United States) in
+conjunction with the Qubit dsDNA HS Assay Kit (Invitrogen,
+CA, United States). Equal amounts of each ampliﬁed sample were
+then enriched in a normalization step and pooled. They were
+pooled in equimolar amounts and then paired-end sequencing
+was performed by the Beijing Novogene company2 on a HiSeq
+2500 (Illumina, San Diego, CA, United States) in rapid mode
+with v2 reagents which produced 250 bp reads per end, according
+to manufacturer’s instruction.
+Data Processing of the 16S rRNA Gene
+Sequences
+The raw paired-end reads were assembled and merged by
+FLASH (Mago and Salzberg, 2011) under default parameters with
+the –x 0.2 and –M 200 for V3-V4 region, and then the PCR
+primers were subsequently truncated by cutadapt (Martin, 2011).
+1https://www.qiagen.com/cn/shop/sample-technologies/dna/genomic-dna/
+qiaamp-powerfecal-dna-kit
+2http://www.novogene.com/
+Those sequences with low quality and multiple N bases were
+eliminated with a setting parameter of an error rate less than
+0.1. The quality-controlled sequences were further chimerically
+removed and OTU clustered by Usearch (Edgar, 2013). In
+detail, all reads were demultiplexed into one ﬁle, clustered at
+97% similarity, then the chimera checking was performed using
+UCHIME in reference mode. Representative sequences were
+generated and singletons were removed, and a ﬁnal OTU table
+was created. The representative sequences of OTU were aligned
+on the Greengenes database for taxonomic classiﬁcation by RDP
+Classiﬁer. All bioinformatics analyses were performed at the
+national supercomputer center in Guangzhou, China.
+Quantitative Real-Time PCR of Dialister
+succinatiphilus and Alistipes onderdonkii
+The
+full
+length
+of
+the
+16S
+rRNA
+genes
+of
+OTU51
+(D. succinatiphilus) and OTU50 (A. onderdonkii) (including
+all strains belonging to the two species) were selected to design
+and test the primers with Primer-BLAST3. Primers that only
+targeted the objective bacteria were chosen and later veriﬁed
+by Sanger sequencing of the PCR products that were ampliﬁed
+with the primers; then, these primers were used for further
+real-time qPCR analysis. In brief, DNA from 32 healthy and HBV
+infected patients was extracted and adjusted to a concentration
+of 20 ng/µl. The real-time PCR was carried out using a TBTM
+Green Premix Ex TaqTM II Kit (TaKaRa Biochemicals, China) in
+10 µl volumes, which included 5 µl TB Green Premix Ex Taq
+II (2×), 0.4 µl forward and reverse primer and 0.8 µl DNA.
+The 16S rRNA gene was used to standardize the results by
+eliminating variation in the quantity and quality. All reactions
+were performed with three technical replicates on a CFX384TM
+Real-Time System (Bio-Rad). The qPCR program consisted of
+denaturation at 95◦C for 30 s and 40 cycles at 95◦C for 5 s and
+at 60◦C for 30 s. The relative gene expression abundance was
+quantiﬁed using the 2−11Ct method.
+Statistical Analyses
+Alpha-diversity metrics, including Shannon, Simpson, Chao1,
+and Pielou’s evenness (J), and β-diversity metrics, including
+Bray–Curis distance with vegdist, PERMANOVA with the adonis
+function, and the envﬁt function, were all performed with the
+R package vegan (version 2.5.3) (Oksanen et al., 2015). The
+shared OTUs were calculated and visualizing using the R package
+VennDiagram (version 1.6.20) (Boutros and Chen, 2011). The
+taxa abundance was measured and plotted using ggplot2 (version
+3.1.0) (Wickham, 2009). LEfSe analysis was performed to identify
+taxa with diﬀerentiating abundance in the diﬀerent group
+with LEfSe1.0 (Segata et al., 2011). ANOVA tests were either
+conducted by a oneway.test and pairwise.t.test with the P-value
+adjusted to the “BH” method for multiple comparisons or the
+bartlett.test using the equal variance and LDuncan method
+(package laercio, 1.0-0) to group diﬀerences. Moreover, the
+indicator analysis (singleton and doubleton genera removed ﬁrst)
+was conducted using the R package indicspecies (version 1.7.1)
+(De Caceres and Legendre, 2009) with 999 permutations, and
+3https://www.ncbi.nlm.nih.gov/tools/primer-blast/
+Frontiers in Microbiology | www.frontiersin.org
+3
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+the P-values were corrected for multiple comparison using the R
+package qvalue (Dabney and Storey, 2015) with a false discovery
+rate of 10%. Finally, the results were visualized using a custom
+R script based on ggplot2. Signiﬁcant correlations between the
+abundances of indicator species and clinical properties were
+calculated by evaluating Pearson’s correlations with the cor and
+cor.test function in the R package stats. Cooccurrence network
+pattern analyses were made by Gephi 0.9.1 (Cherven, 2015).
+These analyses were performed using R3.5.1 (R Core Team,
+2014). We performed random forest classiﬁcation using the
+implementation of this method in Python’s scikit-learn package4.
+We used a speciﬁed group as the positive group, while the others
+were negative. For example, ﬁrst, the LC group was regarded
+as the positive group, the others were regarded as the negative
+group. Then, we conducted a 10-fold cross-validation analysis
+and estimated the classiﬁer accuracy of the random forest model.
+The distribution of indicator species with the disease progression
+were made by Graphapad Prism 5.
+Data and Code Availability
+The 16S sequencing raw reads of this HBV study are available
+on the NCBI SRA. The accession number for the 16S sequencing
+data reported in this paper is NCBI SRA: PRJNA558158. The brief
+pipeline for the 16S rRNA gene sequence analysis and the main
+data sets used during the current study are available on GitHub5.
+RESULTS
+Gut Microbial Community Shift Across
+HBV Infection Status
+To determine associations between microbiome proﬁles and
+HBV infection status, we performed 16s rRNA gene sequencing
+on the stool samples collected from healthy subjects (n = 21)
+and HBVI (n = 23), CHB (n = 28) and LC (n = 25)
+patients (Table 1). The average raw reads (143,149), clean reads
+(122,586), oﬀ-chimera reads (110,422), and OTU numbers per
+patient were 236 (Supplementary Table S1). The diﬀerences
+between the clinical parameters were displayed via NMDS
+ordination (Figure 1A), which showed diﬀerences between
+clinical properties and communities among the healthy, CHB,
+and LC subjects. Regarding gender, there were no obvious
+diﬀerences among HBVI, CHB, and LC subjects, compared
+with the healthy individuals (Supplementary Figure S1A).
+A signiﬁcant increase in serum total bilirubin (TBIL), ALT, and
+AST levels only occurred in the CHB patients (Table 1).
+The samples obtained from the same group were consistent
+compared with those across the groups (ANOSIM, R = 0.14,
+p = 0.001) (Supplementary Figure S1B). Moreover, the mantel
+test results (r = 0.15, p = 0.01) showed that the community
+diﬀerence might be due to the overall clinical distance diﬀerence,
+and not due to chance (Supplementary Figure S1C). The
+PERMANOVA results showed that disease stages (R2 = 0.08,
+p < 0.001) exerted a signiﬁcant inﬂuence on the communities,
+4http://scikitlearn.org/
+5https://github.com/zhangranluxi/HBV
+while age (R2 = 0.03, p = 0.08), BMI (R2 = 0.03, p = 0.53) and
+gender (R2 = 0.01, p = 0.71) did not. Therefore, HBV infection
+progression itself was the primary driver of the alterations
+to the gut microbiota in this study (Supplementary Table
+S2). Ordination of all samples within the four HBV infection
+progression types indicated that their microbial communities
+were shaped primarily by factors associated with the infection
+state (ANOVA, p < 0.01) (Figure 1B). Site scores were
+signiﬁcantly correlated with patient clinical variables, with
+changes observed in particular for RBC (envﬁt, r2 = 0.34,
+p < 0.001), Hb (envﬁt, r2 = 0.33, p < 0.001), ALB (envﬁt,
+r2 = 0.32, p < 0.001), PLT (envﬁt, r2 = 0.26, p < 0.001), and
+AST/ALT (envﬁt, r2 = 0.16, p < 0.01) (Supplementary Table
+S3). The compositional diﬀerences (OTUs) of individual fecal
+microbiota were graphed on NMDS plots, revealing that gut
+bacterial communities of the LC patients varied from the other
+groups (pairwise.adonis test, p < 0.05), and the diﬀerences were
+separated as HBV infection progressed by the ﬁrst NMDS axis
+(Figure 1C). Further, the Bray–Curtis distance, based on genus
+composition, showed a similar trend (Figure 1D). These results
+indicate that the gut microbial communities changed in most
+of the HBV infected patients and most notably in the CHB or
+LC patients. Both the non-supervised and supervised ordination
+results therefore displayed the obvious gut microbiota dispersion
+associated with HBV infection progression.
+More Exclusive OTUs in HBV Infected
+Patients
+To investigate whether gut microbiota can be driven by HBV
+infection, we assessed the ratios of shared or unique OTUs in
+healthy controls and the HBVI, CHB, and LC patients. We found
+that the healthy group contained a lower proportion (2.4%) of
+exclusive OTUs, while the other HBV infected groups accounted
+for approximately 5% of the OTUs (Figure 2A), indicating that
+the HBV infected patients had more unique OTUs. Among the
+four groups, the healthy and HBVI groups had higher observed
+species than the CHB and LC groups (Figure 2B). Bacterial
+diversity (Shannon and Simpson), evenness (J) and estimated
+species (Chao1) were decreased in patients with LC compared
+with patients in earlier stages of the infection (Figure 2C)
+(ANOVA, p < 0.05). These results suggest that the lower
+bacterial diversity in the LC group might be due to unique
+taxa heterogeneity.
+Gut Microbiota Composition Changes as
+HBV Infection Progresses
+To further demonstrate the microbiota shifts across HBV
+progression, we compared bacteria abundance between the
+groups. Bacteroidetes and Firmicutes decreased from healthy
+subjects, HBVI, CHB to LC patients, while Proteobacteria and
+Actinobacteria showed an upgrowing distribution (Figure 3A
+and Supplementary Figure S2A) (ANOVA, p < 0.05). The
+OTUs were classiﬁed into 32 classes, the top 12 of which
+occupied more than 99% of the abundance (Figure 3B).
+Within the Firmicutes class, the most abundant Clostridia
+decreased, while the Bacilli and Erysipelotrichi increased in
+Frontiers in Microbiology | www.frontiersin.org
+4
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+TABLE 1 | Baseline demographics and clinical characteristics.
+Healthy
+HBVI
+CHB
+LC
+Sample size
+21
+23
+28
+25
+Sex (Male/Female)
+16/5
+16/7
+19/9
+20/5
+Age
+45.14 ± 9.03
+43.83 ± 11.76
+44.71 ± 11.3
+51.24 ± 6.91
+BMI (kg/cm2)
+21.97 ± 2.91ab
+23.37 ± 3.93a
+23.21 ± 3.54ab
+21.87 ± 2.61b
+WBC count(109/L)
+6.06 ± 1.15a
+5.87 ± 1.48a
+5.48 ± 1.41a
+4.08 ± 1.92b
+RBC count(1012/L)
+5 ± 0.46a
+4.55 ± 0.63b
+4.4 ± 0.68b
+3.92 ± 0.81c
+Hb(g/L)
+150.05 ± 11.23a
+137.78 ± 21.62ab
+134.75 ± 21.96b
+115.52 ± 25.91c
+PLT count(109/L)
+235.68 ± 41.04a
+227.04 ± 55.87ab
+199.5 ± 55.77b
+84.76 ± 52.78c
+TP(g/L)
+73.28 ± 4.78a
+68.82 ± 9.82b
+66.71 ± 5.63b
+67.36 ± 6.58b
+ALB(g/L)
+48.87 ± 3.49a
+43.27 ± 7.4b
+38.51 ± 5.13c
+35.16 ± 5.24d
+GLO(g/L)
+24.41 ± 3.99a
+25.55 ± 4.23ab
+28.2 ± 4.53b
+32.19 ± 6.06c
+ALB/GLO
+2.06 ± 0.44a
+1.71 ± 0.31b
+1.4 ± 0.29c
+1.14 ± 0.29d
+TBIL(µmol/L)
+7.7 ± 3.79a
+10.19 ± 3.81a
+51.44 ± 89.71b
+27.29 ± 15.46ab
+DBIL(µmol/L)
+3.15 ± 1.24a
+3.95 ± 1.31a
+39.36 ± 77.11a
+13.13 ± 9.94b
+IBIL(µmol/L)
+5.02 ± 2.53a
+8.66 ± 10.06ab
+12.07 ± 13.19b
+14.16 ± 9.59b
+ALT(U/L)
+25.19 ± 17.03a
+36.95 ± 52.95a
+335.87 ± 409.82b
+46.56 ± 45.03a
+AST(U/L)
+21.4 ± 7.19a
+26.38 ± 19.82a
+193.58 ± 256b
+70.69 ± 97.45a
+AST/ALT
+0.99 ± 0.32a
+1.01 ± 0.51a
+0.78 ± 0.44a
+1.64 ± 1.05b
+GGT(U/L)
+25.79 ± 11.62a
+26.48 ± 15.92a
+138.42 ± 145.18b
+86.54 ± 89.55c
+ALP(U/L)
+60.91 ± 14.75
+67.52 ± 19.66
+114.42 ± 80.4
+94.26 ± 45.13
+BUN (mmol/L)
+5.46 ± 1.57a
+4.89 ± 1.18a
+3.82 ± 1.18b
+5.02 ± 1.91a
+SCR(µmol/L)
+75.67 ± 13.12ab
+79.7 ± 34.57a
+71.21 ± 17.68b
+71.46 ± 19.14ab
+BUN/SCR
+0.07 ± 0.02ab
+3.98 ± 17.5ab
+0.05 ± 0.02b
+0.1 ± 0.13a
+BUA(µmol/L)
+339.87 ± 92.81a
+339.65 ± 101.03a
+279.89 ± 67.44b
+301.94 ± 107.96a
+TG (mmol/L)
+1.38 ± 0.81a
+1.12 ± 0.45ab
+1.26 ± 0.55ab
+0.98 ± 0.37b
+CHOL (mmol/L)
+5.11 ± 0.87a
+4.72 ± 1.02ab
+4.3 ± 1.56b
+4.07 ± 1.56b
+HDL (mmol/L)
+1.43 ± 0.36a
+1.35 ± 0.37ab
+1.39 ± 0.52a
+1.12 ± 0.29b
+LDL (mmol/L)
+3.24 ± 0.77a
+3.2 ± 1.05ab
+2.91 ± 2.01ab
+2.65 ± 1.47b
+FBG (mmol/L)
+5.45 ± 0.49a
+5.2 ± 1.18ab
+5.08 ± 1.35ab
+4.98 ± 1.52b
+HbsAg (IU/ml)
+0 ± 0a
+7409.23 ± 17174.08b
+4624.51 ± 6123.07ab
+1585.75 ± 1326.34a
+HBV DNA (107 IU/mL)
+0 ± 0a
+1.77 ± 4.18b
+11.0 ± 25.7b
+0.42 ± 2.02b
+Letters indicate the ANOVA grouping among different HBV infection condition. Groups that do not share as common letter are signiﬁcantly different. The four groups of
+patients according to clinical diagnosis included healthy, HBVI (chronic HBV carrier), CHB (chronic hepatitis B), and LC (liver cirrhosis) groups. WBC, white blood cell;
+RBC, red blood cell; Hb, hemoglobin; PLT, blood platelet; TP, total protein; ALB, albumin; GLO, globulin; ALB/GLO, albumin/globulin; TBIL, total bilirubin; DBIL, direct
+bilirubin; IBIL, indirect bilirubin; ALT, alanine aminotransferase; AST, aspartate aminotransferase; GGT, glutamyl transpeptidase; ALP, alkaline phosphatase; BUN, blood
+urea nitrogen; SCR, serum creatinine; BUN/SCR, blood urea nitrogen/serum creatinine; BUA, blood uric acid; TG, triglyceride; CHOL, cholesterol; HDL, high-density
+lipoprotein; LDL, low-density lipoprotein; and FBG, fasting blood glucose.
+the LC group (Figure 3B). These contrasting class patterns
+within the same phyla were also observed for Proteobacteria,
+within which the relative abundance of Gammaproteobacteria
+(average = 8.4%) increased to approximately 20% in the LC
+patients, even occupying >80% in two LC patients. The HBVI
+patients had lower Betaproteobacteria levels but were not
+diﬀerent among the other three groups. The Deltaproteobacteria
+adversely correlated with the HBV infection progression while
+the least Alphaproteobacteria remained stable. Actinobacteria,
+Verrucomicrobiae, and Coriobacteria were more abundant in
+CHB and LC individuals, while Fusobacteria was the lowest
+in the HBVI patients (Figure 3B). Among the top 30 families,
+the LC patients had more Pasteurellaceae, Enterobacteriaceae,
+Campylobacteraceae, Streptococcaceae, and Leptotrichiaceae, and
+they had less Odoribacteraceae, Rikenellaceae, Barnesiellaceae,
+Paraprevotellaceae,
+Clostridiaceae,
+Ruminococcaceae,
+and
+Moglibacteriaceae. The CHB patients had more Lactobacillaceae,
+Biﬁdobacteriaceae,
+and
+Coriobacteriaceae
+(Supplementary
+Figure S2B). Among the top 40 genera, Bacteroides remained
+relatively stable in all four groups. Haemophilus, Fusobacterium,
+Veillonella, Streptococcus, and Ruminococcus were enriched in
+patients at a more serious stage of infection; however, Dialister,
+Prevotella, Paraprevotella, Anaerostipes, Phascolarctobacterium,
+Butyricimonas, and Desulfovibrio had higher distribution in the
+healthy individuals (Figure 3C, and Supplementary Figure S3).
+LEfSe Analysis to Screen out the HBV
+Infection-Related Bacterial Taxa
+We further examined the diﬀerential OTUs in the HBV infected
+patients and the healthy controls using LEfSe. A total of 38 OTUs
+were assigned to the Bacteroidetes, Firmicutes, Fusobacteria,
+Frontiers in Microbiology | www.frontiersin.org
+5
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+FIGURE 1 | Ordination analyses of clinical parameters and gut bacterial community grouped by disease progression. (A) Non-metric multidimensional scaling
+(NMDS) based on the Bray–Curtis distance showing the overall distribution pattern of clinical parameters. (B) db-RDA analyses reﬂecting differences in gut
+microbiota structures ﬁtted with signiﬁcantly correlated clinical properties. The letter with arrows indicated the total variance explanation degree. (C) Non-metric
+multidimensional scaling (NMDS) plot based on Bray–Curtis distances calculated using OTU compositions. (D) NMDS plot based on Bray–Curtis distances
+calculated using genus compositions. Adonis R2 (effect size) between groups of different category subjects was calculated with 999 permutations and shown in the
+lower part of the ﬁgure. HBVI, chronic HBV infection; CHB, chronic hepatitis B; and LC, liver cirrhosis. OTU, operational taxonomic unit. The color scheme for
+Healthy, HBVI, CHB and LC in the graph are red, green, blue, and purple.
+Proteobacteria and TM7 (phyla level), which were detected as
+signiﬁcantly increased or decreased [log(LDA) > 2, p < 0.01].
+Of these, 27 OTUs were enriched in the healthy group (Table 2).
+Parabacteroides, Prevotella, Bacteroides, and Barnesiellaceae from
+phyla Bacteroidetes were enriched in the healthy individuals,
+while distinguished genera within the S24-7 family had the
+opposite situation in both. Ruminococcus and Ruminococcaceae
+were signiﬁcantly more abundant in the healthy individuals,
+while Clostridium and Lactobacillus decreased. In addition,
+Sutterella and Desulfovibrio were observed to be highly abundant
+in the HBV infected patients. Interestingly, Fusobacterium within
+Fusobacteria was signiﬁcantly more (almost 10 times) abundant
+in the HBV infected patients than in the healthy individuals.
+Indicators Analysis Associated the HBV
+Infection Progression
+Indicator analysis identiﬁed 57 OTUs that were signiﬁcantly
+(qvalue, q < 0.1) associated with infection progression, of which
+32 OTUs belonged to Firmicutes. The most abundant OTU
+was classiﬁed as OTU21 (Ruminococcaceae bacterium), which
+occupied approximately 0.6%, while OTU50 (A. onderdonkii),
+OTU48 (Coprococcus sp.) and OTU51 (D. succinatiphilus)
+followed in abundance. The OTUs with the highest indicator
+value (0.75∼1) were classiﬁed as OTU113 (Fusobacterium
+periodonticum), which occurred in the LC group (Figure 4).
+The correlation between the 57 indicator OTUs and the
+10
+signiﬁcant
+clinical
+parameters
+were
+further
+evaluated
+to screen out those speciﬁc OTUs that might tightly relate
+with clinic applications. The results showed that OTU182
+(Eikenella corrodens), OTU226 (Gemella haemolysans), OTU199
+(Leptotrichia hongkongensis), OTU226 (Leptotrichia hofstadii),
+OTU308 (Leptotrichia sp.), OTU113 (F. periodonticum), OTU776
+(Selenomonas sp.), OTU341 (Lachnoanaerobaculum saburreum),
+OTU646
+(Howardella
+ureilytica),
+OTU315
+(Actinomyces
+odontolyticus), and OTU678 (Okadaella gastrococcus), OTU467
+(Solobacterium moorei) were adversely associated with WBC,
+RBC, PLT, Hb, TP, ALB, ALB/GLO, and HDL changes,
+Frontiers in Microbiology | www.frontiersin.org
+6
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+FIGURE 2 | Comparisons of bacterial diversity among healthy and the HBV infection progression. (A) The Venn graph of percentage of shared and unique OTUs.
+(B) The observed species number comparisons. (C) The diversity indexes (Shannon, J, Simpson and Chao1) comparisons. Letters indicate the ANOVA groupings.
+The color scheme for Healthy, HBVI, CHB and LC in the graph are red, green, blue, and purple.
+FIGURE 3 | The bacterial composition of fecal samples from patients in different taxa levels. (A) Phyla distribution. (B) Class distribution. (C) Comparisons of top 40
+genus taxa among four disease stages by heatmap. The color scheme for Healthy, HBVI, CHB and LC in the graph are red, green, blue, and purple.
+but
+were
+positively
+associated
+with
+GLO
+and
+AST/ALT
+levels. The opposite correlation was observed for OTU119
+(Bacteroides eggerthi), OTU51 (D. succinatiphilus), OTU109
+(Barnesiella
+intestinihominis),
+OTU50
+(A.
+onderdonkii),
+OTU21 (Ruminococcaceae bacterium), OTU108 (Kineothrix
+alysoides), OTU841 (Muribaculum intestinale), OTU81 (Alistipes
+shahii), OTU627 (Prevotella conceptionensis), and OTU570
+(Parasporobacterium paucivorans) (Figure 5A).
+An AUC value of 90% (95% CI: 86–94%) between the
+LC and non-LC groups was obtained with a combination
+of
+bacterial
+indicator
+markers,
+followed
+by
+its
+potential
+in
+distinguishing
+the
+healthy
+individuals
+from
+patients
+Frontiers in Microbiology | www.frontiersin.org
+7
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+TABLE 2 | Differential OTUs selected by linear discriminant analysis effect size (LEfSe).
+OTUID
+Phyla
+Genus
+Enriched group
+LDA
+p-value
+HBV_mean
+Healthy_mean
+OTU637
+Bacteroidetes
+Bacteroides
+Healthy
+2.19
+0.03
+2.85E-04
+1.12E-03
+OTU26
+Bacteroidetes
+Parabacteroides
+Healthy
+3.06
+0.04
+5.22E-2
+5.33E-02
+OTU181
+Bacteroidetes
+Prevotella
+Healthy
+2.57
+0.01
+6.60E-03
+1.31E-02
+OTU200
+Bacteroidetes
+Prevotella
+Healthy
+2.79
+0.00
+1.45E-03
+1.88E-03
+OTU733
+Bacteroidetes
+Prevotella
+Healthy
+2.05
+0.00
+6.60E-05
+2.46E-03
+OTU109
+Bacteroidetes
+un_f_Barnesiellaceae
+Healthy
+3.29
+0.04
+2.61E-02
+4.52E-02
+OTU301
+Bacteroidetes
+un_f_Barnesiellaceae
+Healthy
+2.78
+0.02
+5.24E-03
+1.20E-02
+OTU1038
+Bacteroidetes
+un_f_S24-7
+Healthy
+2.17
+0.00
+6.60E-05
+5.02E-04
+OTU255
+Bacteroidetes
+un_f_S24-7
+Healthy
+2.80
+0.05
+1.19E-03
+5.65E-03
+OTU286
+Bacteroidetes
+un_f_S24-7
+HBV
+2.75
+0.01
+2.40E-03
+2.51E-04
+OTU385
+Bacteroidetes
+un_f_S24-7
+Healthy
+2.41
+0.01
+6.60E-05
+5.01E-03
+OTU407
+Bacteroidetes
+un_f_S24-7
+HBV
+2.33
+0.03
+1.42E-03
+1.14E-03
+OTU764
+Bacteroidetes
+un_f_S24-7
+Healthy
+2.02
+0.03
+1.32E-04
+1.12E-03
+OTU83
+Firmicutes
+Clostridium
+HBV
+2.77
+0.05
+1.14E-02
+8.86E-03
+OTU252
+Firmicutes
+Lactobacillus
+HBV
+2.35
+0.05
+3.18E-03
+5.02E-04
+OTU254
+Firmicutes
+Lactobacillus
+HBV
+2.45
+0.04
+3.51E-03
+0
+OTU282
+Firmicutes
+Megasphaera
+Healthy
+2.52
+0.05
+0
+5.62E-03
+OTU380
+Firmicutes
+Megasphaera
+Healthy
+2.58
+0.01
+9.59E-04
+5.83E-03
+OTU337
+Firmicutes
+Phascolarctobacterium
+HBV
+2.56
+0.01
+2.54E-03
+1.05E-03
+OTU147
+Firmicutes
+Ruminococcus
+Healthy
+2.54
+0.02
+8.00E-03
+1.42E-02
+OTU242
+Firmicutes
+Ruminococcus
+HBV
+2.52
+0.03
+1.56E-03
+7.10E-04
+OTU244
+Firmicutes
+Ruminococcus
+Healthy
+2.25
+0.01
+4.02E-03
+5.39E-03
+OTU638
+Firmicutes
+Ruminococcus
+Healthy
+2.03
+0.03
+2.53E-04
+7.89E-04
+OTU523
+Firmicutes
+un_f_Christensenellaceae
+Healthy
+2.11
+0.01
+3.57E-04
+1.68E-03
+OTU696
+Firmicutes
+un_f_Mogibacteriaceae
+HBV
+2.00
+0.01
+5.05E-04
+0
+OTU1204
+Firmicutes
+un_f_Ruminococcaceae
+Healthy
+2.03
+0.03
+4.23E-04
+8.57E-04
+OTU567
+Firmicutes
+un_f_Ruminococcaceae
+Healthy
+2.02
+0.01
+4.44E-04
+1.92E-03
+OTU579
+Firmicutes
+un_f_Ruminococcaceae
+Healthy
+2.02
+0.03
+5.38E-04
+1.21E-03
+OTU624
+Firmicutes
+un_f_Ruminococcaceae
+Healthy
+2.25
+0.01
+1.32E-04
+3.55E-04
+OTU796
+Firmicutes
+un_f_Ruminococcaceae
+Healthy
+2.08
+0.01
+1.75E-04
+2.51E-04
+OTU779
+Firmicutes
+un_f_Veillonellaceae
+Healthy
+2.08
+0.01
+1.14E-04
+2.51E-04
+OTU801
+Firmicutes
+un_o_Clostridiales
+Healthy
+2.09
+0.01
+0
+7.10E-04
+OTU847
+Firmicutes
+un_o_Clostridiales
+Healthy
+2.19
+0.00
+1.32E-04
+2.51E-04
+OTU113
+Fusobacteria
+Fusobacterium
+HBV
+3.05
+0.03
+1.67E-02
+1.94E-03
+OTU104
+Proteobacteria
+Desulfovibrio
+HBV
+3.18
+0.01
+1.29E-02
+1.05E-02
+OTU263
+Proteobacteria
+Sutterella
+Healthy
+2.74
+0.00
+1.07E-03
+6.51E-03
+OTU268
+Proteobacteria
+Sutterella
+HBV
+2.29
+0.01
+1.64E-03
+1.29E-03
+OTU560
+TM7
+un_c_TM7-3
+Healthy
+2.05
+0.00
+3.57E-04
+8.57E-04
+p-values were adjusted with FDR method.
+(Figure 5B). In addition, based on the correlation signiﬁcance
+and relative abundance (>0.1%), 12 OTUs were screened
+out to investigate their relative abundance distribution along
+the HBV infection process. Their taxonomic information
+displayed increasing or decreasing trends in accordance with
+disease progression. For example, the relative abundance
+of OTU51 (D. succinatiphilus), OTU50 (A. onderdonkii),
+OTU109 (B. intestinihominis), OTU119 (B. eggerthii), OTU108
+(K. alysoides), and OTU81 (A. shahii) gradually decreased
+as the disease progressed to LC (Figure 5C). In addition,
+the
+relative
+abundance
+of
+OTU50
+(A.
+onderdonkii)
+and
+OTU51 (D. succinatiphilus) displayed similar trends than
+that of the 16S rDNA analysis by qPCR in another set
+of subjects (which also covered healthy to LC patients)
+(Supplementary Figure S4), which indicated that they might be
+beneﬁcial in inhibiting the progression of liver disease caused by
+HBV infection.
+More Complexed Network Features in
+LC Patients
+Correlation networks of each patient group that are directly
+related to disease progression, are well suited to detect the
+general patterns in highly populated taxonomic groups (Figure 6,
+and Supplementary Tables S4, S5). We hypothesized that non-
+random cooccurrence patterns between taxa are present if the
+coexisting microbial taxa possessed a strong and signiﬁcantly
+positive correlation (cor.test, R2 > 0.6, p < 0.05). For the
+Frontiers in Microbiology | www.frontiersin.org
+8
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+FIGURE 4 | Indicator species signiﬁcantly (q < 0.1) associated with the disease progression. The bar indicates the relative abundance of each indicator species,
+while the size of each circle represents the indicator value (association strength) of a speciﬁc species with the different group: 0–0.25, not characteristic; 0.25–0.5,
+weakly characteristic; 0.5–0.75, characteristic; and 0.75–1.0, strongly characteristic. The color scheme for Healthy, HBVI, CHB and LC in the graph are red, green,
+blue, and purple.
+healthy group, whose modularity, nodes, and edges were
+0.69, 81 and 96 separately, Leptotrichia from Fusobacteria,
+Enterococcus and Ruminococcus from Firmicutes, Actinobacillus
+from Proteobacteria were more connected. In the HBVI group,
+the nodes that clustered together mainly included Anaerococcus,
+Staphylococcus, Geobacillus, Succinivibrio, and Peptoniphilus.
+In the CHB group, Peptoniphilus, Rhodoplanes, Burkholderia,
+Staphylococcus, Corynebacterium, Peptococcus, Abiotrophia, and
+Lactobacillus were the taxa that centered with the others.
+In the LC group, Leptotrichia, Catenibacterium, Actinomyces,
+Acidaminococcus, Burkholderia, Peptoniphilus, Fusobacteria, and
+Bulleidia dominated the network and were more connected
+with the other bacterial taxa. As the disease progressed from
+the healthy subjects to the LC group, the correlation networks
+became more complex.
+DISCUSSION
+In this study, we investigated the association between HBV
+infection progression and gut microbiota changes in a larger
+number of HBV infected patients, which covered HBVI,
+CHB, and LC patients. The results suggest that gut bacterial
+diversity signiﬁcantly decreased in the LC subjects compared
+with the other groups. Furthermore, the gut microbiota
+communities signiﬁcantly correlated with clinical parameters
+Frontiers in Microbiology | www.frontiersin.org
+9
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+FIGURE 5 | The indicator species’ distribution and correlation with clinics along with the disease progression. (A) The correlation graph between clinics and indicator
+species, * denotes signiﬁcance p < 0.05 and ** denotes p < 0.01. (B) The ROC curve based on the indicator OTU to predict its potential to distinguish healthy and
+non-healthy, HBVI and non-HBVI, CHB and non-CHB, LC and non-LC. (C) The distribution of those indicator species with higher abundance (>0.1%) that
+signiﬁcantly correlated with clinics. * Denotes signiﬁcance p < 0.05 and ** denotes p < 0.01. The color scheme for Healthy, HBVI, CHB and LC in the graph are red,
+green, blue, and purple.
+including WBC count, RBC count, PLT count, Hb, TP,
+ALB, ALB/GLO, and HDL levels, which may be closely
+related
+to
+liver
+ﬁbrosis.
+In
+addition,
+indicator
+analyses
+identiﬁed featured bacterial taxa characteristic during HBV
+infection progression which could serve as a model to predict
+disease progression. The qPCR veriﬁcation results veriﬁed
+the distribution of D. succinatiphilus and A. onderdonkii.
+Moreover, to identify bacterial assemblages that potentially
+interact or share niches within HBV infection progression,
+we constructed cooccurrence networks and found that gut
+microbial network connectivity and complexity increased during
+disease progression.
+Gut Dysbiosis Closely Correlated With
+Clinical Features
+The signiﬁcant decrease of α diversity with disease progression,
+which was especially signiﬁcant in LC patients, was revealed in
+previous studies using 16S rRNA (Wu et al., 2012; Wiest et al.,
+2014; Mullish et al., 2018) and metagenome sequencing (Qin
+et al., 2014). Fecal samples were collected and matched according
+to age (Chou et al., 2015), which were reported to inﬂuence HBV
+clearance and gut microbiota population. Regarding the clinical
+features, only peripheral WBC count, RBC count, PLT count, and
+Hb changes were greatly aﬀected by the hypersplenism caused by
+liver ﬁbrosis. TP, ALB, and ALB/GLO levels, which reﬂect liver
+function, and HDL protein synthesis, which is closely related to
+cholesterol transport, had higher positive correlation with the db-
+RDA1 axis (Figure 1B). In contrast, GLO and AST/ALT which
+reﬂect severe liver damage, were negatively correlated with the
+db-RDA1 axis. However, there was no signiﬁcant correlation
+between TBIL, DBIL, IBIL, ALT, AST, HbsAg, and HBV DNA
+and the overall structure of gut microbial communities, which
+indicated that although these indices were changed, temporary
+inﬂammation of liver or HBV replication is not suﬃcient to
+cause dramatic changes in the overall gut microbiota. OTUs
+Frontiers in Microbiology | www.frontiersin.org
+10
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+FIGURE 6 | The network analysis revealing the co-occurrence patterns between bacterial taxa for each sample group. (A) Healthy group network. (B) HBVI group
+network. (C) CHB group network. (D) LC group network. The nodes were colored according to the phyla assigned by the taxa. A connection represents a strong
+(Spearman’s correlation coefﬁcient R2 > 0.6) and signiﬁcant (p < 0.05) correlation. Edges weighted according to the correlation coefﬁcient and node size weighted
+according to the relative abundance of microbial taxa.
+were classiﬁed into four major phyla, including Bacteroidetes,
+Firmicutes, Proteobacteria and Actinobacteria (each more than
+1% of the total sequences). In addition, we revealed that
+Bacteroidetes, Parabacteroides decreased while Proteobacteria
+increased in the patients. It has been conﬁrmed that these
+bacteria are restored to levels similar to levels found in healthy
+individuals after splenectomy, which was accompanied with and
+upregulation in WBC and PLT counts in liver cirrhosis patients
+(Liu et al., 2018). Bacteroidetes and Firmicutes decreased,
+while Proteobacteria increased during chronic HBV infection.
+A similar trend has been found during NAFLD, while the change
+in Actinobacteria showed the opposite trend, and increased
+during chronic HBV infection (Del Chierico et al., 2017).
+Lower Diversity and Higher Network
+Complexity in LC
+Network analysis is often used to reveal non-random covariation
+patterns that may reﬂect community organization and can
+provide a tool to reveal microbe interactions and the core
+bacterial taxa that are diﬃcult to assess in microbial communities
+in diﬀerent application conditions (Kelder et al., 2014; Sung et al.,
+2017; Bauer and Thiele, 2018). For example, Shi et al. (2016)
+used network complexity, which was a previously undescribed
+property of the rhizosphere microbiome, to deﬁne characteristics
+of the plant rhizosphere microbial activity and found that
+community organization is not captured by univariate diversity.
+However, there were no previously identiﬁed network analysis
+results associated with HBV progression. In this study, more
+nodes within Firmicutes were highly connected, and they were
+accompanied by a higher bacterial diversity than that of the other
+HBV infection groups. As the HBV infection progressed, the
+network complexity was accompanied with decreased bacterial
+diversity and fewer nodes within Firmicutes; however, more
+nodes within Actinobacteria were observed. We considered
+that even though the bacteria in the healthy groups were
+numerically more abundant than those in the LC patients,
+the bacterial communities in the patients with severe HBV
+infection were less rich because particular disease-related taxa
+became dominant in the HBV infection related disease patients.
+As D. succinatiphilus A. onderdonkii, B. intestinihominis, K.
+alysoides, A. shaii, and B. eggerthii decreased when evaluating
+the spectrum from healthy individuals to LC patients, we
+postulated that bile acid or other metabolites produced from
+microbial communities may promote the development of niches
+populated by dominant taxa, which would concurrently yield
+decreased diversity and greater interactions and would overall
+result in more complex cooccurrence patterns along with the
+HBV infection progression. The inverse relationship between
+diversity and network connectivity highlight the importance
+of studying the relationships among organisms, as they are a
+crucial dimension of community organization not captured by
+univariate diversity metrics.
+The Role of Indicator OTUs in the
+Progression of HBV Infection
+Although severe gut dysbiosis, which is associated with
+hypersplenism and great liver dysfunction, occur in the
+LC stage of HBV related liver disease, downregulation of
+Frontiers in Microbiology | www.frontiersin.org
+11
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+D. succinatiphilus, A. onderdonkii, B. intestinihominis, A. shahii,
+K. alysoides, and B. eggerthii occurred even in the earliest phase
+of HBV infection. Combining the abundance of these bacteria
+with serum HBV DNA, serum ALT changes in patients may
+help predict the risk of disease progression and determine the
+timing of antiviral therapy or evaluate curative eﬀects. Early
+diagnosis and treatment toward compensated cirrhosis may help
+delay cirrhosis from the compensated to the decompensated
+state. Ren et al. (2018) reported that the gut microbiome could
+serve as a tool to target noninvasive biomarkers for early
+hepatocellular carcinoma (Bernardi and Caraceni, 2018). Qin
+previously established an accurate patient discrimination index
+based on 15 microbial biomarkers and found that microbiota-
+targeted biomarkers could serve as a powerful tool for an LC
+diagnosis (Qin et al., 2014). In this study, a combination of
+bacterial indicator markers distinguished the LC and non-LC
+groups, which provides a new method for the early diagnosis of
+LC to guide clinical treatment.
+In this study, we found that OTUs positively associated
+with worsening clinical parameters, which reﬂected hepatic
+decompensation. Several OTUs were enriched in the late stage
+of LC and were all of oral origin, including E. corrodens, G.
+haemolysans, Leptotrichia, F. periodonticum, Selenomonas sp., A.
+odontolyticus, and S. moorei, which have been reported to cause
+opportunistic infections, such as a liver abscess or endocarditis,
+or have been associated with colorectal cancer (Malik et al.,
+2010; Woo et al., 2010; Chao et al., 2011; Warren et al., 2013;
+Revest et al., 2016; Eriksson and Lif, 2017; Yu et al., 2017;
+de Carvalho Baptista et al., 2018). Intestinal colonization of
+bacteria of oral origin has been associated with many diseases.
+Atarashi et al. (2017) reported that oral bacteria Klebsiella sp.
+induced T helper 1 cells and triggered gut inﬂammation when
+it colonized the gut. Furthermore, antibiotic resistance of oral
+bacteria makes it diﬃcult to cure opportunistic infections caused
+by oral bacteria invading through the fragile intestinal mucosal
+barrier during LC. The oral bacteria enriched in the LC group
+may be potential pathogens of opportunistic infection or a
+stimulator of inﬂammation in cirrhosis, and may cause severe
+damage to the organism. The diminished bactericidal eﬀects of
+gastric acid, overgrowth of intestinal bacteria and gut dysbiosis in
+patients may contribute to the colonization of oral bacteria in the
+gut (Qin et al., 2014).
+In addition, we found that the OTUs gradually decreased
+when evaluating the spectrum from healthy individuals to LC
+patients, and these OTUs have been reported to contribute
+to immunity function and the maintenance of gut mucosal
+barrier function, which play an important role in reducing
+translocation of bacterial products. Alistipes and Prevotella
+decreased in NAFLD compared with healthy subjects, and
+this change was accompanied by a downregulation of CD4+
+and CD8+ T cells, an upregulation of TNF-α, IL-6, IFN-γ,
+irregularly arranged microvilli, and widened tight junctions in
+gut mucosa (Jiang et al., 2015). B. intestinihominis facilitated
+cyclophosphamide-induced
+therapeutic
+immunomodulatory
+eﬀects via the promotion of the IFN-γ producing γδT cell
+inﬁltration in cancer lesions in advanced lung and ovarian cancer
+patients
+(Daillère et al., 2016).
+Butyrate-producing
+bacteria
+K. alysoides could facilitate maintenance of the intestinal barrier
+by providing an energy source for enterocytes (Haas and
+Blanchard, 2017). Downregulation of these enriched bacteria in
+healthy individuals may promote the colonization of pathogens
+in the gut and further promote systemic inﬂammation and
+worsen hepatic dysfunction, which could cause greater gut
+dysbiosis via intestinal congestion or bile excretion disorder,
+forming a vicious circle. Restoration of gut dysbiosis may
+break this circle.
+FMT as a Tool to Intervene Gut Dysbiosis
+Related With HBV Infection
+Treatment of liver diseases that target gut microbiota has been
+conﬁrmed to eﬀectively improve clinical indicators. Bajaj et al.
+improved cognition and dysbiosis in cirrhosis with recurrent
+hepatic encephalopathy (HE) by transplanting fecal microbiota
+from a rational stool donor to patients that may beneﬁt from
+a reduction of ammoniacal bacteria (Mullish et al., 2017). Bajaj
+et al. (2018b) revealed that FMT restored antibiotic-associated
+disruption in microbial diversity and function when the donor
+sample was enriched in Lachnospiraceae and Ruminococcaceae,
+which were highly abundant in the healthy subjects and less
+abundant in LC patients in our study. Ren et al. (2017) induced
+HBeAg clearance in patients with positive HBeAg after long-
+term antiviral therapy, which was accompanied by an increasing
+relative abundance of Prevotella and Lachnospiraceae. In this
+study, we observed gut microbiota alterations in earlier stages
+of chronic HBV infection, such as HBVI and CHB, while the
+most serious alterations were observed in the LC patients.
+Interestingly, the relative abundance of A. onderdonkii and
+D. succinatiphilus were highest in the healthy individuals and low
+in the HBV infected patients, which were both revealed by our
+16S rRNA sequencing and qPCR results. A. onderdonkii, which
+can be isolated from human intestines, is strictly anaerobic and
+produces succinic acid from the principal metabolic end-product
+of glucose fermentation (Yuli et al., 2006). Results have shown
+that Alistipes were decreased in CHB patients compared with
+healthy controls (Wang et al., 2017). Therefore, A. onderdonkii
+might help to activate the immune response to cure HBV
+patients by releasing succinic acid, which has been shown to
+have beneﬁcial eﬀects (Ladrière et al., 1998; Xu and Guo, 2010;
+Iplik et al., 2018). D. succinatiphilus has been isolated from
+human feces and grows in anaerobic conditions, and is able to
+decarboxylate succinate to propionate (Morotomi et al., 2008),
+which can bind to the GPR-43 that is expressed on lymphocytes in
+order to maintain an appropriate immune defense (Cani, 2018).
+This study covered the HBV infection process, from HBVI to
+LC, and aimed to reveal the unique microbiota proﬁle during
+each disease stage, which might help the future remission of liver
+disease through intervening gut microbiota treatments. However,
+our research has several limitations. First, the results need further
+multicenter veriﬁcation, consisting of several hospitals with
+the same patient inclusion standards. Second, it is essential to
+understand the details of how the diﬀerences in HBV genotypes
+aﬀect the gut microbiota due to their pathogenicity. Third, the
+reason gut dysbiosis exists in chronic HBV infection is not
+Frontiers in Microbiology | www.frontiersin.org
+12
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+well known and should be explored in further studies. Fourth,
+the reason D. succinatiphilus and A. onderdonkii decrease while
+F. periodonticum increases in HBV infected patients is not
+completely understood and should be examined and discussed in
+further studies.
+CONCLUSION
+In
+summary,
+we
+investigated
+gut
+microbiota
+alterations
+between healthy HBVI, CHB, and LC subjects. Prevotella and
+Phascolarctobacterium were the least abundant in the LC group;
+however, they were the most abundant in the healthy group.
+Fusobacteria, Klebsiella, Veillonella and Haemophilus increased
+as the disease progressed. In addition, the clinical features and gut
+microbiota communities showed signiﬁcant linear relationships,
+especially with changes in RBC, Hb, PLT, AST/ALT, and ALB
+levels. The signiﬁcantly higher abundance of D. succinatiphilus
+and A. onderdonkii in the healthy cohort, while becoming less
+in the more serious disease stages, imply their potential beneﬁt
+and requires further in-depth investigations. The complexed
+concurrence network patterns associated with the infection
+progression, demonstrated that ecology networks formed by
+speciﬁc bacterial taxa with detrimental features were the key-
+stone taxa in HBV progression, and their reversion might be
+attainable via beneﬁcial taxa, such as D. succinatiphilus and
+A. onderdonkii.
+DATA AVAILABILITY STATEMENT
+The datasets generated for this study can be found in NCBI SRA
+submission (SUB6109752), BioProject (PRJNA558158).
+ETHICS STATEMENT
+This study was performed in accordance with the approved
+guidelines, the Ethics Committee of Xiamen University with
+written informed consent from all subjects (Permit Number
+ID: XMU-IRB-2018001) and also registered in ClinicalTrials.gov
+(ID:NCT03587467). All participants provided informed consent,
+and the study protocol conformed to the ethical guidelines of the
+Declaration of Helsinki.
+AUTHOR CONTRIBUTIONS
+ZC, YX, and FZ conceived and designed the experiments. FZ,
+JW, and QC collected the fecal samples. YX analyzed the clinical
+data. ZC and LY extracted the DNA. ZC, BZ, and SX analyzed
+the sequencing data. ZC, YX, and XZ wrote the manuscript.
+ZC, JL, RS, and XZ corrected the manuscript. XZ, HX, and
+JR decided to publish. All authors read and approved the ﬁnal
+version of the manuscript.
+FUNDING
+This work was ﬁnancially supported by the National Natural
+Science Foundation of China (81770558 and 81900541) and
+the Postdoctoral Science Foundation of China (2018M632585
+and 2019T120559).
+ACKNOWLEDGMENTS
+We thank Fengchun Lin for her support in collecting fecal
+samples and Jinshui Pan for his clinical suggestions. We thank
+all patients and healthy individuals for providing samples
+and personal information. We also thank TreatGut Company
+(Xiamen, China) for support in DNA sequencing on the
+MiSeq sequencer and Xiahe Branch of Zhongshan Hospital
+aﬃliated with Xiamen University for the sample collecting of
+healthy individuals.
+SUPPLEMENTARY MATERIAL
+The Supplementary Material for this article can be found
+online
+at:
+https://www.frontiersin.org/articles/10.3389/fmicb.
+2020.00383/full#supplementary-material
+REFERENCES
+Atarashi, K., Suda, W., Luo, C., Kawaguchi, T., Motoo, I., Narushima, S., et al.
+(2017). Ectopic colonization of oral bacteria in the intestine drives TH1 cell
+induction and inﬂammation. Science 358:359. doi: 10.1126/science.aan4526
+Bajaj, J. S., Idilman, R., Mabudian, L., Hood, M., Fagan, A., Turan, D., et al. (2018a).
+Diet aﬀects gut microbiota and modulates hospitalization risk diﬀerentially in
+an international cirrhosis cohort. Hepatology 68, 234–247. doi: 10.1002/hep.
+29791
+Bajaj, J. S., Kakiyama, G., Savidge, T., Takei, H., Kassam, Z. A., Fagan, A.,
+et al. (2018b). Antibiotic-associated disruption of microbiota composition and
+function in cirrhosis is restored by fecal transplant. Hepatology 68, 1549–1558.
+doi: 10.1002/hep.30037
+Bauer, E., and Thiele, I. (2018). From network analysis to functional metabolic
+modeling of the human gut microbiota. Msystems 3:e00209-17. doi: 10.1128/
+mSystems.00209-17
+Bernardi, M., and Caraceni, P. (2018). Novel perspectives in the management of
+decompensated cirrhosis. Nat. Rev. Gastro. Hepat. 15, 753-764.
+Bibbò, S., Ianiro, G., Dore, M., Simonelli, C., Newton, E., and Cammarota,
+G. (2018). Gut microbiota as a driver of inﬂammation in nonalcoholic
+fatty liver disease. Mediators Inﬂamm. 2018:9321643. doi: 10.1155/2018/932
+1643
+Bomhof, M., Parnell, J., Ramay, H., Crotty, P., Rioux, K. P., Probert, C. S.,
+et al. (2018). Histological improvement of non-alcoholic steatohepatitis with a
+prebiotic: a pilot clinical trial. Eur. J. Nutr. 58, 1735–1745. doi: 10.1007/s00394-
+018-1721-2
+Boutros, P. C., and Chen, H. (2011). VennDiagram: a package for the generation of
+highly-customizable Venn and Euler diagrams in R. BMC Bioinformatics 12:35.
+doi: 10.1186/1471-2105-12-35
+Cani, P. D. (2018). Human gut microbiome: hopes, threats, and promises. Gut 67,
+1716–1725. doi: 10.1136/gutjnl-2018-316723
+Chao, C. T., Liao, C. H., Lai, C. C., and Hsueh, P. R. (2011). Liver abscess due
+to Actinomyces odontolyticus in an immunocompetent patient. Infection. 39:77.
+doi: 10.1007/s15010-010-0063-7
+Cherven, K. (2015). Mastering Gephi Network Visualization. Birmingham: Packt
+Publishing Ltd.
+Frontiers in Microbiology | www.frontiersin.org
+13
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+Chou, H., Chien, W., Wu, L., Cheng, C.-H., Chung, C.-H., Horng, J.-H., et al.
+(2015). Age-related immune clearance of hepatitis B virus infection requires the
+establishment of gut microbiota. Proc. Natl. Acad. Sci. U.S.A. 112, 2175–2180.
+doi: 10.1073/pnas.1424775112
+Dabney, A., and Storey, J. D. (2015). Qvalue: Q-Value Estimation for False Discovery
+Rate Control. Available online at: http://github.com/jdstorey/qvalue (accessed
+August 13, 2018).
+Daillère, R., Vétizou, M., Waldschmitt, N., Yamazaki, T., Isnard, C., Poirier-
+Colame, V., et al. (2016). Enterococcus hirae and Barnesiella intestinihominis
+facilitate cyclophosphamide-induced therapeutic immunomodulatory eﬀects.
+Immunity 45, 931–943. doi: 10.1016/j.immuni.2016.09.009
+De Caceres, M., and Legendre, P. (2009). Associations between species and groups
+of sites: indices and statistical inference. Ecology 90, 3566–3574. doi: 10.1890/
+08-1823.1
+de Carvalho Baptista, I. M., Martinho FC, Nascimento, G. G., Da, C. R. S., Prado,
+R., and Valera, M. C. (2018). Colonization of oropharynx and lower respiratory
+tract in critical patients: risk of ventilator-associated pneumonia. Arch. Oral
+Biol. 85, 64–69. doi: 10.1016/j.archoralbio.2017.09.029
+Del Chierico , F., Nobili, V., Vernocchi, P., Russo, A., De Stefanis , C., Gnani,
+D., et al. (2017). Gut microbiota proﬁling of pediatric nonalcoholic fatty
+liver disease and obese patients unveiled by an integrated meta-omics-based
+approach. Hepatology. 65, 451–464. doi: 10.1002/hep.28572
+Edgar, R. C. (2013). Uparse: highly accurate otu sequences from microbial
+amplicon reads. Nat. Methods 10, 996–998. doi: 10.1038/nmeth.2604
+Eriksson, L., and Lif, H. P. (2017). Johansson I. saliva and tooth bioﬁlm bacterial
+microbiota in adolescents in a low caries community. Sci. Rep.7:861. doi: 10.
+1038/s41598-017-06221-z
+Garcia-Tsao, G., and Wiest, R. (2004). Gut microﬂora in the pathogenesis of the
+complications of cirrhosis. Best Pract. Res. Cl. Ga. 18, 353–372. doi: 10.1016/j.
+bpg.2003.10.005
+Guo, L., and Wang, L. (2018). The research on gutmicrobiota dysbiosis in liver
+cirrhosis patients: current status. Chin. J. Microecol. 30, 104–108.
+Haas, K. N., and Blanchard, J. L. (2017). Kineothrix alysoides, gen. nov., sp. nov., a
+saccharolytic butyrate-producer within the family Lachnospiraceae. Int. J. Syst.
+Evol. Microbiol. 67, 402–410. doi: 10.1099/ijsem.0.001643
+Hartmann, P., Hochrath, K., Horvath, A., Chen, P., Seebauer, C. T., Llorente,
+C., et al. (2018). Modulation of the intestinal bile acid/farnesoid X
+receptor/ﬁbroblast growth factor 15 axis improves alcoholic liver disease in
+mice. Hepatology 67, 2150–2166. doi: 10.1002/hep.29676
+Hoyles, L., Fernández-Real, J. M., Federici, M., Serino, M., Abbott, J., Charpentier,
+J., et al. (2018). Molecular phenomics and metagenomics of hepatic steatosis in
+non-diabetic obese women. Nat. Med. 24, 1070–1080. doi: 10.1038/s41591-018-
+0061-3
+Iplik, E. S., Catmakas, T., and Cakmakoglu, B. A. (2018). New target for the
+treatment of endometrium cancer by succinic acid. Cell Mol. Biol. 64, 60–63.
+doi: 10.14715/cmb/2018.64.1.11
+Jiang, W., Wu, N., Wang, X., Chi, Y., Zhang, Y., Qiu, X., et al. (2015). Dysbiosis
+gut microbiota associated with inﬂammation and impaired mucosal immune
+function in intestine of humans with non-alcoholic fatty liver disease. Sci. Rep.
+5:8096. doi: 10.1038/srep08096
+Kelder, T. Stroeve, J. H. M., Bijlsma, S, Radonjic, M, Roeselers, G.
+(2014).
+Correlation network analysis reveals relationships between diet-induced
+changes in human gut microbiota and metabolic health. Nutr. Diabetes 4:e122.
+Ladrière, L., Mercan, D., BjöRkling , F., and Malaisse, W. J. (1998). Improved
+viability and metabolic behavior of hepatocytes after liver storage in the
+presence of a succinic acid ester. Transplantation. 66:183.
+doi: 10.1097/
+00007890-199807270-00007
+Lavanchy, D. D. Lavanchy, D., Hepatitis, B (2004). Virus epidemiology, disease
+burden, treatment, and current and emerging prevention and control measures.
+J. Viral Hepatitis. 11, 97–107. doi: 10.1046/j.1365-2893.2003.00487.x
+Liu, Y., Li, J., Jin, Y., Zhao, L., Zhao, F., Feng, J., et al. (2018). Splenectomy leads
+to amelioration of altered gut microbiota and metabolome in liver cirrhosis
+patients. Front. Microbiol. 9:963. doi: 10.3389/fmicb.2018.00963
+Lu, H., Wu, Z., Xu, W., Yang, J., Chen, Y., and Li, L. (2011). Intestinal microbiota
+was assessed in cirrhotic patients with hepatitis B virus infection. Intestinal
+microbiota of HBV cirrhotic patients. Microb Ecol. 61, 693–703. doi: 10.1007/
+s00248-010-9801-8
+Mago, T., and Salzberg, S. L. (2011). FLASH: fast length adjustment of short reads
+to improve genome assemblies. Bioinformatics 27, 2957–2963. doi: 10.1093/
+bioinformatics/btr507
+Malik, I., Ghosh, S., Nutt, C., Macdonald, A., Bal, A. M., and Collier, A. (2010).
+Gemella haemolysans bacteraemia in a patient with solitary liver abscess.
+J. Microbiol. Immunol. 43, 438–441. doi: 10.1016/S1684-1182(10)60067-9
+Mancini, A., Campagna, F., Amodio, P., and Tuohy, K. (2018). Gut : liver : brain
+axis: the microbial challenge in the hepatic encephalopathy. Food Funct. 9,
+373–388.
+Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput
+sequencing reads. Embnet J. 17, 10–12. doi: 10.14806/ej.17.1.200
+Morotomi, M., Nagai, F., Sakon, H., and Tanaka, R. (2008). Dialister succinatiphilus
+sp. nov. and Barnesiella intestinihominis sp. nov., isolated from human faeces.
+Int. J. Syst. Evol. Micr. 58, 2716–2720. doi: 10.1099/ijs.0.2008/000810-0
+Mullish, B., McDonald, J., Thursz, M., and Marchesi, J. (2017). Fecal microbiota
+transplant from a rational stool donor improves hepatic encephalopathy:
+a randomized clinical trial. Hepatology 66, 1354–1355.
+doi: 10.1002/hep.
+29369
+Mullish, B. H., Mcdonald, J., Thursz, M. R., and Marchesi, J. R. (2018). Antibiotic-
+associated disruption of microbiota composition and function in cirrhosis
+is restored by fecal Transplant. Hepatology 68, 1549–1558. doi: 10.1002/hep.
+30037
+Oksanen, J., Blanchet, F. G., Kindt, R., Legendre, P., Minchin, P. R., O’Hara,
+R. B., et al. (2015). Vegan: Community Ecology Package. Available online at:
+https://github.com/vegandevs/vegan (accessed July 3, 2018).
+Ott, J. J., Stevens, G. A., Groeger, J., and Wiersma, S. T. (2012). Global
+epidemiology of hepatitis B virus infection: new estimates of age-speciﬁc HBsAg
+seroprevalence and endemicity. Vaccine. 30, 2212–2219. doi: 10.1016/j.vaccine.
+2011.12.116
+Ponziani, F., Bhoori, S., Castelli, C., Putignani, L., Rivoltini, L., Del Chierico, H.,
+et al. (2018). Hepatocellular carcinoma is associated with gut microbiota proﬁle
+and inﬂammation in nonalcoholic fatty liver disease. Hepatology 69, 107–120.
+doi: 10.1002/hep.30036
+Qin, N., Ehrlich, D., Zheng, S., and Li, L. (2014). Human gut microbiome
+alterations in liver cirrhosis. Nature 513, 311–317.
+R Core Team, (2014). R: a Language and Environment for Statistical Computing. R
+Foundation for Statistical Computing. Vienna: R Core Team.
+Ray, K. (2012). Gut microbiota: married to our gut microbiota. Nat. Rev.
+Gastroenterol. Hepatol. 9, 555. doi: 10.1038/nrgastro.2012.165
+Ren, Y.-D., Ye, Z.-S., Yang, L.-Z., Jin, L.-X., Wei, W.-J., Deng, Y.-Y., et al. (2017).
+Fecal microbiota transplantation induces hepatitis B virus e-antigen (HBeAg)
+clearance in patients with positive HBeAg after long-term antiviral therapy.
+Hepatology 65, 1765–1768. doi: 10.1002/hep.29008
+Ren, Z., Li, A., Jiang, J., Zhou, L., Yu, Z., Lu, H., et al. (2018). Gut
+microbiome analysis as a tool towards targeted non-invasive biomarkers for
+early hepatocellular carcinoma. Gut 68, 1014–1023. doi: 10.1136/gutjnl-2017-
+315084
+Revest, M., Egmann, G., Cattoir, V., and Tattevin, P. (2016). HACEK endocarditis:
+state-of-the-art. Expert Rev. Anti. Infe 14, 523–530. doi: 10.1586/14787210.2016.
+1164032
+Segata, N., Izard, J., Waldron, L., Miropolsky, L., Garrett, W. S., Huttenhower, C.,
+et al. (2011). Metagenomic biomarker discovery and explanation. Genome Biol.
+12:R60. doi: 10.1186/gb-2011-12-6-r60
+Shao, T., Zhao, C., Li, F., Gu, Z., Liu, L., Zhanga, L., et al. (2018). Intestinal HIF-1α
+deletion exacerbates alcoholic liver disease by inducing intestinal dysbiosis and
+barrier dysfunction. J. Hepatol. 69, 886–895. doi: 10.1016/j.jhep.2018.05.021
+Shi, S., Nuccio, E. E., Shi, Z. J., He, Z., Zhou, J., and Firestone, M. K. (2016). The
+interconnected rhizosphere: High network complexity dominates rhizosphere
+assemblages. Ecol. Lett. 19, 926–936. doi: 10.1111/ele.12630
+Stärkel, P., Leclercq, S., de Timary, P., and Schnabl, B. (2018). Intestinal dysbiosis
+and permeability: the yin and yang in alcohol dependence and alcoholic liver
+disease. Clin. Sci. 132, 199–212. doi: 10.1042/CS20171055
+Sung, J., Kim, S., Jjt, C., Jang, S., Jin, Y.-S., Jung, G. Y., et al. (2017). Global
+metabolic interaction network of the human gut microbiota for context-speciﬁc
+community-scale analysis. Nat. Commun. 8:15393. doi: 10.1038/ncomms15393
+Tilg, H., Cani, P., and Mayer, E. (2016). Gut microbiome and liver diseases. Gut 65,
+2035–2044. doi: 10.1136/gutjnl-2016-312729
+Frontiers in Microbiology | www.frontiersin.org
+14
+March 2020 | Volume 11 | Article 383
+Chen et al.
+Bacterial Network in Hepatitis B
+Tripathi, A., Debelius, J., Brenner, D. A., Karin, M., Loomba, R., Schnabl, B., et al.
+(2018). The gut-liver axis and the intersection with the microbiome. Nat .Rev.
+Gastroenterol. Hepatol 15, 397–411.
+Wang, J., Wang, Y., Zhang, X., Liu, J., Zhang, Q., Zhao, Y., et al. (2017). Gut
+microbial dysbiosis is associated with altered hepatic functions and serum
+metabolites in chronic hepatitis B Patients. Front. Microbiol. 8:2222. doi: 10.
+3389/fmicb.2017.02222
+Warren, R. L., Freeman, D. J., Pleasance, S., Watson, P., Moore, R. A., Cochrane,
+K., et al. (2013). Co-occurrence of anaerobic bacteria in colorectal carcinomas.
+Microbiome 1, 16–16. doi: 10.1186/2049-2618-1-16
+Wickham, H. (2009). ggplot2: Elegant Graphics for Data Analysis. Berlin: Springer
+Publishing Company, Incorporated.
+Wiest, R., Albillos, A., Trauner, M., Bajaj, J., and Jalan, R. (2017). Targeting the gut-
+liver axis in liver disease. J. Hepatol. 67, 1084–1103. doi: 10.1016/j.jhep.2017.
+05.007
+Wiest, R., Lawson, M., and Geuking, M. (2014). Pathological bacterial trans-
+location in liver cirrhosis. J. Hepatol. 60, 197–209. doi: 10.1016/j.jhep.2013.
+07.044
+Woo, P. C., Wong, S. S., Teng, J. L., Leung, K. W., Ngan, A. H., Zhao, D. Q.,
+et al. (2010). Leptotrichia hongkongensis sp. nov., a novel Leptotrichia species
+with the oral cavity as its natural reservoir. J. Zhejiang Univ. Sci. B 11, 391–401.
+doi: 10.1631/jzus.B1000056
+World Medical Association. (2008). Declaration of Helsinki - Ethical Principles for
+Medical Research Involving Human Subjects. World Med. J. 27, 235–237.
+Wu, Z. W., Lu, H. F., Wu, J., Zuo, J., Chen, P., Sheng, J. F., et al. (2012). Assessment
+of the fecal lactobacilli population in patients with hepatitis B virus-related
+decompensated cirrhosis and hepatitis B cirrhosis treated with liver transplant.
+Microb. Ecol. 63, 929–937. doi: 10.1007/s00248-011-9945-1
+Xu, J., and Guo, B. H. (2010). Microbial succinic acid, its polymer poly(butylene
+succinate), and applications.plastics from bacteria. Nat. Funct. Appl.
+Yamada, S., Kamada, N., Amiya, T., Nakamoto, N., Nakaoka, T., Kimura, M.,
+et al. (2017). Gut microbiota-mediated generation of saturated fatty acids elicits
+inﬂammation in the liver in murine high-fat diet-induced steatohepatitis. BMC
+Gastroenterol. 17:136. doi: 10.1186/s12876-017-0689-3
+Ye, J., Li, Y., Wu, W., Shi, D., Fang, D.-Q., Yang, L.-Y., et al. (2018). Dynamic
+alterations in the gut microbiota and metabolome during the development of
+methionine-choline-deﬁcient diet-induced nonalcoholic steatohepatitis. World
+J. Gastroenterol. 24, 2468–2481. doi: 10.3748/wjg.v24.i23.2468
+Yu, J., Qiang, F., Wong, S. H., Zhang, D., Yi, Liang Q, Qin, Y., et al. (2017).
+Metagenomic analysis of faecal microbiome as a tool towards targeted non-
+invasive biomarkers for colorectal cancer. Gut 66, 70–78. doi: 10.1136/gutjnl-
+2015-309800
+Yuli, S., Eija, K. N. N., Merja, R., Liu, C., Bryk, A., Eerol, E., et al. (2006). Alistipes
+onderdonkii sp. nov. and Alistipes shahii sp. nov., of human origin. Int. J. Syst.
+Evol. Micr. 56(Pt 8), 1985. doi: 10.1099/ijs.0.64318-0
+Zamparelli, M. S., Rocco, A., Compare, D., and Nardone, G. (2017). The gut
+microbiota: a new potential driving force in liver cirrhosis and hepatocellular
+carcinoma. United Eur. Gastroent. 5, 944–953. doi: 10.1177/2050640617705576
+Conﬂict of Interest: The authors declare that the research was conducted in the
+absence of any commercial or ﬁnancial relationships that could be construed as a
+potential conﬂict of interest.
+Copyright © 2020 Chen, Xie, Zhou, Zhang, Wu, Yang, Xu, Stedtfeld, Chen, Liu,
+Zhang, Xu and Ren. This is an open-access article distributed under the terms
+of the Creative Commons Attribution License (CC BY). The use, distribution or
+reproduction in other forums is permitted, provided the original author(s) and the
+copyright owner(s) are credited and that the original publication in this journal
+is cited, in accordance with accepted academic practice. No use, distribution or
+reproduction is permitted which does not comply with these terms.
+Frontiers in Microbiology | www.frontiersin.org
+15
+March 2020 | Volume 11 | Article 383

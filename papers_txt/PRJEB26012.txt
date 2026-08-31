@@ -1,0 +1,908 @@
+1925
+Journals of Gerontology: Medical Sciences
+cite as: J Gerontol A Biol Sci Med Sci, 2023, Vol. 78, No. 10, 1925–1932
+https://doi.org/10.1093/gerona/glad011
+Advance Access publication January 19, 2023
+Published by Oxford University Press on behalf of The Gerontological Society of America 2023. This work is written by (a) US Government employee(s) and is in the public 
+domain in the US.
+Special Article: Sleep, Circadian Rhythms, and Aging: Advancing Knowledge to  
+Promote Older Adults
+Association of Subjective and Objective Measures of Sleep 
+With Gut Microbiota Composition and Diversity in Older 
+Men: The Osteoporotic Fractures in Men Study
+Mehrbod Estaki, PhD,1,  Lisa Langsetmo, PhD,2,  Michelle Shardell, PhD,3,  Anna Mischel, 
+BA,4 Lingjing Jiang, PhD,5 Yuan Zhong, MS,6 Christopher Kaufmann, PhD,7 Rob Knight, 
+PhD,8,9,10,11 Katie Stone, PhD,12,13,  and Deborah Kado, MD, MS,14,15,*,
+1Cumming School of Medicine, University of Calgary, Calgary, Alberta, Canada. 2Center for Care Delivery and Outcomes Research, 
+Minneapolis VA Health Care System, Minneapolis, Minnesota, USA. 3Institute for Genome Sciences, University of Maryland School 
+of Medicine, Baltimore, Maryland, USA. 4School of Medicine, University of California San Diego, La Jolla, California, USA.  5Janssen 
+Research and Development Los Angeles, Los Angeles, California, USA. 6Department of Biostatistics, University of Michigan School 
+of Public Health, Ann Arbor, Michigan, USA. 7Department of Aging and Geriatric Research, University of Florida College of Medicine, 
+Gainesville, Florida, USA. 8Department of Pediatrics, UC San Diego, La Jolla, California, USA. 9UC San Diego Center for Microbiome 
+Innovation, La Jolla, California, USA. 10Department of Computer Science and Engineering, UC San Diego, La Jolla, California, USA. 
+11Department of Bioengineering, UC San Diego, La Jolla, California, USA. 12Department of Research, California Pacific Medical Center 
+Research Institute, San Francisco, California, USA. 13Department of Epidemiology and Biostatistics, University of California San Francisco, 
+San Francisco, California, USA. 14Geriatrics Section, Stanford University School of Medicine, Palo Alto, California, USA. 15Veterans Health 
+Administration, Geriatrics Research Education and Clinical Center, Palo Alto, California, USA.
+*Address correspondence to: Deborah Kado, MD, MS, Geriatrics Section, Stanford University School of Medicine, Palo Alto, CA, USA. 
+E-mail: dkado@stanford.edu
+Received: August 9, 2022; Editorial Decision Date: December 19, 2022
+Decision Editor: Lewis Lipsitz, MD, FGSA
+Abstract
+Background:  Growing evidence suggests bidirectional links between gut microbiota and sleep quality as shared contributors to health. Little 
+is known about the relationship between microbiota and sleep among older persons.
+Methods:  We used 16S rRNA sequencing to characterize stool microbiota among men (n = 606, mean [standard deviation] age = 83.9 [3.8]) 
+enrolled in the Osteoporotic Fractures in Men (MrOS) study from 2014 to 2016. Sleep was assessed concurrently by a questionnaire (Pittsburgh 
+Sleep Quality index [PSQI]), and activity monitor to examine timing (acrophase) and regularity of patterns (F-statistic). Alpha diversity was 
+measured using Faith’s phylogenetic diversity (PD). Beta diversity was calculated with robust Aitchison distance with matrix completion 
+(RPCA) and phylogenetic-RPCA (PRPCA). Their association with sleep variables was tested with partial distance-based redundancy analysis 
+(dbRDA). Predictive-ratio biomarkers associated with sleep measurements were identified with CoDaCoRe.
+Results:  In unadjusted analyses, men with poor sleep (PSQI >5) tended to have lower alpha diversity compared to men with normal sleep 
+(Faith’s PD, beta = −0.15; 95% confidence interval [CI]: −0.30 to 0.01, p = .06). Sleep regularity was significantly associated with RPCA and 
+PRPCA, even after adjusting for site, batch, age, ethnicity, body mass index, diabetes, antidepressant and sleep medication use, and health 
+behaviors (RPCA/PRPCA dbRDA; p = .033/.002). In taxonomic analysis, ratios of 7:6 bacteria for better regularity (p = .0004) and 4:7 for worse 
+self-reported sleep (p = .005) were differentially abundant: some butyrate-producing bacteria were associated with better sleep characteristics.
+Conclusions:  Subjective and objective indicators of sleep quality suggest that older men with better sleep patterns are more likely to harbor 
+butyrate-producing bacteria associated with better health.
+Keywords:   Biomarkers, Epidemiology, Metabolism, Sleep
+
+Abundant evidence suggests that adequate sleep health is an im-
+portant aspect of healthy aging. Without it, persons are at in-
+creased risk for a multitude of adverse health outcomes including 
+cardiometabolic disorders, systemic inflammation, and all-cause 
+mortality (1). Although adult humans spend about a third of their 
+life sleeping, our understanding of its underlying physiologic basis 
+is not completely understood. However, it is known that disrupted 
+sleep and circadian misalignment are associated with metabolic 
+dysregulation, and some hypothesize that the influence of sleep on 
+metabolic health may be mediated by the gut–brain axis.
+A growing number of animal and human studies implicate a bi-
+directional relationship between sleep and the gut microbiome (2). 
+For example, younger and middle-aged adults with insomnia have 
+been reported to have decreased microbiome richness and diversity 
+with a reduction in short-chain fatty acid (SCFA)-producing bacteria 
+(3). In addition, circadian rhythms have gained attention as being 
+important in regulating metabolism, and both humans and microbes 
+contain clock genes that are important in synchronizing sleep–wake 
+cycles (4). Theoretically, if it can be shown that the gut microbiota 
+and its metabolites influence sleep health, altering intestinal bacterial 
+composition and/or capitalizing on their relevant metabolites could 
+potentially treat sleep disorders.
+Sleep comprises multiple dimensions including duration, timing, 
+regularity, continuity, and quality; yet previous studies in humans 
+investigating sleep and the gut microbiome have focused on either 
+self-reported or a single aspect of sleep, such as the effects of short-
+term sleep restriction on microbial composition (5,6). In addition, 
+although anywhere from 36% to 69% of older adults report sleep 
+disturbances (7), few studies have included older adults, especially 
+those over the age of 75. With increases in life expectancy now be-
+yond 75, there is a considerable need to better understand how sleep 
+health may impact later life span. With advancing age, there is an 
+increasing risk of disease, disability, and dementia, all of which may 
+be impacted by poor sleep. There are biologically plausible reasons 
+why sleep and the gut microbiome might be integrally related, but 
+few have tested this hypothesis. Therefore, we studied 606 older men 
+from the Osteoporotic Fractures in Men (MrOS, https://mrosonline.
+ucsf.edu/) study, to determine whether both subjective (self-reported) 
+and objective measures of sleep (including timing and regularity 
+assessed via activity monitor) were associated with within-person 
+(alpha) and between-person (beta) gut microbial diversity as well 
+as differential bacterial abundance. We hypothesized that (1) in-
+dividuals with worse sleep quality scores would have lower alpha 
+diversity; (2) have an overall distinctly different microbiome com-
+position compared to those with higher sleep quality; and (3) sleep 
+quality measures would be significantly correlated with the relative 
+abundance of microbes previously associated with a healthy gut 
+environment.
+Method
+Study Participants
+Originating in 2000–2002, MrOS included 5 994 men aged 
+65 years and older from 6 U.S. clinical sites (University of Alabama 
+at Birmingham, Birmingham, AL; University of Minnesota, 
+Minneapolis, MN; Stanford University, Palo Alto, CA; University of 
+Pittsburgh, Pittsburgh, PA; Oregon Health and Science University, 
+Portland, OR; and University of California, San Diego, San Diego, 
+CA), with continued follow-up involving 4 full in-clinic examin-
+ations through 2016 with 1 841 ongoing participants attending Visit 
+4 (2014–2016). The study design and recruitment have been previ-
+ously described (8). Starting in March 2015, men who attended Visit 
+4 were also invited to provide stool specimens; 982 men provided a 
+stool sample of which 919 were viable samples (Batch 1 = 599, Batch 
+2 = 320) with 16S rRNA gene amplicon reads (16S) passing quality 
+control (9). Because of the strong effect of recent antibiotic use on 
+the gut microbiome and evidence that some antibiotics can affect 
+sleep (10), we excluded men who reported antibiotic use in the past 
+month (n = 46). For this study, 606 men who had both Visit 4 sleep 
+data and sufficient sequencing data that passed quality filtering steps 
+were included (Figure 1). The institutional review boards of the 6 
+participating institutions approved the study protocol, and a written 
+informed consent was obtained from all participants.
+Sleep Measurements
+For the objective sleep measures, SenseWear armband devices 
+(Bodymedia Inc., Pittsburgh PA) were worn on the upper right arm 
+for 1 week (participants were asked to remove the device only when 
+bathing); this study included those with 90% wear time for at least 
+five 24-hour periods. Minute-by-minute activity data were processed 
+Figure 1.  Study flow diagram.
+1926
+Journals of Gerontology: MEDICAL SCIENCES, 2023, Vol. 78, No. 10
+
+to calculate 2 circadian rhythm variables based on the extended co-
+sine model: (1) acrophase and (2) pseudo F-statistic. The acrophase 
+measure captures the timing of the peak activity in the 24-hour cycle, 
+and the pseudo F-statistic is a measure of robustness and rhythmi-
+city, or consistency of the rhythm (e.g., regularity) and is calculated 
+by goodness of fit to an extended cosine model based on 24-hour 
+patterns (11). These 2 objective measures were chosen due to ac-
+ceptable correlations with wrist actigraphy variables assessed in a 
+subset of MrOS men (n  =  57) who wore both the gold-standard 
+wrist actigraph and armband device (acrophase 0.83; F-statistic 
+0.92; unpublished data). While the MrOS Study participants had 
+wrist actigraphy measures for sleep assessed at previous study visits 
+(2003–2005 and 2009–2012), the armband measures were the only 
+objective sleep measures that were available at that same visit as 
+when the stool was collected (2014–2016) and thus were used for 
+the purposes of this study. Subjective sleep measurements, assessed 
+between 2014 and 2016, such as quality of sleep and total sleep time 
+(hours), were obtained based on self-reported Pittsburgh Quality 
+Sleep Questionnaire (12).
+Covariates
+A list of covariates to include in our statistical models was selected 
+a priori. Prior to data analysis, a discussion was held with the 
+coauthors that included experts from a variety of fields including 
+sleep, gerontology, internal medicine, microbiome, and biostatistics. 
+We took into account the availability and completeness of data, vari-
+ables known to significantly affect the microbiome, relevance to our 
+overall aim, technical variables, and from a statistical perspective, the 
+collinearity of variables as well as the maximum number of variables 
+to include without compromising statistical power. A consensus was 
+reached to include 10 covariates: sequencing batch, study site, age 
+at visit, ethnicity, body mass index (BMI) (kg/m2) from the previous 
+visit, alcohol intake, self-reported physical activity (assessed via the 
+Physical Activity Scale for the Elderly), diabetes, and medication use 
+(specifically antidepressants and benzodiazepines).
+Stool Collection, DNA Extraction, and 16S rRNA 
+Gene Amplicon Sequencing
+MrOS participants collected fecal samples for microbiome analysis 
+at home using the OMNIgene-GUT stool/feces collection kit (OMR-
+200, DNA Genotek, Ottawa, Canada), and 16S rRNA gene amplicon 
+sequencing was performed in 982 men. Details of the stool collec-
+tion protocol and sequencing have been previously published (13). 
+Briefly, fecal DNA was extracted on the Hamilton STARlet platform 
+using the MoBio PowerMag Soil DNA extraction kit following the 
+manufacturer’s recommendations. The V4 hypervariable region of 
+the 16S bacterial rRNA gene was amplified using the 515F and 806R 
+primers and sequenced on an Illumina MiSeq with 2 × 250 cycles 
+according to manufacturer’s protocols (14).
+Bioinformatics
+Raw sequences were uploaded to Qiita (15) and processed using 
+its 
+recommended 
+pipeline 
+(https://qitta.ucsd.edu/workflows) 
+for 16S data. Briefly, sequences were demultiplexed, trimmed to 
+150 nucleotides, and microbial amplicon sequence variants (ASVs) 
+were produced using the Deblur algorithm with the default param-
+eters on Qiita (16). A  phylogenetic tree was constructed using a 
+SATé-enabled phylogenetic placement technique as implemented in 
+the q2-fragment-insertion (17) plugin with the Greengenes reference 
+database (version 13.8) (18) as the backbone tree. The resulting ASV 
+table and phylogenetic tree were imported into QIIME 2 (version 
+2020.6) (19) for additional processing. Taxonomic classification was 
+carried out using the q2-feature-classifier plugin (20). The classifier 
+was trained on the GTDB database(release 89) (21) after extracting 
+the specific V4 region covered by the primers. To improve classi-
+fication accuracy, human stool-specific taxonomic abundance in-
+formation was acquired from the readytowear taxonomic weights 
+repository (https://github.com/BenKaehler/readytowear) and added 
+to the training step of the classifier. This weighted bespoke taxo-
+nomic approach improves classification accuracy over the common 
+Naive Bayes classification methods (22). Any ASVs that were not 
+successfully classified to at least the Phyla level were removed.
+To calculate within-sample diversity (alpha diversity), the ASV 
+table was normalized using the scaling with ranked subsampling 
+(SRS) application (23) with a fixed depth of 5 963 counts. The SRS 
+normalization approach better preserves the original community 
+structure of samples while addressing unequal sampling depth bias. 
+From this table, we calculated ASV richness, Shannon diversity, 
+Pielou’s evenness, and Faith’s phylogenetic diversity (PD) for down-
+stream analysis.
+To measure between-sample (beta) diversity, the robust Aitchison 
+distance with matrix completion (RPCA) (24), its phylogenetic-based 
+counterpart, PRPCA (25), and the presence/absence unweighted 
+UniFrac (26) distances were calculated. The non-normalized ASV 
+table was used to calculate RPCA and PRPCA as these tools are 
+compositionally aware and do not require rarefying/normalization; 
+however, for unweighted UniFrac distance calculation, the SRS-
+normalized table was used.
+To identify key microbes associated with sleep variables of 
+interest, we used multiple differential abundance (DA) approaches. 
+Numerous tools exist that differently address complexities of 
+microbiome data such as compositionality, sparsity, and uneven sam-
+pling depth. These DA approaches have been shown to vastly differ 
+in identifying significant taxa, depending on the underlying structure 
+of the data (27). Given the lack of an a priori list of microbes to spe-
+cifically test, we planned to conduct this analysis in an exploratory 
+manner by utilizing multiple approaches as sensitivity analyses and 
+to cross-validate the results. For all DA approaches, we first filtered 
+our non-normalized table to remove any ASVs that did not appear 
+in at least 25% of our samples or did not have a total of 600 counts 
+across all samples. We first attempted to estimate and sort the dif-
+ferential ranks using songbird’s (28) multinomial model, which we 
+then visualized using qurro (29). While we saw no improvements in 
+model performance, as assessed by pseudo-Q2 (a value analogous to 
+R2 in linear regression), when our adjusted model was compared to 
+an intercept-only model, the resulting ranks were still used to manu-
+ally explore and select potentially interesting sets of ASV log-ratios 
+(also referred to as balances). We next used a learning algorithm to 
+automatically select important balances most associated with sleep 
+variables using the Compositional Data via Continuous Relaxations 
+(CoDaCoRe) package (30). Finally, ASV abundance data were pro-
+jected onto distance-based redundancy analysis (dbRDA) models 
+using the vegan package’s sppscores() function: this produces species 
+scores corresponding to the relationship between each taxon and a 
+response variable within the constrained ordination space.
+Statistical Approach
+To test the association between sleep variables and alpha diver-
+sity measures, we regressed alpha diversity measures on sleep 
+measures and covariates, and we tested the sleep measures using 
+Journals of Gerontology: MEDICAL SCIENCES, 2023, Vol. 78, No. 10
+1927
+
+a type II ANOVA test as implemented in the car package. For 
+each sleep measure, we fit 3 models: an unadjusted model, a base 
+model (adjusted for age, race, site, and sequence batch), and a full 
+model (adjusted for base-model variables plus BMI, diabetes, al-
+cohol intake, physical activity score, depression medications, and 
+benzodiazepine use).
+For beta diversity, we used a similar set up as described for 
+alpha diversity. We first performed a series of covariate-adjusted 
+PERMANOVA tests using the vegan package’s adonis2() function, 
+with the microbiota distance matrices as our response variable and 
+the various model sets (i.e., unadjusted, base, or full-model variables) 
+as our explanatory terms. The PERMANOVA test’s assumption of 
+similar multivariate dispersion was assessed using the betadisper() 
+function; as this test only operates on factorial variables, we used 
+the quartile-transformed version of our continuous sleep variables.
+PERMANOVA tests of covariates suggested that certain base-
+model covariates (such as site, batch, and race) were associated with 
+beta diversity and may confound associations with sleep variables. To 
+remove the influence of these covariates, we additionally performed 
+a partial dbRDA using our full-model variables while removing the 
+effects of the base-model covariates. When the overall main effects 
+were statistically significant, as determined by an ANOVA-like per-
+mutation test using the anova.cca() function, a sequence of terms as 
+well as marginal test was carried out.
+All statistical analyses were conducted using R statistical soft-
+ware 4.2 (31). Significance was defined as p < .05 or 95% confidence 
+intervals (CIs) excluding the null.
+Results
+The 606 men included in the analysis had a mean age of 84 years 
+(standard deviation [SD]  =  3.78), an average BMI of 27  kg/
+m2 (SD = 3.53) and were overall very physically active (Table 1). 
+Consistent with other observational sleep studies, 40% of men had 
+poor sleep (defined as a PSQI > 5) and 24.2% reported taking sleep 
+medications during the past month.
+Sleep Measures and Alpha Diversity
+Worse subjective sleep quality in participants was marginally as-
+sociated with lower alpha diversity, as measured by Faith’s PD 
+(beta = −0.15; 95% CI = −0.30, 0.01; p = .06; Figure 2). The findings 
+lost further significance after adjustment for covariates (beta = −0.07; 
+95% CI = −0.23, 0.09; p = 0.39). No other measures of alpha diver-
+sity including ASV richness, Pielou’s evenness, or Shannon’s diversity 
+were significantly associated with sleep quality (p > .05). Additionally, 
+there were no significant associations between objectively measured 
+sleep and any measure of alpha diversity (p > .05).
+Sleep Measures and Βeta Diversity
+In all beta diversity results (PERMANOVA and dbRDA), there was a 
+limited ability to predict beta diversity based on taxa presence versus 
+taxa abundance as shown by compositionally aware RPCA and 
+PRPCA distances having higher predictive power than unweighted 
+UniFrac as assessed by the global model’s R2 and pseudo F test-statistic 
+(Supplementary Material 1). In the unadjusted models, sleep regu-
+larity was significantly associated with PRPCA (p < .008, R2 = 0.9%, 
+F = 5.43) and remained so after adjustment for base-model covariates 
+(p < .007 R2 = 0.8%), but not in the fully adjusted model (p = .19, 
+R2  =  0.3%). Similarly, sleep regularity was also weakly associated 
+with beta diversity measured by RPCA (p = .088, R2 = 0.4%) in the 
+unadjusted model, and remained significant after adjusting for base-
+model covariates (p = .02, R2 = 0.7%), but not after adjusting for the 
+full-model covariates. Tests of our base-model covariates also iden-
+tified collection site and race as significant variables in both RPCA 
+and PRPCA models. No sleep variables were associated with any of 
+the beta diversity distances in fully adjusted models. However, the full 
+model with the highest explanatory power was sleep regularity ex-
+plaining PRPCA diversity. Tests of covariates in this model identified 
+race, BMI, history of diabetes, physical activity score, and medication 
+for depression as significant variables with modest explanatory power. 
+Given that these signals are more robust than the association with 
+sleep regularity itself, we attempted to isolate this signal by removing 
+the effect of the base-model covariates using a partial dbRDA.
+Table 1,  Characteristics of 606 MrOS Participants
+Characteristic 
+Mean (SD), n (%), or Ratio 
+Age, y
+83.9 (3.8)
+Body mass index (kg/m2)
+27.2 (3.4)
+Diabetes (no:yes)
+549:103
+Race/ethnicity:
+  White
+545 (89.9 %)
+  Black
+20 (3.3 %)
+  Asian
+22 (3.6 %)
+  Hispanic
+9 (1.5 %)
+  Other race/ethnicity
+10 (1.6 %)
+Alcohol consumption (drinks/wk):
+Non-drinker
+238 (39.3 %)
+  <1
+69 (11.4 %)
+  1–2
+68 (11.2 %)
+  3–5
+92 (15.2 %)
+  6–13
+111 (18.3 %)
+  14+
+26 (4.3 %)
+Physical activity score
+125.5 (65.3)
+Antidepressant use (no:yes)
+554:52
+Benzodiazepine use (no:yes)
+592:14
+Sleep quality (range: 0–21)
+5.2 (3.0)
+Activity acrophase
+13.2 (1.6)
+Sleep regularity (pseudo-F-statistic)
+951.1 (476.0)
+Alpha diversity:
+  Richness
+213.9 (71.8)
+  Shannon Diversity Index
+5.07 (0.8)
+  Evenness
+0.66 (0.074)
+  Faith’s phylogenetic diversity
+19.9 (5.7)
+Figure 2.  Faith phylogenetic diversity (PD) is associated with sleep quality. 
+Results of the unadjusted regression model show a weak but significant 
+association between (beta  =  −0.15; 95% CI: −0.30, 0.01; p  =  .06). Faith PD 
+and Pittsburgh Sleep Quality index (PSQI). The solid line and shaded area 
+correspond to the regression line and 95% CI, respectively.
+1928
+Journals of Gerontology: MEDICAL SCIENCES, 2023, Vol. 78, No. 10
+
+The dbRDA models with only the base-model covariates were 
+significantly associated with all 3 beta diversity distances. Among 
+these, the base models best explained variation in RPCA (p < .001, 
+adj.R2  =  4.5%). We then constructed partial dbRDA models that 
+included sleep regularity, full set of variables, but partialled out 
+(removed) the effect of base-model variables. The results of the 
+global models for all 3 distance matrices were statistically signifi-
+cant, with RPCA having the highest explanatory power (p < .001, 
+adj.R2  =  4.4%). In the follow-up sequential ANOVA-like per-
+mutation tests (Table 2), sleep regularity was statistically signifi-
+cant when positioned as the first variable in the model (RPCA, 
+p < .03, F = 4.7, R2 = 0.8%), although other covariables had higher 
+explanatory power than sleep regularity. In the marginal tests 
+(Table 2), sleep regularity and alcohol intake were the only 
+nonsignificant terms, suggesting that other stronger signals overlap 
+with sleep regularity’s signal.
+Sleep Measures and Specific Taxa
+We aimed to identify significant ASVs that were associated with sleep 
+measures using different statistical methods. Initial ASV selection 
+was attempted using a multinomial model (songbird) but we were 
+unable to construct models with informative rankings. CoDaCoRe’s 
+learning algorithm, however, selected 5 ASV balances that had 
+the strongest correlation with sleep regularity. Of these, the top 
+2 balances were significantly associated with sleep regularity after 
+adjusting for full variables, as assessed by a marginal ANOVA test 
+(Balance 1: beta = 0.493; 95% CI: 0.221, 0.71; p < .001; Balance 2: 
+beta = 0.380; 95% CI: 0.113, 0.648; p =.005). Balance 1 (Figure 3) 
+contained 13 ASVs and was defined by the log relative abundance 
+of 7 ASVs (classified as Faecalibacterium prausnitzii G, 2 Prevotella 
+copri A ASVs, Bacteroides B vulgatus, Bacteroides B dorei, Alistipes 
+onderdonkii, and Ruminococcus D bicirculans) versus the rela-
+tive abundance of 6 ASVs (classified as Akkermansia muciniphila, 
+Bacteroides caccae, Bacteroides faecichinchillae, Bacteroides fragilis, 
+Buttiauxella agrestis, and Ruminiclostridium E siraeum). Balance 2 
+contained 11 ASVs, 10 of which overlapped with Balance 1. The 
+log ratio for Balance 1 and 2 was associated with better sleep regu-
+larity scores after adjustment for covariates. The algorithm also pre-
+dicted a single balance that would significantly predict sleep quality 
+(Figure 4). This balance was significantly associated with sleep 
+quality (beta = 0.38, 95% CI: 0.11–0.65; p < .05) and consisted of 
+the ratio of 4 ASVs (classified as Ruthenibacterium lactatiformans, 
+Bacteroides uniformis, Alistipes putredinis, and Escherichia 
+dysenteriae) to 7 ASVs (classified as F.  prausnitzii_G, 2 ASVs of 
+P.  copri_A, Bacteroides_B vulgatus, B.  agrestis, Ruminococcus_D 
+bicirculans, and Oscillibacter valericigenes). The ratio of these taxa 
+was associated with higher PSQI sleep scores indicating worse sleep 
+quality. On the dbRDA triplot (Supplementary Figure 1), the top 5 
+ASVs positively associated with sleep regularity were F. prausnitzii 
+G, OEMS01 sp0900199405, O. valericigenes, F. prausnitzii A, and 
+F. prausnitzii C.
+Discussion
+We determined that both subjectively reported and objectively meas-
+ured sleep correlated with the gut microbiome diversity measures as 
+well as differential bacterial abundance in a relatively large sample 
+of community-dwelling older men. In particular, we found that men 
+with poorer self-reported sleep ascertained by the PSQI had lower 
+alpha diversity, although these results, in contrast to our hypothesis, 
+were no longer statistically significant after multivariable adjust-
+ment. We found that mean sleep regularity was, in accordance with 
+our hypothesis, significantly associated with differences in beta di-
+versity, the implications of which support the findings in an emerging 
+field of circadian rhythms and the gut microbiome (32). In exam-
+ining specific taxa and in agreement with our hypothesis, we found 
+that sleep regularity predicted DA of 13 taxa (more specifically, the 
+higher relative abundance of 7 taxa vs the lower relative abundance 
+of 6 other taxa). Six of the 7 bacterial species associated with better 
+sleep regularity have been previously linked to better gut health 
+and 4 out of 6 bacterial species associated with worse sleep regu-
+larity have been described as being potentially pathogenic, including 
+A. muciniphila, B. fragilis, and Escherichia dysenteriae (33–35). We 
+also found that sleep quality was associated with the DA of 11 taxa. 
+Interestingly, there was a substantial overlap (71.4%) in the specific 
+species of bacteria identified with both better sleep regularity and 
+self-reported sleep.
+It has been long accepted that there are important interactions 
+between the gut–brain axis (2). Within the past 15 years, emerging 
+evidence shows important communication between gut micro-
+biota and the central nervous system that primarily occurs through 
+microbial-derived intermediates including the SFCA (36), secondary 
+bile acids (37), and tryptophan metabolites (38). More recently, es-
+pecially in animal models, there is increasing evidence that the gut 
+microbiota may modulate host circadian rhythms (37). Our study 
+results support an important link between gut microbiota and self-
+reported sleep as well as sleep regularity, at least in older men.
+Of the 7 different taxa that were significantly associated with 
+better sleep, whether determined by more consistent regularity or 
+self-report, at least 5 (F. prausnitzii G, Provotella copri A, Bacteroides 
+Table 2.  Results summary of partial dbRDA based on RPCA distance
+Term 
+df 
+Sequence of Terms Results
+Marginal Test Results
+Variance 
+Test Statistic 
+p Value 
+Variance 
+Test statistic 
+p Value 
+Sleep regularity
+1
+0.008
+4.67
+.031
+0.001
+0.603
+.461
+BMI
+1
+0.01
+6.28
+.018
+0.008
+4.959
+.031
+Diabetes
+1
+0.013
+7.66
+.006
+0.012
+6.962
+.006
+Alcohol intake
+5
+0.009
+1.08
+.382
+0.008
+0.9
+.511
+Physical activity score
+1
+0.009
+5.36
+.019
+0.007
+4.01
+.037
+Medication for depression
+1
+0.014
+8.1
+.005
+0.012
+7.32
+.008
+Use of benzodiazepines
+1
+0.002
+1.13
+.268
+0.002
+1.127
+.268
+Notes: We carried a partial dbRDA using RPCA distances using all variables from the full model. The effect of batch, site, age, and race were “partialled” out 
+(i.e., removed) using the Condition() parameter. The order of the terms in the table correspond to the order in which they were included in the model formula. 
+dbRDA = distance-based redundancy analysis; RPCA = robust Aitchison distance with matrix completion.
+Journals of Gerontology: MEDICAL SCIENCES, 2023, Vol. 78, No. 10
+1929
+
+B vulgatus, and Bacteroides B dorei) are known to produce bu-
+tyrate, the predominant SCFA associated with overall gut health. 
+Although Ruminoccocus and Oscillobacter are both associated with 
+SCFA production of butyrate, R. D bicirculans and Oscillobacter 
+valericegenes, which were associated with better sleep in this study, 
+have been less well characterized with regards to human gut health.
+In examining the taxa associated with worse sleep regularity and 
+poor self-reported sleep, we found that 75%–80% of those taxa 
+have been associated with human disease, with the remaining 2 
+(Akkermansia species, Rutherbacterium lactatiformans) not having 
+enough information to suggest a beneficial or harmful effect in hu-
+mans. Since exploratory studies can yield false positive results, the 
+observation that most of the identified taxa (>70%) have a known 
+biological impact and are found to be associated with sleep charac-
+teristics in the expected direction supports the validity of findings.
+Considering possible mechanisms, a bidirectional effect be-
+tween sleep and the gut microbiome is plausible. Human sleep 
+behaviors are hypothesized to affect the composition of the gut 
+microbiome through the differences in the timing of food intake 
+and fasting (e.g., through direct metabolic effects) (39). In mice, the 
+diurnal rhythmicity of microbiota affects bacterial adherence to the 
+gut wall or changes in microbial pathways related to chemotaxis; 
+these functional oscillations then influence the global programming 
+of the host circadian transcriptional, epigenetic, and metabolic os-
+cillations (40).
+Much attention has been focused on SCFA, specifically bu-
+tyrate, propionate, and acetate as important modulators in the 
+gut–microbiome–brain axis. Leone et al. demonstrated that butyrate 
+modulated the expression of clock genes in the liver (41), whereas 
+Szentirmai et al. demonstrated that butyrate enhanced sleep in rats 
+(42). Secondary bile acids may also link the gut microbiome to sleep. 
+When humans ingest food, primary bile acids are produced from 
+cholesterol in the liver and secreted into the gut. The gut microbiota 
+then converts the primary bile acids into secondary bile acids that 
+regulate hepatic and ileal clock genes in mice (37). Finally, serotonin 
+of which 90% is derived from dietary tryptophan absorbed in the 
+gut has been implicated in sleep–wake cycles (37).
+Our study results confirm previous investigations done in hu-
+mans suggesting an important link between the gut microbiota and 
+sleep (43–46). However, at the taxonomic level, only the largest 
+study of over 1 800 individuals also implicated Ruminococcaceae as 
+protective against chronic insomnia (46). A combination of various 
+factors may explain certain discrepancies from our results to pre-
+vious ones. For example, the older population in our cohort, smaller 
+sample sizes (<50) in other studies, methods of high-throughput 
+sequencing and bioinformatics processing, and choice of appro-
+priate and robust statistical models could differentially influence 
+the results. Our study findings that support underlying biologically 
+plausible explanations for the key taxa identified using the latest 
+taxonomic analyses lend credence to what has been reported in mice 
+models of sleep and the gut microbiome.
+This study has multiple strengths including a large sample size, 
+detailed subjective and objective measures of sleep characteristics, 
+and state-of-the-art high-throughput sequencing analyses for micro-
+biota characterization. This study also has some limitations worth 
+noting. First, since we studied predominantly white older men of 
+mean age of 84 years, the results may not apply to different demo-
+graphics including women and younger persons. However, this 
+population has hitherto been underrepresented in gut microbiome 
+research, thus the current study fills an important gap. Second, this 
+study was cross-sectional in design, so directionality cannot be in-
+ferred. To determine the possible mechanisms and directionality of 
+associations, future studies that incorporate longitudinal designs, 
+gnotobiotic animal models, and randomized controlled trials are 
+required. These studies can also elucidate the mechanisms of ac-
+tion by exploring the functional pathways involved with the use of 
+other technologies such as shotgun metagenomics, metabolomics, 
+proteomics, etc. Third, although we attempted to improve our taxo-
+nomic classifier by incorporating environment-specific information, 
+species-level designations using 16S methods have its own limita-
+tions and require validation using other more sensitive methods 
+(47,48). However, in this setting, the underlying ASV signals would 
+not be incorrect if species names were in fact falsely classified. 
+Fourth, the stool samples were collected at a single time point, while 
+the gut microbiota is known to oscillate diurnally, so the relationship 
+between sleep and gut microbiota could differ depending upon the 
+Figure 4.  Top predicted ASV log ratio is correlated with self-reported sleep 
+quality index. The results of the linear regression model showing the top 
+CoDaCoRe selected balance is significantly associated (beta = 0.38, 95% CI: 
+0.11–0.65; p < .05) with the self-reported Pittsburgh Sleep Quality Index, even 
+after adjustment for all variables from the full model. The solid line and adjacent 
+shaded area correspond to regression line and 95% CIs, respectively. The 
+numerator consists of 4 ASVs classified as Ruthenibacterium lactatiformans, 
+Bacteroides uniformis, Alistipes putredinis, and Escherichia dysenteriae; the 
+denominator consists of 7 ASVs classified as Faecalibacterium prausnitzii_G, 
+2 ASVs of Prevotella copri_A, Bacteroides_B vulgatus, Buttiauxella agrestis, 
+Ruminococcus_D bicirculans, and Oscillibacter valericigenes. ASV = amplicon 
+sequence variant; CI = confidence interval.
+Figure 3.  Top predicted ASV log ratio is correlated with sleep regularity. The 
+results of the linear regression model shows the top CoDaCoRe selected 
+balance is significantly associated (beta  =  0.493; 95% CI: 0.221, 0.71; 
+p < .001) with objective sleep regularity score, even after adjustment for 
+all variables from the full model. The solid line and adjacent shaded area 
+correspond to regression line and 95% CIs, respectively. The numerator 
+consists of 7 ASVs classified as Faecalibacterium prausnitzii G, 2 Prevotella 
+copri A  ASVs, Bacteroides B vulgatus, Bacteroides B dorei, Alistipes 
+onderdonkii, and Ruminococcus D bicirculans; the denominator consists 
+of 6 ASVs classified as Akkermansia muciniphila, Bacteroides caccae, 
+Bacteroides faecichinchillae, Bacteroides fragilis, Buttiauxella agrestis, 
+and Ruminiclostridium E siraeum. ASV  =  amplicon sequence variant; 
+CI = confidence interval.
+1930
+Journals of Gerontology: MEDICAL SCIENCES, 2023, Vol. 78, No. 10
+
+time of sample collection. Despite these limitations, this study con-
+tributes to the small but growing literature on the link between gut 
+microbiota and sleep.
+Achieving a full understanding of the complex nature of each 
+human’s gut microbial composition and how it may affect sleep 
+will require a multidisciplinary approach. Even when specific bac-
+teria are convincingly implicated in affecting sleep, there is tre-
+mendous intraspecies variability resulting in remarkable genome 
+divergence, and hence potential differing functional capabilities (33). 
+Furthermore, recent research has demonstrated that microbial–mi-
+crobial interactions can not only influence each other, but also alter 
+host metabolism (49). With increasingly powerful analytic tools, it 
+is conceivable that with careful experimental study design, poten-
+tial therapies based upon manipulating the gut microbiota and/or 
+harnessing their metabolic products to improve sleep are possible.
+Supporting previous sleep-related research, sleep regularity ap-
+pears to have important health implications. Our study findings 
+highlight a new discovery of the importance of sleep regularity in 
+relation to the gut microbiota in older men. Furthermore, we found 
+that both poor self-reported sleep and worse regularity implicated 
+butyrate-producing bacteria as a positive influence with traditionally 
+pathogenic bacteria leading to human infection being associated with 
+worse sleep patterns. In older adults, sleep disorders are common and 
+although sleep medications can help persons sleep better in the short 
+term, they are not recommended for habitual use (50). If our study 
+results are further explored and mechanisms better understood that 
+implicate diet and optimizing a healthy gut microbiome, perhaps a 
+regular good night’s sleep may be possible for millions.
+Supplementary Material
+Supplementary data are available at The Journals of Gerontology, 
+Series A: Biological Sciences and Medical Sciences online.
+Funding
+The Osteoporotic Fractures in Men (MrOS) Study is supported by National 
+Institutes of Health funding. The following institutes provide support: the 
+National Institutes of Aging (NIA), the National Institute of Arthritis and 
+Musculoskeletal and Skin Diseases (NIAMS grant  R01AR061445), the 
+National Center for Advancing Translational Sciences, and NIH Roadmap 
+for accelerated research under the following grant numbers: U01 AG027810, 
+U01 AG042124, U01 AG042139, U01 AG042140, U01 AG042143, U01 
+AG042145, U01 AG042168, U01 AR066160, R01 AG066671, and UL1 
+TR000128. The National Heart, Lung, and Blood Institute provides funding 
+for the MrOS Sleep ancillary study “Outcomes of Sleep Disorders in Older 
+Men” under the following grant numbers: R01 HL071194, R01 HL070848, 
+R01 HL070847, R01 HL070842, R01 HL070841, R01 HL070837, R01 
+HL070838, and R01 HL070839. Funding to support D.K.’s effort is through 
+the Veterans Administration Health Affairs Administration. M.S.’s effort is 
+supported by the following grants: R03 AG070178, R01 AG069915, P30 
+AG028747-15S1, RF1 NS128360, R03 AG070178, and R01 AG048069. 
+C.K. received funding from the NIA (K01AG061239).
+Conflict of Interest
+None declared.
+Author Contributions
+M.E.: data curation (equal), formal analysis (lead), investigation (equal), meth-
+odology (lead), writing—original draft (lead). L. Langsetmo: data curation, 
+formal analysis, investigation, methodology (equal), supervision, writing—
+review & editing (equal). M.S.: formal analysis, investigation, methodology 
+(equal), supervision, validation, visualization, writing—review & editing 
+(equal). A.M.: project administration, validation, writing—review & editing 
+(equal). L.J.: data curation, formal analysis, investigation, methodology, super-
+vision (supporting), writing—review & editing (supporting). Y.Z.: formal 
+analysis, investigation, writing—review & editing (supporting). C.K.: method-
+ology, writing—review & editing (supporting). R.K.: methodology, resources 
+(equal), software (lead), supervision, validation, visualization, writing—review 
+& editing (supporting). K.S.: data curation (equal), formal analysis, funding 
+acquisition (equal), methodology (equal), resources (equal), supervision, 
+writing—review & editing (supporting). D.K.: conceptualization (lead), data 
+curation (equal), formal analysis (equal), funding acquisition (equal), investi-
+gation (equal), methodology (equal), project administration (lead), resources 
+(equal), supervision (lead), validation (equal), visualization (equal), writing—
+original draft (lead).
+Data Availability
+All sequencing files are available on ENA under project number PRJEB26012. 
+All codes required to reproduce the bioinformatics processing and data ana-
+lysis can be found in the Open Science Framework project page: https://osf.
+io/hq5ax. Please note that participant-level personal identifiable data are pro-
+tected under the Health Insurance Portability and Accountability Act of 1996 
+(HIPAA), Public Law 104-1919 that mandated the adoption of Federal protec-
+tions for individually identifiable health information. Thus, public distribution 
+of some of the sample information used in this study is not allowed, however, 
+they can be made available as a Limited Data Set through accessing https://
+mrosonline.ucsf.edu. Interested users can create an account by registering on-
+line and signing a Data Use Agreement (DUA). The DUA stipulates that the 
+data recipient agrees not to Use or Disclose the Limited Data Set for any pur-
+pose other than Permitted Uses and Disclosures or as Required by Law. The full 
+DUA is available here: https://mrosonline.ucsf.edu/Account/UserAgreement./
+References
+	1.	 Ge L, Guyatt G, Tian J, et al. Insomnia and risk of mortality from all-
+cause, cardiovascular disease, and cancer: systematic review and meta-
+analysis of prospective cohort studies. Sleep Med Rev. 2019;48:101215. 
+doi:10.1016/j.smrv.2019.101215
+	2.	 Sen P, Molinero-Perez A, O’Riordan KJ, McCafferty CP, O’Halloran KD, 
+Cryan JF. Microbiota and sleep: awakening the gut feeling. Trends Mol 
+Med. 2021;27(10):935–945. doi:10.1016/j.molmed.2021.07.004
+	3.	 Li Y, Zhang B, Zhou Y, et al. Gut microbiota changes and their relation-
+ship with inflammation in patients with acute and chronic insomnia. Nat 
+Sci Sleep. 2020;12:895–905. doi:10.2147/NSS.S271927
+	4.	 Huang W, Ramsey KM, Marcheva B, Bass J. Circadian rhythms, sleep, and 
+metabolism. J Clin Invest. 2011;121(6):2133–2141. doi:10.1172/jci46043
+	5.	 Anderson JR, Carroll I, Azcarate-Peril MA, et al. A preliminary examin-
+ation of gut microbiota, sleep, and cognitive flexibility in healthy older 
+adults. Sleep Med. 2017;38:104–107. doi:10.1016/j.sleep.2017.07.018
+	6.	 Zhang SL, Bai L, Goel N, et al. Human and rat gut microbiome compos-
+ition is maintained following sleep restriction. Proc Natl Acad Sci U S A. 
+2017;114(8):E1564–E1571. doi:10.1073/pnas.1620673114
+	7.	 Foley D, Ancoli-Israel S, Britz P, Walsh J. Sleep disturbances and chronic 
+disease in older adults: results of the 2003 National Sleep Foundation Sleep 
+in America Survey. J Psychosom Res. 2004;56(5):497–502. doi:10.1016/j.
+jpsychores.2004.02.010
+	8.	 Orwoll E, Blank JB, Barrett-Connor E, et al. Design and baseline charac-
+teristics of the osteoporotic fractures in men (MrOS) study—a large obser-
+vational study of the determinants of fracture in older men. Contemp Clin 
+Trials. 2005;26(5):569–585. doi:10.1016/j.cct.2005.05.006
+	9.	 Orwoll ES, Parimi N, Wiedrick J, et al. Analysis of the associations between 
+the human fecal microbiome and bone density, structure, and strength: 
+the Osteoporotic Fractures in Men (MrOS) Cohort. J Bone Miner Res. 
+2022;37(4):597–607. doi:10.1002/jbmr.4518
+Journals of Gerontology: MEDICAL SCIENCES, 2023, Vol. 78, No. 10
+1931
+
+	10.	Ogawa  Y, Miyoshi  C, Obana  N, et  al. Gut microbiota depletion by 
+chronic antibiotic treatment alters the sleep/wake architecture and sleep 
+EEG power spectra in mice. Sci Rep. 2020;10(1):19554. doi:10.1038/
+s41598-020-76562-9
+	11.	Marler MR, Gehrman P, Martin JL, Ancoli-Israel S. The sigmoidally trans-
+formed cosine curve: a mathematical model for circadian rhythms with 
+symmetric non-sinusoidal shapes. Stat Med. 2006;25(22):3893–3904. 
+doi:10.1002/sim.2466
+	12.	Buysse  DJ, Reynolds  CF, Monk  TH, Berman  SR, Kupfer  DJ. The 
+Pittsburgh Sleep Quality Index: a new instrument for psychi-
+atric practice and research. Psychiatry Res. 1989;28(2):193–213. 
+doi:10.1016/0165-1781(89)90047-4
+	13.	Abrahamson  M, Hooker  E, Ajami  NJ, Petrosino  JF, Orwoll  ES. 
+Successful collection of stool samples for microbiome analyses from a 
+large community-based population of elderly men. Contemp Clin Trials 
+Commun. 2017;7:158–162. doi:10.1016/j.conctc.2017.07.002
+	14.	Caporaso JG, Lauber CL, Walters WA, et al. Ultra-high-throughput mi-
+crobial community analysis on the Illumina HiSeq and MiSeq platforms. 
+ISME J. 2012;6(8):1621–1624. doi:10.1038/ismej.2012.8
+	15.	Gonzalez  A, Navas-Molina  JA, Kosciolek  T, et  al. Qiita: rapid, web-
+enabled microbiome meta-analysis. Nat Methods. 2018;15(10):796–798. 
+doi:10.1038/s41592-018-0141-9
+	16.	Amir  A, McDonald  D, Navas-Molina  JA, et  al. Deblur rapidly re-
+solves single-nucleotide community sequence patterns. mSystems. 
+2017;2(2):e00191–e00116. doi:10.1128/mSystems.00191-16
+	17.	Janssen  S, McDonald  D, Gonzalez  A, et  al. Phylogenetic placement of 
+exact amplicon sequences improves associations with clinical information. 
+mSystems. 2018;3(3):e00021–e00018. doi:10.1128/mSystems.00021-18
+	18.	McDonald  D, Price  MN, Goodrich  J, et  al. An improved Greengenes 
+taxonomy with explicit ranks for ecological and evolutionary analyses 
+of bacteria and archaea. ISME J. 2012;6(3):610–618. doi:10.1038/
+ismej.2011.139
+	19.	Bolyen E, Rideout JR, Dillon MR, et al. Reproducible, interactive, scalable 
+and extensible microbiome data science using QIIME 2. Nat Biotechnol. 
+2019;37(8):852–857. doi:10.1038/s41587-019-0209-9
+	20.	Bokulich  NA, Kaehler  BD, Rideout  JR, et  al. Optimizing taxonomic 
+classification of marker-gene amplicon sequences with QIIME 2’s 
+q2-feature-classifier plugin. Microbiome. 2018;6(1):90. doi:10.1186/
+s40168-018-0470-z
+	21.	Parks DH, Chuvochina M, Waite DW, et al. A standardized bacterial tax-
+onomy based on genome phylogeny substantially revises the tree of life. 
+Nat Biotechnol. 2018;36(10):996–1004. doi:10.1038/nbt.4229
+	22.	Kaehler  BD, Bokulich  NA, McDonald  D, Knight  R, Caporaso  JG, 
+Huttley GA. Species abundance information improves sequence taxonomy 
+classification accuracy. Nat Commun. 2019;10(1):4643. doi:10.1038/
+s41467-019-12669-6
+	23.	Beule L, Karlovsky P. Improved normalization of species count data in 
+ecology by scaling with ranked subsampling (SRS): application to micro-
+bial communities. PeerJ. 2020;8:e9593. doi:10.7717/peerj.9593
+	24.	Martino C, Morton JT, Marotz CA, et al. A novel sparse compositional 
+technique reveals microbial perturbations. mSystems. 2019;4(1):e00016–
+e00019. doi:10.1128/mSystems.00016-19
+	25.	Martino  C, McDonald  D, Cantrell  K, et  al. Compositionally aware 
+phylogenetic beta-diversity measures better resolve microbiomes asso-
+ciated with phenotype. mSystems. 2022;7(3):e0005022. doi:10.1128/
+msystems.00050-22
+	26.	McDonald  D, Vázquez-Baeza  Y, Koslicki  D, et  al. Striped UniFrac: 
+enabling microbiome analysis at unprecedented scale. Nat Methods. 
+2018;15(11):847–848. doi:10.1038/s41592-018-0187-8
+	27.	Nearing JT, Douglas GM, Hayes MG, et al. Microbiome differential abun-
+dance methods produce different results across 38 datasets. Nat Commun. 
+2022;13(1):342. doi:10.1038/s41467-022-28034-z
+	28.	Morton JT, Marotz C, Washburne A, et al. Establishing microbial com-
+position measurement standards with reference frames. Nat Commun. 
+2019;10(1):2719. doi:10.1038/s41467-019-10656-5
+	29.	Fedarko  MW, Martino  C, Morton  JT, et  al. Visualizing ’omic fea-
+ture rankings and log-ratios using Qurro. NAR Genom Bioinform. 
+2020;2(2):lqaa023. doi:10.1093/nargab/lqaa023
+	30.	Gordon-Rodriguez  E, Quinn  TP, Cunningham  JP. Learning sparse log-
+ratios for high-throughput sequencing data. Bioinformatics. Published on-
+line September 8, 2021. doi:10.1093/bioinformatics/btab645
+	31.	R Core Team. 2020. R: A language and environment for statistical com-
+puting. R Foundation for Statistical Computing. https://www.R-project.
+org/.
+	32.	Withrow D, Bowers SJ, Depner CM, González A, Reynolds AC, Wright KP. 
+Sleep and circadian disruption and the gut microbiome-possible links to 
+dysregulated metabolism. Curr Opin Endocr Metab Res. 2021;17:26–37. 
+doi:10.1016/j.coemr.2020.11.009
+	33.	Karcher N, Nigro E, Punčochář M, et al. Genomic diversity and ecology 
+of human-associated Akkermansia species in the gut microbiome revealed 
+by extensive metagenomic assembly. Genome Biol. 2021;22(1):209. 
+doi:10.1186/s13059-021-02427-7
+	34.	Zafar H, Saier MH. Gut Bacteroides species in health and disease. Gut 
+Microbes. 2021;13(1):1–20. doi:10.1080/19490976.2020.1848158
+	35.	Lee KS, Jeong YJ, Lee MS. Escherichia coli Shiga toxins and gut micro-
+biota 
+interactions. 
+Toxins 
+(Basel). 
+2021;13(6):416. 
+doi:10.3390/
+toxins13060416
+	36.	Silva YP, Bernardi A, Frozza RL. The role of short-chain fatty acids from 
+gut microbiota in gut-brain communication. Front Endocrinol (Lausanne). 
+2020;11:25. doi:10.3389/fendo.2020.00025
+	37.	Parkar SG, Kalsbeek A, Cheeseman JF. Potential role for the gut micro-
+biota in modulating host circadian rhythms and metabolic health. 
+Microorganisms. 2019;7(2):41E41. doi:10.3390/microorganisms7020041
+	38.	Yano JM, Yu K, Donaldson GP, et al. Indigenous bacteria from the gut 
+microbiota regulate host serotonin biosynthesis. Cell. 2015;161(2):264–
+276. doi:10.1016/j.cell.2015.02.047
+	39.	Matenchuk  BA, Mandhane  PJ, Kozyrskyj  AL. Sleep, circadian rhythm, 
+and gut microbiota. Sleep Med Rev. 2020;53:101340. doi:10.1016/j.
+smrv.2020.101340
+	40.	Thaiss  CA, Levy  M, Korem  T, et  al. Microbiota diurnal rhythmicity 
+programs host transcriptome oscillations. Cell. 2016;167(6):1495–1510.
+e12. doi:10.1016/j.cell.2016.11.003
+	41.	Leone V, Gibbons SM, Martinez K, et al. Effects of diurnal variation of 
+gut microbes and high-fat feeding on host circadian clock function and 
+metabolism. Cell Host Microbe. 2015;17(5):681–689. doi:10.1016/j.
+chom.2015.03.006
+	42.	Szentirmai E, Millican NS, Massie AR, Kapás L. Butyrate, a metabolite of 
+intestinal bacteria, enhances sleep. Sci Rep. 2019;9(1):7035. doi:10.1038/
+s41598-019-43502-1
+	43.	Grosicki  GJ, Riemann  BL, Flatt  AA, Valentino  T, Lustgarten  MS. Self-
+reported sleep quality is associated with gut microbiome composition 
+in young, healthy individuals: a pilot study. Sleep Med. 2020;73:76–81. 
+doi:10.1016/j.sleep.2020.04.013
+	44.	Smith RP, Easson C, Lyle SM, et al. Gut microbiome diversity is associ-
+ated with sleep physiology in humans. PLoS One. 2019;14(10):e02223
+94e0222394. doi:10.1371/journal.pone.0222394
+	45.	Agrawal  R, Ajami  NJ, Malhotra  S, et  al. Habitual sleep duration and 
+the colonic mucosa-associated gut microbiota in humans—a pilot study. 
+Clocks Sleep. 2021;3(3):387–397. doi:10.3390/clockssleep3030025
+	46.	Jiang Z, Zhuo LB, He Y, et al. The gut microbiota-bile acid axis links the 
+positive association between chronic insomnia and cardiometabolic dis-
+eases. Nat Commun. 2022;13(1):3002. doi:10.1038/s41467-022-30712-x
+	47.	Suzuki T, Dale GL, Beutler E. The absence of gamma-glutamyltransferase 
+in erythrocyte membranes. Clin Chim Acta. 1987;168(3):347–349. 
+doi:10.1016/0009-8981(87)90011-8
+	48.	Shardell M, Parimi N, Langsetmo L, et al. Comparing analytical methods 
+for the gut microbiome and aging: gut microbial communities and body 
+weight in the osteoporotic fractures in men (MrOS) study. J Gerontol 
+A Biol Sci Med Sci. 2020;75(7):1267–1275. doi:10.1093/gerona/glaa034
+	49.	Zerra  PE, Arthur  CM, Chonat  S, et  al. Fc gamma receptors and com-
+plement component 3 facilitate anti-fVIII antibody formation. Front 
+Immunol. 2020;11:905. doi:10.3389/fimmu.2020.00905
+	50.	Qaseem  A, Kansagara  D, Forciea  MA, Cooke  M, Denberg  TD. 
+Management of chronic insomnia disorder in adults: a clinical practice 
+guideline from the American College of Physicians. Ann Intern Med. 
+2016;165(2):125–133. doi:10.7326/m15-2175
+1932
+Journals of Gerontology: MEDICAL SCIENCES, 2023, Vol. 78, No. 10

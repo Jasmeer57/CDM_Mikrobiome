@@ -1,0 +1,1205 @@
+METHODOLOGY ARTICLE
+Open Access
+Optimizing microbiome sequencing for
+small intestinal aspirates: validation of
+novel techniques through the REIMAGINE
+study
+Gabriela Guimaraes Sousa Leite1, Walter Morales1, Stacy Weitsman1, Shreya Celly1, Gonzalo Parodi1,
+Ruchi Mathur1,2, Rashin Sedighi1, Gillian M. Barlow1, Ali Rezaie1,3 and Mark Pimentel1,3*
+Abstract
+Background: The human small intestine plays a central role in the processes of digestion and nutrient absorption.
+However, characterizations of the human gut microbiome have largely relied on stool samples, and the associated
+methodologies are ill-suited for the viscosity and low microbial biomass of small intestine samples. As part of the
+REIMAGINE study to examine the specific roles of the small bowel microbiome in human health and disease, this
+study aimed to develop and validate methodologies to optimize microbial analysis of the small intestine.
+Results: Subjects undergoing esophagogastroduodenoscopy without colon preparation for standard of care were
+prospectively recruited, and ~ 2 ml samples of luminal fluid were obtained from the duodenum using a custom
+sterile aspiration catheter. Samples of duodenal aspirates were either untreated (DA-U, N = 127) or pretreated with
+dithiothreitol (DA-DTT, N = 101), then cultured on MacConkey agar for quantitation of aerobic gram-negative
+bacteria, typically from the class Gammaproteobacteria, and on blood agar for quantitation of anaerobic
+microorganisms. DA-DTT exhibited 2.86-fold greater anaerobic bacterial counts compared to DA-U (P = 0.0101), but
+were not statistically different on MacConkey agar.
+DNA isolation from DA-U (N = 112) and DA-DTT (N = 43) samples and library preparation for 16S rRNA gene
+sequencing were also performed using modified protocols. DA-DTT samples exhibited 3.81-fold higher DNA
+concentrations (P = 0.0014) and 4.18-fold higher 16S library concentrations (P < 0.0001) then DA-U samples. 16S rRNA
+gene sequencing revealed increases in the detected relative abundances of obligate and facultative anaerobes in DA-
+DTT samples, including increases in the genera Clostridium (false discovery rate (FDR) P = 4.38E-6), Enterococcus (FDR
+P = 2.57E-8), Fusobacterium (FDR P = 0.02) and Bacteroides (FDR P = 5.43E-9). Detected levels of Gram-negative
+enteropathogens from the phylum Proteobacteria, such as Klebsiella (FDR P = 2.73E-6) and Providencia (FDR P < 0.0001)
+(family Enterobacteriaceae) and Pseudomonas (family Pseudomonadaceae) (FDR P = 0.04), were also increased in DA-DTT
+samples.
+Conclusions: This study validates novel DTT-based methodology which optimizes microbial culture and 16S rRNA
+gene sequencing for the study of the small bowel microbiome. The microbial analyses indicate increased isolation of
+facultative and obligate anaerobes from the mucus layer using these novel techniques.
+Keywords: Small intestine, Microbiome, Mucus layer, Methodology optimization, Microbial culture, 16S rRNA gene
+sequencing
+© The Author(s). 2019 Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0
+International License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and
+reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to
+the Creative Commons license, and indicate if changes were made. The Creative Commons Public Domain Dedication waiver
+(http://creativecommons.org/publicdomain/zero/1.0/) applies to the data made available in this article, unless otherwise stated.
+* Correspondence: pimentelm@cshs.org
+1Medically Associated Science and Technology (MAST) Program, Cedars-Sinai
+Medical Center, Los Angeles, CA, USA
+3Division of Digestive and Liver Diseases, Cedars-Sinai Medical Center, Los
+Angeles, CA, USA
+Full list of author information is available at the end of the article
+Leite et al. BMC Microbiology          (2019) 19:239 
+https://doi.org/10.1186/s12866-019-1617-1
+Background
+The Human Microbiome Project [1] was a groundbreak-
+ing introduction to the understanding of the microbiome
+of the human body. In this effort, many areas of the hu-
+man microbiome were sampled and characterized, such
+as the mouth, nose, integument and vaginal tract [2].
+The gastrointestinal tract was specifically characterized
+using stool as an easily available surrogate. Although
+stool sequencing may reveal the microbial signature of
+the distal colon, it is well known that stool does not ad-
+equately represent the entire gastrointestinal tract, given
+the multiple environments that exist as one travels from
+the stomach to the small bowel and then the colon [3].
+For example, conditions such as acidity and transit time
+vary tremendously along the intestine with likely signifi-
+cant effects on microbes by area of exam [3].
+In contrast to the colon, the small intestine, which is
+divided into the duodenum, jejunum and ileum, is of
+central importance to digestion and nutrient absorption.
+Of these, the duodenum has great importance as the site
+of convergence of chyme from the stomach, enzymes
+from the pancreas and bile salts from the gall bladder.
+Clearly, characterizing the microbial populations of the
+small intestine is of central importance, but efforts to
+date have been hampered both by the difficulty of
+obtaining samples, and by challenges associated with
+adapting sample processing for DNA isolation tech-
+niques that were designed for stool.
+The REIMAGINE (Revealing the Entire Intestinal
+Microbiota
+and
+its
+Associations
+with
+the
+Genetic,
+Immunologic, and Neuroendocrine Ecosystem) study is
+a large-scale initiative to examine the specific import-
+ance of the small bowel microbiome in human health
+and
+disease
+(https://www.cedars-sinai.org/programs/di
+gestive-liver-diseases/clinical/small-bowel-diseases-nutri
+tion/clinical-trials/small-intestinal-sampling-study.html).
+However, in order to adequately assess the small bowel,
+techniques need to be assessed and optimized for this lo-
+cation of the intestinal tract. In addition to maintaining
+sterility and preventing cross-contamination with oral
+and stomach microbes, particular challenges associated
+with processing and isolation of DNA from small intes-
+tinal samples include the viscosity, small sample vol-
+umes, and low microbial biomass. Recently, techniques
+and adaptations have been described aimed at optimiz-
+ing DNA sequencing from low-biomass [4], but not high
+viscosity samples. Viscosity of the small bowel mucous
+could impede or affect DNA isolation. One possible
+remedy would be to reduce viscosity prior to DNA isola-
+tion by treating the aspirates with dithiothreitol (DTT),
+which is commonly used to reduce the disulfide bonds
+between cysteine residues of proteins and can also re-
+duce the disulfide bonds linking mucin subunits in
+mucus, improving bacterial recovery and DNA extrac-
+tion methods [5]. DTT has previously been used to li-
+quefy sputum samples for DNA extraction [5].
+In this study we attempt to develop and validate meth-
+odologies to optimize microbial analysis of the small in-
+testine as part of the REIMAGINE study. Optimization
+included utilization of a new catheter technique for as-
+piration, steps to improve DNA recovery using DTT,
+and a new DNA library preparation technique in com-
+parison to conventional DNA isolation and sequencing.
+Results
+Samples and treatment
+A total of 228 subjects had DA samples collected and
+analyzed as shown in Fig. 1. Of these, 127 DA were not
+pretreated with DTT prior to microbial culture (DA-U,
+Fig. 1 Workflow for pretreatment and microbial culture, including the number of subjects in each group
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 2 of 13
+the untreated group), and 101 were pretreated with
+DTT prior to microbial culture (the DA-DTT group).
+DTT effect on microbial cultures
+No growth was observed in MacConkey agar plated with
+1x DTT only (negative control). The CFU on MacCon-
+key agar obtained from DA-U subjects ranged from 0 to
+240 × 103 CFU/mL (Mean = 10.6 × 103 CFU/mL, Me-
+dian = 0 CFU/mL, 25th percentile = 0 CFU/mL and 75th
+percentile = 0 CFU/mL). In the DA-DTT group, the CFU
+on MacConkey agar ranged from 0 to 1035 × 103 CFU/
+mL
+(Mean = 28.22 × 103
+CFU/mL,
+Med = 0 CFU/mL,
+25th percentile = 0 CFU/mL and 75th percentile = 2.5 ×
+103 CFU/mL) (Additional file 1). For the purposes of
+statistical analysis only, no growth was designated as 1
+bacterial CFU/mL of aspirate. DA-DTT exhibited 2.6-
+fold greater bacterial colonies on MacConkey agar when
+compared to DA-U, but the p-value did not reach statis-
+tical significance (P = 0.14).
+No growth was observed on blood agar cultured with
+1x DTT only (negative control). The CFU on blood agar
+obtained from DA-U subjects ranged from 0 to 800 ×
+103 CFU/mL (Mean = 31.3 × 103 CFU/mL, Median = 0
+CFU/mL, 25th percentile = 0 CFU/mL and 75th percent-
+ile = 20 × 103 CFU/mL) (Additional file 1). On blood
+agar, DA-DTT exhibited 2.86-fold greater anaerobic bac-
+terial colonies when compared to DA-U (P = 0.0101).
+For the purposes of statistical analysis only, no growth
+was designated as 1 bacterial CFU/mL of aspirate. In the
+DA-DTT group, CFU on blood agar ranged from 0 to
+2070 × 103 CFU/ml (Mean = 89.58 × 103 CFU/mL, Med =
+6x103CFU/mL, 25th percentile = 0 CFU/mL and 75th
+percentile = 98.5 × 103 CFU/mL).
+Immediate post aspiration DTT improves DNA extraction
+and 16S metagenomic library preparation for DA
+A total of 155 subjects had their DA samples sequenced
+and analyzed as shown in Fig. 2 (Additional file 1). The
+concentrations of DNAs obtained from negative controls
+(DTT only) were undetectable. The concentrations of
+DNAs obtained from DA-U subjects ranged from un-
+detectable levels (lower than 10 pg/μL) (n = 18) to 24.6
+ng/μL (Med = 0.0908 ng/μL, 25th percentile = 0.02365
+ng/μL and 75th percentile = 0.6875 ng/μL) (Additional
+file 1). Treatment with DTT improved DNA isolation. In
+the DA-DTT group, DNA concentrations ranged from
+undetectable levels (n = 3) to 68.8 ng/μL (Med = 0.346
+ng/μL, 25th percentile = 0.0906 ng/μL and 75th percent-
+ile = 1.91 ng/μL) and were 3.81-fold higher than those
+from DA-U (Mann Whitney P = 0.0014).
+The concentrations of the final 16S libraries amplified
+from negative controls were undetectable. The concen-
+trations of the final 16S libraries amplified from DA-U
+samples (i.e. those for which DTT was added only for
+the removal of the All Protect reagent) ranged from
+0.14 ng/μL
+to
+136 ng/μL
+(median = 21.8 ng/μL,
+25th
+Fig. 2 Workflow for DNA extraction and 16S rRNA gene sequencing of duodenal aspirate (DA) samples, including the number of subjects in
+each group
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 3 of 13
+percentile = 5.1 ng/μL and 75th percentile = 69.8 ng/μL)
+and correlated with the initial DNA concentrations
+(Spearman r = 0.316, P = 0.001) (Additional file 1).
+The concentrations of the final 16S libraries amplified
+from DA-DTT samples (i.e. those for which DTT was
+added both before microbial culture and for removal of
+the All Protect reagent) were 4.18x higher than those of
+libraries from DA-U samples (P < 0.0001) (see Fig. 3).
+The library concentrations ranged from 1.69 ng/μL to
+302 ng/μL (Med = 91.2 ng/μL, 25th percentile = 36.6 ng/
+μL and 75th percentile = 117 ng/μL) and correlated with
+the initial DNA concentrations (Spearman r = 0.443, P =
+0.003) (Additional file 1).
+Sequencing results
+All samples had at least 9000 sequences and no exclusions
+were performed. A total of 112 DA-U and 43 DA-DTT
+samples were sequenced. The difference in average library
+sizes between the groups was less than 2-fold (Add-
+itional file 2). Predictions for significant differentially
+abundant Operational Taxonomic Units (OTUs) were
+performed following recommendations from McMurdie
+and Holmes [6], and from Weiss et al. [7], used when the
+average library size for each group is approximately equal
+and/or the fold difference between groups is not high (>
+2-3x on average) (Additional file 1).
+Considering observations regarding contamination of
+DNA extraction kits with traces of bacterial DNA [8],
+16S sequencing was also performed on negative control
+samples (DTT only). Less than 0.03% of the total se-
+quences generated in each MiSeq run was assigned to
+negative control samples, 4433 sequences on average.
+27.63% of the sequences assigned to negative controls
+were identified as bacterial DNA, mostly belong to the
+Pseudomonas genus OTU 646549 (63.5%), and Bacter-
+oides genus OTUs 1,749,079, 193,591 and 359,538 (12%).
+All OTUs observed in negative controls were also de-
+tected in both groups analyzed, DA-U and DA-DTT.
+The OTUs assigned to Bacteroides genus observed in
+negative controls represented less than 3% of all OTUs
+assigned to this same genus in DA-U and DA-DTT,
+thus these OTUs were not excluded during down-
+stream analysis. The OTU assigned to Pseudomonas
+genus (646549) observed in negative controls repre-
+sented 67% of the OTUs assigned to this same genus in
+DA-U and DA-DTT, and considering the high risk of
+bias during analysis the OTU 646549 was excluded dur-
+ing comparisons between DA-U and DA-DTT groups
+(Additional file 1).
+Fig. 3 Final quantification of 16S libraries from DA-U (N = 112) and DA-DTT (N = 43) samples after 35 PCR cycles. The Mann-Whitney test was
+used to compare the median value of groups
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 4 of 13
+DTT increases the detected relative abundance of anaerobic
+bacteria in DA
+The main two dominant phyla observed in DA-DTT
+and DA-U were Firmicutes and Proteobacteria, followed
+by smaller proportions of Actinobacteria, Fusobacteria,
+Bacteroidetes and TM7 (Fig. 4, Table 1). After pretreat-
+ment with DTT, DA showed increased relative abun-
+dance of the phyla Proteobacteria (FC = 6.22, FDR P =
+7.71E-7), Bacteroidetes (FC = 2.19, FDR P = 0.03) and
+Fusobacteria (FC = 1.96, FDR P = 0.03), when compared
+to DA-U (Table 1). There were also smaller changes in
+the relative abundances of Actinobacteria and TM7 that
+did not reach significance (Table 1).
+Although no changes were seen in the detected rela-
+tive abundances of Clostridia and Bacilli, the two main
+classes from the phylum Firmicutes, in DA-DTT vs. DA-
+U, specific increases were observed in families from both
+of these classes. Specifically, DA-DTT exhibited in-
+creased detected relative abundances of the family Clos-
+tridiaceae
+(FC = 5.10,
+FDR
+P < 0.0001)
+and
+genus
+Clostridium (FC = 4.06, FDR P = 4.38E-6), which are
+Gram-positive obligate anaerobes, and of the family
+Enterococcaceae (FC = 76.22, FDR P = 2.62E-11) and
+genus Enterococcus (FC = 42.18, FDR P = 2.57E-8), which
+are Gram-positive facultative anaerobic lactic acid bac-
+teria (Table 2, Fig. 4).
+The detected relative abundances of several obligate
+anaerobic bacteria were increased in DA-DTT vs. DA-U,
+including Fusobacterium (phylum Fusobacteria), which
+are Gram-negative bacilli (FC = 2.29, FDR P = 0.02), and
+Bacteroides (phylum Bacteroidetes) (FC = 28.08, FDR
+P = 5.43E-9) (Table 2, Fig. 4).
+Pretreatment with DTT increased the detected relative
+abundance of gram-negative enteropathogens from the
+phylum Proteobacteria
+The relative abundance of the phylum Proteobacteria, a
+major phylum of Gram-negative bacteria, detected in
+DA-DTT was increased compared to that detected in
+DA-U (FC = 6.22, FDR P = 7.71E-7). The detected rela-
+tive abundances of three of the five most important
+classes from this phylum were significantly increased in
+DA-DTT compared to DA-U - class Gammaproteobac-
+teria, which comprises several enteropathogens (FC =
+8.44, FDR P = 4.25E-8) [9], class Alphaproteobacteria,
+which includes mainly phototrophic bacteria (FC = 7.94,
+FDR P = 2.60E-8), and class Deltaproteobacteria, which
+includes sulfate- and sulfur-reducing bacteria (FC = 6.35,
+FDR P = 9.7E-5) (Table 3). Smaller changes in classes
+Betaproteobacteria and Epsilonproteobacteria did not
+reach significance (Table 3).
+The increase in the detected relative abundance of
+Gammaproteobacteria in DA-DTT was partially driven
+by higher detected relative abundances of Enterobacteri-
+aceae family members (FC = 5.46, FDR P = 1.47E-3), in-
+cluding important enteropathogens and pathogens that
+cause infection in several parts of the human body, such
+as Klebsiella and Providencia (see Table 4) [10]. The
+Fig. 4 Sunburst representation of the overall distribution of the small intestinal microbiome as determined by 16S rRNA sequencing. On the left:
+Relative microbial abundance detected in DA-U (no pretreatment, N = 112). On the right: Relative microbial abundance detected in DA-DTT
+(pretreatment with DTT, N = 43)
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 5 of 13
+detected relative abundances of other members of the
+class Gammaproteobacteria were also increased in DA-
+DTT vs. DA-U, including the family Aeromonadaceae
+(FC = 63.61, FDR P = 1.18E-13) and the genus Pseudo-
+monas (family Pseudomonadaceae) (FC = 2.65, FDR P =
+0.04).
+The increase in detected relative abundances of Alpha-
+proteobacteria
+and
+Deltaproteobacteria
+in
+DA-DTT
+(Table 3) was driven by increases in detection of the
+order Rhizobiales (FC = 19.03, FDR P = 4.33E-13), and of
+sulfur-producing bacteria from the orders Desulfobacter-
+ales (FC = 42.61, FDR P < 0.0001) and Desulfovibrionales
+(FC = 6.41, FDR P = 6.71E-3), respectively.
+Pretreatment with DTT does not affect microbial diversity in
+DA
+Sample rarefaction curves showed a similar pattern,
+which verified that most of the species present in each
+sample from DA-DTT and DA-U groups were observed
+(Fig. 5) [11]. DA-DTT exhibited the same alpha diversity
+as DA-U, as demonstrated by Simpson’s index (P =
+0.9287) and Shannon entropy (P = 0.8066) (Fig. 6). Beta
+diversity of the DA-U and DA-DTT microbiome was an-
+alyzed based on the weighted UniFrac metric. Principal
+Coordinate Analysis plot showed no clustering of the
+DA-DTT (n = 43) and DA-U groups (n = 112) (see
+Fig. 7).
+Discussion
+In this paper, we develop and validate a novel methodo-
+logical approach based on the use of the reducing agent
+dithiothreitol (DTT) that resolves issues related to low
+microbial biomass from luminal duodenal aspirates
+(DA). The use of DTT clearly increases the number of
+bacteria detected on culture plates, and also increases
+DNA yields and the concentration of V3/V4 libraries for
+sequencing, which in turn results in important differ-
+ences in the microbial populations detected in DA.
+Given the central role of the small intestine in the pro-
+cesses of digestion and nutrient absorption, accurate
+characterization of the human small intestinal micro-
+biome is an important future consideration. The small
+intestine is not as heavily colonized as the large intestine,
+ranging under healthy conditions from 103 to 104
+Table 2 Differential abundance of anaerobic bacteria in DA-DTT versus DA-U
+DA-DTT (n = 43) vs. DA-U (n = 112)
+Taxonomy
+Average Relative
+abundance %
+DA-DTTa
+Average Relative
+abundance %
+DA-Ua
+Fold Change
+(calculated from
+the GLM)b
+P-value
+FDR
+P-value
+p_Firmicutes, c_Clostridia, f_Clostridiaceae,
+g_Clostridium
+0.032
+0.024
+4.06
+1.22E-6
+4.38E-6
+p_Firmicutes, c_Bacilli, f_Enterococcaceae,
+g_Enterococcus
+0.661
+0.009
+42.18
+5.57E-9
+2.57E-8
+p_Fusobacteria, c_Fusobacteriia, f_
+Fusobacteriaceae, g_Fusobacterium
+3.625
+2.471
+2.29
+0.01
+0.02
+p_Bacteroidetes, c_Bacteroidia,
+f_Bacteroidaceae, g_Bacteroides
+0.626
+0.073
+28.08
+1.08E-9
+5.43E-9
+P-value< 0.05 and FDR P-value< 0.05 are shown in bold. aThe relative abundances were calculated from the original counts (number of sequences in the OTU
+table). bFold changes were calculated from the GLM, which corrects for differences in library size between the samples and the effects of confounding factors. It is
+therefore not possible to derive these fold changes from the original counts (number of sequences in the OTU table) by simple algebraic calculations
+Table 1 Differential abundance of the top six phyla in DA-DTT versus DA-U
+DA-DTT (n = 43) versus DA-U (n = 112)
+Taxonomy
+Average Relative
+abundance %
+DA-DTTa
+Average Relative
+abundance %
+DA-Ua
+Fold Change
+(calculated
+from the GLM)b
+P-value
+FDR P-value
+Firmicutes
+49.3
+62.25
+1.05
+0.65
+0.70
+Proteobacteria
+28.97
+14.8
+6.22
+1.4E-7
+7.71E-7
+Actinobacteria
+8.91
+12.02
+−1.23
+0.21
+0.42
+Fusobacteria
+5.36
+3.93
+1.96
+0.01
+0.03
+Bacteroidetes
+6.16
+4.63
+2.19
+0.01
+0.03
+TM7
+1.17
+1.86
+−1.34
+0.32
+0.48
+P-value< 0.05 and FDR P-value< 0.05 are shown in bold. aThe relative abundances were calculated from the original counts (number of sequences in the OTU
+table). bFold changes were calculated from the GLM, which corrects for differences in library size between the samples and the effects of confounding factors. It is
+therefore not possible to derive these fold changes from the original counts (number of sequences in the OTU table) by simple algebraic calculations
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 6 of 13
+bacteria per mL of intestinal content in the duodenum
+and jejunum to 108 bacteria per mL in the ileum, com-
+pared to 1011 bacteria per gram of wet stool in the colon
+[12, 13]. In addition to having low bacterial biomass,
+duodenal luminal contents are viscous due to the mucus
+layer present in the small intestine [14, 15], and require
+special handling during sample collection and processing
+prior to culture and DNA extraction, in order to in-
+crease the likelihood of the assessment of all microbial
+communities, including those associated with the mucus
+layer.
+In the assessment of the microbiome, it is essential to
+accurately and completely assess the microbial compo-
+nents in a sample. Although standards have been set for
+the assessment of the stool microbiome, these standards
+have not been assessed for small intestinal fluid assess-
+ment. Mucous in general is a viscous fluid that can trap
+bacteria in its matrix and previous studies performed
+with sputum samples have shown that treating this vis-
+cosity has an impact on the microbial assessment [5, 16].
+However, until now, no studies have investigated the im-
+pact on microbial assessment and DNA recovery in aspi-
+rates collected from small bowel. There are agents
+known to safely and effectively improve microbial assess-
+ment and DNA yield in viscous samples, and one such
+agent is DTT, which can reduce the disulfide bonds be-
+tween mucin subunits.
+In this study we established a methodology to improve
+microbial DNA recovery from small bowel aspirates,
+which includes different sample processing steps when
+compared
+to
+conventionally
+published
+methods
+for
+extracting DNA for microbiome assessment of gut mate-
+rials such as stool [17–19]. The concentrations of DNAs
+extracted from DA ranged from very low levels to up to
+70 ng/ml when samples were pretreated with DTT, more
+than 3-fold higher than those from samples which were
+not pretreated with the reducing agent. Initial DNA con-
+centrations exhibited a higher positive correlation with
+those of the final V3/V4 libraries for DTT-pretreated
+DA compared to non-pretreated DA, which may indi-
+cate a specific increase in the isolation of bacterial
+DNAs. The use of a fixed initial DNA concentration
+during the preparation of sequencing libraries from DA
+should be carefully analyzed, and the addition of DTT
+during sample processing and for removal of the All
+Protect reagent is highly recommended as this increases
+Table 3 Differential abundance of members of the phylum Proteobacteria in DA-DTT versus DA-U
+DA-DTT (n = 43) vs. DA-U (n = 112)
+Taxonomy
+Average relative
+abundance %
+DA-DTTa
+Average relative
+abundance %
+DA-Ua
+Fold Change
+(calculated from
+the GLM)b
+P-value
+FDR
+P-value
+p_Proteobacteria, c_Gammaproteobacteria
+23.823
+10.492
+8.44
+8.3E-9
+4.25E-8
+p_Proteobacteria, c_Alphaproteobacteria
+1.294
+0.145
+7.94
+4.05E-9
+2.60E-8
+p_Proteobacteria, c_Deltaproteobacteria
+0.008
+0.001
+6.35
+3.08E-5
+9.70E-5
+p_Proteobacteria, c_Betaproteobacteria
+3.569
+4.029
+−1.26
+0.41
+0.56
+p_Proteobacteria, c_Epsilonproteobacteria
+0.281
+0.167
+1.74
+0.14
+0.29
+P-value< 0.05 and FDR P-value< 0.05 are shown in bold. aThe relative abundances were calculated from the original counts (number of sequences in the OTU
+table). bFold changes were calculated from the GLM, which corrects for differences in library size between the samples and the effects of confounding factors. It is
+therefore not possible to derive these fold changes from the original counts (number of sequences in the OTU table) by simple algebraic calculations
+Table 4 Differential abundance of members of the family Enterobacteriaceae in DA-DTT versus DA-U
+DA-DTT (n = 43) vs. DA-U (n = 112)
+Taxonomy
+Average relative
+abundance %
+DA-DTTa
+Average relative
+abundance %
+DA-Ua
+Fold Change
+(calculated from
+the GLM)b
+P-value
+FDR
+P-value
+c_Gammaproteobacteria, o_Enterobacteriales,
+f_Enterobacteriaceae
+19.193
+6.068
+5.46
+5.13E-4
+1.47E-3
+f_Enterobacteriaceae, g_unknown
+14.984
+5.227
+17.00
+2.72E-8
+1.21E-7
+f_Enterobacteriaceae, g_Klebsiella
+3.812
+0.784
+24.10
+7.13E-7
+2.73E-6
+f_Enterobacteriaceae, g_Providencia
+0.224
+0.00025
+13.57
+< 0.0001
+< 0.0001
+f_Enterobacteriaceae, g_Morganella
+0.018
+0.006
+36.71
+1.18E-9
+5.81E-9
+f_Enterobacteriaceae, g_Salmonella
+0.006
+0.001
+3.71
+0.01
+0.02
+P-value< 0.05 and FDR P-value< 0.05 are shown in bold. aThe relative abundances were calculated from the original counts (number of sequences in the OTU
+table). bFold changes were calculated from the GLM, which corrects for differences in library size between the samples and the effects of confounding factors. It is
+therefore not possible to derive these fold changes from the original counts (number of sequences in the OTU table) by simple algebraic calculations
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 7 of 13
+the initial yield of microbial DNA prior sequencing li-
+brary preparation.
+In addition to increases in DNA yields and library con-
+centrations, DA processed with DTT prior to microbial
+culture exhibited higher numbers of bacterial colonies
+on blood agar plates incubated under anaerobic condi-
+tions. The relative abundance of specific obligate and
+facultative anaerobes detected in DA-DTT was increased
+compared to DA-U samples, which may reflect the in-
+creased detection of microbes associated with the mucus
+layer. For example, the relative abundance of the genus
+Enterococcus (phylum Firmicutes) detected in DA-DTT
+was significantly increased. This genus comprises over
+50 Gram-positive facultative anaerobic lactic acid cocci
+species isolated from numerous environments, including
+the human GI tract [20]. Enterococcus species constitute
+up to 1% of the gut microbiota, and most species can
+grow on blood agar plates under anaerobic conditions.
+The
+relative
+abundance
+of
+the
+genus
+Clostridium
+(phylum Firmicutes), which is comprised of obligate an-
+aerobes and some aerotolerant species, detected in DA-
+DTT samples was also increased.
+The relative abundance of the genus Bacteroides, com-
+prised of Gram-negative obligately anaerobic bacilli, de-
+tected in DA-DTT was also significantly increased
+compared to DA-U samples. Species from this genus
+can grow on blood agar and are well-adapted to the
+gastrointestinal tracts of mammals, including humans
+[21, 22]. The human large intestine is densely colonized
+with species from the genus Bacteroides (phylum Bacter-
+oidetes) [23], many of which perform essential metabolic
+functions for the host, including the metabolism of
+Fig. 6 Alpha diversity indices of DA samples pre-treated with DTT (DA-DTT, N = 112) and untreated DA (DA-U, N = 43). Left: Shannon entropy
+diversity for DA-DTT and DA-U samples. Right: Simpson’s index diversity for DA-DTT and DA-U samples
+Fig. 5 Alpha diversity rarefaction curves for DA-DTT (N = 112) and DA-U (N = 43) samples. Samples were rarefied to the least numbers of
+sequences obtained
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 8 of 13
+proteins and complex sugars. In contrast, the small in-
+testine is not as heavily colonized by members of the
+phylum Bacteroidetes, which comprised less than 4% of
+the total microbes detected in DA-U. With the addition
+of the reducing agent DTT, which breaks the disulfide
+bonds linking mucin subunits in mucus prior to micro-
+bial culture and DNA extraction, the relative abundance
+of Bacteroidetes detected in DA increased significantly
+from 4 to 7%, indicating a possible role for species from
+this phylum in mucus metabolism. Mucus is a dynamic
+matrix, consisting of mucin glycoproteins secreted by in-
+testinal goblet cells, which lubricates the transit of intes-
+tinal
+contents,
+amongst
+other
+functions.
+Mucus
+glycoproteins can be used as a carbon source by many
+asaccharolytic microorganisms, and the low oxygen
+levels at atmospheric pressures allow the colonization
+and growth of anaerobes in mucus [24, 25].
+The phylum Proteobacteria also includes aerotolerant
+asaccharolytic
+microorganisms
+that
+require
+protein-
+aceous substrates as carbon and energy sources, such as
+Campylobacter [26], as well as facultative anaerobes
+from the family Enterobacteriaceae included in the
+“Mucosally Associated Consortium” in the colon de-
+scribed by Albenberg et al. [24]. Pretreatment of DA
+with DTT increases the detected relative abundance of
+many
+Enterobacteriaceae
+members,
+including
+the
+clinically important genera Klebsiella, Providencia and
+Salmonella as well as unknown members. Providencia
+and Salmonella include motile species that can adhere
+to mucus and epithelial cells and actively invade the host
+epithelium [27–29]. The relative abundance of the genus
+Pseudomonas, detected in DA-DTT was also increased
+compared to non-pretreated DA. Members of this genus,
+including the most studied species P. aeruginosa, are
+also motile and can be part of the normal human micro-
+flora, but are also important clinically as they are known
+to cause hospital-acquired infections such as pneumonia
+and urinary tract infections [30].
+A limitation of this study was that DTT treatment vs.
+non-treatment could not be tested in different portions
+of the same samples. This was partly due to the small
+sizes of the individual samples, and partly due to the fact
+that their viscosity made it impossible to divide them
+evenly. We have attempted to compensate for this
+through the number of samples tested.
+Surprisingly, the changes in several microbial taxa in
+DA samples after the addition of DTT did not affect the
+overall microbial diversity. These findings further sug-
+gest that the addition of the reducing agent DTT im-
+proves microbial assessment and DNA recovery without
+causing a dramatic change in the microbial balance in
+the aspirate samples.
+Fig. 7 Beta diversity of DA-U and DA-DTT based on the weighted UniFrac metric. Principal Coordinates Analysis plot of binary and abundance-
+weighted Unifrac distances between DA-DTT (shown in orange, N = 43) and DA-U (shown in blue, N = 112)
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 9 of 13
+Conclusions
+This study validates methodology to optimize yield for
+culture, and for DNA extraction for analysis of the small
+bowel microbiome. Culture totals, microbial DNA and
+microbiome analysis demonstrate marked differences
+with this new technique. This suggests that conventional
+techniques for DNA isolation provide an incomplete pic-
+ture of the microbial environment in the small bowel.
+Thus, this new technique appears ideal for small bowel
+microbiome assessment.
+Methods
+The REIMAGINE study is a large-scale study designed
+to examine the relationship between the small bowel
+microbiome in human health and disease. In brief, the
+study involves collecting data in consecutive patients
+undergoing routine upper gastrointestinal endoscopy
+(esophagogastroduodenoscopy). After a battery of ques-
+tionnaires for comprehensive collection of health infor-
+mation, and obtaining serum and genetic samples, the
+endoscopy entailed the collection of small bowel aspi-
+rates and two mucosal biopsies. The first phase of this
+study was to develop, validate and optimize small intes-
+tinal
+aspiration
+techniques,
+and
+microbial
+sample
+acquisition.
+Study subjects
+Male and female subjects aged 18–85 undergoing eso-
+phagogastroduodenoscopy (EGD) without colon prepar-
+ation for standard of care purposes were prospectively
+recruited for this study. Potential participants were iden-
+tified by study staff and their eligibility was verified by
+co-investigators or the PI. Although there are no exclu-
+sion criteria for the REIMAGINE study, small bowel
+biopsies are not collected from subjects with bleeding
+disorders or advanced cirrhosis of the liver with coagu-
+lopathy and intestinal varices where the international
+normalized ratio (INR) was greater than 1.5, in order to
+minimize the risk of bleeding from the biopsy site. The
+REIMAGINE
+study
+protocol
+was
+approved
+by
+the
+Institutional
+Review
+Board at Cedars-Sinai
+Medical
+Center, and all subjects provided informed written con-
+sent prior to participating in the study. Samples from
+subjects taking antibiotics were not included in the
+present study.
+Study procedures
+Small intestinal sample procurement
+During EGD, samples of luminal fluid (~ 2 ml) were ob-
+tained from the duodenum using a custom sterile aspir-
+ation
+catheter
+(Hobbs
+Medical,
+Inc.).
+The
+custom
+catheter consisted of a newly designed double lumen
+sterile catheter, with the inner lumen maintaining steril-
+ity during insertion by applying sterile bone wax into the
+open tip of the external catheter. During endoscopy, the
+endoscopist is instructed to immediately enter the duo-
+denum and insert the aspiration catheter. The inner
+catheter then dislodges the bone wax, exposing the ster-
+ile inner catheter. This inner catheter is used to aspirate
+duodenal fluid through lasered side holes to acquire a
+volume of 2 mL. These precautions eliminated the risk
+of oral and gastric contamination.
+Aspirate processing
+Immediately after aspiration, samples from all duodenal
+aspirates were cultured on MacConkey agar (Becton
+Dickinson, Franklin Lakes, NJ, EUA) and blood agar
+(Becton Dickinson) for determination of the number of
+colony-forming units (CFU) per mL of aspirate. To assess
+the effect of viscosity on culture, a subset of aspirates were
+not pretreated and simply cultured (the DA-U group for
+“untreated”) and another subset were first pretreated with
+the reducing agent Dithiothreitol (DTT) (Sputolysin®
+Reagent,
+Cat.
+560,000-1SET,
+EMD
+Millipore
+Corp,
+Billerica, MA, USA) (the DA-DTT group) (see Fig. 1).
+For DA-DTT samples, 1x DTT (6.5 mM dithiothreitol
+in 100 mM phosphate buffer, pH 7.0) was added to an
+aliquot of the DA in a 1:1 ratio and the resulting mixture
+was vortexed until the sample was liquified (typically 30
+s). 100 μL of the liquified mixture was serially diluted
+with 900 μL sterile 1x PBS and samples of the 1:10 and
+1:100 dilutions were plated in duplicate on MacConkey
+agar under aerobic conditions for the quantitation of
+Gram-negative bacilli, and on blood agar under anaer-
+obic conditions for the quantitation of total anaerobes.
+For DA-U samples, 100 μL of DA was diluted directly
+with 900 μL sterile 1x PBS and samples of the 1:10 and
+1:100 dilutions were plated as described above. All plates
+were incubated at 37 °C for 16–18 h, after which colonies
+were electronically counted using the Scan 500 (Inter-
+science, Paris, France). As a negative control, 100 μL of
+1x DTT was also cultured aerobically on MacConkey
+agar and anaerobically on blood agar. All dilution factors
+were taken into account for final determination of mi-
+crobial burden.
+After
+aliquots
+for
+microbial
+culture
+were
+taken,
+remaining DA-U and DA-DTT samples were centri-
+fuged at high speed (17,136 x g) for 10 min and the
+supernatant was carefully removed and stored at −80 °C
+for future metabolomic analyses. 500 μL of sterile All
+Protect reagent (Qiagen, Hilden, Germany) was added to
+each pellet for stabilization of DNA, RNA and proteins,
+and the pellets were stored at −80 °C prior to DNA iso-
+lation and analysis of the DA microbiome.
+DNA extraction and quantification from aspirates
+DA-U and DA-DTT samples were thawed on ice and 1x
+DTT was added in a 1:1 ratio, after which the samples
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 10 of 13
+were vortexed until the All Protect reagent was fully li-
+quefied (around 30 s). DNA extraction was then per-
+formed for both groups using the MagAttract PowerSoil
+DNA KF Kit (Qiagen, cat. No. 27000–4-KF) with some
+modifications. DNA extraction was also performed on
+negative control samples (1x DTT) as a control.
+The lysis step was carried out by adding garnet beads
+(Qiagen, cat. No. 13123–50) and 746 μL PowerBead
+Solution to each pellet-containing tube, followed by 4 μL
+RNase A and 60 μL SL Solution (Lysis buffer) in this
+specific order. Tubes were sealed with parafilm, vortexed
+horizontally for 15 min, and then centrifuged for 6 min
+at 4500 x g. The supernatants were transferred to new
+tubes containing 450 μL IR Solution, vortexed for 3 s, in-
+cubated at 4 °C for 10 min, and then centrifuged for 6
+min at 4500 x g. The supernatants were transferred to
+new tubes and centrifuged for a further 6 min at 4500 x
+g. 450 μL of the resulting supernatants were added to
+deep 96-well KingFisher plates containing magnetic
+beads and DNA extraction was performed using the
+KingFisher Duo (Thermo Fisher Scientific, Waltham,
+MA, USA). The final DNA volume was 100 μL. DNAs
+were then quantified using Qubit ds DNA BR Assay kits
+(Invitrogen by Thermo Fisher Scientific, Waltham, MA,
+USA) on a Qubit 4 Fluorometer (Invitrogen).
+Library preparation and 16S rRNA gene sequencing
+16S library preparation for DNAs from all groups was
+performed according to the Illumina (Illumina, San Diego,
+CA,
+USA)
+protocol
+https://support.illumina.com/docu
+ments/documentation/chemistry_documentation/16s/16s
+-metagenomic-library-prep-guide-15044223-b.pdf,
+with
+some modifications. The V3 and V4 regions were ampli-
+fied using the gene-specific primers S-D-Bact-0341-b-S-17
+and S-D-Bact-0785-a-A-21 published and validated by
+Klindworth et al. [31]. The primers were modified in
+accordance with the protocol by adding the Illumina se-
+quencing adapters to each one.
+The full-length primer sequences used were:
+16S amplicon PCR forward primer: 5’TCGTCGGCA
+GCGTCAGATGTGTATAAGAGACAGCCTACGGGN
+GGCWGCAG
+16S amplicon PCR reverse primer: 5’GTCTCGTGG
+GCTCGGAGATGTGTATAAGAGACAGGACTACVH
+GGGTATCTAATCC
+The 16S library preparation protocol was modified as
+follows: 5 μL of DNA was added to a Master Mix (0.5 μL
+of 10 μM 16S Amplicon PCR Forward primer, 0.5 μL of
+10 μM 16S Amplicon PCR Reverse primer, 12.5 μL 2x
+KAPA HiFi HotStart ReadyMix and 6.5 μL of molecular
+grade PCR H2O) and the PCR was performed as follows:
+1. Initial denaturation step at 95 °C for 3 min
+2. 27 cycles of: 95 °C for 30 s, 55 °C for 30 s and 72 °C
+for 30 s
+3. 72 °C for 5 min
+4. Hold at 4 °C
+An optimized Clean-Up step was performed with
+Agencourt AMPure XP beads using the modifications
+proposed by Quail et al. [32]. After adding the beads to
+each Amplicon PCR 96-well plate on the magnetic
+stand, samples were incubated for five minutes followed
+by two wash steps with 80% ethanol. The beads were air
+dried for five minutes. After removing the plate from
+magnetic stand, beads were incubated with EB Buffer
+(Qiagen) for five minutes to elute the DNA. The plate
+was placed back on the magnetic stand and after 2–3
+min the supernatant was transferred to an empty clean
+well, preventing the transfer of the beads with the
+supernatant.
+Five μL of the final Amplicon PCR product was used
+for the Index PCR, which was performed using the
+Nextera XT Index kit and 2x KAPA HiFi HotStart
+ReadyMix, following the Illumina protocol for 8 cycles.
+After a second modified Clean-Up step, the final product
+was quantified using Qubit ds DNA BR Assay kits and
+Qubit 1X dsDNA HS Assay kits on a Qubit 4 Fluorometer
+and analyzed using Agilent DNA 1000 chips (Agilent
+Technologies, Santa Clara, CA) and Agilent HS DNA
+chips (Agilent) on an Agilent 2100 Bioanalyzer System.
+16S rRNA gene sequencing and analysis
+The V3 and V4 libraries prepared using DNAs from
+DA-DTT and DA-U groups were sequenced using a
+MiSeq Reagent Kit v3 (600-cycles) on a MiSeq System
+(Illumina, San Diego, California). 2 × 301 cycles paired-
+end sequencing was performed according to manufac-
+turer’s protocol and 5% Phix (Illumina) was added to
+each library pool.
+Operational Taxonomic Unit (OTU) clustering and
+taxonomic analyses were performed using CLC Genom-
+ics Workbench v. 10.1.1 and CLC Microbial Genomics
+Module v. 2.5 (Qiagen). Sequences were first trimmed to
+remove 13 bases at the 5′ terminal position and merged
+considering the alignment scores as follows: mismatch
+cost of 2, gap cost of 2, zero maximum unaligned end
+mismatches and minimum score of 30. After merging,
+sequences were clustered into OTUs at 97% sequence
+similarity level using the Amplicon-Based OTU cluster-
+ing tool. The creation of new OTUs was allowed consid-
+ering 97% taxonomic similarity. The most abundant
+sequences were selected as representative of each clus-
+ter, and then assigned to a taxonomy level using CLC
+Microbial Genomics default values and the Greengenes
+Database 2013 release. Alpha diversity indexes (Chao1,
+Simpson
+and
+Shannon)
+were
+calculated
+using
+the
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 11 of 13
+Abundance Analysis tool. The weighted Unifrac metric
+was
+used
+to
+calculate
+inter-sample
+diversity
+(beta
+diversity).
+Statistical analysis
+Multiple comparisons and statistical analyses were per-
+formed using CLC Genomics Workbench v. 10.1.1 and
+CLC Microbial Genomics Module v. 2.5 (Qiagen). A
+Negative Binomial Generalized Linear Model (GLM)
+model was used to obtain maximum likelihood estimates
+for an OTU’s log-fold change between two conditions,
+and the Wald test was used to determine significance, as
+part of the CLC package available at https://www.qiagen-
+bioinformatics.com/products/clc-genomics-workbench/.
+False Discovery Rate (FDR) was performed to correct P-
+values. Fold changes are calculated from the GLM,
+which corrects for differences in library size between the
+samples and the effects of confounding factors. Again,
+these calculations were performed using the CLC pack-
+age. It is therefore not possible to derive these fold
+changes from the original counts by simple algebraic cal-
+culations. Two-tailed Spearman r correlations, Mann-
+Whitney tests and graph construction were performed
+using GraphPad Prism 7.02 (GraphPad Software, La
+Jolla, CA, USA). For statistical analysis purposes only, no
+growth on blood agar and MacConkey agar (CFU/ml =
+0) was assigned as 1 CFU/ml.
+Supplementary information
+Supplementary information accompanies this paper at https://doi.org/10.
+1186/s12866-019-1617-1.
+Additional file 1. Title of data: Culture data, sequenced samples
+information and OTU table. Description of the data: the culture data
+section (sheet 1) shows the number of bacterial colonies observed on
+MacConkey agar (incubated aerobically) and blood agar (incubated
+anaerobically) for all DA-DTT (N = 101) and DA-U (N = 127) samples. Data
+are presented as CFU/mL of duodenal aspirate. The sequenced samples
+information section (sheet 2) provides data for the sequenced DA-DTT
+(N = 43) and DA-U (N = 112) samples, including the number of bacterial
+colonies observed on MacConkey agar and blood agar (in CFU/mL of
+duodenal aspirate), initial DNA concentration, library concentration and li-
+brary size (number of sequences). The OTU table section (sheet 3) con-
+tains the OTU table generated from the sequenced DA-DTT (N = 43) and
+DA-U (N = 112) samples. The table provides the OTU numbers, taxonomic
+classification, number of reads for each OTU and the OTU sequence.
+Additional file 2. Title of data: V3-V4 16S rRNA library size of DA-DTT
+and DA-U samples. Description of the data: library sizes (number of se-
+quences in the OTU table) for DA-DTT and DA-U samples. The table pro-
+vides the library size mean, standard deviation, standard error of the
+mean, median, 25 and 75% percentiles.
+Abbreviations
+CFU: Colony-forming units; DA: Duodenal aspirates; DA-DTT: Duodenal
+aspirates pretreated with dithiothreitol; DA-U: Duodenal aspirates untreated;
+DNA: Deoxyribonucleic acid; DTT: Dithiothreitol;
+EGD: Esophagogastroduodenoscopy; FC: Fold change; FDR: False discovery
+rate; GI: Gastrointestinal; GLM: Generalized linear model; INR: International
+normalized ratio; Med: Median; OTU: Operational taxonomic unit;
+PCR: Polymerase chain reaction; REIMAGINE study: Revealing the Entire
+Intestinal Microbiota and its Associations with the Genetic, Immunologic, and
+Neuroendocrine Ecosystem study; rRNA: ribosomal ribonucleic acid
+Acknowledgements
+Not applicable.
+Authors’ contributions
+RM and MP conceived and designed the study, reviewed the data and wrote
+and edited the manuscript. AR assisted with study design and planning,
+analyzed the data, and reviewed and edited the manuscript. RS recruited
+subjects and RS and SC processed the small intestinal samples. GL, GP, WM,
+SW, and GB performed the laboratory experiments, GL, AR and MP analyzed
+the data, and GL, GB RM and MP wrote and edited the manuscript. All
+authors read and approved the final manuscript.
+Funding
+This study was supported in part by a grant from the Monica Lester
+Charitable Trust to Dr. Ruchi Mathur. This funding body played no role in the
+design of the study, in the collection, analysis, and interpretation of data, or
+the writing of the manuscript.
+Availability of data and materials
+The datasets generated during the current study are available in the National
+Center for Biotechnology Information (NCBI) BioProject Repository https://
+www.ncbi.nlm.nih.gov/bioproject under BioProject ID PRJNA520899.
+Ethics approval and consent to participate
+The study protocol was approved by the Institutional Review Board at
+Cedars-Sinai Medical Center (Pro00035192), and all subjects provided in-
+formed written consent prior to participating in the study.
+Consent for publication
+Not applicable.
+Competing interests
+The authors declare that they have no competing interests.
+Author details
+1Medically Associated Science and Technology (MAST) Program, Cedars-Sinai
+Medical Center, Los Angeles, CA, USA. 2Division of Endocrinology, Diabetes,
+and Metabolism, Cedars-Sinai Medical Center, Los Angeles, CA, USA. 3Division
+of Digestive and Liver Diseases, Cedars-Sinai Medical Center, Los Angeles, CA,
+USA.
+Received: 9 March 2019 Accepted: 20 October 2019
+References
+1.
+Turnbaugh PJ, Ley RE, Hamady M, Fraser-Liggett CM, Knight R, Gordon JI.
+The human microbiome project. Nature. 2007;449:804–10.
+2.
+Costello EK, Lauber CL, Hamady M, Fierer N, Gordon JI, Knight R. Bacterial
+community variation in human body habitats across space and time.
+Science. 2009;326:1694–7.
+3.
+Hillman ET, Lu H, Yao T, Nakatsu CH. Microbial ecology along the
+gastrointestinal tract. Microbes Environ. 2017;32:300–13.
+4.
+Minich JJ, Zhu Q, Janssen S, Hendrickson R, Amir A, Vetter R, et al.
+KatharoSeq Enables High-Throughput Microbiome Analysis from Low-
+Biomass Samples. mSystems. 2018;3.
+5.
+Oriano M, Terranova L, Teri A, Sottotetti S, Ruggiero L, Tafuro C, et al.
+Comparison of different conditions for DNA extraction in sputum - a pilot
+study. Multidiscip Respir Med. 2019;14:6.
+6.
+McMurdie PJ, Holmes S. Waste not, want not: why rarefying microbiome
+data is inadmissible. PLoS Comput Biol. 2014;10:e1003531.
+7.
+Weiss S, Xu ZZ, Peddada S, Amir A, Bittinger K, Gonzalez A, et al.
+Normalization and microbial differential abundance strategies depend upon
+data characteristics. Microbiome. 2017;5:27.
+8.
+Glassing A, Dowd SE, Galandiuk S, Davis B, Chiodini RJ. Inherent bacterial
+DNA contamination of extraction and sequencing reagents may affect
+interpretation of microbiota in low bacterial biomass samples. Gut Pathog.
+2016;8:24.
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 12 of 13
+9.
+Williams KP, Gillespie JJ, Sobral BW, Nordberg EK, Snyder EE, Shallom JM,
+et al. Phylogeny of gammaproteobacteria. J Bacteriol. 2010;192:2305–14.
+10.
+Kolling G, Wu M, Guerrant RL. Enteric pathogens through life stages. Front
+Cell Infect Microbiol. 2012;2:114.
+11.
+Cox KD, Black MJ, Filip N, Miller MR, Mohns K, Mortimor J, et al. Community
+assessment techniques and the implications for rarefaction and
+extrapolation with hill numbers. Ecol Evol. 2017;7:11213–26.
+12.
+Leser TD, Molbak L. Better living through microbial action: the benefits of
+the mammalian gastrointestinal microbiota on the host. Environ Microbiol.
+2009;11:2194–206.
+13.
+Sender R, Fuchs S, Milo R. Revised estimates for the number of human and
+Bacteria cells in the body. PLoS Biol. 2016;14:e1002533.
+14.
+Johansson ME, Sjovall H, Hansson GC. The gastrointestinal mucus system in
+health and disease. Nat Rev Gastroenterol Hepatol. 2013;10:352–61.
+15.
+Ermund A, Schutte A, Johansson ME, Gustafsson JK, Hansson GC. Studies of
+mucus in mouse stomach, small intestine, and colon. I. Gastrointestinal mucus
+layers have different properties depending on location as well as over the
+Peyer's patches. Am J Physiol Gastrointest Liver Physiol. 2013;305:G341–7.
+16.
+Terranova L, Oriano M, Teri A, Ruggiero L, Tafuro C, Marchisio P, et al. How
+to process sputum samples and extract bacterial DNA for microbiota
+analysis. Int J Mol Sci. 2018;19.
+17.
+Jovel J, Patterson J, Wang W, Hotte N, O'Keefe S, Mitchel T, et al.
+Characterization of the gut microbiome using 16S or shotgun
+Metagenomics. Front Microbiol. 2016;7:459.
+18.
+Wang Z, Zolnik CP, Qiu Y, Usyk M, Wang T, Strickler HD, et al. Comparison
+of fecal collection methods for microbiome and metabolomics studies.
+Front Cell Infect Microbiol. 2018;8:301.
+19.
+Jones MB, Highlander SK, Anderson EL, Li W, Dayrit M, Klitgord N, et al.
+Library preparation methodology can influence genomic and functional
+predictions in human microbiome research. Proc Natl Acad Sci U S A. 2015;
+112:14024–9.
+20.
+Dubin K, Pamer EG. Enterococci and their interactions with the intestinal
+microbiome. Microbiol Spectr. 2014;5.
+21.
+Ley RE, Hamady M, Lozupone C, Turnbaugh PJ, Ramey RR, Bircher JS, et al.
+Evolution of mammals and their gut microbes. Science. 2008;320:1647–51.
+22.
+Eckburg PB, Bik EM, Bernstein CN, Purdom E, Dethlefsen L, Sargent M, et al.
+Diversity of the human intestinal microbial flora. Science. 2005;308:1635–8.
+23.
+Rajilic-Stojanovic M, de Vos WM. The first 1000 cultured species of the
+human gastrointestinal microbiota. FEMS Microbiol Rev. 2014;38:996–1047.
+24.
+Albenberg L, Esipova TV, Judge CP, Bittinger K, Chen J, Laughlin A, et al.
+Correlation between intraluminal oxygen gradient and radial partitioning of
+intestinal microbiota. Gastroenterology. 2014;147:1055–63 e1058.
+25.
+Li H, Limenitakis JP, Fuhrer T, Geuking MB, Lawson MA, Wyss M, et al. The
+outer mucus layer hosts a distinct intestinal microbial niche. Nat Commun.
+2015;6:8292.
+26.
+van der Stel AX, van de Lest CHA, Huynh S, Parker CT, van Putten JPM,
+Wosten M. Catabolite repression in campylobacter jejuni correlates with
+intracellular succinate levels. Environ Microbiol. 2018;20:1374–88.
+27.
+O'Hara CM, Brenner FW, Miller JM. Classification, identification, and clinical
+significance of Proteus, Providencia, and Morganella. Clin Microbiol Rev.
+2000;13:534–46.
+28.
+Kurmasheva N, Vorobiev V, Sharipova M, Efremova T, Mardanova A. The
+potential virulence factors of Providencia stuartii: motility, adherence, and
+invasion. Biomed Res Int. 2018;2018:3589135.
+29.
+Elhadad D, Desai P, Rahav G, McClelland M, Gal-Mor O. Flagellin is required
+for host cell invasion and Normal Salmonella Pathogenicity Island 1
+expression by Salmonella enterica Serovar Paratyphi a. Infect Immun. 2015;
+83:3355–68.
+30.
+Lister PD, Wolter DJ, Hanson ND. Antibacterial-resistant Pseudomonas
+aeruginosa: clinical impact and complex regulation of chromosomally
+encoded resistance mechanisms. Clin Microbiol Rev. 2009;22:582–610.
+31.
+Klindworth A, Pruesse E, Schweer T, Peplies J, Quast C, Horn M, et al. Evaluation
+of general 16S ribosomal RNA gene PCR primers for classical and next-
+generation sequencing-based diversity studies. Nucleic Acids Res. 2013;41:e1.
+32.
+Quail MA, Swerdlow H, Turner DJ. Improved protocols for the illumina
+genome analyzer sequencing system. Curr Protoc Hum Genet. 2009;
+Chapter 18: Unit 18 12.
+Publisher’s Note
+Springer Nature remains neutral with regard to jurisdictional claims in
+published maps and institutional affiliations.
+Leite et al. BMC Microbiology          (2019) 19:239 
+Page 13 of 13

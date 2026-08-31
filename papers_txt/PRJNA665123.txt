@@ -1,0 +1,1156 @@
+Submitted 23 October 2020
+Accepted 26 February 2021
+Published 1 April 2021
+Corresponding authors
+Jiangman Zhao,
+zhaojiangman86@163.com
+Hui Tang, tang11_23@126.com
+Academic editor
+Nikolajs Sjakste
+Additional Information and
+Declarations can be found on
+page 14
+DOI 10.7717/peerj.11128
+Copyright
+2021 Shang et al.
+Distributed under
+Creative Commons CC-BY 4.0
+OPEN ACCESS
+Liraglutide-induced structural modulation
+of the gut microbiota in patients with
+type 2 diabetes mellitus
+Junjie Shang1,*, Fang Liu2,*, Bing Zhang1, Kunlun Dong1, Man Lu3,4,
+Rongfeng Jiang3,4, Yue Xu3,4, Le Diao3,4, Jiangman Zhao3,4 and Hui Tang3,4
+1 Nanyang Second General Hospital, Nanyang, Henan Province, China
+2 Kaifeng Central Hospital, Kaifeng, Henan Province, China
+3 Shanghai Biotecan Pharmaceuticals Co., Ltd., Shanghai, China
+4 Shanghai Zhangjiang Institute of Medical Innovation, Shanghai, China
+* These authors contributed equally to this work.
+ABSTRACT
+Accumulating evidence has suggested the importance of gut microbiota in the develop-
+ment of type 2 diabetes mellitus (T2DM). In the present study, 40 patients with T2DM
+were treated with liraglutide for 4 months. Feces samples and clinical characteristics
+were collected from these 40 T2DM patients before and after the liraglutide treatment.
+The diversity and composition of gut microbiota in the two groups were determined
+by sequencing the V4 region of bacterial 16S rRNA genes. Meanwhile, blood glucose,
+insulin, hemoglobin A1c (HbA1c), and lipid metabolism were also measured in the pre-
+and post-liraglutide-treatmentgroups. Wefindthat BaselineHbA1cwasassociatedwith
+liraglutide treatment response (R2 = 0.527, β = −0.726, p < 0.0001). After adjusted for
+baseline HbA1c, blood urea nitrogen was associated with liraglutide treatment response.
+Besides, our results showed reduced gut microbial alpha diversity, different community
+structure distribution and altered microbial interaction network in patients treated with
+liraglutide. The liner discriminant analysis (LDA) effect size (LEfSe) analysis showed
+that 21 species of bacteria were abundant in the pre-liraglutide-treatment group and
+15 species were abundant in the post-liraglutide-treatment group. In addition, we also
+find that Megamonas were significantly correlated with older age, diabetes duration
+and diabetic retinopathy, Clostridum were significantly correlated with family history
+of diabetes and Oscillospira were significantly correlated with both diabetic retinopathy
+and diabetic peripheral neuropathy. Functional analysis based on Kyoto Encyclopedia
+of Genes and Genomes (KEGG) and cluster of orthologous groups (COG) annotations
+enriched three KEGG metabolic pathways and six functional COG categories in the
+post-liraglutide-treatment group. In conclusion, our research suggests that baseline
+HbA1c, blood urea nitrogen and gut microbiota are associated with the liraglutide
+treatment applied on patients with T2DM. These findings may contribute to the
+beneficial effects of liraglutide against diabetes.
+Subjects Biotechnology, Microbiology, Molecular Biology, Diabetes and Endocrinology, Drugs
+and Devices
+Keywords Type 2 diabetes mellitus, Liraglutide, Gut microbiota, 16S rRNA gene sequencing,
+HbA1c
+How to cite this article Shang J, Liu F, Zhang B, Dong K, Lu M, Jiang R, Xu Y, Diao L, Zhao J, Tang H. 2021. Liraglutide-induced struc-
+tural modulation of the gut microbiota in patients with type 2 diabetes mellitus. PeerJ 9:e11128 http://doi.org/10.7717/peerj.11128
+
+INTRODUCTION
+Type 2 diabetes mellitus (T2DM) is a highly prevalent metabolic disorder characterized by
+the imbalance in blood glucose level and altered lipid profile (Sharma & Tripathi, 2019),
+which is caused by either disturbed insulin secretion, disturbed insulin effect, or usually
+both (Petersmann et al., 2019). The World Health Organization (WHO) has proposed that
+T2DM could be one of the top ten potent reasons of death worldwide by 2030 (Kelly
+et al., 2008). The increased morbidity and mortality rates related to T2DM are often
+associated with vascular complications, such as cardiovascular diseases (Zheng et al., 2018),
+nephropathy (Lu et al., 2017) and retinopathy (Maugeri et al., 2018). Approximately 50%
+of T2DM patients developed a diabetic peripheral neuropathy (DPN), which is a chronic
+and progressive disorder affecting the peripheral nervous system (Edwards et al., 2008).
+Diabetic retinopathy (DR) is a microvascular complication of diabetes mellitus and can
+cause blindness or visual impairment (Kulkarni et al., 2019). T2DM is thought to arise due
+to the overlaps of genetic factors, sedentary lifestyle, poor diet, excessive visceral obesity,
+and other environmental exposures throughout life (Salamon et al., 2018).
+In recent years, gut microbiota has been found to play a critical role in the establishment
+and maintenance of human health. A large number of studies showed that the alteration
+of microbiota is associated with many human diseases including gastrointestinal diseases
+(Tong et al., 2013), cancer (Garrett, 2015), metabolic disease (Musso, Gambino & Cassader,
+2011), neurodegenerative disorders (Hsiao et al., 2013) and cardiovascular (Wang et al.,
+2011). Previous studies of clinical T2DM cases have found compositional changes between
+the gut microbiome in patients and healthy controls (Karlsson et al., 2013). However, the
+pathophysiological mechanisms that link the microbiota to T2DM have not been well
+elucidated.
+Liraglutide, a glucagon-like peptide 1 (GLP-1) analogue, was approved by the U.S. Food
+and Drug Administration in 2010 for treating T2DM (Vilsboll & Garber, 2012). GLP-1 is an
+incretin hormone which is secreted by intestinal L cells in response to food ingestion and
+it shows a significant advance in the treatment of T2DM (Drucker & Nauck, 2006). There
+is evidence that GLP-1 may play a role in the biological function of intestinal epithelium,
+correlating these effects with changes in gut microbiota (Hwang et al., 2015).
+However, the effect of liraglutide on gut microbiota in T2DM is not fully understood.
+Therefore, we performed a randomized study in 40 individuals diagnosed with T2DM, and
+combined 16S rRNA gene amplicon sequencing to investigate the effects of liraglutide on
+the composition and function of the gut microbiota.
+MATERIALS AND METHODS
+Study population
+The 40 (including both male and female) T2DM patients were aged 25–83 years, with mean
+% HemoglobinA1c (HbA1c) concentration of 9.17% (76.67 mmol/mol) (5.3%) (34.43
+mmol/mol) −12.2% (109.84 mmol/mol), and body-mass index (BMI) scores >25 kg/m2.
+HbA1c is the gold standard of glycemic control index and the standardization of HbA1c
+was considered to be important, which was proceeded by the National Glycohemoglobin
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+2/19
+
+Standardization Program (NGSP) and the International Federation of Clinical Chemistry
+and Laboratory Medicine (IFCC) (Weykamp, 2013). All participants had been treated
+with metformin as a monotherapy (stable doses for 2 months). Relevant exclusion criteria
+included: taking other glucose-lowering medications and those who had been taking
+antibiotics in the last 3 months. The recruited participants were randomly assigned to
+receive 1.2 mg of liraglutide for 4 months. BaselineHbA1c was assessed at before treated-
+with liraglutide. HbA1c change (liraglutide treatment response) was calculated based on
+treatment HbA1c value (after 4 months treated-with liraglutide) minus baseline HbA1c
+value. All 40 T2DM patients were switched from oral metformin to subcutaneous injections
+of liraglutide for 4 months once daily. The metformin-liraglutide substitution design was
+applied because a pre-study feasibility assessment reported that it was impossible to recruit
+sufficient subjects with liraglutide as their primary medication for T2DM (Hodge et al.,
+2016). All procedures were performed in accordance with the ethical standards of the
+Clinical Research Ethics Committee of the Nanyang Second General Hospital, and written
+informed consents were obtained from all participants included in the study.
+Fecal DNA extraction and 16s rRNA gene sequencing
+Total 80 fresh feces samples were collected in sterile collection tubes (Fisher Scientific,
+Waltham, MA, USA) before and after the 4-month liraglutide treatment and then stored
+at −20 ◦C until being transported to the research center in chilled styrofoam containers.
+They were subsequently stored on-site at −80 ◦C for further analysis. Microbial DNA
+was extracted from 200 mg fecal sample using the QIAamp PowerFecal Pro DNA Kit
+(QIAGEN) which contains a bead-beating step. Briefly, adding 200 mg fecal sample
+and 800 µl lysis buffer in a beads-containing tube and vortex at maximum speed for
+10 min. Take 350 µL supernatant after 1 min centrifugation at 15,000 g and use it in
+the subsequent steps according to the kit instructions. DNA is finally eluted in 100 µl
+elution buffer for downstream applications. DNA was amplified using primers targeting
+the V4 region of the 16S rRNA gene (515F 5′-GTGYCAGCMGCCGCGGTA-3′, 806R 5′-
+GGACTACNVGGGTWTCTAAT-3′). PCR was run in a VeritiTM 96-Well Thermal Cycler
+PCR system (Thermo Fisher Scientific) using the following program: 95 ◦C for 3min,
+followed by 21 cycles of 95 ◦C for 30 s, 56 ◦C for 30 s, 72 ◦C for 30 s, with a final extension
+at 72 ◦C for 5 min. Mixed amplicons were pooled and the sequencing was conducted at
+Shanghai Biotecan Pharmaceuticals Co., Ltd. (Shanghai, China) using an Illumina Novaseq
+6000 Sequencing system (Illumina, USA) according to the manufacturer’s instructions.
+Sequence data analysis
+Sequences were assigned to operational taxonomic units (OTUs) with 97% similarity
+(Greengenes database: http://greengenes.lbl.gov) into mothur (v.1.39.5), OTU taxonomy
+was assigned to the Greengenes database for the comparisons, using the Quantitative
+Insights into Microbial Ecology (QIIME) software package (Caporaso et al., 2010). Both
+Kyoto Encyclopedia of Genes and Genomes (KEGG) (Langille et al., 2013) and Clusters
+of Orthologous Groups of proteins (COG) (Liu et al., 2019) pathways were categorized
+using Phylogenetic Investigation of Communities by Reconstruction of Unobserved
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+3/19
+
+States (PiCRUSt) and both were imported into STAMP (v.2.1.3) for visualization.
+To identify taxa with differing relative abundances between the two groups, linear
+discriminant analysis (LDA) effect size (LEfSe) analyses were performed on the website
+(http://huttenhower.sph.harvard.edu/galaxy). The cut off value was the absolute LDA
+score (log10) >3.0 with a p < 0.05. The alpha diversity ‘‘summary.single’’ script was used
+to calculate ACE, Chao1, Shannon and Simpson indexs in the mothur software package.
+‘‘Beta_diversity.py’’ script was used to calculate the beta diversity in the QIIME software,
+and the Principal Coordinate Analysis (PCoA) was used to measure beta diversity in each
+group. Coabundance network analysis was based on Spearman correlation. Only genera
+present in at least 60% of samples were used for correlation analysis, and only connections
+with a r > 0.6 or < −0.6 and P < 0.05 were used for network building on the basis of
+Igraph R package and imported into Cytoscape (v.3.6.0) for visualization.
+Statistical analysis
+The data are shown as the mean ± standard error of the mean (SEM). Bacterial taxa that
+were differentially abundant were identified by using the Wilcoxon rank-sum test (for two
+groups) or Kruskal-Wallis test (for more than two groups) in R studio (v.3.6.1). Clinical
+data analyses between the two groups were conducted by Wilcoxon signed–rank test or
+t-test using Prism version 6.0 (GraphPad, San Diego, CA, USA). Linear regression analysis
+was performed using R studio (v.3.6.1). A p < 0.05 was considered statistically significant.
+RESULTS
+Baseline HbA1c is a key predictor of liraglutide treatment response
+We recruited 40 individuals with T2DM to receive 1.2 mg liraglutide for 4 months.
+Clinical characteristics of the 40 individuals before and after the 4-month liraglutide
+treatment (termed L0 and L4, respectively) are presented in Table S1. As baseline HbA1c is
+a major predictor in blood glucose therapies, we assessed the relationship between baseline
+HbA1c and HbA1c change using linear regression analysis. The result indicated that
+baseline HbA1c explains 52.7% of liraglutide treatment response variation (R2 = 0.527, β
+= −0.726, P < 0.0001, Fig. 1). In addition, BMI, HbA1c, homeostasis model assessment
+of insulin resistance (HOMA-IR), fasting blood glucose, 2-hour postprandial blood
+glucose, total cholesterol, triglycerides, HDL-C, and LDL-C were significantly lower in the
+post-liraglutide-treatment group than the pre-liraglutide-treatment groupusing Wilcoxon
+signed–rank test or t-test . However, there were no notable differences observed in fasting
+insulin, serum creatinine and the blood urea nitrogen between the two groups (Table S2).
+Furthermore, due to many clinical characteristics may be associated with baseline HbA1c,
+adjusted for baseline HbA1c was suggested to avoid erroneous treatment response. So we
+used multiple linear regression to analyze the association between the baseline HbA1c and
+the baseline covariates (11 clinical characteristics), and the association between the baseline
+covariates and liraglutide treatment response after with or without adjustment for baseline
+HbA1c. However, the results indicated that none clinical characteristics were associated
+with both baseline HbA1c and liraglutide treatment response after without adjustment for
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+4/19
+
+3
+6
+9
+12
+15
+-8
+-6
+-4
+-2
+0
+2
+Baseline HbA1c (%)
+HbA1c change (%)
+β=-0.726,  R2=0.527, P<0.0001
+Figure 1
+Baseline HbA1c is associated with liraglutide treatment response. The association between
+% baseline HbA1c and % HbA1c change using linear regression analysis (R2 = 0.527, β = −0.726, P <
+0.0001).
+Full-size
+DOI: 10.7717/peerj.11128/fig-1
+baseline HbA1c. Only the blood urea nitrogen was associated with liraglutide treatment
+response after adjustment for baseline HbA1c (Table S3).
+Characteristics of the pyrosequencing results
+To characterize the effects of liraglutide on the gut microbiome, we performed high-
+throughput sequencing of the V4 regions of 16S rRNA genes from the 80 fecal samples
+collected from the two groups. A total of 8,822,088 high-quality sequences and 7488 OTUs
+(97% similarity) were obtained from the 80 samples, and the average number of reads
+was 100, 626 and OTUs was 296 for each individual (Table S4). The reads/OTUs were
+assigned to 34 different phyla, and the top 3 dominant bacterial phyla of the two groups
+were Firmicutes, Bacteroidetes and Proteobacteria.
+Liraglutide modiﬁes gut microbiota alpha and beta diversity in the
+T2DM
+Since the participants have different duration of T2DM, we divided the 40 T2DM patients
+into three diabetes duration groups (short-duration group (<5 years); medium- duration
+group (5-10 years) and long-duration group (≥10 years)) and analyzed alpha and beta
+diversity in gut microbiota of the three groups. Alpha diversity is an index reflecting the
+variety of microbial species in stool samples and we also examined the patterns of beta
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+5/19
+
+diversity by calculating the dissimilarity in the composition of gut microbial (Rapacciuolo et
+al., 2019). The results indicated that the three duration groups had no significant difference
+in gut microbiota alpha and beta diversity (Figs. S1 and S2). Therefore, being treated with
+metformin for 2 months do not alter the fecal microbiome in T2DM patients. In order
+to evaluate the effect of liraglutide treatment on gut microbiota diversity, we analyzed
+the 80 fecal samples collected from pre- and post-liraglutide-treatment groups. The alpha
+diversity indices (the ACE, Chao1, Shannon and Simpson index) were used to describe alpha
+diversity. The community richness (ACE and Chao1) was significantly different between
+the two groups (Figs. 2A and 2B), showing a lower abundance in the post-liraglutide-
+treated group. However, there were no significant difference in the community diversity
+(Shannon and Simpson) of the two groups (Figs. S3A and S3B). As to the beta diversity,
+a principal-component analysis (PCoA) of a nonmetric multidimensional scaling plot
+(on a Bray-Curtis distance matrix) and unweighted UniFrac distances revealed significant
+qualitative differences in gut microbial community structure between the two groups (Figs.
+2C and 2D), but there was no difference in weighted UniFrac distances (Fig. S3C).
+Liraglutide alters gut microbiota composition
+To assess the effects of liraglutide on gut microbiota composition, a taxonomy-based
+comparison was performed and a broad overview of our taxonomic data from the 80
+samples was given in Fig. 3A. A heat map was constructed to visualize the top 30 genus in
+the two groups (Fig. 3A). We also conducted a coabundance network analysis to investigate
+how different gut bacteria could interact with each other. The results indicated that 4
+months of liraglutide treatment promoted an increased number of positive correlations
+among microbial genera, especially those within Firmicutes and Bacteroidetes. Negative
+correlation was identified in Ruminococcus (Firmicutes) and Actinomyces (Actinobacteria)
+(Fig. 3B).
+Phylogenetic and taxonomic proﬁles of gut microbiota
+To analyze the statistical differences in microbial communities between the pre- and post-
+liraglutide-treatment of T2DM, the significant differences based on genomic characteristics
+were further confirmed by LEfSe analysis, which used LDA coupled with effect size
+measurement to identify bacterial taxa with sequences that differed in the abundance of
+the two groups.
+Cladograms were obtained by the LEfSe analysis, which showed the most significantly
+difference at taxonomic levels between the two groups. The size of each circle represents
+the abundance of certain bacteria (Fig. 4A).
+Upon analyzing the fecal samples, 36 phylotypes were identified as high-dimensional
+biomarkers (Table S5). Twenty-one species of bacteria were abundant in the pre-liraglutide-
+treatment group and 15 species were abundant in the post-liraglutide-treatment group.
+At the phylum level, the abundance of Fusobacteria was significantly higher in the pre-
+liraglutide-treatment group, while Verrucomicrobia and Actinobacteria were significantly
+higher in the post-liraglutide-treatment group. At the genus level, nine genera were
+found in significantly high abundances in the pre-liraglutide-treatment group. These
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+6/19
+
+L0
+L4
+200
+400
+600
+800
+1000 1200
+wilcox test: p−value =7.51e−05
+ACE
+L0
+L4
+200
+400
+600
+800
+1000 1200
+wilcox test: p−value =6.38e−05
+Chao1
+●
+●●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+−0.2
+0.0
+0.2
+0.4
+0.6
+−0.2
+0.0
+0.2
+PCoA axis1 : 6.65 %
+PCoA axis2 : 6.29 %
+group
+●
+●
+L0
+L4
+R= 0.049       P= 0.003
+Bray−Curtis distance PCoA
+●
+●
+●
+●
+●●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●
+●●
+●
+●
+●
+●
+●
+●
+●
+●
+−0.1
+0.0
+0.1
+0.2
+0.3
+−0.2
+−0.1
+0.0
+0.1
+0.2
+0.3
+PCoA axis1 : 12.72 %
+PCoA axis2 : 5.95 %
+group
+●
+●
+L0
+L4
+R= 0.075    P= 0.001
+Unweighted UniFrac distance PCoA
+A
+B
+C
+D
+Figure 2
+Liraglutide treatment affected the microbiota alpha diversity and beta diversity. (A–B)
+ACE and Chao1 were used to analyze the alpha diversity. Statistic analysis was performed by Wilcoxon
+rank-sum test, ∗P < 0.05. (C–D) PCoA of fecal microbiota from the two groups of patients using a
+Bray-Curtis distance matrix (C) and unweighted UniFrac distances (D). Statistical analysis was performed
+by ANOSIM test, ∗P < 0.05.
+Full-size
+DOI: 10.7717/peerj.11128/fig-2
+genera included Acinetobacter (p = 0.016), Oscillospira (p = 0.013), Acidaminococcus
+(p = 0.021), Succinatimonas (p = 0.042), S24_7 (p = 0.008), Megamonas (p = 0.0005),
+Alistipes (p = 0.035), Fusobacterium (p = 0.017) and Megasphaera (p = 0.0002). The genera
+Collinsella (p = 0.011), Akkermansia (p = 0.002) and Clostridium (p = 0.002) were enriched
+in the post-liraglutide-treatment group (Fig. 4B).
+Correlation between clinical features and gut microbiota
+According to the LDA analysis (LDA value > 3.0), we discovered the relative abundance
+of 12 bacterial genera (Table S5) between the two groups. To investigate the inter
+associations between gut microbiota and clinical status of the host, we identified the
+statistical correlations between the 12 genera and the 11 clinical features, including age, sex,
+BMI, family history of diabetes, diabetes duration, family history of cardiovascular disease,
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+7/19
+
+Enterobacteriaceae_Escherichia
+Bacteroidaceae_Bacteroides
+Lachnospiraceae_Lachnospira
+Rikenellaceae_Alistipes
+Veillonellaceae_Pectinatus
+Enterobacteriaceae_Shigella
+Streptococcaceae_Streptococcus
+Ruminococcaceae_Oscillospira
+Alcaligenaceae_Sutterella
+Lachnospiraceae_Roseburia
+Lachnospiraceae_Lachnospiraceae
+Enterobacteriaceae_Enterobacter
+Ruminococcaceae_Gemmiger
+Veillonellaceae_Megasphaera
+Veillonellaceae_Dialister
+Ruminococcaceae_Ruminococcaceae
+Leuconostocaceae_Weissella
+Ruminococcaceae_Ruminococcus
+Prevotellaceae_Prevotella
+Porphyromonadaceae_Parabacteroides
+Lachnospiraceae_Dorea
+Lachnospiraceae_Clostridium
+Pseudomonadaceae_Pseudomonas
+Veillonellaceae_Phascolarctobacterium
+Moraxellaceae_Acinetobacter
+Ruminococcaceae_Faecalibacterium
+Lachnospiraceae_Ruminococcus
+Lachnospiraceae_Coprococcus
+Veillonellaceae_Megamonas
+Bifidobacteriaceae_Bifidobacterium
+S001541061
+S002240740
+S003127935
+S003455050
+S003600781
+S005787392
+S005859720
+S007683498
+S008634589
+S009893980
+S011537861
+S012838157
+S013136885
+S014716121
+S016155640
+S016535105
+S021680499
+S023697174
+S025161601
+S026092893
+S026336495
+S026671142
+S029542745
+S029695363
+S031090715
+S032859041
+S034720292
+S034861824
+S035488426
+S037854653
+S039463904
+S043755895
+S045519660
+S048196178
+S052222488
+S053635151
+S053815056
+S053955426
+S057613705
+S057663043
+S058143631
+S059365756
+S059718185
+S060636939
+S062280857
+S062554016
+S063813091
+S064788580
+S064792713
+S065750241
+S067686161
+S068476084
+S071368741
+S071427884
+S075024151
+S075882888
+S076545607
+S082700271
+S085570446
+S087726828
+S093560679
+S097805636
+S099723191
+S207621329
+S212496230
+S220458891
+S221637576
+S222861694
+S223643955
+S230851764
+S232494959
+S241357478
+S243919078
+S245779035
+S247938804
+S254984917
+S268822680
+S277870962
+S297508120
+S299608633
+phylum
+group
+Phylum
+Actinobacteria
+Bacteroidetes
+Firmicutes
+Proteobacteria
+group
+L0
+L4
+−4
+−2
+0
+2
+4
+A
+Actinobacteria 
+Bacteroidetes
+Firmicutes
+Fusobacteria
+Proteobacteria
+Phylum
+Positive correlation (L0)
+Positive correlation (L4)
+Negative correlation
+B
+Figure 3
+Liraglutide treatment promoted rapid changes in the composition of the gut microbiota.
+(A) Heat map showing changes in the abundance of bacterial strains before (L0) and after the 4-month li-
+raglutide treatment (L4) (only the top 30 genera are listed here). (B) Genus–genus coabundance network
+of the pre- (L0) and the post-liraglutide-treatment group (L4). The edges indicate Spearman correlations
+of r > 0.5 or r < −0.5 and ∗P < 0.05 between the genera present in at least 60% samples.
+Full-size
+DOI: 10.7717/peerj.11128/fig-3
+family history of diabetic nephropathy (DN), family history of diabetic retinopathy (DR),
+family history of diabetic peripheral neuropath (DPN), smoking status and alcoholism
+status (Table S6).
+First, we found that the abundance of Megamonas was significantly lower in the older
+age group (≥50) (p = 0.014), medium- and long-duration groups (p = 0.006) (Figs. 5A
+and 5B). What’s more, the levels of Clostridum genus was lower in the family history of
+diabetes (p = 0.043) group (Fig. 5C). Oscillospira was significantly different between the
+Non-DR group and DR groups, in which severe non-proliferative DR (NPDR) sub-group
+had the highest abundance of Oscillospira (p = 0.038) (Fig. 5D). We also found that the
+abundance of Megamonas was lower in the DR group (p = 0.005) (Fig. 5E). Last but not
+least, the higher abundance of Oscillospira was found in the DPN group, but not in the
+non-DPN group (p = 0.040) (Fig. 5F).
+Eﬀect of liraglutide-treatment administration on metabolic pathways
+KEGG and COG pathway comparisons were performed to explore potential differences
+in the functional composition of the microbiome between the pre- and post-liraglutide-
+treatment group. Figure 6 highlights the significant differences in the distribution of
+metabolic pathways, and compares the microbiota functions between the two groups. As
+listed in Fig. 6A, seven differences were observed in KEGG pathways. Three KEGG pathways
+(including G protein-coupled receptors, Glycolysis/Gluconeogenesis and Selenocompound
+metabolism) were enriched in the post-liraglutide-treatment group, and 4 KEGG
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+8/19
+
+A
+B
+Figure 4
+The overall structure and composition of the gut microbiota difference between the pre- and
+post-liraglutide-treatment group. (A) The cladogram depicts the phylogenetic distribution of microbial
+lineages in fecal samples taken before (L0) and after the 4-month liraglutide treatment (L4). Differences
+in abundant microbiota are listed and distinguished by different color (blue for L0 group and brown for
+L4 group). (B) Key phylotypes of the gut microbiota responding to liraglutide treatment. The histogram
+shows the lineages with LDA values >3.0 and with a *P < 0.05 as determined by LEfSe analysis.
+Full-size
+DOI: 10.7717/peerj.11128/fig-4
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+9/19
+
+<50
+>=50
+0
+20
+40
+60
+80
+V.Megamonas
+wilcox test: p−value =0.014
+age
+Relative abundance(%)
+short-duration group Medium-duration group Long-duration group
+0
+20
+40
+60
+80
+V.Megamonas
+kruskal test: p−value =0.006
+Relative abundance(%)
+Diabetes duration
+0
+20
+40
+60
+80
+R.Oscillospira
+kruskal test: p−value =0.038
+Relative abundance(%)
+Diabetic retinopathy
+No
+Mild-NPDR
+Moderate-NPDR Severe-NPDR
+0
+20
+40
+60
+80
+V.Megamonas
+kruskal test: p−value =0.005
+Relative abundance(%)
+Diabetic retinopathy
+No
+Mild-NPDR Moderate-NPDR Severe-NPDR
+0
+20
+40
+60
+80
+R.Oscillospira
+wilcox test: p−value =0.040
+Relative abundance(%)
+Diabetic peripheral neuropathy
+No
+Yes
+No
+Yes
+0
+1
+2
+3
+4
+C.Clostridium
+wilcox test: p−value =0.043
+Family history of diabetes
+Relative abundance(%)
+A
+B
+C
+D
+E
+F
+Figure 5
+Correlation analysis between 11 clinical features and 12 genera. (A) Comparison of 12 relative
+abundance genera between <50 age and ≥50 age group. Obviously, Megamonas was lower in the ≥50 age
+group. (B) The abundance of Megamonas was lower in the medium- and long-duration groups. (C) The
+abundance of Clostridium was lower in the family history of diabetes group. (D–E) The abundance of Os-
+cillospira was higher while the abundance of Megamonas was lower in the DR group. (F) The abundance
+of Oscillospira was higher in the DPN group. Statistical analysis was performed by Wilcoxon rank-sum test
+or Kruskal-Wallis test, ∗P < 0.05.
+Full-size
+DOI: 10.7717/peerj.11128/fig-5
+pathways (including tropane, piperidine and pyridine alkaloid biosynthesis, phenylalanine
+metabolism, porphyrin and chlorophyll metabolism, and styrene degradation) were
+enriched in the pre-liraglutide-treatment group.
+As shown in Fig. 6B, 17 different functional COG pathways between the two groups
+were found. Six of them were enriched in the post-liraglutide-treatment group, including
+predicted ABC-type transport system involved in lysophospholipase L1 biosynthesis,
+acetate kinase, phosphatidylglycerophosphate synthase, predicted choline kinase involved
+in lipopolysaccharides (LPS) biosynthesis, predicted glutamine amidotransferase and
+putative cell wall-binding domain. In contrast, the pre-liraglutide-treatment group were
+enriched in ABC-type Co2+ transport system, periplasmic component, ABC-type Fe3+
+transport system, periplasmic component, transcriptional regulator containing PAS, AAA-
+type ATPase, and DNA-binding domains, acetyl-CoA hydrolase, N-acyl-D-aspartate/D-
+glutamate deacylase, Na+/proline symporter, permeases of the drug/metabolite transporter
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+10/19
+
+A
+B
+Figure 6
+Differential PICRUSt-predicted KEGG and COG pathways in individuals before (L0) and af-
+ter the 4-months liraglutide treatment (L4). The KEGG (A) and COG (B) pathways demonstrating seven
+and 17 significant differences between the two groups, respectively. For each comparison in predicted
+KEGG or COG pathways, the mean proportion and the 95% CI difference in mean proportions are also il-
+lustrated. Statistical analysis was performed by Welch’s t-test, ∗P < 0.05.
+Full-size
+DOI: 10.7717/peerj.11128/fig-6
+(DMT) superfamily, precorrin-2 methylase, predicted metal-binding protein, pyruvate
+carboxylase and s-adenosylhomocysteine hydrolase.
+DISCUSSION
+T2DM is a complex metabolic disorder and public health issue throughout the world. It
+is also one of the most severe chronic diseases that affect human health. According to the
+estimation, the prevalence of diabetes may increase 69% in developing countries and 20% in
+developed countries between 2010 and 2030 (Shaw, Sicree & Zimmet, 2010). The metabolic
+potential of the gastrointestinal tract and its microbiota are increasingly recognized as
+promising targets to improve T2DM treatment (Brunkwall & Orho-Melander, 2017). Thus,
+there is an urgent need in the development of more efficient prevention and treatment
+strategies.
+As a GLP-1 analogue, liraglutide has shown the therapeutic effects by changing the
+structural of gut microbiota in diabetic male rats (Zhang et al., 2018). In this study,
+although all participants were stable on metformin as a monotherapy for 2 months
+before the recruitment, neither alpha nor beta diversity was different among the three
+diabetes duration groups. Then all 40 T2DM patients were switched from oral metformin
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+11/19
+
+to subcutaneous injections of liraglutide for 4 months. We found that the liraglutide
+treatment lowered BMI, blood glucose, HbA1c, HOMA-IR and relieved dyslipidemia
+in T2DM patients. Similarity, in a diabetic rat study, insulin level and HOMA-IR were
+significantly decreased (Zhang et al., 2018), and blood glucose and body weight were much
+lower after being treated with liraglutide (Wang et al., 2016). In the present study, we
+found that baseline HbA1c is associated with liraglutide treatment response. As clinical
+characteristics may be associated with baseline HbA1c, many T2DM studies have adjusted
+for baseline HbA1c to avoid incorrect treatment response using linear regression method
+(Jones et al., 2016; Thong et al., 2014). In this study, neither baseline HbA1c nor liraglutide
+treatment response after without adjustment for baseline HbA1c was associated with
+baseline covariates. However, the blood urea nitrogen was associated with treatment
+response after adjustment for baseline HbA1c. Many studies have indicated that blood
+urea nitrogen is associated with increased an risk of insulin use in diabetes mellitus (Xie
+et al., 2018a; Xie et al., 2018b). Jones et al. reported that false positive associations may
+arise and true associations may be covered up by negative results if without adjustment
+for baseline HbA1c (Jones et al., 2016). In this study, without adjustment for baseline
+HbA1c, the blood urea nitrogen was not associated with treatment response; while
+adjustment for baseline HbA1c, the blood urea nitrogen was associated with treatment
+response. Furthermore, we analyzed the effects of liraglutide on the gut microbiota of
+the 80 samples collected from the pre- and post-liraglutide-treatment groups. Several
+interesting results were observed. First of all, at the phyla level, Firmicutes, Bacteroidetes
+and Proteobacteria were the top 3 dominant bacterial phyla between the two groups.
+A previous study reported that Bacteroidetes and Proteobacteria, could produce LPS,
+and subsequently trigger inflammatory response and contribute to the development of
+diabetes (Larsen et al., 2010). The diabetic rat microbiome was profoundly dominated by
+the phyla Firmicutes and Bacteroides, while liraglutide-treated rat group had a reduced
+Firmicutes/Bacteroidetes ratio and relative abundance of Tenericutes (Zhang et al., 2018).
+According to our taxonomic data from the 80 samples, patients who had enriched genus
+Bacteroides usually had low abundance of genus Prevotella, which is consistent with the
+previous study performed in colorectal cancer (Yachida et al., 2019). Zhang et al. reported
+that Prevotella genera was much more lower in liraglutide-treated rats (Zhang et al., 2018).
+Secondly, by using a Bray-Curtis distance matrix and unweighted UniFrac PCoA analysis,
+we confirmed that two major components in the gut microbiota of the two groups were
+structurally separated from each other. What’s more, according to LEfSe analysis, 9 genera
+including Acinetobacter, Oscillospira, Acidaminococcus, Succinatimonas, S24_7, Megamonas,
+Alistipes, Fusobacterium and Megasphaera were found in significantly high abundances in
+the pre-liraglutide-treatment group. In a previous study, Li et al. reported that Acinetobacter
+was significantly abundant in T2DM group than that in healthy subjects (Li et al., 2019).
+Oscillospira was reported to be significantly abundant in high-fat diet mice group than in
+a chow diet mice group (Wu et al., 2019). However, Fusobacterium genera in fecal samples
+were not significantly different between the T2DM and healthy people (Sedighi et al.,
+2017). Therefore, large studies were needed to verify this issue in near future. According to
+our research, Megamonas was significantly lower in the older group, medium- and long-
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+12/19
+
+duration group, which is in accord with the study that Megamonas was significant lower
+in longevity village communities than urbanized town communities (Park et al., 2015). A
+similar study indicated that the abundance of Alistipes was significantly increased in rat
+of T2DM (Zhu et al., 2020). Clostridum was lower in the T2DM family history of diabetes
+group, similarly, Clostridum was significantly lower in the fecal samples of diabetic patients
+than in those of control subjects in Japanese (Yamashiro, 2017). Another study further
+indicated that Clostridium was negatively correlated with fasting blood glucose, HbA1c and
+insulin levels (Karlsson et al., 2013).
+On contrary, liraglutide-treated group had an increased level of Collinsella, Akkermansia
+and Clostridium at the genus level. In a pre-clinical study, the abundance of Akkermansia
+was increased by the metformin treatment in the mice fed by high fat diet (HFD), and
+oral administration of Akkermansia enhanced glucose tolerance and attenuated adipose
+tissue inflammation in HFD-fed mice (Shin et al., 2014). Another study reported the
+low abundance of Clostridium in European women with T2DM, as well as the negative
+correlation of Clostridium with fasting blood sugar, glycated hemoglobin, insulin,
+and plasma triglycerides (Karlsson et al., 2013). In our study, after being treated with
+liraglutide for 4 months, the abundance of Clostridium was decreased in the family
+history of diabetes group, which is consistent with the findings that the abundance
+of Clostridium is lower in diabetic patients (Yamashiro, 2017). In the diabetic rat
+liraglutide-treated study, LEfSe analysis showed 11 bacteria significantly difference
+between the liraglutide-treated group and diabetic group. The genera Flavonifractor
+and Lachnoclostridium, species Ruminococcus_gnavus, Flavonifractor_plautii, and
+Bacteroides_acidifaciens were much more abundant in the liraglutide-treated group than
+the diabetic group. The reduced bacteria were mainly in the family Christensenellaceae,
+genera Christensenellaceae_R_7_group, the genera Ruminococcaceae_UCG_010,
+Ruminoclostridium_6, and Prevotella_9, and the class Mollicutes (Zhang et al., 2018).
+These results indicated that microbiome structures of rat and human were mainly different.
+Finally yet importantly, the PICRUSt analysis revealed 7 different KEGG pathways and
+17 COG pathways. KEGG analysis further indicated that these gut bacteria in T2DM
+were strongly associated with the dysregulation of several metabolic processes such
+as glycolysis/gluconeogenesis metabolism; phenylalanine metabolism; porphyrin and
+chlorophyll metabolism; and selenocompound metabolism. For example, phenylalanine
+metabolism, showed lower abundance in the post-liraglutide-treatment group. It is
+reported that phenylalanine was associated with insulin resistance, and may increase
+the risk of T2DM (Guasch-Ferre et al., 2016). Glycolysis/gluconeogenesis pathway was
+higher in the post-liraglutide-treatment group, which is consistent with the findings that
+glycolysis/gluconeogenesis related metabolites is significantly associated with T2DM risk in
+a Mediterranean population (Guasch-Ferre et al., 2020). In addition, we found 17 different
+functional COGs between the two groups. For example, periplasmic component, ATPase
+component and permeases of the drug/metabolite transporter (DMT) were enriched in the
+pre-liraglutide-treatment group, which promote glucose and ribose/galactoside using to
+regulate energy according to the previous study (Liu et al., 2019). Considering the fact that
+T2DM is a metabolic disease and several metabolic disorder phenotypes were observed in
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+13/19
+
+T2DM patients, we speculated that gut microbiota affects the host via metabolites, which
+provides a further understanding between the microbiome–metabolome interaction in
+T2DM and may be helpful for the diagnosis and treatment of T2DM in the future.
+There were still several limitations in this study. Specifically, the sample size was relatively
+small to represent the combined effects of T2DM and liraglutide. Besides, we did not recruit
+a 4-month-metformin-treated group to compare with the current- liraglutide-treated
+group. Although our collected clinical characteristics were significant changes between the
+pre- and post-liraglutide treatment groups. While adjustment for baseline HbA1c, only
+blood urea nitrogen was associated with liraglutide treatment response in the 40 T2DM
+patients. Therefore, it is urgent to enlarge cohort to verify this issue in the future. Due to
+the extremely complicated interactions between gut microbiota and host, as well as our
+knowledge and research capability, the potential mechanisms behind this interaction were
+not further explored. Meanwhile, metagenomic sequencing has been widely employed
+to explore novel changes in the functional potential of the microbiota. However, in the
+present study, the results of prediction COG and KEGG functional analysis were analyzed
+by the method of 16S rRNA gene sequencing. Besides, due to the small sample size, we only
+covered part of the correlations between gut microbiota and clinical features. Therefore, to
+fully elucidate the modifiable capacity of the gut microbiota and its potential applications
+in the prevention and treatment for type 2 diabetes, large longitudinal, interventional
+studies and multicenter strategies are further required.
+In conclusion, our findings suggest that liraglutide treatment is associated with baseline
+HbA1c, blood urea nitrogen and gut microbiota composition in T2DM patients. This
+may contribute to the beneficial effects of liraglutide against diabetes. In particular, the
+phenylalanine metabolism, porphyrin and chlorophyll metabolism and selenocompound
+metabolism pathways were predicted by KEGG pathways without no functional analysis
+in T2DM yet. So further researches are required to elucidate the mechanisms by which
+liraglutide affects the gut microbiota of diabetes patients, and this may serve as potential
+therapeutic targets for T2DM.
+ADDITIONAL INFORMATION AND DECLARATIONS
+Funding
+This work was supported by the Key Technologies R & D Project of Nanyang Science
+and Technology Bureau (Henan Provincial Medical Science and Technique Program,
+2018020989- KJGG2018101). The funders had no role in study design, data collection and
+analysis, decision to publish, or preparation of the manuscript.
+Grant Disclosures
+The following grant information was disclosed by the authors:
+Key Technologies R & D Project of Nanyang Science and Technology Bureau: 2018020989-
+KJGG2018101.
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+14/19
+
+Competing Interests
+Man Lu, Rongfeng Jiang, Yue Xu, Le Diao, Jiangman Zhao and Hui Tang are employed by
+Shanghai Biotecan Pharmaceuticals Co., Ltd.
+The authors declare there are no competing interests.
+Author Contributions
+• Junjie Shang and Fang Liu conceived and designed the experiments, authored or reviewed
+drafts of the paper, and approved the final draft.
+• Bing Zhang and Kunlun Dong performed the experiments, prepared figures and/or
+tables, and approved the final draft.
+• Man Lu and Rongfeng Jiang analyzed the data, prepared figures and/or tables, and
+approved the final draft.
+• Yue Xu performed the experiments, analyzed the data, authored or reviewed drafts of
+the paper, and approved the final draft.
+• Le Diao performed the experiments, prepared figures and/or tables, and approved the
+final draft.
+• Jiangman Zhao analyzed the data, authored or reviewed drafts of the paper, and approved
+the final draft.
+• Hui Tang conceived and designed the experiments, authored or reviewed drafts of the
+paper, and approved the final draft.
+Human Ethics
+The following information was supplied relating to ethical approvals (i.e., approving body
+and any reference numbers):
+The Medical Ethics Committee of Nanyang Second People’s Hospital approved this
+study.
+Data Availability
+The following information was supplied regarding data availability:
+Data are available at the NCBI BioProject database: PRJNA665123.
+Supplemental Information
+Supplemental information for this article can be found online at http://dx.doi.org/10.7717/
+peerj.11128#supplemental-information.
+REFERENCES
+Brunkwall L, Orho-Melander M. 2017. The gut microbiome as a target for prevention
+and treatment of hyperglycaemia in type 2 diabetes: from current human evidence to
+future possibilities. Diabetologia 60:943–951 DOI 10.1007/s00125-017-4278-3.
+Caporaso JG, Kuczynski J, Stombaugh J, Bittinger K, Bushman FD, Costello EK, Fierer
+N, Pena AG, Goodrich JK, Gordon JI, Huttley GA, Kelley ST, Knights D, Koenig JE,
+Ley RE, Lozupone CA, McDonald D, Muegge BD, Pirrung M, Reeder J, Sevinsky
+JR, Turnbaugh PJ, Walters WA, Widmann J, Yatsunenko T, Zaneveld J, Knight
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+15/19
+
+R. 2010. QIIME allows analysis of high-throughput community sequencing data.
+Nature Methods 7:335–336 DOI 10.1038/nmeth.f.303.
+Drucker DJ, Nauck MA. 2006. The incretin system: glucagon-like peptide-1 re-
+ceptor agonists and dipeptidyl peptidase-4 inhibitors in type 2 diabetes. Lancet
+368:1696–1705 DOI 10.1016/S0140-6736(06)69705-5.
+Edwards JL, Vincent AM, Cheng HT, Feldman EL. 2008. Diabetic neuropa-
+thy: mechanisms to management. Pharmacology and Therapeutics 120:1–34
+DOI 10.1016/j.pharmthera.2008.05.005.
+Garrett WS. 2015. Cancer and the microbiota. Science 348:80–86
+DOI 10.1126/science.aaa4972.
+Guasch-Ferre M, Hruby A, Toledo E, Clish CB, Martinez-Gonzalez MA, Salas-Salvado
+J, Hu FB. 2016. Metabolomics in prediabetes and diabetes: a systematic review and
+meta-analysis. Diabetes Care 39:833–846 DOI 10.2337/dc15-2251.
+Guasch-Ferre M, Santos JL, Martinez-Gonzalez MA, Clish CB, Razquin C, Wang D,
+Liang L, Li J, Dennis C, Corella D, Munoz-Bravo C, Romaguera D, Estruch R,
+Santos-Lozano JM, Castaner O, Alonso-Gomez A, Serra-Majem L, Ros E, Canudas
+S, Asensio EM, Fito M, Pierce K, Martinez JA, Salas-Salvado J, Toledo E, Hu FB,
+Ruiz-Canela M. 2020. Glycolysis/gluconeogenesis- and tricarboxylic acid cycle-
+related metabolites, Mediterranean diet, and type 2 diabetes. American Journal of
+Clinical Nutrition 111:835–844 DOI 10.1093/ajcn/nqaa016.
+Hodge RJ, Paulik MA, Walker A, Boucheron JA, McMullen SL, Gillmor DS, Nunez DJ.
+2016. Weight and glucose reduction observed with a combination of nutritional
+agents in rodent models does not translate to humans in a randomized clinical trial
+with healthy volunteers and subjects with type 2 diabetes. PLOS ONE 11:e0153151
+DOI 10.1371/journal.pone.0153151.
+Hsiao EY, McBride SW, Hsien S, Sharon G, Hyde ER, McCue T, Codelli JA, Chow J,
+Reisman SE, Petrosino JF, Patterson PH, Mazmanian SK. 2013. Microbiota modu-
+late behavioral and physiological abnormalities associated with neurodevelopmental
+disorders. Cell 155:1451–1463 DOI 10.1016/j.cell.2013.11.024.
+Hwang I, Park YJ, Kim YR, Kim YN, Ka S, Lee HY, Seong JK, Seok YJ, Kim JB. 2015. Al-
+teration of gut microbiota by vancomycin and bacitracin improves insulin resistance
+via glucagon-like peptide 1 in diet-induced obesity. FASEB Journal 29:2397–2411
+DOI 10.1096/fj.14-265983.
+Jones AG, Lonergan M, Henley WE, Pearson ER, Hattersley AT, Shields BM. 2016.
+Should studies of diabetes treatment stratification correct for baseline HbA1c? PLOS
+ONE 11:e0152428 DOI 10.1371/journal.pone.0152428.
+Karlsson FH, Tremaroli V, Nookaew I, Bergstrom G, Behre CJ, Fagerberg B, Nielsen J,
+Backhed F. 2013. Gut metagenome in European women with normal, impaired and
+diabetic glucose control. Nature 498:99–103 DOI 10.1038/nature12198.
+Kelly T, Yang W, Chen CS, Reynolds K, He J. 2008. Global burden of obesity in
+2005 and projections to 2030. International Journal of Obesity 32:1431–1437
+DOI 10.1038/ijo.2008.102.
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+16/19
+
+Kulkarni S, Kondalkar S, Mactaggart I, Shamanna BR, Lodhi A, Mendke R, Kharat
+J, Kapse R, Dole K, Deshpande M. 2019. Estimating the magnitude of diabetes
+mellitus and diabetic retinopathy in an older age urban population in Pune, western
+India. BMJ Open Ophthalmology 4:e000201
+DOI 10.1136/bmjophth-2018-000201.
+Langille MG, Zaneveld J, Caporaso JG, McDonald D, Knights D, Reyes JA, Clemente
+JC, Burkepile DE, Vega Thurber RL, Knight R, Beiko RG, Huttenhower C. 2013.
+Predictive functional profiling of microbial communities using 16S rRNA marker
+gene sequences. Nature Biotechnology 31:814–821 DOI 10.1038/nbt.2676.
+Larsen N, Vogensen FK, van den Berg FW, Nielsen DS, Andreasen AS, Pedersen BK, Al-
+Soud WA, Sorensen SJ, Hansen LH, Jakobsen M. 2010. Gut microbiota in human
+adults with type 2 diabetes differs from non-diabetic adults. PLOS ONE 5:e9085
+DOI 10.1371/journal.pone.0009085.
+Li S, Yi G, Peng H, Li Z, Chen S, Zhong H, Chen Y, Wang Z, Deng Q, Fu M. 2019. How
+ocular surface microbiota debuts in type 2 diabetes mellitus. Frontiers in Cellular and
+Infection Microbiology 9:202 DOI 10.3389/fcimb.2019.00202.
+Liu F, Li J, Guan Y, Lou Y, Chen H, Xu M, Deng D, Chen J, Ni B, Zhao L, Li H,
+Sang H, Cai X. 2019. Dysbiosis of the gut microbiome is associated with tumor
+biomarkers in lung cancer. International Journal of Biological Sciences 15:2381–2392
+DOI 10.7150/ijbs.35980.
+Lu M, Yin N, Liu W, Cui X, Chen S, Wang E. 2017. Curcumin ameliorates diabetic
+nephropathy by suppressing NLRP3 inflammasome signaling. BioMed Research
+International 2017:1516985 DOI 10.1155/2017/1516985.
+Maugeri A, Mazzone MG, Giuliano F, Vinciguerra M, Basile G, Barchitta M, Agodi A.
+2018. Curcumin modulates DNA methyltransferase functions in a cellular model
+of diabetic retinopathy. Oxidative Medicine and Cellular Longevity 2018:5407482
+DOI 10.1155/2018/5407482.
+Musso G, Gambino R, Cassader M. 2011. Interactions between gut microbiota and
+host metabolism predisposing to obesity and diabetes. Annual Review of Medicine
+62:361–380 DOI 10.1146/annurev-med-012510-175505.
+Park SH, Kim KA, Ahn YT, Jeong JJ, Huh CS, Kim DH. 2015. Comparative analysis of
+gut microbiota in elderly people of urbanized towns and longevity villages. BMC
+Microbiology 15:49 DOI 10.1186/s12866-015-0386-8.
+Petersmann A, Muller-Wieland D, Muller UA, Landgraf R, Nauck M, Freckmann
+G, Heinemann L, Schleicher E. 2019. Definition, classification and diagnosis of
+diabetes mellitus. Experimental and Clinical Endocrinology and Diabetes 127:S1–S7
+DOI 10.1055/a-1018-9078.
+Rapacciuolo G, Beman JM, Schiebelhut LM, Dawson MN. 2019. Microbes and macro-
+invertebrates show parallel beta-diversity but contrasting alpha-diversity patterns in
+a marine natural experiment. Proceedings of the Royal Society B: Biological Sciences
+286:20190999 DOI 10.1098/rspb.2019.0999.
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+17/19
+
+Salamon D, Sroka-Oleksiak A, Kapusta P, Szopa M, Mrozinska S, Ludwig-Slomczynska
+AH, Wolkow PP, Bulanda M, Klupa T, Malecki MT, Gosiewski T. 2018. Charac-
+teristics of gut microbiota in adult patients with type 1 and type 2 diabetes based
+on nextgeneration sequencing of the 16S rRNA gene fragment. Polish Archives of
+Internal Medicine 128:336–343 DOI 10.20452/pamw.4246.
+Sedighi M, Razavi S, Navab-Moghadam F, Khamseh ME, Alaei-Shahmiri F, Mehrtash
+A, Amirmozafari N. 2017. Comparison of gut microbiota in adult patients with
+type 2 diabetes and healthy individuals. Microbial Pathogenesis 111:362–369
+DOI 10.1016/j.micpath.2017.08.038.
+Sharma S, Tripathi P. 2019. Gut microbiome and type 2 diabetes: where we are and
+where to go? Journal of Nutritional Biochemistry 63:101–108
+DOI 10.1016/j.jnutbio.2018.10.003.
+Shaw JE, Sicree RA, Zimmet PZ. 2010. Global estimates of the prevalence of di-
+abetes for 2010 and 2030. Diabetes Research and Clinical Practice 87:4–14
+DOI 10.1016/j.diabres.2009.10.007.
+Shin NR, Lee JC, Lee HY, Kim MS, Whon TW, Lee MS, Bae JW. 2014. An in-
+crease in the Akkermansia spp. population induced by metformin treatment
+improves glucose homeostasis in diet-induced obese mice. Gut 63:727–735
+DOI 10.1136/gutjnl-2012-303839.
+Thong KY, McDonald TJ, Hattersley AT, Blann AD, Ramtoola S, Duncan C, Carr
+S, Adamson K, Nayak AU, Khurana R, Hunter SJ, Ali A, Au S, Ryder RE. 2014.
+The association between postprandial urinary C-peptide creatinine ratio and the
+treatment response to liraglutide: a multi-centre observational study. Diabetic
+Medicine 31:403–411 DOI 10.1111/dme.12367.
+Tong M, Li X, Wegener Parfrey L, Roth B, Ippoliti A, Wei B, Borneman J, McGovern
+DP, Frank DN, Li E, Horvath S, Knight R, Braun J. 2013. A modular organization
+of the human intestinal mucosal microbiota and its association with inflammatory
+bowel disease. PLOS ONE 8:e80702 DOI 10.1371/journal.pone.0080702.
+Vilsboll T, Garber AJ. 2012. Non-glycaemic effects mediated via GLP-1 recep-
+tor agonists and the potential for exploiting these for therapeutic benefit:
+focus on liraglutide. Diabetes, Obesity and Metabolism 14(Suppl 2):41–49
+DOI 10.1111/j.1463-1326.2012.01579.x.
+Wang L, Li P, Tang Z, Yan X, Feng B. 2016. Structural modulation of the gut microbiota
+and the relationship with body weight: compared evaluation of liraglutide and
+saxagliptin treatment. Scientific Reports 6:33251 DOI 10.1038/srep33251.
+Wang Z, Klipfell E, Bennett BJ, Koeth R, Levison BS, Dugar B, Feldstein AE, Britt EB,
+Fu X, Chung YM, Wu Y, Schauer P, Smith JD, Allayee H, Tang WH, DiDonato JA,
+Lusis AJ, Hazen SL. 2011. Gut flora metabolism of phosphatidylcholine promotes
+cardiovascular disease. Nature 472:57–63 DOI 10.1038/nature09922.
+Weykamp C. 2013. HbA1c: a review of analytical and clinical aspects. Annals of Labora-
+tory Medicine 33:393–400 DOI 10.3343/alm.2013.33.6.393.
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+18/19
+
+Wu R, Zhao D, An R, Wang Z, Li Y, Shi B, Ni Q. 2019. Linggui Zhugan formula
+improves glucose and lipid levels and alters gut microbiota in high-fat diet-induced
+diabetic mice. Frontiers in Physiology 10:918 DOI 10.3389/fphys.2019.00918.
+Xie Y, Bowe B, Li T, Xian H, Al-Aly Z. 2018a. Blood urea nitrogen and risk of insulin
+use among people with diabetes. Diabetes and Vascular Disease Research 15:409–416
+DOI 10.1177/1479164118785050.
+Xie Y, Bowe B, Li T, Xian H, Yan Y, Al-Aly Z. 2018b. Higher blood urea nitrogen is
+associated with increased risk of incident diabetes mellitus. Kidney International
+93:741–752 DOI 10.1016/j.kint.2017.08.033.
+Yachida S, Mizutani S, Shiroma H, Shiba S, Nakajima T, Sakamoto T, Watanabe
+H, Masuda K, Nishimoto Y, Kubo M, Hosoda F, Rokutan H, Matsumoto M,
+Takamaru H, Yamada M, Matsuda T, Iwasaki M, Yamaji T, Yachida T, Soga T,
+Kurokawa K, Toyoda A, Ogura Y, Hayashi T, Hatakeyama M, Nakagama H, Saito
+Y, Fukuda S, Shibata T, Yamada T. 2019. Metagenomic and metabolomic analyses
+reveal distinct stage-specific phenotypes of the gut microbiota in colorectal cancer.
+Nature Medicine 25:968–976 DOI 10.1038/s41591-019-0458-7.
+Yamashiro Y. 2017. Gut microbiota in health and disease. Annals of Nutrition and
+Metabolism 71:242–246 DOI 10.1159/000481627.
+Zhang Q, Xiao X, Zheng J, Li M, Yu M, Ping F, Wang T, Wang X. 2018. Featured article:
+structure moderation of gut microbiota in liraglutide-treated diabetic male rats.
+Experimental Biology and Medicine 243:34–44 DOI 10.1177/1535370217743765.
+Zheng J, Cheng J, Zheng S, Feng Q, Xiao X. 2018. Curcumin, a polyphenolic curcumi-
+noid with its protective effects and molecular mechanisms in diabetes and diabetic
+cardiomyopathy. Frontiers in Pharmacology 9:472 DOI 10.3389/fphar.2018.00472.
+Zhu L, Sha L, Li K, Wang Z, Wang T, Li Y, Liu P, Dong X, Dong Y, Zhang X, Wang
+H. 2020. Dietary flaxseed oil rich in omega-3 suppresses severity of type 2 diabetes
+mellitus via anti-inflammation and modulating gut microbiota in rats. Lipids in
+Health and Disease 19:20 DOI 10.1186/s12944-019-1167-4.
+Shang et al. (2021), PeerJ, DOI 10.7717/peerj.11128
+19/19

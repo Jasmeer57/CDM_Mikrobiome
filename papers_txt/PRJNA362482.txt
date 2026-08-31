@@ -1,0 +1,823 @@
+Ketogenic diet poses a significant effect on imbalanced gut 
+microbiota in infants with refractory epilepsy
+Gan Xie, Qian Zhou, Chuang-Zhao Qiu, Wen-Kui Dai, He-Ping Wang, Yin-Hu Li, Jian-Xiang Liao, Xin-Guo Lu, 
+Su-Fang Lin, Jing-Hua Ye, Zhuo-Ya Ma, Wen-Jian Wang
+Gan Xie, He-Ping Wang, Zhuo-Ya Ma, Wen-Jian Wang, 
+Department of Respiratory Medicine, Shenzhen Children’s 
+Hospital, Shenzhen 518026, Guangdong Province, China
+Jian-Xiang Liao, Xin-Guo Lu, Su-Fang Lin, Jing-Hua Ye, 
+Department of Pediatric Neurology, Shenzhen Children’s 
+Hospital, Shenzhen 518026, Guangdong Province, China
+Qian Zhou, Chuang-Zhao Qiu, Wen-Kui Dai, Yin-Hu Li, 
+WeHealthGene Institute, Shenzhen 518129, Guangdong 
+Province, China
+Author contributions: Dai WK designed the study and Wang 
+WJ managed the project; Zhou Q and Qiu CZ interpreted the 
+data; Xie G and Zhou Q wrote the manuscript; Qiu CZ and Li 
+YH conducted bioinformatics analysis; Wang HP and Ye JH 
+collected sample information; Liao JX, Lu XG, Lin SF and Ma 
+ZY contributed to the study design and patients’ diagnoses; all 
+authors read and approved the final manuscript. Xie G, Zhou
+ Q 
+and Qiu
+ CZ contributed equally to this work.
+Supported by the Innovation Fund of Science and Technology 
+Commission of Shenzhen Municipality, China, No. JCYJ­
+2015­0403100317071.
+Institutional review board statement: The study was reviewed 
+and approved by the Institutional Review Board of Shenzhen 
+Children’s Hospital.
+Conflict-of-interest statement: The authors declare that they 
+have no competing interests.
+Data sharing statement: Sequencing data are available from 
+the NCBI Sequence Read Archive (SRA) database (Accession 
+number: SRP100388).
+Open-Access: This article is an open-access article which was 
+selected by an in-house editor and fully peer-reviewed by external 
+reviewers. It is distributed in accordance with the Creative 
+Commons Attribution Non Commercial (CC BY-NC 4.0) license, 
+which permits others to distribute, remix, adapt, build upon this 
+work non-commercially, and license their derivative works on 
+different terms, provided the original work is properly cited and 
+the use is non-commercial. See: http://creativecommons.org/
+licenses/by-nc/4.0/
+Manuscript source: Unsolicited manuscript
+Correspondence to: Wen-Jian Wang, Doctor, Director, 
+Department of Respiratory Medicine, Shenzhen Children’s 
+Hospital, No. 7019, Yitian Road, Shenzhen 518026, 
+China. dhbk2005@163.com
+Telephone: +86-755- 83936101
+Fax: +86-755- 83009800
+Received: April 24, 2017
+Peer-review started: May 4, 2017 
+First decision: June 5, 2017
+Revised: June 9, 2017
+Accepted: July 12, 2017
+Article in press: July 12, 2017
+Published online: September 7, 2017
+Abstract
+AIM
+To investigate whether patients with refractory epilepsy 
+and healthy infants differ in gut microbiota (GM), and 
+how ketogenic diet (KD) alters GM.
+METHODS
+A total of 14 epileptic and 30 healthy infants were 
+recruited and seizure frequencies were recorded. Stool 
+samples were collected for 16S rDNA sequencing using 
+the Illumina Miseq platform. The composition of GM in 
+each sample was analyzed with MOTHUR, and inter-
+group comparison was conducted by R software.
+RESULTS
+After being on KD treatment for a week, 64% of epileptic 
+infants showed an obvious improvement, with a 50% 
+decrease in seizure frequency. GM structure in epileptic 
+ORIGINAL ARTICLE
+6164
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+Submit a Manuscript: http://www.f6publishing.com
+DOI: 10.3748/wjg.v23.i33.6164
+World J Gastroenterol  2017 September 7; 23(33): 6164-6171
+ ISSN 1007-9327 (print)  ISSN 2219-2840 (online)
+Retrospective Study
+infants (P1 group) differed dramatically from that in 
+healthy infants (Health group). Proteobacteria, which 
+had accumulated significantly in the P1 group, decreased 
+dramatically after KD treatment (P2 group). Crono­bacter 
+predominated in the P1 group and remained at a low 
+level both in the Health and P2 groups. Bacteroides 
+increased significantly in the P2 group, in which Pre­
+votella and Bifidobacterium also grew in numbers and 
+kept increasing.
+CONCLUSION
+GM pattern in healthy infants differed dramatically from 
+that of the epileptic group. KD could significantly modify 
+symptoms of epilepsy and reshape the GM of epileptic 
+infants. 
+Key words: Ketogenic diet; Cronobacter; Seizures; Gut 
+microbiota; Epilepsy
+© The Author(s) 2017. Published by Baishideng 
+Publishing Group Inc. All rights reserved.
+Core tip: Many infants with epilepsy are refractory 
+to current antiepileptic drugs, and ketogenic diet 
+(KD) could help to moderate seizure frequency as an 
+alternative treatment. A large number of reports have 
+demonstrated that gut microbiota (GM) can affect 
+children’s neurodevelopment. Concurrently, GM could 
+be dramatically affected by diet. KD could rapidly alter 
+GM and alleviate seizure frequency in infants with 
+refractory epilepsy. The GM structure of epileptic infants 
+- comprising large numbers of pathogens, such as 
+Streptococcus - differed from that of healthy controls. 
+After KD therapy, GM of epileptic patients changed 
+significantly, with fewer pathogens and more beneficial 
+bacteria.
+Xie G, Zhou Q, Qiu CZ, Dai WK, Wang HP, Li YH, Liao 
+JX, Lu XG, Lin SF, Ye JH, Ma ZY, Wang WJ. Ketogenic diet 
+poses a significant effect on imbalanced gut microbiota in 
+infants with refractory epilepsy. World J Gastroenterol 2017; 
+23(33): 6164-6171  Available from: URL: http://www.wjgnet.
+com/1007-9327/full/v23/i33/6164.htm  DOI: http://dx.doi.
+org/10.3748/wjg.v23.i33.6164
+INTRODUCTION
+Pediatric epilepsy is widespread, with complications 
+including cognitive impairment, delayed neurodevelop­
+ment and loss of bodily control
+[1,2]. Disequilibrium 
+between excitation and depression of the central 
+nervous system is acknowledged as the main factor 
+in epilepsy incidence
+[3]. Prior reports have identified 
+increased inflammatory reactions and pro-inflam­
+matory cytokines, such as interleukin (IL)-6, IL-17 
+and interferon, in the cerebrospinal fluid (CSF)
+[4]. 
+Anti-epileptic drugs (AEDs) and surgery are the main 
+conventional treatments for infants with epilepsy
+[5]. 
+However, there are still 30% of epileptic infants who 
+suffered from therapeutic futility and recurrent attacks.
+A growing number of reports indicated that KD is 
+a promising therapeutic alternative for infants with 
+refractory epilepsy, as it has been shown to ameliorate 
+their clinical symptoms, including the frequency of 
+seizures
+[6-10]. It remains unclear exactly how this occurs. 
+Several reports implicated changed neuro­transmitters 
+after KD therapy, including γ-amino­butyric acid (GABA), 
+monoamines and gluta­mate
+[7,11]. Dahin et al
+[12] and 
+Freeman et al
+[13] also identified increased ketone bodies 
+(KBs) and decreased dopamine and serotonin
+[12,13]. 
+However, Sariego-Jamardo et al
+[14] found little change 
+of neurotransmitters, pterins and amino acids in the 
+CSF of KD responders as opposed to non-responders. 
+These discrepant findings suggested a need for the 
+further elucidation of the mechanisms of KD therapy.
+Several studies showed that diet posed a signifi­
+cant effect on GM
+[8,15]. A high-fat diet induced selective 
+enrichment of bile-metabolizing microbiota, such as 
+Bacteroides
+[16], whilst high-fiber foods pro­moted the 
+accumulation of plant-polysaccharide fermen­ting 
+microbial organisms, including Prevotella and Clostri­
+dium
+[16]. A number of reports implicated involve­ment 
+of GM in enteric nervous system, blood-brain barrier 
+and glial cell development, all of which were pivotal to 
+behavioral control and cognitive pro­gression
+[17,18]. GM 
+could produce neurotransmitters and gut hormones 
+directly
+[19] or indirectly by producing signal­ing molecules 
+to regulate host cells
+[20]. GM-derived short-chain fatty 
+acids (SCFAs) could stimulate enterochro­maffin cells to 
+produce serotonin
+[21]. Wikoff et al
+[22] also documented 
+decreased serotonin in peripheral serum in the 
+absence of GM. Moreover, Clostridium sporogenes 
+and Ruminococcus gnavus promoted decarboxylation 
+of tryptophan to tryptamine, which modulated mood 
+and appetite through amine-associated receptors
+[23]. 
+Based on the involvement of GM in the gut-brain axis, 
+increasing reports demon­strated imbalanced GM in 
+neurogenic diseases (NDs), including autism-spectrum 
+disorder, Parkinson’s disease, and depression
+[24]. 
+However, GM dysbiosis in child­hood epilepsy remains 
+unexplored. 
+Previous studies declared that short-term dietary 
+intake could rapidly alter human GM
+[8,15]. In this study, 
+we performed a comparison between diseased infants 
+(before and after KD treatment) and healthy controls, 
+to explore if and how GM of infants with refractory 
+epilepsy differed with that of age-matched healthy 
+subjects. We also evaluated the therapeutic effect 
+of KD on refractory epilepsy and the changes in GM 
+after treatment. It is hoped that this research will help 
+to bridge some gaps in the current understanding of 
+refractory childhood epilepsy.
+MATERIALS AND METHODS
+Sample collection
+We enrolled 14 pediatric patients with refractory 
+6165
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+Xie G et al. KD alters GM in epileptic infants
+epilepsy (aged 1.95 ± 3.10 years, 11 male and 3 
+female) in Shenzhen Children’s Hospital, according 
+to the following inclusion criteria: Convulsion more 
+than four times per week after treatment with ≥ 3 
+AEDs; no antibiotic exposure for at least 1 mo; no 
+known genetic metabolic disorders or severe systemic 
+illnesses; and successive KD therapy for at least 1 
+wk. KD was provided by Zeneca (Shenzhen, China), 
+including Qitong ketogenic liquid milk (3.4 g protein, 8.0 
+g lipid and 0.6 g carbohydrate per 100 g milk), Qitong 
+ketogenic cookies and Qitong ketogenic set-meal pack­
+ages
+[25].
+Healthy subjects (aged up to 3 years, 15 male and 
+15 female) were also recruited based on the following 
+criteria: No antibiotic exposure for at least 1 mo 
+before this study, no disease symptoms for at least 1 
+mo following recruitment, and no history of seizures 
+(Supplementary Table 1). Fisher’s exact test was 
+used to evaluate the effect of gender and age on GM 
+composition. 
+DNA extraction, library construction and sequencing
+The genomic DNA of microbiota was extracted from 
+stool samples using the Power Soil DNA Isolation 
+Kit (Mo Bio Laboratories, Carlsbad) following the 
+manufacture’s protocol. The hypervariable V3-V4 
+region of the 16S rRNA gene was amplified using PCR 
+kit (TransGenAP221-02, Peking), and DNA products 
+were quantified by gel electrophoresis and Qubit 
+(Thermo Fisher, Singapore). After library construction, 
+the qualified libraries were sequenced using the 
+Illumina MiSeq Sequencing platform (Illumina, San 
+Diego). 
+Taxonomy classification and diversity detection
+After filtration, overlapped paired reads were asse­
+mbled as tags with FLASH (v1.2.11), and clustered to 
+operational taxonomic units (OTUs) through USEARCH 
+(v7.0.1090)
+[26]. Representative OTUs were mapped 
+against the Greengenes database (v201305)
+[27] and 
+classified with RDP classifier (v2.2)
+[28]. The diversity of 
+microbiota was calculated with MOTHUR (v1.31.2)
+[29].
+Principal component analysis and statistical analysis
+PCA was performed with R software (v3.2.5). Wilco­
+xon rank-sum test was used to compare GM in dis­
+eased infants and healthy controls (Health group). 
+Comparative analysis between the epileptic infants 
+before (P1 group) and after treatment (P2 group) 
+was conducted by Wilcoxon signed-rank test. Linear 
+discriminant analysis Effect Size (LEfSe) analysis 
+was used to identify microbial species which were 
+apparently enriched in a specific group. 
+RESULTS
+Data output and patients’ characteristics
+The average number of high-quality sequencing reads 
+produced for each sample was 117196 (range, 31900 
+to 305190). The number of assembled tags averaged 
+22800, with a range from 12655 to 27337. Both 
+gender and age had no significant effect on GM (P = 
+0.069 and 0.234, respectively).
+GM of healthy individuals differs dramatically with that 
+of diseased infants 
+Shannon index analysis indicated higher GM diversity 
+in healthy infants, in comparison with infants with 
+refractory epilepsy (Figure 1, Supplementary Table 2). 
+PCA of GM profile also identified that healthy infants 
+could be clearly distinguished from patients (Figure 
+2, Supplementary Table 3). The phylum Firmicutes 
+predominated in patients (45.82%) and was un­
+changed after KD therapy (47.00%) (Supplementary 
+Table 4). Bacteroidetes accounted for 53.01% of GM 
+in healthy infants, followed by Firmicutes (34.38%). 
+After KD treatment, Bacteroidetes increased from 
+26.75% to 38.71%. Actinobacteria was enriched in 
+healthy infants (8.49%) and occupied a lower percent 
+in patients (2.38% before treatment and 2.92% after 
+treatment). Proteobacteria was highly accumulated 
+in infants with refractory epilepsy (24.34%) and 
+decreased dramatically after KD therapy (10.77%). 
+At the genus level, Cronobacter was dominant in the 
+patients (23.30% vs 0.00% in the healthy group). By 
+contrast, healthy subjects harbored more than twice 
+Bacteroides (42.68%) than infants with refractory 
+epilepsy (17.93%). Prevotella and Bifidobacterium also 
+accumulated in the healthy group (7.25% and 7.84%, 
+respectively) (Supplementary Table 5).
+KD therapy ameliorates epilepsy and GM of patients 
+started to improve
+After a week of KD therapy, 3 (21%) patients were 
+seizure-free and 6 (43%) had a 50% to 90% decrease 
+of seizure frequency (Supplementary Table 1). The 
+6166
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+Shannon index
+3.5
+3.0
+2.5
+2.0
+1.5
+1.0
+Health
+P1
+P2
+Figure 1  Gut microbial diversity of the three groups. Distribution of 
+Shannon index (evenness) is shown. Red, blue, and green represent the 
+Health, P1 and P2 groups, respectively. The gut microbiota (GM) of the healthy 
+infants was more stable than that of the other two groups.
+Xie G et al. KD alters GM in epileptic infants
+6167
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+of the Health group, by comparison with P1 group 
+(Figures 3 and 4). After KD treatment, Bacteroides 
+increased significantly, by 24.42%. Prevotella also 
+remaining 5 (36%) infants experienced no significant 
+improvement in seizure control (Supplementary Table 
+1). GM of the P2 group was more similar to that 
+PC2 (8.23%)
+PC1 (26.95%)
+Health
+P1
+P1
+-6                -4                -2                0                 2                  4                 6
+6
+4
+2
+0
+-2
+-4
+-6
+Figure 2  Principal component analysis. Each plot in the principal component analysis (PCA) graph stands for a sample. Red, blue and green colors represent the 
+Health, P1 and P2 groups, respectively.
+Figure 3  Gut microbiota structures in the Health, P1 and P2 groups at the genus level. SVG package (version 1.1) was used to produce the paragraph. The 
+size of the circle representing each genus was determined by the relative abundance of the three groups, and the width of line linking the P1, P2 and Health groups 
+indicates the relative abundance of each group.
+P1
+Parabacteroides
+Blautia
+Dysgonomonas
+Haemophilus
+Acidaminococcus
+Collinsella
+Prevotella
+Roseburia
+Erysipelatoclostridium
+Bacteroides
+Anearostupes
+Streptococcus
+Faeclibacterium
+Ruminococcus
+Bifidobacterium
+Gemmiger
+Cronobacter
+Health
+P2
+Alistipes
+Xie G et al. KD alters GM in epileptic infants
+6168
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+Health               P1              P2
+Odoribacter
+Eggerthellales
+Eggerthellaceae
+Eggerthella
+Peptoclostridium
+Bacillales
+Parvimonas
+Bacillaceae
+Bacillus
+Solobacterium
+Brochothrix
+Listeriaceae
+Cronobacter
+Enterobacteriales
+Enterobacteriaceae
+Gammaproteobacteria
+Erysipelotrichaceae
+Erysipelotrichales
+Erysipelotrichia
+Erysipelatoclostridium
+Bacilli
+Ruminiclostridium
+Lactobacillales
+Streptococcaceae
+Streptococcus
+Hungdatella
+Lachnoclostridium
+Clostridiaceae
+Enterococcus
+Enterococcaceae
+Klebsiella
+Butyricicoccus
+Myroides
+Peptostreptococcus
+Mogibacterium
+Weissella
+Psychrobacter
+Peptoniphilus
+Clostridiales_incertae_sedis_XIII
+Leuconostocaceae
+Lacticoccus
+Sphingomonadaceae
+Acinetobacter
+Bacteroidaceae
+Bacteroides
+Actinobacteria
+Bifidobacteriaceae
+Bifidobacteriales
+Bifidobacterium
+Faecalibacterium
+Actinobacteria
+Ruminococcus
+Betaproteobacteria
+Pasteurellales
+Pasteurellaceae
+Haemophilus
+Burkholderiales
+Escherichia
+Sutterellaceae
+Clostridium
+Actinomycetales
+Sutterella
+Staphylococcus
+Candidatus_saccharibacteria
+Staphylococcaceae
+Campylobacter
+Epsilonproteobacteria
+Campylopacterales
+Campylobacteraceae
+Actinmycetaceae
+Actinomyces
+Figure 4  Significantly enriched gut microbiota components in the Health, P1 and P2 groups. LEfSe analysis was applied to detect the gut microbiota (GM) 
+components in the three groups. Red, green, and blue represent the Health, P1 and P2 groups, respectively. The LDA score was set as ≤ 2. The enrichment degree 
+is proportional to the LDA score.
+0.0       0.5       1.0       1.5       2.0       2.5       3.0        3.5      4.0        4.5
+LDA score (log10)
+Xie G et al. KD alters GM in epileptic infants
+6169
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+increased in the P1 group from 0.37% to 1.85% after 
+KD treatment (Figure 3 and Supplementary Table 5). 
+Cronobacter decreased sharply in after-treatment 
+patients, from 23.3% to 10.44 % (Figures 3 and 4 and 
+Supplementary Table 5). KD exposure also induced a 
+decrease in Erysipelatoclostridium (by 8.67% in the 
+P1 group and 4.89% in the P2 group); it represented 
+just 0.64% in healthy infants (Figures 3 and 4 and 
+Supplementary Table 5). Streptococcus, Alistipes, 
+Ruminiclostridium, Barnesiella and Enterococcus also 
+decreased after KD therapy (Figures 3 and 4 and 
+Supplementary Table 5). 
+DISCUSSION
+KD is increasingly used for the treatment of refractory 
+epilepsy in childhood, but the mechanism remains 
+unclear. Previous reports indicated that GM played an 
+important role in the gut-brain axis
+[24], and was affected 
+significantly by intake of high-fat food
+[16]. This study 
+focused on differed GM structures between healthy 
+and epileptic infants, as well as altered GM in patients 
+after one week of KD treatment. The results pointed 
+to an imbalanced GM in patients and a significant 
+improvement after KD therapy.
+Proteobacteria comprises a variety of notorious 
+pathogens, such as Escherichia, Salmonella and 
+Vibrio. It accounted for 24.34% in pediatric patients 
+and decreased dramatically after KD treatment. 
+Bacteroidetes was dominant in healthy infants and 
+increased largely in after-treatment patients. 
+We identified accumulated Bacteroides in healthy 
+subjects as well as in patients after treatment. 
+Bacteroides was reported to digest and metabolize high-
+fat food and to regulate the secretion of IL-6 and IL-17 
+in dendritic cells (DCs), a process strongly associated 
+with seizure severity of epileptic patients
+[4,16]. However, 
+patients-enriched Cronobacter decreased dramatically 
+after KD therapy. Prior reports demonstrated that there 
+were multiple virulence determinants of Cronobacter, 
+including Cronobacter plasminogen activator and ferric 
+ion transporter protein, which paly a detrimental role 
+in human health
+[30-32]. Prevotella is a robust producer 
+of SCFAs
+[33], which could protect the intestinal mucosa 
+and function as neurotransmitters. Previous reports 
+also indicated that SCFAs mediated nervous impulse 
+and mitigated Parkinson’s disease
+[33,34]. Similarly, we 
+identified increased Prevotella in the Health and P2 
+group, when compared with the P1 group. Some other 
+genera also offer clues to epilepsy recovery, such as 
+Erysipelatoclostridium, Blautia, Bifidobacterium and 
+Streptococcus. Bifidobacterium was well known to be 
+beneficial to health
+[35], and Streptococcus, a common 
+pathogen, played a role especially in respiratory 
+diseases
+[36]. Although GM imbalance in diseased infants 
+was identified and GM improved after KD treatment, 
+more exploration was needed to elucidate the contri­
+bution of a healthy GM to epilepsy onset/recovery.
+This study revealed that KD can mitigate the sym­
+ptoms of epilepsy and correct an imbalanced GM in 
+epileptic infants. However, further analysis is needed 
+to unravel how GM may be involved in epilepsy onset/
+recovery.
+There are some limitations that need to be clarified. 
+First, 16S rDNA analysis identified microbes at the 
+genus level, which makes it difficult to unravel different 
+microbes at the species or function level. Second, it 
+would be more useful to evaluate the efficacy of KD 
+treatment and its effect on the GM if this could be done 
+with a longer period of follow-up. Third, an animal 
+model might be applied to demonstrate whether GM 
+imbalance could induce epilepsy associated symptoms. 
+Considering these limitations, we are planning to 
+perform metagenomic analysis on GM of healthy and 
+epileptic infants. This will provide more insights into 
+distinct metabolic networks in imbalanced GM. 
+In conclusion, we found that GM of infants with 
+refractory epilepsy differed dramatically from that of 
+healthy infants. Epileptic patients harbored significantly 
+enriched pathogens and decreased beneficial bacteria. 
+Although this study provides new insight into the 
+involve­ment of GM in pediatric refractory epilepsy, the 
+gap between KD and epilepsy recovery is still huge. 
+To uncover the mechanism and pathogens involved 
+in refractory infantile epilepsy, further research should 
+under­score functional gene networks in GM. 
+ACKNOWLEDGMENTS
+We thank the staff of WeHealthGene who contributed 
+to the project, but whose names are not included in 
+the author list.
+COMMENTS
+Background
+Infants with refractory epilepsy could not be cured by several anti-epileptic drugs 
+(AEDs) and ketogenic diet (KD) was increasingly used as an alternative therapy 
+to refractory epilepsy. High-fat diet was reported to pose a significant impact on 
+gut microbiota (GM), which could regulate neural systems.
+Research frontiers
+Previous reports demonstrated that GM could affect neural systems by secreting 
+metabolites as neurotrans­mitters. In parallel, the gut-brain axis is a research 
+hot spot in biomedicine, including the study of autism, Parkinson’s disease, and 
+depression.
+Innovations and breakthroughs
+This study showed that the GM pattern of diseased infants differs significantly 
+from that of healthy controls. The decreased number of dominant pathogens and 
+significantly increased number of beneficial bacteria after KD treatment offer new 
+insight into KD therapy for epilepsy.
+Applications
+This study found several types of bacteria altered in the GM, suggesting that 
+these bacteria could be monitored as biomarkers to provide an important 
+reference for epilepsy treatment.
+Terminology
+GM, which consists of many kinds of bacteria including pathogens, commensals, 
+ COMMENTS
+Xie G et al. KD alters GM in epileptic infants
+6170
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+and probiotics, plays an important role in the human body.
+Peer-review
+The authors have performed important research in pediatric epilepsy. They 
+discovered that the composition of the GM in healthy and diseased infants was 
+significantly different, specifically in healthy infants as opposed to those with 
+refractory epilepsy. Bacterial patterns were dramatically changed after KD therapy, 
+and this was associated with a reduction in the frequency of seizures. These 
+findings should enhance our knowledge of the relationship between epilepsy and 
+GM and provide new insight into the clinical treatment of epilepsy.
+REFERENCES
+1	
+Nordli DR Jr. Epileptic encephalopathies in infants and children. 
+J Clin Neurophysiol 2012; 29: 420-424 [PMID: 23027099 DOI: 
+10.1097/WNP.0b013e31826bd961]
+2	
+Nickels KC, Zaccariello MJ, Hamiwka LD, Wirrell EC. Cognitive 
+and neurodevelopmental comorbidities in paediatric epilepsy. Nat 
+Rev Neurol 2016; 12: 465- 476 [PMID: 27448186 DOI: 10.1038/
+nrneurol.2016.98]
+3	
+Goldberg EM, Coulter DA. Mechanisms of epileptogenesis: a 
+convergence on neural circuit dysfunction. Nat Rev Neurosci 2013; 
+14: 337-349 [PMID: 23595016 DOI: 10.1038/nrn3482]
+4	
+Mao LY, Ding J, Peng WF, Ma Y, Zhang YH, Fan W, Wang X. 
+Interictal interleukin-17A levels are elevated and correlate with 
+seizure severity of epilepsy patients. Epilepsia 2013; 54: e142-e145 
+[PMID: 23944193 DOI: 10.1111/epi.12337]
+5	
+Vigevano F, Arzimanoglou A, Plouin P, Specchio N. Therapeutic 
+approach to epileptic encephalopathies. Epilepsia 2013; 54 Suppl 8: 
+45-5 0 [PMID: 24571117 DOI: 10.1111/epi.12423]
+6	
+Kossoff EH, Zupec-Kania BA, Amark PE, Ballaban-Gil KR, 
+Christina Bergqvist AG, Blackford R, Buchhalter JR, Caraballo RH, 
+Helen Cross J, Dahlin MG, Donner EJ, Klepper J, Jehle RS, Kim 
+HD, Christiana Liu YM, Nation J, Nordli DR Jr, Pfeifer HH, Rho 
+JM, Stafstrom CE, Thiele EA, Turner Z, Wirrell EC, Wheless JW, 
+Veggiotti P, Vining EP; Charlie Foundation, Practice Committee 
+of the Child Neurology Society; Practice Committee of the Child 
+Neurology Society; International Ketogenic Diet Study Group. 
+Optimal clinical management of children receiving the ketogenic 
+diet: recommendations of the International Ketogenic Diet Study 
+Group. Epilepsia 2009; 50: 304-317 [PMID: 18823325 DOI: 
+10.1111/j.1528-1167.2008.01765.x]
+7	
+Lima PA, Sampaio LP, Damasceno NR. Neurobiochemical 
+mechanisms of a ketogenic diet in refractory epilepsy. Clinics 
+(Sao Paulo) 2014; 69: 699-705 [PMID: 255 18023 DOI: 10.6061/
+clinics/2014(10)09]
+8	
+van der Louw E, van den Hurk D, Neal E, Leiendecker B, 
+Fitzsimmon G, Dority L, Thompson L, Marchió M, Dudzińska M, 
+Dressler A, Klepper J, Auvin S, Cross JH. Ketogenic diet guidelines 
+for infants with refractory epilepsy. Eur J Paediatr Neurol 2016; 20: 
+798-809 [PMID: 27470655  DOI: 10.1016/j.ejpn.2016.07.009]
+9	
+Neal EG, Chaffe H, Schwartz RH, Lawson MS, Edwards N, 
+Fitzsimmons G, Whitney A, Cross JH. The ketogenic diet for the 
+treatment of childhood epilepsy: a randomised controlled trial. 
+Lancet Neurol 2008; 7: 500-506 [PMID: 1845655 7 DOI: 10.1016/
+S1474-4422(08)70092-9]
+10	
+Noebels JL. The Voltage-Gated Calcium Channel and Absence 
+Epilepsy. In: Noebels JL, Avoli M, Rogawski MA, Olsen RW, 
+Delgado-Escueta AV, editors. Jasper’s Basic Mechanisms of the 
+Epilepsies. 4th ed. Bethesda (MD), 2012: 1049-1066
+11	
+Ruskin DN, Masino SA. The nervous system and metabolic 
+dysregulation: emerging evidence converges on ketogenic diet 
+therapy. Front Neurosci 2012; 6: 33 [PMID: 22470316 DOI: 
+10.3389/fnins.2012.00033]
+12	
+Dahlin M, Mansson Je Fau - Amark P, Amark P. CSF levels of 
+dopamine and serotonin, but not norepinephrine, metabolites are 
+influenced by the ketogenic diet in children with epilepsy. Epilepsy 
+Res 2012; 99: 132-138 [DOI: 10.1016/j.eplepsyres.2011.11.003]
+13	
+Freeman JM, Kossoff EH, Hartman AL. The ketogenic diet: one 
+decade later. Pediatrics 2007; 119: 535-5 43 [PMID: 17332207 DOI: 
+10.1542/peds.2006-2447]
+14	
+Sariego-Jamardo A, García-Cazorla A, Artuch R, Castejón E, 
+García-Arenas D, Molero-Luis M, Ormazábal A, Sanmartí FX. 
+Efficacy of the Ketogenic Diet for the Treatment of Refractory 
+Childhood Epilepsy: Cerebrospinal Fluid Neurotransmitters and 
+Amino Acid Levels. Pediatr Neurol 2015; 53: 422-426 [PMID: 
+26476148 DOI: 10.1016/j.pediatrneurol.2015.07.013]
+15	
+Wu J, Zhang Y, Yang H, Rao Y, Miao J, Lu X. Intestinal Microbiota 
+as an Alternative Therapeutic Target for Epilepsy. Can J Infect 
+Dis Med Microbiol 2016; 2016: 9032809 [PMID: 27882059 DOI: 
+10.1155 /2016/9032809]
+16	
+Arumugam M, Raes J, Pelletier E, Le Paslier D, Yamada T, 
+Mende DR, Fernandes GR, Tap J, Bruls T, Batto JM, Bertalan M, 
+Borruel N, Casellas F, Fernandez L, Gautier L, Hansen T, Hattori 
+M, Hayashi T, Kleerebezem M, Kurokawa K, Leclerc M, Levenez 
+F, Manichanh C, Nielsen HB, Nielsen T, Pons N, Poulain J, Qin J, 
+Sicheritz-Ponten T, Tims S, Torrents D, Ugarte E, Zoetendal EG, 
+Wang J, Guarner F, Pedersen O, de Vos WM, Brunak S, Doré J; 
+MetaHIT Consortium, Antolín M, Artiguenave F, Blottiere HM, 
+Almeida M, Brechot C, Cara C, Chervaux C, Cultrone A, Delorme 
+C, Denariaz G, Dervyn R, Foerstner KU, Friss C, van de Guchte M, 
+Guedon E, Haimet F, Huber W, van Hylckama-Vlieg J, Jamet A, 
+Juste C, Kaci G, Knol J, Lakhdari O, Layec S, Le Roux K, Maguin E, 
+Mérieux A, Melo Minardi R, M’rini C, Muller J, Oozeer R, Parkhill 
+J, Renault P, Rescigno M, Sanchez N, Sunagawa S, Torrejon A, 
+Turner K, Vandemeulebrouck G, Varela E, Winogradsky Y, Zeller G, 
+Weissenbach J, Ehrlich SD, Bork P. Enterotypes of the human gut 
+microbiome. Nature 2011; 473: 174-180 [PMID: 21508958 DOI: 
+10.1038/nature09944]
+17	
+Braniste V, Al-Asmakh M, Kowal C, Anuar F, Abbaspour A, Tóth 
+M, Korecka A, Bakocevic N, Ng LG, Kundu P, Gulyás B, Halldin C, 
+Hultenby K, Nilsson H, Hebert H, Volpe BT, Diamond B, Pettersson 
+S. The gut microbiota influences blood-brain barrier permeability 
+in mice. Sci Transl Med 2014; 6: 263ra158 [PMID: 25411471 DOI: 
+10.1126/scitranslmed.3009759]
+18	
+Collins J, Borojevic R, Verdu EF, Huizinga JD, Ratcliffe EM. 
+Intestinal microbiota influence the early postnatal development of 
+the enteric nervous system. Neurogastroenterol Motil 2014; 26: 
+98-107 [PMID: 24329946 DOI: 10.1111/nmo.12236]
+19	
+Matsumoto M, Kibe R, Ooga T, Aiba Y, Kurihara S, Sawaki E, 
+Koga Y, Benno Y. Impact of intestinal microbiota on intestinal 
+luminal metabolome. Sci Rep 2012; 2: 233 [PMID: 22724057 DOI: 
+10.1038/srep00233]
+20	
+Batterham RL, ffytche DH, Rosenthal JM, Zelaya FO, Barker 
+GJ, Withers DJ, Williams SC. PYY modulation of cortical and 
+hypothalamic brain areas predicts feeding behaviour in humans. 
+Nature 2007; 450: 106-109 [PMID: 17934448 DOI: 10.1038/
+nature06212]
+21	
+Yano JM, Yu K, Donaldson GP, Shastri GG, Ann P, Ma L, Nagler 
+CR, Ismagilov RF, Mazmanian SK, Hsiao EY. Indigenous bacteria 
+from the gut microbiota regulate host serotonin biosynthesis. 
+Cell 2015; 161: 264-276 [PMID: 25860609 DOI: 10.1016/
+j.cell.2015.02.047]
+22	
+Wikoff WR, Anfora AT, Liu J, Schultz PG, Lesley SA, Peters 
+EC, Siuzdak G. Metabolomics analysis reveals large effects of 
+gut microflora on mammalian blood metabolites. Proc Natl Acad 
+Sci USA 2009;106: 3698-3703 [PMID: 19234110 DOI: 10.1073/
+pnas.0812874106]
+23	
+Williams BB, Van Benschoten AH, Cimermancic P, Donia MS, 
+Zimmermann M, Taketani M, Ishihara A, Kashyap PC, Fraser JS, 
+Fischbach MA. Discovery and characterization of gut microbiota 
+decarboxylases that can produce the neurotransmitter tryptamine. 
+Cell Host Microbe 2014; 16: 495-5 03 [PMID: 25263219 DOI: 
+10.1016/j.chom.2014.09.001]
+24	
+Sharon G, Sampson TR, Geschwind DH, Mazmanian SK. The 
+Central Nervous System and the Gut Microbiome. Cell 2016; 167: 
+915- 932 [PMID: 27814521 DOI: 10.1016/j.cell.2016.10.027]
+25	
+Suo C, Liao J, Lu X, Fang K, Hu Y, Chen L, Cao D, Huang T, Li B, 
+Li C. Efficacy and safety of the ketogenic diet in Chinese children. 
+Xie G et al. KD alters GM in epileptic infants
+6171
+September 7, 2017|Volume 23|Issue 33|
+WJG|www.wjgnet.com
+Seizure 2013; 22: 174-178 [PMID: 23273808 DOI: 10.1016/
+j.seizure.2012.11.014]
+26	
+Edgar RC. UPARSE: highly accurate OTU sequences from 
+microbial amplicon reads. Nat Methods 2013; 10: 996-998 [PMID: 
+23955 772 DOI: 10.1038/nmeth.2604]
+27	
+DeSantis TZ, Hugenholtz P, Larsen N, Rojas M, Brodie EL, Keller 
+K, Huber T, Dalevi D, Hu P, Andersen GL. Greengenes, a chimera-
+checked 16S rRNA gene database and workbench compatible 
+with ARB. Appl Environ Microbiol 2006; 72: 5069-5072 [PMID: 
+16820507 DOI: 10.1128/AEM.03006-05]
+28	
+Wang Q, Garrity GM, Tiedje JM, Cole JR. Naive Bayesian 
+classifier for rapid assignment of rRNA sequences into the new 
+bacterial taxonomy. Appl Environ Microbiol 2007; 73: 5261-5267 
+[PMID: 17586664 DOI: 10.1128/AEM.00062-07]
+29	
+Schloss PD, Westcott SL, Ryabin T, Hall JR, Hartmann M, Hollister 
+EB, Lesniewski RA, Oakley BB, Parks DH, Robinson CJ, Sahl 
+JW, Stres B, Thallinger GG, Van Horn DJ, Weber CF. Introducing 
+mothur: open-source, platform-independent, community-supported 
+software for describing and comparing microbial communities. 
+Appl Environ Microbiol 2009; 75: 7537-7541 [PMID: 19801464 
+DOI: 10.1128/AEM.01541-09]
+30	
+Jackson EE, Forsythe SJ. Comparative study of Cronobacter 
+identification according to phenotyping methods. BMC Microbiol 
+2016; 16: 146 [PMID: 27401027 DOI: 10.1186/s12866-016-0768-6]
+31	
+Bowen AB, Braden CR. Invasive Enterobacter sakazakii disease in 
+infants. Emerg Infect Dis 2006; 12: 1185- 1189 [PMID: 16965695 
+DOI: 10.3201/eid1208.051509]
+32	
+Singh N, Raghav M, Narula S, Tandon S, Goel G. Profiling of 
+Virulence Determinants in Cronobacter sakazakii Isolates from 
+Different Plant and Environmental Commodities.Curr Microbiol 2017; 
+74: 560-565 [PMID: 28258294 DOI: 10.1007/s00284-017-1219-9]
+33	
+Scheperjans F, Aho V, Pereira PA, Koskinen K, Paulin L, Pek­
+konen E, Haapaniemi E, Kaakkola S, Eerola-Rautio J, Pohja M, 
+Kinnunen E, Murros K, Auvinen P. Gut microbiota are related to 
+Parkinson’s disease and clinical phenotype. Mov Disord 2015; 30: 
+350-358 [PMID: 25476529 DOI: 10.1002/mds.26069]
+34	
+Miletta MC, Petkovic V, Eblé A, Ammann RA, Flück CE, Mullis PE. 
+Butyrate increases intracellular calcium levels and enhances growth 
+hormone release from rat anterior pituitary cells via the G-protein-
+coupled receptors GPR41 and 43. PLoS One 2014; 9: e107388 [PMID: 
+25310566 DOI: 10.1371/journal.pone.0107388]
+35	
+Ghouri YA, Richards DM, Rahimi EF, Krill JT, Jelinek KA, 
+DuPont AW. Systematic review of randomized controlled trials of 
+probiotics, prebiotics, and synbiotics in inflammatory bowel disease. 
+Clin Exp Gastroenterol 2014; 7: 473-487 [PMID: 255 25379 DOI: 
+10.2147/CEG.S27530]
+36	
+Krzyściak W, Pluskwa KK, Jurczak A, Kościelniak D. The 
+pathogenicity of the Streptococcus genus. Eur J Clin Microbiol 
+Infect Dis 2013; 32: 1361-1376 [PMID: 24141975 DOI: 10.1007/
+s10096-013-1914-9]
+P- Reviewer: Daniel F, Prakash N    S- Editor: Qi Y 
+L- Editor: Wang TQ    E- Editor: Xu XR
+Xie G et al. KD alters GM in epileptic infants
+                                      © 2017 Baishideng Publishing Group Inc. All rights reserved.
+Published by Baishideng Publishing Group Inc
+7901 Stoneridge Drive, Suite 501, Pleasanton, CA 94588, USA
+Telephone: +1-925-223-8242
+Fax: +1-925-223-8243
+E-mail: bpgoffice@wjgnet.com
+Help Desk: http://www.f6publishing.com/helpdesk
+http://www.wjgnet.com
+I S S N  1 0  0 7  -   9  3 2  7
+9    7 7 1 0  07   9 3 2 0 45
+3  3

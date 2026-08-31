@@ -1,0 +1,903 @@
+Amsterdam UMC
+Human Blood Lipoprotein Predictions from 1H NMR Spectra
+Khakimov, Bekzod; Hoefsloot, Huub C. J.; Mobaraki, Nabiollah; Aru, Violetta; Kristensen,
+Mette; Lind, Mads V.; Holm, Lars; Castro-Mejía, Josué L.; Nielsen, Dennis S.; Jacobs, Doris
+M.; Smilde, Age K.; Engelsen, S. ren Balling
+Published in:
+Analytical chemistry
+DOI:
+10.1021/acs.analchem.1c01654
+E-pub ahead of print: 01/01/2021
+Document Version
+Publisher's PDF, also known as Version of record
+Document license
+Taverne
+Link to publication
+Citation for pulished version (APA):
+Khakimov, B., Hoefsloot, H. C. J., Mobaraki, N., Aru, V., Kristensen, M., Lind, M. V., Holm, L., Castro-Mejía, J.
+L., Nielsen, D. S., Jacobs, D. M., Smilde, A. K., & Engelsen, S. R. B. (2021). Human Blood Lipoprotein
+Predictions from 1H NMR Spectra: Protocol, Model Performances, and Cage of Covariance. Analytical
+chemistry. Advance online publication. https://doi.org/10.1021/acs.analchem.1c01654
+General rights
+It is not permitted to download or to forward/distribute the text or part of it without the consent of the author(s) and/or copyright holder(s),
+other than for strictly personal, individual use, unless the work is under an open content license (like Creative Commons).
+Disclaimer/Complaints regulations
+If you believe that digital publication of certain material infringes any of your rights or (privacy) interests, please let the Amsterdam UMC
+Medical Library know, stating your reasons. In case of a legitimate complaint, the Medical Library will make the material inaccessible and/or
+remove it from the website. Contact address: outputregistratie@amsterdamumc.nl
+Download date: 27. Aug. 2026
+
+Human Blood Lipoprotein Predictions from 1H NMR Spectra:
+Protocol, Model Performances, and Cage of Covariance
+Bekzod Khakimov,* Huub C. J. Hoefsloot, Nabiollah Mobaraki, Violetta Aru, Mette Kristensen,
+Mads V. Lind, Lars Holm, Josué L. Castro-Mejía, Dennis S. Nielsen, Doris M. Jacobs, Age K. Smilde,
+and Søren Balling Engelsen*
+Cite This: Anal. Chem. 2022, 94, 628−636
+Read Online
+ACCESS
+Metrics & More
+Article Recommendations
+*
+sı
+Supporting Information
+ABSTRACT: Lipoprotein subfractions are biomarkers for the
+early diagnosis of cardiovascular diseases. The reference method,
+ultracentrifugation, for measuring lipoproteins is time-consuming,
+and there is a need to develop a rapid method for cohort
+screenings. This study presents partial least-squares regression
+models developed using 1H nuclear magnetic resonance (NMR)
+spectra and concentrations of lipoproteins as measured by
+ultracentrifugation on 316 healthy Danes. This study explores,
+for the ﬁrst time, diﬀerent regions of the 1H NMR spectrum
+representing signals of molecules in lipoprotein particles and
+diﬀerent lipid species to develop parsimonious, reliable, and
+optimal prediction models. A total of 65 lipoprotein main and
+subfractions were predictable with high accuracy, Q2 of >0.6, using
+an optimal spectral region (1.4−0.6 ppm) containing methylene and methyl signals from lipids. The models were subsequently
+tested on an independent cohort of 290 healthy Swedes with predicted and reference values matching by up to 85−95%. In addition,
+an open software tool was developed to predict lipoproteins concentrations in human blood from standardized 1H NMR spectral
+recordings.
+■INTRODUCTION
+Cardiovascular diseases (CVD) are still the leading cause of
+mortality and morbidity.1,2 Although the trend in CVD
+mortality has plateaued in many countries,1 ∼18 million
+people die annually worldwide due to CVD.3 Blood lipoprotein
+particles (LP) play an important role in the development of
+this pathology and serve as diagnostic markers. Total
+cholesterol (chol) in blood and in low-density lipoprotein
+particles (LDLchol) have long been used as markers of risk for
+CVD.4,5 Lipoproteins are micellar-like particles with heteroge-
+neous density and size, made up primarily of lipids and
+proteins.6 The inside of the typical LP is composed of
+triglycerides (tg) and cholesterol esters (chole). The outer shell
+is composed of free cholesterols (fchol), phospholipids (phosl),
+apolipoprotein A (apoA), or apolipoprotein B (apoB). During
+fasting, LP in human blood can be divided into four main
+fractions based on density and size: very low-density
+lipoproteins (VLDL), intermediate-density lipoproteins
+(IDL), low-density lipoproteins (LDL), and high-density
+lipoproteins (HDL). VLDL particles are the largest with the
+lowest density, and HDL are the smallest particles with the
+highest density. The analytical methods used to determine LP
+in human blood include ultracentrifugation (UC), gel
+electrophoresis, high-performance liquid chromatography
+(HPLC), and numerous assays. However, the deﬁnition of
+subfractions diﬀers between the various separation techniques.
+The LP are not clearly distinct groups of particles, but rather
+form a distribution of particles diﬀering in size and density, and
+in lipid and protein composition.7 For example, UC can
+separate seven subfractions of LDL, while HPLC can separate
+ﬁve subfractions, and these subfractions are not directly
+comparable. Ultracentrifugation has become the clinical
+reference method thanks to its capacity to better separate LP
+subfractions.6 However, not all aspects of density and/or size
+of all subfractions are fully determined, and their biochemical
+function and physiological roles in human metabolism are only
+partly understood.
+A promising analytical method for the rapid quantiﬁcation of
+LP in human blood plasma is proton (1H) nuclear magnetic
+resonance (NMR) spectroscopy. In 1991−1992, Otvos et al.
+demonstrated that plasma 1H NMR spectra and curve ﬁtting
+Received:
+April 18, 2021
+Accepted:
+December 7, 2021
+Published: December 22, 2021
+Article
+pubs.acs.org/ac
+© 2021 The Authors. Published by
+American Chemical Society
+628
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+Downloaded via UNIV AMSTERDAM on September 29, 2025 at 12:49:54 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+on the lipid methyl signal envelope (0.87−0.67 ppm) can be
+used to predict the distribution of the main fractions and
+subfractions of LP.8 This seminal work was greatly expanded
+by Ala-Korpela et al., who investigated multiple NMR eﬀects
+that can inﬂuence the quantiﬁcation of LP, including spectral
+regions and time-domain versus frequency domain solu-
+tions.9,10 In 2005, Petersen et al. applied a more pragmatic
+multivariate data analytical approach, partial least-squares
+regression (PLSR),11 for quantifying LP main and subfractions
+by regressing the reference values measured by UC against the
+lipid region (5.7−0.2 ppm) of the 1H NMR spectra (600
+MHz).12 This approach was soon applied by others, and there
+are now more than 20 studies demonstrating LP quantiﬁcation
+by combining
+1H NMR spectroscopy with a reference
+measurement method, predominantly UC.6 More recently, it
+has become clear that optimization and standardization of the
+1H NMR measurement protocols have paramount importance
+for reliable, accurate, and comparable LP quantiﬁcations across
+diﬀerent laboratories and allow data fusion across cohorts.13
+Consensus regarding standardization is that a high-resolution,
+typically 600 MHz, NMR spectrometer has to be used for the
+measurement of one-dimensional (1D) nuclear Overhauser
+eﬀect spectroscopy (NOESY)
+1H NMR spectra of blood
+plasma or serum samples. The main advantage of using the 1D
+NOESY pulse sequence is that it is fast, robust, simple and thus
+suitable for standardization.
+This study shows the development and extensive validation
+of PLSR models to predict concentrations of LP main and
+subfractions using blood plasma
+1H NMR spectra and
+corresponding LP data measured by UC for more than 300
+volunteers. Furthermore, the study demonstrates a newly
+developed software, namely, Signature Mapping (SigMa) to
+predict LP in human blood plasma or serum from 1H NMR
+spectra in future studies. The datasets and the software have
+been made freely available to the public. The 1H NMR spectra
+were measured using the most recent standard operating
+procedures (SOP) covering blood collection, sample handling,
+and NMR data acquisition, which have been published
+previously.13,14 To the best of our knowledge, this study is
+the ﬁrst to illustrate the complexity and prediction perform-
+ances of PLSR models for a wide range of LP subfractions. In
+addition, this study, for the ﬁrst time, explores and compares
+the performance of prediction models using the entire 1H
+NMR spectra as well as diﬀerent spectral regions with the
+purpose of identifying optimal spectral interval(s) to develop
+the simplest, most robust, and best-performing PLSR
+prediction models. The prediction of nearly 100 parameters
+from a single NMR spectrum raises concerns about the
+covariations among the independent variables (reference
+parameters) and about the rank of the dependent variables
+(the spectra). This study therefore investigated the rank of the
+NMR and LP datasets for better understanding the level of
+intercorrelations “cage of covariance” between the individual
+LP and the information content in the NMR spectra. Finally,
+the PLSR models developed were validated by the prediction
+of LP concentrations in an independent cohort of 290 healthy
+Swedes.15
+■EXPERIMENTAL SECTION
+The study was approved by the Research Ethics Committees of
+the Capital Region of Denmark in accordance with the
+Helsinki declaration (H-15008313) and the Danish Data
+Protection Agency (2013-54-0522). The Danish cohort
+included 316 subjects recruited from the COUNTERSTRIKE
+cohort. Subjects included 206 females (51 ± 20 years old) and
+110 males (57 ± 20 years old) with a mean body mass index
+(BMI (kg/m2)) of 25 (±4) for females and males. The mean
+values for systolic and diastolic blood pressures (mm Hg) were
+124 (±15), and 76 (±10), respectively, for females, and 130
+(±17) and 77 (±11), respectively, for males. All subjects were
+apparently healthy and without a diagnosis of any form of
+cardiovascular disease or diabetes, reporting no chronic
+gastrointestinal disorders, and not receiving antibiotic treat-
+ment within 3 months of starting the study, or using pre- or
+probiotic supplements within 1 month of starting the study. All
+subjects visited The Department of Nutrition, Exercise and
+Sports at the University of Copenhagen, where blood samples
+were taken and anthropometric and clinical parameters were
+recorded. Fasting blood samples were collected in vacutainers
+containing the anticoagulant reagent ethylenediaminetetra-
+acetic acid (EDTA). Plasma was separated after blood sample
+collection and 500 μL aliquot was stored in cryovials at −80
+°C until analysis.
+Details of the UC-based LP quantiﬁcation (milligram per
+deciliter, mg dL−1),16 measurement of 1H NMR spectra on
+human blood plasma samples,13 and details of the spectral data
+processing and PLSR model development are given in the
+Supporting Information. One-dimensional 1H NMR spectra
+were measured at the Department of Food Science (University
+of Copenhagen) using a Bruker Avance III 600 MHz NMR
+spectrometer equipped with a 5 mm broadband inverse RT
+(BBI) probe, automated tuning, and matching accessory
+(ATMA) and cooling unit BCU-05. The spectrometer was
+equipped with an automated sample changer (SampleJet,
+Bruker BioSpin) with sample cooling (278 K) and preheating
+stations (298 K), where samples were stored at 278 K and
+measured within 72 h. Phase and baseline-corrected 1H NMR
+spectra were then imported to the SigMa software,2 scaled to
+the electronic reference to access in vivo concentrations
+(ERETIC) signal,17 and aligned toward the alanine’s doublet
+(1.507−1.494 ppm) using icoshift.18 Prior to PLSR analysis,
+subjects with LP concentrations below the limit of detection
+(LOD) or with missing values were removed. This led to
+diﬀerent numbers of subjects used in diﬀerent PLSR models.
+An optimal number of latent variables (LVs) was selected by
+ﬁtting 1−20 LV models to the training samples (70%) using
+10-fold cross-validation and 10 times Monte Carlo repetitions.
+Then, the optimal number of LV, which provided the lowest
+root-mean-square error of cross-validation (RMSECV), was
+selected for each PLSR model and used for the subsequent
+predictions. Thus, a total of 640,200 PLSR models (33 NMR
+spectral intervals × 97 LP variables × 20 LVs × 10 cross-
+validations) were developed in this study. It should be noted
+that a few subjects (up to seven) whose LP values were
+predicted with a large error were regarded as “X−Y relation”
+outliers and were removed from the training models. A PLSR
+calibration model was then recalculated and tested on
+independent subjects (30%) that were not used in the training
+model optimization. The ﬁnal PLSR calibration models were
+also tested to predict LP variables, plasma tg and chol, in the
+independent Swedish cohort including 290 subjects.15 All data
+analyses were performed in MATLAB (version R2016b, The
+Mathworks, Inc.).
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+629
+
+■RESULTS
+Overview of the Implemented Workﬂow. Figure 1
+shows an overview of the workﬂow implemented to predict LP
+in human blood using 1H NMR spectra and UC data as
+response variables by applying PLSR modeling. As described
+previously,13 the NMR spectra were scaled to the ERETIC
+signal positioned at 15 ppm, equivalent to 10 mmol L−1
+protons, which minimizes experimental variations across
+laboratories, and aligned toward the doublet of alanine
+(1.507−1.494 ppm) using icoshift.18 It should be noted that
+any additional spectral alignment aﬀecting the methyl (0.92−
+0.8 ppm) and methylene (1.4−1.2 ppm) regions may
+deteriorate the original chemical shifts of lipid signals and
+impair LP quantiﬁcation. Based on a priori knowledge,19 13
+spectral regions representing signals of blood lipids and
+triglycerides were identiﬁed and their predictive performance
+was compared. Each of these datasets, and combinations
+thereof, were subsequently used to develop PLSR models to
+identify the optimal region for LP prediction (Figure 1). An
+individual training PLSR model was developed for each LP
+variable and evaluated on test samples and externally validated
+using the independent Swedish cohort.
+Optimal Regions of the
+1H NMR Spectra for Lip-
+oprotein Quantiﬁcation. When performing PLSR on a large
+1H NMR spectra (>16k variables), the selection of an optimal
+spectral region is important for developing parsimonious
+models with less noise and fewer interferences. Therefore, the
+entire 1H NMR spectral was used for PLSR models either as is
+(after removing residual water or EDTA signals) or divided
+into 13 regions representing resonances of LP molecules.
+These regions include the signal of the methyl group (C18) of
+cholesterol (0.75−0.65 ppm), methyl (0.92−0.8 ppm),
+methylene (1.4−1.2 ppm), and methine (5.40−5.24 ppm)
+protons of diﬀerent LP molecules (Figure S1). Each spectral
+region was explored either alone or in combination with other
+regions, with and without interfering signals, resulting in a total
+of 33 NMR datasets to be tested for regression performance.
+This approach, testing one region alone and as a part of
+combination with other regions, was performed to identify the
+spectral interval which provides the most reliable, accurate, and
+simple PLSR model for predicting LP particles. The smaller
+spectral region often results in better PLSR models due to less
+interfering compounds, while larger regions experience more
+complex interactions of signals, thus complicating the
+information retrieval.
+The concentrations of 65 of the 97 LP were found to be
+predictable from 20 of the 33 investigated NMR datasets
+(Figure 2a and Table S1). A criterion for an acceptable
+prediction performance of the PLSR model was a prediction
+accuracy, Q2 > 0.6, for test set samples. Q2 is a statistical
+measure of prediction accuracy often used in PLSR modeling20
+and deﬁned as Q2 = (1 −PRESS/SS), where PRESS is the
+predicted residual error sum of squares and SS is the sum of
+squares of actual LP concentrations.
+The ﬁve spectral regions (regions 7−10, 14 in Figure 2b)
+representing the main signals of the LP, including methyl and
+methylene protons as well as methyl of cholesterol, showed the
+best prediction results, with Q2 > 0.6 for all 65 LP. Overall, the
+prediction performances of all ﬁve regions were similar, with a
+mean Q2 of ∼0.84 and a coeﬃcient of variation (CV) of ∼13%
+for the test set prediction. However, for a few LP, the
+Figure 1. Overview of the implemented workﬂow to predict concentrations of lipoprotein particles (LP) in human blood plasma using 1H NMR
+spectra. The outer loop indicated with a gray line represents the selection of regions in the NMR spectra used for PLSR modeling. A total of 33
+NMR spectral intervals were constructed using 13 regions representing LP molecules and other lipid molecules, either alone or in diﬀerent
+combinations. The inner lop indicated with a black line represents PLSR modeling of each LP individually using a selected NMR spectral region; m
+corresponds to the number of the spectral data points in the NMR data, k corresponds to the number of LP, and n corresponds to the number of
+subjects recruited in the cohorts.
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+630
+
+prediction performances diﬀer signiﬁcantly between the ﬁve
+regions. Unlike the other spectral regions, region 8 (Figure 2b)
+does not contain the methyl signal of cholesterol, although this
+did not inﬂuence the prediction of chol content in LP particles.
+Despite interfering signals from non-LP-related molecules such
+as lactic acid, valine, leucine, and isoleucine, the spectral
+regions 9 and 10 showed an overall better prediction
+performance especially for subfractions, LDL1, LDL4,
+HDL2b, and HDL3, compared to regions 7, 8, and 14,
+where these signals were removed (Figure 2b). Spectral regions
+containing only the methyl (regions 2 and 6) or methylene
+(region 3 and 4) protons of LP performed signiﬁcantly worse
+compared to regions 8 and 9, where the two proton
+populations are combined. This was especially pronounced
+in the prediction of LDL and HDL subfractions (Table S1).
+Interestingly, region 15, which contains only signals of
+methylene protons located either one or two bonds away
+from a carbonyl group or double bond of the fatty acid chain, is
+also able to predict 60 out of 65 LP, with Q2 > 0.6 for the test
+set samples. Similarly, the region 24, which represents the
+oleﬁnic protons of lipids, enabled the prediction of 58 out of
+65 LP, with Q2 > 0.6 for the test set samples. Using broader
+spectral regions “as is” (region 16, 22, 28) or after selecting
+only LP-related signals from them (regions 20, 21, 29, and 30)
+showed similar results and were comparable to the prediction
+performances of regions 2−4. Finally, the use of the entire
+Figure 2. Lipoprotein prediction performance of PLSR models developed on 20 NMR spectral intervals, of 33 investigated, that showed relatively
+high prediction performances for at least 65 of 97 modeled lipoproteins. (a) Q2 obtained from test set prediction of 65 LP using PLSR models
+developed on 20 NMR spectral intervals. Black bars on the left side of the heat map show the overall prediction performance of each LP variable
+(normalized cumulative value of Q2 obtained from 20 PLSR models). Black bars at the bottom of the heat map show the overall prediction
+performance of each NMR spectral region used for PLSR modeling (normalized cumulative value of Q2 obtained from 65 LP variables). The NMR
+spectral region shown inside the dashed line corresponds to the LP region (1.4−0.6 ppm) with one of the highest performances for predicting
+concentrations of LP. For more details, see Table S1. (b) 20 NMR spectral regions corresponding to the heat map on the left. Regions of spectra
+highlighted in gray were excluded from the PLSR modeling.
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+631
+
+spectral range of 9.8−0.6 ppm (region 32) showed signiﬁcantly
+lower LP prediction performances than regions 9 or 10.
+Despite comparably high LP prediction performances of
+regions 7−10 and 14, region 9 (1.4−0.6 ppm, later referred to
+as the LP region) proved to be an optimal region, showing
+consistently high prediction performances for all 65 LP. The
+LP region is also the simplest one to extract from the entire
+spectra, and unlike other regions, it does not require the
+removal of interferences (non-LP molecules). Thus, the use of
+the LP region minimizes complications that may arise in new
+cohorts dealing with a large number of spectra with possible
+chemical shifts, unforeseen signals, or a high spectral
+complexity, which may impair reliable LP predictions across
+laboratories. Thus, the LP region was the ﬁnal dataset used for
+the development of PLSR models for LP prediction.
+Prediction Performance of PLSR Models Using the LP
+Region (1.4−0.6 ppm). Concentrations of 65 LP including
+main and subfractions were predictable from the 1H NMR
+spectral region of 1.4−0.6 ppm (region 9; Figure 2b) with Q2 >
+0.6 (Table S2). The PLSR models varied in terms of their
+prediction performance and complexity. From 4 to 17 LV were
+required to obtain optimal models. More than 40 models
+require 10 or less LV. Only one LP (LDL4chol) needed 15 LV,
+and three LP (apoB in LDL3, LDL4, and LDL6) needed 17
+LV. The PLSR models for total concentrations of LP
+molecules in plasma and of the main fractions were found to
+be less complex than the corresponding models for the
+subfractions. Models for phoslp were generally less complex
+than the models for chol or apoB. For example, in the same
+subfraction, LDL1, the phoslp predicting PLSR model required
+7 LV while the chol and apoB models required 15 and 17 LV,
+respectively. No clear trend explaining model complexity by LP
+molecular type, particle type, or particle size was observed.
+However, it is assumed that the number of LV’s in PLSR
+models is mainly determined by three factors: the chemical
+complexity of the LP (number of representative NMR signals
+and their resolution), the variation range present in a cohort
+(concentration span of the individual LP), and the presence of
+spectral interferences (overlap of signals of LP and non-LP
+molecules).
+Figure 3 shows the PLSR predictions of tg, chol, phoslp, and
+apoA (see Figure S2). Concentrations of all seven LP
+molecules, tg, chol, fchol, chole, phoslp, apoA, and apoB in
+blood plasma were predictable and showed test set Q2 and
+cross-validation (CV) values of 0.87−0.97 and 3−6%,
+respectively (Table S2). A cumulative concentration of all
+molecules in main LP fractions (e.g., chol_main_fraction =
+VLDLchol + IDLchol + LDLchol + HDLchol) was also
+predicted with high accuracy (Q2 = 0.70−0.97, CV = 4−
+8%). Models performed slightly worse in predicting LP
+molecules in each main fraction separately (e.g., VLDLchol)
+than for cumulative concentrations. For example, Q2 and CV of
+PLSR models for chol in VLDL, IDL, LDL, and HDL ranged
+between 0.87−0.94 and 7−20%, respectively, while for total
+chol in main fractions, Q2 was 0.95 and CV was 5%. Similar
+trends were observed for tg, chole, phoslp, apoA, and apoB
+molecules. Consistent for all seven LP molecules, the
+prediction performances of the models for the main fractions
+were better than those for their corresponding subfractions.
+For example, the Q2 and CV values of the LDLphoslp model
+Figure 3. Training PLSR model and test set prediction performances of selected LP variables, included triglycerides (tg), cholesterol (chol),
+phospholipid (phoslp), and apolipoprotein A (apoA) molecules in main or subfractions of LP particles using the LP region (1.4−0.6 ppm) of the 1H
+NMR spectra and ultracentrifugation as a reference method. LVs = number of latent variables used in PLSR models; Q2 = prediction accuracy of
+the test set prediction model; CV = coeﬃcients of variation of the test set prediction model. TRAIN and TEST represent a number of subjects used
+in the training and test set prediction models, respectively.
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+632
+
+were 0.83 and 13%, respectively, while those for subfractions,
+including phoslp in LDL1−LDL4, ranged between 0.67−0.76
+and 17−19%, respectively. Overall, the PLSR models of all 65
+LP showed Q2 > 0.6 for the test set samples with a mean,
+quartile (Q) 50%, Q 75%, and Q 90% values of 0.84, 0.86,
+0.93, and 0.95, respectively. Similarly, the coeﬃcients of
+variations (CV) of the test set predictions were relatively low
+and ranged between 3 and 30%, with mean, Q 50%, Q 75%,
+and Q 90% values of 13, 13, 17, and 21, respectively. The
+prediction performances of the training and test set PLSR
+models were similar with root-mean-square error (RMSE)
+diﬀerences of <5%. Overall, the prediction performances of
+PLSR models for diﬀerent LP molecules showed a consistent
+trend: total concentration in plasma > cumulative in all main
+fractions > individual main fractions > subfractions.
+In summary, a total of 65 of 97 LP were predictable with
+reasonable performance (Q2 > 0.6). The prediction of the
+remaining 32 LP variables was suboptimal, with a relatively low
+test set performance (Q2 of 0.3−0.6). These models were
+therefore deemed unreliable and, as a minimum, require
+additional data (NMR and corresponding UC data) to be
+improved. It is assumed that there are two main reasons
+behind these suboptimal predictions: (1) a high uncertainty of
+the reference method, UC, related to assay limitations and the
+freeze−thaw cycle of plasma samples, and (2) a lack of
+variability and/or close to LOD levels of those 32 LP in the
+investigated cohort. The uncertainty of the UC method
+depends on the molecular type and ranged from 5 to 40%.16
+The lowest uncertainties were observed for ApoA (5−15%),
+ApoB (6−20%), and chol (5−18%) molecules, while the
+highest uncertainties were observed for fchol (8−40%) and tg
+(12−30%). The latter is in agreement with our PLSR modeling
+results, where these LP molecules were not well predicted
+using the
+1H NMR spectra. Monsonis-Centelles et al.16
+reported an average within-individual coeﬃcient of variation
+(WCV) as high as 12−16% for LDL2tg−LDL6tg using fresh
+blood plasma samples duplicated from the same volunteer.
+They also showed reduced repeatability for tg using frozen
+plasma compared to fresh plasma. Given this, it is speculated
+that the main reasons behind the relatively low prediction
+performances for LDL2tg−LDL6tg are twofold: sample matrix
+disruption due to freeze−thaw cycles and a relatively high
+uncertainty of the UC measurements. A similar trend was
+observed for fchol molecules in the LDL subfractions16 with a
+WCV range of 12−24% for LDL1fchol−LDL6fchol, and
+subsequently, the corresponding PLSR models developed in
+this study showed a Q2 of 0.2−0.4 for test set samples. In
+contrast, chol, chole, and phoslp molecules in LDL subfractions
+(LDL1−LDL6) were predicted with moderate to high
+prediction performance (test set Q2 range of 0.67−0.81)
+with few exceptions.
+Validation of the Final LP Prediction Models Using an
+Independent Cohort. PLSR prediction models developed in
+this study were validated on an independent Swedish cohort15
+using externally measured 1H NMR spectra. The predicted LP
+concentrations were subsequently compared to the actual
+concentrations. The Swedish cohort included 1H NMR spectra
+of blood serum from 290 healthy subjects (sex: 210 females/80
+males; age: 58 ± 11 years old; BMI: 25 ± 2.6 kg/m2)
+measured using a protocol similar to that of the present study.
+However, the sample preparation procedure was slightly
+diﬀerent wherefore the spectra of the Swedish cohort were
+aligned and scaled toward the Danish cohort as described
+previously.13 Unlike the present study, the LP concentrations
+of the Swedish cohort were quantiﬁed using the HPLC
+method21 of LipoSEARCH (Skylight Biotech, Inc., Akita,
+Japan). Lipoprotein subfractions were thus not directly
+comparable and a direct comparison was therefore only
+possible for total concentrations of chol and tg in blood. Figure
+4 shows scatter plots comparing actual concentrations (mg/
+dL) of total chol and tg as measured by HPLC, with predicted
+concentrations from the corresponding PLSR models
+developed in this study. The total concentrations of chol and
+tg were predicted well with a Pearson’s correlation coeﬃcient
+(r2) of 0.94 and 0.97, respectively. In the case of total tg, the
+RMSE calculated between HPLC- and PLSR-based predicted
+values was as low as 8.2 mg/dL with mean (STD) and relative
+mean standard deviations (RTD) of 4.6 and 5.1%, respectively.
+However, the PLSR-based predicted concentrations of total
+chol were underestimated in the majority of samples. Despite a
+high correlation between the actual and predicted values, the
+presence of the oﬀset resulted in a relatively high RMSE
+(23.9). This may be related to systematic diﬀerences between
+the two reference methods. The UC method has been shown
+to result in denaturation or degradation of some LP
+particles,22,23 which might be the reason for the systematic
+underestimation of chol particles when using UC-calibrated
+PLSR models.
+Despite the fact that subfractions are not directly
+comparable between HPLC and UC, correlations of chol and
+Figure 4. Validation of the PLSR-based LP prediction models
+developed in this study on an independent cohort; the Swedish cohort
+including 290 healthy subjects. Correlation coeﬃcients (r2), relative
+standard deviation (RSD, %), standard deviation (STD, mg/dL), and
+root-mean-square error (RMSE, mg/dL) were calculated between the
+predicted value of LP variable in this study using UC and the HPLC-
+based measured value obtained from the Swedish cohort. RMSE-M,
+Q2-M, and CV-M correspond to the test set prediction RMSEP
+(RMSEP), Q2, and coeﬃcients of variance (CV).
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+633
+
+tg values in some subfractions were found to be high. For
+example, chol in the G17 subfraction (which is deﬁned as
+medium HDL with a diameter of 10.9 nm) quantiﬁed by
+HPLC showed high correlation (r2 = 0.83) with chol of HDL2a
+subfraction predicted from the UC-calibrated PLSR model. As
+a consequence, RMSE and RSD values were also low, 2.4 mg/
+dL and 6.3%, respectively, suggesting that G17chol quantiﬁed
+by HPLC may in fact represent HDL2achol measured by UC.
+However, concentrations of tg in the same subfractions,
+quantiﬁed by HPLC or predicted by PLSR, were not
+comparable (r2 = 0.3). Concentrations of tg in the G08
+subfraction of the HPLC method, which represents tg in a large
+LDL subfraction with the diameter of 28.6 nm, correspond to
+the tg of the IDL fraction quantiﬁed using UC and showed r2,
+RMSE, and RSD values of 0.72, 1.5, and 8.4, respectively.
+However, concentrations of chol in the same subfractions were
+not comparable (r2 = 0.1). Instead, the IDLchol content
+predicted by PLSR showed a relatively high correlation (r2 =
+0.64 and RSD = 18%) with the chol of G06 subfraction
+(medium VLDL with a particle diameter of 36.8 nm)
+measured by HPLC. Interestingly, a similar correlation was
+observed for the tg content in the same fractions, IDLtg versus
+tg in G06 (r2 = 0.68 and RSD = 22%) (Figure S3).
+Furthermore, the PLSR-based predicted chol concentration in
+the HDL2b subfraction was highly correlated (r2 = 0.89) to the
+chol of G16 HPLC subfraction (a large HDL with a diameter
+of 12.1 nm). Despite a high correlation, a signiﬁcant oﬀset was
+present (PLSR-based concentrations were overestimated) and
+predictions were not accurate (RSD = 46%).
+Rank of the LP Region of the 1H NMR Spectra. To
+better understand the feasibility of predicting the concen-
+trations of 65 LP variables from a relatively small 1H NMR
+spectral region of human blood plasma, the LP region (1.4−0.6
+ppm), a rank estimation of the NMR data was performed. It is
+known that concentrations of many LP particles co-vary in
+blood and that biology makes it extremely diﬃcult to break this
+covariation. This phenomenon is known as the “cage of
+covariance”.24 In practice, this means that some LP prediction
+models rely on information related to highly co-varying LP
+particles. The rank estimation allows us to evaluate
+intercorrelations present between LP variables and compare
+them with systematic variation present in the NMR spectra. To
+estimate the rank of the NMR spectra and UC data, a principal
+component analysis (PCA)-based iterative method25,26 was
+employed. The method is based on comparing the eigenvalues
+calculated on the original matrix (e.g., NMR data) with those
+obtained from the column-wise permuted matrix (see the
+Supporting Information). It is assumed that the mathematical
+rank estimated in this way approximates the true chemical
+variation present in the NMR spectra. The rank of the LP UC
+data used in this study was found to be 33 (Figure 5), which
+indicates that there are at least 33 independent systematic
+variations present in the data. To further investigate this, the
+LP data were subjected to a correlation analysis where each LP
+variable of the original UC data (YACTUAL) was correlated to all
+other LP variables individually, resulting in a 65-by-65
+Pearson’s correlation coeﬃcients matrix. The same correlation
+analysis was then performed on the predicted UC data
+obtained from PLSR models (YHAT).24 The symmetric heat
+map showing Pearson’s correlation coeﬃcients between the 65
+LP in YACTUAL and YHAT, and the distribution of the correlation
+coeﬃcients (Figure S4) shows that the intercorrelations of LP
+variables is similar (symmetric) in YACTUAL and YHAT and
+ranged between −0.55 and 0.99. The fact that the correlations
+are not increased in YHAT compared to YACTUAL is an indication
+of a reliable prediction network that is not overﬁtted by
+intercorrelations. Clustering of the correlation matrices
+revealed positive correlations between diﬀerent LP molecules
+within HDL, LDL, and VLDL particles and negative
+correlations between VLDL and HDL particles, and to a
+lesser extent between LDL and HDL particles.
+In contrast to the UC data, the LP region of the NMR
+spectra is complex, and despite alignment, some minor signal
+misalignments are still present, which complicates an unbiased
+rank estimation. Therefore, the rank of the LP region from the
+Danish cohort is estimated without and after binning with bin
+sizes of 2−32 (Figure 5). The estimated rank of the LP region
+gradually decreases as bin size increases, with a notable decline
+after a bin size of 11. Interestingly, the bin size of 11 was the
+largest bin size that could be used before losing spectral
+resolution to the point that the characteristic shape of the
+methyl protons between 0.95 and 0.8 ppm was kept intact, and
+before the loss of spin coupling information from signals of
+amino acids. Thus bin size of 11 was found to be optimal for
+reducing spectral misalignments while keeping the shape and
+Figure 5. Estimation of the mathematical rank of the LP region of the
+1H NMR spectra and ultracentrifugation data obtained from the
+Danish cohort (316 subjects) was performed separately using an
+iterative permutation-based PCA modeling. The rank of the similar
+spectra of the Swedish cohort (290 healthy subjects) was evaluated in
+the same way. F-ratio is the ratio of an eigenvalue obtained from the
+PCA analysis of the original matrix to the value obtained from the
+PCA of the permuted residual matrix. After deﬂating a certain number
+of principal components (PCs), the F-ratio of the unpermuted
+residual matrix (FRATIO) will become equal to or lower than the F-
+ratio obtained on the permuted residual matrix (FPERM RATIO), which
+in turn is a sign that there is no more systematic variation left in the
+residuals.
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+634
+
+resolution of signals intact. The rank of the LP region without
+any binning was 93, and after binning a bin size of 11, it was
+reduced to 83. For comparison, the rank of the NMR spectra
+of the Swedish cohort, using a bin size of 11, was 92. This can
+be explained by the greater heterogeneity of the Swedish
+cohort. It can therefore be concluded that the LP region is
+tremendously complex and contain information from which it
+is possible to predict a large number of independently varying
+LP in human blood.
+NMR Spectral Signatures of LP Depend on Particle
+Size. Unique spectral signatures of LP were investigated within
+and between molecular types using a selectivity ratio obtained
+from the PLSR models. Selectivity ratio (SR) can be regarded
+as a spectral signature responsible for the prediction of a given
+LP. The SR matrix consisting of 65 LP was analyzed using
+PCA and ANOVA-simultaneous component analysis
+(ASCA)27 (Figure S5A), which conﬁrmed that the largest
+variation was related to the LP particle size, while molecular
+type was not signiﬁcant. The SRs of main fractions across
+diﬀerent molecular types were very similar to r2 of 0.89−0.97
+(Figures S5B and S6). The main diﬀerence in the SR of the
+four main fractions (VLDL, IDL, LDL, and HDL) were ratios
+of the three proton populations including methyl (1.4−5.5),
+methylene (0.9−1.8), and cholesterol methyl (1) of LP
+particles (Figure S5A).
+Implementation of Lipoprotein Prediction PLSR
+Models in the Signature Mapping (SigMa) Software.
+Based on the
+1H NMR spectra and LP data, and the
+subsequently PLSR models developed in this study, an open-
+access software was developed for future use in biomarker
+discovery research. It was developed as an extension of the
+SigMa software, originally developed to process complex 1H
+NMR metabolomics datasets.2,28 The software is able to
+predict concentrations (mg/dL) of 65 LP from human blood
+plasma/serum 1H NMR NOESY spectra. This requires that
+the input spectra are acquired using a protocol for sample
+preparation and 1H NMR spectra acquisition similar to the one
+used in the present study. Prior to LP prediction SigMa checks
+the compatibility of the user spectra by data size correction and
+intensity normalization. SigMa initializes by scaling the input
+spectra by the ERETIC signal, aligning the spectra toward the
+alanine signal at 1.49 ppm, constraining the spectra to the LP
+region (1.4−0.6 ppm), and applying the regression equations
+developed here. The SigMa software including the LP
+prediction module can be freely downloaded from www.food.
+ku.dk/foodomics.
+■DISCUSSION
+The present study describes, for the ﬁrst time, the entire
+workﬂow of LP prediction using 1H NMR spectra, including
+spectral processing steps, the optimization and validation of
+PLSR regression models, model parameters, and complexity,
+and their prediction performances on test set and independent
+cohort samples. This study shows that a relatively small interval
+of the 1H NMR spectra, the LP region (1.4−0.6 ppm), is the
+optimal region for LP prediction. The LP region contains not
+only the three most important proton populations representing
+LP molecules, including methyl groups of cholesterol (0.75−
+0.65 ppm), methyl (0.92−0.8 ppm), and methylene (1.4−1.2
+ppm) protons of LP molecules, but also signals of a few amino
+acids and lactic acid. Spectral regions representing only the
+methyl (0.92−0.8 ppm) or methylene (1.4−1.2 ppm) protons
+performed signiﬁcantly worse than their counterpart where the
+two proton populations were combined. This suggests that the
+entire LP proﬁle information is better preserved in the LP
+region.
+Using the LP region, it was possible to predict
+concentrations of 65 of the 97 LP quantiﬁed in the Danish
+cohort. Suboptimal PLSR models for the remaining 32 LP can
+be explained by relatively high uncertainty of the reference
+measurements and/or limitation of the variability in the
+cohort. Optimized PLSR models require 4−17 LV, and the
+complexity depends on LP particle type; the smaller the
+particle size, the more LVs were needed. It can be assumed
+that the optimal number of LVs is determined by the
+complexity of the signals, the presence of spectral interferences,
+the size and heterogeneity of the cohort, and the concentration
+span of LP particles. An average diﬀerence in RMSE of the
+training and test set models was <5%, which indicates the
+robustness of the PLSR models. The models were further
+validated externally on an independent Swedish cohort and
+showed high accuracy in the prediction of the LP variables that
+were comparable between the two cohorts.
+In conclusion, this study describes a protocol and open-
+access data to build PLSR models for predicting LP
+concentration from 1H NMR spectra of human blood plasma
+or serum. The PLSR models are optimized to use the most
+informative and reproducible spectral region and are based on
+a relatively large and heterogeneous cohort. Finally, the PLSR
+models were implemented in the SigMa software, which is
+freely available, and will be improved/upgraded in the future
+when new datasets with coherent 1H NMR spectra and UC
+data become available. This will signiﬁcantly increase the
+coverage of the LP prediction models.
+■ASSOCIATED CONTENT
+*
+sı Supporting Information
+The Supporting Information is available free of charge at
+https://pubs.acs.org/doi/10.1021/acs.analchem.1c01654.
+Lipoprotein prediction performance of PLSR models
+developed on 20 NMR spectral regions (XLS)
+Lipoprotein prediction performance of PLSR models
+developed using the LP region (δ 1.4−0.6) (XLSX)
+Experimental section, results on the analysis of 1H NMR
+spectral signatures of lipoproteins, Figures S1−S6
+demonstrating part of the results, and Table S1 (PDF)
+■AUTHOR INFORMATION
+Corresponding Authors
+Bekzod Khakimov −Department of Food Science, University
+of Copenhagen, DK-1958 Frederiksberg C, Denmark;
+orcid.org/0000-0002-6580-2034; Phone: +45-2887-
+4454; Email: bzo@food.ku.dk
+Søren Balling Engelsen −Department of Food Science,
+University of Copenhagen, DK-1958 Frederiksberg C,
+Denmark;
+orcid.org/0000-0003-4124-4338;
+Phone: +45-2020-0064; Email: se@food.ku.dk
+Authors
+Huub C. J. Hoefsloot −Swammerdam Institute for Life
+Sciences, University of Amsterdam, Amsterdam 1090 GE,
+The Netherlands
+Nabiollah Mobaraki −Institute for Medicinal and
+Pharmaceutical Chemistry, University of Technology
+Braunschweig, 38106 Braunschweig, Germany
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+635
+
+Violetta Aru −Department of Food Science, University of
+Copenhagen, DK-1958 Frederiksberg C, Denmark
+Mette Kristensen −Department of Nutrition, Exercise and
+Sports, University of Copenhagen, DK-1958 Frederiksberg C,
+Denmark
+Mads V. Lind −Department of Nutrition, Exercise and Sports,
+University of Copenhagen, DK-1958 Frederiksberg C,
+Denmark
+Lars Holm −School of Sport, Exercise and Rehabilitation
+Sciences, University of Birmingham, Birmingham B15 2TT,
+U.K.
+Josué L. Castro-Mejía −Department of Food Science,
+University of Copenhagen, DK-1958 Frederiksberg C,
+Denmark
+Dennis S. Nielsen −Department of Food Science, University
+of Copenhagen, DK-1958 Frederiksberg C, Denmark
+Doris M. Jacobs −Unilever Global Food Innovation Centre,
+6708 WH Wageningen, The Netherlands
+Age K. Smilde −Department of Food Science, University of
+Copenhagen, DK-1958 Frederiksberg C, Denmark;
+Swammerdam Institute for Life Sciences, University of
+Amsterdam, Amsterdam 1090 GE, The Netherlands;
+orcid.org/0000-0002-3052-4644
+Complete contact information is available at:
+https://pubs.acs.org/10.1021/acs.analchem.1c01654
+Author Contributions
+S.B.E., D.S.N., and A.K.S. designed the research. B.K.,
+H.C.J.H., N.M., and V.A. performed research. B.K., V.A.,
+M.K., M.V.L., L.H., J.L.C.-M., and D.M.J. acquired data. B.K.
+and N.M. developed software. B.K. analyzed data. B.K. and
+S.B.E. wrote the paper. All authors read and approved the
+paper.
+Notes
+The authors declare no competing ﬁnancial interest.
+The 1H NMR spectra acquired on the human blood plasma of
+316 healthy subjects from the Danish cohort and the
+corresponding lipoprotein concentration data are available
+upon request by contacting the corresponding authors.
+Signature Mapping for Lipoprotein Quantiﬁcation (SigMa
+LP) software can be freely downloaded from www.food.ku.dk/
+foodomics. All other data supporting the ﬁndings of this study
+are included in the main text and the Supporting Information.
+■ACKNOWLEDGMENTS
+This study was funded by the Innovation Foundation Denmark
+through the COUNTERSTRIKE project (4105-00015B). In
+addition, the following other funding sources have supported
+the project: The University of Copenhagen Excellence
+Programme for Interdisciplinary Research 2016, the Counter-
+acting Age-related Loss of Skeletal Muscle (CALM) project
+(www.calm.ku.dk), and the University of Copenhagen Data+
+project funding (Strategy 2013 funds) received for the
+“Introduction of statistical causality modeling and deep
+learning to solve the cage of covariance problem in
+Foodomics/Metabolomics” project.
+■REFERENCES
+(1) Roth, G. A.; et al. J. Am. Coll. Cardiol. 2017, 70, 1−25.
+(2) Khakimov, B.; Mobaraki, N.; Trimigno, A.; Aru, V.; Engelsen, S.
+B. Anal. Chim. Acta 2020, 1108, 142−151.
+(3) World Health Organization (WHO). Cardiovascular Diseases.
+https://www.who.int/health-topics/cardiovascular-diseases/#tab=
+tab_1 (accessed September 29, 2020).
+(4) Ference, B. A.; et al. Eur. Heart J. 2017, 38, 2459−2472.
+(5) Wilson, P. W. F.; D’Agostino, R. B.; Levy, D.; Belanger, A. M.;
+Silbershatz, H.; Kannel, W. B. Circulation 1998, 97, 1837−1847.
+(6) Aru, V.; Lam, C.; Khakimov, B.; Hoefsloot, H. C. J.;
+Zwanenburg, G.; Lind, M. V.; Schäfer, H.; van Duynhoven, J.;
+Jacobs, D. M.; Smilde, A. K.; Engelsen, S. B. TrAC, Trends Anal. Chem.
+2017, 94, 210−219.
+(7) Musliner, T. A.; Krauss, R. M. Clin. Chem. 1988, 34, B78−B83.
+(8) Otvos, J. D.; Jeyarajah, E. J.; Bennett, D. W. Clin. Chem. 1991,
+37, 377−386.
+(9) Ala-Korpela, M. Prog. Nucl. Magn. Reson. Spectrosc. 1995, 27,
+475−554.
+(10) Ala-Korpela, M.; Korhonen, A.; Keisala, J.; Hörkkö, S.; Korpi,
+P.; Ingman, L. P.; Jokisaari, J.; Savolainen, M. J.; Kesäniemi, Y. A. J.
+Lipid Res. 1994, 35, 2292−2304.
+(11) Wold, S.; Ruhe, A.; Wold, H.; W J Dunn, I. SIAM J. Sci. Stat.
+Comput. 1984, 5, 735−743.
+(12) Petersen, M.; Dyrby, M.; Toubro, S.; Engelsen, S. B.; Nørgaard,
+L.; Pedersen, H. T.; Dyerberg, J. Clin. Chem. 2005, 51, 1457−1461.
+(13) Monsonis Centelles, S.; Hoefsloot, H. C. J.; Khakimov, B.;
+Ebrahimi, P.; Lind, M. V.; Kristensen, M.; de Roo, N.; Jacobs, D. M.;
+van Duynhoven, J.; Cannet, C.; Fang, F.; Humpfer, E.; Schäfer, H.;
+Spraul, M.; Engelsen, S. B.; Smilde, A. K. Anal. Chem. 2017, 89,
+8004−8012.
+(14) Dona, A. C.; Jiménez, B.; Schäfer, H.; Humpfer, E.; Spraul, M.;
+Lewis, M. R.; Pearce, J. T. M.; Holmes, E.; Lindon, J. C.; Nicholson, J.
+K. Anal. Chem. 2014, 86, 9887−9894.
+(15) Mihaleva, V. V.; van Schalkwijk, D. B.; de Graaf, A. A.; van
+Duynhoven, J.; van Dorsten, F. A.; Vervoort, J.; Smilde, A.;
+Westerhuis, J. A.; Jacobs, D. M. Anal. Chem. 2014, 86, 543−550.
+(16) Monsonis-Centelles, S.; Hoefsloot, H. C. J.; Engelsen, S. B.;
+Smilde, A. K.; Lind, M. V. Clin. Chem. Lab. Med. 2019, 58, 103.
+(17) Akoka, S.; Barantin, L.; Trierweiler, M. Anal. Chem. 1999, 71,
+2554−2557.
+(18) Savorani, F.; Tomasi, G.; Engelsen, S. B. J. Magn. Reson. 2010,
+202, 190−202.
+(19) Nicholson, J. K.; Foxall, P. J. D.; Spraul, M.; Farrant, R. D.;
+Lindon, J. C. Anal. Chem. 1995, 67, 793−811.
+(20) Wold, S.; Sjöström, M.; Eriksson, L. Chemom. Intell. Lab. Syst.
+2001, 58, 109−130.
+(21) Okazaki, M.; Usui, S.; Ishigami, M.; Sakai, N.; Nakamura, T.;
+Matsuzawa, Y.; Yamashita, S. Arterioscler. Thromb. Vasc. Biol. 2005, 25,
+578−584.
+(22) Kunitake, S. T.; Kane, J. P. J. Lipid Res. 1982, 23, 936−940.
+(23) Murdoch, S. J.; Breckenridge, W. C. Anal. Biochem. 1994, 222,
+427−434.
+(24) Eskildsen, C. E.; Næs, T.; Skou, P. B.; Solberg, L. E.; Dankel, K.
+R.; Basmoen, S. A.; Wold, J. P.; Horn, S. S.; Hillestad, B.; Poulsen, N.
+A.; Christensen, M.; Pieper, T.; Afseth, N. K.; Engelsen, S. B.
+Chemom. Intell. Lab. Syst. 2021, 213, No. 104311.
+(25) Vitale, R.; Westerhuis, J. A.; Næs, T.; Smilde, A. K.; de Noord,
+O. E.; Ferrer, A. J. Chemom. 2017, 31, No. e2937.
+(26) Hotelling, H. J. Educ. Psychol. 1933, 24, 417−441.
+(27) Smilde, A. K.; Jansen, J. J.; Hoefsloot, H. C. J.; Lamers, R.-J. A.
+N.; van der Greef, J.; Timmerman, M. E. Bioinformatics 2005, 21,
+3043−3048.
+(28) Cui, M.; Trimigno, A.; Aru, V.; Khakimov, B.; Engelsen, S. B.
+Anal. Chem. 2020, 92, 9546−9555.
+Analytical Chemistry
+pubs.acs.org/ac
+Article
+https://doi.org/10.1021/acs.analchem.1c01654
+Anal. Chem. 2022, 94, 628−636
+636

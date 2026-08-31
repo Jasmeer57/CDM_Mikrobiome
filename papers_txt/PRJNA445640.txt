@@ -1,0 +1,1745 @@
+1 
+ 
+Using molecular ecological network analysis to explore the effects of 
+1 
+chemotherapy on intestinal microbial communities of colorectal cancer patients 
+2 
+ 
+3 
+Jing Cong1,2, Jingjuan Zhu1, Chuantao Zhang1, Tianjun Li1, Kewei Liu1, Dong Liu1,2, 
+4 
+Na Zhou1,2, Man Jiang1,2, Helei Hou1,2, Xiaochun Zhang1,2* 
+5 
+1. Department of Medical Oncology, The Affiliated Hospital of Qingdao University, 
+6 
+ Qingdao University, Qingdao, 266061, China 
+7 
+2. Cancer Institute, Qingdao, 266061, China 
+8 
+ 
+9 
+*To 
+whom 
+correspondence 
+may 
+be 
+addressed. 
+E-mail: 
+10 
+zhangxiaochun9670@126.com; 
+11 
+Phone: +86-8291-3271; Fax: +86-0532-82913271 
+12 
+ 
+13 
+Running title: Intestinal microbiota in response to the chemotherapy 
+14 
+Type: research article 
+15 
+ 
+ 
+16 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+2 
+ 
+Abstract 
+17 
+Intestinal microbiota is now widely known to be key roles in the nutrition uptake, 
+18 
+metabolism, and the regulation of human immune responses. However, we do not 
+19 
+know how changes the intestinal microbiota in response to the chemotherapy. In this 
+20 
+study, we used network-based analytical approaches to explore the effects of five 
+21 
+stages of chemotherapy on the intestinal microbiota of colorectal cancer patients. The 
+22 
+results showed that chemotherapy greatly reduced the alpha diversity and changed the 
+23 
+specie-specie interaction networks of intestinal microbiota, proved by the network 
+24 
+size, network connectivity and modularity. The OTU167 and OTU8 from the genus 
+25 
+Fusobacterium and Bacteroides were identified as keystone taxa by molecular 
+26 
+ecological networks in the first two stages of chemotherapy, and were significantly 
+27 
+correlated with tumor makers (P < 0.05). Five stages of chemotherapy did not make 
+28 
+the intestinal micro-ecosystem regain a steady state, because of the lower alpha 
+29 
+diversity and more complicated ecological networks compared to the healthy 
+30 
+individuals. Furthermore, combing the changes of ecological networks with the tumor 
+31 
+markers, the intestinal microbiota was closely linked with clinical chemotherapeutic 
+32 
+effects. 
+33 
+Importance 
+34 
+A deeply understanding of the role of intestinal microbiota contributes to help us find 
+35 
+path forward for improving the prognosis of colorectal cancer patients. In addition, 
+36 
+diet or probiotics interventions will be a possible attempt to improve the clinical 
+37 
+chemotherapeutic effects for colorectal cancer patients. 
+38 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+3 
+ 
+Key words: intestinal microbiota; molecular ecological network; chemotherapy; 
+39 
+colorectal cancer 
+40 
+ 
+41 
+Introduction 
+42 
+Colorectal cancer (CRC) is a major killer of people in the world all the time, though 
+43 
+continuing medical advances on several fronts. The CRC etiology is very complicated 
+44 
+and still not fully understood, but CRC carcinogenesis is a heterogeneous progression 
+45 
+with a train of genetic and epigenetic variations, and is profoundly influenced by 
+46 
+dietary, environment, host and intestinal microbiota (1). Although genetic 
+47 
+predisposition is closely associated with certain types of CRC, intestinal microbiota 
+48 
+increasingly plays an indispensable role in human intestinal health. It has been proved 
+49 
+that intestinal microbiota is concerned with the initiation and progression of colorectal 
+50 
+cancer (2, 3). Heterogeneity of CRC-associated microbiota might reflect discrepancies 
+51 
+in the host immunoinflammatory (4). Despite such heterogeneity, considering a 
+52 
+combination of several bacteria in the faecal microbiota of CRC individuals as a 
+53 
+marker for detecting the disease is feasible (5, 6). As a consequence, the plasticity of 
+54 
+intestinal microbiota can be leveraged for therapeutic interventions (7) and to improve 
+55 
+therapeutic effect (8). 
+56 
+Cytotoxic drugs continue to be the mainstay of therapy for most CRC patients, 
+57 
+whereas the related treatment response is unpredictable. The personalized cancer 
+58 
+therapies are now emerging, and targeted therapies have made revolutionized 
+59 
+outcomes in CRC (9). However, it still appears novel problems such as idiosyncratic 
+60 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+4 
+ 
+adverse effects, acquired resistance and high costs (10, 11). Recent studies have 
+61 
+implicated intestinal microbiota at the species level in influencing the drug response 
+62 
+and toxicity of CRC patients (12). Drug metabolism by intestinal microbiota was well 
+63 
+recognized since the 1960s (13). Intestinal microbiota played a key role in confirming 
+64 
+the efficacy and toxicity to a broad range of drugs (14). With the development of 
+65 
+high-throughput sequencing, the importance of intestinal microbiota for drug 
+66 
+modulation and discovery is increasingly recognized (15). Timothy A. Scott et al. 
+67 
+reported that intestinal microbiota had an influence on fluoropyrimidines, which are 
+68 
+the first-line treatment for CRC, through drug interconversion involving bacterial 
+69 
+vitamin B6, B9, and ribonucleotide metabolism (16). Leah Guthrie et al. suggested 
+70 
+that metagenomic mining of the microbiome, associated with metabolomics, was 
+71 
+considered as a non-invasive approach to develop biomarkers for CRC treatment 
+72 
+outcomes (2). These findings highlight intestinal microbiota as the potential 
+73 
+therapeutic power to ensure host metabolic health and disease treatment. 
+74 
+Microbes coexist in complex environments in which interactions among 
+75 
+individuals are indispensable for community assembly and ecosystem function (17, 
+76 
+18). However, few studies explore the interactions among intestinal microbiota, or 
+77 
+determine which individuals share niches within the intestinal environment. Therefore, 
+78 
+identifying and defining the interactions that occur among intestinal microbiota 
+79 
+contributes to understanding microbial diversity and function to provide a possibility 
+80 
+in better therapeutic interventions. Molecular ecological network analysis provides a 
+81 
+promising future for exploring the dynamics of microbial interactions and niches (19). 
+82 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+5 
+ 
+Network analysis can identify putative keystone taxa which are important in 
+83 
+maintaining community structure and function (20). In recent years, molecular 
+84 
+ecological network analysis has been used as a tool to determine complex microbial 
+85 
+assemblages in various environments such as human (21), groundwater (22) and soil 
+86 
+(23).  
+87 
+To identify intestinal microbial assemblages that potentially interact or share 
+88 
+niches within intestine, we used molecular ecological network analysis (24) to 
+89 
+construct co-occurrence networks for healthy volunteers and CRC patients throughout 
+90 
+the treatment. We conducted a study of intestinal microbiota using faecal samples 
+91 
+from CRC patients and healthy volunteers. High-throughput sequencing of 16S rRNA 
+92 
+gene amplicons was used to describe the intestinal bacterial assemblages. We mainly 
+93 
+examined the changes of intestinal microbiota during the treatment based on the 
+94 
+molecular ecological network. Molecular network analysis was used to address three 
+95 
+questions: (1) if the microbial diversity and community structure were affected by 
+96 
+chemotherapy treatment for CRC patients? (2) How does the bacterial interaction 
+97 
+change during the treatment for CRC patients? (3) Are there taxa that play particularly 
+98 
+important roles within CRC networks, suggesting that they may serve as keystone 
+99 
+taxa in CRC communities? Our work identifies a previously undocumented dimension 
+100 
+of the intestinal microbiota, and offers insight into the specie-specie interaction 
+101 
+networks of intestinal microbiota associated with CRC patients in response to the 
+102 
+chemotherapy.  
+103 
+ 
+104 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+6 
+ 
+Results 
+105 
+Variations of alpha diversity of intestinal microbiota from CRC patients in 
+106 
+response to the chemotherapy 
+107 
+To explore the changes of intestinal microbiota for CRC patients in response to the 
+108 
+chemotherapy, we examined the alpha diversity (Shannon diversity, Simpson diversity, 
+109 
+phylogenetic diversity and richness) of intestinal microbiota (Table S1). The results 
+110 
+showed that T1 had the lowest of Shannon diversity, phylogenetic diversity and 
+111 
+richness, except for the Simpson diversity. The alpha diversity of intestinal microbiota 
+112 
+in CRC patients was distinctly lower compared with the healthy individuals (Table 
+113 
+S1). Based on the relative abundance, Bacteroidaceae, Ruminococcaceae and 
+114 
+Lachnospiraceae were the most abundant family in healthy individuals, followed by 
+115 
+Prevotellaceae and Veillonellaceae (Figure S1). In the CRC patients, except for 
+116 
+Bacteroidaceae, 
+Ruminococcaceae 
+and 
+Lachnospiraceae 
+as 
+main 
+family, 
+117 
+Enterobacteriaceae became more conspicuous in response to the chemotherapy. Some 
+118 
+members of the Enterobacteriaceae produce endotoxins that cause a systemic 
+119 
+inflammatory response when released into the bloodstream following cell lysis. 
+120 
+Characteristics of constructed networks 
+121 
+To identify potential intestinal microbe-microbe interactions and niche-sharing in 
+122 
+CRC patients’ intestine, we constructed microbial co-occurrence networks and further 
+123 
+measured their topological parameters during abnormal microbial succession over 
+124 
+treatment process (Figure 1 and Table 1). The identical threshold values imposed 0.66 
+125 
+in H and T samples. All the constructed networks showed scale-free characteristics, 
+126 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+7 
+ 
+which means that only a few nodes in the network have a great many of connections, 
+127 
+whereas most nodes have no or few connections (25), as proved by R2 of power law 
+128 
+ranging from 0.72 to 0.87 (Table 1). Less modularity values (0.40-0.50) in T samples 
+129 
+indicated that these networks could be impossibly isolated into multiple modules. The 
+130 
+networks from the T0 to the T5 presented inconspicuous regularity, identified by the 
+131 
+changes of the average connectivity (avgK), harmonic geodesic distance (HD) and 
+132 
+modularity (Table 1). In addition, the constructed networks were significantly 
+133 
+different from random networks obtained using identical numbers of nodes and links 
+134 
+(P < 0.05, Tables 2). These metrics suggested that the network structures were 
+135 
+non-random and unlikely due to chance.  
+136 
+Distinct networks in colorectal cancer patients and healthy individuals 
+137 
+The intestinal microbial co-occurrence patterns were profoundly different for 
+138 
+colorectal cancer patients and healthy individuals networks (Figure 1), which were 
+139 
+also proved by multiple network topological properties (Table 1). Healthy 
+140 
+assemblages formed larger networks with more nodes than the CRC patients’ 
+141 
+networks (Table 1). With the treatment stage going on, the nodes in CRC patients 
+142 
+increased ranging from 99 to 103, except for T3 (80). However, the CRC networks 
+143 
+contained more links between nodes than healthy networks, which increased the 
+144 
+density of connections and created more intricate network patterns (Figure 1 and 
+145 
+Table 1). The increased complexity of T networks was also reflected by the shorter 
+146 
+harmonic geodesic distances (HD) and the increased average degree (avgK) (24). 
+147 
+However, none of network size and connectivity in CRC patients was close to the 
+148 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+8 
+ 
+healthy individuals. Collectively the above results indicated that the network in CRC 
+149 
+patients did not present a regular change with treatment stage increasing, and do not 
+150 
+totally close to the healthy network. In addition, we examined the correlation of alpha 
+151 
+diversity and network size and connectivity for CRC patients according to multiple 
+152 
+univariate diversity metrics. The results showed that there were no significant 
+153 
+relationships between them (P > 0.05), except that the network size was significantly 
+154 
+positively correlated with richness (P = 0.025, r = 0.87, Figure S2). 
+155 
+Modularity in CRC intestinal communities 
+156 
+To identify microbial assemblages that potentially share or interact intestinal niches 
+157 
+during the treatment process of CRC patients, we focused on representative networks 
+158 
+from CRC patients with five treatment stages. We focused on modules with at least 
+159 
+five nodes, and visualized the phylogeny for these modules (Figure 2). Total of 8 
+160 
+modules were detected in the healthy individuals. There were 6, 6, 5, 6, 7, 7 modules, 
+161 
+respectively in T0, T1, T2, T3, T4 and T5 network (Table S2). Networks from all 
+162 
+CRC patients contained modules with modularity (M) values ＜ 0.50 (Table 1). 
+163 
+Overall, taxa tended to co-exclude (negative correlations, blue lines) rather than 
+164 
+co-occur (positive correlations, gray lines); negative correlations accounted for 47–75% 
+165 
+of the potential interactions observed at each treatment stage (Figure 2). The negative 
+166 
+correlations in CRC patients decreased from T0 to T5; however, they were still more 
+167 
+than that in healthy individuals (45%). 
+168 
+The composition of modules differed within each network and changed over 
+169 
+treatment time (Figure 2). Firmicutes almost dominated all the modules of each 
+170 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+9 
+ 
+treatment stage of CRC patients. The phylum Fusobacteria presented in the module 
+171 
+before the treatment (T0), after the first treatment (T1) and the third treatment (T4); 
+172 
+and primarily co-exclude with Firmicutes or Bacteroidetes or Proteobacteria, which 
+173 
+was supposed to be more relevant to dysbiosis and CRC progression (3, 26). 
+174 
+Topological roles of taxa in ecological networks of CRC patients 
+175 
+To evaluate possible topological roles of taxa in the networks, we took these nodes 
+176 
+into four categories based on the values of among-module connectivity (Pi) and 
+177 
+within-module connectivity (Zi): module hubs, connectors, peripherals and network 
+178 
+hubs (24) (Figure 3, Table S3, Table S4 and Table S5). The nodes in each network 
+179 
+were mainly peripherals with most of their links inside their modules. Module hubs 
+180 
+and connectors have been proposed to be keystone taxa because of their important 
+181 
+roles in network topology (24). In this study, the module hubs and connectors were 
+182 
+detected in all networks. There were one or two nodes in each treatment stage 
+183 
+classified as module hubs in T networks. Total of 7 module hubs identified in T 
+184 
+networks originated from a variety of taxonomic groups. The module hubs in T0 and 
+185 
+T1 were respectively from the genus of Klebsiella and Fusobacterium (Table S3), 
+186 
+which act pathogen routinely found in human intestine that causes diarrhea and 
+187 
+bloodstream infections and markedly increases the rates of treatment failure and death 
+188 
+(27). Two taxa from the genus Bacteroides and Atopobium were classified as module 
+189 
+hubs in T2. The T3, T4 and T5 were respectively from the member of 
+190 
+Faecalibacterium, Bacteroides and Faecalibacterium (Table S3). Compared with H 
+191 
+network, T networks had more connectors during the different treatment stages. The 
+192 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+10 
+ 
+majority of the connectors in each network originated from the Firmicutes, and the 
+193 
+others were from the Actinobacteria, Bacteroidetes, Proteobacteria and Candidatus 
+194 
+Saccharibacteria (Table S4). 
+195 
+In addition, we selected some key OTUs and tumor markers (CA242, CEA, 
+196 
+CA199, and CA724) to make Spearman correlation analysis to explore the linkages 
+197 
+between microbial correlation networks and clinical chemotherapeutic effects. The 
+198 
+results showed that the OTU167, OTU8 and OTU9 were significantly correlated with 
+199 
+CEA, CA724 and CA242 (P < 0.05, Table S6). The OTU167, OTU8 and OTU9 were 
+200 
+from the genus of Fusobacterium, Bacteroides and Faecalibacterium, respectively. 
+201 
+These significant OTUs, which were classified into module hubs or network hubs in 
+202 
+T0, T1, T2 and T3, were conspicuous in ecological networks, indicated that they were 
+203 
+extremely sensitive to chemotherapy. 
+204 
+ 
+205 
+ 
+ 
+206 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+11 
+ 
+Discussions 
+207 
+Chemotherapy remains the mainstay of treatment for patients with CRC, except 
+208 
+available surgical debulking (28). In recent years, the changes that occur to the 
+209 
+intestinal microbiota are gradually understood in response to cancer chemotherapy. 
+210 
+Chemotherapy can damage the mucus layer and disrupt the mucosal barrier in the 
+211 
+intestine. Then some intestinal microbiota probably penetrates the lamina propria, 
+212 
+leading to life-threatening systemic infections to activate the innate immune system to 
+213 
+influence the efficacy of chemotherapy (29, 30). Previous study reported that 
+214 
+chemotherapy severely influenced the homeostasis of intestinal mcirobiota (31); in 
+215 
+turn, intestinal microbiota modulated the efficacy and toxicity by key mechanisms as 
+216 
+translocation, immunomodulation, metabolism, reduced diversity and ecological 
+217 
+variation (32). Thus, to optimize current therapeutic strategies, which could help 
+218 
+improve the patients’ survival, we compare the intestinal microbiota from the faeces 
+219 
+of CRC patients in response to five stages of the chemotherapy based on the 
+220 
+molecular ecological network analysis. 
+221 
+Microbes in the intestine are not independent individuals but complex 
+222 
+inter-connected ecological communities. Microbes compete for resources or exchange 
+223 
+genetic material influencing the microbial composition and host health. Therefore, 
+224 
+understanding microbial interactions is important to understand their function. 
+225 
+Multiple mechanisms may be responsible for changing network size and complexity 
+226 
+in the intestinal microbiota. Chemotherapy distinctly influenced the ecological 
+227 
+networks within the intestinal microbiota in CRC patients (T), identified in terms of 
+228 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+12 
+ 
+the average degree (avgK), average clustering coeffcient (avgCC), harmonic geodesic 
+229 
+distance (HD) and modularity (M). The T networks had their unique ecological 
+230 
+network model and varied with different treatment stages (Figure 1). The T networks 
+231 
+formed more complex networks than that of healthy individuals, determined by more 
+232 
+kinds of phyla in each sub-module (Figure 2). Generally, the OTUs from the same 
+233 
+species within a module probably share the same functions (33), and the loss of some 
+234 
+OTUs do not disturb the overall function of the module. Accordingly, the less OTU 
+235 
+from the same phylum belongs to the same module, the less stable that module would 
+236 
+be. Thus, chemotherapy may have key effects on the homeostasis of intestinal 
+237 
+microbiota based on the molecular ecological network analysis. 
+238 
+Generally, high alpha diversity is often relevant to health and temporal stability 
+239 
+(34). Conversely, low diversity is often observed in the unhealthy intestinal 
+240 
+microecosystem contributing to CRC (35). A drastic drop was observed in alpha 
+241 
+diversity (Shannon diversity, Simpson diversity, richness and phylogenetic diversity) 
+242 
+of intestinal microbiota after the first stage in response to the chemotherapy (Table 
+243 
+S1). The similar results were proved by previous study about a steep reduction in 
+244 
+alpha diversity of the intestinal microbiota during high-dose chemotherapy for bone 
+245 
+marrow transplantation (36). The reduced richness of the intestinal microbiota was 
+246 
+also found in obese or IBD patients (37, 38). During the five stage of chemotherapy, 
+247 
+T1 had the lowest of Shannon diversity, phylogenetic diversity and richness, except 
+248 
+for the Simpson diversity (Table S1). However, the result was inconsistent with the 
+249 
+changes in the ecological networks of intestinal microbiota, which was the lowest 
+250 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+13 
+ 
+after the third chemotherapy (T3, Table S2). Pathological disease states might create a 
+251 
+state of dysbiosis, and chemotherapy further exaggerated the effect of intestinal 
+252 
+microbiota. The intestinal microbiota might adapt to the effect of chemotherapy by 
+253 
+increasing the connectivity or the complexity of specie-specie interactions, proved by 
+254 
+higher links (Table 1). Therefore, it presented the dissimilarity in the changes of alpha 
+255 
+diversity and ecological networks of intestinal microbiota.  
+256 
+The identified modules within the networks probably arise from microbe–
+257 
+microbe interactions in response to shared niches in the intestine. The links in the 
+258 
+ecological network could be explained that the co-occur or co-exclude of two nodes, 
+259 
+caused by the species performing similar or complementary, and contrary or exclusive 
+260 
+functions (39). Study results showed that the links in T modules were distinctly richer 
+261 
+than that in H modules (Figure 2), indicated the more complex and compact 
+262 
+specie-specie interactions within ecological network. Positive interactions indicate 
+263 
+nodes complement or cooperate with each other, while negative interactions signify 
+264 
+predation or competition between the taxa. In a relatively healthy intestine, 
+265 
+cooperation probably linked with the stable, was found to be the primary interaction 
+266 
+in symbiotic intestinal communities (40, 41). Our results showed more negative 
+267 
+interaction appeared in T networks than that in H network (Figure 2). However, 
+268 
+previous study reported intestinal microbial species were inclined to coexist stably 
+269 
+when the system was dominated by competitive interactions (42). Considering the 
+270 
+changes of tumor markers before and after the chemotherapy (Supplemental material 
+271 
+1), we supposed that cooperative interactions probably contributed to promote the 
+272 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+14 
+ 
+stability of intestinal microbial community in our study. 
+273 
+Exploring the modular topological roles is a key step in the identification of key 
+274 
+OTUs roles in their modules. Topologically, different OTUs play individual roles in 
+275 
+the ecological networks (43). Structurally, the loss of peripherals could not influence 
+276 
+the functions of ecological networks, while losing the connectors, module hubs or 
+277 
+network hubs would result in the deterioration of the entire network (44). In healthy 
+278 
+individuals, there were only one module hub, one connector and no network hubs in H 
+279 
+network, suggesting the structure of network was relatively stable. There were 18 
+280 
+connectors in T0 network which was distinctly more than that in H network, while the 
+281 
+number of connectors did not change much within the ecological networks after five 
+282 
+stages of chemotherapy. Therefore, the intestinal microbes were likely to be in a 
+283 
+hyperactive state based on the number of network hubs, module hubs and connectors 
+284 
+in response to the chemotherapy. 
+285 
+ 
+286 
+Conclusions 
+287 
+Ecological molecular network is considered as an effective way to evaluate the 
+288 
+intestinal microbiota homeostasis systematically and provides novel insights into the 
+289 
+intestinal microbiota in response to the chemotherapy. In this study, we supposed that 
+290 
+intestinal microbiota of colorectal cancer patients was still in an unstable state after 
+291 
+five stages of chemotherapy based on the ecological molecular network analysis, 
+292 
+which might influence the prognosis of colorectal cancer. Therefore, we consider 
+293 
+adding probiotics or reducing antibiotic usage to change specie-specie interactions, 
+294 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+15 
+ 
+improve modularity, and enhance the number of generalists to influence intestinal 
+295 
+microbial homeostasis. However, further studies need to provide for more evidence to 
+296 
+support this idea.  
+297 
+ 
+298 
+Materials and methods 
+299 
+Experiment description 
+300 
+Total of 22 CRC patients from affiliated hospital of Qingdao University (Qingdao, 
+301 
+China), aged 34-73 years, were enrolled in our study (Table 1). This study was 
+302 
+selected from histopathological diagnosis of primary CRC, newly diagnosed and 
+303 
+untreated, and no history of other tumors. All CRC patients were guided by the 
+304 
+National Comprehensive Cancer Network Guidelines. The 21 healthy volunteers, 
+305 
+aged 27-64 years, were selected as controls. During a routine physical examination, 
+306 
+all these participants who used antibiotics within two months, or were regularly using 
+307 
+non-steroidal anti-inﬂammatory drugs, probiotics or statins before sampling, were 
+308 
+excluded from the study. Other exclusions included chronic bowel disease, food 
+309 
+allergies, dietary restrictions, and other signs of infections. Based on the national 
+310 
+comprehensive cancer network (NCCN) guideline, these CRC patients were 
+311 
+performed by standard chemotherapy (45), the following-up samples were obtained 
+312 
+from CRC patients before the treatment of every stage, named T0, T1, T2, T3, T4 and 
+313 
+T5. Total of 123 fecal samples from the CRC patients were collected for about six 
+314 
+times. All these participants were local residents of Qingdao city for more than five 
+315 
+years. This study was approved by the Ethics Committee of the Affiliated Hospital of 
+316 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+16 
+ 
+Qingdao University and all study participants signed the informed consent before 
+317 
+participation. Fresh fecal samples were collected into 5 ml tubes and immediately 
+318 
+stored at -80 ℃ until the day of analysis.  
+319 
+DNA extraction, purification, sequencing and data processing 
+320 
+Microbial DNA was extracted from fecal samples by QIAamp Fast DNA Stool Mini 
+321 
+Kit as previous reported (46). The freshly extracted DNA was purified by 1% melting 
+322 
+point agarose gel followed by phenolchloroform-butanol extraction. The V3-V4 
+323 
+region of the 16S rRNA gene from each sample was amplified by the bacterial 
+324 
+universal primers (forward primer: 5’-ACTCCTACGGGRSGCAGCAG-3’; reverse 
+325 
+primer: 5’-GGACTACVVGGGTATCTAATC-3’). PCR amplification was performed 
+326 
+in a 30μl reaction, containing 15μl 2 × KAPA HiFi Hotstart ReadyMix, 10 ng 
+327 
+template DNA, 1μl of each primer (forward and reverse primer), and the rest of the 
+328 
+ddH2O. The reaction mixtures were operated to a denaturation at 95℃ for 1 min, 
+329 
+followed by 12 cycles of 98℃ for 15 s, 72℃ for 10 s, 94℃ for 20 s, 65℃ for 10 s 
+330 
+and 72℃ for 10s, followed by 11 cycles of 94℃ for 20 s, 58℃ for 30 s, 72℃ for 
+331 
+30 s, and a final extension at 72℃ for 150 s. The PCR amplification products were 
+332 
+purified through AxyPrep DNA Gel Extraction Kit (Axygen, USA), eluted in 30μl 
+333 
+water, and aliquoted into three PCR tubes. DNA quality and quantity were assessed by 
+334 
+the ratios of 260/280 nm and 260/230 nm, and final DNA contents were quantified 
+335 
+with a Qubit® dsDNA HS Assay Kit (Invitrogen, USE). Finally, we sequenced 
+336 
+bacterial DNA amplicons from each fecal sample based on the Illumina Hiseq 2500. 
+337 
+Raw sequences were separated to samples by barcodes. After quality control of 
+338 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+17 
+ 
+raw data, the clean reads were first sorted by the abundance from big to small, and 
+339 
+removed the singletons. Based on the Usearch software, these reads were clustered 
+340 
+and removed the chimera based on the standard 97% similarity. The reads of each 
+341 
+sample were randomly pumped to extract the corresponding Operational Taxonomic 
+342 
+Units (OTU) sequences. Each OTU is considered to represent a species.  
+343 
+Network construction and analysis  
+344 
+Networks were constructed for intestinal microbiota from CRC patients and healthy 
+345 
+individuals based on OTU relative abundances, yielding a total of 7 networks. 
+346 
+Covariations were calculated across more than 19 biological replicates to create each 
+347 
+network. Only OTUs detected in more than 50% replicate samples were used for 
+348 
+network construction. Before the network construction, the random matrix theory 
+349 
+(RMT), which is a reliable, sensitive and robust tool for analyzing high-throughput 
+350 
+genomics data (47), was used to automatically get the appropriate similarity threshold 
+351 
+(St) for identifying modular network and elucidating network interactions. St means 
+352 
+the minimal strength of the connections between each pair of nodes (48). Global 
+353 
+network properties were characterized according to previous research (24). Modules 
+354 
+reflect divergent selection regimes, clusters of phylogenetically and closely related 
+355 
+species, habitat heterogeneity and the key unit of species co-evolution (49). 
+356 
+Modularity is used to demonstrate a network which is divided into distinct sub-groups 
+357 
+naturally (47). Average degree (avgK) represents the complexity of the network. 
+358 
+Harmonic geodesic distance (HD) means the state (close or dispersive) of the nodes in 
+359 
+the network. Average clustering coefficient (avgCC) is described to that how well a 
+360 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+18 
+ 
+node is linked with its neighbors. The modular topological roles are explained by 
+361 
+peripherals, connectors, module hubs and network hubs, which are defined by two 
+362 
+parameters, within-module connectivity (Zi) and among-module connectivity (Pi) (23, 
+363 
+47). In an ecological perspective, peripherals tend to the role of specialists, whereas 
+364 
+connectors and module hubs were considered as generalists and network hubs as 
+365 
+super-generalists (50). 
+366 
+Statistical analyses  
+367 
+The R software package (v3.4.1) was used for all statistical analysis. Alpha diversity 
+368 
+was calculated using the observed species, phylogenetic diversity, Shannon diversity 
+369 
+and Simpson diversity. Linear regression analyses characterized the slopes for alpha 
+370 
+diversity and network parameters (nodes or links) in response to the chemotherapy. 
+371 
+All analyses were performed based on Molecular Ecological Network Analyses 
+372 
+(MENA) Pipeline (http://ieg2.ou.edu/MENA/), and networks were graphed by the 
+373 
+software of Cytoscape 2.8.3 (51) and Gephi 0.9.1 (52).  
+374 
+ 
+375 
+Declarations 
+376 
+Ethics approval and consent to participate 
+377 
+The affiliated hospital of Qingdao University Institutional Review Board approved 
+378 
+this study, and all study subjects provided informed consent.  
+379 
+Consent for publication 
+380 
+Not applicable. 
+381 
+Availability of data and material  
+382 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+19 
+ 
+Raw sequences have been uploaded into the NCBI Sequence Read Archive data with 
+383 
+Accession No.SRP137370 (https://www.ncbi.nlm.nih.gov/sra/SRP137370).  
+384 
+Competing Interests 
+385 
+There were no any competing interests among all authors. 
+386 
+Funding 
+387 
+This study was supported by funding from Project funded by China Postdoctoral 
+388 
+Science Foundation (2016M602094), Qingdao Application Research Project 
+389 
+(2016047), Youth Research Fund Project, and Authors’ contributions Taishan Scholar 
+390 
+Foundation (201502061).  
+391 
+Authors’ contributions 
+392 
+All authors were involved in the design of the study. Jing Cong analyzed the data. 
+393 
+Dong Liu, Na Zhou and Man Jiang collected samples and analyzed the data. All 
+394 
+authors interpreted the data. Jing Cong wrote the manuscript. Jingjuan Zhu, Chuantao 
+395 
+Zhang, Tianjun Li, Kewei Liu, Helei Hou and Xiaochun Zhang reviewed and revised 
+396 
+the manuscript. All authors read and approved the final manuscript. 
+397 
+ 
+398 
+Acknowledgements 
+399 
+The authors thank the CRC patients and healthy volunteers for providing the fecal 
+400 
+samples that were used in this study. We would also like to thank Amanda Elmore for 
+401 
+reviewing and correcting errors and providing feedback on manuscript drafts. 
+402 
+ 
+ 
+403 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+20 
+ 
+Reference 
+404 
+1. 
+Russo E, Taddei A, Ringressi MN, Ricci F, Amedei A. 2016. The interplay 
+405 
+between the microbiome and the adaptive immune response in cancer 
+406 
+development. Therapeutic Advances in Gastroenterology 9:594. 
+407 
+2. 
+Guthrie L, Gupta S, Daily J, Kelly L. 2017. Human microbiome signatures of 
+408 
+differential colorectal cancer drug metabolism. Npj Biofilms & Microbiomes 
+409 
+3:27. 
+410 
+3. 
+Flemer B, Lynch DB, Brown JMR, Jeffery IB, Ryan FJ, Claesson MJ, 
+411 
+O'Riordain M, Shanahan F, O'Toole PW. 2017. Tumour-associated and 
+412 
+non-tumour-associated microbiota in colorectal cancer. Gut 66:633. 
+413 
+4. 
+Tosolini M, Kirilovsky A, Mlecnik B, Fredriksen T, Mauger S, Bindea G, 
+414 
+Berger A, Bruneval P, Fridman WH, Pagès F. 2011. Clinical Impact of 
+415 
+Different Classes of Infiltrating T Cytotoxic and Helper Cells (Th1, Th2, Treg, 
+416 
+Th17) in Patients with Colorectal Cancer. Cancer Research 71:1263-71. 
+417 
+5. 
+Yu J, Feng Q, Wong SH, Zhang D, Liang QY, Qin Y, Tang L, Zhao H, 
+418 
+Stenvang J, Li Y. 2017. Metagenomic analysis of faecal microbiome as a tool 
+419 
+towards targeted non-invasive biomarkers for colorectal cancer. Gut 66:70. 
+420 
+6. 
+Zeller G, Tap J, Voigt AY, Sunagawa S, Kultima JR, Costea PI, Amiot A, 
+421 
+Böhm J, Brunetti F, Habermann N. 2014. Potential of fecal microbiota for 
+422 
+early-stage detection of colorectal cancer. Molecular Systems Biology 10:766. 
+423 
+7. 
+Ross CL, Spinler JK, Savidge TC. 2016. Structural and functional changes 
+424 
+within the gut microbiota and susceptibility to Clostridium difficile infection. 
+425 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+21 
+ 
+Anaerobe 41:37-43. 
+426 
+8. 
+Wallace BD, Wang H, Lane KT, Scott JE, Orans J, Koo JS, Venkatesh M, 
+427 
+Jobin C, Lian Y, Mani S. 2010. Alleviating Cancer Drug Toxicity by Inhibiting 
+428 
+a Bacterial Enzyme. Science 330:831-5. 
+429 
+9. 
+Mirnezami R, Nicholson J, Darzi A. 2012. Preparing for precision medicine. 
+430 
+New England Journal of Medicine 366:489. 
+431 
+10. 
+Kantarjian HM, Fojo T, Mathisen M, Zwelling LA. 2013. Cancer Drugs in the 
+432 
+United States: Justum Pretium—The Just Price. Journal of Clinical Oncology 
+433 
+31:3600. 
+434 
+11. 
+Welsh SJ, Rizos H, Scolyer RA, Long GV. 2016. Resistance to combination 
+435 
+BRAF and MEK inhibition in metastatic melanoma: Where to next? European 
+436 
+Journal of Cancer 62:76-85. 
+437 
+12. 
+Haiser HJ, Gootenberg DB, Chatman K, Sirasani G, Balskus EP, Turnbaugh PJ. 
+438 
+2013. Predicting and Manipulating Cardiac Drug Inactivation by the Human 
+439 
+Gut Bacterium Eggerthella lenta. Science 341:295-298. 
+440 
+13. 
+Scheline RR. 1968. Drug Metabolism by Intestinal Microorganisms. Journal 
+441 
+of Pharmaceutical Sciences 57:2021-2037. 
+442 
+14. 
+Li H, He J, Jia W. 2016. The influence of gut microbiota on drug metabolism 
+443 
+and toxicity. Expert Opinion on Drug Metabolism & Toxicology 12:31. 
+444 
+15. 
+Jia W, Li H, Zhao L, Nicholson JK. 2008. Gut microbiota: a potential new 
+445 
+territory for drug targeting. Nature Reviews Drug Discovery 7:123-129. 
+446 
+16. 
+Scott TA, Quintaneiro LM, Norvaisas P, Lui PP, Wilson MP, Leung KY, 
+447 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+22 
+ 
+Herrera-Dominguez L, Sudiwala S, Pessia A, Clayton PT. 2017. Host-Microbe 
+448 
+Co-metabolism Dictates Cancer Drug Efficacy in C.Â elegans. Cell 
+449 
+169:442-456. 
+450 
+17. 
+Fuhrman JA. 2009. Microbial community structure and its functional 
+451 
+implications. Nature 459:193. 
+452 
+18. 
+Hallam SJ, Mccutcheon JP. 2015. Microbes don't play solitaire: how 
+453 
+cooperation trumps isolation in the microbial world. Environmental 
+454 
+Microbiology Reports 7:26-8. 
+455 
+19. 
+Faust K, Raes J. 2012. Microbial interactions: from networks to models. 
+456 
+Nature Reviews Microbiology 10:538. 
+457 
+20. 
+Power ME, Tilman D, Estes JA, Menge BA, Bond WJ, Mills LS, Daily G, 
+458 
+Castilla JC, Lubchenco J, Paine RT. 1996. Challenges in the Quest for 
+459 
+Keystones. Bioscience 46:609-620. 
+460 
+21. 
+Faust K, Sathirapongsasuti JF, Izard J, Segata N, Gevers D, Raes J, 
+461 
+Huttenhower C. 2012. Microbial Co-occurrence Relationships in the Human 
+462 
+Microbiome. Plos Computational Biology 8:e1002606. 
+463 
+22. 
+Deng Y, Zhang P, Qin Y, Tu Q, Yang Y, He Z, Schadt CW, Zhou J. 2016. 
+464 
+Network succession reveals the importance of competition in response to 
+465 
+emulsified 
+vegetable 
+oil 
+amendment 
+for 
+uranium 
+bioremediation. 
+466 
+Environmental Microbiology 18:205-218. 
+467 
+23. 
+Jing C, Yang Y, Liu X, Hui L, Xiao L, Zhou J, Li D, Yin H, Ding J, Zhang Y. 
+468 
+2015. Analyses of soil microbial community compositions and functional 
+469 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+23 
+ 
+genes reveal potential consequences of natural forest succession. Scientific 
+470 
+Reports 5:10007. 
+471 
+24. 
+Ye D, Jiang YH, Yang Y, He Z, Feng L, Zhou J. 2012. Molecular ecological 
+472 
+network analyses. Bmc Bioinformatics 13:113. 
+473 
+25. 
+Barabási AL. 2009. Scale-free networks: a decade and beyond. Science 
+474 
+325:412-3. 
+475 
+26. 
+Geng J, Song Q, Tang X, Xiao L, Hong F, Peng H, Qiang G, Zhang Z. 2014. 
+476 
+Co-occurrence of driver and passenger bacteria in human colorectal cancer. 
+477 
+Gut Pathogens 6:26. 
+478 
+27. 
+Yan Q, Gu Y, Li X, Yang W, Jia L, Chen C, Han X, Huang Y, Zhao L, Li P. 
+479 
+2017. Alterations of the Gut Microbiome in Hypertension. Frontiers in 
+480 
+Cellular & Infection Microbiology 7:381. 
+481 
+28. 
+Yu T, Guo F, Yu Y, Sun T, Ma D, Han J, Qian Y, Kryczek I, Sun D, Nagarsheth 
+482 
+N. 2017. Fusobacterium nucleatum Promotes Chemoresistance to Colorectal 
+483 
+Cancer by Modulating Autophagy. Cell 170:548. 
+484 
+29. 
+Cammarota G, Ianiro G. 2017. Gut Microbiota and Cancer Patients: A 
+485 
+Broad-Ranging Relationship. Mayo Clinic Proceedings 92:1605-1607. 
+486 
+30. 
+Marin M, Gudiol C, Ardanuy C, Garcia-Vidal C, Calvo M, Arnan M, Carratalà 
+487 
+J. 2014. Bloodstream infections in neutropenic patients with cancer: 
+488 
+Differences between patients with haematological malignancies and solid 
+489 
+tumours. Journal of Infection 69:417-423. 
+490 
+31. 
+Montassier E, Gastinne T, Vangay P, Alghalith GA, Bruley dVS, Massart S, 
+491 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+24 
+ 
+Moreau P, Potel G, Mf DLC, Batard E. 2015. Chemotherapy-driven dysbiosis 
+492 
+in the intestinal microbiome. Alimentary Pharmacology & Therapeutics 
+493 
+42:515-528. 
+494 
+32. 
+Alexander JL, Wilson ID, Teare J, Marchesi JR, Nicholson JK, Kinross JM. 
+495 
+2017. Gut microbiota modulation of chemotherapy efficacy and toxicity. Nat 
+496 
+Rev Gastroenterol Hepatol 14:356-365. 
+497 
+33. 
+Yan KK, Wang D, Rozowsky J, Zheng H, Cheng C, Gerstein M. 2014. 
+498 
+OrthoClust: an orthology-based network framework for clustering data across 
+499 
+multiple species. Genome Biology 15:R100. 
+500 
+34. 
+Flores GE, Caporaso JG, Henley JB, Rideout JR, Domogala D, Chase J, Leff 
+501 
+JW, Vázquez-Baeza Y, Gonzalez A, Knight R. 2014. Temporal variability is a 
+502 
+personalized feature of the human microbiome. Genome Biology 15:1-13. 
+503 
+35. 
+Gao Z, Guo B, Gao R, Zhu Q, Qin H. 2015. Microbiota disbiosis is associated 
+504 
+with colorectal cancer. Frontiers in Microbiology 6:20. 
+505 
+36. 
+Montassier E, Batard E, Massart S, Gastinne T, Carton T, Caillon J, Fresne SL, 
+506 
+Caroff N, Hardouin JB, Moreau P. 2014. 16S rRNA Gene Pyrosequencing 
+507 
+Reveals Shift in Patient Faecal Microbiota During High-Dose Chemotherapy 
+508 
+as Conditioning Regimen for Bone Marrow Transplantation. Microbial 
+509 
+Ecology 67:690-699. 
+510 
+37. 
+Manichanh C, Rigottiergois L, Bonnaud E, Gloux K, Pelletier E, Frangeul L, 
+511 
+Nalin R, Jarrin C, Chardon P, Marteau P. 2006. Reduced diversity of faecal 
+512 
+microbiota in Crohn's disease revealed by a metagenomic approach. Digest of 
+513 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+25 
+ 
+the World Core Medical Journals(Gastroenterology) 55:205. 
+514 
+38. 
+Turnbaugh PJ, Hamady M, Yatsunenko T, Cantarel BL, Duncan A, Ley RE, 
+515 
+Sogin ML, Jones WJ, Roe BA, Affourtit JP. 2009. A core gut microbiome in 
+516 
+obese and lean twins. Nature 457:480. 
+517 
+39. 
+Zhou J, Deng Y, Luo F, He Z, Yang Y. 2011. Phylogenetic Molecular 
+518 
+Ecological Network of Soil Microbial Communities in Response to Elevated 
+519 
+CO2. Mbio 2:: e00122-11. 
+520 
+40. 
+Schluter J, Foster KR. 2012. The Evolution of Mutualism in Gut Microbiota 
+521 
+Via Host Epithelial Selection. Plos Biology 10:e1001424. 
+522 
+41. 
+Jain S, Krishna S. 2001. A model for the emergence of cooperation, 
+523 
+interdependence, and structure in evolving networks. Proceedings of the 
+524 
+National Academy of Sciences of the United States of America 98:543. 
+525 
+42. 
+Coyte KZ, Schluter J, Foster KR. 2015. The ecology of the microbiome: 
+526 
+Networks, competition, and stability. Science 350:663-666. 
+527 
+43. 
+Guimerà R, Sales-Pardo M, Amaral LAN. 2007. Classes of complex networks 
+528 
+defined by role-to-role connectivity profiles. Nature Physics 3:63. 
+529 
+44. 
+Roger G, Amaral LA, Nunes. 2005. Functional cartography of complex 
+530 
+metabolic networks. Nature 433:895. 
+531 
+45. 
+Wang S, Wang X, Han X, Deng Y. 2018. Higher precipitation strengthens the 
+532 
+microbial interactions in semi‐arid grassland soils. Global Ecology & 
+533 
+Biogeography. 
+534 
+46. 
+Wu X, Zhang H, Chen J, Shang S, Wei Q, Yan J, Tu X. 2016. Comparison of 
+535 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+26 
+ 
+the fecal microbiota of dholes high-throughput Illumina sequencing of the V3–
+536 
+V4 region of the 16S rRNA gene. Applied Microbiology & Biotechnology 
+537 
+100:3577-3586. 
+538 
+47. 
+Deng Y, Jiang YH, Yang Y, He Z, Luo F, Zhou J. 2012. Molecular ecological 
+539 
+network analyses. BMC Bioinformatics 13:113. 
+540 
+48. 
+Zhou J, Ye D, Feng L, He Z, Yang Y. 2011. Phylogenetic Molecular Ecological 
+541 
+Network of Soil Microbial Communities in Response to Elevated CO2. Mbio 
+542 
+2:: e00122-11. 
+543 
+49. 
+Olesen JM, Bascompte J, Dupont YL, Jordano P. 2007. The modularity of 
+544 
+pollination networks. Proceedings of the National Academy of Sciences of the 
+545 
+United States of America 104:19891-6. 
+546 
+50. 
+Olesen JM, Bascompte J, Dupont YL, Jordano P. 2007. The modularity of 
+547 
+pollination networks. Proc Natl Acad Sci U S A 104:19891-6. 
+548 
+51. 
+Killcoyne S, Carter GW, Smith J, Boyle J. 2009. Cytoscape: a 
+549 
+community-based framework for network modeling. Methods in Molecular 
+550 
+Biology 563:219. 
+551 
+52. 
+Bastian M, Heymann S, Jacomy M. Gephi: An Open Source Software for 
+552 
+Exploring and Manipulating Networks, p. In (ed),   
+553 
+ 
+554 
+ 
+ 
+555 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+27 
+ 
+Figure legends 
+556 
+Figure 1 Overview of the networks in healthy individuals and colorectal cancer 
+557 
+patients in response to five stages of chemotherapy. Modules are randomly colored at 
+558 
+each stage of chemotherapy, and nodes in modules with relative abundance < 1% are 
+559 
+in white. Networks represent random matrix theory co-occurrence models derived 
+560 
+from more than 19 biological replicates at each stage, where nodes represent OTUs, 
+561 
+and links between the nodes indicate significant correlation. 
+562 
+Figure 2 Highly connected modules within intestinal networks of colorectal cancer 
+563 
+patients in response to five stages of chemotherapy. Colors of nodes represent 
+564 
+different major phyla; pie charts represent the composition of modules with > 1 phyla. 
+565 
+A grey link indicates positive relationship between two individual nodes, whereas a 
+566 
+blue link indicates negative relationship.  
+567 
+Figure 3 Putative keystone species in the networks of colorectal cancer patients in 
+568 
+response to chemotherapy. Different colors represent different stages of chemotherapy, 
+569 
+namely red for healthy individuals (H), green for T0, orange T1, blue for T2, pink for 
+570 
+T3, water blue for T4, and grey for T5.  
+571 
+ 
+ 
+572 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+28 
+ 
+Table 1 Topological properties of the ecological networks of intestinal microbiota 
+573 
+from healthy individuals and colorectal cancer patients during the different treatment 
+574 
+stages 
+575 
+Sample 
+H 
+T0 
+T1 
+T2 
+T3 
+T4 
+T5 
+Empirical 
+Network 
+Total nodes 
+105 
+99 
+102 
+103 
+80 
+103 
+103 
+Total links 
+110 
+238 
+228 
+239 
+173 
+210 
+231 
+Average degree 
+(avgK) 
+2.10 
+4.81 
+4.47 
+4.64 
+4.33 
+4.08 
+4.49 
+Average clustering 
+coefficient (avgCC) 
+0.07 
+0.19 
+0.21 
+0.18 
+0.14 
+0.12 
+0.24 
+Harmonic geodesic 
+distance (HD) 
+4.17 
+2.49 
+2.54 
+2.76 
+2.72 
+3.02 
+2.67 
+Identical threshold 
+0.66 
+0.66 
+0.66 
+0.66 
+0.66 
+0.66 
+0.66 
+R2 of power-law 
+0.79 
+0.79 
+0.72 
+0.82 
+0.81 
+0.86 
+0.87 
+Modularity 
+0.77 
+0.43 
+0.45 
+0.48 
+0.40 
+0.50 
+0.50 
+Random 
+networks* 
+Average clustering 
+coefficient±SD 
+0.01±0.01 
+0.21±0.03 
+0.20±0.02 
+0.10±0.02 
+0.14±0.02 
+0.08±0.02 
+0.10±0.02 
+Average Harmonic 
+geodesic distance±SD 
+4.31±0.25 
+2.40±0.03 
+2.42±0.03 
+2.64±0.03 
+2.51±0.04 
+2.80±0.04 
+2.65±0.04 
+*Random networks were generated by resetting all of the links of a matching 
+576 
+empirical network with the same nodes and links. Data were generated from 100 
+577 
+random runs and SD indicates the standard deviation from the 100 runs. 
+578 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+29 
+ 
+Table 2 Clinical characteristic of colorectal cancer patients 
+579 
+Characteristic 
+Number 
+Age                        ≥55 
+12 
+<55 
+10 
+Gender                     Male 
+14 
+                          Female 
+8 
+Location                    Colon 
+8 
+                          Rectum 
+14 
+Tumor size                    ≥5 
+9 
+                         <5 
+13 
+Lymph node metastasis      Negative 
+3 
+                        Positive 
+19 
+Remote metastasis          Negative 
+20 
+                        Positive 
+2 
+TNM stage              Ⅰ and Ⅱ 
+2 
+                      Ⅲ and Ⅳ 
+20 
+The TNM staging were determined according to the American Joint Committee on 
+580 
+Cancer system. 
+581 
+ 
+582 
+.
+CC-BY-NC 4.0 International license
+available under a 
+not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprint (which was
+this version posted May 27, 2018. 
+; 
+https://doi.org/10.1101/331876
+doi: 
+bioRxiv preprint 
+
+
+

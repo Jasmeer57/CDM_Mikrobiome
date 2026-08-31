@@ -1,0 +1,1204 @@
+ORIGINAL RESEARCH
+published: 13 September 2019
+doi: 10.3389/fmicb.2019.02138
+Edited by:
+Malka Halpern,
+University of Haifa, Israel
+Reviewed by:
+Silvia Turroni,
+University of Bologna, Italy
+Muriel Derrien,
+Nutricia Research (France), France
+*Correspondence:
+Funmilola A. Ayeni
+funmiyeni@yahoo.co.uk
+Christoph Högenauer
+christoph.hoegenauer@medunigraz.at
+Specialty section:
+This article was submitted to
+Microbial Symbioses,
+a section of the journal
+Frontiers in Microbiology
+Received: 07 December 2018
+Accepted: 30 August 2019
+Published: 13 September 2019
+Citation:
+Afolayan AO, Ayeni FA,
+Moissl-Eichinger C, Gorkiewicz G,
+Halwachs B and Högenauer C (2019)
+Impact of a Nomadic Pastoral
+Lifestyle on the Gut Microbiome
+in the Fulani Living in Nigeria.
+Front. Microbiol. 10:2138.
+doi: 10.3389/fmicb.2019.02138
+Impact of a Nomadic Pastoral
+Lifestyle on the Gut Microbiome in
+the Fulani Living in Nigeria
+Ayorinde O. Afolayan1, Funmilola A. Ayeni1*, Christine Moissl-Eichinger2,3,
+Gregor Gorkiewicz3,4,5, Bettina Halwachs3,4,5 and Christoph Högenauer4,5,6*
+1 Department of Pharmaceutical Microbiology, Faculty of Pharmacy, University of Ibadan, Ibadan, Nigeria, 2 Division
+of Infectious Diseases and Tropical Medicine, Department of Internal Medicine, Medical University of Graz, Graz, Austria,
+3 BioTechMed, Interuniversity Cooperation, Graz, Austria, 4 Institute of Pathology, Medical University of Graz, Graz, Austria,
+5 Theodor Escherich Laboratory for Microbiome Research, Graz, Austria, 6 Division of Gastroenterology and Hepatology,
+Department of Internal Medicine, Medical University of Graz, Graz, Austria
+The co-evolution of the gut microbiota with its human host has revolutionized our current
+scientiﬁc viewpoint about the contribution of diet and lifestyle on human health. Most
+studies so far have focused on populations living in the United States and Europe or
+compared those with communities from other geographic areas in the world. In order
+to determine the taxonomic and predicted functional proﬁle of the gut microbiome
+of a hitherto unstudied human community, we investigated the phylogenetic diversity
+of the gut microbiota in a community of Fulani nomadic pastoralists, and their semi-
+urbanized neighbors – the Jarawa. The Jarawa reside in a city (Jos) in the north-central
+part of Nigeria, and are adapted in part to a westernized lifestyle. The nomadic
+Fulani lifestyle resembles a mix of Paleolithic and Neolithic lifestyle patterns with a
+greater predisposition to diseases. The fecal microbiota of the Fulani and the Jarawa
+were characterized by paired-end Illumina MiSeq sequencing of the 16S rRNA gene,
+followed by downstream bioinformatics analysis of the sequence reads. The Fulani
+harbored increased numbers of signatures of microbes that are known to be associated
+with a foraging lifestyle such as the Bacteroidetes, Spirochaetes, and Prevotellaceae,
+while the Jarawa were dominated by signatures of Firmicutes, Ruminococcaceae,
+Lachnospiraceae, and Christensenellaceae. Notably, the gut microbiota of the Fulani
+showed less taxonomic diversity than those of the Jarawa. Although they reside in the
+same geographical zone, microbial community composition was signiﬁcantly different
+between the two groups. Pathogens were predicted to be more abundant in the
+gut microbiota of the Fulani than of the Jarawa. Predicted pathogenic pathways and
+pathways associated with the breakdown of ﬁber-rich diet were enriched in the Fulani,
+including glutathione metabolism, while pathways associated with the consumption of
+low-ﬁber diet and xenobiotics, including fructose and mannose metabolic pathways,
+and nitrotoluene degradation pathways, respectively, were enriched in the Jarawa.
+Signiﬁcant differences in composition between both groups were likely due to
+differences in diet and lifestyle and exposure to pathogens. These results suggest
+that microbial diversity may not always be higher in non-industrialized societies than
+in westernized societies, as previously assumed.
+Keywords: gut microbiota, Fulani, Jarawa, lifestyle, diet
+Frontiers in Microbiology | www.frontiersin.org
+1
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+INTRODUCTION
+The gastrointestinal tract of humans is home to an abundant
+and diverse consortium of microorganisms collectively known
+as the gut microbiota (Martínez et al., 2015). They are known
+to impact metabolism, physiology, and health of the host
+(Kau et al., 2011; Ramakrishna, 2013). Studying the variations
+of gut microbiota across human populations on various
+continents suggests that human gut microbiota is inﬂuenced by
+environmental adaptation. Comparative studies have shown that
+there is an integral relationship between lifestyle factors and the
+composition of the gut microbial community (Yatsunenko et al.,
+2012; Schnorr et al., 2014; Martínez et al., 2015). Most studies,
+however, have focused on Americans and Europeans, while
+only a limited number of studies have investigated populations
+on other continents with distinct diﬀerences in their mode
+of life (Gomez et al., 2016; Gupta et al., 2017; Ayeni et al.,
+2018). Groups selected for this study were from two areas of
+the Plateau State (the city of Jos, and a rural area within the
+town of Jengre), both in North-Central Nigeria (Figures 1A–
+C). Nigeria in West Africa is the most populous country in
+Africa and the 7th most populous country in the world. The
+World Factbook published by the Central Intelligence Agency
+(2016) shows that there are two major ethnic groups in the
+North-Central zone of Nigeria, namely the Fulani and the
+Hausa, who make up 29% of the Nigerian population. The
+Jarawa are one of the tribes that speak the Hausa language,
+and they (along with other Hausa-speaking tribes) are often
+erroneously referred to as Hausa. The majority of the Fulani in
+Nigeria are agro-pastoralists with a pastoral nomadic lifestyle.
+Although there is some interaction with the Hausa and other
+ethnic groups, their traditional lifestyle remains distinctly intact.
+The Fulani only mingle with other ethnic groups to sell their
+cattle or engage in other trade. They hardly ever intermarry,
+and they do not permit undue access to their community
+without permission from the head of the community. The
+nomadic Fulani commonly migrate seasonally in search of richer
+pasture for their cows. The Fulani reside not only in Nigeria
+but also in large numbers in Ghana, Guinea, Burkina Faso,
+Niger, Chad, Mali, Sudan, and Cameroon. The Fulani consume
+ﬁber-based foods (Lockett et al., 2009). The Jarawa eat meat
+regularly and consume a low-ﬁber diet with processed foods
+(pasta, spaghetti, reﬁned rice, and other fast foods) along with
+most of the food (high-ﬁber diet) and fermented drinks also
+consumed by the Fulani. Traditional lifestyle, which correlates
+with consumption of crude, high-ﬁber diets rather than low-
+ﬁber, highly processed foods, as in a westernized diet, has a
+major impact on the composition and metabolic function of
+the intestinal microbiota and is considered to be negatively
+associated with predisposition to metabolic diseases and obesity
+(Turnbaugh et al., 2009; De Filippo et al., 2010). The eﬀect of diet
+and lifestyle on the gut microbiome has generated considerable
+interest because these may have an impact on human health
+and are considered as a possible mechanism driving diseases of
+civilization (Ramadass et al., 2017).
+We performed the study since we assumed that the very
+unique primal nomadic lifestyle of the Fulani has a major
+impact on the composition and the functional characteristics
+of the gut microbiota. For comparison we chose the urban
+Jarawa population, living in the same geographic region but
+with a more westernized lifestyle, including consumption of
+industrial processed food.
+RESULTS
+Differences Between Proﬁles of Bacterial
+Communities Derived From Fecal
+Samples of the Fulani and the Jarawa
+Fecal samples were obtained from 28 healthy Fulani (13 males
+and 15 females, mean age = 19 years, SD = 16) and 22
+healthy Jarawa (non-Fulani, 9 males and 13 females, mean
+age = 29 years, SD = 18). DNA extraction was performed and
+the hypervariable region 4 (V4) region of the microbial 16S
+rRNA gene was sequenced using the Illumina MiSeq platform,
+resulting in 1,265,159 high-quality paired-end reads with an
+average of 25,303 ± 5,596 reads per subject. Reads were clustered
+into 9,635 operational taxonomic units (OTUs) at 97% identity.
+Compared with the Jarawa, the Chao1 and the Shannon diversity
+indices revealed a signiﬁcantly lower alpha diversity and evenness
+in the Fulani (Figures 2A–C). In total, 10 bacterial phyla
+were detected, with Firmicutes (Fulani vs. non-Fulani: 66.38
+vs. 77.63%, p-value = 0.047), Bacteroidetes (Fulani vs. non-
+Fulani: 23.23 vs. 13.8%, p-value = 0.04), Proteobacteria (Fulani vs.
+non-Fulani: 8.49 vs. 5.50%, not signiﬁcant), and Actinobacteria
+(Fulani vs. non-Fulani: 0.54 vs. 1.27%, p-value = 0.04) as the
+most dominant phyla in both ethnic groups (Table 1). The
+highest percentages of reads were assigned to the genus Prevotella
+9 (Fulani vs. non-Fulani: 16.58 vs. 10.22%, p-value = 0.039),
+Clostridium sensu stricto 1 (Fulani vs. non-Fulani: 11.69 vs. 6.34%,
+not signiﬁcant), Blautia (Fulani vs. non-Fulani: 2.96 vs. 6.64%,
+p-value = 0.045), and Faecalibacterium (Fulani vs. non-Fulani:
+4.94 vs. 3.78%, not signiﬁcant). The Fulani showed a trend toward
+a lower Firmicutes/Bacteroidetes ratio than the Jarawa (Fulani vs.
+Jarawa; 2.9 vs. 7.3%, p = 0.08997, Pearson’s Chi-squared test).
+Linear discriminant analysis eﬀect size (LEfSE) was performed
+on diﬀerent taxonomic levels (Supplementary Table 7). The
+results revealed several signiﬁcantly discriminant microbial taxa
+(p < 0.05, LDA > 2) when Fulani and Jarawa sequence data were
+compared, see Figure 3, Table 1, and Supplementary Figure 2.
+The Fulani had signiﬁcantly higher levels of Bacteroidetes and
+signiﬁcantly lower levels of Firmicutes than the Jarawa (Figure 3,
+Table 1, and Supplementary Figures 1, 2). Signatures of the
+genera belonging to the phylum Bacteroidetes (Prevotella and
+Alloprevotella) were signiﬁcantly higher in the Fulani than
+the Jarawa, while signatures of the genera belonging to the
+phylum Firmicutes (Blautia, Ruminococcus 1, Ruminococcaceae
+UCG002, and Christensenellaceae R7 group) were signiﬁcantly
+higher in the Jarawa than in the Fulani (Figure 3). The Jarawa
+were enriched in signatures belonging to the archaea domain
+(Figure 3 and Table 1). Members of the order Lactobacillales
+(Fulani vs. non-Fulani: 0.2 ± 1.25% vs. 0.4 ± 0.6%; p = 0.44
+including Lactobacillus, Weissella, Lactococcus, and Leuconostoc)
+Frontiers in Microbiology | www.frontiersin.org
+2
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+FIGURE 1 | Location, scenery, and lifestyle patterns of nomadic Fulani and Jarawa (non-Fulani). The pictures show the geographical location of the Fulani (red dot)
+and the Jarawa (non-Fulani, blue dot) studied (A), a typical nomadic Fulani house (B), and a typical Jarawa (Non-Fulani) scenery of the area studied (C).
+FIGURE 2 | Differences in parameters of taxonomic alpha-diversity between Fulani and Jarawa (non-Fulani). Boxplots show a signiﬁcantly lower Chao1 index of
+microbial richness (A), a signiﬁcantly lower Shannon index of microbial diversity (B), and signiﬁcantly lower evenness index (C) in the fecal microbiota of Fulani (red
+boxes), compared to Jarawa (non-Fulani, blue boxes). Mann–Whitney U-test was used with FDR-corrected p-values of (A) 0.001, (B) 0.001, and (C) 0.01.
+were not signiﬁcantly diﬀerent between the study groups,
+although the Fulani are known to consume fermented raw
+and cooked milk regularly. Although Spirochaetes at phylum
+level was signiﬁcantly enriched in the Fulani (Table 1), there
+was no signiﬁcant diﬀerence in the relative abundance of
+Treponema signature (Fulani vs. non-Fulani: 0.3 ± 0.42% vs.
+0.1 ± 0.1%; p = 0.072). When the gut microbial communities
+of the Fulani and the Jarawa were compared at the OTU level
+using the RDA plots based on Bray–Curtis distances, distinctness
+between both groups was observed (Figure 4 and Supplementary
+Figure 4). ADONIS analysis revealed that the diﬀerences in the
+gut microbial community composition between the Fulani and
+the Jarawa were statistically signiﬁcant at genus and OTU level
+(p = 0.00333 and p = 0.000666, respectively). ANOSIM of Bray–
+Curtis distances revealed clustering of samples based on the
+groups (Fulani vs. Jarawa), at genus and OTU levels (Genus:
+R = 15.9%, p = 0.002; OTU: R = 22%, p = 0.001). As age is a factor
+inﬂuencing the composition of the intestinal microbiome, we also
+tested for diﬀerences between children and adults/adolescents
+that might have impacted the ﬁndings between the two groups,
+Frontiers in Microbiology | www.frontiersin.org
+3
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+TABLE 1 | Taxa with signiﬁcantly different abundance on phylum, family, and genus level in the fecal microbiota between Fulani and Jarawa (non-Fulani) subjects
+(Wilcoxon rank test p-values were adjusted for multiple testing by FDR).
+Phylum
+Fulani (mean% ± SD)
+Jarawa (non-Fulani) (mean% ± SD)
+FDR-corrected p-value
+Bacteroidetes
+23.23 ± 0.14
+13.8 ± 0.09
+0.04
+Spirochaetes
+0.43 ± 0.01
+0.10 ± 0.004
+0.04
+Fusobacteria
+0.14 ± 0.006
+0.00 ± 0.00
+0.046
+Actinobacteria
+0.54 ± 0.005
+1.27 ± 0.016
+0.04
+Euryarchaeota
+0.04 ± 0.001
+0.2 ± 0.002
+0.016
+Firmicutes
+66.38 ± 0.18
+77.63 ± 0.12
+0.047
+Lentisphaerae
+0.00 ± 0.00
+0.09 ± 0.001
+0.0042
+Tenericutes
+0.09 ± 0.0015
+0.36 ± 0.0034
+0.0098
+Verrucomicrobia
+0.02 ± 0.0006
+0.20 ± 0.0045
+0.021
+Family
+Prevotellaceae
+22.83 ± 0.14
+12.76 ± 9.62
+0.013
+Bacteroidaceae
+0.20 ± 0.005
+0.60 ± 0.014
+0.013
+Ruminococcaceae
+13.11 ± 0.064
+20.09 ± 0.099
+0.044
+Christensenellaceae
+0.18 ± 0.002
+1.18 ± 0.014
+0.012
+Genus
+Eubacterium rectale group
+2.72 ± 0.02
+1.37 ± 0.01
+0.03
+Campylobacter
+0.13 ± 0.003
+0.01 ± 0.0004
+0.035
+Prevotella 2
+2.85 ± 0.026
+0.96 ± 0.01
+0.039
+Bacteroides
+0.2 ± 0.005
+0.6 ± 0.014
+0.013
+Ruminococcus 1
+0.41 ± 0.005
+1.11 ± 0.008
+0.011
+Blautia
+2.96 ± 0.023
+6.64 ± 0.079
+0.045
+Christensenellaceae R7 group
+0.18 ± 0.002
+1.17 ± 0.014
+0.025
+Lachnospiraceae ND 3007
+0.04 ± 0.0005
+0.18 ± 0.0021
+0.036
+Methanosphaera
+0.02 ± 0.0005
+0.09 ± 0.0013
+0.03
+Values in bold represent the group with enriched microbial taxa.
+FIGURE 3 | Cladogram of LEfSe analysis showing different abundance of microbial taxa in the gut of the Fulani (red) and the Jarawa (non-Fulani, blue).
+but found no signiﬁcant diﬀerences in alpha and beta diversity
+in relation to age (Supplementary Tables 3, 4). Subgroups
+analyses of children and adults/adolescent between Fulanis
+and non-Fulanis showed signiﬁcant diﬀerences in measures
+of alpha and beta diversity in the subgroups (Supplementary
+Tables 5, 6 and Supplementary Figures 5–7) except for
+alpha diversity in children (Supplementary Tables 5, 6 and
+Supplementary Figures 5, 6).
+Frontiers in Microbiology | www.frontiersin.org
+4
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+FIGURE 4 | Beta-diversity. RDA plot based on Bray–Curtis distances shows
+patterns of signiﬁcant separation between the Fulani (red boxes) and the
+Jarawa (non-Fulani, blue circles) at the OTU level (p = 0.001). The Calypso
+online software (http://cgenome.net:8080/calypso-8.84/faces/uploadFiles.
+xhtml) was used to perform RDA on log-transformed data. P-values were
+calculated using 999 Monte Carlo permutations and were corrected for
+multiple testing using Bonferroni correction.
+Predicted Functional Metagenomics
+Analysis
+Metagenomic
+predictions
+using
+PICRUSt
+showed
+distinct
+microbial
+functional
+proﬁles
+in
+the
+Fulani
+and
+Jarawa
+(Table 2 and Supplementary Figure 3). Pathways involving
+lipopolysaccharide biosynthesis, ubiquinone and other terpenoid
+quinone
+synthesis,
+glycosyltransferases,
+arachidonic
+acid
+metabolism, riboﬂavin and vitamin B6 metabolism, and protein
+digestion and absorption were overrepresented in the Fulani
+fecal samples. In the Jarawa, the pathways involving methane
+metabolism;
+fructose
+and
+mannose
+metabolism;
+arginine
+and proline metabolism; pyruvate metabolism; and valine,
+leucine, and isoleucine biosynthesis were overrepresented. The
+predicted functional evenness (p = 0.001) and Shannon diversity
+(p = 0.04) of the gut microbiome was signiﬁcantly higher in the
+Fulani than the Jarawa (Figures 5A,B), although the predicted
+functional alpha diversity of the Fulani gut microbiota was
+not signiﬁcantly diﬀerent from the Jarawa with Chao1 index
+(Figure 5C; p = 0.486).
+Predicted Organism-Level Microbiome
+Phenotypes Comparison
+Predicted
+microbiome
+phenotypes
+using
+BugBase
+(Ward
+et al., 2017) revealed that the Fulani had a signiﬁcantly higher
+abundance
+of
+microorganisms
+with
+predicted
+pathogenic
+potential (p = 0.01) (Figure 6). Bugbase is an algorithm that
+uses output from PICRUSt analysis (categorize_by_function.py)
+of 16S rRNA sequence data to predict biologically interpretable
+microbiome
+phenotypes,
+including
+the
+predicted
+relative
+abundance of microorganisms with pathogenic potentials. Also,
+the predicted relative abundance of oxidative stress-tolerant
+microbes in the Fulani tended to be higher than the Jarawa, but
+the diﬀerence did not reach statistical signiﬁcance. The predicted
+high abundance of signatures of potentially pathogenic bacteria
+in the Fulani using BugBase also reﬂects PICRUSt results, which
+indicate the overrepresentation of pathways involved in the
+Vibrio cholerae pathogenic cycle (Table 2).
+DISCUSSION
+We investigated the gut microbiota of an African ethnicity,
+the Fulani, living a very unique traditional pastoral nomadic
+lifestyle. To study the potential eﬀects of their lifestyle on
+the intestinal microbiota, we compared their fecal samples to
+a control group from an urban African population in the
+same area with a more westernized way of life. Apart from
+the recent study on rural Bassa and urbanized populations in
+Nigeria (Ayeni et al., 2018), and seven rural populations in
+Southern Cameroon (Morton et al., 2015), previous studies
+on the gut microbiome of Africans focused on the unique
+diﬀerences in the gut microbiome composition between Africans
+and industrialized populations. Examples of such studies
+include those of hunter–gatherer populations, traditional settled
+farming, or ﬁshing populations (Schnorr et al., 2014; Gomez
+et al., 2016; Gupta et al., 2017). The lifestyle of the Fulani
+is somewhere between the ﬁrst two of the aforementioned
+TABLE 2 | Top 30 discriminative metabolic pathways between the Fulani and
+Jarawa (non-Fulani) using PICRUSt (Wilcoxon sum rank test, p-values were
+adjusted for multiple testing by FDR).
+Metabolic pathway
+FDR-corrected p-value
+Pathways signiﬁcantly enriched in the Fulani
+Glutathione metabolism
+0.044
+Vibrio cholerae pathogenic cycle
+0.015
+Cell motility and secretion
+0.029
+Peroxisome
+0.029
+Isoquinoline alkaloid biosynthesis
+0.046
+D-Glutamine and D-glutamate metabolism
+0.02
+DNA replication proteins
+0.044
+Pathways signiﬁcantly enriched in the Jarawa (non-Fulani)
+Chloroalkane and chloroalkene degradation
+0.0077
+Methane metabolism
+0.013
+Nitrotoluene degradation
+0.015
+Xylene degradation
+0.023
+Linoleic acid metabolism
+0.023
+C5 branched dibasic acid metabolism
+0.044
+Carbohydrate metabolism
+0.044
+Fructose and mannose metabolism
+0.025
+Pentose phosphate pathway
+0.036
+Pyruvate metabolism
+0.031
+Dioxin degradation
+0.044
+Tetracycline biosynthesis
+0.025
+Sporulation
+0.031
+Signal transduction mechanisms
+0.029
+Bisphenol degradation
+0.043
+Germination
+0.015
+Bolded pathways were also signiﬁcantly different in LEfSe analysis.
+Frontiers in Microbiology | www.frontiersin.org
+5
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+FIGURE 5 | Differences in parameters of predicted functional alpha-diversity between Fulani and Jarawa (non-Fulani). Metagenomic predictions with PICRUSt
+showed a signiﬁcantly higher predicted functional evenness index (A), a signiﬁcantly higher predicted functional diversity (B), and no differences in the Chao1 index
+of predicted functional diversity (C) in the fecal microbiota of Fulani (red boxes) compared to Jarawa (non-Fulani, blue boxes). Mann–Whitney U-test was used with
+FDR-corrected p-values of 0.001 (A), 0.04 (B), and 0.486 (C), respectively.
+FIGURE 6 | Relative abundance of microorganisms predicted to possess
+pathogenic potential in the intestinal microbiota of the Fulani (red) and the
+Jarawa (non-Fulani, blue) as determined by BugBase. Each dot represents the
+relative abundance of microorganisms with pathogenic potential in one
+individual sample, lines indicate mean ± SD (FDR-corrected
+p-value = 0.01164532). Mann–Whitney U-test was the statistical test used.
+traditional populations as they have a nomadic lifestyle and their
+diet includes foods gathered in the wild as well as produced by
+traditional farming.
+In general, we observed large diﬀerences in the taxonomic
+and functional composition in the intestinal microbiota between
+the Fulani and the urban Jarawa population, supporting previous
+observations that diet and lifestyle are major factors inﬂuencing
+the composition of the gut microbiota. Although we found
+some similarities to previous observations in traditional non-
+westernized populations, some ﬁndings were contradictory
+and unique in supporting a very speciﬁc lifestyle of the
+Fulani population.
+The Fulani fecal microbiota had signiﬁcantly less OTU
+richness and compositional diversity than the Jarawa. This
+is in contrast to previous comparative studies in other non-
+westernized populations in Africa, Asia, and South America
+(Schnorr et al., 2014; Clemente et al., 2015; De Filippo
+et al., 2017; Gupta et al., 2017; Nakayama et al., 2017).
+It is generally assumed that microbial diversity is reduced
+with westernization of the host community and that the
+higher diversity leads to a greater stability of the microbial
+ecosystem and better adaption to changes in the diet and
+exposure to parasites (Gupta et al., 2017). This interesting
+observation of lower alpha-diversity in the Fulani could be
+as a result of their narrow diet, unlike the Jarawa, who
+consume ﬁbrous and fermented foods in addition to processed
+foods. Our report is in contrast to a recent study comparing
+the rural Bassa individuals and their urban counterparts
+in Nigeria, which reported, besides slightly more observed
+species in the rural population, no signiﬁcant diﬀerence in
+the alpha-diversity of the gut microbiota between the study
+groups (Ayeni et al., 2018). Although microbial taxonomic
+diversity was signiﬁcantly lower in the Fulani, their predicted
+functional diversity was signiﬁcantly higher (albeit with Shannon
+index, not Chao1 index). A possible explanation for this
+observation is the acquisition of additional genes by horizontal
+gene transfer due to a high exposure to environmental
+microorganisms including pathogens that do not permanently
+colonize the human gastrointestinal tract. The result for
+predictive functional diversity is in agreement with a previous
+study demonstrating higher functional diversity by metagenomic
+analysis of uncontacted Amerindians compared with US persons
+(Yatsunenko et al., 2012).
+Regarding taxonomic composition, the microbiota of the
+Fulani was enriched among others in Bacteroidetes, Spirochaetes,
+Fusobacteria, and Prevotellaceae and depleted in Firmicutes,
+Ruminococcaceae, Christensenellaceae, and Blautia (Table 1),
+similar to the ﬁndings of Ayeni et al. (2018) on rural
+Bassa individuals in Northern Nigeria. The signiﬁcantly higher
+signatures of Bacteroidetes observed in the nomadic Fulani
+have also been reported in traditional societies practicing a
+hunter–gatherer lifestyle, while the observed enrichment of
+members of the Firmicutes in the Jarawa have been reported in
+Frontiers in Microbiology | www.frontiersin.org
+6
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+societies that practice an agricultural- or industrial-based lifestyle
+(Gomez et al., 2016).
+Although the less abundant Spirochaetes phylum was
+signiﬁcantly enriched in the Fulani, there was no signiﬁcant
+diﬀerence in the relative abundance of Treponema signatures.
+In contrast, previous studies on African populations have
+reported the high relative abundance of Treponema signatures
+in the gut of members of traditional societies, while this
+genus is signiﬁcantly underrepresented in westernized societies
+(Schnorr et al., 2014; Gomez et al., 2016). Signatures of
+methanogenic members of Euryarchaeota have been established
+to be enriched in the gut of traditional African and semi-
+nomadic Amerindian societies (Walker, 2007; Clemente et al.,
+2015). However, we observed that Euryarchaeota members were
+signiﬁcantly underrepresented in the Fulani, while they were
+enriched in the urban Jarawa study group. The methanogens
+have been reported to positively inﬂuence energy harvest by
+removing excess hydrogen that could inhibit ATP production
+(Walker, 2007). Since the Fulani consume fermented raw
+and cooked milk directly sourced from their herds, a higher
+relative abundance of Lactobacilli in the intestinal microbiota
+of the Fulani than the non-Fulani was assumed before the
+study; however, this was not the case. It could be that
+the access to and consumption of locally made yoghurt
+(nono) and Lactobacillus processed yoghurt by the Jarawa had
+also increased the relative abundance of Lactobacilli in their
+intestinal microbiota.
+Overrepresentation in the Fulani of predicted pathways
+involved
+in
+lipopolysaccharide
+biosynthesis,
+ubiquinone
+and other terpenoid quinone synthesis, glycosyltransferases,
+arachidonic
+acid
+metabolism,
+riboﬂavin,
+and
+vitamin
+B6
+metabolism was also in agreement with the study of the
+uncontacted Amerindians (Clemente et al., 2015). The presence
+of predicted pathways involved in vitamin metabolism could
+be related to the habitual consumption of fruits by the Fulani.
+In the Jarawa, overrepresentation of pathways involved in
+methane metabolism corroborates microbial taxonomic results,
+which indicate the signiﬁcantly high abundance of archaeal
+signatures. The enrichment of KEGG pathways involved in the
+metabolism of simple sugar (fructose and mannose metabolism)
+and pathways involved in the metabolism of carbohydrates (such
+as the pentose phosphate pathway and pyruvate metabolism),
+which were overrepresented in the Jarawa, might be due to their
+consumption of more sugars and short-chain carbohydrates.
+An increase of these pathways has been shown to be associated
+with a western diet (Turnbaugh et al., 2009; Gomez et al., 2016).
+Although the V. cholerae pathogenic pathway was predicted to
+be enriched in the Fulani, V. cholerae was not identiﬁed in the
+microbial community by 16S RNA analysis. It is possible that
+certain resident microorganisms have acquired virulence genes
+involved in the pathogenic pathway from V. cholerae prior to
+its disappearance from the community to increase the ﬁtness
+of the microbial recipients. The acquisition of virulence genes
+through horizontal transfer has been reported to contribute
+to increased ﬁtness of naïve bacteria (Brown et al., 2006).
+Members of the genus Prevotella and Campylobacter (higher
+abundance in the Fulani) might have also been predicted to
+be potentially pathogenic by BugBase. Although Prevotella
+is associated with plant-based diet and is linked to beneﬁcial
+gut health, it has been associated with certain extraintestinal
+diseases, especially those of the female reproductive tract (Ravel
+et al., 2011; Ma et al., 2012; Vieira et al., 2017; Freitas et al.,
+2018). Our functional data need to be interpreted with caution
+as they were generated using the prediction tool PICRUSt,
+which cannot replace metagenomic, metatranscriptomic, or
+metabolomic studies.
+Our study has some limitations. First, the two groups studied
+showed a diﬀerence in age; in particular we had a higher
+proportion of children below the age of 11 years in the Fulani
+group than in the Jarawa group (Supplementary Table 2).
+Previous studies demonstrated that age is a factor that inﬂuences
+the composition of the intestinal microbiome and diﬀerences
+between children and adults have been reported (Koenig et al.,
+2011; Yatsunenko et al., 2012). It is generally assumed that
+at an age of 2–3 years, the intestinal microbiome of infants
+transforms into an adult-like microbiome (Koenig et al., 2011;
+Yatsunenko et al., 2012), probably by the change from breast
+feeding to a regular diet. In our study only two subjects (one
+in the Fulani and one in the Jarawa group) were below the
+critical age of 3 years; furthermore, analyses of our data for
+variation between adult versus pediatric microbiota showed
+no diﬀerences for alpha and beta diversity (Supplementary
+Tables 3, 4). In addition, when comparing subgroups of children
+and adults/adolescent between Fulanis and non-Fulanis we
+observed signiﬁcant diﬀerences in measures of alpha and beta
+diversity in the subgroups (Supplementary Tables 5, 6 and
+Supplementary Figures 5–7) except for alpha diversity in
+children. The latter observation can be explained by the small
+samples size in this subgroup. It is therefore unlikely that
+dissimilarities in age between the two groups had a major impact
+on the diﬀerences observed in the intestinal microbiota between
+Fulani and Jarawa.
+A second limitation is that we assessed antibiotic exposure
+only for a period of 1 month in the individuals included in
+the study. Although changes in alpha diversity after antibiotic
+intake normalize in healthy volunteers after 1 month (Burdet
+et al., 2019), eﬀects of antibiotic intake on intestinal microbiota
+composition are even seen after 12 and more months (Rashid
+et al., 2015; Haak et al., 2019). It is possible that potential non-
+assessed diﬀerences in previous antibiotic intake between the
+two groups might have inﬂuenced the study results. It should
+be mentioned that this potential bias is also probably relevant
+for most studies investigating the intestinal microbiota, as self-
+reporting of previous antibiotic intake by patients is unreliable. In
+a previous study patients only correctly reported 50% of antibiotic
+courses in the last 6 months in response to an open question
+(Metlay et al., 2003).
+Other confounding factors associated to changes in the
+microbiota such as BMI could also possibly explain the observed
+diﬀerences in the fecal microbiota between the two groups but
+were not assessed in the study.
+Further functional metagenomic studies on these populations
+will be needed to support PICRUSt analysis predictions
+to achieve deeper insights into the functional capacity of
+Frontiers in Microbiology | www.frontiersin.org
+7
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+the microbial community. Nevertheless, our study revealed
+insights into the impact of dietary practices and lifestyle on
+the composition of the gut microbiota of nomadic agro-
+pastoralists. It also revealed that a signiﬁcantly higher taxonomic
+diversity of the microbial community is not always present
+in subjects living a non-Western traditional lifestyle and
+does not necessarily always translate to a signiﬁcantly higher
+functional diversity.
+MATERIALS AND METHODS
+Dietary Proﬁle and Lifestyle of the Fulani
+and Jarawa
+Verbal interviews with the Fulani community selected for the
+study revealed that they consume a diet rich in ﬁber such
+as grains (corn, millet, sorghum) (Supplementary Table 1),
+fruits from trees deliberately planted and those gathered from
+the wild, tubers, and other farm products, which is similar to
+previously reported dietary practices of rural Fulani in Nigeria
+(Lockett et al., 2009). In addition, they also regularly consume
+fermented drinks such as nono (fermented milk) and kunu
+(fermented millet), while they hardly eat meat outside of festival
+periods. Although they use salt, processed food additives are
+absent in the meals of the nomadic Fulani. They prefer to use
+additives derived from their crops (for example, additives from
+soy beans) to add ﬂavor to their meals. The majority of the
+Jarawa are agriculturalists (subsistence farmers) and traders, and
+consume farm produce rich in ﬁber. However, their dietary
+habits are gradually being inﬂuenced by urbanization, and it
+is not uncommon for the Jarawa to include processed foods
+such as pasta, spaghetti, and fast foods in their daily diet. Also,
+to improve the aroma and the taste of their meals, artiﬁcial
+food additives are added during food preparation, mirroring
+the dietary practices of urban populations. The Jarawa consume
+foods of animal origin, such as ﬁsh, meat, and eggs, on a
+daily basis. Since the cultures of both Jarawa and Fulani are
+interwoven, some foods are commonly eaten by both groups
+such as local grains (tamba, tuwo varieties, and other grains)
+and fermented milk (known as nono or nunu) (Obi and
+Ikenebomeh, 2007; Okonkwo, 2011). Both groups also speak
+the Hausa language, which besides English is the language
+commonly spoken in Northern Nigeria. Nevertheless, both
+groups have their unique dialects. Historically, the nomadic
+Fulani and their herds have often been neglected by the local
+authorities with regard to the provision of health-care services,
+and this increases their vulnerability to zoonotic and non-
+zoonotic diseases (Sheik-Mohamed and Velema, 1999; Akogun
+et al., 2012; Muhammad et al., 2016). Unlike the Fulani, the
+Jarawa have easy access to health care, and the community
+studied lived about 1 km from the nearest hospital. Unlike the
+Fulani, the Jarawa have access to safer/potable drinking water, due
+in part, to proximity to the hospital. With the proximity of the
+Jarawa to a health-care center, they, unlike the nomadic Fulani,
+have easy access to health services and medications, including
+antibiotics (Sheik-Mohamed and Velema, 1999; Akogun et al.,
+2012; Muhammad et al., 2016).
+Subject Enrollment
+Participants included 28 healthy Fulani volunteers (2–70 years)
+from a community of Fulani living in Pabaman-shanu village,
+Plateau State, North-Central Nigeria. Since the participants were
+illiterate, verbal consent was obtained by the participants, and
+this was documented by a separate witness. Twenty-two (22)
+consenting healthy Jarawa (non-Fulani) participants (2–65 years)
+living in the same geographical area (Lamingo, Jos, Plateau
+State) were also recruited for this study. General (sample, age,
+sex, group) information on enrolled subjects can be found in
+Supplementary Table 2. Based on age, the volunteers in each
+of the study groups were sorted into two groups: children
+(≤11 years) and adolescent and adults (>11 years). Based on
+this classiﬁcation, 17 adolescents and adults and 5 children
+comprised the population of the non-Fulani volunteers, while
+15 adolescents and adults and 13 children comprised the
+population of the Fulani volunteers. Written informed consent
+was obtained from the subjects and the parents of children and
+adolescents enrolled.
+The volunteers were healthy and had not received antibiotics
+for at least 1 month before sampling. Because subjects were
+uneducated, we chose to assess the composition of their diet by
+verbal interviews rather than questionnaires.
+Sampling Procedure
+Fecal samples were collected from the study participants,
+transferred into 50 ml tubes, and preserved with 95% ethanol.
+After 24–36 h, the ethanol in each tube was carefully decanted and
+the bolus was transferred aseptically into another sterile DNA-
+free container half-ﬁlled with 3 mm-sized silica gel beads and
+sterile cotton wool (on the top of the beads, for desiccation)
+according to previously described protocols (Nsubuga et al., 2004;
+Schnorr et al., 2014). The whole process was done at room
+temperature. The samples were transported by courier to the
+Centre for Medical Research (ZMF), Medical University of Graz,
+Austria where they were stored at −80◦C until further processing.
+DNA Isolation, 16S rRNA Gene
+Ampliﬁcation and Sequencing
+Total genomic DNA was isolated from previously frozen
+samples using a combination of mechanical and enzymatic
+lysis followed by bacterial DNA extraction with the MagnaPure
+LC DNA Isolation Kit III (Bacteria, Fungi; Roche, Mannheim,
+Germany) according to previously described methods (Klymiuk
+et al., 2016; Kump et al., 2018) on a MagNA Pure LC 2.0
+instrument
+(Roche
+Diagnostics,
+Mannheim,
+Germany).
+Hypervariable
+region
+V4-speciﬁc
+PCR
+ampliﬁcation
+was
+performed as described by Klymiuk et al. (2016) using the
+primer
+set
+515F-5′-GTGCCAGCMGCCGCGGTAA
+and
+806R-5′-GGACTACHVGGGTWTCTAAT
+synthesized
+at
+Euroﬁns (MWG, Ebersberg, Germany). PCR reaction for
+each sample was performed in triplicates. Amplicons were
+puriﬁed
+as
+previously
+described
+(Klymiuk
+et
+al.,
+2016),
+quantiﬁed,
+pooled,
+and
+ﬁnally
+sequenced
+on
+a
+MiSeqII
+desktop
+sequencer
+(Illumina,
+Eindhoven,
+Netherlands)
+using
+V3
+chemistry
+(MiSeq
+Reagent
+Kits
+v6,
+Illumina,
+Frontiers in Microbiology | www.frontiersin.org
+8
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+Eindhoven, Netherlands) and a paired-end protocol according
+to manufacturer’s instructions.
+Microbiota Analysis and Statistics
+The raw reads (in FASTQ format obtained from next-generation
+sequencing) were processed using QIIME (version 1.9.1, if not
+speciﬁed otherwise) on the internal Galaxy software (version
+1.24.0) provided by the ZMF at the Medical University of
+Graz (Caporaso et al., 2010; Afgan et al., 2016). Brieﬂy, paired-
+end reads were ﬁrst merged for further processing. Joint raw
+sequences were ﬁltered by removing sequence reads shorter
+than 200 bps, reads containing ambiguous bases, or reads with
+an average quality score of <29. In addition adapters were
+identiﬁed and removed with Cutadapt (v1.16) (Martin, 2011).
+Pre-ﬁltered sequences were then screened for potential chimeras
+by USEARCH v6.1 (Edgar, 2010) against the 97% clustered
+SILVA reference 16S rRNA gene database (v128) (Pruesse et al.,
+2007; Quast et al., 2012). Remaining high quality sequence reads
+were ﬁnally processed by the QIIME open reference pipeline
+(pick_open_reference_otus.py, default setting if not speciﬁed
+otherwise) to perform clustering into OTUs at 97% sequence
+similarity. SILVA (v128) was used as reference database for
+taxonomic classiﬁcation, and UCLUST for subsequent de novo
+OTU clustering strategies. Singletons were rejected prior to
+ﬁnal downstream analysis. Taxonomic composition, alpha-
+[observed species, Chao1 index, Shannon index, phylogenetic
+diversity (PD) whole tree, Simpson index] and beta diversity
+(Bray–Curtis, unweighted and weighted UniFrac) analysis were
+assessed using the core diversity workﬂow (core_diversity.py)
+of QIIME. Diversity analysis, here in particular Evenness
+calculation, was performed using Calypso which implements
+Evenness using vegan (R package, Oksanen et al., 2019) as
+Pielou’s measure of species evenness (J) with J = H/log(S);
+S = species richness and H is the Shannon Weiner diversity.
+For diversity analysis data were rariﬁed to a minimal depth
+of 13,100 sequences per sample. Further downstream analysis,
+visualizations, and statistical calculations, such as RDA (OTU
+level) and boxplots, and Adonis or ANOSIM, were performed
+using Calypso (v7.38) (Zakrzewski et al., 2017). Also, the impact
+of age on the gut microbiota of both populations was tested
+with the aforementioned methods. Phylogenetic Investigation
+of Communities by Reconstruction of Unobserved States
+(PICRUSt version 1.0.0) was applied to predict metagenomic
+content from the 16S rRNA gene data (Langille et al., 2013;
+Kanehisa et al., 2016). RDA plots were constructed for beta
+diversity using Bray–Curtis distances, and functional diversity
+was measured using the Shannon index on PICRUSt-predicted
+metagenomes. Finally, BugBase was used to assess the predicted
+phenotypes present in microbiome samples (Ward et al., 2017).
+As this software estimates the proportion of Gram-positive,
+Gram-negative, potentially pathogenic, bioﬁlm-forming, and
+oxidative
+stress-tolerant
+microbial
+signatures,
+it
+provides
+interesting insights into the pathogenic potential of the
+investigated
+communities.
+Diﬀerentially
+abundant
+feature
+testing was implemented by QIIME within the core_diversity
+workﬂow (group_signiﬁcance.py) and applying Kruskal–Wallis.
+For this analysis false discovery rate (FDR) correction was
+used to adjust p-values for multiple comparisons. Statistics
+on alpha-diversity metrices was assessed by QIIME within
+the core_diversity workﬂow (compare_alpha_diversity.py) by
+applying a non-parametric pairwise t-test (p-values are calculated
+using 999 Monte-Carlo simulations). Here Bonferroni correction
+was applied to adjust p-values for multiple comparisons.
+Signiﬁcant
+diﬀerences
+in
+microbial
+composition
+between
+Fulani and non-Fulani beta diversity were investigated by
+multivariate
+analysis
+using
+ANOSIM/Adonis
+implemented
+and provided by Calypso based on the distances (Bray–Curtis,
+unweighted UniFrac) calculated by QIIME. Signiﬁcance between
+Firmicutes/Bacteroides ratio was determined using Pearson’s
+Chi-squared test with simulated p-value (based on 1e + 06
+replicates). In addition, Calypso redundancy analysis was used
+to explore the association between community composition
+and multiply explanatory variables (group and age). Taxonomic
+and functional discriminatory features as well as diﬀerences in
+pathogenic capacity, obtained from BugBase, between the Fulani
+and non-Fulani were determined using LEfSe.
+LDA score (log10) > 2 (LEfSe) and p-values < 0.05 (general)
+were considered statistically signiﬁcant. Default settings were
+used, if not otherwise speciﬁed.
+Age distribution between Fulani (19.4 ± 16.14 mean/SD) and
+non-Fulani (29 ± 18.03 mean/SD) ranges from 2 to 70 years
+in both groups, see Supplementary Table 2. Diﬀerence in age
+between the groups was tested using the Wilcoxon–Mann–
+Whitney-test, resulting in a p-value = 0.0398. Based on this
+statistically signiﬁcant diﬀerence, age was critically investigated
+with regard to alpha and beta diversity for young (age ≤11)
+and adult (age > 11) Fulani and non-Fulani. None of these
+calculations resulted in a statistically signiﬁcant result, see
+Supplementary Tables 3, 4.
+ETHICS STATEMENT
+This
+study
+was
+carried
+out
+in
+accordance
+with
+the
+recommendations of the National Code for Health Research
+Ethics, University of Ibadan/University College Hospital Ethics
+Committee with written informed consent from all subjects.
+All subjects gave written informed consent in accordance
+with the Declaration of Helsinki. The study protocol was
+approved by the ethical review committee of the University of
+Ibadan/University College Hospital on September 9, 2016 with
+NHREC/05/01/2008a, and reference number: UI/EC/16/0211.
+AUTHOR CONTRIBUTIONS
+AA was involved in formal analysis, investigation, methodology,
+visualization, and writing of the original draft. FA was
+involved with conceptualization, formal analysis, investigation,
+methodology, project administration, and editing of the draft. CH
+was involved with formal analysis, investigation, methodology,
+visualization, project administration, and editing of the draft.
+BH was involved in formal analysis, methodology, visualization,
+and review/editing of the draft. CM and GG were involved with
+investigation, methodology, and review/editing of the draft.
+Frontiers in Microbiology | www.frontiersin.org
+9
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+FUNDING
+This
+research
+was
+funded
+by
+the
+Austrian
+Agency
+for
+International Mobility and Cooperation in Education, Science,
+and Research (OEAD-GmbH); and Centre for International
+Cooperation and Mobility (ICM) with reference number ICM-
+2016-03232.
+ACKNOWLEDGMENTS
+We are indebted to Ingeborg Klymiuk and Alexandra Benharkou
+for their assistance with DNA extraction protocols, library
+preparation, and sequencing; Kaisa Koskinen, Maximilian
+Mora, Manuela-Raluca Pausan, and Lisa Wink for their
+assistance with laboratory procedures as well as with sequence
+data analysis; and Eugenia Lamont for language editing.
+This research was supported by the Ernst Mach scholarship
+from the Austrian Agency for International Cooperation
+in Education and Research. We acknowledge the support
+of the ZMF Galaxy Team: Core Facility Computational
+Bioanalytics, Medical University of Graz, funded by the
+Austrian Federal Ministry of Science, Research and Economy
+(BMWFW), Hochschulraum-Strukturmittel (2016) grant as part
+of BioTechMed Graz.
+SUPPLEMENTARY MATERIAL
+The Supplementary Material for this article can be found
+online
+at:
+https://www.frontiersin.org/articles/10.3389/fmicb.
+2019.02138/full#supplementary-material
+REFERENCES
+Afgan, E., Baker, D., van den Beek, M., Blankenberg, D., Bouvier, D., ˇCech, M.,
+et al. (2016). The Galaxy platform for accessible, reproducible and collaborative
+biomedical analyses: 2016 update. Nucleic Acids Res. 44, W3–W10. doi: 10.1093/
+nar/gkw343
+Akogun, O. B., Gundiri, M. A., Badaki, J. A., Njobdi, S. Y., Adesina, A. O., and
+Ogundahunsi, O. T. (2012). Febrile illness experience among Nigerian nomads.
+Int. J. Equity Health 11:5. doi: 10.1186/1475-9276-11-5
+Ayeni, F. A., Biagi, E., Rampelli, S., Fiori, J., Soverini, M., Audu, H. J., et al. (2018).
+Infant and adult gut microbiome and metabolome in rural bassa and urban
+settlers from Nigeria. Cell Rep. 23, 3056–3067. doi: 10.1016/j.celrep.2018.05.018
+Brown, N. F., Wickham, M. E., Coombes, B. K., and Finlay, B. B. (2006). Crossing
+the line: selection and evolution of virulence traits. PLoS Pathog. 2:e42. doi:
+10.1371/journal.ppat.0020042
+Burdet, C., Grall, N., Linard, M., Bridier-Nahmias, A., Benhayoun, M., Bourabha,
+K., et al. (2019). Ceftriaxone and cefotaxime have similar eﬀects on
+the intestinal microbiota in human volunteers treated by standard doses
+regimens. Antimicrob. Agents Chemother. 63, e02244–18. doi: 10.1128/AAC.
+02244-8
+Caporaso, J. G., Kuczynski, J., Stombaugh, J., Bittinger, K., Bushman, F. D.,
+Costello, E. K., et al. (2010). QIIME allows analysis of high-throughput
+community sequencing data. Nat. Methods 7, 335–336. doi: 10.1038/nmeth.f.
+303
+Central Intelligence Agency (2016). Nigeria. The world factbook. Available at: https:
+//www.cia.gov/library/publications/the-world-factbook/geos/ni.html
+Clemente, J. C., Pehrsson, E. C., Blaser, M. J., Sandhu, K., Gao, Z., Wang, B., et al.
+(2015). The microbiome of uncontacted Amerindians. Sci. Adv. 1:e1500183.
+doi: 10.1126/sciadv.1500183
+De Filippo, C., Cavalieri, D., Di Paola, M., Ramazzotti, M., Poullet, J. B., Massart, S.,
+et al. (2010). Impact of diet in shaping gut microbiota revealed by a comparative
+study in children from Europe and rural Africa. Proc. Natl. Acad. Sci. U.S.A. 107,
+14691–14696. doi: 10.1073/pnas.1005963107
+De Filippo, C., Di Paola, M., Ramazzotti, M., Albanese, D., Pieraccini, G., Banci,
+E., et al. (2017). Diet, environments, and gut microbiota. A preliminary
+investigation in children living in rural and urban burkina faso and italy. Front.
+Microbiol. 8:1979. doi: 10.3389/fmicb.2017.01979
+Edgar, R. C. (2010). Search and clustering orders of magnitude faster than BLAST.
+Bioinformatics 26, 2460–2461. doi: 10.1093/bioinformatics/btq461
+Freitas, A. C., Bocking, A., Hill, J. E., and Money, D. M. (2018). Increased
+richness and diversity of the vaginal microbiota and spontaneous preterm birth.
+Microbiome 6:117. doi: 10.1186/s40168-018-0502-8
+Gomez, A., Petrzelkova, K. J., Burns, M. B., Yeoman, C. J., Amato, K. R., Vlckova,
+K., et al. (2016). Gut microbiome of coexisting BaaKa pygmies and bantu
+reﬂects gradients of traditional subsistence patterns. Cell Rep. 14, 2142–2153.
+doi: 10.1016/j.celrep.2016.02.013
+Gupta, V. K., Paul, S., and Dutta, C. (2017). Geography, ethnicity or subsistence-
+speciﬁc variations in human microbiome composition and diversity. Front.
+Microbiol. 8:1162. doi: 10.3389/fmicb.2017.01162
+Hochschulraum-Strukturmittel
+(2016).
+BioTechMed.
+2017.
+Infrastructure-
+Call
+2016.
+Available
+at:
+https://biotechmedgraz.at/en/programs/shared-
+infrastructure/infrastructure-call-2016/#c240799 (accessed September, 2019).
+Haak, B. W., Lankelma, J. M., Hugenholtz, F., Belzer, C., de Vos, W. M., and
+Wiersinga, W. J. (2019). Long-term impact of oral vancomycin, ciproﬂoxacin
+and metronidazole on the gut microbiota in healthy humans. J. Antimicrob.
+Chemother. 74, 782–786. doi: 10.1093/jac/dky471
+Kanehisa, M., Sato, Y., Kawashima, M., Furumichi, M., and Tanabe, M. (2016).
+KEGG as a reference resource for gene and protein annotation. Nucleic Acids
+Res. 44, D457–D462. doi: 10.1093/nar/gkv1070
+Kau, A. L., Ahern, P. P., Griﬃn, N. W., Goodman, A. L., and Gordon, J. I. (2011).
+Human nutrition, the gut microbiome and the immune system. Nature 474,
+327–336. doi: 10.1038/nature10213
+Klymiuk, I., Bambach, I., Patra, V., Trajanoski, S., and Wolf, P. (2016). 16S based
+microbiome analysis from healthy subjects’ skin swabs stored for diﬀerent
+storage periods reveal phylum to genus level changes. Front. Microbiol. 7:2012.
+doi: 10.3389/fmicb.2016.02012
+Koenig, J. E., Spor, A., Scalfone, N., Fricker, A. D., Stombaugh, J., Knight, R.,
+et al. (2011). Succession of microbial consortia in the developing infant gut
+microbiome. Proc. Natl. Acad. Sci. U.S.A. 108, 4578–4585. doi: 10.1073/pnas.
+1000081107
+Kump, P., Wurm, P., Gröchenig, H. P., Wenzl, H., Petritsch, W., Halwachs, B.,
+et al. (2018). The taxonomic composition of the donor intestinal microbiota
+is a major factor inﬂuencing the eﬃcacy of faecal microbiota transplantation
+in therapy refractory ulcerative colitis. Aliment. Pharmacol. Ther. 47, 67–77.
+doi: 10.1111/apt.14387
+Langille, M. G. I., Zaneveld, J., Caporaso, J. G., McDonald, D., Knights, D., Reyes,
+J. A., et al. (2013). Predictive functional proﬁling of microbial communities
+using 16S rRNA marker gene sequences. Nat. Biotechnol. 31, 814–821. doi:
+10.1038/nbt.2676
+Lockett, C. T., Calvert, C. C., and Grivetti, L. E. (2009). Energy and micronutrient
+composition of dietary and medicinal wild plants consumed during drought.
+Study of rural Fulani, Northeastern Nigeria. Int. J. Food Sci. Nutr. 51, 195–208.
+doi: 10.1080/09637480050029700
+Ma, B., Forney, L. J., and Ravel, J. (2012). Vaginal microbiome: rethinking health
+and disease. Annu. Rev. Microbiol. 66, 371–389. doi: 10.1146/annurev-micro-
+092611-150157
+Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput
+sequencing reads. EMBnet. J. 17:10. doi: 10.14806/ej.17.1.200
+Martínez, I., Stegen, J. C., Maldonado-Gómez, M. X., Eren, A. M., Siba, P. M.,
+Greenhill, A. R., et al. (2015). The gut microbiota of rural papua new guineans:
+composition, diversity patterns, and ecological processes. Cell Rep. 11, 527–538.
+doi: 10.1016/j.celrep.2015.03.049
+Frontiers in Microbiology | www.frontiersin.org
+10
+September 2019 | Volume 10 | Article 2138
+Afolayan et al.
+The Gut Microbiome of Nomadic Fulani
+Metlay, J. P., Hardy, C., and Strom, B. L. (2003). Agreement between patient
+self-report and a Veterans Aﬀairs national pharmacy database for identifying
+recent exposures to antibiotics. Pharmacoepidemiol. Drug Saf. 12, 9–15. doi:
+10.1002/pds.772
+Morton, E. R., Lynch, J., Froment, A., Lafosse, S., Heyer, E., Przeworski, M.,
+et al. (2015). Variation in rural african gut microbiota is strongly correlated
+with colonization by entamoeba and subsistence. PLoS Genet. 11:e1005658.
+doi: 10.1371/journal.pgen.1005658
+Muhammad, H., Dalhat, M., Habib, Z., Bello, M., Bello, A., Yakasai, A., et al. (2016).
+Primary tuberculosis in a nomadic Fulani population and their cattle herds
+in Kano, Nigeria: a one health approach. Sub-Saharan African J. Med. 3:205.
+doi: 10.4103/ssajm.ssajm_40_16
+Nakayama, J., Yamamoto, A., Palermo-Conde, L. A., Higashi, K., Sonomoto, K.,
+Tan, J., et al. (2017). Impact of westernized diet on gut microbiota in children
+on Leyte Island. Front. Microbiol. 8:197. doi: 10.3389/fmicb.2017.00197
+Nsubuga, A. M., Robbins, M. M., Roeder, A. D., Morin, P. A., Boesch, C., and
+Vigilant, L. (2004). Factors aﬀecting the amount of genomic DNA extracted
+from ape faeces and the identiﬁcation of an improved sample storage method.
+Mol. Ecol. 13, 2089–2094. doi: 10.1111/j.1365-294X.2004.02207.x
+Obi, C. N., and Ikenebomeh, M. J. (2007). Studies on the microbiology and
+nutritional qualities of a Nigerian fermented milk product (Nono). Int. J. Dairy
+Sci. 2, 95–99. doi: 10.3923/ijds.2007.95.99
+Okonkwo, O. I. (2011). Microbiological analyses and safety evaluation of nono:
+a fermented milk product consumed in most parts of northern nigeria. Int. J.
+Dairy Sci. 6, 181–189. doi: 10.3923/ijds.2011.181.189
+Oksanen, J., Blanchet, F. G., Friendly, M., Kindt, R., Legendre, P., Mcglinn, D.,
+et al. (2019). vegan: Community Ecology Package. R Package. Version 2.5-5.
+doi: 10.1186/s12866-016-0748-x Available at: https://cran.r-project.org/web/
+packages/vegan/vegan.pdf (accessed May 12, 2019).
+Pruesse, E., Quast, C., Knittel, K., Fuchs, B. M., Ludwig, W., Peplies, J., et al.
+(2007). SILVA: a comprehensive online resource for quality checked and aligned
+ribosomal RNA sequence data compatible with ARB. Nucleic Acids Res. 35,
+7188–7196. doi: 10.1093/nar/gkm864
+Quast, C., Pruesse, E., Yilmaz, P., Gerken, J., Schweer, T., Yarza, P., et al. (2012). The
+SILVA ribosomal RNA gene database project: improved data processing and
+web-based tools. Nucleic Acids Res. 41, D590–D596. doi: 10.1093/nar/gks1219
+Ramadass, B., Rani, B. S., Pugazhendhi, S., John, K. R., and Ramakrishna, B. S.
+(2017). Faecal microbiota of healthy adults in South India: comparison of a
+tribal & a rural population. Indian J. Med. Res. 145, 237–246. doi: 10.4103/ijmr.
+IJMR_639_14
+Ramakrishna, B. S. (2013). Role of the gut microbiota in human nutrition and
+metabolism. J. Gastroenterol. Hepatol. 28, 9–17. doi: 10.1111/jgh.12294
+Rashid, M.-U., Zaura, E., Buijs, M. J., Keijser, B. J. F., Crielaard, W., Nord, C. E.,
+et al. (2015). Determining the long-term eﬀect of antibiotic administration
+on the human normal intestinal microbiota using culture and pyrosequencing
+methods. Clin. Infect. Dis. 60(Suppl. 2), S77–S84. doi: 10.1093/cid/civ137
+Ravel, J., Gajer, P., Abdo, Z., Schneider, G. M., Koenig, S. S. K., McCulle,
+S. L., et al. (2011). Vaginal microbiome of reproductive-age women.
+Proc. Natl. Acad. Sci. U.S.A. 108, 4680–4687. doi: 10.1073/pnas.10026
+11107
+Schnorr, S. L., Candela, M., Rampelli, S., Centanni, M., Consolandi, C., Basaglia,
+G., et al. (2014). Gut microbiome of the Hadza hunter-gatherers. Nat. Commun.
+5:3654. doi: 10.1038/ncomms4654
+Sheik-Mohamed, A., and Velema, J. P. (1999). Where health care has no access: the
+nomadic populations of sub-Saharan Africa. Trop. Med. Int. Heal. 4, 695–707.
+doi: 10.1046/j.1365-3156.1999.00473.x
+Turnbaugh, P. J., Ridaura, V. K., Faith, J. J., Rey, F. E., Knight, R., and Gordon,
+J. I. (2009). The eﬀect of diet on the human gut microbiome: a metagenomic
+analysis in humanized gnotobiotic mice. Sci. Transl. Med. 1:6ra14. doi: 10.1126/
+scitranslmed.3000322
+Vieira, A. T., Castelo, P. M., Ribeiro, D. A., and Ferreira, C. M. (2017). Inﬂuence of
+oral and gut microbiota in the health of menopausal women. Front. Microbiol.
+8:1884. doi: 10.3389/fmicb.2017.01884
+Walker, A. (2007). Say hello to our little friends. Nat. Rev. Microbiol. 5, 572–573.
+doi: 10.1038/nrmicro1720
+Ward, T., Larson, J., Meulemans, J., Hillmann, B., Lynch, J., Sidiropoulos, D.,
+et al. (2017). BugBase predicts organism level microbiome phenotypes. bioRxiv
+133462. doi: 10.1101/133462
+Yatsunenko, T., Rey, F. E., Manary, M. J., Trehan, I., Dominguez-Bello,
+M. G., Contreras, M., et al. (2012). Human gut microbiome viewed
+across age and geography. Nature 486, 222–227. doi: 10.1038/nature
+11053
+Zakrzewski, M., Proietti, C., Ellis, J. J., Hasan, S., Brion, M.-J., Berger, B.,
+et al. (2017). Calypso: a user-friendly web-server for mining and visualizing
+microbiome-environment interactions. Bioinformatics 33, 782–783. doi: 10.
+1093/bioinformatics/btw725
+Conﬂict of Interest Statement: The authors declare that the research was
+conducted in the absence of any commercial or ﬁnancial relationships that could
+be construed as a potential conﬂict of interest.
+Copyright © 2019 Afolayan, Ayeni, Moissl-Eichinger, Gorkiewicz, Halwachs and
+Högenauer. This is an open-access article distributed under the terms of the Creative
+Commons Attribution License (CC BY). The use, distribution or reproduction in
+other forums is permitted, provided the original author(s) and the copyright owner(s)
+are credited and that the original publication in this journal is cited, in accordance
+with accepted academic practice. No use, distribution or reproduction is permitted
+which does not comply with these terms.
+Frontiers in Microbiology | www.frontiersin.org
+11
+September 2019 | Volume 10 | Article 2138

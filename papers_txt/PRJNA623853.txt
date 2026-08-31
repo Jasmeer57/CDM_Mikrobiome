@@ -1,0 +1,1223 @@
+ARTICLE
+Physiology and Biochemistry
+A predictive regression model of the obesity-related
+inﬂammatory status based on gut microbiota composition
+Paula Aranaz1,2,6, Omar Ramos-Lopez3,6, Amanda Cuevas-Sierra1,4, J. Alfredo Martinez1,2,4,5, Fermin I. Milagro
+1,2,4,5✉and
+Jose I. Riezu-Boj
+1,2
+© The Author(s), under exclusive licence to Springer Nature Limited 2021
+BACKGROUND AND AIM: Fecal microbiome disturbances are linked to different human diseases. In the case of obesity, gut
+microbiota seems to play a role in the development of low-grade inﬂammation. The purpose of the present study was to identify
+speciﬁc bacterial families and genera associated with an increased obesity-related inﬂammatory status, which would allow to build
+a regression model for the prediction of the inﬂammatory status of obese and overweight subjects based on fecal microorganisms.
+METHODS: A total of 361 volunteers from the Obekit trial (65 normal-weight, 110 overweight, and 186 obese) were classiﬁed
+according to four variables: waist/hip ratio (≥0.86 for women and ≥1.00 for men), leptin/adiponectin ratio (LAR, ≥3.0 for women and
+≥1.4 for men), and plasma C-reactive protein (≥2 mg/L) and TNF levels (≥0.85 pg/mL). An inﬂammation score was designed to
+classify individuals in low (those subjects who did exceed the threshold value in 0 or 1 variable) or high inﬂammatory index (those
+subjects who did exceed the threshold value in 2 or more variables). Fecal 16 S rRNA sequencing was performed for all participants,
+and differential abundance analyses for family and genera were performed using the MicrobiomeAnalyst web-based platform.
+RESULTS: Methanobacteriaceae, Christensenellaceae, Coriobacteriaceae, Biﬁdobacteriaceae, Catabacteriaceae, and
+Dehalobacteriaceae families, and Methanobrevibacter, Eggerthella, Gemmiger, Anaerostipes, and Collinsella genera were
+signiﬁcantly overrepresented in subjects with low inﬂammatory index. Conversely, Carnobacteriaceae, Veillonellaceae,
+Pasteurellaceae, Prevotellaceae and Enterobacteriaceae families, and Granulicatella, Veillonella, Haemophilus, Dialister
+Parabacteroides, Prevotella, Shigella, and Allisonella genera were more abundant in subjects with a high inﬂammatory index. A
+regression model adjusted by BMI, sex, and age and including the families Coriobacteriaceae and Prevotellaceae and the genus
+Veillonella was developed.
+CONCLUSION: A microbiota-based regression model was able to predict the obesity-related inﬂammatory status (area under the
+ROC curve = 0.8570 ± 0.0092 Harrell’s optimism-correction) and could be useful in the precision management of inﬂammobesity.
+International Journal of Obesity; https://doi.org/10.1038/s41366-021-00904-4
+INTRODUCTION
+Inﬂammation is an orchestrated immunologic reaction to diverse
+harmful stimuli aimed to maintain cellular homeostasis and
+recover damaged tissue [1]. In obesity, excessive calorie intake
+and increased fat accumulation lead to a chronic, low-grade
+inﬂammatory state via altered secretion of adipocytokines like
+tumor necrosis factor (TNF)-α, interleukins (IL-1, IL-6), C-reactive
+protein (CRP), leptin and adiponectin, and the recruitment of
+immune cells, including activated macrophages [2]. This sustained
+condition is considered a key risk factor for developing many
+diseases such as atherosclerosis, hypertension, type 2 diabetes
+mellitus, nonalcoholic steatohepatitis, metabolic syndrome, and
+some cancers [3]. Hence, the characterization of factors inﬂuen-
+cing obesity-related inﬂammation is essential for the search of
+potential therapeutic targets aimed to mitigate exacerbated
+inﬂammation.
+In recent years, metagenomic analyses have demonstrated that
+some alterations of the microbiome are linked to the development
+of different human diseases [4]. In this context, gut microbiota
+seems to play a critical role in the onset and progression of obesity-
+related inﬂammation, where genetic/epigenetic and environmen-
+tal factors may be involved [5]. Indeed, unbalanced changes in
+microbiota proﬁle (dysbiosis) and changes in intestinal perme-
+ability are identiﬁed as potential enhancers of inﬂammation in
+obesity via lipopolysaccharide (LPS) release and toll-like receptor 4
+(TLR4) activation [6]. Thus, LPS translocation triggers several classic
+immune
+pathways,
+including
+nuclear
+factor-κB
+(NF-κB)
+and
+subsequent persistent low-grade inﬂammatory responses [7].
+Received: 22 December 2020 Revised: 28 May 2021 Accepted: 23 June 2021
+1Center for Nutrition Research, University of Navarra, Pamplona, Spain. 2Navarra Institute for Health Research (IdiSNA), Pamplona, Spain. 3Medicine and Psychology School,
+Autonomous University of Baja California, Tijuana, Baja California, Mexico. 4Department of Nutrition, Food Science, and Physiology, University of Navarra, Pamplona, Spain.
+5Centro de Investigación Biomédica en Red Fisiopatología de la Obesidad y Nutrición (CIBERobn), Instituto de Salud Carlos III, Madrid, Spain. 6These authors contributed equally:
+Paula Aranaz, Omar Ramos-Lopez. ✉email: fmilagro@unav.es
+www.nature.com/ijo
+International Journal of Obesity
+Regarding the relationship between gut microbiota composi-
+tion and inﬂammation in obesity, it has been reported that the
+abundance of Biﬁdobacterium, Faecalibacterium, Ruminococcus,
+and Prevotella genera were inversely associated with serum levels
+of different pro-inﬂammatory cytokines, including CRP and IL-6 [8].
+Moreover, lower gut microbial diversity was also related to higher
+blood leukocyte counts and CRP concentrations [9]. Similarly,
+individuals with lower bacterial richness were characterized by
+having a more pronounced inﬂammatory phenotype compared
+with subjects presenting high bacterial richness [10].
+The purpose of the present study was to identify speciﬁc
+bacterial families and genera associated with an increased
+inﬂammatory status in obesity, which could allow to build a
+microbiota-based regression model for the prediction of the
+inﬂammatory status of obese and overweight subjects.
+MATERIAL AND METHODS
+Participants
+This cross-sectional study was performed on 361 adult individuals from the
+OBEKIT trial (registered code: NCT02737267) using baseline data. The study
+included 65 normal-weight (18 male and 47 female), 110 overweight (30
+male and 80 female), and 186 obese (62 male and 124 female) participants.
+Study design, protocol characteristics, and inclusion and exclusion
+criteria of this trial have been described elsewhere [11]. This study was
+properly approved by the Research Ethics Committee of the University of
+Navarra (Ref. 132/2015) in compliance with the ethical principles of the
+Helsinki Declaration regarding medical research involving human subjects.
+All participants provided written informed consent before inclusion in
+the study.
+Anthropometric measurements
+BMI was calculated as the ratio between body weight and squared height
+(kg/m2) and the BMI classiﬁcation criteria was following according to the
+World Health Organization [12]. Dual-energy X-ray absorptiometry was
+applied to estimate fat distribution following the company instructions
+(DEXA, Lunar Prodigy, software version 6.0, Madison, WI, USA).
+Waist circumference (cm) was measured on standing subjects at the end
+of a natural breath, at the midpoint between the top of the iliac crest and
+the lower rib on the midaxillary line; whereas hip circumference (cm) was
+measured in the same conditions at the level of the widest circumference
+over the great trochanters. Both circumferences were collected with
+stretch-resistant tape at least twice. Waist/hip ratio (WHR) was estimated
+by dividing waist circumference by hip circumference. Systolic and
+diastolic blood pressures were measured with a sphygmomanometer
+using the standardized criteria of the World Health Organization and the
+International Society of Hypertension [13].
+Biochemical determinations
+Peripheral blood samples were drawn by venipuncture after a 12-h
+overnight fast in a clinical setting. Serum was processed in an automatic
+analyzer (Pentra C200, HORIBA Medical, Kyoto, Japan) using appropriate
+kits for glucose, total cholesterol, high-density lipoprotein cholesterol
+(HDL-c), triglycerides, alanine aminotransferase (ALT), aspartate amino-
+transferase (AST), and uric acid provided by the company (HORIBA
+medical), as described previously [14]. The serum concentrations of leptin
+(Mercodia,
+Uppsala,
+Sweden),
+adiponectin
+(BioVendor,
+Brno,
+Czech
+Republic), CRP (Demeditec, Kiel, Germany), and TNF (R&D Systems,
+Minneapolis, MN, USA) were measured using speciﬁc enzyme-linked
+immunosorbent (ELISA) assays and read with an automated analyzer
+system (Triturus, Grifols, Barcelona, Spain). Homeostatic model assessment
+for insulin resistance (HOMA-IR) was calculated according to the following
+formula: fasting insulin (mU/mL) × fasting glucose (mg/dL))/405. The
+Friedewald
+formula
+was
+used
+to
+estimate
+low-density
+lipoprotein
+cholesterol (LDL-c) levels.
+Inﬂammation score
+Participants
+were
+classiﬁed
+according
+to
+four
+inﬂammation-related
+variables associated with obesity: WHR (≥0.86 for women and ≥1.00 for
+men), the LAR (≥3.0 for women and ≥1.4 for men), and the circulating
+levels of CRP (≥2 mg/L) and TNF (≥0.85 pg/mL). Cut-off values were
+established based on combining the use of the median (so as not to
+unbalance the low and high-risk groups of inﬂammation) with the choice
+of values published by other relevant research groups. An inﬂammation
+score was designed to classify individuals in low (those who did exceed the
+threshold value in 0 or 1 variable) or high inﬂammatory index (those who
+did exceed the threshold value in 2, 3, or 4 variables).
+Metagenomic analyses
+Fecal samples were collected using OMNIgene®•GUT kits (DNA Genotek,
+Ottawa, ON, Canada), according to the supplier instructions. Bacterial DNA
+was isolated with the QIAamp®DNA kit (Qiagen, Hilden, Germany)
+following the manufacturer’s protocol. Metagenomic analyses have been
+previously described [14]. Brieﬂy, the V3-V4 hypervariable regions of the
+16 S rRNA gene were ampliﬁed by paired-end DNA sequencing in the
+MiSeq System (Illumina, San Diego, CA, USA) at the Servei de Genòmica i
+Bioinformàtica (Autonomous University of Barcelona, Barcelona, Spain).
+Taxonomy (including species, genus, family, order, class, and phylum) was
+assigned using HITdb (https://github.com/microbiome/HITdb). All sequen-
+cing data have been submitted to the NCBI. SRA repository under the
+accession number PRJNA623853.
+Comprehensive differential abundance analyses were performed
+using
+the
+MicrobiomeAnalyst
+web-based
+platform
+(https://www.
+microbiomeanalyst.ca/) [15]. Gene abundance data were analyzed by
+Marker Data Proﬁling (MDP). Data were ﬁltered by a minimum count of
+4, 20% of prevalence in samples, and a low variance ﬁlter (maximum
+percentage of samples to remove) of 20%, based on inter-quantile
+range. Data were then normalized by the trimmed mean of M-values
+(TMM). The differential abundance analysis method used for the
+comparative analysis was the RNA-seq method, using the edgeR
+(Empirical analysis for Digital Gene Expression in R) algorithm, with an
+adjusted p value cutoff of 0.05.
+Alpha diversity proﬁling between the low and high inﬂammation score
+groups was calculated by determining the Shannon and Simpson indexes
+using MicrobiomeAnalyst [15], considering all OTU counts.
+Statistical analyses
+The
+normality
+of
+analyzed
+variables
+was
+screened
+with
+the
+Kolmogorov–Smirnov test. Results were expressed as means ± SEM for
+continuous variables and as numbers and percentages for categorical
+variables. Statistical differences between groups were assessed by
+Student’s t-test or Mann–Whitney U-test depending on the distribution
+of data. Pearson’s correlation was performed to assess the association
+between the variables. Statistical signiﬁcance was set on a p value <0.05.
+In order to select the best logistic regression model to associate bacteria
+with the inﬂammation score, three different methods were combined
+using the Stata 16 program (StataCorp LLC, College Station, TX, USA; http://
+www.stata.com): The “lars” module to perform least angle regression
+solution [16]; the “vselect” module to perform a variable selection for linear
+regression [17]; and the “swboot” module to perform bootstrap stepwise
+linear or logistic regression models [18]. BMI, age, and sex were used as
+covariates.
+Stata
+16
+was
+used
+also
+to
+perform
+Pearson
+or
+Hosmer–Lemeshow goodness-of-ﬁt test, calibration plot of prediction
+model performance, compute the area under the receiver operating
+characteristic curve (ROC), and graph the curve. Harrel’s bootstrap method
+was used to adjust for optimism/overﬁtting of the ROC curve based on a
+modiﬁed script from Patrick Royston (https://www.stata.com/statalist/
+archive/2008-10/msg01137.html). Mean-variance inﬂation factor (VIF) and
+condition number were determined as measures of collinearity between
+variables.
+RESULTS
+Scores of inﬂammation linked to obesity
+Four variables were selected to determine the level of obesity-
+related inﬂammation of a subject: WHR, LAR, and the circulating
+levels of CRP and TNF. Individuals were classiﬁed according to
+their values for these four variables in the corresponding group:
+“low” (for those with values lower than the established threshold)
+or “high” (for those with values higher than the established
+threshold). The baseline characteristics of the subjects of each
+group are summarized in Table 1. As expected, all of them were
+associated with different obesity-related parameters. However,
+P. Aranaz et al.
+2
+International Journal of Obesity
+1234567890();,:
+Table 1.
+Baseline characteristics of the studied population separated by the two groups (low and high) of the four variables used in the inﬂammation score (waist-hip ratio, TNF, CRP, and leptin-
+adiponectin ratio), and the inﬂammation score.
+Waist/Hip
+ratio
+TNF
+CRP
+Leptin/
+Adiponectin
+ratio
+Inﬂammation
+score
+Variable
+Low
+n = 191
+High
+n = 170
+P value
+Low
+n = 206
+High
+n = 155
+P value
+Low
+n = 227
+High
+n = 134
+P value
+Low n = 185
+High
+n = 176
+P value
+Low n = 159
+High
+n = 202
+P value
+Age (years)
+40.9 ± 0.7
+49.1 ± 0.7
+<0.001
+42.8 ± 0.7
+47.4 ± .0.9
+<0.001
+44.8 ± 0.7
+44.7 ± 0.9
+0.88
+43.6 ± 0.7
+45.9 ± 0.8
+0.04
+42.0 ± 0.7
+46.7 ± 0.8
+<0.001
+Sex (# women/men)
+129/62
+122/48
+158/48
+93/62
+151/76
+100/34
+127/58
+124/52
+109/50
+142/60
+Weight (kg)
+78.3 ± 1.2
+88.4 ± 1.0
+<0.001
+82.3 ± 1.2
+84.1 ± 1.3
+0.29
+79.2 ± 1.1
+89.6 ± 1.2
+<0.001
+75.2 ± 1.1
+91.3 ± 1.0
+<0.001
+75.3 ± 1.2
+89.2 ± 1.0
+<0.001
+BMI (kg/m2)
+27.7 ± 03
+32.4 ± 0.3
+<0.001
+29.7 ± 0.3
+30.2 ± 0.4
+0.26
+28.3 ± 0.3
+32.6 ± 0.3
+<0.001
+27.0 ± 0.3
+33.0 ± 3.4
+<0.001
+26.7 ± 0.3
+32.4 ± 0.3
+<0.001
+Waist (cm)
+89.3 ± 0.9
+106.3 ±
+0.8
+<0.001
+95.7 ± 1.0
+99.5 ± 1.2
+0.005
+93.3 ± 1.0
+104.1 ± 1.0
+<0.001
+89.3 ± 1.0
+105.7 ± 0.8
+<0.001
+87.7 ± 1.0
+104.9 ± 0.7
+<0.001
+Hip (cm)
+106.9 ±
+0.8
+110.5 ± 0.7
+<0.001
+109.3 ± 0.7
+107.7 ± 0.8
+0.13
+105.9 ± 0.7
+113.2 ± 0.8
+<0.001
+103.5 ± 0.7
+114.0 ± 0.6
+<0.001
+104.4 ± 0.8
+111.9 ± 0.6
+<0.001
+Waist/Hip ratio
+0.83 ± 0.01
+0.96 ± 0.01
+<0.001
+0.87 ± 0.01
+0.92 ± 0.001
+<0.001
+0.88 ± 0.01
+0.92 ± 0.01
+<0.001
+0.86 ± 0.01
+0.93 ± 0.01
+<0.001
+0.84 ± 0.01
+0.94 ± 0.01
+<0.01
+Fat mass (kg)
+25.4 ± 0.7
+34.4 ± 0.7
+<0.001
+30.0 ± 0.7
+29.2 ± 0.8
+0.53
+26.3 ± 0.6
+35.3 ± 0.8
+<0.001
+23.6 ± 0.6
+36.0 ± 0.6
+<0.001
+23.4 ± 0.7
+34.6 ± 0.6
+<0.001
+Visceral fat (g)
+824 ± 53
+1762 ± 73
+<0.001
+1122 ± 67
+1458 ± 76
+<0.001
+1096 ± 64
+1559 ± 78
+<0.001
+854 ± 57
+1698 ± 72
+<0.001
+747 ± 60
+1671 ± 65
+<0.001
+SBP (mmHg)
+120 ± 1
+128 ± 1
+<0.001
+121 ± 1
+127 ± 2
+0.003
+121 ± 1
+127 ± 2
+0.002
+119 ± 1
+128 ± 1
+<0.001
+118 ± 1
+128 ± 1
+<0.001
+DBP (mmHg)
+74 ± 1
+80 ± 1
+<0.001
+77 ± 1
+77 ± 1
+0.49
+76 ± 1
+79 ± 1
+0.005
+73 ± 1
+80 ± 1
+<0.001
+73 ± 1
+80 ± 1
+<0.001
+Glucose (mg/dL)
+90.3 ± 0.7
+99.5 ± 1.2
+<0.001
+93.3 ± 0.7
+96.4 ± 1.4
+0.13
+92.9 ± 0.7
+97.6 ± 1.5
+0.001
+90.4 ± 0.7
+99.1 ± 1.2
+<0.001
+90.4 ± 0.8
+98.0 ± 1.1
+<0.001
+Cholesterol (mg/dL)
+205.5 ± 1.5
+219.6 ± 3.0
+<0.001
+212.9 ± 2.8
+211.2 ± 3.0
+0.62
+211.7 ± 2.6
+213.0 ± 3.2
+0.75
+208.9 ± 2.9
+215.6 ± 2.0
+0.08
+207.3 ± 32
+216.0 ± 2.6
+<0.03
+HDL-c (mg/dL)
+59.3 ± 1.0
+53.6 ± 0.9
+<0.001
+59.5 ± 0.8
+52.8 ± 1.1
+<0.001
+58.7 ± 0.9
+53.1 ± 1.0
+<0.001
+59.1 ± 0.9
+54.0 ± 0.7
+<0.001
+60.5 ± 1.0
+53.6 ± 1.0
+<0.001
+LDL-c (mg/dL)
+129.4 ± 2.5
+143.5 ± 2.6
+<0.001
+136.0 ± 2.6
+136.1 ± 2.6
+0.85
+134.9 ± 2.4
+138.0 ± 2.8
+0.44
+133.0 ± 2.7
+139.4 ± 2.4
+0.04
+130.6 ± 3.0
+140.3 ± 2.2
+0.003
+Triglycerides (mg/
+dL)
+83.8 ± 3.3
+112.9 ± 4.7
+<0.001
+87.4 ± 3.4
+110.9 ± 4.8
+<0.001
+90.3 ± 3.7
+109.6 ± 4.6
+<0.001
+84.4 ± 3.7
+111.3 ± 4.3
+<0.001
+81.2 ± 4.0
+110.3 ± 3.9
+<0.001
+ALT (U/L)
+20.6 ± 0.9
+24.7 ± 1.2
+<0.001
+19.5 ± 0.7
+26.6 ± 1.4
+<0.001
+22.1 ± 1.0
+23.4 ± 1.0
+0.015
+20.4 ± 1.0
+24.9 ± 1.1
+<0.001
+19.1 ± 0.9
+25.3 ± 1.1
+<0.001
+AST (U/L)
+21.5 ± 0.4
+22.1 ± 0.8
+0.95
+20.6 ± 0.4
+23.5 ± 0.8
+<0.001
+21.8 ± 0.6
+21.7 ± 0.6
+0.88
+22.0 ± 0.7
+21.6 ± 0.5
+0.85
+21.2 ± 0.5
+22.3 ± 0.7
+0.26
+Uric acid (mg/dL)
+4.8 ± 0.1
+5.2 ± 0.1
+<0.001
+2.8 ± 0.1
+5.2 ± 0.1
+<0.001
+4.9 ± 0.1
+5.2 ± 0.1
+0.002
+4.7 ± 0.1
+5.3 ± 0.1
+<0.001
+4.7 ± 0.1
+5.2 ± 0.1
+<0.001
+Leptin (ng/mL)
+26.9 ± 2.0
+39.4 ± 2.1
+<0.001
+34.3 ± 1.9
+30.8 ± 2.3
+0.05
+26.0 ± 1.5
+44.3 ± 2.7
+<0.001
+18.1 ± 1.0
+48.3 ± 2.3
+<0.001
+20.4 ± 1.4
+42.6 ± 2.1
+<0.001
+Adiponectin (µg/mL)
+12.9 ± 0.4
+10.6 ± 0.3
+<0.001
+12.2 ± 0.4
+11.4 ± 0.4
+0.11
+12.5 ± 0.4
+10.7 ± 0.4
+0.003
+13.5 ± 0.4
+10.1 ± 0.3
+<0.001
+13.4 ± 0.4
+10.6 ± 0.3
+<0.001
+Leptin/Adiponectin
+ratio
+2.2 ± 0.2
+4.0 ± 0.2
+<0.001
+3.2 ± 0.2
+3.0 ± 0.2
+0.41
+2.3 ± 0.1
+4.5 ± 0.3
+<0.001
+1.3 ± 0.1
+4.9 ± 0.2
+<0.001
+1.6 ± 0.1
+4.3 ± 0.2
+<0.001
+Insulin (mU/L)
+5.8 ± 0.2
+9.4 ± 0.4
+<0.001
+7.2 ± 0.3
+7.9 ± 0.4
+0.46
+6.4 ± 0.2
+9.5 ± 0.5
+<0.001
+5.2 ± 0.2
+10.0 ± 0.4
+<0.001
+5.2 ± 0.2
+9.4 ± 0.4
+<0.001
+CRP (µg/mL)
+2.0 ± 0.3
+3.3 ± 0.2
+<0.001
+2.3 ± 0.2
+3.1 ± 0.3
+0.006
+0.9 ± 0.0
+5.5 ± 0.4
+<0.001
+1.7 ± 0.2
+3.6 ± 0.3
+<0.001
+0.8 ± 0.1
+4.0 ± 0.3
+<0.001
+TNF (pg/mL)
+0.81 ± 0.02
+0.93 ± 0.03
+<0.001
+0.65 ± 0.01
+1.61 ± 0.03
+<0.001
+0.81 ± 0.02
+0.96 ± 0.04
+0.002
+0.86 ± 0.03
+0.87 ± 0.02
+0.58
+0.73 ± 0.02
+0.97 ± 0.03
+<0.001
+HOMA-IR
+1.3 ± 0.1
+2.4 ± 0.1
+<0.001
+1.7 ± 0.1
+2.0 ± 0.1
+0.36
+1.5 ± 0.1
+2.4 ± 0.1
+<0.001
+1.2 ± 0.1
+2.5 ± 0.1
+<0.001
+1.2 ± 0.1
+2.3 ± 0.1
+<0.001
+Values correspond to the mean ± SEM. P value of the comparison of means at baseline by unpaired t-test or Mann–Whitney U-test according to data distribution. p lower than 0.05 is highlighted in bold type.
+BMI body mass index, SBP systolic blood pressure, DBP diastolic blood pressure. ALT alanine aminotransferase, AST aspartate aminotransferase, CRP C-reactive protein, TNF tumor necrosis factor, HOMA-IR
+homeostatic model assessment for insulin resistance.
+P. Aranaz et al.
+3
+International Journal of Obesity
+WHR was the only one related to total cholesterol levels (p <
+0.001), and TNF was the only related to AST levels (p < 0.001). The
+four inﬂammation variables presented different levels of correla-
+tion between them, as summarized in Fig. S1, but the R values are
+not very high reﬂecting that these variables are not too close.
+Particularly, no signiﬁcant correlations have been found between
+WHR and CRP, and between LAR and TNF.
+From these four variables, an inﬂammation score was designed
+to classify individuals in “Low” (those who did exceed the
+threshold value in 0 or 1 variable) or “High” inﬂammatory index
+(those who did exceed the threshold value in 2, 3, or 4). The
+characteristics of the individuals of both groups, low and high
+inﬂammation scores, are also summarized in Table 1. Both groups
+differed in all the variables measured except the AST levels. The
+low inﬂammation group was younger, with lower total and
+visceral adiposity, and with lower levels of markers related to
+cardiovascular risk and insulin resistance. As an example of its
+relation with obesity (Fig. S2), the individuals with higher
+inﬂammation score exhibited increased BMI in comparison with
+those with low inﬂammation score (p value <0.0001).
+Differences in the abundance of bacterial families and genera
+according to the four inﬂammation variables
+We initially studied the relative abundance of bacterial families
+and genera differentially distributed in the low and high groups
+for the four inﬂammation variables. Table S1 summarizes the taxa
+associated with WHR, TNF, CRP, and LAR. LAR and WHR were
+related to more families and genera than the pro-inﬂammatory
+proteins. Some taxa were extremely statistically signiﬁcant, such as
+Carnobacteriaceae and Granulicatella with WHR and LAR (pro-
+inﬂammatory), Eggerthella and Gemmiger with WHR, and Metha-
+nobacteriaceae with TNF and CRP (anti-inﬂammatory).
+In order to detect those taxa speciﬁc of each variable, together
+with those commonly found in more than two variables, we
+performed a Venn diagram comparing the obtained results
+(Fig. 1).
+Methanobacteriaceae family, and also the Methanobrevibacter
+genera was found to be associated with the low level of the four
+inﬂammation variables. On the contrary, the genus Granulicatella
+was found to be associated with the high-level group of the four
+variables. Different families and genera were found to be
+associated with reduced levels of the different inﬂammatory
+variables.
+Thus,
+Coriobacteriaceae
+and
+Christensenellaceae
+families were more abundant in individuals with reduced levels
+of WHR
+and LAR, together
+with the genera Anaerostipes,
+Eggerthella, and Gemmiger. These two latter were also associated
+with reduced TNF and CRP concentrations, respectively. Moreover,
+Holdemania and Collinsella were more abundant in individuals
+with reduced levels of TNF and WHR.
+On the contrary, individuals with higher levels of WHR and LAR
+exhibited an increased proportion of the family Carnobacteriaceae
+and the genera Veillonella, Rothia, and Shigella. This latter was also
+associated with higher levels of CRP. The genera Parabacteroides
+and Adlercreutzia were more abundant in individuals with higher
+levels of LAR and TNF. Surprisingly, the genus Bacteroides was
+associated with higher LAR but reduced TNF levels.
+Differences in the abundance of bacterial families and genera
+according to the inﬂammation score
+Considering these results, we analysed the relative abundance
+of those families and genera differentially distributed between
+the high and the low groups of the inﬂammatory score. First,
+we observed that the bacterial alpha diversity of those
+individuals with the high inﬂammatory score was signiﬁcantly
+reduced in comparison with individuals with a low inﬂamma-
+tory score, as it is demonstrated by signiﬁcantly lower Shannon
+(p value: 0.0185) and Simpson (p value: 0.0439) diversity
+indexes (Fig. S3).
+Fig. 1
+Venn diagram showing the families and genera that were statistically associated and shared between the four inﬂammation-
+related variables. CRP: yellow. TNF: green. Leptin/adiponectin ratio (LAR): red. Waist-to-hip ratio (WHR): blue. Families and genera associated
+with higher levels of the corresponding inﬂammation variables are written in red font. Families and genera associated with lower levels of the
+corresponding inﬂammation variables are written in green font.
+P. Aranaz et al.
+4
+International Journal of Obesity
+The analysis of the relative abundance among the inﬂammation
+score groups
+revealed that
+the
+families Carnobacteriaceae,
+Veillonellaceae, Pasteurellaceae, Prevotellaceae, and Enterobacter-
+iaceae were signiﬁcantly associated with a higher inﬂammatory
+score (edgeR p value <0.05; FDR <0.05), while the families
+Methanobacteriaceae, Christensenellaceae, Coriobacteriaceae, Biﬁ-
+dobacteriaceae, Catabacteriaceae, and Dehalobacteriaceae were
+more abundant in subjects with a lower inﬂammatory score
+(edgeR p value <0.05; FDR <0.05) (Fig. 2). Moreover, the genera
+Granulicatella, Veillonella, Haemophilus, Dialister Parabacteroides,
+Prevotella, Shigella, and Allisonella were signiﬁcantly associated
+with a higher inﬂammatory score (edgeR p value <0.05; FDR
+<0.05), while the genera Methanobrevibacter, Eggerthella, Gemmi-
+ger, Anaerostipes, and Collinsella were more abundant in subjects
+with a lower inﬂammatory score (edgeR p value <0.05; FDR <0.05)
+(Fig. 2).
+When comparing the inﬂammation score with the results
+obtained for the four inﬂammation variables previously described
+in Table S1, four new families (Veillonellaceae, Prevotellaceae,
+Catabacteriaceae, and Dehalobacteriaceae) and two new genera
+(Dialister and Prevotella) were found to be associated with a low or
+high inﬂammation score (Fig. 3).
+Multiple logistic regression model showing variables
+associated with the bimodal general inﬂammation score
+In order to evaluate the inﬂuence of the different taxa described in
+the previous section on the bimodal general score of inﬂamma-
+tion, different multiple logistic regression models were studied, as
+described in Material and Methods. The best model obtained
+(Table 2) presents a Pseudo R2 of 0.3343 and p < 0.0001. BMI, sex,
+and age were used as adjustment variables. In the model, it is
+observed that the family Coriobacteriaceae has a protective effect
+on the inﬂammation score, whereas Veillonella and Prevotellaceae
+are associated with a pro-inﬂammatory effect.
+A microbiota-based adjusted regression model was able to
+predict the obesity-related inﬂammatory status (area under the
+ROC curve = 0.8570 ± 0.0092 Harrell’s optimism-correction) (Fig.
+4A). Hosmer–Lemeshow goodness-of-ﬁt test using 10 quantiles
+was Chi-square 6.92 and p = 0.55. The calibration plot for this
+multivariate model is included (Fig. 4B).
+Fig. 2
+Bacterial families and genera diferential between individuals with high and low inﬂammatory score. Bacterial families and genera
+are signiﬁcantly more abundant (edgeR p value <0.05 and FDR <0.05) in individuals with high inﬂammatory score (A) and low inﬂammatory
+score (B). Data were log-transformed counts of bacterial 16 S rRNA gene copies.
+P. Aranaz et al.
+5
+International Journal of Obesity
+DISCUSSION
+Excessive visceral fat accumulation is closely related to a chronic
+low-grade inﬂammatory state [19]. In this research, an inﬂamma-
+tion score was calculated using different markers, comprising WHR
+ratio, the plasma levels of CRP and TNF, and the LAR ratio, which
+represent different inﬂammatory mechanisms related to obesity
+comorbidities. For instance, WHR has been extensively used as a
+surrogate to measure visceral adiposity and a predictor for
+cardiovascular outcomes [20]. LAR has been associated with a
+higher risk of metabolic syndrome derangement, [21]. CRP is an
+acute‐phase inﬂammatory marker that has shown to be an
+independent predictor of depression and death from cardiovas-
+cular incidents [22]. Finally, TNF is a pro-inﬂammatory cytokine
+that
+promotes
+insulin
+resistance
+[23].
+Of
+note,
+no
+strong
+correlations between these parameters were found (Fig. S1),
+avoiding bias from scoring.
+Accordingly, abdominal obesity (measured by waist/hip circum-
+ferences) has been associated with greater blood levels of CRP, TNF,
+and leptin in several studies, linking obesity with an increased risk
+of developing cardiovascular disease, metabolic syndrome, and
+type 2 diabetes [24]. Moreover, this inﬂammatory environment is
+characterized by a decreased expression of beneﬁcial anti-
+inﬂammatory
+adipokines
+with
+a
+protective
+effect,
+including
+adiponectin [25]. Indeed, similar inﬂammation scores using classical
+circulating cytokines/adipokines have been identiﬁed as important
+predictors of certain obesity phenotypes involving low-grade
+inﬂammation in some populations [26, 27], but not in others [28].
+Cumulative
+evidence
+identiﬁes
+microbiota
+dysbiosis
+and
+reduced bacterial richness as key players in triggering obesity-
+related systemic inﬂammation and metabolic dysfunction [29]. In
+this study, we demonstrated that the bacterial alpha diversity of
+those individuals with high inﬂammatory score was signiﬁcantly
+reduced in comparison with individuals with low inﬂammatory
+score (Fig. S2). Moreover, the family Prevotellaceae and the genus
+Veillonella were associated with a pro-inﬂammatory phenotype,
+whereas
+the
+family
+Coriobacteriaceae
+seemed
+to
+exert
+a
+protective
+effect.
+Remarkably,
+these
+taxa
+were
+exclusively
+associated with the inﬂammation score and were not detected
+by the four inﬂammation-related variables at the individual level
+(Fig. 3). In this context, animal and human studies support a causal
+role of the family Prevotellaceae in promoting low-grade chronic
+systemic inﬂammation through activation and dissemination of
+inﬂammatory mediators at mucosal sites involving antigen-
+presenting cells [30]. Also, the relative abundance of the bacterial
+family Prevotellaceae and markers of low-grade inﬂammation
+were higher in obese pregnant women compared to their
+overweight pregnant counterparts [31]. Moreover, Prevotellaceae
+Fig. 3
+Venn diagram of the families and genera identiﬁed by the inﬂammation score in comparison with those common taxa found in
+the four variables. Six taxa were exclusive of the inﬂammation score. Families and genera associated with higher levels of inﬂammation are
+indicated in red. Families and genera associated with lower levels of inﬂammation are indicated in green.
+Table 2.
+Variables included in the multiple logistic regression model
+devised to predict the level of obesity-related inﬂammation of an
+individual.
+Variable
+β coefﬁcients (CI 95%)
+P value
+BMI
+0.3467 (0.2662, 0.4273)
+<0.001
+Age (years)
+0.0270 (0.0010, 0.0530)
+0.042
+Sex (F)
+0.6465 (0.0565, 1.2365)
+0.032
+Prevotellaceae (%)
+0.0237 (0.0073, 0.0400)
+0.004
+Veillonella (%)
+1.6981 (0.0411, 3.3550)
+0.045
+Coriobacteriaceae (%)
+−0.5073 (−1.2592, 0.2446)
+0.186
+χ2
+165.59
+<0.0001
+R2
+0.3343
+Bold numbers indicate P < 0.1.
+P. Aranaz et al.
+6
+International Journal of Obesity
+and Veillonella were associated with insulin resistance and low-
+grade inﬂammation in adipose tissue from morbidly obese
+patients [32]. In addition, the family Coriobacteriaceae has been
+reported to be abundant in healthy phenotypes but depleted in
+inﬂammatory
+syndromes
+[33].
+Furthermore,
+an
+association
+between the abundance of Coriobacteriaceae and the risk of
+developing metabolic syndrome was found in young patients with
+obesity [34].
+Emerging predictive models in medicine using precision biomar-
+kers and integrative computational approaches are allowing the
+generation of meaningful clinical and translating information to the
+implementation
+of
+novel
+diagnosis,
+prognosis,
+and
+treatment
+strategies for a wide range of diseases [35]. In this study, a
+multivariate logistic regression model based on microbiome and
+phenotype data was able to predict the obesity-related inﬂammation
+status in this sample. Of note, it has been reported that dysbiotic gut
+microbiome in combination with unhealthy diets predicted the
+development of obesity and concomitant inﬂammation features in
+children [36]. Also, the functional metagenomic analysis identiﬁed 16
+different taxa that might explain the observed metabolic alterations in
+Mexican women with obesity, [37]. Similarly, clinical trials and larger
+modeling studies have shown the predictive capacity of baseline
+microbiota for clinical response to dietary counseling in obesity and
+inﬂammatory bowel syndrome, although some inconsistencies have
+been reported [38]. Nonetheless, these ﬁndings highlight the
+importance of incorporating gut microbiota information in persona-
+lized nutrition models within the context of research and clinical
+practice [38]. In this regard, a species-level gut microbiome index for
+predicting the likelihood of disease independent of the clinical
+diagnosis has been recently proposed [39].
+The strengths of this investigation include the screening of robust
+statistical approaches to select the best multiple logistic regression
+model explaining obesity-related inﬂammation status using micro-
+biome data. Also, the inﬂammatory index was constructed with
+classical anthropometric and laboratory measurements in the clinical
+setting. On the other hand, some drawbacks of this research included
+a relatively small sample analyzed, the enrollment of only European
+individuals, and the lack of dietary data analysis. Other limitations
+comprise the arbitrary choice of the criteria used for building the
+inﬂammation score as well as the need to separate the role of
+microbiota from that of obesity per se. Thus, further studies
+considering these factors are required. Moreover, the analysis of the
+interplay of additional precision parameters inﬂuencing obesity-
+related inﬂammatory phenotypes such as epigenetic signatures [40],
+metabolomics proﬁles [41], and host genomic variants [42] is
+warranted.
+In conclusion, a multiple logistic regression model based on
+differences in gut microbiota composition is able to predict the
+inﬂammatory degree associated with obesity. Although caution
+should be exercised, this knowledge may contribute to the
+prevention, prognosis, and management of the obesity-related
+inﬂammation
+status
+through
+innovative
+precision
+medicine
+approaches targeting the microbiota. Furthermore, these results
+highlight several bacterial families and genera whose study should
+deserve more attention in the next years for precision nutrition
+management.
+REFERENCES
+1. Bennett JM, Reeves G, Billman GE, Sturmberg JP. Inﬂammation-nature’s way to
+efﬁciently respond to all types of challenges: implications for understanding and
+managing ‘the epidemic’ of chronic diseases. Front Med. 2018. https://doi.org/
+10.3389/fmed.2018.00316.
+2. Ellulu MS, Patimah I, Khaza’ai H, Rahmat A, Abed Y. Obesity & inﬂammation: the
+linking mechanism & the complications. Arch Med Sci. 2017. https://doi.org/
+10.5114/aoms.2016.58928.
+3. Rodríguez-Hernández H, Simental-Mendía LE, Rodríguez-Ramírez G, Reyes-
+Romero MA. Obesity and inﬂammation: epidemiology, risk factors, and markers
+of inﬂammation. Int J Endocrinol 2013. https://doi.org/10.1155/2013/678159.
+4. Durack J, Lynch SV. The gut microbiome: relationships with disease and oppor-
+tunities for therapy. J Exp Med. 2019. https://doi.org/10.1084/jem.20180448.
+5. Cuevas-Sierra A, Ramos-Lopez O, Riezu-Boj JI, Milagro FI, Martinez JA. Diet, gut
+microbiota, and obesity: links with host genetics and epigenetics and potential
+applications. Adv Nutr. 2019. https://doi.org/10.1093/advances/nmy078.
+6. Saad MJA, Santos A, Prada PO. Linking gut microbiota and inﬂammation to
+obesity
+and
+insulin
+resistance.
+Physiology.
+2016.
+https://doi.org/10.1152/
+physiol.00041.2015.
+7. Hersoug LG, Møller P, Loft S Gut microbiota-derived lipopolysaccharide uptake
+and trafﬁcking to adipose tissue: Implications for inﬂammation and obesity. Obes.
+Rev. 2016. https://doi.org/10.1111/obr.12370.
+8. van den Munckhof ICL, Kurilshikov A, ter Horst R, Riksen NP, Joosten LAB,
+Zhernakova A, et al. Role of gut microbiota in chronic low-grade inﬂammation as
+potential driver for atherosclerotic cardiovascular disease: a systematic review of
+human studies. Obes. Rev. 2018. https://doi.org/10.1111/obr.12750.
+9. Manco M, Morandi A, Marigliano M, Rigotti F, Manfredi R, Maffeis C. Epicardial
+fat, abdominal adiposity and insulin resistance in obese pre-pubertal and
+early
+pubertal
+children.
+Atherosclerosis
+2013.
+https://doi.org/10.1016/j.
+atherosclerosis.2012.11.023.
+10. Le Chatelier E, Nielsen T, Qin J, Prifti E, Hildebrand F, Falony G, et al. Richness of
+human gut microbiome correlates with metabolic markers. Nature 2013. https://
+doi.org/10.1038/nature12506.
+11. Ramos-Lopez O, Riezu-Boj JI, Milagro FI, Goni L, Cuervo M, Martinez JA. Differ-
+ential lipid metabolism outcomes associated with ADRB2 gene polymorphisms in
+response to two dietary interventions in overweight/obese subjects. Nutr Metab
+Cardiovasc Dis. 2018. https://doi.org/10.1016/j.numecd.2017.11.006.
+Fig. 4
+Graphical representation of the multivariate model for inﬂammation prediction. ROC curve (A) and calibration plot (B) for the
+multivariate model for inﬂammation prediction.
+P. Aranaz et al.
+7
+International Journal of Obesity
+12. World Health Organization. Media centre Obesity and overweight. World Heal.
+Organ. 2017. https://doi.org/10.1037/a0014093.
+13. Whitworth JA, Chalmers J. World Health Organisation-International Society of
+Hypertension
+(WHO/ISH)
+hypertension
+guidelines.
+Clin
+Exp
+Hypertens.
+2004;26:747–52.
+14. Cuevas-Sierra A, Riezu-Boj JI, Guruceaga E, Milagro FI, Martínez JA. Sex-speciﬁc
+associations between gut prevotellaceae and host genetics on adiposity.
+Microorganisms 2020. https://doi.org/10.3390/microorganisms8060938.
+15. Chong J, Liu P, Zhou G, Xia J. Using MicrobiomeAnalyst for comprehensive sta-
+tistical, functional, and meta-analysis of microbiome data. Nat Protoc. 2020.
+https://doi.org/10.1038/s41596-019-0264-1.
+16. Efron B, Hastie T, Johnstone I, Tibshirani R, Ishwaran H, Knight K, et al. Least angle
+regression. Ann Stat. 2004. https://doi.org/10.1214/009053604000000067.
+17. Lindey C, Sheather S. Variable selection in linear regression. The Stata J.
+2004;10:650–69.
+18. Garrett JM. SWBOOT: stata module to bootstrap stepwise linear or logistic
+regression models. Statistical Software Components S415601. 2000.
+19. Pereira SS, Alvarez-Leite JI. Adipokines: biological functions and metabolically
+healthy obese proﬁle. J Receptor Ligand Channel Res. 2014. https://doi.org/
+10.2147/JRLCR.S36060.
+20. Czernichow S, Kengne AP, Huxley rachel R, Batty GD, de Galan B, Grobbee D, et al.
+Comparison of waist-to-hip ratio and other obesity indices as predictors of car-
+diovascular disease risk in people with type-2 diabetes: a prospective cohort
+study
+from
+ADVANCE. Eur J Prev
+Cardiol.
+2011.
+https://doi.org/10.1097/
+HJR.0b013e32833c1aa3.
+21. Lee KW, Shin D. Prospective associations of serum adiponectin, leptin, and leptin-
+adiponectin ratio with incidence of metabolic syndrome: the Korean genome
+and epidemiology study. Int J Environ Res Public Health. 2020. https://doi.org/
+10.3390/ijerph17093287.
+22. Dixon JB, Hayden MJ, Lambert GW, Dawood T, Anderson ML, Dixon ME, et al.
+Raised CRP levels in obese patients: symptoms of depression have an indepen-
+dent positive association. Obesity. 2008. https://doi.org/10.1038/oby.2008.271.
+23. Hotamisligil GS, Peraldi P, Budavari A, Ellis R, White MF, Spiegelman BM. IRS-1-
+mediated inhibition of insulin receptor tyrosine kinase activity in TNF-α- and
+obesity-induced
+insulin
+resistance.
+Science.
+1996.
+https://doi.org/10.1126/
+science.271.5249.665.
+24. Berg AH, Scherer PE. Adipose tissue, inﬂammation, and cardiovascular disease.
+Circ Res. 2005. https://doi.org/10.1161/01.RES.0000163635.62927.34.
+25. Maury E, Brichard SM. Adipokine dysregulation, adipose tissue inﬂammation and
+metabolic
+syndrome.
+Mol
+Cell
+Endocrinol.
+2010.
+https://doi.org/10.1016/j.
+mce.2009.07.031.
+26. de Faria AP, Ritter AMV, Gasparetti CS, Corrêa NB, Brunelli V, Almeida A, et al. A
+proposed inﬂammatory score of circulating cytokines/ adipokines associated
+with resistant hypertension, but dependent on obesity parameters. Arq Bras
+Cardiol. 2019. https://doi.org/10.5935/abc.20190032.
+27. Denis GV, Sebastiani P, Bertrand KA, Strissel KJ, Tran AH, Slama J, et al. Inﬂam-
+matory signatures distinguish metabolic health in African American women with
+obesity. PLoS ONE. 2018. https://doi.org/10.1371/journal.pone.0196755.
+28. Adabimohazab R, Garﬁnkel A, Milam EC, Frosch O, Mangone A, Convit A. Does
+inﬂammation mediate the association between obesity and insulin resistance?
+Inﬂammation. 2016. https://doi.org/10.1007/s10753-016-0329-z.
+29. Escobedo G, López-Ortiz E, Torres-Castro I. Gut microbiota as a key player in
+triggering obesity, systemic inﬂammation and insulin resistance. Rev Investig
+Clin. 2014;66:450-9.
+30. Larsen JM. The immune response to Prevotella bacteria in chronic inﬂammatory
+disease. Immunology. 2017. https://doi.org/10.1111/imm.12760.
+31. Houttu N, Mokkala K, Laitinen K. Overweight and obesity status in pregnant
+women are related to intestinal microbiota and serum metabolic and inﬂam-
+matory proﬁles. Clin Nutr. 2018;37(6 Pt A):1955–66.
+32. Moreno-Indias I, Sánchez-Alcoholado L, García-Fuentes E, Cardona F, Queipo-
+Ortuño MI, Tinahones FJ. Insulin resistance is associated with speciﬁc gut
+microbiota in appendix samples from morbidly obese patients. Am J Transl Res.
+2016;8:5672–84.
+33. Clavel T, Duck W, Charrier C, Wenning M, Elson C, Haller D. Enterorhabdus cae-
+cimuris sp. nov., a member of the family Coriobacteriaceae isolated from a mouse
+model of spontaneous colitis, and emended description of the genus Enter-
+orhabdus Clavel et al. 2009. Int J Syst Evol Microbiol. 2010. https://doi.org/
+10.1099/ijs.0.015016-0.
+34. Del Chierico F, Manco M, Gardini S, Guarrasi V, Russo A, Bianchi M, et al. Fecal
+microbiota signatures of insulin resistance, inﬂammation, and metabolic syn-
+drome in youth with obesity: a pilot study. Acta Diabetol. 2021. https://doi.org/
+10.1007/s00592-020-01669-4.
+35. Chowdhury MZI, Turin TC. Variable selection strategies and its importance in
+clinical prediction modelling. Fam Med Community Heal. 2020. https://doi.org/
+10.1136/fmch-2019-000262.
+36. Rampelli S, Guenther K, Turroni S, Wolters M, Veidebaum T, Kourides Y, et al. Pre-
+obese children’s dysbiotic gut microbiome and unhealthy diets may predict the
+development of obesity. Commun Biol. 2018. https://doi.org/10.1038/s42003-
+018-0221-5.
+37. Chávez-Carbajal A, Nirmalkar K, Pérez-Lizaur A, Hernández-Quiroz F, Ramírez-Del-
+Alto S, García-Mena J, et al. Gut microbiota and predicted metabolic pathways in
+a sample of Mexican women affected by obesity and obesity plus metabolic
+syndrome. Int J Mol Sci. 2019. https://doi.org/10.3390/ijms20020438.
+38. Biesiekierski JR, Jalanka J, Staudacher HM. Can gut microbiota composition
+predict response to dietary treatments? Nutrients. 2019. https://doi.org/10.3390/
+nu11051134.
+39. Gupta VK, Kim M, Bakshi U, Cunningham KY, Davis JM, Lazaridis KN, et al. A
+predictive index for health status using species-level gut microbiome proﬁling.
+Nat Commun. 2020. https://doi.org/10.1038/s41467-020-18476-8.
+40. Ramos-Lopez O, Milagro FI, Riezu-Boj JI, Martinez JA. Epigenetic signatures
+underlying inﬂammation: an interplay of nutrition, physical activity, metabolic
+diseases, and environmental factors for personalized nutrition. Inﬂamm Res.
+2020. https://doi.org/10.1007/s00011-020-01425-y.
+41. Rangel-Huerta OD, Pastor-Villaescusa B, Gil A. Are we close to deﬁning a meta-
+bolomic signature of human obesity? A systematic review of metabolomics
+studies. Metabolomics. 2019. https://doi.org/10.1007/s11306-019-1553-y.
+42. Galmés S, Cifre M, Palou A, Oliver P, Serra F. A genetic score of predisposition to
+low-grade inﬂammation associated with obesity may contribute to discern
+population at risk for metabolic syndrome. Nutrients. 2019. https://doi.org/
+10.3390/nu11020298.
+ACKNOWLEDGEMENTS
+The authors acknowledge the OBEKIT team (Marta Cuervo, Leticia Goñi, Ana Lorente,
+Miren Iosune Zubieta, and Laura Olazarán); Anna Barceló from the Servei de Genòmica
+Bioinformàtica of the Universitat Autònoma de Barcelona (Spain) for the technical analysis
+of gut microbiota; Elizabeth Guruceaga from the Center for Applied Medical Research
+(Pamplona, Spain) for the bioinformatic analysis of the sequences; Marta García Granero
+from the Department of Biochemistry & Genetics of the University of Navarra (Spain) for
+statistical advice. This research was supported by CIBER (CB12/03/30002) and Gobierno de
+Navarra: Obekit (PT024), Microbiota (PI035), and Nutribiota (0011-1411-2018-000040)
+projects. The PRODEP-Mexico program to ORL (UABC-PTC-796) is also gratefully
+acknowledged. The support from CINFA is also appreciated.
+COMPETING INTERESTS
+The authors declare no competing interests.
+ADDITIONAL INFORMATION
+Supplementary information The online version contains supplementary material
+available at https://doi.org/10.1038/s41366-021-00904-4.
+Correspondence and requests for materials should be addressed to F.I.M.
+Reprints and permission information is available at http://www.nature.com/reprints
+Publisher’s note Springer Nature remains neutral with regard to jurisdictional claims
+in published maps and institutional afﬁliations.
+P. Aranaz et al.
+8
+International Journal of Obesity
