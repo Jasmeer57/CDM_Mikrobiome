@@ -1,4 +1,4 @@
-"""Multi-NER runner CLI — orchestrates GLiNER + PubMedBERT + PubTator3."""
+"""Multi-NER runner CLI — orchestrates GLiNER + PubMedBERT + PubTator3 + sciSpaCy."""
 import sys
 import io
 import os
@@ -25,6 +25,7 @@ from ..config import PAPERS_DIR, NER_OUTPUT_DIR
 from .gliner import run_gliner
 from .pubmedbert import run_pubmedbert
 from .pubtator import run_pubtator
+from .scispacy import run_scispacy
 
 
 def save_csv_dict(rows, output_path):
@@ -69,7 +70,7 @@ def save_summary_rows(all_rows, elapsed_times, output_dir):
 def main():
     parser = argparse.ArgumentParser(description="Run multi-NER on corpus")
     parser.add_argument("--models", nargs="+", default=["gliner", "pubmedbert", "pubtator"],
-                        choices=["gliner", "pubmedbert", "pubtator", "all"],
+                        choices=["gliner", "pubmedbert", "pubtator", "scispacy", "all"],
                         help="Which NER models to run")
     parser.add_argument("--max_files", type=int, default=500, help="Max papers to process")
     parser.add_argument("--incremental", action="store_true",
@@ -80,7 +81,7 @@ def main():
     args = parser.parse_args()
 
     if "all" in args.models:
-        args.models = ["gliner", "pubmedbert", "pubtator"]
+        args.models = ["gliner", "pubmedbert", "pubtator", "scispacy"]
 
     # Get paper list
     all_papers = sorted([f.name for f in PAPERS_DIR.glob("*.txt")])[:args.max_files]
@@ -88,7 +89,8 @@ def main():
 
     # Incremental mode: skip papers already in existing output CSVs
     if args.incremental:
-        model_csv_map = {"gliner": "gliner_ner.csv", "pubmedbert": "pubmedbert_ner.csv", "pubtator": "pubtator3_ner.csv"}
+        model_csv_map = {"gliner": "gliner_ner.csv", "pubmedbert": "pubmedbert_ner.csv",
+                         "pubtator": "pubtator3_ner.csv", "scispacy": "scispacy_ner.csv"}
         done = set()
         for model_name in args.models:
             csv_name = model_csv_map.get(model_name, "")
@@ -116,11 +118,12 @@ def main():
     elapsed_times = {}
 
     # Load existing results for merge when incremental
-    existing_results = {"gliner": [], "pubmedbert": [], "pubtator": []}
+    existing_results = {"gliner": [], "pubmedbert": [], "pubtator": [], "scispacy": []}
     if args.incremental:
         for model_key, csv_name in [("gliner", "gliner_ner.csv"),
                                      ("pubmedbert", "pubmedbert_ner.csv"),
-                                     ("pubtator", "pubtator3_ner.csv")]:
+                                     ("pubtator", "pubtator3_ner.csv"),
+                                     ("scispacy", "scispacy_ner.csv")]:
             csv_path = NER_OUTPUT_DIR / csv_name
             if csv_path.exists():
                 with open(csv_path, encoding="utf-8", errors="replace") as f:
@@ -152,9 +155,17 @@ def main():
         elapsed_times["pubtator3"] = elapsed
         del results; gc.collect()
 
+    if "scispacy" in args.models:
+        results, elapsed = run_scispacy(papers)
+        merged = existing_results["scispacy"] + [dict(zip(["term","labels","model","paper","char_start","char_end"], r)) for r in results]
+        save_csv_dict(merged, NER_OUTPUT_DIR / "scispacy_ner.csv")
+        all_results.extend(results)
+        elapsed_times["scispacy"] = elapsed
+        del results; gc.collect()
+
     # Combined CSV (all models, all papers)
     combined = []
-    for csv_name in ["gliner_ner.csv", "pubmedbert_ner.csv", "pubtator3_ner.csv"]:
+    for csv_name in ["gliner_ner.csv", "pubmedbert_ner.csv", "pubtator3_ner.csv", "scispacy_ner.csv"]:
         csv_path = NER_OUTPUT_DIR / csv_name
         if csv_path.exists():
             with open(csv_path, encoding="utf-8", errors="replace") as f:

@@ -1,8 +1,9 @@
 """PubTator 3 NER via NCBI E-utilities + PubTator3 API."""
 import re
+import json
 import time as _time
 
-from ..config import CDM_TYPES, PAPERS_DIR
+from ..config import CDM_TYPES, PAPERS_DIR, BIOPROJECT_JSON
 
 
 def map_pubtator_label(raw_type):
@@ -28,15 +29,51 @@ def map_pubtator_label(raw_type):
     return mapping.get(rt, rt if rt in CDM_TYPES else "ENTITY")
 
 
+def _load_bioproject_titles():
+    """Load clean study titles from bioproject_data_export.json."""
+    titles = {}
+    if BIOPROJECT_JSON.exists():
+        try:
+            with open(BIOPROJECT_JSON, encoding="utf-8") as f:
+                data = json.load(f)
+            for bp in data.get("bioprojects", []):
+                pid = bp.get("bioproject_id", "")
+                title = bp.get("title", "") or bp.get("study_title", "")
+                if pid and title:
+                    titles[pid] = title
+        except Exception:
+            pass
+    return titles
+
+
+def _extract_title_from_text(text):
+    """Fallback: extract title from first lines of paper text."""
+    lines = [l.strip() for l in text[:2000].split("\n") if l.strip()]
+    junk_titles = {
+        "research article", "nature communications", "science",
+        "plos one", "frontiers", "frontiers in", "pnas",
+        "proceedings of the national academy of sciences",
+    }
+    for line in lines:
+        if line.startswith("PRJ") or len(line) < 10:
+            continue
+        low = line.lower().strip()
+        if low in junk_titles:
+            continue
+        if re.search(r'\d{4}\s*\(\d{4}\)\s*\d', line):
+            continue
+        if re.match(r'^\d{4}$', line.strip()):
+            continue
+        return line
+    return None
+
+
 def run_pubtator(papers, api_key=None, batch_size=200):
     """Run PubTator 3 API on papers.
 
-    PubTator annotates PubMed abstracts/full text by PMID.
-    Since our papers are PRJ-accession-named txt files (not PMIDs),
-    we need to extract the PMID from the text or use the title-based search.
-
-    Strategy: Extract title from first line of each paper, search PubTator
-    by title to get PMID, then fetch annotations.
+    Uses clean titles from bioproject_data_export.json when available,
+    falls back to parsing paper text. Searches PubMed by title to get PMID,
+    then fetches PubTator3 annotations.
     """
     import requests
 
@@ -44,8 +81,14 @@ def run_pubtator(papers, api_key=None, batch_size=200):
 
     print("\n[PubTator] Running via NCBI E-utilities + PubTator3 API ...")
 
+    # Load clean titles from BioProject metadata
+    bp_titles = _load_bioproject_titles()
+    if bp_titles:
+        print("[PubTator] Loaded %d titles from BioProject metadata" % len(bp_titles))
+
     all_results = []
     found_count = 0
+    title_source = {"bioproject": 0, "text": 0, "none": 0}
     t0 = _time.time()
 
     session = requests.Session()
@@ -53,29 +96,20 @@ def run_pubtator(papers, api_key=None, batch_size=200):
         session.params["api_key"] = api_key
 
     for idx, paper_file in enumerate(papers):
-        path = PAPERS_DIR / paper_file
-        text = path.read_text(encoding="utf-8", errors="replace")
+        pid = paper_file.replace(".txt", "")
 
-        # Extract title from first ~2000 chars
-        lines = [l.strip() for l in text[:2000].split("\n") if l.strip()]
-        title = None
-        junk_titles = {
-            "research article", "nature communications", "science",
-            "plos one", "frontiers", "frontiers in", "pnas",
-            "proceedings of the national academy of sciences",
-        }
-        for line in lines:
-            if line.startswith("PRJ") or len(line) < 10:
-                continue
-            low = line.lower().strip()
-            if low in junk_titles:
-                continue
-            if re.search(r'\d{4}\s*\(\d{4}\)\s*\d', line):
-                continue
-            if re.match(r'^\d{4}$', line.strip()):
-                continue
-            title = line
-            break
+        # Prefer clean title from BioProject metadata
+        title = bp_titles.get(pid)
+        if title:
+            title_source["bioproject"] += 1
+        else:
+            path = PAPERS_DIR / paper_file
+            text = path.read_text(encoding="utf-8", errors="replace")
+            title = _extract_title_from_text(text)
+            if title:
+                title_source["text"] += 1
+            else:
+                title_source["none"] += 1
 
         if not title:
             continue
@@ -135,4 +169,5 @@ def run_pubtator(papers, api_key=None, batch_size=200):
     elapsed = _time.time() - t0
     print("[PubTator] Done: %d entities from %d papers in %.1fs" % (
         len(all_results), len(papers), elapsed))
+    print("[PubTator] Title sources: %s" % title_source)
     return all_results, elapsed
