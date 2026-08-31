@@ -75,6 +75,9 @@ class LLMClient:
                 "model": self.model,
                 "prompt": prompt,
                 "stream": False,
+                # Reasoning models (qwen3/qwen3.5/gemma "thinking" families) otherwise burn the
+                # entire num_predict budget on chain-of-thought and never emit the JSON answer.
+                "think": kwargs.get('think', False),
                 "options": {
                     "temperature": kwargs.get('temperature', self.config['temperature']),
                     "top_p": 0.9,

@@ -8,6 +8,8 @@ import requests
 from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict
 
+from .confidence_scoring import score_match
+
 logger = logging.getLogger(__name__)
 
 @dataclass
@@ -50,7 +52,11 @@ class OLSMapper:
             if response.status_code == 200:
                 results = response.json().get('response', {}).get('docs', [])
                 for result in results:
-                    confidence = self._calculate_confidence(entity_name, result)
+                    confidence = score_match(
+                        entity_name, entity_type,
+                        candidate_label=result.get('label'),
+                        ontology_name=result.get('ontology_name'),
+                    )
                     if confidence > 0.4:
                         mappings.append(OLSMapping(
                             entity_name=entity_name,
@@ -71,12 +77,3 @@ class OLSMapper:
             self.cache[cache_key] = mappings
             
         return mappings
-
-    def _calculate_confidence(self, entity_name: str, result: Dict) -> float:
-        confidence = 0.5
-        label = result.get('label', '').lower()
-        if label == entity_name.lower():
-            confidence += 0.4
-        elif entity_name.lower() in label:
-            confidence += 0.2
-        return min(confidence, 1.0)

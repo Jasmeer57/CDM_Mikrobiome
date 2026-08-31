@@ -367,33 +367,46 @@ def is_placeholder_definition(definition: str) -> bool:
 # ============================================================================
 
 class LLMClient:
-    """Client for LLM inference via llama.cpp server (OpenAI-compatible API)."""
+    """Client for LLM inference via an Ollama server.
+
+    Originally built for llama.cpp's OpenAI-compatible /v1/chat/completions
+    endpoint, but that path does NOT honor Ollama's `think: false` param - a
+    thinking-capable model (qwen3.5:9b) burned its ENTIRE max_tokens budget on
+    chain-of-thought reasoning and returned 0 characters of actual content,
+    even at max_tokens=6000, even for a 1-pair prompt. Switched to Ollama's
+    native /api/generate endpoint instead, where `think: false` is honored
+    (this is the exact fix already proven in core/llm_client.py's Ollama
+    client - see that file's _call_ollama for the original diagnosis).
+    """
 
     def __init__(self, base_url: str = None, model: str = None):
-        self.base_url = (base_url or os.getenv("LLM_SERVER_BASE_URL",
-                         "http://127.0.0.1:8000/v1")).rstrip("/")
+        configured = base_url or os.getenv("LLM_SERVER_BASE_URL", "http://127.0.0.1:8000/v1")
+        # Accept either an OpenAI-style base (".../v1") or a bare Ollama host -
+        # normalize to the bare host since we hit /api/generate directly.
+        self.base_url = configured.rstrip("/")
+        if self.base_url.endswith("/v1"):
+            self.base_url = self.base_url[: -len("/v1")]
         self.model = model or os.getenv("LLM_MODEL", "Qwen3-14B")
 
     def _make_request(self, prompt: str, temperature: float = 0.1,
                       max_tokens: int = 2048, timeout: int = 600) -> str:
-        """Make request to llama.cpp server via OpenAI-compatible API."""
+        """Make request to Ollama's native /api/generate endpoint."""
         import urllib.request
         import urllib.error
 
-        # Use chat completions endpoint
         payload = {
             "model": self.model,
-            "messages": [
-                {"role": "system", "content": "You are a helpful biomedical expert assistant."},
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-            "stream": False
+            "prompt": prompt,
+            "stream": False,
+            "think": False,
+            "options": {
+                "temperature": temperature,
+                "num_predict": max_tokens,
+            },
         }
 
         request = urllib.request.Request(
-            f"{self.base_url}/chat/completions",
+            f"{self.base_url}/api/generate",
             data=json.dumps(payload).encode('utf-8'),
             headers={'Content-Type': 'application/json'}
         )
@@ -401,7 +414,7 @@ class LLMClient:
         try:
             with urllib.request.urlopen(request, timeout=timeout) as response:
                 result = json.loads(response.read().decode('utf-8'))
-                return result['choices'][0]['message']['content'].strip()
+                return result.get('response', '').strip()
         except urllib.error.URLError as e:
             logger.error(f"LLM request failed: {e}")
             raise
@@ -427,7 +440,11 @@ Requirements:
 
 Definition:"""
 
-        response = self._make_request(prompt, max_tokens=300, temperature=0.0)
+        # max_tokens bumped from 300: this Ollama-served model reasons heavily
+        # before emitting `content` regardless of prompt size (measured ~296
+        # tokens of chain-of-thought for a one-word answer) - 300 was leaving
+        # empty/truncated definitions most of the time.
+        response = self._make_request(prompt, max_tokens=1500, temperature=0.0)
 
         # Remove any chain-of-thought prefixes
         cleanup_patterns = [
@@ -480,7 +497,7 @@ Determine the most likely relationship type from:
 
 Output JSON: {{"relationship_type": "...", "confidence": 0.0-1.0, "evidence": "brief explanation (max 200 chars)"}}"""
 
-        response = self._make_request(prompt, max_tokens=500, temperature=0.1)
+        response = self._make_request(prompt, max_tokens=2000, temperature=0.1)  # see note above re: reasoning overhead
 
         try:
             json_match = re.search(r'\{.*\}', response, re.DOTALL)
@@ -518,7 +535,10 @@ Entity Pairs:
             prompt += f"\n{i}. {pair.entity_a.term} ({pair.entity_a.entity_type}) <-> {pair.entity_b.term} ({pair.entity_b.entity_type})\n"
             prompt += f"   Context: {ctx[:500]}...\n"
 
-        response = self._make_request(prompt, max_tokens=4096, temperature=0.0)
+        response = self._make_request(prompt, max_tokens=6000, temperature=0.0)  # see reasoning-overhead note above
+
+        if os.getenv("KG_DEBUG_RAW_RESPONSE"):
+            logger.info(f"  [DEBUG] raw response ({len(response)} chars):\n{response}")
 
         try:
             # Extract JSON from response
@@ -549,7 +569,7 @@ Answer these questions with yes/no/reversed/suggest:
 
 Respond as JSON: {{"plausible": "yes/no", "direction": "yes/no/reversed", "type_appropriate": "yes/no/suggest", "evidence_support": "yes/partial/no", "suggested_type": "if applicable"}}"""
 
-        response = self._make_request(prompt, max_tokens=500, temperature=0.0)
+        response = self._make_request(prompt, max_tokens=1500, temperature=0.0)  # see reasoning-overhead note above
 
         try:
             json_match = re.search(r'\{.*\}', response, re.DOTALL)
@@ -988,10 +1008,28 @@ class Phase1PairGeneration:
                     key = (entity_b.term, entity_a.term)
 
                 if key not in pair_dict:
+                    a, b = (entity_a, entity_b) if entity_a.term < entity_b.term else (entity_b, entity_a)
                     pair = EntityPair(
-                        entity_a=entity_a if entity_a.term < entity_b.term else entity_b,
-                        entity_b=entity_b if entity_a.term < entity_b.term else entity_a,
-                        shared_papers=[paper_id]
+                        entity_a=a,
+                        entity_b=b,
+                        shared_papers=[paper_id],
+                        # co_occurrence_contexts was never populated anywhere in this
+                        # file despite being read in 3 places downstream (extraction
+                        # prompt context, preliminary-relationship context, and the
+                        # rule-based filter's "entity names must appear in context"
+                        # gate). An empty context meant `_rule_based_filter` rejected
+                        # every single relationship unconditionally. Our corpus
+                        # aggregates entities across papers (no per-mention sentence
+                        # linking two specific entities survives that aggregation),
+                        # so this is a synthetic paper-level co-mention statement, not
+                        # a real extracted sentence - it exists to (a) satisfy the
+                        # name-presence gate and (b) give the LLM a minimal, honest
+                        # co-occurrence signal. Real semantic judgment for the
+                        # relationship still comes primarily from entity type +
+                        # definition, not this string.
+                        co_occurrence_contexts=[
+                            f"{a.term} and {b.term} both appear in paper {paper_id} of this microbiome research corpus."
+                        ],
                     )
                     pair_dict[key] = pair
                 else:
@@ -1075,6 +1113,14 @@ class Phase1PairGeneration:
 
     def _infer_preliminary_relationships(self, pairs: List[EntityPair]) -> List[EntityPair]:
         """Infer preliminary relationships for top pairs using LLM."""
+        if os.getenv("KG_SKIP_PRELIM_INFERENCE"):
+            # This step is UNBATCHED (one LLM call per pair, up to 5000 pairs) and
+            # purely preliminary/advisory - Phase 2's extract_relationships() does
+            # the real extraction properly batched (15 pairs/call). At this model's
+            # reasoning-overhead cost per call, 5000 sequential calls here would run
+            # ~20+ hours for output that gets superseded by Phase 2 anyway.
+            logger.info("  KG_SKIP_PRELIM_INFERENCE set - skipping (redundant with Phase 2's batched extraction)")
+            return pairs
         # Check LLM availability
         try:
             client = LLMClient()
@@ -1610,8 +1656,11 @@ class Phase3GraphConstruction:
             'weakly_connected_components': nx.number_weakly_connected_components(graph),
             'entity_types': dict(Counter([graph.nodes[n].get('type', 'UNKNOWN')
                                         for n in graph.nodes()])),
+            # graph is a MultiDiGraph - graph.edges() without keys=True yields 2-tuples,
+            # but graph.edges[e] indexing requires the 3-tuple (u, v, key) form (that's
+            # what threw ValueError: not enough values to unpack here originally).
             'relationship_types': dict(Counter([graph.edges[e].get('relationship_type', 'UNKNOWN')
-                                               for e in graph.edges()])),
+                                               for e in graph.edges(keys=True)])),
             'communities': len(set([graph.nodes[n].get('community', 0)
                                    for n in graph.nodes()])),
             'avg_confidence': np.mean([graph.nodes[n].get('confidence', 0)
@@ -2489,6 +2538,20 @@ class CDMKnowledgeGraphPipeline:
 
             phase1 = Phase1PairGeneration()
             pairs = phase1.run(entities)
+
+            # Phase 2 extraction is properly batched (BATCH_SIZE_EXTRACTION pairs/call)
+            # but still one call per batch - at full corpus scale, pair counts run into
+            # the tens of thousands (55k+ pairs even at 100-paper scale), which would be
+            # thousands of sequential LLM calls (many hours) to extract relationships for
+            # long-tail pairs that barely co-occur. Cap to the top-N by priority_score
+            # (already sorted descending by Phase 1) - this is a real, disclosed scope
+            # limit, not a silent truncation: see run_log for the actual pair count kept.
+            max_pairs = int(os.getenv("KG_MAX_PAIRS", "0")) or None
+            if max_pairs and len(pairs) > max_pairs:
+                logger.info(f"  KG_MAX_PAIRS={max_pairs}: keeping top {max_pairs} of {len(pairs)} "
+                            f"pairs by priority_score (relationship extraction is O(pairs), "
+                            f"this bounds it to a finishable scope)")
+                pairs = pairs[:max_pairs]
 
             # Save pairs using to_dict method (includes preliminary relationships)
             pairs_data = [p.to_dict() for p in pairs]

@@ -1,0 +1,294 @@
+{
+  "_comment": "Curated test set for Claim A. 35 ambiguous terms across the 14 CDM entity types. Each term has an expected_type (the right type in 90%+ of microbiome-paper contexts), an example_context (a 2-3 sentence snippet from a real microbiome paper or a constructed equivalent), and an ambiguity_note explaining the type trap. To extend: add a new entry, make sure the example_context is from a real paper if possible, and rerun benchmark.py.",
+
+  "metadata": {
+    "purpose": "Test context-dependent entity type disambiguation for Claim A",
+    "n_terms": 35,
+    "cdm_types_covered": ["ORGANISM", "PROTEIN", "CHEMICAL", "DISEASE", "DNA_RNA", "CELL_TYPE", "SAMPLE_METHOD", "LAB_METHOD", "DATA_ANALYSIS", "PATHWAY", "EXPERIMENTAL_METHOD", "STUDY_DESIGN", "GENOMICS", "CLINICAL"],
+    "source_corpus": "Curated from 168,000-sample Abdill et al. 2025 cited literature + synthetic equivalents",
+    "expected_winner_per_term": "LLM should win on terms marked ambiguous=true, especially the type-traps"
+  },
+
+  "terms": [
+    {
+      "id": "A01",
+      "term": "butyrate",
+      "expected_type": "CHEMICAL",
+      "ambiguous": true,
+      "type_trap": "Could be PROCESS (e.g., 'butyrate synthesis') or CHEMICAL (the SCFA itself). In microbiome context, the molecule is the right answer 90%+ of the time.",
+      "example_context": "Short-chain fatty acids (SCFAs) such as acetate, propionate, and butyrate are major microbial metabolites produced by gut bacteria through the fermentation of dietary fiber. Butyrate serves as the primary energy source for colonocytes and has well-documented anti-inflammatory effects in the gut mucosa."
+    },
+    {
+      "id": "A02",
+      "term": "propionate",
+      "expected_type": "CHEMICAL",
+      "ambiguous": false,
+      "type_trap": "Almost always the SCFA chemical; rarely anything else.",
+      "example_context": "Propionate, a short-chain fatty acid produced by Bacteroidetes through the succinate pathway, has been shown to reduce hepatic lipogenesis in rodent models and is associated with improved insulin sensitivity in human cohort studies."
+    },
+    {
+      "id": "A03",
+      "term": "acetate",
+      "expected_type": "CHEMICAL",
+      "ambiguous": true,
+      "type_trap": "Could be PROCESS (acetylation) or CHEMICAL. In microbiome contexts, the chemical is the right answer.",
+      "example_context": "Acetate is the most abundant short-chain fatty acid produced by colonic fermentation, accounting for roughly 60% of total SCFA production in the human gut. Bacterial producers include Bifidobacterium and Prevotella species."
+    },
+    {
+      "id": "A04",
+      "term": "16S rRNA",
+      "expected_type": "DNA_RNA",
+      "ambiguous": false,
+      "type_trap": "Sometimes LAB_METHOD (as in '16S rRNA sequencing') but the term itself is the genetic material.",
+      "example_context": "We amplified the bacterial 16S rRNA gene using universal primers 27F and 1492R, then sequenced the V3-V4 region on an Illumina MiSeq platform. The resulting reads were clustered into operational taxonomic units (OTUs) at 97% similarity."
+    },
+    {
+      "id": "A05",
+      "term": "E. coli",
+      "expected_type": "ORGANISM",
+      "ambiguous": false,
+      "type_trap": "Trivially the organism, but spaCy NERs often split it on the period.",
+      "example_context": "Enterotoxigenic E. coli (ETEC) remains a leading cause of diarrheal disease in children under five in low- and middle-income countries. Recent work has shown that colonization resistance against ETEC is mediated by commensal E. coli strains producing colicin V."
+    },
+    {
+      "id": "A06",
+      "term": "Lactobacillus",
+      "expected_type": "ORGANISM",
+      "ambiguous": false,
+      "type_trap": "Genus-level taxon, sometimes mis-tagged as a chemical (probiotic product).",
+      "example_context": "Lactobacillus species dominate the vaginal microbiota in reproductive-age women and produce lactic acid that maintains a protective low pH. Depletion of Lactobacillus is associated with bacterial vaginosis and increased susceptibility to HIV acquisition."
+    },
+    {
+      "id": "A07",
+      "term": "Faecalibacterium prausnitzii",
+      "expected_type": "ORGANISM",
+      "ambiguous": false,
+      "type_trap": "Long Latin name — spaCy sentence-splitter can break it.",
+      "example_context": "Reduced abundance of Faecalibacterium prausnitzii, a major butyrate producer, has been consistently observed in patients with inflammatory bowel disease. F. prausnitzii contributes to gut homeostasis through the production of short-chain fatty acids and the anti-inflammatory protein MAM."
+    },
+    {
+      "id": "A08",
+      "term": "Firmicutes",
+      "expected_type": "ORGANISM",
+      "ambiguous": false,
+      "type_trap": "Phylum — sometimes mis-classified as a study cohort term.",
+      "example_context": "The human gut microbiota is dominated by two bacterial phyla, Firmicutes and Bacteroidetes, which together typically account for over 90% of the total community. The Firmicutes/Bacteroidetes ratio has been widely used as a coarse marker of dysbiosis, though its clinical utility is now debated."
+    },
+    {
+      "id": "A09",
+      "term": "Bacteroidetes",
+      "expected_type": "ORGANISM",
+      "ambiguous": false,
+      "type_trap": "Phylum.",
+      "example_context": "Bacteroidetes are Gram-negative anaerobic bacteria that are major contributors to polysaccharide degradation in the human colon. Their expansion has been associated with high-protein diets in multiple human cohort studies."
+    },
+    {
+      "id": "A10",
+      "term": "TNF-alpha",
+      "expected_type": "PROTEIN",
+      "ambiguous": true,
+      "type_trap": "Could be GENE (TNF gene) or PROTEIN (TNF-α cytokine). In microbiome contexts, the protein is usually what's measured.",
+      "example_context": "Tumor necrosis factor alpha (TNF-α) is a pro-inflammatory cytokine produced by activated macrophages. Elevated TNF-α levels in the gut mucosa are a hallmark of inflammatory bowel disease, and anti-TNF therapy (infliximab, adalimumab) is a mainstay of treatment for moderate-to-severe Crohn's disease."
+    },
+    {
+      "id": "A11",
+      "term": "IL-6",
+      "expected_type": "PROTEIN",
+      "ambiguous": true,
+      "type_trap": "Could be GENE (IL6 gene) or PROTEIN (IL-6 cytokine). The protein form dominates in serum measurements.",
+      "example_context": "Interleukin-6 (IL-6) is a pleiotropic cytokine with both pro- and anti-inflammatory effects. Serum IL-6 levels correlate with disease activity in ulcerative colitis, and tocilizumab (an anti-IL-6R antibody) is approved for several autoimmune indications."
+    },
+    {
+      "id": "A12",
+      "term": "lipopolysaccharide",
+      "expected_type": "CHEMICAL",
+      "ambiguous": true,
+      "type_trap": "Could be PROTEIN (a peptide/lipid complex) or CHEMICAL. The CDM treats it as a chemical; it is sometimes tagged as PROTEIN due to LPS-binding protein confusion.",
+      "example_context": "Lipopolysaccharide (LPS), a major component of the outer membrane of Gram-negative bacteria, is a potent inducer of systemic inflammation. Circulating LPS levels are elevated in metabolic endotoxemia and correlate with insulin resistance in obese subjects."
+    },
+    {
+      "id": "A13",
+      "term": "BLAST",
+      "expected_type": "DATA_ANALYSIS",
+      "ambiguous": true,
+      "type_trap": "Could be GENE (BLAST gene names exist) or BIOINFO_TOOL. In microbiome context, the tool is the right answer.",
+      "example_context": "We used BLAST to align the assembled 16S sequences against the SILVA 138 reference database. Hits with e-value < 1e-5 and >97% identity were retained for downstream taxonomic assignment."
+    },
+    {
+      "id": "A14",
+      "term": "QIIME2",
+      "expected_type": "DATA_ANALYSIS",
+      "ambiguous": false,
+      "type_trap": "All-caps acronym, sometimes tokenized as separate words.",
+      "example_context": "We processed the demultiplexed sequences in QIIME2 (Quantitative Insights Into Microbial Ecology, version 2023.9), using the DADA2 plugin for denoising and the q2-feature-classifier for taxonomy assignment against the SILVA 138 99% OTU reference."
+    },
+    {
+      "id": "A15",
+      "term": "DADA2",
+      "expected_type": "DATA_ANALYSIS",
+      "ambiguous": false,
+      "type_trap": "Tool name, sometimes confused with a gene/database.",
+      "example_context": "DADA2 (Divisive Amplicon Denoising Algorithm 2) was used for sequence variant inference, providing single-nucleotide resolution ASVs. The DADA2 workflow denoises, dereplicates, and removes chimeras in a single integrated pipeline."
+    },
+    {
+      "id": "A16",
+      "term": "16S",
+      "expected_type": "DNA_RNA",
+      "ambiguous": true,
+      "type_trap": "Could be LAB_METHOD (as shorthand for '16S sequencing'). In context, the genetic region is the referent.",
+      "example_context": "Genomic DNA was extracted using the PowerSoil kit, and the 16S rRNA gene was amplified using barcoded primers targeting the V4 region. Library preparation followed the Illumina 16S Metagenomic Sequencing Library Preparation protocol."
+    },
+    {
+      "id": "A17",
+      "term": "shotgun metagenomic sequencing",
+      "expected_type": "LAB_METHOD",
+      "ambiguous": false,
+      "type_trap": "Multi-word method name.",
+      "example_context": "We performed shotgun metagenomic sequencing on an Illumina NovaSeq 6000 platform, generating 2x150 bp paired-end reads. Reads were quality-filtered with fastp and host-decontaminated with Kraken2 against the human reference genome."
+    },
+    {
+      "id": "A18",
+      "term": "metagenomics",
+      "expected_type": "GENOMICS",
+      "ambiguous": false,
+      "type_trap": "The omics term, not the method.",
+      "example_context": "Recent advances in metagenomics have enabled culture-free characterization of microbial communities directly from environmental samples, bypassing the historical requirement for laboratory isolation. Shotgun metagenomics in particular allows functional gene content inference in addition to taxonomic profiling."
+    },
+    {
+      "id": "A19",
+      "term": "microbiome",
+      "expected_type": "ORGANISM",
+      "ambiguous": true,
+      "type_trap": "Concept term; CDM has it as ORGANISM (the community-as-entity). spaCy often tags it as ENTITY (uncategorized).",
+      "example_context": "The human gut microbiome comprises trillions of microorganisms whose collective metabolic activity rivals that of a human organ. Dysbiosis of the gut microbiome has been implicated in obesity, inflammatory bowel disease, and even neurodegenerative conditions."
+    },
+    {
+      "id": "A20",
+      "term": "inflammation",
+      "expected_type": "DISEASE",
+      "ambiguous": true,
+      "type_trap": "Could be PROCESS (DISEASE/PATHWAY) or DISEASE. In microbiome contexts, chronic inflammation is the referent.",
+      "example_context": "Chronic low-grade inflammation is a hallmark of metabolic syndrome and is thought to be driven, in part, by translocation of bacterial lipopolysaccharide across a compromised gut barrier. Therapeutic strategies aimed at reducing this inflammation include probiotics, prebiotics, and dietary fiber supplementation."
+    },
+    {
+      "id": "A21",
+      "term": "IBD",
+      "expected_type": "DISEASE",
+      "ambiguous": false,
+      "type_trap": "Acronym — spaCy abbreviation expansion helps here.",
+      "example_context": "Patients with inflammatory bowel disease (IBD) show reduced microbial diversity and a depletion of butyrate-producing Firmicutes, particularly Faecalibacterium prausnitzii. The two major subtypes, Crohn's disease and ulcerative colitis, share some but not all microbial signatures."
+    },
+    {
+      "id": "A22",
+      "term": "Crohn's disease",
+      "expected_type": "DISEASE",
+      "ambiguous": false,
+      "type_trap": "Possessive + named eponym.",
+      "example_context": "Crohn's disease is characterized by transmural inflammation that can affect any part of the gastrointestinal tract, with the terminal ileum being the most commonly involved site. The pathogenesis involves a complex interplay of genetic susceptibility, immune dysregulation, and alterations in the gut microbiota."
+    },
+    {
+      "id": "A23",
+      "term": "ulcerative colitis",
+      "expected_type": "DISEASE",
+      "ambiguous": false,
+      "type_trap": "Two-word disease name.",
+      "example_context": "Ulcerative colitis is a chronic inflammatory condition limited to the colon and rectum, with continuous mucosal inflammation extending proximally from the rectum. Current treatments include 5-aminosalicylates, corticosteroids, biologics, and small-molecule JAK inhibitors."
+    },
+    {
+      "id": "A24",
+      "term": "fecal microbiota transplantation",
+      "expected_type": "EXPERIMENTAL_METHOD",
+      "ambiguous": true,
+      "type_trap": "Could be CLINICAL (procedure in a hospital) or EXPERIMENTAL_METHOD. In microbiome literature, the experimental intervention is the right answer.",
+      "example_context": "Fecal microbiota transplantation (FMT) has demonstrated remarkable efficacy in recurrent Clostridioides difficile infection, with cure rates exceeding 85% in randomized controlled trials. The procedure involves transferring a fecal suspension from a healthy donor to a recipient via colonoscopy, nasoduodenal tube, or oral capsule."
+    },
+    {
+      "id": "A25",
+      "term": "probiotic",
+      "expected_type": "CHEMICAL",
+      "ambiguous": true,
+      "type_trap": "Could be ORGANISM (the actual bugs in a probiotic) or CHEMICAL (a product). CDM treats it as a chemical (a substance), which is the more common usage.",
+      "example_context": "Probiotic supplementation with Lactobacillus rhamnosus GG has been shown in multiple meta-analyses to reduce the duration of acute infectious diarrhea in children by approximately one day. The mechanism is thought to involve competitive exclusion of pathogens and modulation of the gut immune response."
+    },
+    {
+      "id": "A26",
+      "term": "synbiotic",
+      "expected_type": "CHEMICAL",
+      "ambiguous": true,
+      "type_trap": "Combination term (probiotic + prebiotic) — spaCy often drops the type.",
+      "example_context": "Synbiotic preparations combining Lactobacillus and Bifidobacterium strains with fructooligosaccharide prebiotics have shown promise in reducing postoperative infection rates in patients undergoing colorectal surgery. The combination is thought to improve probiotic survival through the upper GI tract."
+    },
+    {
+      "id": "A27",
+      "term": "SCFA",
+      "expected_type": "CHEMICAL",
+      "ambiguous": false,
+      "type_trap": "All-caps acronym, expandable to 'short-chain fatty acid' or 'short-chain fatty acids'.",
+      "example_context": "SCFAs, the major metabolic end-products of bacterial fermentation of dietary fiber in the colon, play crucial roles in host energy metabolism, immune function, and gut barrier integrity. The three principal SCFAs — acetate, propionate, and butyrate — each have distinct metabolic fates."
+    },
+    {
+      "id": "A28",
+      "term": "bile acid",
+      "expected_type": "CHEMICAL",
+      "ambiguous": false,
+      "type_trap": "Two-word chemical, sometimes tagged as DISEASE (in 'bile acid diarrhea').",
+      "example_context": "Primary bile acids synthesized from cholesterol in the liver are deconjugated and converted by gut bacteria into secondary bile acids such as deoxycholic acid and lithocholic acid. The bile acid pool composition is now recognized as a key mediator of host-microbe metabolic cross-talk."
+    },
+    {
+      "id": "A29",
+      "term": "epithelial cell",
+      "expected_type": "CELL_TYPE",
+      "ambiguous": false,
+      "type_trap": "Two-word cell type, sometimes tagged as ANATOMICAL or TISSUE.",
+      "example_context": "Commensal bacteria and their metabolites interact directly with intestinal epithelial cells lining the gut lumen. Butyrate, in particular, is a primary energy source for colonic epithelial cells and strengthens the gut barrier by upregulating tight junction proteins."
+    },
+    {
+      "id": "A30",
+      "term": "T cell",
+      "expected_type": "CELL_TYPE",
+      "ambiguous": false,
+      "type_trap": "Single-letter abbreviation, sometimes tokenized as 'T' alone.",
+      "example_context": "T cell receptor sequencing revealed clonotypic expansions of CD4+ and CD8+ T cells in the lamina propria of patients with active ulcerative colitis, consistent with an adaptive immune response to luminal antigens."
+    },
+    {
+      "id": "A31",
+      "term": "fecal sample",
+      "expected_type": "SAMPLE_METHOD",
+      "ambiguous": false,
+      "type_trap": "Sometimes SPECIMEN, sometimes SAMPLE_METHOD. CDM treats it as SAMPLE_METHOD (the act of collecting).",
+      "example_context": "Each participant provided a fecal sample at baseline and at week 12, collected using a sterile DNA-free collection kit and stored at -80C within 2 hours of defecation. DNA was extracted from 200 mg of each fecal sample using the QIAamp DNA Stool Mini Kit."
+    },
+    {
+      "id": "A32",
+      "term": "16S sequencing",
+      "expected_type": "LAB_METHOD",
+      "ambiguous": true,
+      "type_trap": "Could be DNA_RNA (the 16S molecule) or LAB_METHOD. In context, the method is the referent.",
+      "example_context": "We performed 16S sequencing on the Illumina MiSeq platform, targeting the V3-V4 hypervariable region with the 341F/806R primer pair. Library preparation followed the standard Illumina 16S Metagenomic Sequencing Library Preparation protocol with 30 PCR cycles."
+    },
+    {
+      "id": "A33",
+      "term": "PICRUSt2",
+      "expected_type": "DATA_ANALYSIS",
+      "ambiguous": false,
+      "type_trap": "Tool name with embedded number.",
+      "example_context": "Functional potential of the microbial communities was inferred using PICRUSt2 (Phylogenetic Investigation of Communities by Reconstruction of Unobserved States), which predicts metagenomic functional content from 16S marker gene sequences using a reference phylogeny."
+    },
+    {
+      "id": "A34",
+      "term": "Shannon diversity",
+      "expected_type": "DATA_ANALYSIS",
+      "ambiguous": true,
+      "type_trap": "Could be MEASUREMENT (the metric value) or DATA_ANALYSIS (the method). spaCy often tags as MEASUREMENT.",
+      "example_context": "Alpha diversity was quantified using the Shannon diversity index calculated from the ASV table rarefied to 10,000 reads per sample. The Shannon diversity index incorporates both richness and evenness and ranges from 0 (single taxon) to higher values for more diverse communities."
+    },
+    {
+      "id": "A35",
+      "term": "case-control study",
+      "expected_type": "STUDY_DESIGN",
+      "ambiguous": false,
+      "type_trap": "Multi-word study design term, sometimes tagged as EXPERIMENTAL_METHOD.",
+      "example_context": "We conducted a case-control study comparing the gut microbiota composition of 100 patients with newly diagnosed Crohn's disease to 100 age- and sex-matched healthy controls. Cases and controls were recruited from the same gastroenterology clinic between 2018 and 2022."
+    }
+  ]
+}

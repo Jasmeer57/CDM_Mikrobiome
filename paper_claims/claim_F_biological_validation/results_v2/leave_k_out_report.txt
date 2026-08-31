@@ -1,0 +1,27 @@
+===========================================================================
+LEAVE-K-OUT VALIDATION — held-out KB associations recovered by text-mining
+===========================================================================
+  For each K% of KB associations held out, we rebuild the KG with the
+  remaining 90% and measure recall on the held-out portion.
+  If the held-out recall is high, the text-mining layers are recovering
+  canonical biology from the literature — the KG is not just 'answering with itself'.
+
+    K  n_seeds    mean recall (full)    mean recall (entity)
+------------------------------------------------------------
+  10%        3                 26.7%                  100.0%
+  20%        3                 27.5%                  100.0%
+  30%        3                 28.8%                  100.0%
+
+Per-seed detail:
+  K=10%:
+    seed 0: 9/30 = 30.0% full, 100.0% entity
+    seed 1: 7/30 = 23.3% full, 100.0% entity
+    seed 2: 8/30 = 26.7% full, 100.0% entity
+  K=20%:
+    seed 0: 10/34 = 29.4% full, 100.0% entity
+    seed 1: 9/34 = 26.5% full, 100.0% entity
+    seed 2: 9/34 = 26.5% full, 100.0% entity
+  K=30%:
+    seed 0: 11/44 = 25.0% full, 100.0% entity
+    seed 1: 13/44 = 29.5% full, 100.0% entity
+    seed 2: 14/44 = 31.8% full, 100.0% entity

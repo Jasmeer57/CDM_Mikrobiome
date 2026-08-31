@@ -1,0 +1,11 @@
+metric,LLM-only,spaCy-only,Hybrid (5-source)
+n_entities,1564,4359,5995
+n_relationships,20772,23314,34524
+n_entity_types,14,7,15
+n_rel_types,14,14,14
+mean_entity_confidence,0.761,0.0,0.761
+cross_paper_rels,2010,0,2010
+cross_paper_pct,9.7,0.0,5.8
+cross_source_entities,503,0,503
+top_entity_types,"ORGANISM=523, DISEASE=241, CHEMICAL=223, DATA_ANALYSIS=213, PROTEIN=68","PROTEIN=1208, DNA_RNA=805, CHEMICAL=778, DISEASE=768, CELL_TYPE=397","PROTEIN=1276, CHEMICAL=1042, DISEASE=1017, ORGANISM=857, DNA_RNA=829"
+top_rel_types,"co_occurs_with=13080, associated_with=2088, produces=1104, produced_by=1059, treats=921","co_occurs_with=17732, associated_with=1596, treats=1113, treated_by=904, produces=812","co_occurs_with=24392, associated_with=2691, treats=1617, produces=1389, produced_by=1351"

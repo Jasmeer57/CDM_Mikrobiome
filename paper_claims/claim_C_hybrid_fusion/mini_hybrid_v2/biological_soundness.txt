@@ -1,0 +1,87 @@
+======================================================================
+BIOLOGICAL SOUNDNESS CHECK (v2 hybrid KG with KB layer)
+======================================================================
+Entities: 5995, Relationships: 34524
+
+[100.0%] Butyrate producers (9/9):
+   FOUND: faecalibacterium prausnitzii  type=ORGANISM  source=llm
+   FOUND: eubacterium rectale  type=ORGANISM  source=llm
+   FOUND: roseburia intestinalis  type=ORGANISM  source=kb_seed
+   FOUND: roseburia hominis  type=ORGANISM  source=kb_seed
+   FOUND: butyrivibrio fibrisolvens  type=ORGANISM  source=kb_seed
+   FOUND: butyricicoccus pullicaecorum  type=ORGANISM  source=kb_seed
+   FOUND: anaerostipes hadrus  type=ORGANISM  source=kb_seed
+   FOUND: coprococcus catus  type=ORGANISM  source=kb_seed
+   FOUND: eubacterium hallii  type=ORGANISM  source=kb_seed
+
+[100.0%] IBD-depleted organisms (5/5):
+   FOUND: faecalibacterium prausnitzii  type=ORGANISM  source=llm
+   FOUND: akkermansia muciniphila  type=ORGANISM  source=llm
+   FOUND: bifidobacterium longum  type=ORGANISM  source=kb_seed
+   FOUND: roseburia intestinalis  type=ORGANISM  source=kb_seed
+   FOUND: eubacterium rectale  type=ORGANISM  source=llm
+
+[100.0%] IBD-enriched organisms (7/7):
+   FOUND: ruminococcus gnavus  type=ORGANISM  source=llm
+   FOUND: ruminococcus torques  type=ORGANISM  source=llm
+   FOUND: fusobacterium nucleatum  type=ORGANISM  source=llm
+   FOUND: enterobacteriaceae  type=ORGANISM  source=llm
+   FOUND: veillonella  type=ORGANISM  source=llm
+   FOUND: adherent invasive escherichia coli  type=ORGANISM  source=kb_seed
+   FOUND: klebsiella pneumoniae  type=ORGANISM  source=llm
+
+[100.0%] Butyrate / SCFA chemicals (6/6):
+   FOUND: butyrate  type=CHEMICAL  source=llm
+   FOUND: propionate  type=CHEMICAL  source=llm
+   FOUND: acetate  type=CHEMICAL  source=llm
+   FOUND: short-chain fatty acid  type=CHEMICAL  source=llm
+   FOUND: lipopolysaccharide  type=CHEMICAL  source=spacy
+   FOUND: bile acid  type=CHEMICAL  source=llm
+
+[ 90.9%] Crohn's disease drugs (10/11):
+   FOUND: infliximab  type=CHEMICAL  source=kb_seed
+   FOUND: adalimumab  type=CHEMICAL  source=kb_seed
+   FOUND: ustekinumab  type=CHEMICAL  source=kb_seed
+   FOUND: vedolizumab  type=CHEMICAL  source=kb_seed
+   FOUND: mesalamine  type=CHEMICAL  source=kb_seed
+   FOUND: sulfasalazine  type=CHEMICAL  source=kb_seed
+   FOUND: budesonide  type=CHEMICAL  source=kb_seed
+   FOUND: azathioprine  type=CHEMICAL  source=kb_seed
+   FOUND: 6-mercaptopurine  type=CHEMICAL  source=kb_seed
+   FOUND: methotrexate  type=CHEMICAL  source=kb_seed
+   MISS:  certolizumab pegol
+
+[ 58.3%] UC drugs (7/12):
+   FOUND: infliximab  type=CHEMICAL  source=kb_seed
+   FOUND: adalimumab  type=CHEMICAL  source=kb_seed
+   FOUND: vedolizumab  type=CHEMICAL  source=kb_seed
+   FOUND: mesalamine  type=CHEMICAL  source=kb_seed
+   FOUND: sulfasalazine  type=CHEMICAL  source=kb_seed
+   FOUND: prednisone  type=CHEMICAL  source=spacy
+   FOUND: budesonide  type=CHEMICAL  source=kb_seed
+   MISS:  golimumab
+   MISS:  olsalazine
+   MISS:  balsalazide
+   MISS:  cyclosporine
+   MISS:  tacrolimus
+
+[100.0%] Gut-disrupting antibiotics (9/9):
+   FOUND: vancomycin  type=CHEMICAL  source=llm
+   FOUND: ciprofloxacin  type=CHEMICAL  source=kb_seed
+   FOUND: metronidazole  type=CHEMICAL  source=llm
+   FOUND: rifaximin  type=CHEMICAL  source=kb_seed
+   FOUND: clindamycin  type=CHEMICAL  source=llm
+   FOUND: tetracycline  type=CHEMICAL  source=spacy
+   FOUND: doxycycline  type=CHEMICAL  source=kb_seed
+   FOUND: amoxicillin  type=CHEMICAL  source=spacy
+   FOUND: fidaxomicin  type=CHEMICAL  source=kb_seed
+
+[100.0%] Common gut diseases (8/8):
+   FOUND: inflammatory bowel disease  type=DISEASE  source=spacy
+   FOUND: crohn's disease  type=DISEASE  source=spacy
+   FOUND: ulcerative colitis  type=DISEASE  source=llm
+   FOUND: irritable bowel syndrome  type=DISEASE  source=spacy
+   FOUND: type 2 diabetes mellitus  type=DISEASE  source=spacy
+   FOUND: obesity  type=DISEASE  source=llm
+   FOUND: colorectal cancer  type=DISEASE  source=llm
+   FOUND: c. difficile infection  type=DISEASE  source=kb_seed

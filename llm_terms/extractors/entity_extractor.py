@@ -63,6 +63,25 @@ Requirements:
 5. Include only microbiome-related entities
 """
 
+    def _repair_truncated_json(self, json_str: str) -> Optional[list]:
+        """Best-effort recovery for a JSON array cut off mid-entry by num_predict/max_tokens.
+
+        Drops the trailing incomplete object and closes the array, so a response that
+        got cut off after (say) 20 of 30 complete entities still yields those 20 instead
+        of being discarded entirely.
+        """
+        if not json_str.lstrip().startswith('['):
+            return None
+        last_complete = json_str.rfind('}')
+        if last_complete == -1:
+            return None
+        candidate = json_str[:last_complete + 1] + ']'
+        try:
+            data = json.loads(candidate)
+        except json.JSONDecodeError:
+            return None
+        return data if isinstance(data, list) else None
+
     def parse_llm_response(self, response: str, chunk_num: int) -> List[Dict]:
         """Parse LLM response and extract entities with robust cleaning."""
         entities = []
@@ -98,15 +117,26 @@ Requirements:
                 if arr_start != -1 and arr_end != -1 and arr_end > arr_start:
                     json_start = arr_start
                     json_end = arr_end + 1
+                elif arr_start != -1:
+                    # Array was opened but never closed (response cut off by num_predict) -
+                    # still take the array branch so the truncation repair below can salvage it.
+                    json_start = arr_start
+                    json_end = len(cleaned_response)
                 elif obj_start != -1 and obj_end != -1 and obj_end > obj_start:
                     json_start = obj_start
                     json_end = obj_end + 1
                     
                 if json_start != -1:
                     json_str = cleaned_response[json_start:json_end]
-                    import json
-                    import json
-                    data = json.loads(json_str)
+                    try:
+                        data = json.loads(json_str)
+                    except json.JSONDecodeError:
+                        # Response was cut off mid-object by num_predict/max_tokens.
+                        # Salvage whatever complete entries came before the truncation
+                        # instead of discarding the whole (mostly-good) response.
+                        data = self._repair_truncated_json(json_str)
+                        if data is None:
+                            raise
                     
                     # If it's a dictionary wrapping the list (e.g. {"entities": [...]})
                     if isinstance(data, dict):

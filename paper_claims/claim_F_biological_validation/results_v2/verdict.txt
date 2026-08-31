@@ -1,0 +1,23 @@
+SUPPORTED (non-circular): leave-K-out validation
+
+Full-triple recall on the complete gold set is 100% — but this is circular,
+since the gold associations are sourced from the same biological_kb.py that
+seeds the KG's KB layer.
+
+Leave-K-out validation (non-circular):
+  - Hold out K% of KB associations, rebuild KG without them, measure recall
+    on the held-out portion. If text-mining recovers held-out associations,
+    the KG is not just "answering with itself."
+  - K=10%: 26.7% mean full recall, 100% entity coverage (3 seeds)
+  - K=20%: 27.5% mean full recall, 100% entity coverage (3 seeds)
+  - K=30%: 28.8% mean full recall, 100% entity coverage (3 seeds)
+
+Interpretation:
+  - 100% entity coverage: all held-out entities are present in the KG (seeded
+    from ORGANISMS/DRUGS/DISEASES lists even when their associations are removed).
+  - ~27% full-triple recall: the text-mining layers independently recover
+    ~1 in 4 held-out subject-relation-object triples from the literature alone,
+    without the KB layer providing the answer. This is a meaningful signal that
+    the extraction pipeline captures real biology, not just KB memorization.
+  - Recall is stable across holdout fractions (26.7%–28.8%), indicating the
+    result is not sensitive to which associations are held out.

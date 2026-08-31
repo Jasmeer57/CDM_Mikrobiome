@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Microbiome-CDM — Figure 2: Per-CDM-type Method Comparison</title>
+<style>
+  :root { --bg: #f7f5f0; --card: #fff; --ink: #14171e; --ink-2: #3a4256; --muted: #7c7a72; --line: #e9e3d6;
+          --llm: #6b4e9c; --craft: #2e6e8e; --bc5cdr: #c97b3f; --jnlpba: #2f6f5e; --gap: #b06367; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Outfit', system-ui, sans-serif; background: var(--bg); color: var(--ink);
+         margin: 0; padding: 32px 20px; font-size: 14px; line-height: 1.55; }
+  main { max-width: 900px; margin: 0 auto; }
+  h1 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 30px; margin: 0 0 6px; letter-spacing: -0.005em; }
+  h2 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 20px; margin: 32px 0 6px; }
+  .lede { color: var(--ink-2); max-width: 760px; margin: 0 0 24px; }
+  .section-tag { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+  .chart { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px;
+           box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 6px; border-bottom: 2px solid var(--line); font-weight: 600;
+       color: var(--ink-2); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  td { padding: 7px 6px; border-bottom: 1px solid var(--line-soft); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.llm-only td { background: rgba(107, 78, 156, 0.05); }
+  .bar { display: inline-block; height: 12px; border-radius: 2px; vertical-align: middle; }
+  .bar.llm    { background: var(--llm); }
+  .bar.craft  { background: var(--craft); }
+  .legend { display: flex; gap: 16px; margin: 12px 0 16px; font-size: 12.5px; }
+  .legend .item { display: flex; align-items: center; gap: 6px; }
+  .legend .sw { width: 12px; height: 12px; border-radius: 2px; }
+  .finding { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+             border-radius: 12px; padding: 16px 20px; margin-top: 16px; }
+  .finding h4 { font-family: 'DM Serif Display', serif; font-size: 15px; font-weight: 400; margin: 0 0 4px; }
+  .finding p { font-size: 13px; color: var(--ink-2); margin: 0; }
+  .finding em { color: var(--ink); font-style: normal; font-weight: 600; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 12px; }
+  pre { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.04);
+        padding: 8px 12px; border-radius: 6px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<main>
+  <div class="section-tag">Microbiome-CDM  ·  Figure 2  ·  Method Complementarity</div>
+  <h1>Per-CDM-type comparison: LLM vs scispaCy.</h1>
+  <p class="lede">Counts are <em>unique filtered entities</em> on the 50-paper cohort (LLM qwen3.5:9b, spaCy union of 3 typed models). The <code style="font-family:'JetBrains Mono',monospace; font-size:12px;">en_core_sci_lg</code> model is omitted because 91% of its output is the generic <code style="font-family:'JetBrains Mono',monospace; font-size:12px;">ENTITY</code> label. An <code style="font-family:'JetBrains Mono',monospace; font-size:12px;">is_valid_entity()</code> filter rejects truncations, affiliations, DNA sequences, numerics, journal names, merged words, and short terms (&lt;3 chars).</p>
+
+  <div class="chart">
+    <div class="legend">
+      <div class="item"><span class="sw" style="background: var(--llm);"></span> LLM (qwen3.5:9b)</div>
+      <div class="item"><span class="sw" style="background: var(--craft);"></span> spaCy union (3 models)</div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>CDM type</th>
+          <th class="num">LLM</th>
+          <th class="num">spaCy union</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ORGANISM</td>
+          <td class="num">523</td><td class="num">311</td>
+          <td>LLM leads; spaCy craft contributes</td>
+        </tr>
+        <tr>
+          <td>CHEMICAL</td>
+          <td class="num">223</td><td class="num">778</td>
+          <td>spaCy bc5cdr + craft dominate</td>
+        </tr>
+        <tr>
+          <td>DISEASE</td>
+          <td class="num">241</td><td class="num">768</td>
+          <td>spaCy bc5cdr dominates</td>
+        </tr>
+        <tr>
+          <td>PROTEIN</td>
+          <td class="num">68</td><td class="num">1,208</td>
+          <td>spaCy jnlpba + craft dominate</td>
+        </tr>
+        <tr>
+          <td>DNA_RNA</td>
+          <td class="num">24</td><td class="num">805</td>
+          <td>spaCy jnlpba + craft dominate</td>
+        </tr>
+        <tr>
+          <td>CELL_TYPE</td>
+          <td class="num">15</td><td class="num">412</td>
+          <td>spaCy jnlpba only</td>
+        </tr>
+        <tr>
+          <td>UNKNOWN</td>
+          <td class="num">0</td><td class="num">92</td>
+          <td>spaCy-only (untyped residue)</td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>DATA_ANALYSIS</b></td>
+          <td class="num">213</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>PATHWAY</b></td>
+          <td class="num">64</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>LAB_METHOD</b></td>
+          <td class="num">64</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>SAMPLE_METHOD</b></td>
+          <td class="num">59</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>EXPERIMENTAL_METHOD</b></td>
+          <td class="num">29</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>CLINICAL</b></td>
+          <td class="num">20</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>GENOMICS</b></td>
+          <td class="num">14</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+        <tr class="llm-only">
+          <td><b>STUDY_DESIGN</b></td>
+          <td class="num">7</td><td class="num">0</td>
+          <td><b>LLM-only</b></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The empirical case for the hybrid</h2>
+  <div class="chart">
+<pre>LLM vs spaCy union on normalized, filtered terms (50 papers):
+  Jaccard = 0.085
+  shared   = 503
+  LLM-only = 1,061
+  spaCy-only = 4,359
+  total distinct = 5,923     ← only ~8.5% shared
+
+Type complementarity:
+  LLM-only types:   8  (DATA_ANALYSIS, PATHWAY, LAB_METHOD, SAMPLE_METHOD,
+                        EXPERIMENTAL_METHOD, CLINICAL, GENOMICS, STUDY_DESIGN)
+  spaCy-only types: 1  (UNKNOWN — untyped residue)
+  shared types:      6  (ORGANISM, CHEMICAL, DISEASE, PROTEIN, DNA_RNA, CELL_TYPE)
+  missing in both:   0</pre>
+  </div>
+
+  <div class="finding" style="border-left-color: var(--llm);">
+    <h4>Why hybrid? Three empirical facts.</h4>
+    <p>
+      <em>1. The two methods are largely disjoint.</em> Only 8.5% of the union of normalized terms is shared between the LLM and spaCy. 1,061 of 1,564 LLM entities (68%) appear in NO spaCy model; 4,359 of 4,862 spaCy entities (90%) appear in NO LLM output.
+      <br><br>
+      <em>2. The LLM produces 8 CDM types that no spaCy model produces.</em> These are the higher-level, context-dependent types (DATA_ANALYSIS, PATHWAY, LAB_METHOD, SAMPLE_METHOD, EXPERIMENTAL_METHOD, CLINICAL, GENOMICS, STUDY_DESIGN). spaCy's label set is general (CHEMICAL, DISEASE, CELL_TYPE, etc.) and does not include them.
+      <br><br>
+      <em>3. All 14 CDM types are covered.</em> The LLM covers all 14 types; spaCy covers 6 biological types plus UNKNOWN. No CDM type is missing from both methods — the hybrid achieves complete type coverage.
+    </p>
+  </div>
+
+  <div class="footer">
+    <b>paper_claims/claim_C_hybrid_fusion/results_v2/entity_type_distribution.csv</b> — per-type counts.
+    <b>paper_claims/claim_C_hybrid_fusion/results_v2/summary.json</b> — headline metrics, source counts.
+    Generated 2026-08-27. v2 (with is_valid_entity filter).
+  </div>
+</main>
+</body>
+</html>

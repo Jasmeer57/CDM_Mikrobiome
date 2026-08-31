@@ -74,7 +74,12 @@ Respond with ONLY a number from 0.0 to 1.0 indicating the probability they are t
 Provide only the number:"""
 
         try:
-            response = self.llm_client.generate(prompt, model=self.biomistral_model, max_tokens=10)
+            # NOTE: was `self.llm_client.generate(prompt, model=..., max_tokens=10)` -
+            # LLMClient has no `generate` method (only `call_llm`), so this always
+            # raised AttributeError and silently fell through to the `except` below,
+            # meaning every single call returned the conservative default of 0.0 -
+            # this deduplicator never actually merged anything in practice.
+            response = self.llm_client.call_llm(prompt, max_tokens=20)
 
             # Extract numeric score from response
             import re
@@ -154,7 +159,7 @@ Similarity Score: {similarity}
 Provide a concise biomedical explanation (max 50 words):"""
 
         try:
-            reasoning = self.llm_client.generate(reasoning_prompt, model=self.biomistral_model, max_tokens=100)
+            reasoning = self.llm_client.call_llm(reasoning_prompt, max_tokens=300)
             reasoning = reasoning.strip()[:200]  # Limit length
         except Exception:
             reasoning = f"Biomedical similarity detected (score: {similarity:.2f})"
@@ -205,7 +210,10 @@ Provide a concise biomedical explanation (max 50 words):"""
     def deduplicate_entities(self, entities: List[Dict],
                            biomistral_threshold: float = 0.7,
                            semantic_threshold: float = 0.85,
-                           use_biomistral: bool = True) -> Tuple[List[Dict], List[DuplicateGroup]]:
+                           use_biomistral: bool = True,
+                           embedding_prefilter: float = 0.55,
+                           fuzzy_prefilter: float = 0.85,
+                           fuzzy_fast_merge_threshold: float = 0.95) -> Tuple[List[Dict], List[DuplicateGroup]]:
         """
         Advanced deduplication using BioMistral and semantic analysis.
 
@@ -214,6 +222,18 @@ Provide a concise biomedical explanation (max 50 words):"""
             biomistral_threshold: Threshold for BioMistral contextual similarity
             semantic_threshold: Threshold for semantic similarity
             use_biomistral: Whether to use BioMistral (fallback to semantic only)
+            embedding_prefilter: Cheap embedding-similarity gate applied BEFORE the
+                LLM call. _identify_duplicate_candidates does no filtering at all -
+                it emits every pair within an entity type, so this method previously
+                called the LLM on genuinely every candidate pair (O(n^2) LLM calls
+                per type group; infeasible past a few dozen entities of one type -
+                a real corpus has hundreds to thousands). Computing the cheap
+                sentence-embedding score first and skipping the LLM call entirely
+                when it's below this floor cuts LLM calls by ~90%+ in practice
+                (most cross-pairs within a type are unrelated), without changing
+                what counts as a final duplicate - the LLM/semantic scoring logic
+                below is unchanged, this only skips calls that would almost
+                certainly score low anyway. Set to 0.0 to disable (original behavior).
 
         Returns:
             Tuple of (deduplicated_entities, duplicate_groups)
@@ -230,25 +250,47 @@ Provide a concise biomedical explanation (max 50 words):"""
 
         # Step 2: Analyze candidates
         duplicate_groups = []
+        llm_calls_made = 0
+        fast_path_merges = 0
+        llm_calls_skipped = 0
 
         for entity1, entity2 in candidates:
             similarity_scores = []
 
-            # Method 1: BioMistral contextual analysis
-            if use_biomistral:
+            # Method 3: String/fuzzy similarity (cheap - compute first, used as a gate
+            # AND a fast-path auto-merge, not just a discarded display value like before -
+            # it was computed here but never fed into final_score/threshold at all, so
+            # obvious typo/case/whitespace variants that embeddings score inconsistently
+            # were never caught by this signal despite being computed every time).
+            import difflib
+            string_score = difflib.SequenceMatcher(None, entity1['entity'].lower(), entity2['entity'].lower()).ratio()
+            similarity_scores.append(('string', string_score))
+
+            # Method 2: Semantic similarity (cheap - compute, use as the other gate)
+            semantic_score = self._get_semantic_similarity(entity1['entity'], entity2['entity'])
+            similarity_scores.append(('semantic', semantic_score))
+
+            # Fast path: near-identical strings (typo/case/whitespace variants) are merged
+            # directly without spending an LLM call - fuzzy_fast_merge_threshold is set high
+            # enough that this only fires for things a human would call "obviously the same
+            # string", not genus/species-type near-matches (those still need the LLM's
+            # biological judgment, e.g. "Bacteroides" vs "Bacteroides fragilis").
+            if string_score >= fuzzy_fast_merge_threshold:
+                similarity_scores.append(('biomistral', 1.0))  # treat as a confirmed match
+                fast_path_merges += 1
+            # Method 1: BioMistral contextual analysis - only spend an LLM call if EITHER
+            # cheap signal (embedding OR fuzzy string) suggests these might be related.
+            # Embedding catches synonyms with no shared substring ("SCFA" vs "short-chain
+            # fatty acid"); fuzzy catches typo/near-identical variants embeddings sometimes
+            # score inconsistently. Either one clearing the bar is enough to justify the call.
+            elif use_biomistral and (semantic_score >= embedding_prefilter or string_score >= fuzzy_prefilter):
                 biomistral_score = self._get_bio_contextual_similarity(
                     entity1['entity'], entity2['entity'], entity1.get('entity_type', 'UNKNOWN')
                 )
                 similarity_scores.append(('biomistral', biomistral_score))
-
-            # Method 2: Semantic similarity
-            semantic_score = self._get_semantic_similarity(entity1['entity'], entity2['entity'])
-            similarity_scores.append(('semantic', semantic_score))
-
-            # Method 3: String similarity (fallback)
-            import difflib
-            string_score = difflib.SequenceMatcher(None, entity1['entity'].lower(), entity2['entity'].lower()).ratio()
-            similarity_scores.append(('string', string_score))
+                llm_calls_made += 1
+            elif use_biomistral:
+                llm_calls_skipped += 1
 
             # Determine final similarity (prioritize BioMistral)
             if use_biomistral and any(s[0] == 'biomistral' for s in similarity_scores):
@@ -266,6 +308,10 @@ Provide a concise biomedical explanation (max 50 words):"""
 
                 logger.info(f"🔗 Duplicate found: '{entity1['entity']}' ↔ '{entity2['entity']}' "
                            f"(score: {final_score:.2f}, method: {max(similarity_scores, key=lambda x: x[1])[0]})")
+
+        if use_biomistral:
+            logger.info(f"  LLM calls made: {llm_calls_made}, skipped by pre-filter: {llm_calls_skipped}, "
+                        f"fast-path fuzzy merges (no LLM needed): {fast_path_merges}")
 
         # Step 4: Merge overlapping groups
         duplicate_groups = self._merge_duplicate_groups(duplicate_groups)

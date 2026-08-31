@@ -3,6 +3,8 @@ import requests
 from typing import List, Dict, Optional
 from dataclasses import dataclass
 
+from .confidence_scoring import score_match
+
 logger = logging.getLogger(__name__)
 
 @dataclass
@@ -14,7 +16,8 @@ class BioPortalMapping:
     ontology_name: str
     mapping_confidence: float
     mapping_method: str = "BioPortal_API"
-    
+    label: str = ""
+
     def to_dict(self) -> Dict:
         return {
             "entity_name": self.entity_name,
@@ -22,7 +25,8 @@ class BioPortalMapping:
             "concept_id": self.concept_id,
             "ontology_name": self.ontology_name,
             "mapping_confidence": self.mapping_confidence,
-            "mapping_method": self.mapping_method
+            "mapping_method": self.mapping_method,
+            "label": self.label,
         }
 
 class BioPortalMapper:
@@ -56,15 +60,21 @@ class BioPortalMapper:
             if response.status_code == 200:
                 results = response.json().get('collection', [])
                 for result in results:
-                    confidence = self._calculate_confidence(entity_name, result)
+                    ontology_name = result.get('links', {}).get('ontology', '').split('/')[-1]
+                    confidence = score_match(
+                        entity_name, entity_type,
+                        candidate_label=result.get('prefLabel'),
+                        ontology_name=ontology_name,
+                    )
                     if confidence > 0.4:
                         mappings.append(BioPortalMapping(
                             entity_name=entity_name,
                             entity_type=entity_type,
                             concept_id=result.get('@id', ''),
-                            ontology_name=result.get('links', {}).get('ontology', '').split('/')[-1],
+                            ontology_name=ontology_name,
                             mapping_confidence=confidence,
-                            mapping_method="BioPortal_API"
+                            mapping_method="BioPortal_API",
+                            label=result.get('prefLabel', ''),
                         ))
             else:
                  logger.warning(f"BioPortal API error: {response.status_code} - {response.text[:100]}")
@@ -78,12 +88,3 @@ class BioPortalMapper:
             self.cache[cache_key] = mappings
             
         return mappings
-
-    def _calculate_confidence(self, entity_name: str, result: Dict) -> float:
-        confidence = 0.5
-        pref_label = result.get('prefLabel', '').lower()
-        if pref_label == entity_name.lower():
-            confidence += 0.4
-        elif entity_name.lower() in pref_label:
-            confidence += 0.2
-        return min(confidence, 1.0)

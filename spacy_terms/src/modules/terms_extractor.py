@@ -521,9 +521,15 @@ class TermsExtractor:
                 if cleaned and len(cleaned) > 1:
                     tokens.append(cleaned)
 
-            # Create normalized form (sorted for consistency)
-            sorted_tokens = sorted(tokens)
-            normalized_form = " ".join(sorted_tokens) if sorted_tokens else ""
+            # Create normalized form, preserving original word order.
+            # NOTE: this used to be `sorted(tokens)` for a "canonical" dedup key,
+            # but that alphabetized string (e.g. "flora gut" from "gut flora")
+            # is what ends up in the shipped `term`/display field - it isn't just
+            # an internal key. Word-order-invariant dedup is already handled
+            # separately by the pipeline's fuzzy/semantic dedup stage
+            # (src/modules/deduplication.py), so sorting here only corrupted
+            # the display text without buying any real deduplication.
+            normalized_form = " ".join(tokens) if tokens else ""
 
             # Step 3: Apply SAFE synonym mapping only if enabled and safe
             if use_synonym_map:

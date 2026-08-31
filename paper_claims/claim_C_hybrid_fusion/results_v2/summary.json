@@ -1,0 +1,54 @@
+{
+  "n_entities": 5995,
+  "n_relationships": 34524,
+  "source_counts": {
+    "S1_llm_entities": 1564,
+    "S2_spacy_entities": 4359,
+    "S3_co_occurrence_edges": 32288,
+    "S4_type_canonical_edges": 1985,
+    "S5_cross_source_entities": 468,
+    "S6_kb_seed_entities": 72,
+    "S7_kb_curated_edges": 251
+  },
+  "headline_metrics": {
+    "LLM-only": {
+      "n_entities": 1564,
+      "n_relationships": 20772,
+      "n_entity_types": 14,
+      "n_rel_types": 14,
+      "mean_entity_confidence": 0.761,
+      "cross_paper_rels": 2010,
+      "cross_paper_pct": 9.7,
+      "cross_source_entities": 503,
+      "top_entity_types": "ORGANISM=523, DISEASE=241, CHEMICAL=223, DATA_ANALYSIS=213, PROTEIN=68",
+      "top_rel_types": "co_occurs_with=13080, associated_with=2088, produces=1104, produced_by=1059, treats=921"
+    },
+    "spaCy-only": {
+      "n_entities": 4359,
+      "n_relationships": 23314,
+      "n_entity_types": 7,
+      "n_rel_types": 14,
+      "mean_entity_confidence": 0.0,
+      "cross_paper_rels": 0,
+      "cross_paper_pct": 0.0,
+      "cross_source_entities": 0,
+      "top_entity_types": "PROTEIN=1208, DNA_RNA=805, CHEMICAL=778, DISEASE=768, CELL_TYPE=397",
+      "top_rel_types": "co_occurs_with=17732, associated_with=1596, treats=1113, treated_by=904, produces=812"
+    },
+    "Hybrid (5-source)": {
+      "n_entities": 5995,
+      "n_relationships": 34524,
+      "n_entity_types": 15,
+      "n_rel_types": 14,
+      "mean_entity_confidence": 0.761,
+      "cross_paper_rels": 2010,
+      "cross_paper_pct": 5.8,
+      "cross_source_entities": 503,
+      "top_entity_types": "PROTEIN=1276, CHEMICAL=1042, DISEASE=1017, ORGANISM=857, DNA_RNA=829",
+      "top_rel_types": "co_occurs_with=24392, associated_with=2691, treats=1617, produces=1389, produced_by=1351"
+    }
+  },
+  "wins": 5.0,
+  "losses": 0,
+  "verdict": "SUPPORTED (hybrid \u2265 both single-method views on \u22653 metrics)"
+}

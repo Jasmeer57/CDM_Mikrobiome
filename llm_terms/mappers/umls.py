@@ -9,6 +9,8 @@ import json
 from typing import Dict, List, Optional, Set
 from dataclasses import dataclass
 
+from .confidence_scoring import score_match
+
 logger = logging.getLogger(__name__)
 
 @dataclass
@@ -193,26 +195,23 @@ class UMLSMapper:
         return bool(concept_set.intersection(expected_set))
 
     def _calculate_umls_confidence(self, entity_name: str, concept: UMLSConcept, entity_type: str) -> float:
-        """Calculate confidence score for UMLS mapping."""
-        confidence = 0.5  # Base confidence
+        """Calculate confidence score for UMLS mapping.
 
-        entity_lower = entity_name.lower()
-        concept_name_lower = concept.name.lower()
-
-        # Exact name match
-        if entity_lower == concept_name_lower:
-            confidence += 0.3
-        # Partial match
-        elif entity_lower in concept_name_lower or concept_name_lower in entity_lower:
-            confidence += 0.15
-
-        # Synonym match
+        Base name-match score comes from confidence_scoring.score_match (token-set
+        + embedding similarity), which replaced the old naive substring check that
+        credited accidental character overlaps (e.g. "intestinal pH" scoring as a
+        partial match against "Intestinal phase..." purely because the first 13
+        characters happened to line up). UMLS-specific signals - synonym match,
+        semantic-type agreement, definition presence - stay on top as bonuses,
+        since they're real extra evidence score_match doesn't have access to.
+        """
+        best_name_score = score_match(entity_name, entity_type, concept.name, ontology_name=None)
+        # Also check synonyms - the best-matching synonym can beat the preferred name
+        # (e.g. entity extracted using an abbreviation that's a listed synonym).
         for synonym in concept.synonyms:
-            if entity_lower == synonym.lower():
-                confidence += 0.25
-                break
-            elif entity_lower in synonym.lower() or synonym.lower() in entity_lower:
-                confidence += 0.1
+            best_name_score = max(best_name_score, score_match(entity_name, entity_type, synonym, ontology_name=None))
+
+        confidence = best_name_score
 
         # Semantic type matching bonus
         expected_semantic_types = self.semantic_type_mappings.get(entity_type, [])

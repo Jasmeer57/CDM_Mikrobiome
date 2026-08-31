@@ -29,6 +29,7 @@ env/
 .env.*
 **/venv/
 **/.venv/
+**/.venv39/
 **/env/
 **/.env/
 spacy_terms/venv_scispacy/
@@ -56,6 +57,7 @@ microbiome_cdm.db
 bioproject_database.db
 llm_terms/omop_vocab/
 papers_txt/
+pdfs/
 168000*
 **/data/
 **/vocab/
@@ -66,6 +68,9 @@ papers_txt/
 outputs/
 output/
 enhanced_output/
+results/
+results_partial/
+results_partial2/
 **/output_full*/
 llm_terms/Output_final/
 **/output_final*/
@@ -83,6 +88,7 @@ pipeline_log*
 *_logs/
 test_logs/
 logs_*/
+*.pid
 
 # --- Database & Model Binaries ---
 *.sqlite
@@ -143,6 +149,19 @@ llm_terms/llama.cpp/
 
 # --- Claude Code local config ---
 CLAUDE.md
+
+# --- paper_claims generated data (keep scripts, docs, small summaries) ---
+paper_claims/_spacy_runs/
+paper_claims/_llm_runs/
+paper_claims/_llm_smoke/
+paper_claims/_multi_ner_runs/cdm_output/
+paper_claims/_multi_ner_runs/gliner_ner.csv
+paper_claims/_multi_ner_runs/pubmedbert_ner.csv
+paper_claims/_multi_ner_runs/all_ner_combined.csv
+paper_claims/_multi_ner_runs/mapped_entities.json
+paper_claims/_multi_ner_runs/deduplicated_entities.json
+paper_claims/_multi_ner_runs/mapping_checkpoint.json
+paper_claims/_multi_ner_runs/mapping_run2*.log
 
 # --- Explicit Allow Rules ---
 !.gitignore
