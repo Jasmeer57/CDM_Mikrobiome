@@ -118,19 +118,23 @@ PROP_DOMAIN_RANGE = {
 JUNK_PATTERNS = [
     # Sentence fragments: number + common English words
     re.compile(r'^\d+\)?\.?\s*(and|were|contained|the|individuals|with|copies|intestinal|week)\b', re.I),
-    re.compile(r'^(in contrast|and|or|but)\)?$', re.I),
+    re.compile(r'^(in contrast|and|or|but)\)?\s*$', re.I),
     # Temporal microbiome references (not organisms)
-    re.compile(r'^\d+(M|m)?_(month|year|week|day|hour)_?microbiome$', re.I),
-    re.compile(r'^\d+M_microbiome$', re.I),
-    # Pure measurements
-    re.compile(r'^\d+(\.\d+)?\s*(mL|mg|kg|µL|uL|mmol|mol|copies|intake|week_intake|mL_NaOH|mM_Fuc)$', re.I),
-    re.compile(r'^\d+mL$', re.I),
-    # Primer/sequence probe strings (e.g. 1119r, 1492_R, 27F, 78F)
-    re.compile(r'^\d+[A-Z]?[rR]?$'),
-    re.compile(r'^\d+_?[A-Z]+_?\d*[rR]?$'),
+    re.compile(r'^\d+m?_?(month|year|week|day|hour)_?microbiome$', re.I),
+    re.compile(r'^\d+m_microbiome$', re.I),
+    # Pure measurements (units only, not chemical names)
+    re.compile(r'^\d+(\.\d+)?\s*(ml|mg|kg|µl|ul|mmol|copies|week_intake)$', re.I),
+    re.compile(r'^\d+ml$', re.I),
+    re.compile(r'^\d+mm_naoh$', re.I),
+    re.compile(r'^\d+mm_fuc$', re.I),
+    # Primer/sequence probe strings (e.g. 1119r, 1492_R, 27F, 78F, 515F, 806R)
+    re.compile(r'^\d+[_]?[fFrR]$'),
+    re.compile(r'^\d+_?[a-z]*_r$', re.I),
     # Age/developmental stage fragments
-    re.compile(r'^\d+_week_old', re.I),
-    # Single character or two-char
+    re.compile(r'^\d+_?week_?old', re.I),
+    re.compile(r'germ_free.*(mouse|mice)', re.I),
+    re.compile(r'c57bl.?6j', re.I),
+    # Single character or two-char (too short to be meaningful)
     re.compile(r'^.{1,2}$'),
     # Pure numbers (with optional decimal)
     re.compile(r'^\d+(\.\d+)?$'),
@@ -138,8 +142,16 @@ JUNK_PATTERNS = [
     re.compile(r'^[^\w]+$'),
     # Starts with a digit+parenthesis fragment like "05)."
     re.compile(r'^\d+\)\.?\s'),
-    # NER artifacts: "X_and", "X_the", "X_with" where X is alphanumeric
-    re.compile(r'^[A-Za-z0-9_]+_(and|the|with|for|from|of|in|to|on|at|by)\s*$', re.I),
+    # NER artifacts: "X_and", "X_the", "X_with" trailing stopwords
+    re.compile(r'^[a-z0-9_]+_(and|the|with|for|from|of|in|to|on|at|by)\s*$', re.I),
+    # Experimental group labels (Control, Target, Treated, etc.) — not organisms
+    re.compile(r'^\w+_(control|target|treated|untreated|placebo)\s*$', re.I),
+    # Mouse model references that are group labels, not organism names
+    re.compile(r'^\w+_mice$', re.I),
+    re.compile(r'^\w+_colonized_mice$', re.I),
+    re.compile(r'^\w+_community$', re.I),
+    # Ratio/fraction patterns
+    re.compile(r'^\d+:\d+$'),
 ]
 
 # Specific junk strings to drop (case-insensitive)

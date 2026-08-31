@@ -1,26 +1,29 @@
-"""
-Batch runner for llm_terms/main.py on all 444 papers using Qwen3.5:9b.
+"""Batch runner for llm_terms/main.py on all papers using Qwen3.5:9b.
+
 - Sequential execution (GPU memory constraint)
 - Checkpoint/resume support
 - Error handling per-paper
 - Thinking mode disabled by default in core/llm_client.py
 """
-import sys, os, json, time, subprocess, traceback
+import sys
+import json
+import time
+import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-REPO = Path(__file__).parent
-PAPERS_DIR = REPO / "papers_txt"
-OUTPUT_DIR = REPO / "llm_terms" / "output"
+from .config import REPO_ROOT, PAPERS_DIR, LLM_TERMS_DIR, SPACY_VENV_PYTHON
+
+OUTPUT_DIR = LLM_TERMS_DIR / "output"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 CHECKPOINT = OUTPUT_DIR / "qwen_batch_checkpoint.json"
-PYTHON = str(REPO / "spacy_terms" / ".venv39" / "Scripts" / "python.exe")
-MAIN_PY = str(REPO / "llm_terms" / "main.py")
+MAIN_PY = str(LLM_TERMS_DIR / "main.py")
 MODEL = "qwen3.5:9b"
+
 
 def load_checkpoint():
     if CHECKPOINT.exists():
@@ -28,15 +31,17 @@ def load_checkpoint():
             return json.load(f)
     return {"done": {}, "errors": {}, "started": None}
 
+
 def save_checkpoint(cp):
     with open(CHECKPOINT, "w", encoding="utf-8") as f:
         json.dump(cp, f, indent=2, ensure_ascii=False)
 
+
 def main():
     papers = sorted(PAPERS_DIR.glob("*.txt"))
-    print(f"=" * 60)
-    print(f"Qwen3.5:9b Batch NER Runner")
-    print(f"=" * 60)
+    print("=" * 60)
+    print("Qwen3.5:9b Batch NER Runner")
+    print("=" * 60)
     print(f"Papers: {len(papers)}")
     print(f"Model: {MODEL}")
     print(f"Output: {OUTPUT_DIR}")
@@ -67,11 +72,11 @@ def main():
 
         try:
             result = subprocess.run(
-                [PYTHON, MAIN_PY, "--input", str(paper),
+                [str(SPACY_VENV_PYTHON), MAIN_PY, "--input", str(paper),
                  "--model", MODEL, "--output", str(out_path)],
                 capture_output=True, text=True, timeout=900,
                 encoding="utf-8", errors="replace",
-                cwd=str(REPO)
+                cwd=str(REPO_ROOT)
             )
 
             if result.returncode == 0 and out_path.exists():
@@ -143,6 +148,7 @@ def main():
     with open(summary_path, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
     print(f"\nSummary saved to {summary_path}")
+
 
 if __name__ == "__main__":
     main()
