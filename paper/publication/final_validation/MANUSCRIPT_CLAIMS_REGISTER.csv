@@ -148,6 +148,9 @@ W05,Triple screen,triples judged by both runs / Q04-partial (P) triples now SUPP
 RT01,Rights,"papers licence-checked / text included (CC BY, CC0) / NC layer / text withheld",453/274/15/164,453/274/15/164,MATCH,PAPER_RIGHTS_MATRIX.csv
 RT02,Rights,papers whose text is not redistributed: total / no licence found / CC BY-NC-ND / CC BY-NC / CC BY-NC-SA,179/135/29/12/3,179/135/29/12/3,MATCH,PAPER_RIGHTS_MATRIX.csv
 RT03,Rights,public build: text values emptied / table-columns redacted / unexplained rights-scan hits,2103395/263/0,2103395/263/0,MATCH,zenodo_frozen RELEASE_REDACTION_LOG.csv + VERIFICATION_RIGHTS_SCAN.json
+RT04,Rights,FhGenie triple-label judge (2026-11-07): labels sent / withheld-only / of these >= 50 chars,51576/6477/1460,51576/6477/1460,MATCH,B24 addendum 2026-11-10
+RT05,Rights,FhGenie term-relevance screen (2026-11-09): labels sent / withheld-only / of these >= 50 chars,157990/13138/877,157990/13138/877,MATCH,B24 addendum 2026-11-10
+RT06,Rights,definitions layer: terms with a model field holding a withheld span / quoted source definitions from non-open papers,2061/1422,2061/1422,MATCH,B24 addendum 2026-11-10
 CL01,CDM 3.1.0,canonical terms: 3.0.3 / after dedup / kept after relevance filter,162409/157815/116755,162409/157815/116755,MATCH,CDM 3.1.0 term_curation
 CL02,CDM 3.1.0,accepted concepts: IRIs / after ID normalisation / after dedup / kept,13330/12657/12182/11912,13330/12657/12182/11912,MATCH,"CDM 3.1.0 concept_curie_map, concept_curation"
 CL03,CDM 3.1.0,accepted mappings: 3.0.3 rows / clean rows,18272/15769,18272/15769,MATCH,CDM 3.1.0 term_concept_map_clean
