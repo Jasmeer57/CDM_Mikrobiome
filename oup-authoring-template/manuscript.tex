@@ -124,8 +124,10 @@ in 77.0\% of determinable pairs versus a 52.0\% chance baseline, and a
 licence-filtered LLM-as-judge screen classifies 56.0\% of relation triples as
 supported by their source sentence. Build 3.1.0 keeps build 3.0.3 unchanged
 and adds curated layers: deduplication and a relevance filter reduce 162,409
-canonical terms to 116,755, and relation repair yields 8,307 triples with a
-specific, cue-verified relation.
+canonical terms to 116,755, context-based re-typing leaves no term with the
+generic type (88.3\% carry one of the 14 CDM types), and relation repair and
+re-typing yield 13,564 triples (52.6\%) with a specific, cue-verified relation.
+%% FACT 2026-11-10: JV05, JV06 (re-typing layers over 3.1.0; lead approval pending)
 
 \textbf{Conclusions:} A multi-program extraction protocol can turn a
 literature corpus underlying a large microbiome compendium into a
@@ -629,6 +631,31 @@ then removed strings that are not concepts, such as author names, figure
 references and sentence fragments, or that lie outside biomedical
 research, keeping 116,755 terms, 11,912 concepts and 15,769 accepted
 mappings between them.
+
+%% FACT 2026-11-10: re-typing layers [JV03 JV04 JV05 JV06 JV09]; scripts src/scripts/terms/retype_entity_terms.py,
+%% src/scripts/triples/retype_triples_v2.py (v2.5), retype_merge_summary.py. New model run; lead approval pending.
+Two further layers type what extraction left generic. First, each of the
+53,780 kept terms that carried only the generic ENTITY type was re-typed by
+a locally run language model (Qwen3.5-9B~\cite{qwen35card}, 4-bit AWQ
+weights~\cite{lin2023awq}, served with vLLM on a single GPU), given the
+term, its merged variants, its model definition and up to three corpus
+sentences from distinct papers. A JSON schema restricts the answer to the
+14 CDM types, to four proposed extension types for things the 14 cannot
+hold (anatomy or body site, population or host group, measure or unit, and
+geography), or to NOT\_A\_CONCEPT for words that name no scientific thing.
+Second, each of the 14,867 triples whose relation was still unspecific
+after repair was re-typed from up to three of its source sentences. The
+model first quotes the words that relate subject and object and only then
+chooses a relation, from the existing closed list extended by signed
+association labels (positively or negatively associated, differentially
+abundant, biomarker of, predicts, increases or decreases over time) or one
+of three exits: association without direction, null finding, or not
+supported. A relation counts as specific only when its quoted cue is found
+verbatim in a source sentence; a null finding also requires negation
+wording in the cue, and a reversed direction is overruled when the
+sentence reads subject, cue, object in active voice. Both prompts were
+frozen after constructed test sets on which 19 of 20 terms and 17 of 17
+sentences were typed as expected.
 %% REVIEW 2026-11-09 (Claude Code fact check; prose not changed):
 %%  - "organising the terms into 16 upper categories and 66 subcategories":
 %%    in terminology 1.0.1 the taxonomy is a DRAFT schema and 0 terms were
@@ -804,7 +831,7 @@ a graph of 22,579 unique nodes.
 Because the 453-paper corpus size precludes comprehensive human
 ground-truth annotation, the protocol embeds a purely computational
 %% FRAMING 2026-11-09 (Claude Code; prose not changed): Stage 5 opening: KEEP this one, it is the reason for the evaluation design (the single Methods statement).
-evaluation framework. We evaluated the pipeline across five dimensions:
+evaluation framework. We evaluated the pipeline across six dimensions:
 
 \begin{enumerate}
 \item \textbf{Structural Integrity:} automated scripts verified
@@ -842,6 +869,23 @@ by the text, 22.6\% as partially supported, 18.2\% as unsupported, and
 3.3\% as conflicting. We report these strictly as model concordance
 judgements, not as absolute accuracy
 claims~\cite{chen2025llmbench,deepseekv41card}.
+
+%% FACT 2026-11-10: judge rubric v2.1 (src/scripts/final_validation/evidence_judge_v2.py, PROMPT_SHA256 3a3e53fc...),
+%% judge_v2.sbatch, judge_v2_analysis.py, link_structural_check.py [JV01 JV02 JV07 JV08]. Lead approval pending.
+\item \textbf{Catalogue Judges:} three locally run model judges
+(Qwen3.5-9B, Llama-3.1-8B and Mistral-7B~\cite{qwen35card,grattafiori2024llama3,jiang2023mistral})
+checked catalogue values under a decomposed rubric. Links between records
+were checked structurally rather than by a model. For classification
+fields each judge answered the question blind, and its answer was compared
+with the stored value; for stated values a judge had to quote an evidence
+span, which was accepted only if found in the source passage and covering
+the value; record-level summary labels were rated as fair or unfair.
+Verdicts were constrained by a JSON schema. The rubric was developed on a
+1\% development split (536 records, assigned by hash of the record
+identifier) and frozen before the 51,837 held-out records were judged.
+Agreement is reported as Cohen's and Fleiss' $\kappa$~\cite{cohen1960kappa},
+Gwet's AC1 and per-verdict specific agreement, as agreement between models
+rather than accuracy.
 \end{enumerate}
 %% REVIEW 2026-11-09 (Claude Code fact check; prose not changed):
 %%  - ITEM 5, RIGHTS (critical): "To adhere strictly to licensing constraints
@@ -925,7 +969,8 @@ claims~\cite{chen2025llmbench,deepseekv41card}.
 \caption{Summary of the extraction pipeline and of the two frozen builds.
 Quantities are given per stage, and the last column names the row in the
 claims register (\texttt{MANUSCRIPT\_CLAIMS\_REGISTER.csv}) that each value
-was verified against; \texttt{CL} rows are the CDM 3.1.0 layers.
+was verified against; \texttt{CL} rows are the CDM 3.1.0 layers and
+\texttt{JV} rows the re-typing layers and catalogue judges.
 Percentages and judge-derived values are concordance or model-judgement
 measures, not accuracy against human annotation.\label{tab:summary}}%
 \input{tables/table_pipeline_summary.tex}
@@ -974,14 +1019,17 @@ tables and 866 columns in which every extracted value carries paper,
 section and character-offset provenance. Of 121 schema, value and
 provenance tests, 118 pass, two fail and one is conditional, and no row
 names an unregistered extraction run. Seventeen entity types are
-fully populated, fifteen partially, one is planned and five are
-embedded in other tables' rows, and the build, terminology and
+fully populated, fifteen partially (five of them embedded in other
+tables' rows), and one is planned. The build, terminology and
 catalogue releases were frozen with SHA-256 manifests
-(Section~\ref{sec:stage4}). Build 3.1.0 leaves these tables unchanged and
+(Section~\ref{sec:stage4}). Build 3.1.0 leaves the entity tables unchanged and
 adds the curated layers described in Section~\ref{sec:stage3}: 116,755 kept
 terms, 11,912 kept concepts and 15,769 accepted mappings between them, of
 which 13,540 of the original accepted rows are exact agreements and the
-remainder broader, narrower or related concepts. A blinded reviewer
+remainder broader, narrower or related concepts. After re-typing, no kept
+term has the generic type: 103,088 (88.3\%) carry one of the 14 CDM types,
+8,856 a proposed extension type and 4,811 are flagged as not a concept.
+A blinded reviewer
 classified 307 of 497 randomly sampled accepted mappings (61.8\%) as exact,
 159 as broader, narrower or related and 31 (6.2\%) as wrong, judged 485 of
 496 terms (97.8\%) to be genuine concepts and 426 of 493 entity types
@@ -994,19 +1042,22 @@ frozen builds, with the claims-register row behind every value.
 Deterministic matching locates 70.5\% of catalogue text values and
 75.4\% of numeric counts inside their own quote-anchored evidence
 passage; the remainder are dominated by coded
-values that cannot be string-checked. Two model judges of catalogue
-values (Llama-3.1-8B and Mistral-7B) label 2.9\% and 6.6\% of validly
-labelled text values as unsupported. Their observed agreement is
-85.0\% but Cohen's $\kappa$ is only 0.282~\cite{cohen1960kappa}. Re-running
-both judges with schema-enforced verdicts removed invalid output (0.1\%
-remaining for Mistral-7B) yet left $\kappa$ at 0.293: 96\% of decided
-verdicts are PASS (prevalence-adjusted $\kappa$, PABAK, 0.847), and the
-judges agree on what passes (specific agreement 0.959) but rarely on what
-fails (0.39). We therefore treat them as screening tools rather than raters: 2,023 values are
-failed by both, concentrated in DNA extraction, storage,
-preservation and timepoint fields, and validator-accepted gap-filled
-values fail more often than originally extracted ones (19.1\% versus
-5.6\%). A pattern-based extractor containing no model component finds
+values that cannot be string-checked.
+%% FACT 2026-11-10: JV01 JV02 JV07 JV08; ANALYSIS.json stated_majority_fail_by_field.
+Three local model judges then checked 51,837 held-out catalogue records,
+and all 167,197 links between records point to existing records of the
+same paper. The two most consistent judges (Llama-3.1-8B and Mistral-7B)
+agree on 82.9\% of 442,772 field verdicts (Cohen's $\kappa$ 0.566, Gwet's
+AC1 0.788), and when one fails a value the other fails it too in most cases
+(specific agreement 0.598). Fleiss' $\kappa$ over all three judges is
+0.471, 0.535 for stated values and 0.616 for the judges' blind answers to
+classification questions. The remaining disagreement sits in a few fields
+where the models default to different answers, for example whether a
+control-group record describes one group or a case--control design. We
+therefore use the judges as screening tools rather than raters: a majority
+fails 13.1\% of stated values (33,253 of 254,022), concentrated in DNA
+extraction method (68.9\%), sequencing platform (56.3\%), body site
+(40.4\%) and intervention agent (40.2\%). A pattern-based extractor containing no model component finds
 its accession numbers, sequencing platforms and 16S regions present
 in our catalogue in 88.7\%, 89.2\% and 72.1\% of cases, an agreement
 measure between two methods, not a recall bound.
@@ -1032,10 +1083,13 @@ zero-shot), with Qwen3.5-4B at 34.5\% (full-body run) and 36.6\% (section-level
 run), or 50.7\% when mentions are weighted instead of distinct
 strings. Validity also depends on CDM type: chemicals (44.3\%), data
 analysis (43.1\%) and diseases (42.8\%) screen far better than
-experimental methods (14.1\%) or study design (16.1\%). For triples,
-the same screen judges 39.3\% to be well-formed claims with valid
-subject and object in 38.7\%, but only 12.5\% carry a specific
-relation label and 29.5\% are too generic.
+experimental methods (14.1\%) or study design (16.1\%). For the
+build-3.0.3 triples, the same screen judges 39.3\% to be well-formed
+claims, with valid subject and object in 38.7\%. After relation repair and
+re-typing, 13,564 of the 25,788 triples (52.6\%) carry a specific
+relation whose cue phrase is found in the source sentence; 8,039 are
+flagged as not supported by their sentence, 1,708 state an association
+without direction and 915 report a null finding.
 
 %% Para 4: public benchmark -> corpus transfer [B01--B05 G01--G09
 %% H03 H04 H05 H06 H07]
@@ -1233,20 +1287,19 @@ ground truth; all other evaluation is computational (concordance
 against chance baselines, judged validity screens and curated-reference
 comparisons) and is reported as concordance, never as
 accuracy~\cite{chen2025llmbench}.
-\item \textbf{Relation quality.} In build 3.0.3 only 8{,}071 of the
-25{,}788 triples carry a typed relation; the remaining 17{,}717 are
-generic (escape) relations extracted from text rather than co-occurrence
-counts, and the string screen judges just 12.5\% of triples to carry a
-specific relation label. Repair in build 3.1.0 raises this to 9{,}621
-triples with a specific relation, 8{,}307 of them with a verified cue
-phrase, but after deduplication 61.6\% of the 23{,}339 clean triples
-still state no specific relation.
+\item \textbf{Relation quality.} After repair and re-typing,
+13{,}564 of the 25{,}788 triples (52.6\%) carry a specific relation with
+a verified cue phrase; 8{,}039 are flagged as not supported by their
+source sentence and should be read as extraction errors, and 1{,}708
+state an association without direction. Re-typed relations, directions
+and term types are model output, checked on small constructed test sets
+but not against human annotation.
 %% FACT 2026-11-10: kappa 0.282 = frozen run [J05]; schema-enforced re-run 0.293 [CL11], AC1 0.771,
 %% FAIL specific agreement 0.39 [CL15]; low kappa is not a formatting artefact.
-\item \textbf{Judges, not experts.} Two model judges of catalogue
-values agreed in 85.0\% of cases but with Cohen's $\kappa$ 0.282
-(0.293 after schema-enforced re-running, so the disagreement is not a
-formatting artefact), and the triple screens (two judge models, two rubrics) are not
+\item \textbf{Judges, not experts.} The three catalogue judges reach
+moderate agreement (Cohen's $\kappa$ 0.566 for the best pair, Fleiss'
+$\kappa$ 0.471), the record-level summary labels they rate are almost
+always judged fair and so carry little information, and the triple screens (two judge models, two rubrics) are not
 sanity-checked to the same depth for every judge; concordance with
 model judges is not concordance with experts.
 %% Model-version drift (review 2026-11-08; judge identities verified
@@ -1257,8 +1310,9 @@ behaviour can change across model updates, and any reproduction must
 record the exact model versions, as the Methods do for each screen.
 %%  >> AUTHOR REWRITE REQUIRED as part of the Limitations rewrite.
 \item \textbf{Documented schema gaps.} Definitions cover 2.09\% of
-terms (3{,}397 of 162{,}409); 89{,}799 terms (55\%) are typed only
-as the generic ENTITY type and 98.3\% of those ground nowhere; 9 of
+terms (3{,}397 of 162{,}409); the 53{,}780 kept terms re-typed from the
+generic ENTITY type carry model-assigned types and mostly ground to no
+vocabulary, and four of their types are proposed extensions; 9 of
 14 CDM types have no reference vocabulary; the build declares no
 foreign keys (multi-valued links are modelled with explicit link
 tables, so referential integrity was checked by audit, not by
@@ -1529,12 +1583,14 @@ Fraunhofer Genie gateway, for the licence-filtered triple evidence screen
 (16{,}032 triples judged against their Creative Commons CC BY or CC0 source
 sentences, drawn from 25{,}714 licence-screened sentences), Gemma and
 DeepSeek-R1 as the two adjudicating models for vocabulary mapping, and
-Llama-3.1-8B and Mistral-7B as judges of catalogue values. Where the
+Qwen3.5-9B, Llama-3.1-8B and Mistral-7B, run locally, as judges of
+catalogue values. Where the
 manuscript reports a percentage from these screens, the responsible judge
 model is named alongside it. All judge-derived results are reported as
 concordance or judged validity, not as accuracy against human annotation;
 the only human evaluation is the blinded review of 500 sampled accepted
-mappings. For build 3.1.0, Qwen3.5-4B also generated contextual
+mappings. Qwen3.5-9B, run locally, re-typed generic terms and unspecific
+triples (Methods). For build 3.1.0, Qwen3.5-4B also generated contextual
 definitions and repaired triple relations, SapBERT and MiniLM embeddings
 supported deduplication, and DeepSeek-V4.1-Flash screened term and concept
 labels for relevance.
