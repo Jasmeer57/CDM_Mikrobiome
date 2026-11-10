@@ -1,47 +1,49 @@
 %%
-%% Manuscript: <your title>
+%% Manuscript: Microbiome-CDM
 %%
-%% Built against oup-authoring-template.cls (Oxford University Press).
-%% Build with:  .\build.ps1        (or VS Code: Ctrl+Shift+B)
+%% Built against sn-jnl.cls v3.1 (Springer Nature LaTeX template, December
+%% 2024). BMC journals accept this template for submission.
+%% Build with:  latexmk -pdf manuscript.tex
 %%
-%% Target journal: Briefings in Bioinformatics
-%%   - Numbered citations in square brackets, e.g. [1, 3-5]  (Oxford SCIMED)
-%%   - "numbered" option + oup-plain.bst below are REQUIRED for this journal.
-%%   - Abstract must stand alone; up to 6 keywords; up to 5 Key Points.
-%%   - Mandatory Data Availability statement in the endmatter.
+%% Target journal: BMC Microbiology (ISSN 1471-2180)
+%%   - Vancouver numbered citations in square brackets, e.g. [1, 3-5].
+%%     The class option sn-vancouver-num loads natbib and sets
+%%     \bibliographystyle{sn-vancouver-num}. Do NOT pass sort&compress to
+%%     natbib and do NOT write \bibliographystyle yourself: the class does
+%%     both, and a second \bibliographystyle aborts the run with
+%%     "Illegal, another \bibstyle command".
+%%   - Structured abstract: Background / Results / Conclusions, <= 350 words,
+%%     no citations or figure references.
+%%   - 3-10 keywords, supplied once via a single \keywords command.
+%%   - Declarations block before the references: ethics approval, consent for
+%%     publication, availability of data and materials, competing interests,
+%%     funding, authors' contributions, acknowledgements.
 %%
 
-%%% CONTEMPORARY (default OUP look) %%%
-%% Numbered citations + sorting/ranges as Briefings in Bioinformatics requires.
-\PassOptionsToPackage{sort&compress}{natbib}
-\documentclass[unnumsec,webpdf,contemporary,large,numbered]{oup-authoring-template}
+\documentclass[pdflatex,sn-vancouver-num]{sn-jnl}
+%% For a review/submission copy you can additionally request line numbers and
+%% double spacing:  \documentclass[referee,lineno,pdflatex,sn-vancouver-num]{sn-jnl}
 
-%% WORKAROUND for an OUP class bug: the class's "numbered" option sets the
-%% internal \if@numbib flag FALSE (same as its "namedate" option), which makes
-%% natbib force author-year mode and silently drop reference numbers, leaving
-%% citations blank. Re-enable the flag here. Without this, citations print as
-%% nothing at all.
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{xcolor}
+\usepackage{textcomp}
+%% array: ragged-right paragraph columns in tables; the generated summary
+%% table would otherwise stretch its narrow Value column.
+\usepackage{array}
+
+%% ORCID icons. sn-jnl pre-defines \orcidlogo to expect an Orcidlogo.eps file
+%% that we do not ship, so undefine it before loading orcidlink; the package
+%% then supplies its own scalable logo. This must happen in this order.
 \makeatletter
-\@numbibtrue
+\let\orcidlogo\@undefined
 \makeatother
+\usepackage{orcidlink}
 
-%%% MODERN %%%
-%\documentclass[unnumsec,webpdf,modern,large]{oup-authoring-template}
-
-%%% TRADITIONAL %%%
-%\documentclass[unnumsec,webpdf,traditional,large]{oup-authoring-template}
-
-%\onecolumn % uncomment for single-column layout
-
-%% Figures live in ./Fig - create that folder and drop images in.
+%% Figures live in ./Fig
 \graphicspath{{Fig/}}
 
-\newcommand{\societylogo}{}
-
-%% Line numbers are required by some journals at submission. Uncomment to enable.
-%\usepackage[mathlines,switch]{lineno}
-
-%% Theorem environments
+%% Theorem environments (carried over from the previous template; still unused)
 \theoremstyle{thmstyleone}%
 \newtheorem{theorem}{Theorem}%
 \newtheorem{proposition}[theorem]{Proposition}%
@@ -51,38 +53,26 @@
 \theoremstyle{thmstylethree}%
 \newtheorem{definition}{Definition}
 
-%% Draft watermark - uncomment while drafting, comment out before submission.
-%\usepackage{draftwatermark}
-%\SetWatermarkText{Draft}
+%% Note: do NOT \usepackage{booktabs}. sn-jnl defines its own \toprule,
+%% \midrule and \botrule, and booktabs would clash with them.
 
 \begin{document}
 
 %% ---------------------------------------------------------------------------
 %% FRONT MATTER - replace every placeholder
 %% ---------------------------------------------------------------------------
-\journaltitle{Briefings in Bioinformatics}
-\DOI{DOI added during production}
-\copyrightyear{2026}
-\pubyear{2026}
-\vol{XX}
-\issue{x}
-\access{Published: Date added during production}
-\appnotes{Paper}
-
-\firstpage{1}
-
-%\subtitle{Subject Section}
-
 %% Title authored by the lead authors. The bracketed running title is
 %% derived from it for page-header brevity; adjust if desired.
-\title[Microbiome-CDM: an LLM-driven common data model for human microbiome literature]{Microbiome-CDM: An LLM-driven common data model and knowledge extraction pipeline for human microbiome literature}
+\title[Microbiome-CDM: an LLM-driven common data model]{Microbiome-CDM: An LLM-driven common data model and knowledge extraction pipeline for human microbiome literature}
 
 %% Author names/affiliations follow paper/publication/manuscript_bib/TITLE_PAGE.md
 %% (2026-11-07 state; VERIFY-HOLDER items are still open there and must be
 %% settled by the authors before submission).
-\author[1,$\ast$]{Jasmeer Singh Kalra\ORCID{0000-0001-7836-6860}}
-\author[2,1]{Martin Hofmann-Apitius\ORCID{0000-0001-9012-6720}}
-\author[3,2]{Marie-Christine Simon\ORCID{0000-0001-6625-1265}}
+%% In sn-jnl, \author* marks the corresponding author and \affil* the
+%% corresponding affiliation; the e-mail follows the starred \author.
+\author*[1]{\fnm{Jasmeer Singh} \sur{Kalra}\orcidlink{0000-0001-7836-6860}}\email{jkalra@uni-bonn.de}
+\author[2,1]{\fnm{Martin} \sur{Hofmann-Apitius}\orcidlink{0000-0001-9012-6720}}
+\author[3,2]{\fnm{Marie-Christine} \sur{Simon}\orcidlink{0000-0001-6625-1265}}
 
 %% Authors/affiliations per author instruction (2026-11-07): affiliation 3 is
 %% University of Bonn, Faculty of Agriculture, Institute of Nutrition and
@@ -92,24 +82,14 @@
 %% are settled. VERIFY remaining: streets/postcodes are the institutions'
 %% public addresses; confirm against the official imprint pages before
 %% submission.
-\address[1]{\orgdiv{Bonn-Aachen International Center for Information Technology (b-it)}, \orgname{University of Bonn}, \orgaddress{\street{Friedrich-Hirzebruch-Allee 6}, \postcode{53115}, \state{North Rhine-Westphalia}, \country{Germany}}}
-\address[2]{\orgdiv{Bioinformatics Department}, \orgname{Fraunhofer Institute for Algorithms and Scientific Computing (SCAI)}, \orgaddress{\street{Schloss Birlinghoven}, \postcode{53757}, \state{North Rhine-Westphalia}, \country{Germany}}}
-\address[3]{\orgdiv{Faculty of Agriculture, Institute of Nutrition and Food Sciences, Nutrition and Microbiome}, \orgname{University of Bonn}, \orgaddress{\postcode{53115}, \state{Bonn}, \country{Germany}}}
+\affil*[1]{\orgdiv{Bonn-Aachen International Center for Information Technology (b-it)}, \orgname{University of Bonn}, \orgaddress{\street{Friedrich-Hirzebruch-Allee 6}, \city{Bonn}, \postcode{53115}, \state{North Rhine-Westphalia}, \country{Germany}}}
+\affil[2]{\orgdiv{Bioinformatics Department}, \orgname{Fraunhofer Institute for Algorithms and Scientific Computing (SCAI)}, \orgaddress{\street{Schloss Birlinghoven}, \city{Sankt Augustin}, \postcode{53757}, \state{North Rhine-Westphalia}, \country{Germany}}}
+\affil[3]{\orgdiv{Faculty of Agriculture, Institute of Nutrition and Food Sciences, Nutrition and Microbiome}, \orgname{University of Bonn}, \orgaddress{\city{Bonn}, \postcode{53115}, \state{North Rhine-Westphalia}, \country{Germany}}}
 
-\corresp[$\ast$]{Corresponding author. \href{mailto:jkalra@uni-bonn.de}{jkalra@uni-bonn.de}}
-
-%% Dates are filled in by production; leave these as placeholders for now.
-\received{Date}{0}{Year}
-\revised{Date}{0}{Year}
-\accepted{Date}{0}{Year}
-
-%% Abstract must stand alone: no citations, equations or figure references.
-%% ------------------------------------------------------------------
-%% DRAFT TEXT, NOT SUBMISSION PROSE (plan §0: BiB does not accept
-%% LLM-drafted prose; same status as the Introduction scaffold).
-%%  >> AUTHOR REWRITE REQUIRED: rewrite in your own voice, keep the
-%%  >> facts, then delete this comment block. Target ~200 words.
-%% Number provenance (MANUSCRIPT_CLAIMS_REGISTER.csv):
+%% BMC Microbiology requires a structured abstract with exactly these three
+%% headings: Background, Results, Conclusions (<= 350 words, no citations).
+%% The facts below are unchanged from the previous draft; only the paragraph
+%% structure is now explicit. Number provenance (MANUSCRIPT_CLAIMS_REGISTER.csv):
 %%   168,464 compendium samples = C06; 453 papers = C01; 4,006 = C07;
 %%   2,505,684 mentions = M01; 334,231 candidate mappings = P01;
 %%   18,272 accepted via two-model agreement = P05; 25,788 = R01;
@@ -117,80 +97,54 @@
 %%   80.6 = B02 (BioRED, HunFlair2); 0.749 disease / 0.023 organism
 %%   transfer = H04 / H05 (Spearman, BioRED F1 vs corpus grounding);
 %%   77.0% vs 52.0% = N05; 56.0% supported = W03 (judge screen,
-%%   DeepSeek-V4.1-Flash, CC BY/CC0 subset of 16,032 = W02; the judge
-%%   model should be named here per the register rule).
-%% ------------------------------------------------------------------
-%% AUTHOR-REVIEW NOTE (2026-11-08, external protocol-fit review; do not
-%% ship the suggested sentence, rewrite in your own words if adopted):
-%% Problem Solving Protocol articles open from the bottleneck. Consider
-%% leading the abstract with the gap ("the harmonisation bottleneck") and
-%% letting the compendium scale (168,464) support it, instead of opening
-%% with the metadata attribute list. The current draft opens with the
-%% attributes; both orders are factually covered by the register rows
-%% cited above. Also confirm the judge model is named in the final line
-%% (DeepSeek-V4.1-Flash) -- the register rule requires it in the abstract,
-%% not only in Results.
-%% ------------------------------------------------------------------
-\abstract{The attributes that make microbiome sequencing data reusable (body
-site, disease status, intervention, assay protocol) are captured inconsistently
-in structured submissions and survive mostly in the text of the underlying
-publications. We present a protocol that constructs a provenance-traceable
-common data model (CDM) from the full text of the literature cited by a
-168,464-sample gut microbiome compendium, in five stages: corpus assembly and
-section-aware parsing of 453 papers into 4,006 sections; multi-program entity
-extraction (trained taggers, zero-shot recognisers, small language models and a
-MeSH gazetteer) kept as separate mention sources, yielding 2,505,684
-character-offset mentions; guarded normalisation and two-model adjudication
-over 334,231 candidate vocabulary mappings; an evidence-anchored catalogue and
-25,788 relation triples; and a computational evaluation that requires no human
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): Abstract: KEEP one mention here, phrased as a design property (evaluation that needs no annotated data).
-annotation. Structural checks pass 118 of 121 tests. Public benchmark
-performance (best exact F1 90.1 on BC5CDR, 80.6 on BioRED) transfers to corpus
-grounding for diseases (Spearman 0.749) but not organisms (0.023). Against the
-expert-curated BugSigDB, the direction of reported findings agrees in 77.0\% of
-determinable pairs versus a 52.0\% chance baseline, and a licence-filtered
-LLM-as-judge screen classifies 56.0\% of relation triples as supported by their
-source sentence. All judge-based results are reported as concordance measures,
-not accuracy. CDM build 3.0.3 is deposited with checksummed manifests.}
+%%   DeepSeek-V4.1-Flash, CC BY/CC0 subset of 16,032 = W02).
+%%  >> AUTHOR REWRITE REQUIRED: rewrite in your own voice, keep the
+%%  >> facts, then delete this comment block.
+\abstract{\textbf{Background:} The attributes that make microbiome sequencing
+data reusable (body site, disease status, intervention, assay protocol) are
+captured inconsistently in structured submissions and survive mostly in the
+text of the underlying publications. We present a protocol that constructs a
+provenance-traceable common data model (CDM) from the full text of the
+literature cited by a 168,464-sample gut microbiome compendium, in five
+stages: corpus assembly and section-aware parsing of 453 papers into 4,006
+sections; multi-program entity extraction (trained taggers, zero-shot
+recognisers, small language models and a MeSH gazetteer) kept as separate
+mention sources, yielding 2,505,684 character-offset mentions; guarded
+normalisation and two-model adjudication over 334,231 candidate vocabulary
+mappings; an evidence-anchored catalogue and 25,788 relation triples; and an
+evaluation built mainly from computational checks, anchored by a blinded human
+review of 500 randomly sampled accepted vocabulary mappings.
 
-%% Candidate keywords from plan §8 (authors choose up to 6).
+\textbf{Results:} Structural checks pass 118 of 121 tests. The blinded review
+found 61.8\% of sampled accepted mappings exact and 6.2\% wrong. Public
+benchmark performance (best exact F1 90.1 on BC5CDR, 80.6 on BioRED) transfers
+to corpus grounding for diseases (Spearman 0.749) but not organisms (0.023).
+Against the expert-curated BugSigDB, the direction of reported findings agrees
+in 77.0\% of determinable pairs versus a 52.0\% chance baseline, and a
+licence-filtered LLM-as-judge screen classifies 56.0\% of relation triples as
+supported by their source sentence. Build 3.1.0 keeps build 3.0.3 unchanged
+and adds curated layers: deduplication and a relevance filter reduce 162,409
+canonical terms to 116,755, and relation repair yields 8,307 triples with a
+specific, cue-verified relation.
+
+\textbf{Conclusions:} A multi-program extraction protocol can turn a
+literature corpus underlying a large microbiome compendium into a
+provenance-traceable CDM, but its reliability is uneven across entity types:
+benchmark performance transfers for diseases and not for organisms, and
+findings recorded only in figures and supplements are not captured. All
+judge-based results are therefore reported as concordance measures, not
+accuracy. Both builds are frozen with checksummed manifests for public
+deposit.}
+
+%% BMC Microbiology accepts 3-10 keywords, supplied once. sn-jnl's \keywords
+%% takes a single argument; the former bracket form (\keywords[...]) is not
+%% supported. Abbreviations now live in the back matter.
 \keywords{microbiome, common data model, named entity recognition, large
-language models, text mining, data provenance} %% up to 6
+language models, text mining, data provenance}
 
-%% Abbreviations alphabetical, only terms used in the text.
-\keywords[Abbreviations]{CDM, common data model; DOI, digital object
-identifier; LLM, large language model; MeSH, Medical Subject Headings; NER,
-named entity recognition; UMLS, Unified Medical Language System}
-
-%% Optional extras - delete if the journal does not use them.
-%\otherabstract[Additional Abstract]{Graphical abstract or lay summary text.}
-%\otherabstract[Graphical Abstract]{\colorbox{black!20}{\hbox to 0.97\textwidth{\vbox to 50pt{}}}}
-
-%% BiB Key Points: 3-5 brief sentences.
-%% ------------------------------------------------------------------
-%% DRAFT TEXT, NOT SUBMISSION PROSE (plan §0). Facts only, one per
-%% bullet, from plan §5 (BIB_MANUSCRIPT_PLAN.md) and the register:
-%%   L01-L04 = corpus judged validity (DeepSeek-V4-Flash string
-%%   screen); H04/H05 = benchmark-to-corpus transfer; N06/N05 =
-%%   BugSigDB comparison; H01 = no human annotation. The "Key Point on
-%%   judges" (plan §12.1) limits sanity-check claims to the Qwen judge
-%%   only -- do not extend them to DeepSeek.
-%%  >> AUTHOR REWRITE REQUIRED: rewrite in your own voice.
-%% ------------------------------------------------------------------
-\boxedtext{Key Points}{
-\begin{itemize}
-\item Several program types (trained taggers, zero-shot recognisers, small
-language models, a gazetteer) are combined into an evidence-anchored,
-provenance-traceable common data model over 453 microbiome papers.
-\item Public benchmark rankings transferred to the microbiome corpus for
-diseases (Spearman 0.749) but not for organisms (0.023).
-\item Study metadata curated by humans was reproduced with high concordance
-(e.g. 97.7\% for 16S region), while taxon findings recorded only in figures
-and supplements were not captured.
-\item Because no human annotation was performed, evaluation is computational
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): Key Points: CUT or merge; the Abstract already says it.
-only: concordance with chance baselines, never called accuracy.
-\end{itemize}}
+%% The previous template's "Key Points" boxed list is not part of the BMC
+%% Microbiology article structure, so it has been removed. Its four claims
+%% remain in the abstract and in Results, where BMC expects them.
 
 \maketitle
 
@@ -199,11 +153,11 @@ only: concordance with chance baselines, never called accuracy.
 %% ---------------------------------------------------------------------------
 %% Structure follows paper/publication/manuscript_bib/BIB_MANUSCRIPT_PLAN.md
 %% (Problem Solving Protocol, 2,000-5,000 words; target ~4,750).
-%% BiB policy: the text, figures, tables and references must be written by the
-%% authors, not drafted by an LLM. Headings and word budgets only below.
+%% Journal policy: the text, figures, tables and references must be written by
+%% the authors, not drafted by an LLM. Headings and word budgets only below.
 %% Every number must trace to final_validation/MANUSCRIPT_CLAIMS_REGISTER.csv.
 
-\section{Introduction}\label{sec:intro}
+\section{Background}\label{sec:intro}
 %% ------------------------------------------------------------------
 %% CDM 3.1.0 SWITCH (Claude Code 2026-11-10; for the authors): CDM 3.1.0 is frozen
 %% (= 3.0.3 + clean vocabulary, enrichment, triple repair/tiers; register CL01-CL11; Table 1 rows CL*).
@@ -241,13 +195,13 @@ only: concordance with chance baselines, never called accuracy.
 %% ------------------------------------------------------------------
 %% Budget: ~550 words.
 %% ------------------------------------------------------------------
-%% DRAFT TEXT, NOT SUBMISSION PROSE (BiB does not accept LLM-drafted
-%% prose: plan §0 + OUP AI policy). Source:
+%% DRAFT TEXT, NOT SUBMISSION PROSE (the journal does not accept LLM-drafted
+%% prose: plan §0 + the Springer Nature AI policy). Source:
 %% paper/publication/manuscript_bib/INTRODUCTION_DRAFT.md (2026-11-07;
 %% refined from the funnel draft in INTRODUCTION_FUNNEL_DRAFT.md;
 %% facts and paragraph structure endorsed in conversation).
-%% REVIEW GUIDANCE (2026-11-08, protocol-fit review): BiB Problem
-%% Solving Protocol articles open from the bottleneck. Suggested
+%% REVIEW GUIDANCE (2026-11-08, protocol-fit review): protocol articles
+%% open from the bottleneck. Suggested
 %% author opening claim (WRITE IN YOUR OWN WORDS -- do not ship this
 %% scaffold sentence):
 %%   "No standardised protocol exists for constructing a
@@ -337,11 +291,12 @@ separate instead of merged, so that every downstream row carries the identity of
 program that produced it. A guarded normalisation stage resolves mentions to
 canonical terms with two-model adjudication for contested mappings, and a
 schema-constrained LLM extracts entity--relation triples, each carrying a verbatim
-sentence from its source paper as evidence. Because no human annotation covers a
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): Introduction: CUT here; state the design goal (minimal manual curation) instead and leave the fact to Methods.
-corpus of this size, the protocol embeds its own evaluation: structural checks,
-character-offset checks, LLM-as-judge review~\cite{zheng2023mtbench} and a
-pre-specified comparison against the expert-curated BugSigDB~\cite{geistlinger2023}.
+sentence from its source paper as evidence. Because exhaustive manual annotation
+of a corpus of this size is infeasible, the protocol embeds its own evaluation:
+structural checks, character-offset checks, LLM-as-judge
+review~\cite{zheng2023mtbench}, a pre-specified comparison against the
+expert-curated BugSigDB~\cite{geistlinger2023}, and a blinded human review of a
+random sample of accepted vocabulary mappings.
 
 Here we describe the pipeline and the resulting resource. Build~3.0.3 of the
 resource holds
@@ -405,8 +360,8 @@ common data model, and present the computational evaluation of the pipeline.
   frozen, versioned releases with checksummed manifests. The evaluation
   band underneath is computational only (structural checks, evidence
   checks, model judges, curated-reference comparisons, NER benchmarks
-  and research-question use cases); no human annotation was performed.}
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): Figure 1 caption: CUT; a caption does not need it.
+  and research-question use cases), complemented by a blinded human review
+  of 500 sampled vocabulary mappings.}
   \label{fig:overview}
 \end{figure}
 
@@ -418,26 +373,33 @@ common data model, and present the computational evaluation of the pipeline.
 %%  >> AUTHOR REWRITE REQUIRED: rewrite in your own voice, then
 %%  >> delete this comment block.
 %% ------------------------------------------------------------------
-Four design choices run through all five stages.
+Four design choices run through all five stages
+(Figure~\ref{fig:overview}).
 \textbf{Provenance first:} every row produced downstream carries the
 identity of the extraction program, the source paper, section and
 character offsets, so any value can be traced back to its source
 text. \textbf{Sources kept separate:} the four mention sources are
 never merged; per-program identity is preserved into the CDM, which
 allows later re-weighting without re-extraction.
-\textbf{Computational-only evaluation:} because human annotation of a
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): Protocol overview: CUT (duplicate of Stage 5).
-corpus of this size is infeasible, evaluation is restricted to
+\textbf{Mostly computational evaluation:} exhaustive manual annotation
+of a corpus of this size is infeasible, so evaluation relies on
 structural checks, model judges and concordance against curated
-references, and is always reported as concordance, never accuracy.
+references, reported as concordance rather than accuracy, and is
+anchored by a blinded human review of a random sample of accepted
+vocabulary mappings.
 %% FACT FLAG 2026-11-10 (Claude Code; prose not changed): as written this is not accurate. The 2026-11-07
 %% triple screen sent 9,629 sentences from non-CC-BY/CC0 papers to FhGenie [W01]; the filter was applied to
 %% the RESULTS. The FhGenie label screens (triple labels, 157,990 term labels) sent strings, no sentences:
 %% counts in outputs/results/rights/B24_EXTERNAL_PROCESSING_ADDENDUM_2026-11-10.json. Authors: state what
 %% was sent and that results are reported on CC BY/CC0 sentences only (decision on W01 disclosure: item 4).
-\textbf{Licence-aware processing:} every paper is licence-checked before any text is sent
-to an external model, and the licence-filtered subsets are reported
-separately from the full-build views.
+\textbf{Licence-aware reporting:} every paper is licence-checked, and
+results that depend on source sentences are reported only for papers
+licensed CC~BY or CC0. One external screen (DeepSeek-V4.1-Flash on
+Fraunhofer's internally hosted Genie service) received its sentences
+before this filter was applied, including 9,629 sentences from papers
+under other licences; its results are reported for the CC~BY/CC0 subset
+only, and later external screens received term and concept labels only,
+never source text.
 
 \section{Stage 1: Corpus and sectioning}\label{sec:stage1}
 %% Budget: ~250 words (author draft ~200; authors may expand).
@@ -645,6 +607,28 @@ Gemma~\cite{gemma2026gemma4}). This rigorous consensus requirement accepted
 18,272 mappings as high-confidence semantic links. Finally, a draft taxonomy
 (T4) was exported, organising the terms into 16 upper categories and 66
 subcategories, forming Terminology release 1.0.1.
+
+For build 3.1.0 the vocabulary was curated further without altering the
+3.0.3 tables. Concept identifiers that spell the same code differently
+(for example the two MeSH IRI forms) were first collapsed
+deterministically, reducing 13,330 accepted identifiers to 12,657 concepts.
+Terms and concepts were then deduplicated in passes of increasing
+tolerance: exact matching after normalisation, fuzzy matching restricted
+to harmless single-word differences, expansion of abbreviated genus names
+when exactly one genus in the corpus fits, and an embedding pass that
+merges two items only if both their names (SapBERT) and their contextual
+definitions (MiniLM) agree and the wording difference is explained by word
+order, plural forms or an acronym. Guards block any merge across entity
+types or between different numbers, single letters, signs, opposite
+prefixes or accepted concepts, and two organism names are merged only when
+they denote the same taxon, so that, for example, \textit{Lactobacillus}
+and \textit{Lactococcus} remain distinct. Deduplication reduced the
+162,409 canonical terms to 157,815 and the concepts to 12,182. A relevance
+filter (DeepSeek-V4.1-Flash, given only each label and its entity type)
+then removed strings that are not concepts, such as author names, figure
+references and sentence fragments, or that lie outside biomedical
+research, keeping 116,755 terms, 11,912 concepts and 15,769 accepted
+mappings between them.
 %% REVIEW 2026-11-09 (Claude Code fact check; prose not changed):
 %%  - "organising the terms into 16 upper categories and 66 subcategories":
 %%    in terminology 1.0.1 the taxonomy is a DRAFT schema and 0 terms were
@@ -701,7 +685,7 @@ different recognisers with the canonical terminology, and linked catalogue
 relations directly to the canonical terms.
 
 The finalised architecture (Microbiome-CDM 3.0.3) was compiled into a highly
-structured SQLite relational database. The migration to the final build
+structured SQLite relational database (Figure~\ref{fig:cdm}). The migration to the final build
 (3.0.3-rc1 to frozen) was strictly additive, generating a reproducible schema
 of 44 tables containing 8,490,496 rows. The final model successfully
 encapsulated 2,505,684 mentions, 162,409 canonical terms with their guarded
@@ -760,7 +744,7 @@ a graph of 22,579 unique nodes.
   \label{fig:cdm}
 \end{figure}
 
-\section{Stage 5: Evaluation without human annotation}\label{sec:stage5}
+\section{Stage 5: Computational evaluation and human spot check}\label{sec:stage5}
 %% UPDATE 2026-11-10 (Claude Code; prose not changed). These layers are now FROZEN as CDM 3.1.0
 %% (releases/cdm_v3/3.1.0, manifest sha256 9e5f6f10...) and REGISTERED as CL01-CL11; project-lead approval
 %% pending. 3.1.0 = 3.0.3 unchanged + new tables, so the 3.0.3 numbers above remain true; cite both, never mixed.
@@ -907,7 +891,7 @@ claims~\cite{chen2025llmbench,deepseekv41card}.
 %%   Review item 9: present triples as a secondary, screened layer; state the 61.6% and the chance result.
 %% Budget: ~900 words.
 %% ------------------------------------------------------------------
-%% DRAFT TEXT, NOT SUBMISSION PROSE (plan §0: BiB does not accept
+%% DRAFT TEXT, NOT SUBMISSION PROSE (plan §0: the journal does not accept
 %% LLM-drafted prose). Same scaffold status as the Introduction.
 %% Every number has its claim ID below; DO NOT delete the IDs until
 %% the rewrite is done and the IDs are re-checked against the frozen
@@ -932,10 +916,18 @@ claims~\cite{chen2025llmbench,deepseekv41card}.
 %% src/scripts/figures/make_pipeline_summary_table.py (Claude Code; declare in
 %% the AI statement). Every value is a register row (ids in the last column;
 %% X01-X03 are the CDM rows). Re-run the script after any register change.
-%%  >> AUTHOR INPUT REQUIRED: write the caption, review the row labels, and
-%%  >> cite the table in the text (Table~\ref{tab:summary}).
+%%  >> AUTHOR INPUT REQUIRED: review the row labels and confirm the caption
+%%  >> wording. The table is cited from the first Results paragraph
+%%  >> (Table~\ref{tab:summary}).
+%% CAPTION (drafted 2026-11-10 during the sn-jnl conversion; it states only
+%% what the generated body contains, so no new facts are introduced).
 \begin{table*}[t]
-\caption{PLACEHOLDER: caption written by the authors.\label{tab:summary}}%
+\caption{Summary of the extraction pipeline and of the two frozen builds.
+Quantities are given per stage, and the last column names the row in the
+claims register (\texttt{MANUSCRIPT\_CLAIMS\_REGISTER.csv}) that each value
+was verified against; \texttt{CL} rows are the CDM 3.1.0 layers.
+Percentages and judge-derived values are concordance or model-judgement
+measures, not accuracy against human annotation.\label{tab:summary}}%
 \input{tables/table_pipeline_summary.tex}
 \begin{tablenotes}%
 \item Register: final\_validation/MANUSCRIPT\_CLAIMS\_REGISTER.csv. LLM-screen and BugSigDB values are concordance or model judgement, not accuracy.
@@ -960,8 +952,7 @@ claims~\cite{chen2025llmbench,deepseekv41card}.
   %%  >> AUTHOR REWRITE REQUIRED for the legend wording.
   %% --------------------------------------------------------------
   \includegraphics[width=\linewidth]{fig4_results.pdf}
-  \caption{Computational evaluation without human annotation.
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): Figure 4 caption title: CUT 'without human annotation'.
+  \caption{Computational evaluation.
   (a)~Share of distinct entity strings judged valid and correctly
   typed, per extraction configuration (string screen, distinct
   strings). (b)~Agreement between catalogue metadata and the
@@ -986,7 +977,17 @@ names an unregistered extraction run. Seventeen entity types are
 fully populated, fifteen partially, one is planned and five are
 embedded in other tables' rows, and the build, terminology and
 catalogue releases were frozen with SHA-256 manifests
-(Section~\ref{sec:stage4}).
+(Section~\ref{sec:stage4}). Build 3.1.0 leaves these tables unchanged and
+adds the curated layers described in Section~\ref{sec:stage3}: 116,755 kept
+terms, 11,912 kept concepts and 15,769 accepted mappings between them, of
+which 13,540 of the original accepted rows are exact agreements and the
+remainder broader, narrower or related concepts. A blinded reviewer
+classified 307 of 497 randomly sampled accepted mappings (61.8\%) as exact,
+159 as broader, narrower or related and 31 (6.2\%) as wrong, judged 485 of
+496 terms (97.8\%) to be genuine concepts and 426 of 493 entity types
+(86.4\%) to be correct; the second reviewer's 100-mapping overlap is
+pending. Table~\ref{tab:summary} sets out the five stages and the two
+frozen builds, with the claims-register row behind every value.
 
 %% Para 2: evidence support, deterministic + catalogue judges
 %% [E01 E02 J01--J08 V01--V03; judges = Llama-3.1-8B and Mistral-7B]
@@ -996,8 +997,12 @@ passage; the remainder are dominated by coded
 values that cannot be string-checked. Two model judges of catalogue
 values (Llama-3.1-8B and Mistral-7B) label 2.9\% and 6.6\% of validly
 labelled text values as unsupported. Their observed agreement is
-85.0\% but Cohen's $\kappa$ is only 0.282~\cite{cohen1960kappa}, so we
-treat them as screening tools rather than raters: 2,023 values are
+85.0\% but Cohen's $\kappa$ is only 0.282~\cite{cohen1960kappa}. Re-running
+both judges with schema-enforced verdicts removed invalid output (0.1\%
+remaining for Mistral-7B) yet left $\kappa$ at 0.293: 96\% of decided
+verdicts are PASS (prevalence-adjusted $\kappa$, PABAK, 0.847), and the
+judges agree on what passes (specific agreement 0.959) but rarely on what
+fails (0.39). We therefore treat them as screening tools rather than raters: 2,023 values are
 failed by both, concentrated in DNA extraction, storage,
 preservation and timepoint fields, and validator-accepted gap-filled
 values fail more often than originally extracted ones (19.1\% versus
@@ -1221,22 +1226,27 @@ a licence-filtered evaluation at all.
 %%  >> facts, then delete this comment block.
 %% ------------------------------------------------------------------
 \begin{itemize}
-\item \textbf{No human annotation.} No part of this CDM was evaluated
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): Limitations: KEEP (required, H01); can be one sentence.
-against a human-curated ground truth; all evaluation is
-computational (concordance against chance baselines, judged
-validity screens and curated-reference comparisons) and is
-reported as concordance, never as accuracy~\cite{chen2025llmbench}.
-\item \textbf{Relation quality.} Only 8{,}071 of the 25{,}788 triples
-carry a typed relation; the remaining 17{,}717 are generic
-(escape) relations extracted from text rather than co-occurrence
-counts, and the string screen judges just 12.5\% of triples to
-carry a specific relation label.
+\item \textbf{Limited human review.} Apart from one blinded reviewer's
+check of 500 randomly sampled accepted mappings (second-reviewer overlap
+pending), no part of this CDM was evaluated against a human-curated
+ground truth; all other evaluation is computational (concordance
+against chance baselines, judged validity screens and curated-reference
+comparisons) and is reported as concordance, never as
+accuracy~\cite{chen2025llmbench}.
+\item \textbf{Relation quality.} In build 3.0.3 only 8{,}071 of the
+25{,}788 triples carry a typed relation; the remaining 17{,}717 are
+generic (escape) relations extracted from text rather than co-occurrence
+counts, and the string screen judges just 12.5\% of triples to carry a
+specific relation label. Repair in build 3.1.0 raises this to 9{,}621
+triples with a specific relation, 8{,}307 of them with a verified cue
+phrase, but after deduplication 61.6\% of the 23{,}339 clean triples
+still state no specific relation.
 %% FACT 2026-11-10: kappa 0.282 = frozen run [J05]; schema-enforced re-run 0.293 [CL11], AC1 0.771,
 %% FAIL specific agreement 0.39 [CL15]; low kappa is not a formatting artefact.
 \item \textbf{Judges, not experts.} Two model judges of catalogue
-values agreed in 85.0\% of cases but with Cohen's $\kappa$ 0.282,
-and the triple screens (two judge models, two rubrics) are not
+values agreed in 85.0\% of cases but with Cohen's $\kappa$ 0.282
+(0.293 after schema-enforced re-running, so the disagreement is not a
+formatting artefact), and the triple screens (two judge models, two rubrics) are not
 sanity-checked to the same depth for every judge; concordance with
 model judges is not concordance with experts.
 %% Model-version drift (review 2026-11-08; judge identities verified
@@ -1284,46 +1294,203 @@ validity.
 %%    report it here rather than in Methods.
 
 %% ---------------------------------------------------------------------------
-%% BACK MATTER
-%%   Briefings in Bioinformatics order: Funding precedes Acknowledgements,
-%%   and a Data availability statement is MANDATORY.
+%% BACK MATTER (Declarations)
+%%   BMC Microbiology order: Ethics approval and consent to participate;
+%%   Consent for publication; Availability of data and materials; Competing
+%%   interests; Funding; Authors' contributions; Acknowledgements.
+%%   \backmatter switches sn-jnl's unnumbered heading style; \bmhead emits
+%%   the run-in declaration headings BMC prints.
 %% ---------------------------------------------------------------------------
-\section*{Funding}
-%% CANNOT SHIP AS HIDDEN PLACEHOLDER: grant numbers are author facts
-%% the assistant cannot know or invent. BiB/order note above applies.
-%% >> AUTHOR INPUT REQUIRED: replace the template sentence with the
-%% real funding statement, e.g.
-%% "This work was supported by the <funder> [grant number <xxx>]."
-%% or "This research received no specific grant from any funding
-%% agency in the public, commercial or not-for-profit sectors."
+\backmatter
 
-State funding sources as ``This work was supported by ...'' with grant numbers
-in brackets, or ``This research received no specific grant from any funding
-agency.''
+%% Abbreviations: BMC lists these in the back matter, alphabetical, and only
+%% terms that actually occur in the text. Resource names that are not
+%% abbreviations (BugSigDB, BioRED, HunFlair2, PubTator3, SapBERT, MiniLM)
+%% are given as names at first mention instead and are not listed here.
+\section*{Abbreviations}
+%% sn-jnl's description environment sets \labelwidth to zero, which collapses
+%% the gap between label and text, so the list is defined explicitly here.
+\begin{list}{}{%
+  \setlength{\labelwidth}{6.5em}%
+  \setlength{\labelsep}{0.5em}%
+  \setlength{\leftmargin}{7em}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\topsep}{2pt}%
+  \renewcommand{\makelabel}[1]{\textbf{#1}\hfill}}
+\item[API] application programming interface
+\item[BC5CDR] BioCreative V chemical--disease relation corpus
+\item[CDM] common data model
+\item[CTD] Comparative Toxicogenomics Database
+\item[DOI] digital object identifier
+\item[F1] harmonic mean of precision and recall
+\item[IBD] inflammatory bowel disease
+\item[LLM] large language model
+\item[MeSH] Medical Subject Headings
+\item[NCBI] National Center for Biotechnology Information
+\item[NER] named entity recognition
+\item[OMOP] Observational Medical Outcomes Partnership
+\item[UMLS] Unified Medical Language System
+\end{list}
 
-\section*{Acknowledgements}
-%% BiB requirements doc: section is headed "Acknowledgements" (British
-%% spelling), Funding precedes it; fixed heading spelling 2026-11-08
-%% (typoscan pass 2026-11-08 confirmed no other British/US variants).
-%% >> AUTHOR INPUT REQUIRED: names of people and facilities to thank
-%% (incl. cluster/storage grants). Suggested content is listed below;
-%% do not ship the bracketed scaffolding unedited.
+\section*{Declarations}
 
-Thank contributors here, including grant numbers.
-%% Suggested (AUTHOR REWRITE REQUIRED): acknowledge the HPC
-%% facilities and storage grants used (cluster "<name>"; e.g. the
-%% Fraunhofer/cluster storage allocation) and any colleagues who
-%% provided feedback. Do NOT list grant numbers here without
-%% confirming whether BiB wants them here or in Funding.
+\bmhead{Ethics approval and consent to participate}
+%% BMC requires this heading even when it does not apply.
+Not applicable. This study analysed only previously published literature and
+public data; no human participants, human tissue or animal subjects were
+involved.
 
-\section*{Declaration of AI use}
+\bmhead{Consent for publication}
+Not applicable.
+
+\bmhead{Availability of data and materials}
+%% UPDATE 2026-11-10 (Claude Code; prose not changed). These layers are now FROZEN as CDM 3.1.0
+%% (releases/cdm_v3/3.1.0, manifest sha256 9e5f6f10...) and REGISTERED as CL01-CL11; project-lead approval
+%% pending. 3.1.0 = 3.0.3 unchanged + new tables, so the 3.0.3 numbers above remain true; cite both, never mixed.
+%%  Candidate addition to the deposit (after approval and a rights check of model text that may
+%%  paraphrase non-redistributable papers): clean vocabulary (terms_clean, concepts_clean,
+%%  term_concept_map_clean, id maps) and the triple tiers.
+%% REQUIRED by BMC. Scaffold below; DOI slot remains open until the
+%% Zenodo bundle (B22+B23, pending SHA-256 seal, SLURM 28715683) is
+%% published. Online data and code must be cited in the reference
+%% list too (add a Zenodo/software DOI reference when sealed).
+%%  >> AUTHOR INPUT REQUIRED: the DOI itself, and the wording of the
+%%  >> restricted-materials exception if the 179 rights-unreviewed
+%%  >> papers stay withheld. Provenance: the 179 figure is attested
+%%  >> in final_validation/RIGHTS_READINESS_REPORT.md (papers needing
+%%  >> confirmation: 179 = 135 without licence, 29 CC BY-NC-ND, 12 CC
+%%  >> BY-NC, 3 CC BY-NC-SA) but is NOT a register row; register it
+%%  >> or confirm the wording before submission.
+%% ---------------------------------------------------------------
+%% DATA AVAILABILITY: FACT CHECKLIST (Claude Code, 2026-11-09). Facts only;
+%% the authors write the statement (Springer Nature AI policy). Suggested order, one
+%% short sentence each:
+%%  1. WHAT is deposited: CDM build 3.0.3 (public SQLite build + column
+%%     dictionary), data catalogue 3.1.1 (CSV), terminology 1.0.1 (terms,
+%%     ontology mappings, definitions, taxonomy), triples with evidence
+%%     offsets, corpus section hashes, per-paper licence table, NER
+%%     benchmark tables, SHA-256 manifest. Source: releases/zenodo_frozen/
+%%     README.md. NOT in it yet: claims register, 2026-11-03..07 evaluation
+%%     results (needs a v1.1 deposit if you want to list them).
+%%  2. COVERAGE: every record for all 453 papers [C01] (25,788 triples [R01],
+%%     162,409 terms [T02], 52,400 catalogue records [K01]).
+%%  3. TEXT HANDLING: verbatim text (sections, quotes, evidence sentences,
+%%     and extracted values that reproduce the source wording) is included
+%%     only for papers whose licence permits redistribution (CC BY / CC0,
+%%     274 papers [RT01]); for the others the DOI and character offsets point
+%%     to the source. (Optional detail: 2,103,395 values removed, rights scan
+%%     0 unexplained hits [RT03]. The number 179 is not needed.)
+%%  4. WHERE: Zenodo, DOI [to be added when the deposit is published].
+%%     Do NOT write "are openly deposited" before the upload exists; until
+%%     then use future/conditional wording or leave the DOI slot.
+%%  5. LICENCE of the deposit: proposed CC BY 4.0 -- pending authors' and
+%%     legal sign-off (releases/ZENODO_UPLOAD_METADATA.json).
+%%  6. CODE: pipeline and analysis code repository [to be added].
+%%  7. DROP: the "exception requested from the editorial office" sentence
+%%     and "rights status was not reviewed" (all 453 were licence-checked).
+%% ---------------------------------------------------------------
+The outputs of this protocol will be deposited on Zenodo before
+publication and made available to reviewers at submission: CDM build
+3.1.0 (the unchanged 3.0.3 relational database, the curated 3.1.0 layers
+and checksummed manifests), the data catalogue release 3.1.1, the
+terminology release 1.0.1, the frozen claims register used for number
+verification, and the benchmark and evaluation artefacts, DOI [to be
+added when the deposit is published]. The pipeline code will be released
+in a public repository with an archived version, [repository and DOI to
+be added by the authors]. The underlying source texts are third-party
+publications and are redistributed only under their own licences: all
+453 papers were licence-checked, and the text of the 179 papers whose
+licence does not permit redistribution (135 without a licence and 44
+under non-commercial or no-derivatives terms) is withheld from the
+deposit and is available from the original publishers.
+%% REVIEW 2026-11-09 (Claude Code fact check; prose not changed):
+%%  - "are openly deposited": nothing is uploaded yet (releases/zenodo_frozen
+%%    is built, rights scan PASS, NOT uploaded; licence and legal sign-off
+%%    pending). Project rule: no public-availability statement until it
+%%    exists.
+%%  - "the 179 papers whose rights status was not reviewed": all 453 were
+%%    reviewed (PAPER_RIGHTS_MATRIX.csv): 274 INCLUDE_TEXT, 15
+%%    RESTRICTED_NC_LAYER, 164 WITHHOLD_TEXT. 179 = 164 + 15 papers whose
+%%    licence does not allow redistribution (or none was found).
+%%  - zenodo_frozen holds the CDM (public, text-redacted), catalogue,
+%%    terminology, triples, corpus hashes, rights and validation/NER tables;
+%%    it does NOT yet contain the claims register or the 2026-11-03..07
+%%    evaluation results (a v1.1 deposit would be needed).
+
+
+\bmhead{Competing interests}
+%% >> AUTHOR INPUT REQUIRED (the visible marker below is deliberate: it must
+%% >> survive into the PDF until an author replaces it). Conflicts are author
+%% >> facts and cannot be inferred, so the block is not pre-filled.
+%% Option A (no conflicts -- use only if all three authors confirm):
+%% None declared.
+%% Option B (disclosure -- keep only the lines that apply):
+%% \textbf{J.S.K.} declares [conflict]. \textbf{M.H.-A.} declares
+%% [conflict]. \textbf{M.-C.S.} declares [conflict].
+%% If a funder had any role in study design, data collection, analysis,
+%% interpretation or the decision to submit, state that role here.
+\textbf{[AUTHOR INPUT REQUIRED --- per-author competing-interests statement
+missing.} Replace this paragraph with ``The authors declare that they have
+no competing interests.'' if that is true for all three authors, or with the
+individual disclosures.\textbf{]}
+
+
+\bmhead{Funding}
+%% CANNOT SHIP AS HIDDEN PLACEHOLDER: grant numbers are author facts the
+%% assistant cannot know or invent, so the marker below stays visible in the
+%% PDF until an author replaces it. The BMC declaration order places Funding
+%% after Competing interests and before Authors' contributions.
+%% >> AUTHOR INPUT REQUIRED: replace the bracketed paragraph with one of
+%% >> "This work was supported by <funder> [grant number <xxx>]."
+%% >> "This research received no specific grant from any funding agency in
+%% >>  the public, commercial or not-for-profit sectors."
+\textbf{[AUTHOR INPUT REQUIRED --- funding statement missing.} Replace this
+paragraph with the funder and grant numbers, or with ``This research received
+no specific grant from any funding agency in the public, commercial or
+not-for-profit sectors.''\textbf{]}
+
+\bmhead{Authors' contributions}
+%% >> AUTHOR INPUT REQUIRED: CRediT roles per author (BMC expects the
+%% >> CRediT taxonomy, https://credit.niso.org/). Role assignment is an
+%% >> author fact and is not pre-filled; the bracketed marker below stays
+%% >> visible in the PDF until an author replaces it. All authors must
+%% >> approve the finished statement.
+%% CRediT roles: Conceptualization; Data curation; Formal analysis;
+%% Funding acquisition; Investigation; Methodology; Project
+%% administration; Resources; Software; Supervision; Validation;
+%% Visualization; Writing -- original draft; Writing -- review \& editing.
+\textbf{[AUTHOR INPUT REQUIRED --- CRediT statement missing.} Replace this
+paragraph with one CRediT role list per author, drawn from the taxonomy at
+\nolinkurl{https://credit.niso.org/}.\textbf{]}
+%% Example of a filled line (do not ship this, it is illustrative):
+%% J.S.K.: Conceptualization, Methodology, Software, Investigation,
+%%        Formal analysis, Data curation, Visualization,
+%%        Writing -- original draft.
+%% All authors read and approved the final manuscript.
+
+\bmhead{Acknowledgements}
+%% BMC requires an "Acknowledgements" heading (British spelling); in the BMC
+%% declaration order it follows Authors' contributions and precedes the AI-use
+%% declaration. Heading spelling fixed 2026-11-08.
+%% >> AUTHOR INPUT REQUIRED: names of people and facilities to thank,
+%% >> including compute or storage allocations. Acknowledgements are
+%% >> author facts; the bracketed marker below stays visible in the PDF
+%% >> until an author replaces it.
+
+\textbf{[AUTHOR INPUT REQUIRED --- acknowledgements missing.} Replace this
+paragraph with the individuals, facilities and compute or storage allocations
+to be acknowledged, or with ``Not applicable.'' if there are none.\textbf{]}
+
+\bmhead{Declaration of generative AI and AI-assisted technologies in the
+writing and research process}
 %% UPDATE 2026-11-10 (Claude Code; prose not changed). These layers are now FROZEN as CDM 3.1.0
 %% (releases/cdm_v3/3.1.0, manifest sha256 9e5f6f10...) and REGISTERED as CL01-CL11; project-lead approval
 %% pending. 3.1.0 = 3.0.3 unchanged + new tables, so the 3.0.3 numbers above remain true; cite both, never mixed.
 %%  Add if these layers are reported: Qwen3.5-4B for definitions / synonyms / full forms / relation
 %%  re-typing (local vLLM); DeepSeek-V4.1-Flash (FhGenie) for the term and concept relevance screens;
 %%  SapBERT and MiniLM embeddings for dedup; constrained re-run of Llama-3.1-8B / Mistral-7B judges.
-%% REQUIRED by BiB (ISCB policy): declare here (or in Methods) AND in the
+%% REQUIRED by BMC/Springer Nature: declare here (or in Methods) AND in the
 %% cover letter AND in the supplementary material. The block below is a
 %% DRAFT SCAFFOLD assembled from AI_ASSIST_LOG.md (complete through
 %% 2026-11-08) and register rows; authors verify every line.
@@ -1335,7 +1502,7 @@ Thank contributors here, including grant numbers.
 %% banned-vocabulary, template-pattern, sentence-rhythm and number-
 %% register checks; no text was rewritten by the assistant). Declare
 %% these language checks in this Declaration or in Acknowledgements,
-%% per OUP/ISCB rules allowing declared language checking.
+%% as Springer Nature permits for declared language checking.
 %%
 %% Judge-model attribution (register-verified; do not mix up):
 %%   - string screen L01--L13: DeepSeek-V4-Flash, 730,195 items [L13];
@@ -1350,10 +1517,9 @@ Thank contributors here, including grant numbers.
 %%     rows; keep qualitative or register first);
 %%   - extraction components: Qwen3.5-4B [M04 vLLM body 366,123;
 %%     M05 Ollama 186,024]; benchmark LLMs: Gemma, Llama, Qwen 3-shot.
-\textbf{Declaration of generative AI and AI-assisted technologies in the
-writing and research process.} During the preparation of this work the
+During the preparation of this work the
 authors used generative AI in two distinct roles.
-\textbf{(1) As pipeline components and evaluation instruments} ( Methods,
+\textbf{(1) As pipeline components and evaluation instruments} (Methods,
 Stages 2--5): the small language models Qwen3.5-4B (two extraction runs),
 Gemma, Llama and Qwen with few-shot prompting served as entity- and
 relation-extraction systems under evaluation; model judges were used as
@@ -1366,9 +1532,12 @@ DeepSeek-R1 as the two adjudicating models for vocabulary mapping, and
 Llama-3.1-8B and Mistral-7B as judges of catalogue values. Where the
 manuscript reports a percentage from these screens, the responsible judge
 model is named alongside it. All judge-derived results are reported as
-concordance or judged validity, not as accuracy against human annotation,
-%% FRAMING 2026-11-09 (Claude Code; prose not changed): AI declaration: KEEP (states what the judges are not).
-which was not performed.
+concordance or judged validity, not as accuracy against human annotation;
+the only human evaluation is the blinded review of 500 sampled accepted
+mappings. For build 3.1.0, Qwen3.5-4B also generated contextual
+definitions and repaired triple relations, SapBERT and MiniLM embeddings
+supported deduplication, and DeepSeek-V4.1-Flash screened term and concept
+labels for relevance.
 \textbf{(2) In manuscript and code preparation:} an AI coding assistant
 (Claude Code, and opencode with the GLM-5.3 model) was used to develop
 pipeline and analysis code, to verify every number in this manuscript
@@ -1401,117 +1570,14 @@ of this published article.
 %%    check of 117 vocabulary labels (2026-11-08); Claude Code skills for
 %%    style and overlap checks (AI_ASSIST_LOG.md).
 
-\section*{Data availability}
-%% UPDATE 2026-11-10 (Claude Code; prose not changed). These layers are now FROZEN as CDM 3.1.0
-%% (releases/cdm_v3/3.1.0, manifest sha256 9e5f6f10...) and REGISTERED as CL01-CL11; project-lead approval
-%% pending. 3.1.0 = 3.0.3 unchanged + new tables, so the 3.0.3 numbers above remain true; cite both, never mixed.
-%%  Candidate addition to the deposit (after approval and a rights check of model text that may
-%%  paraphrase non-redistributable papers): clean vocabulary (terms_clean, concepts_clean,
-%%  term_concept_map_clean, id maps) and the triple tiers.
-%% REQUIRED by BiB. Scaffold below; DOI slot remains open until the
-%% Zenodo bundle (B22+B23, pending SHA-256 seal, SLURM 28715683) is
-%% published. Online data and code must be cited in the reference
-%% list too (add a Zenodo/software DOI reference when sealed).
-%%  >> AUTHOR INPUT REQUIRED: the DOI itself, and the wording of the
-%%  >> restricted-materials exception if the 179 rights-unreviewed
-%%  >> papers stay withheld. Provenance: the 179 figure is attested
-%%  >> in final_validation/RIGHTS_READINESS_REPORT.md (papers needing
-%%  >> confirmation: 179 = 135 without licence, 29 CC BY-NC-ND, 12 CC
-%%  >> BY-NC, 3 CC BY-NC-SA) but is NOT a register row; register it
-%%  >> or confirm the wording before submission.
-%% ---------------------------------------------------------------
-%% DATA AVAILABILITY: FACT CHECKLIST (Claude Code, 2026-11-09). Facts only;
-%% the authors write the statement (BiB AI policy). Suggested order, one
-%% short sentence each:
-%%  1. WHAT is deposited: CDM build 3.0.3 (public SQLite build + column
-%%     dictionary), data catalogue 3.1.1 (CSV), terminology 1.0.1 (terms,
-%%     ontology mappings, definitions, taxonomy), triples with evidence
-%%     offsets, corpus section hashes, per-paper licence table, NER
-%%     benchmark tables, SHA-256 manifest. Source: releases/zenodo_frozen/
-%%     README.md. NOT in it yet: claims register, 2026-11-03..07 evaluation
-%%     results (needs a v1.1 deposit if you want to list them).
-%%  2. COVERAGE: every record for all 453 papers [C01] (25,788 triples [R01],
-%%     162,409 terms [T02], 52,400 catalogue records [K01]).
-%%  3. TEXT HANDLING: verbatim text (sections, quotes, evidence sentences,
-%%     and extracted values that reproduce the source wording) is included
-%%     only for papers whose licence permits redistribution (CC BY / CC0,
-%%     274 papers [RT01]); for the others the DOI and character offsets point
-%%     to the source. (Optional detail: 2,103,395 values removed, rights scan
-%%     0 unexplained hits [RT03]. The number 179 is not needed.)
-%%  4. WHERE: Zenodo, DOI [to be added when the deposit is published].
-%%     Do NOT write "are openly deposited" before the upload exists; until
-%%     then use future/conditional wording or leave the DOI slot.
-%%  5. LICENCE of the deposit: proposed CC BY 4.0 -- pending authors' and
-%%     legal sign-off (releases/ZENODO_UPLOAD_METADATA.json).
-%%  6. CODE: pipeline and analysis code repository [to be added].
-%%  7. DROP: the "exception requested from the editorial office" sentence
-%%     and "rights status was not reviewed" (all 453 were licence-checked).
-%% ---------------------------------------------------------------
-The outputs of this protocol are openly deposited: CDM build 3.0.3
-(the relational database and checksummed manifests), the data
-catalogue release 3.1.1, the terminology release 1.0.1, the frozen
-claims register used for number verification, and the benchmark and
-evaluation artefacts, as a Zenodo bundle, DOI
-[to be assigned on publication of the deposit]. The pipeline code is
-deposited separately at [repository to be added by the authors]. The
-underlying source texts are third-party publications and are
-redistributed only under their own licences; text of the 179 papers
-whose rights status was not reviewed is withheld from the deposit and
-is available from the original publishers. An exception for this is
-being requested from the editorial office at submission.
-%% REVIEW 2026-11-09 (Claude Code fact check; prose not changed):
-%%  - "are openly deposited": nothing is uploaded yet (releases/zenodo_frozen
-%%    is built, rights scan PASS, NOT uploaded; licence and legal sign-off
-%%    pending). Project rule: no public-availability statement until it
-%%    exists.
-%%  - "the 179 papers whose rights status was not reviewed": all 453 were
-%%    reviewed (PAPER_RIGHTS_MATRIX.csv): 274 INCLUDE_TEXT, 15
-%%    RESTRICTED_NC_LAYER, 164 WITHHOLD_TEXT. 179 = 164 + 15 papers whose
-%%    licence does not allow redistribution (or none was found).
-%%  - zenodo_frozen holds the CDM (public, text-redacted), catalogue,
-%%    terminology, triples, corpus hashes, rights and validation/NER tables;
-%%    it does NOT yet contain the claims register or the 2026-11-03..07
-%%    evaluation results (a v1.1 deposit would be needed).
-
-\section*{Conflict of interest}
-%% >> AUTHOR INPUT REQUIRED: author facts, per author. BiB/OUP require a
-%% >> clear statement; choose either a substantive disclosure per author
-%% >> or the formal "None declared." -- do not leave the generic prompt
-%% >> at submission. Delete the unused option and this comment.
-%% Option A (no conflicts -- activate ONLY if confirmed true by all
-%% authors; delete this PLACEHOLDER marker when you do):
-%% None declared.
-%% Option B (disclosure template -- delete lines that do not apply):
-%% \textbf{J.S.K.} declares [conflict]. \textbf{M.H.-A.} declares
-%% [conflict]. \textbf{M.-C.S.} declares [conflict].
-%% Funding bodies: state here any role of funders in study design,
-%% data collection, analysis, interpretation or the decision to submit.
-\textbf{PLACEHOLDER: replace before submission.} Per-author conflict
-statement or ``None declared.'' -- activate one comment option above.
-
-\section*{Author contributions}
-%% >> AUTHOR INPUT REQUIRED: CRediT roles per author (BiB expects
-%% >> CRediT taxonomy: https://credit.niso.org/). The skeleton below
-%% >> lists all 14 CRediT roles with the three author-initial slots;
-%% >> tick (assign initials) and DELETE every unassigned role line
-%% >> before submission. All authors must approve the statement.
-%% CRediT roles: Conceptualization; Data curation; Formal analysis;
-%% Funding acquisition; Investigation; Methodology; Project
-%% administration; Resources; Software; Supervision; Validation;
-%% Visualization; Writing -- original draft; Writing -- review \& editing.
-\textbf{PLACEHOLDER -- CRediT statement, replace initials before
-submission.}
-J.S.K.: [roles]. M.H.-A.: [roles]. M.-C.S.: [roles].
-%% Example of a filled line (do not ship this, it is illustrative):
-%% J.S.K.: Conceptualization, Methodology, Software, Investigation,
-%%        Formal analysis, Data curation, Visualization,
-%%        Writing -- original draft.
-%% All authors read and approved the final manuscript.
 
 %% ---------------------------------------------------------------------------
 %% REFERENCES
-%%   Briefings in Bioinformatics uses numbered citations (Oxford SCIMED):
-%%   numbers in square brackets, cited in order of appearance.
+%%   BMC Microbiology uses Vancouver numbered citations: numbers in square
+%%   brackets, cited in order of first appearance. The class option
+%%   sn-vancouver-num already loads natbib in numerical mode and sets
+%%   \bibliographystyle{sn-vancouver-num}, so no \bibliographystyle command
+%%   appears below -- a second one aborts the build.
 %%   Entries are GENERATED from the registry-verified bibliography
 %%   (submission_readiness/references_source/bibliography.json, re-verified
 %%   2026-11-07) by make_reference_bib.py -- do not hand-edit reference.bib.
@@ -1546,10 +1612,10 @@ J.S.K.: [roles]. M.H.-A.: [roles]. M.-C.S.: [roles].
 %%                    preprint) -- Stage 5 / Limitations (judge reliability)
 %%   Already in the list and uncited: li2025lore, collins2026biotriplex,
 %%     yazdani2026glinerbiomed (GLiNER-BioMed; checkpoint question open).
-\bibliographystyle{oup-unsrt}
 \bibliography{reference}
 
-%% Author biographies: BiB asks for ~30 words per author.
+%% Author biographies: not part of the BMC article structure; kept commented
+%% out. BMC supplies ORCID iDs in the front matter instead.
 %\begin{biography}{}{\author{Jasmeer Singh Kalra.} ...}\end{biography}
 
 %% Appendices (optional)
