@@ -1,13 +1,13 @@
-# Fit and positioning assessment: *Microbiome* (BMC, ISSN 2049-2618)
+# Fit and positioning assessment: *Microbiome*, BMC Microbiology, and *mSystems*
 
 **Subject:** `oup-authoring-template/manuscript.tex`
 *"Microbiome-CDM: An LLM-driven common data model and knowledge extraction pipeline for human microbiome literature"*
 
 **Date:** 2026-11-10
 **Manuscript status:** converted to Springer Nature `sn-jnl` v3.1 (`sn-vancouver-num`); clean from-scratch `latexmk -pdf` build, 17 pages, 0 undefined citations/references, 0 LaTeX errors. Committed as `b804f97` on branch `submission-prep-2026-11-10` (not pushed).
-**Scope of this document:** (A) whether the manuscript fits this journal and every way it currently falls short, and (B) how it compares to the published competition and what to change so it competes. Both parts are needed together — most of the compliance gaps are also positioning gaps.
+**Scope of this document:** (A) whether the manuscript fits *Microbiome* and every way it currently falls short; (A2) whether the ASM journals — above all *mSystems* — fit it better; and (B) how it compares to the published competition and what to change so it competes. All three belong together: most of the compliance gaps are also positioning gaps, and the choice of venue changes which gaps are blocking.
 
-**Verdict in one line:** the manuscript is *mechanically submittable* apart from 4 author-input blocks and 2 unfilled DOIs, but it is **not yet competitive** at this journal, because it is framed as NLP engineering performed over a microbiome corpus rather than as a microbiome resource — and, separately, because **eight near-identical systems published in the last 18 months are uncited**, so the paper is not visibly in conversation with its own field.
+**Verdict in one line:** the manuscript is *mechanically submittable* apart from 4 author-input blocks and 2 unfilled DOIs, but it is **not yet competitive at *Microbiome***, because it is framed as NLP engineering performed over a microbiome corpus rather than as a microbiome resource — and, separately, because **eight near-identical systems published in the last 18 months are uncited**, so the paper is not visibly in conversation with its own field. **It is, however, close to competitive at *mSystems* today**, because that journal has an article type — **Resource Report** — that describes this paper as written, and has published near-identical papers ([ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper)–[ASM3](#asm3-do-comparable-papers-actually-get-published-here)).
 
 **Two independent rejection risks, not one:**
 
@@ -16,6 +16,8 @@
 
 Fixing only the first will not get the paper through review. Both are addressable with existing artefacts.
 
+**A third axis, and the reason Part A2 exists:** *where* the paper is sent changes which of these are blocking. Gap 5 ("protocol") is a framing desk-reject at *Microbiome* and a perfectly valid article type at *mSystems*. Gap 4 ("no microbiome result") is disqualifying at *Microbiome* and optional for a Resource Report at *mSystems*. Gap 2 (nothing deposited) is equally fatal at every venue. Read [Part A2](#part-a2--alternative-venues-the-asm-journals) before deciding how much of Tier 0 to do.
+
 ## The ten gaps that decide the outcome
 
 Ranked by how much each one alone can sink the submission.
@@ -23,10 +25,10 @@ Ranked by how much each one alone can sink the submission.
 | # | Gap | Where |
 |---|---|---|
 | 1 | No `Methods`, `Discussion` or `Conclusions` section; Limitations (1,089 words) is longer than Results (900) | A3.1, A3.2 |
-| 2 | Data and code availability is future tense with two empty DOI slots — fails the "available at submission" policy outright | A4.1, A4.2 |
+| 2 | Data and code availability is future tense with two empty DOI slots — fails the "available at submission" policy outright **at every venue** | A4.1, A4.2 |
 | 3 | Eight direct competitor systems uncited; the gap over them is asserted, not demonstrated | B2.1, B3.2 |
 | 4 | No microbiome result and no microbiome figure — the paper never shows what the CDM buys a microbiome scientist | A5.2, B2.4 |
-| 5 | Calls itself a "protocol" 17 times; no Protocol article type exists at this journal | A5.1, B3.1 |
+| 5 | Calls itself a "protocol" 17 times; no Protocol article type exists at *Microbiome* (but **Methods and Protocols does exist at *mSystems***) | A5.1, B3.1, ASM2 |
 | 6 | Zero engagement with FAIR, MIxS/MIMARKS, STORMS/STREAMS — the standards the paper implicitly implements | A4.4, B2.2 |
 | 7 | Validation is one reviewer, n=500, no confidence intervals, second reviewer unfinished | A6.1, B2.6 |
 | 8 | Relations: 17,717 of 25,788 triples carry only a generic `OTHER_RELATION`, yet triples lead the abstract | A6.4, B3.4 |
@@ -44,23 +46,31 @@ The venue is **contested inside the repository**:
 - `manuscript.tex` comments (line 90) say: *"BMC Microbiology requires a structured abstract with exactly these three headings…"*
 - `manuscript.tex` comments (lines 1336, 1405) reference BMC/Springer Nature declaration ordering.
 - The current request asks about **Microbiome (2049-2618)**.
+- A third option was raised while this assessment was being written: ***mSystems*** (ASM, 2379-5077).
 
-These are **different journals with different article types, different declarations, and different framing expectations**. Nothing further should be reformatted until one is chosen.
+These are **different journals with different article types, different declarations, different section order, and different framing expectations**. Nothing further should be reformatted until one is chosen — and the choice now genuinely changes the edits, because *Microbiome* requires Methods before Results while ASM requires Methods **after** Discussion.
 
-| | *Microbiome* (2049-2618) | BMC Microbiology (1471-2180) |
-|---|---|---|
-| Article types | Research, **Methodology**, **Software**, Review, Brief report, Comment, Correspondence, Meeting Report | Research article, Methodology article, Software, Database, Short report, Review, … |
-| KG/ontology-titled papers | **13** | **60** |
-| Software/database/tool/pipeline-titled | **41** | **77** |
-| Text-mining/NER/NLP-titled | **2** | **2** |
-| LLM in abstract | **2** | **1** |
-| 2026 sample (200 / 300 articles): curation | 11 | 15 |
-| 2026 sample: database | 10 | — |
-| 2026 sample: pipeline | 4 | — |
-| 2026 sample: tool / platform | — | 17 / 12 |
-| 2026 sample: text-mining/LLM methodology | 3 | **≈ 0** |
+| | *Microbiome* (2049-2618) | BMC Microbiology (1471-2180) | ***mSystems*** (2379-5077) |
+|---|---|---|---|
+| Publisher / model | Springer Nature (BMC), hybrid | Springer Nature (BMC), hybrid | **ASM, fully OA, CC BY 4.0** |
+| Article types that fit | Research, **Methodology**, **Software**, Brief report, Review | Research, Methodology, Software, **Database**, Short report | Research, **Resource Report**, **Methods and Protocols** |
+| KG/ontology-titled papers | **13** | **60** | **0** (18 in tiab) |
+| Software/database/tool/pipeline-titled | **41** | **77** | **71** |
+| Text-mining/NER/NLP-titled | **2** | **2** | **1** |
+| LLM in abstract | **2** | **1** | **4** |
+| 2026 sample (200 / 300 articles): curation | 11 | 15 | (25 tiab, all years) |
+| 2026 sample: database | 10 | — | (31 resource-titled, all years) |
+| 2026 sample: pipeline | 4 | — | — |
+| 2026 sample: tool / platform | — | 17 / 12 | — |
+| 2026 sample: text-mining/LLM methodology | 3 | **≈ 0** | (4 LLM in abstract) |
+| Body word cap | none stated | none stated | **5,000** (current: ≈3,950) |
+| Abstract cap | **350** structured (current: **311** — compliant, 39 to spare) | 350 structured | **250** + **120-word Importance** (current: **311** — **61 over**) |
+| APC | **$5,190 / €4,290** | lower (verify) | **$4,500** non-member / $3,375 member |
+| Initial submission format | editable TeX | editable TeX | **format-neutral — any format** |
 
-**Read of the evidence:** *Microbiome* demonstrably publishes curation/database/pipeline work and has an explicit **Methodology** article type. BMC Microbiology publishes more ontology/KG work but essentially **no** text-mining or LLM methodology. So *Microbiome* is the better *thematic* home for this paper and the worse *competitive* one (higher bar, mechanistic bias). See **A10** for the full venue verdict.
+**Read of the evidence.** *Microbiome* publishes curation/database/pipeline work at volume and has an explicit **Methodology** article type, but its bar is "a demonstrable advance" and its reviewers are the competitors. BMC Microbiology publishes the most ontology/KG work but essentially **no** text-mining or LLM methodology. ***mSystems* is the only one of the three whose article-type catalogue contains a name for what this manuscript already is** (Resource Report), and it has published near-identical papers.
+
+**Nothing in the comparison settles it**, because fit and odds point the same way but ceiling and audience do not. That is a decision for the authors, and it is the first item in Part C. Full ASM analysis: [Part A2](#part-a2--alternative-venues-the-asm-journals). Full verdict ranking across all five venues considered: [ASM7](#asm7-five-venue-verdict-ranking).
 
 ---
 
@@ -289,7 +299,7 @@ Good. But it should also state: (a) the **licence of your own deposit** (CC BY 4
 
 The title promises "an LLM-driven common data model **and knowledge extraction pipeline**" — a **Software** or **Methodology** paper. But the manuscript **calls itself a protocol** in 17 places, including the abstract ("We present a **protocol**…") and line 286 ("We built Microbiome-CDM as a **protocol** rather than a single model").
 
-- **There is no Protocol article type at *Microbiome*.**
+- **There is no Protocol article type at *Microbiome*.** (There *is* a **Methods and Protocols** type at ***mSystems***, and a **Resource Report** type that fits better still — see [ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper). This section's verdict is venue-specific, not absolute.)
 - As **Software**: criteria require "broad utility" and "direct comparison with available related software". You compare *individual NER models* on BC5CDR/BioRED, but **never compare the pipeline as a whole** to any competing literature-mining system (PubTator3-as-pipeline, SemRep, an existing microbiome KG).
 - As **Methodology**: criteria require a "**demonstrable advance**". The Background (lines 228–300) dismisses related work in one paragraph and *asserts* "None of these delivers a provenance-traceable common data model over the cited literature of a compendium" — asserted, not demonstrated.
 
@@ -304,6 +314,8 @@ The journal's readers are microbiome scientists. Evidence from the manuscript:
 - **The biological payoff is never shown.** You built a CDM over 453 papers and a 168,464-sample compendium and never demonstrate one insight it enables.
 
 For this journal, "technical advance" means *it enables something*. An infrastructure report that never delivers a microbiome result is the archetype of what the editorial calls work that does not provide "substantial conceptual or technical advances".
+
+**This gap is venue-dependent, and that is the single most important finding in this document.** A *mSystems* **Resource Report** explicitly asks for "proof-of-principle so that the new methodology can be replicated and/or utilized by others" — a *reuse path*, not a biological insight. Under that standard, the IBD 25/44 agreement result (currently a Limitations caveat, line 1274) plus the released deposit is **sufficient**, and no microbiome figure is required. What remains mandatory at both venues is that the paper shows *someone can use it*. See [ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper) and [ASM4](#asm4-quantitative-topic-profile--and-the-honest-counter-signal).
 
 ### A5.3 The "cited by a compendium" framing is correct but needs an inclusion rule
 
@@ -418,7 +430,7 @@ Uncited entries:
 
 | Check | Result |
 |---|---|
-| Word count | **282** (≤350 ✓) |
+| Word count | **311** (≤350 ✓, 39 to spare) |
 | Structure | Background / Results / Conclusions ✓ |
 | Citations | **0** ✓ (verified: no `\cite` in the abstract block) |
 | Abbreviations | Reasonably minimised ✓ |
@@ -496,9 +508,151 @@ Do not lose these while fixing everything else:
 
 ### Conclusion
 
-**Neither journal currently sees a paper that fits cleanly, because the manuscript is framed as NLP engineering with a microbiome corpus rather than as a microbiome resource with NLP underneath** — and because it does not cite the field it claims to advance. That is a *framing* failure and it is fixable, but it requires rewriting the Background, the title, the abstract's payoff sentence, and the related-work section — not just adding sections.
+**Neither *Microbiome* nor BMC Microbiology currently sees a paper that fits cleanly, because the manuscript is framed as NLP engineering with a microbiome corpus rather than as a microbiome resource with NLP underneath** — and because it does not cite the field it claims to advance. That is a *framing* failure and it is fixable, but it requires rewriting the Background, the title, the abstract's payoff sentence, and the related-work section — not just adding sections.
 
-**Recommended path:** rewrite to Methodology framing (provenance + principled abstention + transfer-domain finding, with one demonstrated reuse case), fix everything in Part C, then submit to ***Microbiome***. If the authors will not add a microbiome-facing demonstration, **BMC Microbiology** is the honest fallback.
+**But a third venue removes most of the framing problem without any rewriting.** *mSystems* has a **Resource Report** article type that describes this paper as it stands, a 5,000-word cap the manuscript already meets, and published precedents of exactly this shape — including a *metadata schema paper with no primary data* ([ASM3](#asm3-do-comparable-papers-actually-get-published-here)). The framing failure documented throughout this part is, in large measure, a **venue** failure. See [Part A2](#part-a2--alternative-venues-the-asm-journals).
+
+**Recommended path, in order of preference:**
+
+1. **If the authors will add the biological demonstration** (one reuse figure, IBD promoted, second reviewer) → **rewrite to Methodology framing** as described in Part B and submit to ***Microbiome***. Highest ceiling.
+2. **If they will not** → submit the paper substantially as it stands to ***mSystems*** as a **Resource Report**, after the venue-independent fixes (deposit, availability, competitor citations, Importance paragraph, abstract trim). The biological demonstration is optional for that article type; a demonstrated reuse path is not.
+3. **BMC Microbiology** remains a defensible fallback, and is the most likely of the three to accept the current framing — at the lowest signalling value.
+
+What is *not* recommended is submitting the current manuscript to *Microbiome* unrevised. On the evidence in Parts A and B it would be rejected on framing grounds alone, before the science is reached.
+
+---
+
+# PART A2 — ALTERNATIVE VENUES: THE ASM JOURNALS
+
+This part answers a different question from Part A: not "does it fit *Microbiome*" but "is there a journal where this paper's *current shape* is a recognised article type". The answer is yes — **mSystems** — and that changes the cost calculus enough to justify the extra length.
+
+Evidence grade is stated for every claim below, because ASM's site (`journals.asm.org`) returns HTTP 403 to direct fetch and to `r.jina.ai` proxying (Cloudflare bot check). ASM facts therefore come from search-engine excerpts of ASM's own pages, not from a full page read. Where a detail could not be pinned down I say so rather than filling the gap.
+
+## ASM1. Hard facts about *mSystems* (ISSN 2379-5077)
+
+| Property | Value | Confidence |
+|---|---|---|
+| Publisher / model | ASM; fully open access | High |
+| Licence | **CC BY 4.0**; authors retain copyright | High (ASM proprietary-rights page) |
+| APC | **$3,375 member / $4,500 non-member** (mBio, mSphere, mSystems share this row) | High (ASM publication-fees page) |
+| Short-article APC | $1,950 / $2,600 (Brief Reports, Opinions & Hypotheses) | High |
+| Initial submission format | **Format-neutral** — "ASM Journals welcomes papers in any format" | High (ASM format-neutral page) |
+| Peer review | Single-blind by default; **open peer review optional** (reports published with the article if the author opts in) | High |
+| Corpus size (PubMed) | **3,071** papers total; **444** in 2025, **354** in 2026 | High (E-utilities, 2026-11-10) |
+| Research Article word limit | **5,000 words**, excluding references, tables and figure legends | High |
+| Abstract convention | **250 words**, plus a separate non-technical **Importance** paragraph of **120 words** | Medium — the 250/120 pair is confirmed on ASM's JB article-type page and is the ASM-wide Research Article convention; the mSystems page carries the same pattern but could not be read directly |
+| Title page | Title, **running title ≤ 54 characters incl. spaces**, all authors, affiliations at time of work, corresponding e-mail(s), **abstract word count** | Medium-high (ASM JB/CMR page text; mSystems page not directly readable) |
+| Section order | Abstract → Importance → Introduction → Results → Discussion → **Materials and Methods** → Acknowledgments → Author Contributions → References | Medium — Methods *after* Discussion is ASM convention and appears in third-party submission checklists; not verified against a live ASM page |
+| LaTeX | ASM supplies an **Overleaf template for mSystems Research Articles** | Medium-high (referenced on the mSystems article-types page) |
+
+### ASM2. Article types at *mSystems* — and why two of them fit this paper
+
+Article types recorded for *mSystems*: **Research Article**, **Resource Report**, **Methods and Protocols**, Observation, Minireview, Opinion/Hypothesis, Commentary, Perspective.
+
+Two matter here.
+
+**Resource Reports** — the journal's own description: *"Resource Reports describe major technical advances and/or major informational databases that would be of interest in microbiology or allied fields. The manuscripts should include detailed methods and illustration of proof-of-principle so that the new methodology can be replicated and/or utilized by others."*
+
+Read that against what the manuscript actually is: a database-shaped artefact (2,505,735 mentions, 165,991 canonical terms, 334,231 mappings, a released CDM bundle) with a documented method and a released deposit. **"Proof-of-principle so that others can replicate or utilise it" is a materially lower bar than *Microbiome*'s "demonstrable advance"**, and it is the exact standard the paper can already meet. The missing element at *Microbiome* — a microbiome *insight* — is not required here; a demonstrated *reuse path* is.
+
+**Methods and Protocols** — the paper's own preferred self-description ("we present a protocol that constructs…") turns out to name a real article type at this journal. That is worth pausing on: the single most-repeated framing defect at *Microbiome* (A5.1, B3.1 — "protocol" as a 17-occurrence tic with no article type behind it) **disappears entirely at mSystems**. The word does not have to be scrubbed from the manuscript; it has to be aimed at the right article type.
+
+**Recommendation: Resource Report**, not Methods and Protocols. The contribution is an information resource with a method attached, not a bench/wet-lab protocol. Methods and Protocols would invite "this is not a protocol" from a reviewer who expects step-by-step laboratory procedures.
+
+### ASM3. Do comparable papers actually get published here?
+
+This is the question that decides fit, and the answer is unusually clean: yes, repeatedly, and one precedent is almost a template.
+
+| Precedent | Year | Why it matters |
+|---|---|---|
+| **PaperBLAST: Text Mining Papers for Information about Homologs** | 2017 | The closest structural analogue in existence: a **literature text-mining database** published as an mSystems resource. Establishes that "we mined the literature and built a queryable resource" is inside scope, without any new microbiology |
+| **A Schema for Digitized Surface Swab Site Metadata in Open-Source DNA Sequence Databases** | 2023 | **A metadata schema paper** — no experiments, no new biology, purely an argument that a free-text field should be replaced by structured, digitised metadata. This is the nearest possible neighbour to "microbiome attributes survive only in prose; here is a data model for them" |
+| **Microbiome Metadata Standards: Report of the National Microbiome Data Collaborative's Workshop** | 2021 | Confirms ASM will publish microbiome-metadata-standardisation work with zero primary data |
+| **E.PathDash**, pathway activation analysis of public pathogen expression data | 2024 | Reuse of public data as a first-class contribution |
+| **Semantic search using protein large language models…** | 2024 | An **LLM-method** paper in mSystems — the journal is not LLM-averse |
+| **NIAID systems-biology data resource / schema papers** (several) | 2020–2025 | A standing line of data-resource publishing |
+
+The swab-metadata paper is the strongest single argument in this entire document for a venue change: it is the same paper shape, at the same journal, with no biological finding, and it was published.
+
+### ASM4. Quantitative topic profile — and the honest counter-signal
+
+PubMed counts, all years, journal-limited (`2379-5077[ta]`):
+
+| Query | Papers |
+|---|---|
+| semantic / ontology / data model (tiab) | **18** |
+| curation / harmonisation / interoperability / metadata standard (tiab) | **25** |
+| metadata / schema / standard / controlled vocabulary (title) | **7** |
+| resource / database / platform / toolkit / repository (title) | **31** |
+| software / database / tool / pipeline (any) | **71** |
+| multi-omics | **160** |
+| benchmark | **8** |
+| **text-mining / NER / NLP** | **1** (PaperBLAST, 2017) |
+| LLM anywhere in abstract | **4** |
+| "knowledge graph" / "ontology" in title | **0** |
+
+Two readings, both true:
+
+- **Supportive:** 71 software/database/pipeline-titled papers and 31 resource-titled papers is a real, sustained publishing line. The paper would not be a curiosity.
+- **Adversarial:** the text-mining cell is **1** paper in nine years, and knowledge-graph-in-title is **0**. mSystems is a *systems biology* journal that publishes data resources; it is not a text-mining journal. A reviewer pool drawn from systems microbiologists will ask the same question *Microbiome*'s reviewers would ask — *what does this tell me about microbes?* — and will be **less** familiar with the NER/relation-extraction literature than *Microbiome*'s would be.
+
+**Net:** mSystems lowers the *article-type* bar and does not lower the *demonstration* bar by much. It converts "you must show a biological insight" into "you must show that the resource is usable by others" — which the IBD 25/44 reuse result and the released deposit already do, once promoted out of Limitations (C:16).
+
+### ASM5. What the manuscript would have to change — and what it would not
+
+| Requirement | Current manuscript | Delta |
+|---|---|---|
+| 5,000-word body | **≈3,950 words** excluding tables and figure legends (4,507 including them) | **Already compliant**, with ~1,000 words of headroom — enough for the capability matrix, related-work rewrite and IBD promotion, and *still* under the cap |
+| Abstract ≤ 250 words | **311** by a comments-stripped, LaTeX-command-stripped count (the three headings excluded) | **Trim 61 words**, plus a new ≤120-word Importance paragraph. The trim is cheap; the Importance paragraph is the real work |
+| Separate **Importance** paragraph ≤ 120 words | Does not exist | **Write ~110 words of plain-language significance.** New work, but it is exactly the paragraph B4.3 already asks for |
+| Abstract word count on the title page | Absent | Add one number |
+| Running title ≤ 54 characters | No running title | Add |
+| Numbered references in citation order | `sn-vancouver-num` already does this | **Already compliant** — the reference work survives the venue change |
+| Methods **after** Discussion | Materials and methods currently precede Results | Reorder (see conflict below) |
+| Data deposited in a public repository, available at review | Nothing uploaded; future tense | **No improvement.** ASM is as strict as *Microbiome* here. This is venue-independent and remains Tier 0 |
+| CC BY 4.0 | CC BY proposed in Declarations | Already aligned |
+| Author Contributions / Acknowledgments as unnumbered end sections | Currently BMC/Springer Declarations machinery | Rework the back matter — one pass |
+| No formal "Declarations / Ethics / Consent / Abbreviations" block | Present | **Delete or fold.** ASM does not use the BMC declarations apparatus |
+| "16S" → "16S rRNA gene" | 3 bare occurrences | Do it anyway. *Microbiome*'s rule is explicit; ASM's is not verified, and correct usage is harmless at either venue |
+
+**The one real structural conflict.** ASM puts Materials and Methods *after* Discussion; the Tier 0 restructure planned for *Microbiome* (C:6–8) puts Methods before Results and adds a separate Conclusions. These are not the same edit. Deciding the venue **before** writing the restructure — which is what Part 0 already says — saves doing it twice.
+
+**The cost that is easy to underrate.** The `sn-jnl` v3.1 conversion (preamble, structured abstract, declaration ordering, `sn-vancouver-num`, the whole `latexmk` path validated at 17 pages / 0 errors) is Springer-specific. Moving to ASM means switching to the ASM Overleaf template and re-doing front matter, back matter and declaration handling. That is a day, not a week — but it is wasted if the venue is chosen after the restructure rather than before.
+
+### ASM6. The other ASM journals — where this paper would and would not go
+
+| Journal | ISSN | Papers | 2026 | Best article type for this paper | Verdict |
+|---|---|---|---|---|---|
+| **mSystems** | 2379-5077 | 3,071 | 354 | **Resource Report** | **Best ASM fit** |
+| mSphere | 2379-5042 | 3,238 | 233 | Resource Report, Observation | Same article types, **narrower scope** (host–microbe and eukaryotic microbes), no better precedent. No reason to prefer it |
+| **Microbiology Spectrum** | 2165-0497 | **10,103** | **1,689** | Research Article / Resource | Highest volume of the group (≈2.8× mSystems' 2026 output) and a broader scope, but scope breadth cuts both ways: it is the group's catch-all, so per-paper visibility and selectivity signalling are lower. APC band lower than mSystems per ASM's fee table (exact figures for this row could not be resolved from the fetched table — **verify before quoting**) |
+| mBio | 2150-7511 | 9,105 | — | Research Article only | **Not suitable.** No resource/protocol article type; expects mechanistic microbiology |
+| ASM S2O journals (J Bacteriol, Appl Environ Microbiol, J Clin Microbiol, …) | — | — | — | Research Article | **Not suitable.** **No APC**, but subscription/S2O model means no CC BY open access by default, and all are mechanism- or method-in-laboratory oriented |
+
+**If ASM is chosen, submit to mSystems.** Not mSphere (same types, smaller and more narrowly scoped audience), not Spectrum (volume without selectivity), not mBio (no article type for this shape).
+
+### ASM7. Five-venue verdict ranking
+
+Scores are comparative within this paper only, not journal quality.
+
+| Rank | Venue | Article type | Formal fit | Precedent | Audience | Cost | Honest odds |
+|---|---|---|---|---|---|---|---|
+| **1** | ***mSystems*** | Resource Report | **Best** — article type describes the paper as written; 5,000-word cap already met; format-neutral first submission | **Strong** (PaperBLAST, swab schema, NMDC standards) | Systems microbiologists | APC **$4,500** non-member | **Best available.** Still needs availability + reuse promotion + Importance paragraph. Not a desk-reject risk on shape |
+| **2** | ***Microbiome*** | Methodology | Good — type exists, criteria are "demonstrable advance", which the paper does not yet show | Thin (2 text-mining titles in 2,491) | Microbiome scientists, competitors as reviewers | APC **$5,190 / €4,290** | Credible **only** after the biological demonstration. Highest ceiling, highest bar |
+| **3** | **BMC Microbiology** | Database / Software / Methodology | Good — widest ontology/KG precedent (**60** titles vs 13) | Strongest on topic | Mixed microbiology | Lower APC (verify) | **Most likely acceptance** of the five, lowest signalling. The honest fallback |
+| 4 | mSphere | Resource Report | Good | Weaker for this paper | Host–microbe focus | $4,500 | No advantage over mSystems |
+| 5 | Microbiology Spectrum | Research Article | Moderate | Broad | Very broad | Lower | Volume without selectivity; no upside |
+
+**The decision in one line:** *mSystems* is where the paper as it exists today is closest to publishable; *Microbiome* is where it would matter most if the biological demonstration is added; BMC Microbiology is where it is most likely to be accepted as-is.
+
+### ASM8. What this changes in the rest of this document
+
+- **C:1 (decide the venue)** now has three real options, not two, and the choice is no longer "prestige vs fit" — it is "which bar do you intend to clear".
+- **C:2 (article type)** — "protocol" is not a defect at mSystems if the article type is **Methods and Protocols**, and not a defect at all under Resource Report. The scrub is still worth doing, because the word is used 17 times where "pipeline" or "resource" is meant, but it is no longer a desk-reject.
+- **C:6–9 (restructure)** — the target architecture is **venue-dependent**. Write it once, after the decision.
+- **A4 / C:4–5 (availability, deposit, DOI)** — unchanged and equally blocking at every venue considered. This is the one Tier 0 item that buys value regardless of where the paper goes.
+- **A8.2 / C:21 (abstract)** — at mSystems the abstract must come down from **311 to ≤250 words** *and* gain a ≤120-word Importance paragraph; at *Microbiome* the current 311-word structured abstract is already compliant (39 words to spare under the 350 cap).
+- **B2.1 / B2.2 (uncited competitors, unclaimed standards)** — unchanged. mSystems reviewers will be *less* likely to know MINERVA and MicrobiomeKG, which lowers the risk of being caught but does not make the missing citations defensible. Cite them regardless.
 
 ---
 
@@ -602,17 +756,17 @@ MINERVA has a viewer. MicrobiomeKG is in Translator. MicrobiomeKG explicitly say
 
 ## B3. What you are framing incorrectly
 
-### B3.1 "Protocol" — an article type that does not exist
+### B3.1 "Protocol" — an article type that does not exist *(at *Microbiome*)*
 
-*(Article-type criteria: **A5.1**.)*
+*(Article-type criteria: **A5.1**. Venue alternative: **[ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper)**.)*
 
 The manuscript calls itself a **protocol** in 17 places, including the abstract ("We present a protocol that constructs a…") and line 286 ("We built Microbiome-CDM as a protocol rather than a single model").
 
-*Microbiome* has **no Protocol article type**. Its types are Research, Methodology, Software, Review, Brief report, Comment, Correspondence, Meeting Report.
+*Microbiome* has **no Protocol article type**. Its types are Research, Methodology, Software, Review, Brief report, Comment, Correspondence, Meeting Report. ***mSystems* does have a "Methods and Protocols" type — so this defect is specific to the *Microbiome* path, not intrinsic to the paper.**
 
-You are describing a **Methodology** paper using a word that maps to no category. Every time a reviewer reads "protocol" they hear "we have not implemented this / this is a plan", which is the opposite of what a Methods paper must convey.
+You are describing a **Methodology** paper using a word that maps to no category at this journal. Every time a reviewer reads "protocol" they hear "we have not implemented this / this is a plan", which is the opposite of what a Methods paper must convey.
 
-**Decide: Methodology or Software. Then delete the word "protocol" from the entire vocabulary of the paper.** Replace with "pipeline" (Software) or "method" (Methodology). Do not mix.
+**If *Microbiome* or BMC: decide Methodology or Software, then replace "protocol" throughout** with "pipeline" (Software) or "method" (Methodology). Do not mix. **If *mSystems*:** submit as a **Resource Report** and still replace "protocol" — the article type is not a protocol, and the word invites the same misreading from an ASM reviewer. The fix is cheap at any venue; only its *severity* changes.
 
 ### B3.2 "Provenance-traceable common data model" is asserted, not shown
 
@@ -771,18 +925,19 @@ Items are deduplicated across both parts and grouped by how blocking they are. N
 
 ## Tier 0 — cannot submit without these
 
-1. **Decide the venue** (Part 0) — *Microbiome* vs BMC Microbiology. Everything downstream depends on it.
-2. **Decide the article type** — Methodology or Software. Then delete "protocol" from the paper's vocabulary (17 occurrences, including the abstract).
+1. **Decide the venue** (Part 0, [ASM7](#asm7-five-venue-verdict-ranking)) — *Microbiome*, BMC Microbiology, or *mSystems*. Everything downstream depends on it, including the section order.
+2. **Decide the article type** — *Microbiome*: Methodology or Software. *mSystems*: **Resource Report**. BMC Microbiology: Database or Software. Then replace "protocol" with "pipeline"/"resource" where that is what is meant (17 occurrences, including the abstract). At *mSystems* this is a clarity fix, not a desk-reject.
 3. Replace the **4** `[AUTHOR INPUT REQUIRED]` blocks (competing interests, funding, CRediT, acknowledgements).
 4. Fill the **Zenodo DOI** and the **code repository + DOI**.
-5. **Upload the deposit before submission**; convert "will be deposited" to present tense with a live DOI.
-6. Add `\section{Methods}` — rename/absorb the five Stage sections as subsections.
+5. **Upload the deposit before submission**; convert "will be deposited" to present tense with a live DOI. **Identical requirement at all three venues** — do this regardless of the decision.
+6. Add `\section{Methods}` — rename/absorb the five Stage sections as subsections. **If *mSystems*: Methods goes after Discussion, not before Results.**
 7. Add `\section{Discussion}` with **Limitations and Recommendations as subsections**.
-8. Add `\section{Conclusions}`.
-9. Enable `referee,lineno` (double spacing + line numbers) for the submission build.
-10. Fix bare **"16S" → "16S rRNA gene"** (lines 816, 1010, 1071) — explicit journal rule.
+8. Add `\section{Conclusions}` (*Microbiome*/BMC only — ASM ends with Discussion).
+9. Enable `referee,lineno` (double spacing + line numbers) for the submission build (*Microbiome* requires it; ASM is format-neutral, so optional).
+10. Fix bare **"16S" → "16S rRNA gene"** (lines 816, 1010, 1071) — explicit *Microbiome* rule; correct at any venue.
 11. Remove the internal `MANUSCRIPT_CLAIMS_REGISTER.csv` reference from Table 1's caption (line 927).
 12. Produce a **comment-stripped `.tex`** for submission (931 comment lines, 29 "Claude" mentions).
+13. ***If mSystems:*** cut the abstract from **311 → ≤250 words**, write a **≤120-word Importance** paragraph, add the **abstract word count** and a **≤54-character running title** to the title page, and swap `sn-jnl` for the ASM Overleaf template.
 
 ## Tier 1 — reviewer-facing, decisive
 
@@ -833,8 +988,8 @@ Items are deduplicated across both parts and grouped by how blocking they are. N
 
 | Effort | Items |
 |---|---|
-| **Under an hour** | 2 (delete "protocol"), 10 (16S), 11 (claims register), 23 (SapBERT/MiniLM), 24 (cite uncited), 42 (keywords), 12 (strip comments) |
-| **Under a day** | 13 (exports), 14 (capability matrix), 15 (related work), 16 (IBD), 17 (standards), 18 (CIs), 22 (transfer finding), 26 (452), 28 (additional files) |
+| **Under an hour** | 2 (replace "protocol"), 10 (16S), 11 (claims register), 23 (SapBERT/MiniLM), 24 (cite uncited), 42 (keywords), 12 (strip comments), **13 (abstract trim + Importance, if mSystems)** |
+| **Under a day** | 13 (exports), 14 (capability matrix), 15 (related work), 16 (IBD), 17 (standards), 18 (CIs), 22 (transfer finding), 26 (452), 28 (additional files), **venue template switch (if mSystems)** |
 | **Days, but decisive** | 19 (second reviewer), 31 (biological figure), 32 (system comparison), 36 (PROV-O) |
 | **Blocking, outside writing** | 3 (author facts), 4–5 (deposit + DOI), 30 (affiliations) |
 
@@ -863,19 +1018,32 @@ That gets the manuscript **into review with a fair hearing**. Whether it is acce
 
 **BMC Microbiology remains the honest fallback** if the authors will not invest in the biological demonstration — it publishes the KG/ontology framing at volume (60 vs 13 ontology-titled papers) and does not carry the mechanistic-insight editorial pressure.
 
+***mSystems* changes the calculation materially, and should be read as a serious first choice rather than a fallback.** Two of the three items this part calls "decisive" — the biological demonstration and the system-level comparison — are *optional* for a **Resource Report**. The item that is not optional, the deposited resource, is the same at every venue. In practical terms: the current manuscript plus a deposit, a trimmed abstract, a 120-word Importance paragraph, a reuse demonstration promoted out of Limitations, and the competitor citations would be a **credible mSystems Resource Report** — and that is a materially shorter list than the *Microbiome* path.
+
+The honest risk at *mSystems* is different, not smaller: a reviewer drawn from systems microbiology will ask *"who will use this, and for what?"* and will not be impressed by named-entity F1 scores. The answer has to be a use case, not a metric. The IBD 25/44 result is that use case, and it is currently buried in Limitations as a caveat.
+
+**Three doors, honestly stated:**
+
+| Venue | What it takes from here | What it buys | Principal way it fails |
+|---|---|---|---|
+| ***mSystems*** | Deposit + DOI, abstract trim, Importance, reuse promoted, competitors cited, template switch | Fastest credible route; article type matches the paper | "Who uses this?" — answered only by the reuse case |
+| ***Microbiome*** | All of the above **plus** a biological figure, a system comparison, and a finished second reviewer | Highest visibility in the field | Rejection on framing before the science is assessed |
+| **BMC Microbiology** | Deposit + DOI, light reframing | Highest acceptance probability | Low signalling; the paper lands quietly |
+
 ---
 
 # PART E — SEQUENCING
 
-1. **Answer Part 0** — which journal, and Methodology or Software.
-2. **Tier 0 items 3–5** (author facts + DOIs + deposit upload) — these gate everything else.
+1. **Answer Part 0** — which journal, and which article type. There are now three options; [ASM7](#asm7-five-venue-verdict-ranking) ranks them, and the ranking turns on whether the authors will add a biological demonstration.
+2. **Tier 0 items 3–5** (author facts + DOIs + deposit upload) — these gate everything else and are **identical at every venue**. Start here regardless; none of this work is wasted whichever venue is chosen.
 3. **Upload the deposit**, add the SSSOM/KGX/RDF exports to it, then rewrite Availability in present tense.
-4. **Restructure** (Tier 0 items 6–9) in one pass, since Methods/Discussion/Conclusions move together.
+4. **Restructure** (Tier 0 items 6–9) in one pass, since Methods/Discussion/Conclusions move together — **and to the chosen venue's section order**.
 5. **Rewrite Background** (B4.2) + add the capability matrix (B4.1) + novelty paragraph (B4.5); cite all competitors.
 6. **Promote the IBD reuse result** and the **transfer-domain finding** into Results; reframe triples as abstention.
-7. **Add the comparison table and the biological figure** — highest value per hour for reviewer confidence.
+7. **Add the comparison table and the biological figure** — highest value per hour for reviewer confidence. At *mSystems* the comparison table still matters and the biological figure is optional.
 8. **Finish the second reviewer**; add Wilson CIs.
-9. Strip comments, rebuild, verify 0 errors, then run `manuscript-style-check` and `text-overlap-check`.
+9. **If *mSystems*:** trim the abstract to ≤250 words, write the ≤120-word Importance paragraph, add the running title and abstract word count, and switch to the ASM template.
+10. Strip comments, rebuild, verify 0 errors, then run `manuscript-style-check` and `text-overlap-check`.
 
 ---
 
@@ -887,7 +1055,7 @@ That gets the manuscript **into review with a fair hearing**. Whether it is acce
 | Comment lines | 931 (57%) |
 | "Claude" mentions | 29 |
 | Body words (excl. tables/figures/comments) | 4,507 |
-| Abstract words | 282 |
+| Abstract words | **311** |
 | Figures | 3 (vector, 0 raster) |
 | Tables | 1 (`table*`) |
 | Top-level sections | 10 + 2 unnumbered |
@@ -902,6 +1070,8 @@ That gets the manuscript **into review with a fair hearing**. Whether it is acce
 | Undefined citations/references | 0 |
 | Overfull hbox > 5 pt | 0 |
 | Unused figure file | `Fig/fig_overview_illustrated.pdf` |
+| Body words vs *mSystems* 5,000-word cap | ≈3,950 vs 5,000 — **1,050 headroom** |
+| Abstract vs *mSystems* 250-word cap | **311** vs 250 — **61 over** (the three headings are outside the count) |
 
 # Appendix 2 — evidence log
 
@@ -923,6 +1093,29 @@ That gets the manuscript **into review with a fair hearing**. Whether it is acce
 - LLM in abstract: 2 vs 1
 - "common data model"/harmonisation/metadata: 21
 - 2026 samples parsed to `/home/jkalra_hpc/jk_fig/microbiome_2026.xml` (200 records) and `/home/jkalra_hpc/jk_fig/bmcmicro_2026.xml` (300 records)
+
+**ASM journal-profile counts** (PubMed E-utilities, `db=pubmed`, 2026-11-10; full matrix saved to `/home/jkalra_hpc/jk_fig/asm_profile.json`):
+
+- Totals: mSystems **3,071** · mSphere **3,238** · Microbiology Spectrum **10,103** · mBio **9,105**
+- 2026 only: mSystems **354** · mSphere **233** · Spectrum **1,689** (2025: mSystems **444**)
+- mSystems `2379-5077[ta]` topical: semantic/ontology/data model (tiab) **18** · curation/harmonisation/interoperability/metadata standard (tiab) **25** · metadata/schema/standard/controlled-vocabulary in title **7** · resource/database/platform/toolkit/repository in title **31** · software/database/tool/pipeline **71** · multi-omics **160** · benchmark **8** · **text-mining/NER/NLP 1** · LLM in abstract **4** · knowledge-graph/ontology in title **0**
+- mSystems precedents confirmed by PMID/DOI: PaperBLAST (2017, `10.1128/mSystems.00039-17`) · swab-site metadata schema (2023, PMID **36847566**, `10.1128/msystems.01284-22`) · NMDC Microbiome Metadata Standards report (2021) · E.PathDash (2024) · protein-LLM semantic search (2024)
+
+**ASM guidance** — direct fetch of `journals.asm.org` returns **HTTP 403** and the `r.jina.ai` proxy hits a Cloudflare CAPTCHA, so ASM facts are drawn from search-engine excerpts of ASM's own pages, **not** a full page read. Where a detail could not be pinned down it is marked "verify" in the tables above:
+
+- `https://journals.asm.org/journal/msystems/article-types` (article types, 5,000-word cap, Resource Report description, format-neutral statement resolved from search snippets)
+- `https://journals.asm.org/format-neutral-submissions`
+- `https://journals.asm.org/publication-fees` (APC rows: mBio/mSphere/mSystems $3,375 member / $4,500 non-member; short articles $1,950 / $2,600)
+- `https://journals.asm.org/proprietary-rights` (CC BY 4.0; authors retain copyright)
+- `https://journals.asm.org/peer-review-process` (open peer review optional in mSystems and Microbiology Spectrum)
+- `https://journals.asm.org/journal/jb/article-types` and `.../journal/cmr/article-types` (250-word abstract + 120-word Importance; running title ≤54 characters) — used as the ASM-wide Research Article convention because the mSystems page could not be read directly
+- Article-type inventories corroborated at `https://scraiber.com/journals/msystems` and `https://scraiber.com/journals/msphere`
+
+**Manuscript word counts for the mSystems comparison** (comments stripped, LaTeX commands removed):
+
+- Body between `\section{Background}` and `\bibliography`, excluding `figure`/`table`/`tabular` environments: **3,953 words** (4,026 including float environments; 4,507 by the counting convention used in Appendix 1)
+- Abstract: **311 words** by the same tokeniser (the manuscript's own header comment cited 282, but that figure is the count of COMPLETE papers in the catalogue manifest, not an abstract word count — corrected 2026-11-10)
+- `reference.bib`: 68 entries, **0** with more than 6 authors (so no truncation rule bites)
 
 **Competitor systems located (2026-11-10):**
 
