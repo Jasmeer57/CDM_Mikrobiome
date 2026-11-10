@@ -1,0 +1,100 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Microbiome-CDM — pinned requirements lock (direct dependencies only)
+#
+# This file reproduces the conda env microbiome-cdm-env (Python 3.9.23)
+# that produced the v2.1.1-clean release. Direct deps are == pinned;
+# transitive deps are resolved by pip's solver.
+#
+# Install:
+#   conda create -n microbiome-cdm-env python=3.9
+#   conda activate microbiome-cdm-env
+#   pip install -r requirements.lock
+#   pip install gliner==0.2.26 --no-deps
+#   python spacy_terms/scripts/install_scispacy_models.py --verify
+#
+# torch is the CPU build (torch==2.1.1+cpu).
+# ──────────────────────────────────────────────────────────────────────────────
+
+# PyTorch CPU wheels are NOT on PyPI — need the PyTorch index.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# ── Core scientific stack ──
+# NOTE: scispacy 0.5.4 requires scipy<1.11; working env had 1.13.1 (incremental
+# upgrade). Pinned to 1.10.1 to satisfy scispacy's constraint.
+numpy==1.26.4
+pandas==2.0.3
+scipy==1.10.1
+scikit-learn==1.6.1
+
+# ── spaCy / sciSpaCy ──
+spacy==3.7.5
+scispacy==0.5.4
+
+# ── torch + transformers (CPU) ──
+# NOTE: transformers 4.44.2 + tokenizers 0.19.1 are the sweet spot:
+#  - torch 2.1.1+cpu compatible (unlike 4.57+ which needs torch>=2.2)
+#  - tokenizers 0.19.1 can parse gliner_biomed's tokenizer.json (prepend_scheme field)
+#  - huggingface_hub 0.25.2 (sentence-transformers 2.2.2 needs cached_download)
+# gliner 0.2.26 wants transformers>=4.51.3; install it --no-deps after the main install.
+torch==2.1.1+cpu
+torchvision==0.16.1+cpu
+transformers==4.44.2
+huggingface-hub==0.25.2
+tokenizers==0.19.1
+protobuf==6.33.6
+sentencepiece==0.2.2
+
+# ── GLiNER (zero-shot NER) ──
+# gliner 0.2.26 requires transformers>=4.51.3 which needs torch>=2.2.
+# We use torch 2.1.1+cpu with transformers 4.35.2, so gliner must be
+# installed AFTER the main install with --no-deps:
+#   pip install gliner==0.2.26 --no-deps
+
+# ── onnxruntime (required by gliner) ──
+onnxruntime==1.19.2
+
+# ── sentence-transformers (embedding/dedup) ──
+sentence-transformers==2.2.2
+
+# ── RDF / OWL export ──
+rdflib==7.6.0
+
+# ── HTTP / API ──
+requests==2.31.0
+httpx==0.25.2
+
+# ── API server ──
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic==2.7.0
+
+# ── Fuzzy matching / dedup ──
+rapidfuzz==3.4.0
+
+# ── Bioinformatics ──
+biopython==1.85
+
+# ── Graph algorithms ──
+networkx==3.2.1
+
+# ── Vector search ──
+faiss-cpu==1.7.4
+
+# ── CLI / utilities ──
+tqdm==4.66.1
+PyYAML==6.0
+psutil==5.9.6
+
+# ── Testing ──
+pytest==7.4.3
+pytest-asyncio==0.21.1
+
+# ── Plotting (manuscript figures) ──
+matplotlib==3.9.4
+seaborn==0.13.2
+
+# ── sciSpaCy models (installed separately via install_scispacy_models.py) ──
+# en_core_sci_lg@https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz#sha256=a2bfde10824958d51cd016b4142563373d553e24767d79b1abf8699596e31a5b
+# en_ner_bc5cdr_md@https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_bc5cdr_md-0.5.4.tar.gz#sha256=ffc73130a710edf851206199720cb2c744a043e032f5da6ba4bb36863deca778
+# en_ner_craft_md@https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_craft_md-0.5.4.tar.gz#sha256=63ddbc8320c968e419148e4c10dad595cc601aadc6f35187a1340d147f706ab7
+# en_ner_jnlpba_md@https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_jnlpba_md-0.5.4.tar.gz#sha256=9a6f59629c1aa0d43643d3e0f786016766149b2ef622d4d7a08808c4a6d9cb11

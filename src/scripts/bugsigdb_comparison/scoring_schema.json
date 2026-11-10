@@ -1,0 +1,67 @@
+{
+  "schema": "bugsigdb-comparison-scoring",
+  "version": "1.0",
+  "registered": "2026-11-03",
+  "purpose": "Direct comparison of the frozen CDM 3.0.3 (catalogue 3.1.1 findings and metadata) with BugSigDB, a human-curated signature database, on the papers present in both. Scoring rules, thresholds and endpoints are fixed in this file before the run; its sha256 is written to PREREGISTRATION.sha256 in the output folder before any result is computed.",
+  "inputs": {
+    "cdm": {"path": "releases/cdm_v3/3.0.3/microbiome_cdm_v3.db", "sha256": "5d23ba87d29ac7a6de831e66b35c0f42bc10312132cf20dd0191526b8b041e3e", "opened": "read-only"},
+    "bugsigdb": {"path": "data/reference_kg/raw/bugsigdb/full_dump.csv", "sha256": "b106dafaec8b5be5a52d685da9bf88f8439ab93f87a4f68f423d6b3d679ce81c", "export": "2026-11-03_07:58_UTC", "license": "CC BY 4.0"},
+    "ncbi_taxonomy_nodes": {"path": "data/reference_kg/raw/nodes.dmp", "sha256": "1bee29d1a84466cc17c9096222881acfcb353c9683c66acbea68ac7e25d26779"},
+    "ncbi_taxonomy_names": {"path": "data/reference_kg/raw/names.dmp", "sha256": "f485240f5669e0d24da411fd2b330308bbdc4c9f254428580c9b988761986672"}
+  },
+  "paper_matching": "CDM paper.pmid == BugSigDB PMID, else lower-cased CDM paper.doi == BugSigDB DOI. No title matching.",
+  "our_findings": {
+    "primary": "claim rows with claim_source = 'catalogue_v3_1' (the frozen catalogue 3.1.1 findings)",
+    "secondary": "all claim rows (catalogue_v3_1 + corpus_stage52)",
+    "direction_map": {"INCREASE": "up", "increased": "up", "DECREASE": "down", "decreased": "down"}
+  },
+  "bugsigdb_signatures": "all signatures of matched papers whose 'Abundance in Group 1' is increased or decreased; taxon = last NCBI ID of each ';'-separated lineage",
+  "taxon_matching": {
+    "exact": "same NCBI Taxonomy ID -> verdict MATCH",
+    "lineage": "both IDs lifted to their genus in nodes.dmp (IDs at genus rank or above are kept as they are) and the lifted IDs are equal -> verdict PARTIAL",
+    "otherwise": "MISMATCH; OURS_MISSING when the paper has no linked taxon in our findings"
+  },
+  "fields": {
+    "taxon": {"method": "exact_id / lineage_genus", "reference_value": "BugSigDB taxon per paper (deduplicated)"},
+    "sequencing_type": {"method": "rule_class", "classes": ["16S", "WMS", "ITS", "18S", "PCR", "RNA-Seq"], "ours_from": ["assay.assay_type", "assay.assay_type_normalized", "assay.target_gene_or_region", "study.assay_type", "study.target_gene_region"]},
+    "region_16s": {"method": "region_set", "rule": "MATCH if the BugSigDB V-region set equals the set parsed from one of our strings or their union; PARTIAL if they overlap", "ours_from": ["assay.target_gene_or_region", "assay.primer_or_probe", "study.target_gene_region"]},
+    "platform": {"method": "rule_class", "classes": ["Illumina", "Roche454", "Ion Torrent", "PacBio", "Nanopore", "Sanger", "BGI/MGI"], "ours_from": ["assay.sequencing_platform", "study.sequencing_platform"]},
+    "country": {"method": "country", "rule": "country names and official names (pycountry) plus a fixed alias list (USA, UK, PRC, UAE, Korea, England, ...) mapped to ISO alpha-2", "ours_from": ["study.country_region", "cohort.country_or_region"]},
+    "statistical_test": {"method": "rule_class", "rule": "fixed regex classes listed in compare.py:TESTS; BugSigDB values outside these classes are UNCLASSIFIED and excluded", "ours_from": ["assay.statistical_methods", "assay.software_tools", "assay.bioinformatics_pipeline", "study.statistical_methods"]},
+    "group_size": {"method": "integer", "rule": "BugSigDB group 0/1 sample size appears as an integer among our counts", "ours_from": ["cohort.participant_count", "cohort.sample_count", "sample.sample_count", "study.num_participants_reported", "study.num_biological_samples_reported"]},
+    "body_site": {"method": "embedding", "ours_from": ["sample.body_site", "sample.body_site_normalized", "sample.sample_type_normalized", "study.body_sites", "study.specimen_types"]},
+    "condition": {"method": "embedding", "ours_from": ["study.health_conditions", "study.exposures_interventions", "cohort.health_status", "claim.comparison_or_exposure"]},
+    "group_name": {"method": "embedding", "ours_from": ["cohort.cohort_label", "cohort.health_status", "study.comparator_control_group", "claim.comparison_or_exposure", "claim.population_subgroup"]}
+  },
+  "embedding": {
+    "primary_model": {"id": "cambridgeltl/SapBERT-from-PubMedBERT-fulltext", "revision": "090663c3ae57bf35ffe4d0d468a2a88d03051a4d", "pooling": "cls", "max_length": 64},
+    "sensitivity_model": {"id": "sentence-transformers/all-MiniLM-L6-v2", "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41", "pooling": "mean", "max_length": 64},
+    "candidate_split": "our strings split on ';' ',' '|' ' vs ' ' versus '; pieces of 2-200 characters",
+    "score": "maximum cosine similarity between the BugSigDB value and any candidate of the same paper",
+    "threshold_rule": "per field and model: the 95th percentile of the same score computed against the candidates of every OTHER matched paper (cross-paper null). Fixed by rule, never tuned on observed matches.",
+    "lexical": "a normalised exact or word-bounded containment match is reported alongside as a strict lower bound"
+  },
+  "verdicts": ["MATCH", "PARTIAL", "MISMATCH", "OURS_MISSING", "NOT_IN_REFERENCE", "UNCLASSIFIED"],
+  "endpoints": {
+    "primary": [
+      "taxon coverage: share of BugSigDB (paper, taxon) items with verdict MATCH or PARTIAL (catalogue findings)",
+      "taxon direction concordance: among items matched in both with a single direction on each side, share with the same direction"
+    ],
+    "secondary": [
+      "taxon exact-ID coverage (MATCH only)",
+      "support rate of our taxa: share of our (paper, taxon) items present in BugSigDB (not precision: BugSigDB is not exhaustive)",
+      "per metadata field: completeness (share of items with an our-side value) and concordance (MATCH share among items with values on both sides)",
+      "secondary findings source (all claims) for taxon coverage"
+    ]
+  },
+  "chance_baseline": "every metric is also computed with each paper's BugSigDB items scored against every OTHER matched paper's extraction (all cross-paper pairs, deterministic). Chance-corrected agreement = (observed - chance) / (1 - chance).",
+  "uncertainty": {"wilson": "95% Wilson interval on item-level proportions", "bootstrap": {"unit": "paper", "replicates": 2000, "seed": 20261103, "interval": "percentile 2.5-97.5"}},
+  "adjudication": "for rule-based fields with verdict MISMATCH, both values are looked up with the same rules in the paper's own section text (local, read-only; References and Acknowledgements excluded): OURS_ONLY_IN_TEXT, BSDB_ONLY_IN_TEXT, BOTH_IN_TEXT, NEITHER_IN_TEXT. No text leaves the machine.",
+  "ontology_currency": "BugSigDB taxon IDs are checked against our NCBI Taxonomy snapshot (2026-11-02): ID present or absent, and BugSigDB leaf name equal or different from the current scientific name. Reported as measured counts only.",
+  "reporting_rules": [
+    "Describe results as concordance with human curation (BugSigDB), never as accuracy.",
+    "Disagreement is not automatically our error: BugSigDB curates selected signatures, and adjudication shows which side the text supports.",
+    "Taxa we report that are absent from BugSigDB are not counted as false positives.",
+    "Direction concordance depends on group orientation (BugSigDB group 1 vs our comparison); report it with that caveat."
+  ]
+}

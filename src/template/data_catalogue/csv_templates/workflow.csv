@@ -1,0 +1,10 @@
+﻿stage,action,input,output,quality_check,status,owner,notes
+01_Deduplicate,Deduplicate by DOI/PMID/title; retain source IDs,Paper list,Canonical paper registry,Duplicate report reviewed,NOT_STARTED,,
+02_Register,Assign stable paper_id and capture bibliographic metadata,Full-text corpus,Papers sheet,Unique paper_id; DOI format checked,NOT_STARTED,,
+03_Screen,Confirm human microbiome relevance and inclusion,Paper full text,Inclusion decision and reason,Reason documented for exclusions,NOT_STARTED,,
+04_Find_datasets,"Extract repository names, accessions, URLs and availability statements",Methods/data availability/supplements,Datasets sheet,Evidence location recorded,NOT_STARTED,,
+05_Verify,Check repository landing pages and asset availability,Dataset links/accessions,Verified dataset and asset rows,URL resolves; accession type recorded,NOT_STARTED,,
+06_Extract_methods,"Capture cohorts, biospecimens, assays and pipelines",Methods and supplements,"Cohorts, Samples, Assays sheets",Counts and method evidence checked,NOT_STARTED,,
+07_Extract_findings,Record discrete microbiome results and supporting locations,Results/tables/figures,Findings sheet,Result separated from interpretation,NOT_STARTED,,
+08_QC,"Run ID, relationship, vocabulary and missingness checks",All tables,QC log / corrected tables,No orphan foreign keys; duplicates reviewed,NOT_STARTED,,
+09_Release,Version catalogue and document unresolved gaps,Validated catalogue,Versioned release,Schema version and changelog recorded,NOT_STARTED,,

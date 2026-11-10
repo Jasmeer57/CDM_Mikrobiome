@@ -1,0 +1,35 @@
+{
+  "stage": "stage51_studies_extract",
+  "pipeline_version": "2.1.0",
+  "generated_at": "2026-10-23T19:23:06Z",
+  "papers": 453,
+  "study_records": 453,
+  "extraction_status_counts": {
+    "COMPLETE": 402,
+    "PARTIAL": 51
+  },
+  "llm_status_counts": {
+    "COMPLETE": 402,
+    "FAILED": 49,
+    "PARTIAL": 2
+  },
+  "conflict_fields_total": 1774,
+  "conflict_distribution": {
+    "country_region": 224,
+    "health_conditions": 223,
+    "body_sites": 341,
+    "population_description": 340,
+    "num_participants_reported": 288,
+    "dna_rna_extraction_method": 164,
+    "sequencing_platform": 116,
+    "assay_type": 78
+  },
+  "papers_with_conflicts": 386,
+  "field_fill_rate": 0.5867,
+  "fields_per_study": 38,
+  "model": "Qwen/Qwen3.5-4B",
+  "model_label": "qwen3.5:4b",
+  "prompt_version": "v2-study-extract-1",
+  "thinking": false,
+  "note": "every §3G field present per record; not_reported means no source states it; conflicts deterministic>llm are recorded not discarded"
+}

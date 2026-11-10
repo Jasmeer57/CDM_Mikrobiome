@@ -1,0 +1,47 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage I model answer (mapping_check_v1)",
+ "type": "object",
+ "required": [
+  "judgements"
+ ],
+ "properties": {
+  "judgements": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "candidate_id",
+     "relation"
+    ],
+    "properties": {
+     "candidate_id": {
+      "type": "string"
+     },
+     "relation": {
+      "enum": [
+       "EXACT",
+       "BROADER",
+       "NARROWER",
+       "RELATED",
+       "WRONG",
+       "UNSURE"
+      ]
+     },
+     "reason": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "best_candidate_id": {
+   "type": [
+    "string",
+    "null"
+   ]
+  }
+ }
+}

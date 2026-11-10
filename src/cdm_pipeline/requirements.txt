@@ -1,0 +1,57 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# cdm_pipeline/ — CDM builder, RDF exporter, catalogue generator, audit tools.
+#
+# This package imports from `llm_terms/` and `spacy_terms/` for the actual NER /
+# extraction pipelines. Those two have their own venvs (see
+# `llm_terms/requirements.txt`, `spacy_terms/requirements.txt`). The dependencies
+# below are for the *integrator layer only* — what you need to:
+#   • query the SQLite CDM
+#   • produce RDF/OWL/TTL
+#   • run the catalogue + audit + evaluation scripts
+#   • call external APIs (UMLS, BioPortal, OLS, OMOP, Entrez)
+#   • run the release-artifact tests
+#
+# Floors pinned to versions known to work as of 2026-10-03. No upper bounds —
+# bumping is intentional, not automatic. See `requirements.lock` at the repo
+# root for a fully-pinned set.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Core scientific stack
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+scikit-learn>=1.3
+
+# RDF / OWL / TTL export
+rdflib>=6.0
+
+# HTTP client (UMLS, BioPortal, OLS, OMOP, Entrez, Ollama)
+requests>=2.31
+
+# Rapid fuzzy matching (faster than difflib, used in dedup)
+rapidfuzz>=3.0
+
+# NCBI E-utilities (PubMed, BioProject)
+biopython>=1.81
+
+# Embedding-based deduplication (sentence-transformers / Nomic)
+sentence-transformers>=2.2
+
+# GLiNER zero-shot NER (one of the 4 NER backends)
+gliner>=0.2
+
+# torch (required by GLiNER + sentence-transformers)
+torch>=2.0
+
+# transformers (required by GLiNER + PubMedBERT)
+transformers>=4.20
+
+# spaCy + sciSpaCy (required by 3 of the 4 NER backends)
+spacy>=3.7
+scispacy>=0.5
+
+# Optional: graph algorithms (used by intra-NLP evaluation)
+networkx>=3.0
+
+# Progress bars / CLI niceties
+tqdm>=4.65

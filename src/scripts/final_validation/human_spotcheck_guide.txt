@@ -1,0 +1,31 @@
+MANUAL CHECK OF 100 TRIPLES -- ANNOTATOR GUIDE (same definitions the model judge used)
+
+Work alone. Do not discuss items with the other annotator until both sheets are finished. Do not look at any model
+output (the KEY file) before both sheets are finished. Judge ONLY from the sentence shown in the row. Do not open the
+paper. If the sentence is cut off or unreadable, use NOT_SUPPORTED and write "unusable" in NOTES.
+
+A triple is: SUBJECT -- RELATION -- OBJECT, extracted automatically from the sentence.
+
+SUPPORT (column I) -- pick one:
+  SUPPORTED      the sentence states this subject-relation-object claim, in this direction.
+  PARTIAL        the sentence conveys it only hedged ("may", "suggests", "possibly"), or with a qualifier the
+                 triple drops (e.g. "in mice only", "at baseline"), or one end is a broader paraphrase than the
+                 sentence supports.
+  NOT_SUPPORTED  the sentence does not state this relation (including when an end of the triple is not in the
+                 sentence at all).
+  CONFLICTS      the sentence states the opposite (e.g. triple says INCREASES, sentence says decreased).
+
+POLARITY (column J):
+  Y  the direction in the relation label (increases / decreases / produces / reduces ...) matches the sentence.
+  N  it does not match.
+  U  the relation label has no direction (ASSOCIATED_WITH, OTHER_RELATION, PRESENT_IN, ...).
+
+RELATION_JUSTIFIED (column K):
+  Y  the sentence's own wording justifies this specific relation label.
+  N  a weaker or different label would be needed (e.g. "associated with" does not justify CAUSES).
+
+NOTES (column L): optional, up to ~25 words; quote the decisive phrase ("may", "associated", "produces").
+
+Time: about 1 minute per item, roughly 1.5-2 hours for 100. Save the file under its own name (A or B).
+After both are done, both annotators resolve disagreements together and record the agreed label; the analysis
+reports each annotator separately, their agreement, and the agreed labels.

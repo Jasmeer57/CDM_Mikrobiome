@@ -1,0 +1,33 @@
+MANUAL REVIEW OF 500 TERM-TO-ONTOLOGY MAPPINGS -- REVIEWER GUIDE (same categories the two model judges used)
+
+Each row is one canonical term from the microbiome corpus (deduplicated across 453 papers), its entity type, and the
+ontology concept it was mapped to, with the ontology's own definition (ontology_definition) where the ontology has
+one. Taxonomy and model columns are pipeline outputs, shown for context only. Work alone. Do not open KEY_model_verdicts.csv before you finish. You may open
+the concept_link to read the ontology's own definition and synonyms; you may use general references. The term is
+meant in the sense of its entity type (term_type) in human-microbiome research.
+
+MAPPING (how the CONCEPT relates to the TERM) -- pick one:
+  EXACT     same concept (synonym, abbreviation, spelling variant).
+  BROADER   the concept is more general than the term (term "Bacteroides fragilis" -> concept "Bacteroides").
+  NARROWER  the concept is more specific than the term (term "IBD" -> concept "Crohn disease").
+  RELATED   associated but a different concept (term "butyrate" -> concept "butyrate kinase").
+  WRONG     unrelated or the wrong sense (a moth genus for a bacterium, a gene for a disease abbreviation,
+            a person name).
+
+TERM_IS_CONCEPT:
+  Y  the term is a real scientific concept.
+  N  it is not: numbers, statistics, p-values, figure or table labels, sentence fragments, author names,
+     generic words ("group", "level", "data"), formatting debris.
+
+TYPE_CORRECT:  Y if term_type fits the term (ORGANISM, CHEMICAL, DISEASE, PROTEIN, DNA_RNA, CELL_TYPE,
+  SAMPLE_METHOD, LAB_METHOD, DATA_ANALYSIS, PATHWAY, EXPERIMENTAL_METHOD, STUDY_DESIGN, GENOMICS, CLINICAL); else N.
+
+DEFINITION (only if definition_in_paper is filled; otherwise NA):
+  DEFINITION  the text defines or expands the term.
+  MENTION     the term only appears; the text does not define it.
+  WRONG_TERM  the text defines a different term.
+
+NOTES: optional; e.g. the correct concept or type.
+
+Time: about 40-60 seconds per row (500 rows: roughly 6-8 hours; split over several sittings). A second person
+annotates the first 100 rows (ANNOTATION_SHEET_B_overlap100.xlsx) independently, to measure agreement.

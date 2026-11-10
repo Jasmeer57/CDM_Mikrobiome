@@ -1,0 +1,42 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json + terminology_extraction_manifest.json",
+  "check_name": "mentions_rows_written_vs_manifest_coverage",
+  "expected": "rows_written 2,505,736 == extraction manifest coverage.mention_records 2,505,736 (both releases)",
+  "observed": "written 2,505,736; manifest coverage.mention_records 2,505,736 in BOTH 1.0.0 and 1.0.1; shipped jsonl 2,505,735 (delta 1, the frozen G2 off-by-one \u2014 must not be patched); DB 2,505,684 (delta 51 vs jsonl = documented load dedup)",
+  "query_or_file": "chain across _mentions_summary.rows_written, terminology_extraction_manifest.coverage.mention_records, wc -l term_mentions.jsonl, COUNT(*) term_mention",
+  "status": "PASS",
+  "note": "supersedes original T07 note (its expected 2,505,735 was wrong): the frozen off-by-one is between rows written and rows shipped, present identically in 1.0.0 and 1.0.1"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json",
+  "check_name": "mentions_offsets_verified_recovered_unverified_census",
+  "expected": "verified 2,505,616 + recovered 34 + unverified 85 = rows_written 2,505,736",
+  "observed": "verified 2,505,616 + recovered 34 + unverified 85 = 2,505,736; control_char_surfaces 1,497",
+  "query_or_file": "_mentions_summary.json offsets_unverified/recovered scan",
+  "status": "PASS",
+  "note": "supersedes original T08 (expected sum==jsonl rows, a wrong model): census closes against rows_written as the artifact defines it"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "mention_id_sets_identical_symmetric_diff_0",
+  "expected": "distinct mention_id sets identical across jsonl and DB after the documented 51-row load dedup",
+  "observed": "jsonl distinct 1,948,059; DB distinct 1,948,059; symmetric difference 0; row delta exactly 51 with no id lost (dup ids in jsonl 557,676 \u2014 multi-source repetition)",
+  "query_or_file": "distinct mention_id set comparison",
+  "status": "PASS",
+  "note": "supersedes original I01 (expected 51 absent ids \u2014 a wrong model of the documented dedup); corrected and re-recorded"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl + microbiome_cdm_v3.db:canonical_term+removed_canonical_term",
+  "check_name": "canonical_reverse_containment",
+  "expected": "0 DB term_ids absent from jsonl",
+  "observed": "live-only 0, removed-only 0",
+  "query_or_file": "set difference (DB term_ids minus jsonl term_ids, both live and removed tables)",
+  "status": "PASS",
+  "note": ""
+ }
+]

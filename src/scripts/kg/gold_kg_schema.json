@@ -1,0 +1,41 @@
+{
+  "schema": "kg-reference-check",
+  "version": "1.0",
+  "registered": "2026-11-04",
+  "purpose": "Check the edges of the CDM triple KG (outputs/results/kg_2026-11-04) against curated knowledge graphs, independent of the source paper: is the association known anywhere in the reference? Absence is reported as NOT_IN_REFERENCE, never as an error.",
+  "references": {
+    "disbiome": {"path": "data/reference_kg/raw/disbiome_experiment.json", "pairs": "organism_ncbi_id x disease_name (human host)"},
+    "bugsigdb": {"path": "data/reference_kg/raw/bugsigdb/full_dump.csv", "pairs": "signature taxa x Condition (all signatures with a direction)"},
+    "ctd_chemical_disease": {"path": "data/reference_kg/raw/CTD_chemicals_diseases.tsv.gz", "levels": "CURATED (DirectEvidence) and ANY (incl. inferred)"},
+    "ctd_gene_disease": {"path": "data/reference_kg/raw/CTD_curated_genes_diseases.tsv.gz"},
+    "ctd_chemical_gene": {"path": "data/reference_kg/raw/CTD_chem_gene_ixns.tsv.gz", "pairs": "ChemicalID x GeneID, any organism"}
+  },
+  "node_type": "type_cleaned from the cleaned layer, falling back to the CDM type",
+  "edge_types": {
+    "microbe_disease": "ORGANISM with DISEASE",
+    "chemical_disease": "CHEMICAL with DISEASE",
+    "gene_disease": "PROTEIN, DNA_RNA or GENOMICS with DISEASE",
+    "chemical_gene": "CHEMICAL with PROTEIN, DNA_RNA or GENOMICS"
+  },
+  "resolution": {
+    "taxon": "node ontology_id NCBITaxon, else exact unique name in NCBI Taxonomy names.dmp; matched at the same ID or after lifting both sides to genus",
+    "disease": "MeSH ID from the node ontology_id, else exact name or synonym in CTD_diseases (MEDIC). Disbiome and BugSigDB diseases are mapped the same way; a disease also matches on identical normalised name",
+    "chemical": "MeSH ID from the node ontology_id, else exact name or synonym in CTD_chemicals",
+    "gene": "human gene_info symbol or synonym (upper case, at least 3 characters), unique"
+  },
+  "endpoints": {
+    "primary": ["per edge type: share of resolved edges whose pair is in at least one reference, with chance"],
+    "secondary": [
+      "the same for kept vs dropped by the DeepSeek cleaning (Newcombe interval of the difference)",
+      "the same for edges whose sentence supports the original label (evidence check A = Y) vs not",
+      "per reference separately"
+    ]
+  },
+  "chance": "share of all cross pairs (distinct resolved entities of one side x the other side, within the edge type) that are in the reference",
+  "uncertainty": {"wilson": "95% Wilson interval"},
+  "limitations_stated_in_advance": [
+    "Reference KGs are incomplete; absence is not error.",
+    "Name matching can map a generic label to a specific concept; resolution methods are reported.",
+    "Reference support shows that an association is known, not that the triple's paper states it or that the direction is right."
+  ]
+}

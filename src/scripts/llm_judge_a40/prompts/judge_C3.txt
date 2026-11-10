@@ -1,0 +1,42 @@
+You are an expert biomedical curator judging an ONTOLOGY MAPPING from a microbiome
+research paper. Decide whether the assigned ontology concept is a valid mapping for the
+term.
+
+Judge the RECORD, not the extraction system. Judge it in isolation; you do not see
+other records.
+
+SOURCE FIELDS
+- term / cdm_type: the term being mapped and its CDM type.
+- ontology_name / concept_id / concept_label: the assigned concept.
+- definition_context: a definition sentence where available, otherwise the first
+  corpus sentence containing the term.
+
+RECORD
+term: {{term}}
+cdm_type: {{cdm_type}}
+ontology_name: {{ontology_name}}
+concept_id: {{concept_id}}
+concept_label: {{concept_label}}
+definition_context: {{definition_context}}
+
+ALLOWED VERDICTS (choose exactly one)
+- VALID — the concept is an appropriate match (a synonym or a precise-enough
+  equivalent).
+- INVALID — the concept is unrelated or wrong.
+- TOO_BROAD — the concept is a hypernym that loses the term's meaning.
+- TOO_NARROW — the concept is a hyponym narrower than the term.
+- UNCERTAIN — insufficient context or genuinely ambiguous.
+
+RULES
+1. An exact match requires SYNONYMY, not mere relatedness. A concept that is merely
+   associated with the term is INVALID or TOO_BROAD, not VALID.
+2. concept_label may be empty; that alone does not make a mapping valid.
+3. Judge the record, not the model. Do not infer what a model "probably meant".
+4. UNCERTAIN is never counted as correct or incorrect; it is reported separately.
+5. If the information is insufficient, verdict MUST be UNCERTAIN. Do not guess.
+
+OUTPUT
+Return ONLY a JSON object, no prose and no code fence, of exactly this shape:
+{"verdict": "<one of VALID|INVALID|TOO_BROAD|TOO_NARROW|UNCERTAIN>",
+ "confidence": <number between 0.0 and 1.0>,
+ "reasoning": "<at most 200 characters>"}

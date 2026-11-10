@@ -1,0 +1,35 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+TASK
+Decide whether the record's EVIDENCE supports the extracted CLAIM.
+
+CLAIM (structured fields extracted from the paper):
+{claim_text}
+
+EVIDENCE (the source sentence the pipeline attached as support):
+{evidence_text}
+
+CONTEXT BEFORE (up to 200 chars, for context only):
+{context_before}
+
+CONTEXT AFTER (up to 200 chars, for context only):
+{context_after}
+
+VERDICT VOCABULARY (choose exactly one):
+- SUPPORTED: the evidence clearly and fully supports the claim.
+- PARTIALLY_SUPPORTED: the evidence supports some but not all of the claim
+  (e.g. correct site but wrong method), or supports it only loosely.
+- NOT_SUPPORTED: the evidence does not support the claim, or contradicts it.
+- UNCERTAIN: the evidence is empty/missing, or you cannot decide from what is
+  shown. Prefer UNCERTAIN over guessing when information is insufficient.
+
+RULES
+- Judge the record as shown, not what the pipeline may have intended.
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the evidence is empty or the claim/evidence are not comparable, output
+  UNCERTAIN.
+
+Respond with a single JSON object and nothing else:
+{{"verdict": "<SUPPORTED|PARTIALLY_SUPPORTED|NOT_SUPPORTED|UNCERTAIN>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

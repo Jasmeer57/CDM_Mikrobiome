@@ -1,0 +1,44 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+TASK
+Decide whether the assigned ONTOLOGY CONCEPT is a valid mapping for the TERM.
+
+TERM:
+{term}
+
+CDM TYPE (the pipeline's own type for the term):
+{cdm_type}
+
+ONTOLOGY NAME:
+{ontology_name}
+
+CONCEPT ID:
+{concept_id}
+
+CONCEPT LABEL (may be empty for no-match rows):
+{concept_label}
+
+DEFINITION / CONTEXT (a definition sentence where available, else a corpus
+sentence containing the term):
+{term_definition}
+
+VERDICT VOCABULARY (choose exactly one):
+- VALID: the concept is an appropriate match (synonym or precise-enough
+  equivalent).
+- INVALID: the concept is unrelated or wrong.
+- TOO_BROAD: the concept is a hypernym that loses the term's meaning.
+- TOO_NARROW: the concept is a hyponym narrower than the term.
+- UNCERTAIN: insufficient context or genuinely ambiguous. Prefer UNCERTAIN over
+  guessing when information is insufficient.
+
+RULES
+- An exact-match mapping requires SYNONYMY, not mere relatedness. A concept that
+  is merely associated with the term is INVALID or TOO_BROAD, not VALID.
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the concept label is empty or the context cannot support a decision, output
+  UNCERTAIN rather than guessing.
+
+Respond with a single JSON object and nothing else:
+{{"verdict": "<VALID|INVALID|TOO_BROAD|TOO_NARROW|UNCERTAIN>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

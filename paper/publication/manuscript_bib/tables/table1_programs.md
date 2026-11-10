@@ -1,0 +1,29 @@
+| Configuration | Kind | Model | Distinct strings | Valid + correctly typed (%) | Valid, mention-weighted (%) |
+|---|---|---|---|---|---|
+| bert_chemical | Trained NER | alvaroalon2/biobert_chemical_ner | 4,144 | 59.3 | 87.6 |
+| bert_disease | Trained NER | alvaroalon2/biobert_diseases_ner | 5,349 | 57.3 | 80.7 |
+| bert_genetic | Trained NER | alvaroalon2/biobert_genetic_ner | 6,639 | 47.1 | 70.5 |
+| hunflair2 | Trained NER | hunflair/hunflair2-ner | 23,484 | 37.4 | 67.9 |
+| scibert_jnlpba | Trained NER | fran-martinez/scibert_scivocab_cased_ner_jnlpba | 13,340 | 33.5 | 56.9 |
+| scispacy_bc5cdr | Trained NER | en_ner_bc5cdr_md (scispaCy) | 12,392 | 38.1 | 67.6 |
+| scispacy_bionlp13cg | Trained NER | en_ner_bionlp13cg_md (scispaCy) | 28,707 | 18.8 | 41.9 |
+| scispacy_craft | Trained NER | en_ner_craft_md (scispaCy) | 11,198 | 37.2 | 69.6 |
+| scispacy_jnlpba | Trained NER | en_ner_jnlpba_md (scispaCy) | 19,169 | 16.1 | 37.9 |
+| gliner2_base | Zero-shot NER | fastino/gliner2-base-v1 | 37,395 | 36.5 | 72.1 |
+| gliner2_large | Zero-shot NER | fastino/gliner2-large-v1 | 41,948 | 41.7 | 72.0 |
+| gliner_v25_biomed | Zero-shot NER | Ihor/gliner-large-v2.5-biomed | 53,923 | 34.7 | 64.4 |
+| gliner_v25_medium | Zero-shot NER | gliner-community/gliner_medium-v2.5 | 34,266 | 43.6 | 74.4 |
+| llm_deepseek_fs | Small open LLM | casperhansen/deepseek-r1-distill-qwen-7b-awq (3-shot) | 29,808 | 26.7 | 58.2 |
+| llm_deepseek_zs | Small open LLM | casperhansen/deepseek-r1-distill-qwen-7b-awq (zero-shot) | 30,261 | 28.0 | 60.4 |
+| llm_gemma_fs | Small open LLM | google/gemma-4-E4B-it-qat-w4a16-ct (3-shot) | 28,295 | 35.3 | 60.8 |
+| llm_gemma_zs | Small open LLM | google/gemma-4-E4B-it-qat-w4a16-ct (zero-shot) | 31,428 | 35.5 | 60.4 |
+| llm_llama_fs | Small open LLM | hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4 (3-shot) | 61,738 | 20.0 | 49.8 |
+| llm_llama_zs | Small open LLM | hugging-quants/Meta-Llama-3.1-8B-Instruct-AWQ-INT4 (zero-shot) | 80,993 | 15.7 | 42.8 |
+| llm_mistral_fs | Small open LLM | TechxGenus/Mistral-7B-Instruct-v0.3-AWQ (3-shot) | 42,383 | 24.8 | 57.1 |
+| llm_mistral_zs | Small open LLM | TechxGenus/Mistral-7B-Instruct-v0.3-AWQ (zero-shot) | 51,550 | 16.9 | 45.3 |
+| llm_phi_fs | Small open LLM | thesven/Phi-3.5-mini-instruct-awq (3-shot) | 59,401 | 20.5 | 49.1 |
+| llm_phi_zs | Small open LLM | thesven/Phi-3.5-mini-instruct-awq (zero-shot) | 57,948 | 20.4 | 49.7 |
+| llm_qwen_fs | Small open LLM | Qwen/Qwen3.5-4B (3-shot) | 41,699 | 28.9 | 59.7 |
+| llm_qwen_zs | Small open LLM | Qwen/Qwen3.5-4B (zero-shot) | 55,473 | 22.6 | 52.1 |
+
+Judged by DeepSeek-V4-Flash from the string alone (model judgement, not accuracy). Other programs in the protocol: Qwen3.5-4B (catalogue and triple extraction), Llama-3.1-8B and Mistral-7B (evidence judges), DeepSeek-R1-Distill-Qwen-7B (term review, mapping adjudication), DeepSeek-V4-Flash (validity judge, relabelling), SapBERT and all-MiniLM-L6-v2 (embedding matches); BioPortal, OLS, UMLS, OMOP and NCBI Taxonomy (vocabulary mapping).

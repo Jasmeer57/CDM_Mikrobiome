@@ -1,0 +1,132 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json + MANIFEST.sha256",
+  "check_name": "provenance_hashes_three_way_tie",
+  "expected": "all 8 PROVENANCE.artifacts hashes == MANIFEST.sha256 == recomputed sha256",
+  "observed": "8 three-way ties, mismatch=[]",
+  "query_or_file": "PROVENANCE.json artifacts vs MANIFEST.sha256 vs sha256sum recompute",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json",
+  "check_name": "provenance_counts_match_file_rows",
+  "expected": "mentions 2,505,735 / canonical_terms 165,991 / definitions 1,150 / mappings 334,231",
+  "observed": "mentions 2,505,735 / canonical_terms 165,991 / definitions 1,150 / mappings 334,231",
+  "query_or_file": "PROVENANCE.counts vs wc -l of the four jsonl artifacts",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json",
+  "check_name": "provenance_calibration_and_autoaccept",
+  "expected": "auto_accepted 0; calibration NOT_CALIBRATED",
+  "observed": "auto_accept_eligible 38,334, auto_accepted 0, calibration NOT_CALIBRATED",
+  "query_or_file": "PROVENANCE.json counts/calibration fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json + terminology_extraction_manifest.json (1.0.0 AND 1.0.1) + term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "mention_count_chain_deltas_documented",
+  "expected": "rows_written 2,505,736 -> manifest coverage.mention_records 2,505,736 -> shipped jsonl 2,505,735 (delta 1: frozen G2 off-by-one) -> DB 2,505,684 (delta 51: documented load dedup)",
+  "observed": "written 2505736, manifest 2505736 (identically in 1.0.0 and 1.0.1), jsonl 2505735, DB 2505684; deltas exactly 1 and 51",
+  "query_or_file": "count chain across the four sources in both releases",
+  "status": "PASS",
+  "note": "supersedes original P03 (expected manifest 2,505,735 \u2014 wrong: the manifest writes 2,505,736 in both releases); the +1/-51 deltas are the documented frozen G2 off-by-one (must not be patched) and the D1 load-dedup tie"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/terminology_taxonomy.json + taxonomy_summary.json",
+  "check_name": "taxonomy_shape_keys_reverified",
+  "expected": "upper_categories 16, subcategories 66, reserved_categories [UNCERTAIN], status DRAFT, classified_terms 0",
+  "observed": "upper_categories 16 / subcategories 66 / reserved_categories ['UNCERTAIN'] / status DRAFT / summary classified 0",
+  "query_or_file": "terminology_taxonomy.json actual schema keys + taxonomy_summary.json",
+  "status": "PASS",
+  "note": "supersedes original R01 (keyed a nonexistent 'categories' field, scored DISCREPANCY): re-keyed to the file's actual schema (upper_categories/subcategories)"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl",
+  "check_name": "canonical_cdm_type_census",
+  "expected": "ENTITY 94,458 / ORGANISM 12,248 / CHEMICAL 9,673 / PROTEIN 8,752 / DISEASE 7,351 / DNA_RNA 6,386 / CELL_TYPE 4,853 / CLINICAL 3,932 / DATA_ANALYSIS 3,716 / EXPERIMENTAL_METHOD 3,698 / LAB_METHOD 3,179 / GENOMICS 2,201 / PATHWAY 1,905 / SAMPLE_METHOD 1,829 / STUDY_DESIGN 1,810",
+  "observed": "all 15 values match (sum 165,991)",
+  "query_or_file": "canonical_terms.jsonl GROUP BY cdm_type vs canonical_terms_summary.by_cdm_type",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl",
+  "check_name": "canonical_taxonomy_category_all_null",
+  "expected": "0 rows with non-null taxonomy_category (no classification pass run)",
+  "observed": "0 non-null; is_generic_type census {False: 71,533, True: 94,458}",
+  "query_or_file": "predicate scan of canonical_terms.jsonl",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/ontology_registry.json",
+  "check_name": "ontology_registry_structure",
+  "expected": "registry lists local-only vocabularies with versions (structural check)",
+  "observed": "keys: ['credentials_policy', 'generated_at', 'local_only_note', 'local_only_supported', 'n_local', 'n_network', 'n_vocabularies', 'note', 'vocabularies']",
+  "query_or_file": "ontology_registry.json structure scan",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + releases/cdm_v3/3.0.3/microbiome_cdm_v3.db:term_definition",
+  "check_name": "definition_run_lineage",
+  "expected": "jsonl definitions (1,150) = 588 live in DB (all run termpipeline_t3_rules_v1) + 562 tombstoned; the DB table's extra 4,469 rows are the separate 'gap G8' remediation lineage, not part of release 1.0.1",
+  "observed": "jsonl runs {'termpipeline_t3_rules_v1': 1150}; DB live overlap 588; DB live ids not in jsonl 4,469; DB live distinct ids 5,057; DB live census {'gap G8': 6,185 rows, 'termpipeline_t3_rules_v1': 588 rows}",
+  "query_or_file": "definition_id set overlap + GROUP BY extraction_run_id on term_definition",
+  "status": "PASS",
+  "note": "gap-G8 remediation lineage (D2 L-1/L-2 family); the 588+562=T3 accounting closes the jsonl side with no unexplained remainder"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/_calibration_sample_summary.json",
+  "check_name": "calibration_v0_shape",
+  "expected": "mappings_rows_total 334,275 / sampled 390 / primary 300 / control 90",
+  "observed": "mappings_rows_total 334,275 / sampled_rows 390 / primary_rows 300 / control_rows 90",
+  "query_or_file": "_calibration_sample_summary.json counts",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/calibration_sample.csv + .jsonl",
+  "check_name": "calibration_v0_rows_strata_emptyverdicts",
+  "expected": "390 data rows (300 primary + 90 control, 14 strata: five 60-row EXACT_MATCH strata + nine 10-row strata), csv==jsonl rows, all 390 human_verdict cells empty",
+  "observed": "csv rows 390, jsonl rows 390, strata 14, empty verdicts 390; census: bioportal|AMBIGUOUS 10, bioportal|EXACT_MATCH 60, bioportal|RELATED_TO 10, mesh|EXACT_MATCH 60, ncbi_taxon|RELATED_TO 10, none|NO_MATCH_FOUND 10, ols|AMBIGUOUS 10, ols|EXACT_MATCH 60, ols|RELATED_TO 10, omop|AMBIGUOUS 10, omop|EXACT_MATCH 60, umls|AMBIGUOUS 10, umls|EXACT_MATCH 60, umls|RELATED_TO 10",
+  "query_or_file": "calibration_sample.csv/.jsonl census",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/QUARANTINE.md",
+  "check_name": "calibration_quarantine_declaration_tokens",
+  "expected": "declares: draw universe 334,275 (pre-fix); current 334,231; producing build 28609294; current build 28619916; status superseded; pooling forbidden",
+  "observed": "all tokens present: True (the earlier 'verdict statement: False' hit was only a case-sensitivity artifact of the probe; direct empty-cell scan proves the 390 empty verdicts)",
+  "query_or_file": "QUARANTINE.md text scan + direct empty-cell verification",
+  "status": "PASS",
+  "note": "verbatim-token probe vs direct scan reconciled"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/_calibration_sample_summary.json + releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "calibration_draw_universe_delta",
+  "expected": "draw universe 334,275 exceeds current 1.0.1 mappings 334,231 by 44 rows; the v0 sample predates the mapping rebuild and is NOT a sample of the current table",
+  "observed": "declared draw universe 334,275; current mapping rows 334,231; delta 44",
+  "query_or_file": "summary vs jsonl row count",
+  "status": "PASS",
+  "note": "quarantine + mandatory redraw before use is the documented disposition"
+ }
+]

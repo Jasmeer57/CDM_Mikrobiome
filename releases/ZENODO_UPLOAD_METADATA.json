@@ -1,0 +1,58 @@
+{
+ "_instructions": "Metadata to enter on Zenodo when uploading releases/zenodo_frozen/. Fields marked TODO must be completed by the authors. Remove this key before using the file with the Zenodo API.",
+ "metadata": {
+  "upload_type": "dataset",
+  "title": "Evidence-linked study metadata and common data model for the literature behind a human gut microbiome compendium",
+  "version": "1.0",
+  "publication_date": "TODO (date of upload)",
+  "creators": [
+   {
+    "name": "Kalra, Jasmeer Singh",
+    "affiliation": "Bonn-Aachen International Center for Information Technology (b-it), University of Bonn",
+    "orcid": "TODO (add)"
+   },
+   {
+    "name": "Hofmann-Apitius, Martin",
+    "affiliation": "Fraunhofer Institute for Algorithms and Scientific Computing (SCAI); Bonn-Aachen International Center for Information Technology (b-it), University of Bonn",
+    "orcid": "TODO (add)"
+   },
+   {
+    "name": "Simon, Marie-Christine",
+    "affiliation": "University of Bonn; Fraunhofer Institute for Algorithms and Scientific Computing (SCAI)",
+    "orcid": "TODO (add)"
+   }
+  ],
+  "description": "Section-segmented corpus, evidence-linked study-metadata catalogue (52,400 records), terminology (162,409 canonical terms from NER models, LLMs and a MeSH gazetteer) and a versioned common data model (CDM 3.0.3, SQLite) for the 453 publications behind the BioProjects of the Human Microbiome Compendium (Abdill et al., Cell 2025). Every extracted value links to its source paper, section and character offsets. No human annotation was performed; values were extracted automatically and assessed computationally. Paper text and quotations are included only for the 274 CC BY / CC0 papers; for 179 papers text is withheld pending rights review, while identifiers, offsets and hashes are retained.",
+  "license": "TODO: confirm (proposed cc-by-4.0)",
+  "access_right": "open",
+  "keywords": [
+   "human gut microbiome",
+   "common data model",
+   "data catalogue",
+   "biomedical text mining",
+   "named entity recognition",
+   "large language models",
+   "metadata",
+   "provenance"
+  ],
+  "related_identifiers": [
+   {
+    "identifier": "10.1016/j.cell.2024.12.017",
+    "relation": "references",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "TODO: DOI of the article (after acceptance)",
+    "relation": "isSupplementTo",
+    "scheme": "doi"
+   },
+   {
+    "identifier": "https://github.com/SCAI-BIO/Microbiome-CDM",
+    "relation": "isSupplementedBy",
+    "scheme": "url",
+    "_note": "replace with a software DOI (Zenodo GitHub release) once the repository is public"
+   }
+  ],
+  "notes": "Derived from frozen releases CDM 3.0.3 (manifest 9e71d509…), catalogue 3.1.1 (671b672b…), terminology 1.0.1 (2ddc5706…), corpus 2.2.0 (ce4db5a5…). Integrity: sha256sum -c MANIFEST.sha256."
+ }
+}

@@ -1,0 +1,11 @@
+D4-I02_canonical_id_containment	all 165,991 jsonl term_ids in canonical_term UNION removed_canonical_term; none absent	live 162409 + removed 3582 + absent 0	term_id set containment	PASS	
+D4-I02b_canonical_reverse_containment	0 DB term_ids absent from jsonl	live-only 0, removed-only 0	set difference	PASS	
+D4-I01_mention_id_containment	all jsonl mention_ids in DB except 51 load-dedup rows	0 absent (jsonl distinct ids 1948059, DB 1948059, dup ids 557676); sample absent link_status=None	mention_id set containment	DISCREPANCY	2,505,735 jsonl rows - 51 dedup = 2,505,684 DB rows
+D4-I03_definition_id_containment	jsonl definition_ids found in term_definition or removed_term_definition	live 588 + removed 562 + absent 0	definition_id set containment	PASS	DB term_definition (6,773) and removed_term_definition (3,865) are supersets from CDM remediation; jsonl is the 1.0.1 T4 artifact
+D4-I04_mapping_id_containment	all jsonl mapping_ids present in DB term_concept_map	2784 of 318605 jsonl mapping_ids absent; DB distinct 315821	mapping_id set containment	DISCREPANCY	
+D4-I04b_mapping_reverse_diff	0 DB mapping_ids absent from jsonl (or documented demotions)	0 DB mapping_ids not in jsonl	set difference	PASS	demoted/removed mapping rows land under term_status REMOVED/NOT_IN_TERMINOLOGY or are absent from live table
+D4-C01_mapping_relation_census_jsonl	{"RELATED_TO": 188313, "AMBIGUOUS": 96038, "EXACT_MATCH": 38403, "NO_MATCH_FOUND": 11477}	{"RELATED_TO": 188313, "NO_MATCH_FOUND": 11477, "AMBIGUOUS": 96038, "EXACT_MATCH": 38403}	jsonl GROUP mapping_relation	PASS	
+D4-C02_mapping_source_census_jsonl	{"cv_linking": 292221, "omop_local": 21881, "mesh_gazetteer": 8652, "none": 11477}	{"cv_linking": 292221, "null": 11477, "omop_local": 21881, "mesh_gazetteer": 8652}	jsonl GROUP ontology_source	DISCREPANCY	
+D4-C03_mapping_disposition_census_jsonl	{"REVIEW_REQUIRED": 322754, "UNRESOLVED": 11477}	{"REVIEW_REQUIRED": 322754, "UNRESOLVED": 11477}	jsonl GROUP mapping_disposition	PASS	
+D4-C04_auto_accept_eligible_count	38334 eligible, 0 auto_accepted	38334 eligible	jsonl count auto_accept_eligible	PASS	auto_accepted stay 0: calibration NOT_CALIBRATED (T5b/c never run)
+D4-C05_mapping_row_delta_explained	334,231 - 331,394 = 2,837 demoted rows (term_status REMOVED/NOT_IN_TERMINOLOGY)	2837	row-count delta	PASS	check D6 for demotion census

@@ -1,0 +1,63 @@
+{
+ "tests": 121,
+ "non_pass": {
+  "S4.dataset.dataset_id": "FAIL",
+  "S9": "FAIL",
+  "N3": "CONDITIONAL"
+ },
+ "S4": {
+  "dataset_rows": 2976,
+  "failing_ids": 142,
+  "failing_ids_of_form_HMDATA_BP_nnnnnn": 142,
+  "failing_ids_that_are_BioProject_links": 142,
+  "ids_unique": true,
+  "explanation": "the only non-matching ids are HMDATA_BP_nnnnnn: dataset rows that link a paper to its corpus BioProject (not extracted from the text); a distinct prefix on purpose. Ids are unique. The registry pattern ^HMDATA_[0-9]{6}$ does not list this second form."
+ },
+ "S9": {
+  "columns": {
+   "cohort.participant_count": {
+    "text_values": 2647,
+    "by_value": {
+     "": 1336,
+     "CONFLICTING": 494,
+     "NOT_REPORTED": 817
+    },
+    "text_values_that_are_numbers": 0,
+    "text_values_not_missing_codes": 0
+   },
+   "cohort.sample_count": {
+    "text_values": 4877,
+    "by_value": {
+     "": 4877
+    },
+    "text_values_that_are_numbers": 0,
+    "text_values_not_missing_codes": 0
+   },
+   "sample.sample_count": {
+    "text_values": 2284,
+    "by_value": {
+     "": 1219,
+     "CONFLICTING": 321,
+     "NOT_REPORTED": 744
+    },
+    "text_values_that_are_numbers": 0,
+    "text_values_not_missing_codes": 0
+   },
+   "data_asset.file_size_bytes": {
+    "text_values": 1770,
+    "by_value": {
+     "": 1770
+    },
+    "text_values_that_are_numbers": 0,
+    "text_values_not_missing_codes": 0
+   }
+  },
+  "explanation": "every text value in these integer columns is an empty string or a missing-data code (NOT_REPORTED, CONFLICTING); no malformed number is stored. Mixed storage is the coding convention for missing values, not corrupt data; a typed column plus a separate status column is a schema change for a later release."
+ },
+ "N3": {
+  "detail": "two independent extractions share the table: {\"catalogue_v3_1\": 24272, \"corpus_stage52\": 21395}; overlap between them is not reconciled (expert decision)",
+  "claim_rows_by_source": "two independent extractions share the table: {\"catalogue_v3_1\": 24272, \"corpus_stage52\": 21395}; overlap between them is not reconciled (expert decision)",
+  "explanation": "CLAIM holds two independent extractions (catalogue v3.1 and corpus stage 52); their overlap is not reconciled. Reconciliation is an expert design decision (blocker B12), left open and disclosed."
+ },
+ "frozen_data_changed": false
+}

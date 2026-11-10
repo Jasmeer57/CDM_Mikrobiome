@@ -1,0 +1,52 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "mapping_relation_census_jsonl",
+  "expected": "RELATED_TO 188,313 / AMBIGUOUS 96,038 / EXACT_MATCH 38,403 / NO_MATCH_FOUND 11,477 (sum 334,231)",
+  "observed": "RELATED_TO 188,313 / AMBIGUOUS 96,038 / EXACT_MATCH 38,403 / NO_MATCH_FOUND 11,477",
+  "query_or_file": "jsonl GROUP BY mapping_relation",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + mapping_projection_summary.json",
+  "check_name": "mapping_source_census_jsonl_null_spelling",
+  "expected": "cv_linking 292,221 / omop_local 21,881 / mesh_gazetteer 8,652 / JSON null 11,477 (summary spells null as 'none')",
+  "observed": "jsonl: cv_linking 292,221 / omop_local 21,881 / mesh_gazetteer 8,652 / null 11,477; summary: cv_linking 292,221 / omop_local 21,881 / mesh_gazetteer 8,652 / none 11,477",
+  "query_or_file": "jsonl GROUP BY ontology_source vs mapping_projection_summary.json",
+  "status": "PASS",
+  "note": "supersedes original C02 (scored DISCREPANCY on the literal string 'none' vs JSON null): the summary file spells JSON null as \"none\"; counts tie exactly"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "mapping_disposition_census_jsonl",
+  "expected": "REVIEW_REQUIRED 322,754 / UNRESOLVED 11,477 (sum 334,231)",
+  "observed": "REVIEW_REQUIRED 322,754 / UNRESOLVED 11,477",
+  "query_or_file": "jsonl GROUP BY mapping_disposition",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "auto_accept_eligible_and_accepted",
+  "expected": "auto_accept_eligible 38,334 / auto_accepted 0",
+  "observed": "auto_accept_eligible 38,334; auto_accepted 0",
+  "query_or_file": "jsonl count of auto_accept_eligible=true",
+  "status": "PASS",
+  "note": "auto_accepted stays 0 because calibration is NOT_CALIBRATED (T5b/c never produced a filled review sheet); consistent with mapping_projection_summary.json"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + microbiome_cdm_v3.db:term_concept_map",
+  "check_name": "mapping_row_delta_2837_equals_demotion",
+  "expected": "jsonl 334,231 - DB 331,394 = 2,837, matching D1's demoted-mappings figure",
+  "observed": "delta exactly 2,837 rows; same event as the D1 'demoted mappings' record and the D4 T03R/I04R/X01 characterizations",
+  "query_or_file": "row-count delta tied across censuses",
+  "status": "PASS",
+  "note": "re-verification of the D4 delta tie ahead of the D6 mappings pass"
+ }
+]

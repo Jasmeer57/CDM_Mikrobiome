@@ -1,0 +1,63 @@
+layer,path,format,record_count,count_method,populates_cdm_entities,size_mb,sha256_16,provenance_notes
+L1,corpus_v2/data/papers.jsonl,JSONL,453,wc -l (verified),PAPER,4.87,82b6ef1313ef2fe2,release 2.1.0; HMPAPER_[0-9]{6}; duplicate_group_id/canonical_paper_id on papers
+L1,corpus_v2/data/sections.jsonl,JSONL,4006,wc -l (verified),SECTION,38.04,bc6d81993f3eb2b3,"join key (paper_id, section_id_original); offsets index section_text_original"
+L1,corpus_v2/data/segments.jsonl,JSONL,4006,wc -l (verified),SECTION (chunk view),1.76,8d1ccbc844ff5442,one row per section at this build; chunk geometry defined in stage 08
+L1,corpus_v2/data/studies.jsonl,JSONL,453,wc -l (verified),STUDY,3.67,450a16f4a1120a8e,HMPAPER_*_STUDY_NNN; methods/design/population blocks with LLM provenance
+L1,corpus_v2/data/findings.jsonl,JSONL,21395,wc -l (verified),"CLAIM, CLAIM_EVIDENCE",38.35,bf1dc0d5e8df2078,HMPAPER_*_FIND_NNNN; locator + evidence_text + locator status
+L1,corpus_v2/data/source_inventory.jsonl,JSONL,,wc -l (verified),SOURCE_ASSET,0.74,d5177f9a786dd26e,per-paper source file hashes (txt/pdf/xml)
+L1,papers_txt/,TXT dir (453 files),453,ls,SOURCE_ASSET (raw text),,,gitignored; PRJ-accession-named; others/ excluded from scans
+L1,segmented_sections_markdown/,Markdown dir (453 files),453,ls,SECTION content source,,,gitignored; LLM-segmented per-paper section files
+L2,zenodo_v1/,CSV set + MANIFEST_v1.txt,,MANIFEST sha256 list,"TERM_MENTION (section-level, 7 CPU models + Qwen)",,,"frozen export; SLURM 418086 (CPU ensemble), 418089 (Qwen 3.5:4b); do not modify in place"
+L2,zenodo_v1/ner_453_sections/gliner_ner.csv,CSV,168029,csv.reader (verified),TERM_MENTION,13.65,6807e37241a0e522,section-level GLiNER
+L2,zenodo_v1/ner_453_sections/gliner_biomed_ner.csv,CSV,297115,csv.reader (verified),TERM_MENTION,24.31,b1b9af13a478a335,section-level GLiNER-biomed
+L2,zenodo_v1/ner_453_sections/pubmedbert_ner.csv,CSV,26970,csv.reader (verified),TERM_MENTION,2.12,b3965325bc09e880,section-level PubMedBERT
+L2,zenodo_v1/ner_453_sections/scispacy_ner_bc5cdr.csv,CSV,80584,csv.reader (verified),TERM_MENTION,6.55,e31cca89244dc515,section-level sciSpaCy BC5CDR
+L2,zenodo_v1/ner_453_sections/scispacy_ner_craft.csv,CSV,119092,csv.reader (verified),TERM_MENTION,9.49,07f092ef04e47dac,section-level sciSpaCy CRAFT
+L2,zenodo_v1/ner_453_sections/all_ner_sections_combined.csv,CSV,1705501,csv.reader (verified),TERM_MENTION,135.63,">(100MB, skipped)",ensemble union
+L2,zenodo_v1/qwen_sections_ner/qwen_sections_ner.csv,CSV,186024,csv.reader (verified),TERM_MENTION (Qwen),15.42,c8dfeda2a7fee585,Qwen 3.5:4b section NER; chunk-level cache in _qwen_sections_cache.json
+L2,paper_claims/_multi_ner_runs/gliner_ner.csv,CSV,186832,csv.reader (verified),TERM_MENTION (paper-level),13.42,3f2a319b67585222,444-era paper-level lineage (pre-corpus_v2) - PENDING-VERIFICATION
+L2,paper_claims/_multi_ner_runs/pubmedbert_ner.csv,CSV,321333,csv.reader (verified),TERM_MENTION (paper-level),42.24,d3c3176094e6aa10,444-era paper-level lineage (pre-corpus_v2) - PENDING-VERIFICATION
+L2,paper_claims/_multi_ner_runs/pubtator3_ner.csv,CSV,5443,csv.reader (verified),TERM_MENTION (paper-level),0.27,3150b5ff64f68ed5,"300-paper coverage; title-only PMID lookup; offsets 0,0 (paper-level geometry)"
+L2,paper_claims/_multi_ner_runs/scispacy_ner.csv,CSV,1599258,csv.reader (verified),TERM_MENTION (paper-level),99.95,c0580ac42bffc9ee,444-era paper-level lineage (pre-corpus_v2) - PENDING-VERIFICATION
+L2,paper_claims/_multi_ner_runs/all_ner_combined.csv,CSV,2112866,csv.reader (verified),TERM_MENTION (paper-level),155.88,">(100MB, skipped)",union of paper-level runs; pre-453 lineage
+L2,results/28608086_pubtator3_backfill/pubtator3_backfill_ner.csv,CSV,2699,run summary (verified),TERM_MENTION (PubTator3 backfill),0.14,e1c9a3c5d1f63062,"job 28608086 COMPLETED 2026-10-24; PMID>DOI>title strategy; 134/153 papers recovered; original pubtator3_ner.csv untouched; offsets 0,0"
+L2,results/28608086_pubtator3_backfill/pubtator3_backfill_status.jsonl,JSONL,153,wc -l (verified),EXTRACTION_RUN provenance / VALIDATION_RESULT,0.04,8cd77a7770bcc86b,"per-paper strategy + status: OK 134, ZERO_ANNOTATIONS 6, NO_PMID 9, PUBTATOR_ERROR 4 (transient 502s - retry candidates)"
+L2,results/_termpipe_chain/term_mentions.jsonl,JSONL,6000,manifest records,"TERM_MENTION, TERM_OCCURRENCE",8.51,6e805822fcf0d70b,SMOKE-CAPPED 2000 rows/source; full-scale mentions live in zenodo_v1 CSVs; termpipe-v1 (job 28608065) will lift cap
+L2,results/_termpipe_chain/term_definitions.jsonl,JSONL,59,manifest records,TERM_DEFINITION,0.04,83dd25c8999d13af,SMOKE-CAPPED 30 papers
+L2,corpus_v2/data/processing_events.jsonl,JSONL,7339,wc -l (verified),"EXTRACTION_RUN, PROCESSING_LINEAGE",4.61,d367fc65d241f724,stage-level run/event provenance
+L3,results/_termpipe_chain/canonical_terms.jsonl,JSONL,166012,manifest records,CANONICAL_TERM,115.99,">(100MB, skipped)","uncapped stage T2; manifest sha256 verified; first-record oddity (n_papers 2092, HMPAPER_000001-5) predates corpus_v2 IDs - inspect on ingest"
+L3,data/catalogue/terminology_dedup.csv,CSV,166012,wc -l (verified),CANONICAL_TERM (dedup layer),17.2,4541535763b697c8,exact + fuzzy dedup product; word_norm is fuzzy key only
+L3,data/catalogue/terminology_exact_dedup.csv,CSV,185242,wc -l (verified),CANONICAL_TERM (exact-dedup layer),19.33,ecfefeec214a07c5,
+L3,data/catalogue/terminology_raw.csv,CSV,1820028,raw line count (quoted newlines note),TERM_MENTION (raw pool),203.41,">(100MB, skipped)",203 MB; 1.82M raw extraction rows pooled across models
+L3,data/catalogue/catalogue_remapping.json,JSON,19230,stats file (verified earlier),CANONICAL_TERM (remap keys),0.93,7fa105dfffdfb694,"19,230 remapping keys"
+L3,data_catalogue/terminology/taxonomy/term_taxonomy_v1.yaml (+csv),YAML+CSV,16 cat / 66 subcat,file header,TAXONOMY_ANNOTATION,,,project taxonomy labels - not external concepts
+L4,results/_termpipe_chain/term_ontology_mappings.jsonl,JSONL,30533,manifest records,TERM_CONCEPT_MAP,33.46,c734fa532f39c8dc,"chain scoped to 20,000 terms (smoke); cv-link job 28607619 RUNNING over 36,475 terms -> PROVISIONAL"
+L4,data_catalogue/tables/papers.csv,CSV,453,csv.reader (verified; quoted newlines handled),PAPER,1.04,f2bc9805ee30f6b2,"machine-extracted, UNVERIFIED (catalogue README); findings.csv rows > findings.jsonl (catalogue includes study-level rows)"
+L4,data_catalogue/tables/datasets.csv,CSV,3228,csv.reader (verified; quoted newlines handled),DATASET,2.8,7424bdd052a4f072,"machine-extracted, UNVERIFIED (catalogue README); findings.csv rows > findings.jsonl (catalogue includes study-level rows)"
+L4,data_catalogue/tables/data_assets.csv,CSV,2143,csv.reader (verified; quoted newlines handled),DATA_ASSET,1.01,29d556f51a20f947,"machine-extracted, UNVERIFIED (catalogue README); findings.csv rows > findings.jsonl (catalogue includes study-level rows)"
+L4,data_catalogue/tables/cohorts.csv,CSV,9575,csv.reader (verified; quoted newlines handled),COHORT,6.1,590fed7c8fa1f31f,"machine-extracted, UNVERIFIED (catalogue README); findings.csv rows > findings.jsonl (catalogue includes study-level rows)"
+L4,data_catalogue/tables/samples.csv,CSV,8484,csv.reader (verified; quoted newlines handled),SAMPLE,3.88,7842549d4d68244c,"machine-extracted, UNVERIFIED (catalogue README); findings.csv rows > findings.jsonl (catalogue includes study-level rows)"
+L4,data_catalogue/tables/assays.csv,CSV,12116,csv.reader (verified; quoted newlines handled),ASSAY,7.11,66c052347c5dcf6d,"machine-extracted, UNVERIFIED (catalogue README); findings.csv rows > findings.jsonl (catalogue includes study-level rows)"
+L4,data_catalogue/tables/findings.csv,CSV,21439,csv.reader (verified; quoted newlines handled),CLAIM/QUANTITATIVE_RESULT,15.3,e3820fdc48026361,"machine-extracted, UNVERIFIED (catalogue README); findings.csv rows > findings.jsonl (catalogue includes study-level rows)"
+L4,data_catalogue/records/catalogue_records.jsonl,JSONL,"51,941 records (56,985 lines)",earlier session count,catalogue row-level source of truth,82.98,7187570ff350c3a7,83 MB; line count > record count because some records span lines; JSON-parse for true count
+L4,paper_claims/_multi_ner_runs/cdm_output/microbiome_cdm.db,SQLite,9 tables,inspected,legacy CDM physical (v2.0.0),377.43,">(100MB, skipped)","Aug 2026 build; 113,517 entities, 108,251 mappings; 444-paper era lineage - SUPERSEDED, migration input only with re-validation"
+L4,llm_terms/Output_final/databases_ontology/microbiome_cdm.db,SQLite,12 tables,inspected,legacy CDM physical (LLM pipeline),115.01,">(100MB, skipped)","444-paper era lineage - SUPERSEDED, migration input only with re-validation"
+L5,corpus_v2/data/validation_per_paper.jsonl,JSONL,453,wc -l (verified),VALIDATION_RESULT,0.97,fde5bee965056830,per-paper structural validation
+L5,results/_termpipe_chain/terminology_validation.jsonl,JSONL,4006,manifest records,VALIDATION_RESULT,2.58,80fca8c23fa8d131,per-section span integrity (chain run)
+L5,data_catalogue/quality/integrity_report.json,JSON,,ls,VALIDATION_RESULT,0.01,44850617be3a46e1,catalogue integrity checks
+L5,data_catalogue/quality/sample_type_review_queue.csv,CSV,,ls,HUMAN_REVIEW (planned queue),1.7,b9a037ac3df85edd,existing review queue input
+L5,data_catalogue/MANIFEST.json (+ .sha256),JSON+sha,,ls,DATASET_RELEASE,,,"catalogue release manifest, sha256-verified"
+L5,results/28608068_ner_eval_permodel/,eval deliverable set,metrics + 735-record evidence set,session inventory,EVALUATION_RUN,,,per-model Qwen-vs-NER agreement (job 28608068 COMPLETED); pubtator3 rows restricted to common papers (300); backfill not yet included
+L5,results/28608068_ner_eval_permodel/ner_comparison_errors.jsonl,JSONL,735,wc -l (verified earlier),HUMAN_REVIEW (planned adjudication queue),0.35,331762241076e922,105 evidence records/model; pending first-pass adjudication
+X,corpus_v2/schema/,schema/config,,ls,constraint layer (all entities),,,"authoritative JSON Schemas (paper, section, finding, study, processing_event, validation, triple_domains, triple_relation_schema) + ID patterns"
+X,template/corpus_template.json,schema/config,,ls,constraint layer (all entities),,,per-paper master template v1.1.0
+X,template/data_catalogue/,schema/config,,ls,constraint layer (all entities),,,catalogue JSON Schema + template + csv_templates + HM* ID registry + missing-data vocabulary
+X,notebooks/cdm_catalogue_schema.yaml,schema/config,,ls,constraint layer (all entities),,,prior CDM schema DRAFT 0.1.0; depends on ner_entity_template.yaml 0.1.0 - NOT FOUND in repo (gap)
+X,template/cdm/,schema/config,,ls,constraint layer (all entities),,,"CDM template set DRAFT 0.1.0 (README.md, human_microbiome_cdm_template.md, schema.json, entity registry)"
+X,scripts/termpipeline/ids.py,schema/config,,ls,constraint layer (all entities),,,deterministic HM* identity layers (HMTERM_/HMOCC_/HMCTERM_/HMDEF_/HMMAP_)
+X,configs/canonical.yaml,schema/config,,ls,constraint layer (all entities),,,14 CDM entity types + pinned environment v2.1.1
+X,src/cdm_pipeline/cdm_schema_alignment.py,schema/config,,ls,constraint layer (all entities),,,3-phase OMOP alignment plan; SRC_DB env references releases/v2.1.1-clean path that does not resolve in working tree
+P,results/ stage 53/54 triple_mentions.jsonl,PENDING,,squeue,RELATION,,,job 28607588 PENDING (Resources); release 2.2.0 blocker; auto-fires 28607924 (stage 56)
+P,results/ cv-link mapping outputs,PROVISIONAL (RUNNING),,squeue,TERM_CONCEPT_MAP,,,"job 28607619 RUNNING node082, 36,475 terms at ~3.4/s, ETA ~2h from start; log logs/cv_link_28607619.out"
+P,llm-ner-body Qwen body NER (160 segments),PROVISIONAL (RUNNING),,squeue,TERM_MENTION,,,"job 28607825 RUNNING mlgpu010; 7 segment errors so far; feeds termpop promotion, not zenodo"
+P,termpipe-v1 full-scale terminology pipeline,PENDING (Dependency),,squeue,"TERM_MENTION, TERM_DEFINITION (full-scale)",,,job 28608065 (user-submitted) - lifts smoke caps; do not interfere

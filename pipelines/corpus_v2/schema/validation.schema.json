@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://microbiome-cdm.local/corpus_v2/validation.schema.json",
+  "title": "Corpus v2 validation report",
+  "description": "Per-paper validation result (template section 3E/3I and section 7). Fail-closed: an overall status of COMPLETE requires every check to pass with recorded evidence.",
+  "type": "object",
+  "required": ["paper_id", "validation_status", "checks", "validated_at"],
+  "properties": {
+    "paper_id": {"type": "string", "pattern": "^HMPAPER_[0-9]{6}$"},
+    "validation_status": {"enum": ["COMPLETE", "PARTIAL", "FAILED", "REVIEW_REQUIRED"]},
+    "full_text_completeness": {"enum": ["not_checked", "complete", "partial", "failed", "not_applicable"]},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "passed"],
+        "properties": {
+          "rule_id": {"type": "string"},
+          "passed": {"type": "boolean"},
+          "detail": {"type": "string"},
+          "evidence": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "properties": {
+        "sections": {"type": "integer"},
+        "sections_eligible": {"type": "integer"},
+        "segments": {"type": "integer"},
+        "characters": {"type": "integer"},
+        "tokens": {"type": "integer"},
+        "llm_terms": {"type": "integer"}
+      }
+    },
+    "known_issues": {"type": "array", "items": {"type": "string"}},
+    "validated_at": {"type": "string", "format": "date-time"},
+    "validator_version": {"type": "string"}
+  }
+}

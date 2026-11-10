@@ -1,0 +1,103 @@
+objects: 44 tables + 57 indexes (no views, no triggers)
+
+INDEX ix303_relation_evidence on relation_evidence
+INDEX ix303_section_paper_sec on section
+INDEX ix_assay_paper_id on assay
+INDEX ix_canonical_term_cdm_type on canonical_term
+INDEX ix_canonical_term_term_norm on canonical_term
+INDEX ix_claim_finding_id on claim
+INDEX ix_claim_paper_id on claim
+INDEX ix_cohort_paper_id on cohort
+INDEX ix_compendium_sample_project on compendium_sample
+INDEX ix_compendium_sample_tag_srs on compendium_sample_tag
+INDEX ix_compendium_sample_tag_tag on compendium_sample_tag
+INDEX ix_data_asset_dataset_id on data_asset
+INDEX ix_data_asset_paper_id on data_asset
+INDEX ix_dataset_paper_id on dataset
+INDEX ix_paper_bioproject on paper
+INDEX ix_paper_doi on paper
+INDEX ix_paper_publication_publication_id on paper_publication
+INDEX ix_processing_event_paper_id on processing_event
+INDEX ix_sample_paper_id on sample
+INDEX ix_section_paper_id on section
+INDEX ix_study_paper_id on study
+INDEX ix_taxonomy_annotation_category on taxonomy_annotation
+INDEX ix_taxonomy_annotation_term_id on taxonomy_annotation
+INDEX ix_term_concept_map_concept_id on term_concept_map
+INDEX ix_term_concept_map_mapping_id on term_concept_map
+INDEX ix_term_concept_map_term_id on term_concept_map
+INDEX ix_term_definition_term_id on term_definition
+INDEX ix_term_mention_canonical_term_id on term_mention
+INDEX ix_term_mention_mention_id on term_mention
+INDEX ix_term_mention_occurrence_key on term_mention
+INDEX ix_term_mention_paper_id on term_mention
+INDEX sqlite_autoindex_canonical_term_1 on canonical_term
+INDEX sqlite_autoindex_compendium_project_1 on compendium_project
+INDEX sqlite_autoindex_compendium_sample_1 on compendium_sample
+INDEX sqlite_autoindex_concept_1 on concept
+INDEX sqlite_autoindex_data_asset_1 on data_asset
+INDEX sqlite_autoindex_dataset_1 on dataset
+INDEX sqlite_autoindex_dataset_release_1 on dataset_release
+INDEX sqlite_autoindex_evaluation_run_1 on evaluation_run
+INDEX sqlite_autoindex_extraction_run_1 on extraction_run
+INDEX sqlite_autoindex_intervention_1 on intervention
+INDEX sqlite_autoindex_paper_1 on paper
+INDEX sqlite_autoindex_publication_1 on publication
+INDEX sqlite_autoindex_relation_1 on relation
+INDEX sqlite_autoindex_section_1 on section
+INDEX sqlite_autoindex_study_1 on study
+INDEX sqlite_autoindex_term_concept_map_1 on term_concept_map
+INDEX sqlite_autoindex_term_mention_1 on term_mention
+INDEX ux303_assay on assay
+INDEX ux303_claim on claim
+INDEX ux303_claim_evidence on claim_evidence
+INDEX ux303_cohort on cohort
+INDEX ux303_quantitative_result on quantitative_result
+INDEX ux303_sample on sample
+INDEX ux303_section on section
+INDEX ux303_taxonomy_annotation on taxonomy_annotation
+INDEX ux303_term_definition on term_definition
+TABLE assay (42 cols): assay_id , paper_id , dataset_id , assay_type , target_gene_or_region , sequencing_platform , library_preparation , dna_extraction_method , primer_or_probe , negative_controls , positive_controls , contamination_handling , quality_control , bioinformatics_pipeline , software_tools , taxonomic_database , functional_database , normalization_method , statistical_methods , evidence_location , notes , evidence_text , v3_status , merged_from , evidence_match , link_status , link_run_id , assay_type_normalized , assay_class , section_id , char_start , char_end , evidence_verified , extraction_run_id , extraction_model , review_status , evidence_anchor_status , evidence_span_start , evidence_span_end , evidence_span , section_text_sha256 , study_id 
+TABLE body_site (3 cols): body_site_label , ontology_id , n_records 
+TABLE canonical_term (31 cols): alternative_types , cdm_type , cdm_type_ds_suggestion , cdm_type_original , definition_count , definition_sources , definition_status , ds_flag , ds_reviewed , identity_evidence , is_generic_type , is_non_concept_surface , mention_count , models , n_candidate_types , n_models , n_observations , n_papers , non_concept_reason , paper_count , review_status , source_names , source_table , taxonomy_category , taxonomy_subcategory , term , term_id , term_norm , top_paper_ids , type_source , has_linked_mention 
+TABLE cdm_change_log (6 cols): step , kind , target , description , rows_affected , revert_sql 
+TABLE cdm_entity_status (5 cols): entity , module , table , rows , status 
+TABLE claim (89 cols): adjusted_covariates , assay_id , author_interpretation , body_site , body_site_normalized , body_site_ontology_id , body_site_original , body_site_status , char_end , char_start , chunk , chunk_char_offset , cites_other_work , claim_source , claim_type , cohort_id , comparison_or_exposure , confidence_interval , corpus_id , dataset_id , direction , direction_flag , direction_llm , direction_original , direction_refers_to , effect_estimate , effect_measure , evidence_anchor_status , evidence_location , evidence_locator , evidence_locator_chars , evidence_locator_convention , evidence_locator_status , evidence_locator_type , evidence_match , evidence_section_id , evidence_span , evidence_span_end , evidence_span_start , evidence_text , evidence_verified , exposure_or_comparison , extraction_method , extraction_model , extraction_run_id , extraction_status_section , extractor_model_and_version , extractor_prompt_version , finding_domain , finding_domain_normalized , finding_id , finding_source , finding_text , intervention_agent , intervention_category , is_primary_finding , is_primary_finding_llm , is_primary_finding_source , link_run_id , link_status , llm_source_section_status , merged_from , microbial_function_pathway , notes , outcome , p_value , paper_id , population_subgroup , q_value , review_date , review_status , reviewer , sample_size , section_id , study_id , taxon_link_status , taxon_ncbi_ids , taxon_ncbi_names , taxon_or_feature , taxon_original , taxonomic_rank , taxonomic_rank_normalized , text_version_id , v3_status , verification_status , extraction_run_id_recovered , run_provenance_status , section_text_sha256 , study_id_derived 
+TABLE claim_evidence (14 cols): finding_id , claim_source , paper_id , section_id , evidence_text , evidence_locator , evidence_location , char_start , char_end , evidence_locator_status , evidence_anchor_status , evidence_span_start , evidence_span_end , evidence_span 
+TABLE cohort (45 cols): cohort_id , paper_id , dataset_id , cohort_label , cohort_role , population_description , country_or_region , setting , recruitment_method , participant_count , sample_count , age_group , age_summary , sex_or_gender_reporting , health_status , inclusion_criteria , exclusion_criteria , key_covariates , longitudinal , timepoints , evidence_location , notes , evidence_text , v3_status , merged_from , evidence_match , count_flag , link_status , link_run_id , gap_changes , field_sources , gap_evidence , section_id , char_start , char_end , evidence_verified , extraction_run_id , extraction_model , review_status , evidence_anchor_status , evidence_span_start , evidence_span_end , evidence_span , section_text_sha256 , study_id 
+TABLE compendium_project (10 cols): project , link , amplicon , avg_length , bead_beating , kit , sample_type , condition , subjects , notes 
+TABLE compendium_sample (11 cols): srs , project , srr , library_strategy , library_source , pubdate , total_bases , instrument , geo_loc_name , iso , region 
+TABLE compendium_sample_tag (5 cols): project , srr , srs , tag , value 
+TABLE concept (4 cols): concept_id , concept_label , source_service , ontology_name 
+TABLE data_asset (39 cols): asset_id , dataset_id , asset_name , asset_type , format , description , repository_url , accession , file_size_bytes , checksum_type , checksum , access_status , license_or_terms , data_dictionary_url , notes , paper_id , evidence_text , evidence_location , v3_status , merged_from , evidence_match , accession_original , accession_ids , accession_valid , link_status , link_run_id , section_id , char_start , char_end , evidence_verified , extraction_run_id , extraction_model , review_status , evidence_anchor_status , evidence_span_start , evidence_span_end , evidence_span , section_text_sha256 , study_id 
+TABLE dataset (48 cols): dataset_id , paper_id , dataset_title , dataset_description , dataset_role , dataset_type , repository_name , repository_accession , accession_type , dataset_url , related_publication_dois , data_availability_status , access_conditions , license_or_terms , original_or_reused , data_dictionary_url , study_registration , evidence_text , evidence_location , verification_status , last_verified , catalogue_notes , v3_status , merged_from , evidence_match , repository_accession_original , accession_ids , accession_valid , record_source , link_status , link_run_id , repository_normalized , gap_changes , field_sources , gap_evidence , section_id , char_start , char_end , evidence_verified , extraction_run_id , extraction_model , review_status , evidence_anchor_status , evidence_span_start , evidence_span_end , evidence_span , section_text_sha256 , study_id 
+TABLE dataset_release (3 cols): release_id , manifest , n_files 
+TABLE evaluation_run (4 cols): evaluation_run_id , target , method , report 
+TABLE extraction_run (13 cols): extraction_run_id , stage , model , run_kind , source_artifact , source_artifact_sha256 , job_ids , completed_at , model_name_version , prompt_version , provenance_evidence , verification , stage_corrected 
+TABLE human_review (7 cols): review_id , target_entity , target_id , reviewer , review_date , decision , notes 
+TABLE identifier_crosswalk (5 cols): table , row_key , original_id_column , original_id_unique , note 
+TABLE intervention (4 cols): intervention_id , category , agent , n_findings 
+TABLE load_audit (4 cols): table , rows_offered , rows_kept , rows_dropped 
+TABLE paper (47 cols): paper_id , doi , pmid , pmcid , title , authors , journal , publication_year , article_type , abstract , keywords , language , full_text_source , full_text_url , full_text_format , license_name , license_url , retrieved_at , primary_research_domain , human_microbiome_relevance , human_study_design , inclusion_decision , exclusion_reason , full_text_completeness , curation_status , curator_notes , bioproject , bioproject_match_method , bioproject_bundle_status , full_text_parse_status , metadata_review_status , source_database , n_datasets , n_data_assets , n_cohorts , n_samples , n_assays , n_findings , n_records_total , sections_total , sections_complete , char_coverage_pct , extraction_status , data_availability_status , field_sources , duplicate_group_id , canonical_paper_id 
+TABLE paper_publication (3 cols): paper_id , bioproject , publication_id 
+TABLE processing_event (14 cols): run_id , corpus_id , pipeline_stage , pipeline_version , started_at , completed_at , run_status , retry_count , manual_intervention , operator_or_reviewer , paper_id , input_artifact_hash , output_artifact_hash , error_message 
+TABLE processing_lineage (3 cols): parent_id , child_id , relation 
+TABLE publication (6 cols): publication_id , doi , pmid , title , n_bioprojects , duplicate_status 
+TABLE quantitative_result (8 cols): finding_id , claim_source , paper_id , effect_measure , effect_estimate , confidence_interval , p_value , q_value 
+TABLE relation (55 cols): canonical_triple_id , duplicate_group_id , graph_id , graph_version , canonicalization_stage , canonicalization_method , subject_normalized_label , subject_display_label , subject_entity_id , subject_entity_type , subject_domain , relation_normalized , relation_id , relation_family , relation_is_causal , relation_is_symmetric , object_normalized_label , object_display_label , object_entity_id , object_entity_type , object_domain , mention_count , triple_mention_ids , paper_count , paper_ids , polarity_variants , polarity_agreement , assertion_status_variants , assertion_agreement , effect_direction_variants , effect_direction_agreement , evidence_locator_statuses , evidence_verified_count , evidence_unresolved_count , subject_entity_resolution_status , object_entity_resolution_status , subject_ontology_id , object_ontology_id , external_linking_status , duplicate_validation_status , conflict_flag , triple_quality_status , human_review_status , verification_status , unresolved_issues , record_status , verdict_deepseek , verdict_gemma_c4 , subject_term_id , object_term_id , entity_link_method , subject_link_status , object_link_status , review_status , extraction_run_id 
+TABLE relation_evidence (11 cols): triple_mention_id , canonical_triple_id , relation_table , paper_id , section_record_id , source_sentence , char_start , char_end , anchor_status , extraction_run_id , section_text_sha256 
+TABLE removed_canonical_term (27 cols): term_id , term , term_norm , cdm_type , is_generic_type , is_non_concept_surface , non_concept_reason , alternative_types , n_candidate_types , identity_evidence , models , source_names , n_models , n_observations , n_papers , mention_count , paper_count , top_paper_ids , definition_status , taxonomy_category , taxonomy_subcategory , review_status , source_table , definition_sources , definition_count , ds_reviewed , removal_reason 
+TABLE removed_relation (49 cols): canonical_triple_id , duplicate_group_id , graph_id , graph_version , canonicalization_stage , canonicalization_method , subject_normalized_label , subject_display_label , subject_entity_id , subject_entity_type , subject_domain , relation_normalized , relation_id , relation_family , relation_is_causal , relation_is_symmetric , object_normalized_label , object_display_label , object_entity_id , object_entity_type , object_domain , mention_count , triple_mention_ids , paper_count , paper_ids , polarity_variants , polarity_agreement , assertion_status_variants , assertion_agreement , effect_direction_variants , effect_direction_agreement , evidence_locator_statuses , evidence_verified_count , evidence_unresolved_count , subject_entity_resolution_status , object_entity_resolution_status , subject_ontology_id , object_ontology_id , external_linking_status , duplicate_validation_status , conflict_flag , triple_quality_status , human_review_status , verification_status , unresolved_issues , record_status , verdict_deepseek , verdict_gemma_c4 , removal_reason 
+TABLE removed_term_definition (24 cols): definition_id , term_id , term , term_norm , cdm_type , paper_id , section_id , sentence_id , definition_text , definition_char_start , definition_char_end , defined_surface , definition_source , definition_formality , provenance_class , extraction_method , extraction_run_id , confidence , review_status , unresolved_flags , _id , _src , verdict_deepseek , removal_reason 
+TABLE run_metadata (2 cols): key , value 
+TABLE sample (44 cols): sample_group_id , paper_id , dataset_id , cohort_id , body_site , body_site_original , sample_type , collection_method , collection_timepoint , storage_condition , preservation_method , sample_count , sample_processing , notes , evidence_text , evidence_location , v3_status , merged_from , evidence_match , count_flag , link_status , link_run_id , body_site_normalized , body_site_ontology_id , body_site_status , sample_type_normalized , sample_type_normalization_status , sample_type_normalization_reason , gap_changes , field_sources , gap_evidence , section_id , char_start , char_end , evidence_verified , extraction_run_id , extraction_model , review_status , evidence_anchor_status , evidence_span_start , evidence_span_end , evidence_span , section_text_sha256 , study_id 
+TABLE section (13 cols): section_record_id , paper_id , section_id_original , section_name_original , section_name_normalized , section_type , heading_path , section_order , character_count , word_count , text_hash_sha256 , section_text_original , section_quality_status 
+TABLE source_asset (3 cols): paper_id , source_file_hash_sha256 , source_location 
+TABLE study (58 cols): study_id , corpus_id , paper_id , bioproject , extraction_status , llm_error , llm_model , llm_model_version , llm_prompt_version , llm_input_chars , llm_source_section_ids , llm_source_text_hash , llm_degrees , llm_split_retries , study_provenance , llm_status , study_design , research_question , country_region , recruitment_setting , population_description , num_biological_samples_reported , num_participants_reported , num_technical_replicates_reported , num_time_points_reported , age_information , sex_gender_information , health_conditions , exposures_interventions , comparator_control_group , eligibility_criteria , confounders_covariates_reported , limitations_reported , body_sites , specimen_types , collection_method , collection_time_points , storage_transport_conditions , dna_rna_extraction_method , assay_type , assay_type_evidence , sequencing_platform , target_gene_region , negative_positive_controls , contamination_handling , taxonomic_profiling_method , taxonomic_database_and_version , functional_profiling_method , quality_filtering_normalization , statistical_methods , multiple_testing_correction , software_pipeline_version , data_accessions , code_data_availability , sra_submission_window , country_iso_from_compendium , _input_fingerprint , review_status 
+TABLE taxonomy_annotation (10 cols): term_id , taxonomy_version , category , subcategory , agreement_status , sub_qwen , sub_gemma , classification_method , review_status , extraction_run_id 
+TABLE term_concept_map (24 cols): mapping_row_id , mapping_id , mapping_id_status , term_id , term_status , concept_id , candidate_rank , is_canonical_candidate , mapping_relation , guard_status , mapping_disposition , relation_llm_g9 , relation_deepseek , mapping_disposition_reviewed , review_status , extraction_run_id , g9_run_id , deepseek_run_id , matched_via , match_scores , mapping_provenance , source_service_mapping , guard_rejection_reason , mapping_evidence_status 
+TABLE term_definition (19 cols): definition_id , term_id , term , paper_id , section_id , verdict_deepseek , definition_text , definition_char_start , definition_char_end , evidence_anchor_status , evidence_span_start , evidence_span_end , definition_source , term_status , provenance_class , extraction_method , extraction_run_id , review_status , section_text_sha256 
+TABLE term_mention (31 cols): mention_row_id , mention_id , occurrence_key , paper_id , source_file_id , section_id , section_name , subsection , paragraph_id , sentence_id , surface_form , normalized_mention , start_offset , end_offset , supporting_sentence , supporting_sentence_clipped , entity_type , domain , subdomain , canonical_term_id , extraction_method , extraction_model , extraction_run_id , confidence , review_status , unresolved_flags , offset_status , offset_correction , term_link_status , canonical_term_status , section_text_sha256 
+TABLE term_occurrence (7 cols): occurrence_key , paper_id , section_id , start_offset , end_offset , n_mentions , n_models 
+TABLE type_harmonization (11 cols): id , term , inventory_types , context , type_relation , canonical_term_id , canonical_type , canonical_alternatives , term_id_llm , type_llm , extraction_run_id 
+TABLE validation_result (5 cols): validation_result_id , target , check , passed , detail 

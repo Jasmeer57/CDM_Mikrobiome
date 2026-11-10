@@ -1,0 +1,1073 @@
+{
+ "public_vs_corpus": {
+  "correlation": {
+   "GeneOrGeneProduct": {
+    "n_models": 22,
+    "spearman_f1_vs_grounding": 0.2,
+    "spearman_precision_vs_grounding": 0.308
+   },
+   "DiseaseOrPhenotypicFeature": {
+    "n_models": 20,
+    "spearman_f1_vs_grounding": 0.749,
+    "spearman_precision_vs_grounding": 0.853
+   },
+   "ChemicalEntity": {
+    "n_models": 21,
+    "spearman_f1_vs_grounding": 0.252,
+    "spearman_precision_vs_grounding": 0.305
+   },
+   "OrganismTaxon": {
+    "n_models": 19,
+    "spearman_f1_vs_grounding": 0.023,
+    "spearman_precision_vs_grounding": 0.27
+   },
+   "SequenceVariant": {
+    "n_models": 16,
+    "spearman_f1_vs_grounding": 0.112,
+    "spearman_precision_vs_grounding": -0.124
+   }
+  },
+  "pairs": {
+   "GeneOrGeneProduct": [
+    {
+     "model": "bert_genetic",
+     "kind": "trained NER",
+     "biored_exact_f1": 71.9,
+     "biored_exact_p": 70.7,
+     "corpus_grounded_pct": 17.6,
+     "corpus_unique": 6548
+    },
+    {
+     "model": "gliner2_base",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 51.0,
+     "biored_exact_p": 73.0,
+     "corpus_grounded_pct": 20.9,
+     "corpus_unique": 3889
+    },
+    {
+     "model": "gliner2_large",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 53.1,
+     "biored_exact_p": 64.0,
+     "corpus_grounded_pct": 15.0,
+     "corpus_unique": 6186
+    },
+    {
+     "model": "gliner_v25_biomed",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 68.4,
+     "biored_exact_p": 74.4,
+     "corpus_grounded_pct": 13.7,
+     "corpus_unique": 9113
+    },
+    {
+     "model": "gliner_v25_medium",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 59.2,
+     "biored_exact_p": 64.8,
+     "corpus_grounded_pct": 17.8,
+     "corpus_unique": 4839
+    },
+    {
+     "model": "hunflair2",
+     "kind": "trained NER",
+     "biored_exact_f1": 83.3,
+     "biored_exact_p": 89.9,
+     "corpus_grounded_pct": 19.4,
+     "corpus_unique": 3476
+    },
+    {
+     "model": "llm_deepseek_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 54.3,
+     "biored_exact_p": 82.6,
+     "corpus_grounded_pct": 17.7,
+     "corpus_unique": 1432
+    },
+    {
+     "model": "llm_deepseek_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 48.6,
+     "biored_exact_p": 74.3,
+     "corpus_grounded_pct": 13.8,
+     "corpus_unique": 3214
+    },
+    {
+     "model": "llm_gemma_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 72.2,
+     "biored_exact_p": 73.9,
+     "corpus_grounded_pct": 9.3,
+     "corpus_unique": 11488
+    },
+    {
+     "model": "llm_gemma_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 78.0,
+     "biored_exact_p": 78.3,
+     "corpus_grounded_pct": 10.2,
+     "corpus_unique": 11936
+    },
+    {
+     "model": "llm_llama_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 70.5,
+     "biored_exact_p": 76.3,
+     "corpus_grounded_pct": 7.8,
+     "corpus_unique": 12759
+    },
+    {
+     "model": "llm_llama_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 73.1,
+     "biored_exact_p": 71.0,
+     "corpus_grounded_pct": 7.6,
+     "corpus_unique": 18661
+    },
+    {
+     "model": "llm_mistral_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 65.7,
+     "biored_exact_p": 83.8,
+     "corpus_grounded_pct": 12.0,
+     "corpus_unique": 3738
+    },
+    {
+     "model": "llm_mistral_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 65.8,
+     "biored_exact_p": 78.2,
+     "corpus_grounded_pct": 8.9,
+     "corpus_unique": 9898
+    },
+    {
+     "model": "llm_phi_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 51.7,
+     "biored_exact_p": 66.2,
+     "corpus_grounded_pct": 4.1,
+     "corpus_unique": 8776
+    },
+    {
+     "model": "llm_phi_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 48.3,
+     "biored_exact_p": 56.3,
+     "corpus_grounded_pct": 4.1,
+     "corpus_unique": 18411
+    },
+    {
+     "model": "llm_qwen_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 81.4,
+     "biored_exact_p": 89.7,
+     "corpus_grounded_pct": 16.1,
+     "corpus_unique": 5741
+    },
+    {
+     "model": "llm_qwen_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 81.9,
+     "biored_exact_p": 86.7,
+     "corpus_grounded_pct": 15.1,
+     "corpus_unique": 7121
+    },
+    {
+     "model": "scibert_jnlpba",
+     "kind": "trained NER",
+     "biored_exact_f1": 49.9,
+     "biored_exact_p": 42.8,
+     "corpus_grounded_pct": 10.7,
+     "corpus_unique": 12933
+    },
+    {
+     "model": "scispacy_bionlp13cg",
+     "kind": "trained NER",
+     "biored_exact_f1": 69.3,
+     "biored_exact_p": 78.5,
+     "corpus_grounded_pct": 12.8,
+     "corpus_unique": 11390
+    },
+    {
+     "model": "scispacy_craft",
+     "kind": "trained NER",
+     "biored_exact_f1": 50.3,
+     "biored_exact_p": 61.2,
+     "corpus_grounded_pct": 17.1,
+     "corpus_unique": 5539
+    },
+    {
+     "model": "scispacy_jnlpba",
+     "kind": "trained NER",
+     "biored_exact_f1": 45.0,
+     "biored_exact_p": 44.6,
+     "corpus_grounded_pct": 5.7,
+     "corpus_unique": 16458
+    }
+   ],
+   "DiseaseOrPhenotypicFeature": [
+    {
+     "model": "bert_disease",
+     "kind": "trained NER",
+     "biored_exact_f1": 86.1,
+     "biored_exact_p": 83.4,
+     "corpus_grounded_pct": 29.2,
+     "corpus_unique": 5324
+    },
+    {
+     "model": "gliner2_base",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 57.4,
+     "biored_exact_p": 68.4,
+     "corpus_grounded_pct": 23.5,
+     "corpus_unique": 5601
+    },
+    {
+     "model": "gliner2_large",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 53.7,
+     "biored_exact_p": 58.8,
+     "corpus_grounded_pct": 17.1,
+     "corpus_unique": 8418
+    },
+    {
+     "model": "gliner_v25_biomed",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 67.3,
+     "biored_exact_p": 66.7,
+     "corpus_grounded_pct": 14.2,
+     "corpus_unique": 11127
+    },
+    {
+     "model": "gliner_v25_medium",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 70.4,
+     "biored_exact_p": 69.8,
+     "corpus_grounded_pct": 21.0,
+     "corpus_unique": 7329
+    },
+    {
+     "model": "hunflair2",
+     "kind": "trained NER",
+     "biored_exact_f1": 86.6,
+     "biored_exact_p": 88.5,
+     "corpus_grounded_pct": 18.1,
+     "corpus_unique": 7141
+    },
+    {
+     "model": "llm_deepseek_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 32.9,
+     "biored_exact_p": 38.3,
+     "corpus_grounded_pct": 8.9,
+     "corpus_unique": 8672
+    },
+    {
+     "model": "llm_deepseek_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 32.9,
+     "biored_exact_p": 52.1,
+     "corpus_grounded_pct": 12.5,
+     "corpus_unique": 5789
+    },
+    {
+     "model": "llm_gemma_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 55.6,
+     "biored_exact_p": 63.9,
+     "corpus_grounded_pct": 22.1,
+     "corpus_unique": 4551
+    },
+    {
+     "model": "llm_gemma_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 62.1,
+     "biored_exact_p": 64.2,
+     "corpus_grounded_pct": 19.6,
+     "corpus_unique": 5799
+    },
+    {
+     "model": "llm_llama_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 52.2,
+     "biored_exact_p": 58.1,
+     "corpus_grounded_pct": 9.8,
+     "corpus_unique": 11545
+    },
+    {
+     "model": "llm_llama_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 50.3,
+     "biored_exact_p": 55.3,
+     "corpus_grounded_pct": 7.8,
+     "corpus_unique": 13704
+    },
+    {
+     "model": "llm_mistral_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 44.5,
+     "biored_exact_p": 57.0,
+     "corpus_grounded_pct": 12.1,
+     "corpus_unique": 7260
+    },
+    {
+     "model": "llm_mistral_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 39.9,
+     "biored_exact_p": 59.0,
+     "corpus_grounded_pct": 12.7,
+     "corpus_unique": 6025
+    },
+    {
+     "model": "llm_phi_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 45.6,
+     "biored_exact_p": 44.3,
+     "corpus_grounded_pct": 7.3,
+     "corpus_unique": 13546
+    },
+    {
+     "model": "llm_phi_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 35.9,
+     "biored_exact_p": 44.3,
+     "corpus_grounded_pct": 9.2,
+     "corpus_unique": 10246
+    },
+    {
+     "model": "llm_qwen_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 64.3,
+     "biored_exact_p": 70.1,
+     "corpus_grounded_pct": 20.6,
+     "corpus_unique": 5256
+    },
+    {
+     "model": "llm_qwen_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 57.9,
+     "biored_exact_p": 59.7,
+     "corpus_grounded_pct": 15.1,
+     "corpus_unique": 7142
+    },
+    {
+     "model": "scispacy_bc5cdr",
+     "kind": "trained NER",
+     "biored_exact_f1": 65.1,
+     "biored_exact_p": 68.9,
+     "corpus_grounded_pct": 19.5,
+     "corpus_unique": 5962
+    },
+    {
+     "model": "scispacy_bionlp13cg",
+     "kind": "trained NER",
+     "biored_exact_f1": 24.1,
+     "biored_exact_p": 52.2,
+     "corpus_grounded_pct": 7.6,
+     "corpus_unique": 4344
+    }
+   ],
+   "ChemicalEntity": [
+    {
+     "model": "bert_chemical",
+     "kind": "trained NER",
+     "biored_exact_f1": 81.2,
+     "biored_exact_p": 79.5,
+     "corpus_grounded_pct": 41.3,
+     "corpus_unique": 4123
+    },
+    {
+     "model": "gliner2_base",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 53.5,
+     "biored_exact_p": 55.3,
+     "corpus_grounded_pct": 22.9,
+     "corpus_unique": 8915
+    },
+    {
+     "model": "gliner2_large",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 58.8,
+     "biored_exact_p": 58.9,
+     "corpus_grounded_pct": 17.0,
+     "corpus_unique": 12949
+    },
+    {
+     "model": "gliner_v25_biomed",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 67.9,
+     "biored_exact_p": 67.1,
+     "corpus_grounded_pct": 19.7,
+     "corpus_unique": 11215
+    },
+    {
+     "model": "gliner_v25_medium",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 63.3,
+     "biored_exact_p": 66.9,
+     "corpus_grounded_pct": 23.3,
+     "corpus_unique": 8525
+    },
+    {
+     "model": "hunflair2",
+     "kind": "trained NER",
+     "biored_exact_f1": 75.4,
+     "biored_exact_p": 79.6,
+     "corpus_grounded_pct": 21.4,
+     "corpus_unique": 7683
+    },
+    {
+     "model": "llm_deepseek_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 58.3,
+     "biored_exact_p": 70.9,
+     "corpus_grounded_pct": 15.4,
+     "corpus_unique": 7500
+    },
+    {
+     "model": "llm_deepseek_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 48.1,
+     "biored_exact_p": 58.4,
+     "corpus_grounded_pct": 14.0,
+     "corpus_unique": 8598
+    },
+    {
+     "model": "llm_gemma_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 66.7,
+     "biored_exact_p": 78.0,
+     "corpus_grounded_pct": 21.0,
+     "corpus_unique": 7463
+    },
+    {
+     "model": "llm_gemma_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 73.9,
+     "biored_exact_p": 80.0,
+     "corpus_grounded_pct": 19.1,
+     "corpus_unique": 8348
+    },
+    {
+     "model": "llm_llama_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 60.4,
+     "biored_exact_p": 57.0,
+     "corpus_grounded_pct": 10.6,
+     "corpus_unique": 18204
+    },
+    {
+     "model": "llm_llama_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 63.9,
+     "biored_exact_p": 63.5,
+     "corpus_grounded_pct": 10.1,
+     "corpus_unique": 18242
+    },
+    {
+     "model": "llm_mistral_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 60.2,
+     "biored_exact_p": 64.9,
+     "corpus_grounded_pct": 18.6,
+     "corpus_unique": 8380
+    },
+    {
+     "model": "llm_mistral_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 44.3,
+     "biored_exact_p": 60.1,
+     "corpus_grounded_pct": 15.1,
+     "corpus_unique": 9149
+    },
+    {
+     "model": "llm_phi_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 46.6,
+     "biored_exact_p": 45.6,
+     "corpus_grounded_pct": 6.1,
+     "corpus_unique": 25604
+    },
+    {
+     "model": "llm_phi_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 42.4,
+     "biored_exact_p": 52.9,
+     "corpus_grounded_pct": 9.8,
+     "corpus_unique": 15168
+    },
+    {
+     "model": "llm_qwen_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 67.9,
+     "biored_exact_p": 71.3,
+     "corpus_grounded_pct": 12.7,
+     "corpus_unique": 15092
+    },
+    {
+     "model": "llm_qwen_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 70.7,
+     "biored_exact_p": 68.1,
+     "corpus_grounded_pct": 9.4,
+     "corpus_unique": 21054
+    },
+    {
+     "model": "scispacy_bc5cdr",
+     "kind": "trained NER",
+     "biored_exact_f1": 64.5,
+     "biored_exact_p": 63.2,
+     "corpus_grounded_pct": 25.7,
+     "corpus_unique": 6383
+    },
+    {
+     "model": "scispacy_bionlp13cg",
+     "kind": "trained NER",
+     "biored_exact_f1": 63.4,
+     "biored_exact_p": 69.2,
+     "corpus_grounded_pct": 19.4,
+     "corpus_unique": 8456
+    },
+    {
+     "model": "scispacy_craft",
+     "kind": "trained NER",
+     "biored_exact_f1": 37.6,
+     "biored_exact_p": 54.4,
+     "corpus_grounded_pct": 38.1,
+     "corpus_unique": 3019
+    }
+   ],
+   "OrganismTaxon": [
+    {
+     "model": "gliner2_base",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 18.8,
+     "biored_exact_p": 32.3,
+     "corpus_grounded_pct": 14.1,
+     "corpus_unique": 11457
+    },
+    {
+     "model": "gliner2_large",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 20.3,
+     "biored_exact_p": 32.4,
+     "corpus_grounded_pct": 16.8,
+     "corpus_unique": 10126
+    },
+    {
+     "model": "gliner_v25_biomed",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 42.4,
+     "biored_exact_p": 41.3,
+     "corpus_grounded_pct": 13.7,
+     "corpus_unique": 12584
+    },
+    {
+     "model": "gliner_v25_medium",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 47.3,
+     "biored_exact_p": 52.8,
+     "corpus_grounded_pct": 20.2,
+     "corpus_unique": 7907
+    },
+    {
+     "model": "hunflair2",
+     "kind": "trained NER",
+     "biored_exact_f1": 94.4,
+     "biored_exact_p": 96.5,
+     "corpus_grounded_pct": 13.6,
+     "corpus_unique": 5109
+    },
+    {
+     "model": "llm_deepseek_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 27.9,
+     "biored_exact_p": 29.5,
+     "corpus_grounded_pct": 9.9,
+     "corpus_unique": 10815
+    },
+    {
+     "model": "llm_deepseek_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 20.3,
+     "biored_exact_p": 26.4,
+     "corpus_grounded_pct": 10.7,
+     "corpus_unique": 10347
+    },
+    {
+     "model": "llm_gemma_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 20.9,
+     "biored_exact_p": 37.5,
+     "corpus_grounded_pct": 18.7,
+     "corpus_unique": 3520
+    },
+    {
+     "model": "llm_gemma_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 32.8,
+     "biored_exact_p": 50.8,
+     "corpus_grounded_pct": 25.3,
+     "corpus_unique": 3472
+    },
+    {
+     "model": "llm_llama_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 43.3,
+     "biored_exact_p": 43.1,
+     "corpus_grounded_pct": 5.1,
+     "corpus_unique": 14889
+    },
+    {
+     "model": "llm_llama_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 35.3,
+     "biored_exact_p": 39.4,
+     "corpus_grounded_pct": 6.2,
+     "corpus_unique": 18658
+    },
+    {
+     "model": "llm_mistral_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 11.8,
+     "biored_exact_p": 17.5,
+     "corpus_grounded_pct": 7.1,
+     "corpus_unique": 19188
+    },
+    {
+     "model": "llm_mistral_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 25.0,
+     "biored_exact_p": 43.7,
+     "corpus_grounded_pct": 5.7,
+     "corpus_unique": 18129
+    },
+    {
+     "model": "llm_phi_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 24.8,
+     "biored_exact_p": 26.8,
+     "corpus_grounded_pct": 8.1,
+     "corpus_unique": 9834
+    },
+    {
+     "model": "llm_phi_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 22.6,
+     "biored_exact_p": 30.8,
+     "corpus_grounded_pct": 8.3,
+     "corpus_unique": 8860
+    },
+    {
+     "model": "llm_qwen_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 42.4,
+     "biored_exact_p": 48.5,
+     "corpus_grounded_pct": 15.1,
+     "corpus_unique": 9113
+    },
+    {
+     "model": "llm_qwen_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 31.8,
+     "biored_exact_p": 36.9,
+     "corpus_grounded_pct": 10.8,
+     "corpus_unique": 13104
+    },
+    {
+     "model": "scispacy_bionlp13cg",
+     "kind": "trained NER",
+     "biored_exact_f1": 73.8,
+     "biored_exact_p": 71.8,
+     "corpus_grounded_pct": 6.8,
+     "corpus_unique": 4127
+    },
+    {
+     "model": "scispacy_craft",
+     "kind": "trained NER",
+     "biored_exact_f1": 42.0,
+     "biored_exact_p": 62.9,
+     "corpus_grounded_pct": 19.9,
+     "corpus_unique": 2618
+    }
+   ],
+   "SequenceVariant": [
+    {
+     "model": "gliner2_base",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 40.0,
+     "biored_exact_p": 44.8,
+     "corpus_grounded_pct": 1.9,
+     "corpus_unique": 5222
+    },
+    {
+     "model": "gliner2_large",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 31.7,
+     "biored_exact_p": 27.8,
+     "corpus_grounded_pct": 3.4,
+     "corpus_unique": 3150
+    },
+    {
+     "model": "gliner_v25_biomed",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 30.1,
+     "biored_exact_p": 23.6,
+     "corpus_grounded_pct": 1.3,
+     "corpus_unique": 5879
+    },
+    {
+     "model": "gliner_v25_medium",
+     "kind": "zero-shot NER",
+     "biored_exact_f1": 35.1,
+     "biored_exact_p": 29.4,
+     "corpus_grounded_pct": 2.2,
+     "corpus_unique": 2682
+    },
+    {
+     "model": "llm_deepseek_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 34.4,
+     "biored_exact_p": 40.7,
+     "corpus_grounded_pct": 1.0,
+     "corpus_unique": 1152
+    },
+    {
+     "model": "llm_deepseek_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 31.1,
+     "biored_exact_p": 34.5,
+     "corpus_grounded_pct": 5.1,
+     "corpus_unique": 1372
+    },
+    {
+     "model": "llm_gemma_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 41.6,
+     "biored_exact_p": 36.6,
+     "corpus_grounded_pct": 10.7,
+     "corpus_unique": 795
+    },
+    {
+     "model": "llm_gemma_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 44.9,
+     "biored_exact_p": 39.9,
+     "corpus_grounded_pct": 7.5,
+     "corpus_unique": 1249
+    },
+    {
+     "model": "llm_llama_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 47.8,
+     "biored_exact_p": 49.8,
+     "corpus_grounded_pct": 4.5,
+     "corpus_unique": 1825
+    },
+    {
+     "model": "llm_llama_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 44.8,
+     "biored_exact_p": 43.7,
+     "corpus_grounded_pct": 1.4,
+     "corpus_unique": 7304
+    },
+    {
+     "model": "llm_mistral_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 39.1,
+     "biored_exact_p": 38.4,
+     "corpus_grounded_pct": 3.2,
+     "corpus_unique": 2152
+    },
+    {
+     "model": "llm_mistral_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 44.4,
+     "biored_exact_p": 42.4,
+     "corpus_grounded_pct": 2.0,
+     "corpus_unique": 3932
+    },
+    {
+     "model": "llm_phi_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 33.7,
+     "biored_exact_p": 31.6,
+     "corpus_grounded_pct": 4.3,
+     "corpus_unique": 907
+    },
+    {
+     "model": "llm_phi_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 31.4,
+     "biored_exact_p": 32.0,
+     "corpus_grounded_pct": 2.5,
+     "corpus_unique": 3263
+    },
+    {
+     "model": "llm_qwen_fs",
+     "kind": "LLM 3-shot",
+     "biored_exact_f1": 42.6,
+     "biored_exact_p": 39.6,
+     "corpus_grounded_pct": 2.3,
+     "corpus_unique": 3923
+    },
+    {
+     "model": "llm_qwen_zs",
+     "kind": "LLM zero-shot",
+     "biored_exact_f1": 42.2,
+     "biored_exact_p": 35.5,
+     "corpus_grounded_pct": 2.1,
+     "corpus_unique": 5442
+    }
+   ]
+  }
+ },
+ "run_inventory": {
+  "bert_chemical": {
+   "kind": "trained NER",
+   "device": "A40 GPU",
+   "seconds": 165.2,
+   "papers_with_entities": 431
+  },
+  "bert_disease": {
+   "kind": "trained NER",
+   "device": "A40 GPU",
+   "seconds": 164.9,
+   "papers_with_entities": 448
+  },
+  "bert_genetic": {
+   "kind": "trained NER",
+   "device": "A40 GPU",
+   "seconds": 165.1,
+   "papers_with_entities": 432
+  },
+  "gliner2_base": {
+   "kind": "zero-shot NER",
+   "device": "A40 GPU",
+   "threshold": 0.6,
+   "seconds": 499.0,
+   "papers_with_entities": 453
+  },
+  "gliner2_large": {
+   "kind": "zero-shot NER",
+   "device": "A40 GPU",
+   "threshold": 0.5,
+   "seconds": 885.3,
+   "papers_with_entities": 453
+  },
+  "gliner_v25_biomed": {
+   "kind": "zero-shot NER",
+   "device": "A40 GPU",
+   "threshold": 0.4,
+   "seconds": 1031.4,
+   "papers_with_entities": 453
+  },
+  "gliner_v25_medium": {
+   "kind": "zero-shot NER",
+   "device": "A40 GPU",
+   "threshold": 0.6,
+   "seconds": 643.1,
+   "papers_with_entities": 453
+  },
+  "hunflair2": {
+   "kind": "trained NER",
+   "device": "CPU (8 cores)",
+   "seconds": 2210.6,
+   "papers_with_entities": 452
+  },
+  "llm_deepseek_fs": {
+   "kind": "LLM 3-shot",
+   "llm": "DeepSeek-R1-Distill-Qwen-7B (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 7207.7,
+   "failed_chunks": 3,
+   "truncated_chunks": 442,
+   "salvaged_chunks": 951,
+   "strings": 137368,
+   "strings_not_in_text": 60505,
+   "invalid_type": 25336,
+   "papers_with_entities": 453
+  },
+  "llm_deepseek_zs": {
+   "kind": "LLM zero-shot",
+   "llm": "DeepSeek-R1-Distill-Qwen-7B (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 5411.5,
+   "failed_chunks": 6,
+   "truncated_chunks": 285,
+   "salvaged_chunks": 458,
+   "strings": 118519,
+   "strings_not_in_text": 37676,
+   "invalid_type": 5242,
+   "papers_with_entities": 453
+  },
+  "llm_gemma_fs": {
+   "kind": "LLM 3-shot",
+   "llm": "Gemma-4-E4B (w4a16)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 1308.9,
+   "failed_chunks": 2,
+   "truncated_chunks": 8,
+   "salvaged_chunks": 8,
+   "strings": 87658,
+   "strings_not_in_text": 5291,
+   "invalid_type": 55,
+   "papers_with_entities": 452
+  },
+  "llm_gemma_zs": {
+   "kind": "LLM zero-shot",
+   "llm": "Gemma-4-E4B (w4a16)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 1405.7,
+   "failed_chunks": 2,
+   "truncated_chunks": 63,
+   "salvaged_chunks": 63,
+   "strings": 111656,
+   "strings_not_in_text": 5482,
+   "invalid_type": 100,
+   "papers_with_entities": 452
+  },
+  "llm_llama_fs": {
+   "kind": "LLM 3-shot",
+   "llm": "Llama-3.1-8B-Instruct (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 10675.0,
+   "failed_chunks": 2,
+   "truncated_chunks": 1793,
+   "salvaged_chunks": 1793,
+   "strings": 465644,
+   "strings_not_in_text": 68381,
+   "invalid_type": 7556,
+   "papers_with_entities": 453
+  },
+  "llm_llama_zs": {
+   "kind": "LLM zero-shot",
+   "llm": "Llama-3.1-8B-Instruct (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 22527.5,
+   "failed_chunks": 2,
+   "truncated_chunks": 5665,
+   "salvaged_chunks": 5665,
+   "strings": 1279886,
+   "strings_not_in_text": 193035,
+   "invalid_type": 11358,
+   "papers_with_entities": 453
+  },
+  "llm_mistral_fs": {
+   "kind": "LLM 3-shot",
+   "llm": "Mistral-7B-Instruct-v0.3 (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 4023.4,
+   "failed_chunks": 2,
+   "truncated_chunks": 43,
+   "salvaged_chunks": 43,
+   "strings": 102575,
+   "strings_not_in_text": 11176,
+   "invalid_type": 52983,
+   "papers_with_entities": 452
+  },
+  "llm_mistral_zs": {
+   "kind": "LLM zero-shot",
+   "llm": "Mistral-7B-Instruct-v0.3 (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 3443.5,
+   "failed_chunks": 2,
+   "truncated_chunks": 72,
+   "salvaged_chunks": 72,
+   "strings": 119658,
+   "strings_not_in_text": 10684,
+   "invalid_type": 17599,
+   "papers_with_entities": 453
+  },
+  "llm_phi_fs": {
+   "kind": "LLM 3-shot",
+   "llm": "Phi-3.5-mini-instruct (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 18938.0,
+   "failed_chunks": 2,
+   "truncated_chunks": 929,
+   "salvaged_chunks": 929,
+   "strings": 292851,
+   "strings_not_in_text": 58315,
+   "invalid_type": 93105,
+   "papers_with_entities": 453
+  },
+  "llm_phi_zs": {
+   "kind": "LLM zero-shot",
+   "llm": "Phi-3.5-mini-instruct (AWQ)",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 9381.4,
+   "failed_chunks": 2,
+   "truncated_chunks": 219,
+   "salvaged_chunks": 219,
+   "strings": 155066,
+   "strings_not_in_text": 17303,
+   "invalid_type": 82661,
+   "papers_with_entities": 453
+  },
+  "llm_qwen_fs": {
+   "kind": "LLM 3-shot",
+   "llm": "Qwen3.5-4B",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 3023.6,
+   "failed_chunks": 2,
+   "truncated_chunks": 233,
+   "salvaged_chunks": 233,
+   "strings": 162019,
+   "strings_not_in_text": 8331,
+   "invalid_type": 1,
+   "papers_with_entities": 453
+  },
+  "llm_qwen_zs": {
+   "kind": "LLM zero-shot",
+   "llm": "Qwen3.5-4B",
+   "device": "1x A40 (vLLM)",
+   "seconds_this_run": 4271.6,
+   "failed_chunks": 2,
+   "truncated_chunks": 619,
+   "salvaged_chunks": 619,
+   "strings": 295819,
+   "strings_not_in_text": 15032,
+   "invalid_type": 327,
+   "papers_with_entities": 453
+  },
+  "scibert_jnlpba": {
+   "kind": "trained NER",
+   "device": "A40 GPU",
+   "seconds": 155.3,
+   "papers_with_entities": 448
+  },
+  "scispacy_bc5cdr": {
+   "kind": "trained NER",
+   "device": "CPU (8 cores)",
+   "seconds": 267.7,
+   "papers_with_entities": 451
+  },
+  "scispacy_bionlp13cg": {
+   "kind": "trained NER",
+   "device": "CPU (8 cores)",
+   "seconds": 307.3,
+   "papers_with_entities": 453
+  },
+  "scispacy_craft": {
+   "kind": "trained NER",
+   "device": "CPU (8 cores)",
+   "seconds": 278.9,
+   "papers_with_entities": 452
+  },
+  "scispacy_jnlpba": {
+   "kind": "trained NER",
+   "device": "CPU (8 cores)",
+   "seconds": 280.4,
+   "papers_with_entities": 450
+  },
+  "scispacy_lg": {
+   "kind": "trained NER",
+   "device": "CPU (8 cores)",
+   "seconds": 280.0,
+   "papers_with_entities": 0
+  }
+ }
+}

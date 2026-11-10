@@ -1,0 +1,82 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage H model answer (definition_repair_v1)",
+ "type": "object",
+ "required": [
+  "stored_verdict",
+  "definition",
+  "basis",
+  "evidence_quote"
+ ],
+ "properties": {
+  "stored_verdict": {
+   "enum": [
+    "CORRECT",
+    "PARTIAL",
+    "WRONG_TERM",
+    "NOT_A_DEFINITION"
+   ]
+  },
+  "definition": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "maxLength": 400
+  },
+  "basis": {
+   "enum": [
+    "EXPLICIT",
+    "ABBREVIATION",
+    "INFERRED_FROM_CONTEXT",
+    "NONE"
+   ]
+  },
+  "evidence_quote": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "maxLength": 500
+  },
+  "sense_note": {
+   "type": [
+    "string",
+    "null"
+   ]
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "basis": {
+      "const": "NONE"
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "definition": {
+      "type": "null"
+     },
+     "evidence_quote": {
+      "type": "null"
+     }
+    }
+   },
+   "else": {
+    "properties": {
+     "definition": {
+      "type": "string",
+      "minLength": 3
+     },
+     "evidence_quote": {
+      "type": "string",
+      "minLength": 3
+     }
+    }
+   }
+  }
+ ]
+}

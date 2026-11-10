@@ -1,0 +1,37 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+METRIC: FAITHFULNESS (RAGAS-style). Faithfulness asks whether the extracted
+CLAIM is grounded in the supplied EVIDENCE/CONTEXT, with no invented content.
+
+CLAIM (structured fields extracted from the paper):
+{claim_text}
+
+EVIDENCE (the source sentence the pipeline attached as support):
+{evidence_text}
+
+CONTEXT BEFORE (up to 200 chars, for context only):
+{context_before}
+
+CONTEXT AFTER (up to 200 chars, for context only):
+{context_after}
+
+VERDICT VOCABULARY (choose exactly one):
+- FAITHFUL: every part of the claim is stated or directly entailed by the
+  evidence/context.
+- PARTIALLY_FAITHFUL: some parts are grounded but other parts are not stated or
+  are only loosely implied.
+- UNFAITHFUL: the claim asserts content the evidence/context does not state, or
+  contradicts it.
+- UNCERTAIN: the evidence/context is empty or insufficient to decide. Prefer
+  UNCERTAIN over guessing.
+
+RULES
+- Judge grounding only: does the evidence support the claim as written?
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the evidence is empty or the claim and evidence are not comparable, output
+  UNCERTAIN.
+
+Respond with a single JSON object and nothing else:
+{{"verdict": "<FAITHFUL|PARTIALLY_FAITHFUL|UNFAITHFUL|UNCERTAIN>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

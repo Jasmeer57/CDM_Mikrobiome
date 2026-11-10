@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Triple reference check item (answer template)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["item_id", "check", "triple_id", "paper_id", "subject", "relation", "object", "ids", "link_methods", "verdict", "direction", "cleaned"],
+  "properties": {
+    "item_id": {"type": "string"},
+    "check": {"enum": ["bugsigdb_taxon", "ctd_chemical_disease", "ctd_gene_disease"]},
+    "triple_id": {"type": "string"},
+    "paper_id": {"type": ["string", "null"]},
+    "subject": {"type": "string", "maxLength": 300},
+    "relation": {"type": "string"},
+    "object": {"type": "string", "maxLength": 300},
+    "ids": {"type": "array", "items": {"type": "string"}, "maxItems": 2},
+    "link_methods": {"type": "array", "items": {"enum": ["cdm_mapping", "name_match"]}, "maxItems": 2},
+    "verdict": {"enum": ["MATCH", "PARTIAL", "CURATED", "INFERRED_ONLY", "NOT_IN_REFERENCE"]},
+    "direction": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["original", "cleaned"],
+      "properties": {
+        "original": {"enum": ["SAME", "OPPOSITE", "UNDETERMINED"]},
+        "cleaned": {"enum": ["SAME", "OPPOSITE", "UNDETERMINED", null]}
+      }
+    },
+    "cleaned": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kept", "relation", "swapped"],
+      "properties": {
+        "kept": {"type": "boolean"},
+        "relation": {"type": ["string", "null"]},
+        "swapped": {"type": "boolean"}
+      }
+    }
+  }
+}

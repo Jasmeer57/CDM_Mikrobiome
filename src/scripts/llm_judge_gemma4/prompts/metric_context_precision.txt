@@ -1,0 +1,35 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+METRIC: CONTEXT PRECISION (RAGAS-style). Context precision asks whether the
+retrieved/attached EVIDENCE is relevant to the CLAIM (i.e. no off-topic or
+irrelevant support was attached).
+
+CLAIM (structured fields extracted from the paper):
+{claim_text}
+
+EVIDENCE (the source sentence the pipeline attached as support):
+{evidence_text}
+
+CONTEXT BEFORE (up to 200 chars, for context only):
+{context_before}
+
+CONTEXT AFTER (up to 200 chars, for context only):
+{context_after}
+
+VERDICT VOCABULARY (choose exactly one):
+- HIGH: the evidence is directly on-topic and clearly relevant to the claim.
+- MEDIUM: the evidence is related but only partly relevant, or partially
+  off-topic.
+- LOW: the evidence is mostly or entirely irrelevant to the claim.
+- UNCERTAIN: the evidence is empty or insufficient to decide. Prefer UNCERTAIN
+  over guessing.
+
+RULES
+- Judge relevance of the attached evidence to the claim, not truth of the claim.
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the evidence is empty, output UNCERTAIN.
+
+Respond with a single JSON object and nothing else:
+{{"verdict": "<HIGH|MEDIUM|LOW|UNCERTAIN>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

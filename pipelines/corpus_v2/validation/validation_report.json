@@ -1,0 +1,152 @@
+{
+  "stage": "stage60_validate",
+  "pipeline_version": "2.1.0",
+  "generated_at": "2026-10-23T22:07:14Z",
+  "corpus_status": "COMPLETE",
+  "corpus_evidence": "CRIT_all_papers_validated:pass; CRIT_sections_attributed:pass; CRIT_segment_attribution:pass; CRIT_counts_reconcile:pass; PART_no_failed_papers:pass; PART_llm_all_eligible_covered:pass; CRIT_studies_one_per_paper:pass; CRIT_findings_attributed:pass; CRIT_finding_ids_unique:pass; PART_findings_study_links_resolve:pass; PART_findings_all_have_locator_status:pass",
+  "corpus_checks": [
+    {
+      "rule_id": "CRIT_all_papers_validated",
+      "passed": true,
+      "detail": "453 validation records for 453 papers"
+    },
+    {
+      "rule_id": "CRIT_sections_attributed",
+      "passed": true,
+      "detail": "section references an unknown paper"
+    },
+    {
+      "rule_id": "CRIT_segment_attribution",
+      "passed": true,
+      "detail": "segment references an unknown paper"
+    },
+    {
+      "rule_id": "CRIT_counts_reconcile",
+      "passed": true,
+      "detail": "papers claim 4006 sections, file has 4006"
+    },
+    {
+      "rule_id": "PART_no_failed_papers",
+      "passed": true,
+      "detail": "0 FAILED papers"
+    },
+    {
+      "rule_id": "PART_llm_all_eligible_covered",
+      "passed": true,
+      "detail": "eligible section not enriched"
+    },
+    {
+      "rule_id": "CRIT_studies_one_per_paper",
+      "passed": true,
+      "detail": "453 study records for 453 papers"
+    },
+    {
+      "rule_id": "CRIT_findings_attributed",
+      "passed": true,
+      "detail": "finding references an unknown paper"
+    },
+    {
+      "rule_id": "CRIT_finding_ids_unique",
+      "passed": true,
+      "detail": "duplicate finding_id in corpus"
+    },
+    {
+      "rule_id": "PART_findings_study_links_resolve",
+      "passed": true,
+      "detail": "finding study_id does not resolve to its paper's STUDY_001"
+    },
+    {
+      "rule_id": "PART_findings_all_have_locator_status",
+      "passed": true,
+      "detail": "findings without evidence_locator_status (stage 55 not run?)"
+    }
+  ],
+  "papers": 453,
+  "papers_validated": 453,
+  "validation_status_counts": {
+    "REVIEW_REQUIRED": 392,
+    "COMPLETE": 46,
+    "PARTIAL": 15
+  },
+  "papers_with_issues": 406,
+  "issue_counts_by_rule": {
+    "WARN_unresolved_evidence": 352,
+    "WARN_study_extraction_status": 51,
+    "PART_fulltext_crosscheck": 14,
+    "WARN_identifier": 6,
+    "WARN_title": 6
+  },
+  "sections": 4006,
+  "sections_eligible": 1699,
+  "sections_validated": 4006,
+  "segments": 4006,
+  "characters": 26874831,
+  "tokens": 7909432,
+  "llm_records": 1699,
+  "llm_terms_total": 104054,
+  "llm_status_counts": {
+    "COMPLETE": 1639,
+    "PARTIAL": 49,
+    "FAILED": 11
+  },
+  "duplicates_excluded": 6,
+  "studies": {
+    "records": 453,
+    "extraction_status_counts": {
+      "COMPLETE": 402,
+      "PARTIAL": 51
+    },
+    "llm_status_counts": {
+      "COMPLETE": 402,
+      "FAILED": 49,
+      "PARTIAL": 2
+    },
+    "conflict_fields_total": 1774,
+    "field_fill_rate": 0.5867
+  },
+  "findings": {
+    "records": 21395,
+    "papers_with_findings": 383,
+    "claim_type_counts": {
+      "result": 13932,
+      "author_interpretation": 4922,
+      "null_result": 2455,
+      "other": 86
+    },
+    "direction_counts": {
+      "increased": 8918,
+      "decreased": 4136,
+      "unclear": 3106,
+      "no_association_reported": 3871,
+      "mixed": 1364
+    },
+    "evidence_locator_status_counts": {
+      "verified_normalized": 16602,
+      "unresolved_not_in_source": 2788,
+      "verified_exact": 2005
+    },
+    "quote_resolution_rate": 0.8697,
+    "verification_status_counts": {
+      "pending": 21395
+    }
+  },
+  "fulltext_crosscheck": {
+    "records": 296,
+    "status_counts": {
+      "COMPLETE": 282,
+      "PARTIAL": 14
+    },
+    "papers_with_missing_sections": 14,
+    "papers_without_independent_source": 157
+  },
+  "artifact_hashes": {
+    "data/papers.jsonl": "82b6ef1313ef2fe292581d8c452cd76c7284c651ff7105fae0d33465a4cff9d6",
+    "data/sections.jsonl": "bc6d81993f3eb2b35d41d62fe9183296b5416b3c85aa034460e5e3d752152d26",
+    "data/segments.jsonl": "8d1ccbc844ff5442ab733fc3cf171c0f40f97ce94740e02e01568b513eafb15f",
+    "data/llm_terms.jsonl": "643066ce8b155d83c5554f8b7ce44226a1b60b5a04f7b224372d87aff16e7f03",
+    "data/studies.jsonl": "450a16f4a1120a8e7d78b726ec25ed4e0907e410c9afd24403e4a45080ab55b7",
+    "data/findings.jsonl": "bf1dc0d5e8df207842ba0b65d0d90476cd00349415b7ffc9e7d1dfd8c33077e1",
+    "data/validation_per_paper.jsonl": "fde5bee9650568300033aeacfd56b814d1eb2d55c81acb9ee3ac748689d962a1"
+  },
+  "note": "schema validity is not scientific correctness; annotation remains unverified"
+}

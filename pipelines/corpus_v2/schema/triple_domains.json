@@ -1,0 +1,43 @@
+{
+  "domain_taxonomy_id": "HMCV2-DOM-v1",
+  "domain_taxonomy_version": "v2-triple-domains-1",
+  "frozen_at": "2026-10-23",
+  "note": "Domains are extraction scope, not an ontology claim. D25 keeps unclassifiable entities visible for taxonomy review; they are never silently dropped.",
+  "entity_types": [
+    "microorganism_taxon", "gene_protein_product", "function_pathway",
+    "ecological_process", "host_factor", "body_site", "disease_phenotype",
+    "host_microbe_process", "microbe_microbe_process", "immune_factor",
+    "dietary_factor", "drug_intervention", "environmental_exposure",
+    "clinical_outcome_biomarker", "sample_cohort", "experimental_method",
+    "bioinformatics_method", "statistic_measure", "dataset_resource",
+    "study_design_concept", "temporal_concept", "transmission_event",
+    "evolutionary_concept", "mechanistic_concept", "other_unclassified"
+  ],
+  "domains": {
+    "D01": {"label": "Microorganisms and taxa", "example_subdomains": "species, strains, genera, phyla, consortia, pathobionts, commensals, phages"},
+    "D02": {"label": "Microbial genes and molecular products", "example_subdomains": "genes, plasmids, MGEs, proteins, enzymes, toxins, virulence factors, AMR determinants"},
+    "D03": {"label": "Microbial functions and metabolism", "example_subdomains": "fermentation, carbohydrate utilization, bile-acid transformation, SCFA production, vitamin synthesis"},
+    "D04": {"label": "Microbial ecology and community structure", "example_subdomains": "diversity, richness, evenness, co-occurrence, colonization, dysbiosis, stability"},
+    "D05": {"label": "Host organisms and characteristics", "example_subdomains": "age, sex as reported, pregnancy, genetics, immune status, physiological state"},
+    "D06": {"label": "Body sites and anatomical compartments", "example_subdomains": "gut, colon, oral cavity, plaque, skin, vagina, respiratory tract, urine"},
+    "D07": {"label": "Diseases, symptoms and phenotypes", "example_subdomains": "IBD, CRC, obesity, diabetes, vaginosis, periodontitis, asthma, infection"},
+    "D08": {"label": "Host-microbe interactions", "example_subdomains": "colonization, adhesion, immune modulation, barrier function, tolerance"},
+    "D09": {"label": "Microbe-microbe interactions", "example_subdomains": "competition, cross-feeding, antagonism, mutualism, bacteriocin inhibition, quorum sensing"},
+    "D10": {"label": "Immune system and inflammation", "example_subdomains": "cytokines, immune cell populations, mucosal immunity, immunoglobulins"},
+    "D11": {"label": "Diet, nutrition and lifestyle", "example_subdomains": "dietary patterns, fiber, nutrients, alcohol, smoking, physical activity"},
+    "D12": {"label": "Drugs, treatments and interventions", "example_subdomains": "antibiotics, probiotics, prebiotics, synbiotics, FMT, therapeutic regimens"},
+    "D13": {"label": "Exposures and environmental factors", "example_subdomains": "pollutants, hygiene, geography, household and occupational exposures"},
+    "D14": {"label": "Clinical outcomes and biomarkers", "example_subdomains": "severity, remission, relapse, treatment response, survival, diagnostic markers"},
+    "D15": {"label": "Samples, cohorts and study populations", "example_subdomains": "stool, saliva, swabs, biopsies, cohorts, cases, controls, longitudinal populations"},
+    "D16": {"label": "Experimental and laboratory methods", "example_subdomains": "16S rRNA, shotgun metagenomics, qPCR, culture, microscopy, flow cytometry"},
+    "D17": {"label": "Bioinformatics and computational methods", "example_subdomains": "taxonomic profiling, differential abundance, assembly, binning, ML, clustering"},
+    "D18": {"label": "Statistics and quantitative results", "example_subdomains": "odds ratios, HRs, CIs, p-values, effect sizes, significance tests"},
+    "D19": {"label": "Datasets, databases and reference resources", "example_subdomains": "repositories, reference genomes, tools, ontologies, accession IDs"},
+    "D20": {"label": "Study design and evidence characteristics", "example_subdomains": "RCTs, observational designs, confounders, limitations, replication"},
+    "D21": {"label": "Temporal and developmental concepts", "example_subdomains": "early-life colonization, aging, succession, pre/post changes"},
+    "D22": {"label": "Transmission and microbial source", "example_subdomains": "mother-to-infant, household, source tracking, vertical/horizontal transmission"},
+    "D23": {"label": "Evolution, resistance and adaptation", "example_subdomains": "mutation, horizontal gene transfer, persistence, strain evolution"},
+    "D24": {"label": "Mechanistic and causal concepts", "example_subdomains": "mediators, mechanisms, perturbations, rescue experiments"},
+    "D25": {"label": "Other and unresolved domain concepts", "example_subdomains": "anything relevant that does not fit D01-D24; flagged for taxonomy review"}
+  }
+}

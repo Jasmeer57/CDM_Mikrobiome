@@ -1,0 +1,408 @@
+{
+  "stage": "stage56_triples_canonicalize",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "offline_mode": false,
+  "budget_seconds": 16200.0,
+  "wall_seconds": 8187.1,
+  "omop_index_seconds": 38.8,
+  "entities_total": 37907,
+  "candidate_mapping_records": 5530,
+  "mapping_dispositions": {
+    "AUTO_ACCEPTED": 2287,
+    "UNRESOLVED": 1170,
+    "REVIEW_REQUIRED": 151,
+    "LOOKUP_FAILED": 1922
+  },
+  "mapping_relations": {
+    "EXACT_MATCH": 2170,
+    "AMBIGUOUS": 754,
+    "MAPPED_TO_STANDARD_CONCEPT": 117,
+    "NO_MATCH_FOUND": 416,
+    "UNVERIFIED": 151,
+    "LOOKUP_FAILED": 1922
+  },
+  "run_id": "HMCV2-LINK-20261024T070015Z",
+  "outcomes": {
+    "unresolved_no_standard_concept": 364,
+    "linked_T0_omop_exact": 344,
+    "unresolved_ambiguous_multi_standard": 86,
+    "unresolved_no_omop_match": 3615,
+    "linked_T2_embed_rerank": 89,
+    "unresolved_below_threshold_or_low_margin": 180,
+    "review_required_embed_band": 151,
+    "unresolved_fuzzy_ambiguous_top_score": 64,
+    "linked_T3_entrez": 1637,
+    "linked_T3_bioportal": 24,
+    "left_ineligible_for_api_tier": 30870,
+    "unresolved_entrez_multiple_taxids": 394,
+    "unresolved_api_no_match": 2283,
+    "linked_T3_umls": 190,
+    "linked_T3_ols": 3,
+    "unresolved_lookup_failed_ols": 1922
+  },
+  "per_domain_outcomes": {
+    "D12": {
+      "linked_T0_omop_exact": 64,
+      "linked_T2_embed_rerank": 15,
+      "linked_T3_umls": 1,
+      "linked_T3_entrez": 5
+    },
+    "D07": {
+      "linked_T0_omop_exact": 180,
+      "linked_T2_embed_rerank": 44,
+      "linked_T3_entrez": 4,
+      "linked_T3_umls": 1
+    },
+    "D06": {
+      "linked_T0_omop_exact": 52,
+      "linked_T2_embed_rerank": 16
+    },
+    "D10": {
+      "linked_T0_omop_exact": 17,
+      "linked_T2_embed_rerank": 14,
+      "linked_T3_umls": 1,
+      "linked_T3_entrez": 1
+    },
+    "D07/D10": {
+      "linked_T0_omop_exact": 3
+    },
+    "D01/D02/D03/D04/D08/D15/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D02/D03/D04/D05/D07/D08/D09/D10/D11/D12/D13/D14/D15/D16/D18/D20/D21/D24/D25": {
+      "linked_T3_bioportal": 1
+    },
+    "D01/D03/D04/D06/D08/D15/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D08/D15/D25": {
+      "linked_T3_entrez": 1,
+      "linked_T3_umls": 1
+    },
+    "D01": {
+      "linked_T3_entrez": 1368,
+      "linked_T3_bioportal": 11,
+      "linked_T3_umls": 89,
+      "linked_T3_ols": 2
+    },
+    "D01/D04/D18": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D05/D07/D08/D15/D20/D25": {
+      "linked_T3_bioportal": 1
+    },
+    "D01/D04/D25": {
+      "linked_T3_entrez": 2
+    },
+    "D01/D02/D16/D18/D19/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D05/D11/D21/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D15/D18": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D15/D18/D21/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D03": {
+      "linked_T3_entrez": 2,
+      "linked_T3_umls": 4
+    },
+    "D01/D04/D05/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D09/D15/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D08/D11/D12": {
+      "linked_T3_umls": 1
+    },
+    "D01/D02/D15/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D03/D04/D08": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04": {
+      "linked_T3_umls": 5,
+      "linked_T3_entrez": 29,
+      "linked_T3_bioportal": 1,
+      "linked_T3_ols": 1
+    },
+    "D04/D25": {
+      "linked_T3_bioportal": 1
+    },
+    "D01/D18/D20/D21/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D04/D06/D08/D15/D18": {
+      "linked_T3_umls": 1
+    },
+    "D01/D04/D08/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D12": {
+      "linked_T3_umls": 1
+    },
+    "D01/D15/D16/D18/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D04/D06/D15/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D03/D11/D14": {
+      "linked_T3_umls": 1
+    },
+    "D01/D03/D11": {
+      "linked_T3_umls": 2
+    },
+    "D01/D11/D13": {
+      "linked_T3_umls": 1
+    },
+    "D01/D04/D09": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D07/D09/D15/D16/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D15/D25": {
+      "linked_T3_entrez": 1,
+      "linked_T3_umls": 1
+    },
+    "D01/D25": {
+      "linked_T3_bioportal": 1,
+      "linked_T3_entrez": 4,
+      "linked_T3_umls": 3
+    },
+    "D01/D04/D06/D15": {
+      "linked_T3_umls": 1
+    },
+    "D01/D07": {
+      "linked_T3_umls": 5,
+      "linked_T3_bioportal": 1,
+      "linked_T3_entrez": 2
+    },
+    "D01/D08/D10": {
+      "linked_T3_umls": 1
+    },
+    "D01/D04/D08": {
+      "linked_T3_entrez": 1,
+      "linked_T3_umls": 1
+    },
+    "D01/D04/D06": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D02/D03/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D02/D04": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D04/D05/D12/D15/D20": {
+      "linked_T3_umls": 1
+    },
+    "D01/D12/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D04/D15": {
+      "linked_T3_entrez": 1,
+      "linked_T3_umls": 1
+    },
+    "D01/D11/D12/D15": {
+      "linked_T3_entrez": 1
+    },
+    "D04/D08/D09/D24": {
+      "linked_T3_umls": 1
+    },
+    "D01/D02/D03/D11": {
+      "linked_T3_umls": 2
+    },
+    "D01/D21/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D18/D25": {
+      "linked_T3_bioportal": 1
+    },
+    "D04": {
+      "linked_T3_bioportal": 3,
+      "linked_T3_umls": 7,
+      "linked_T3_entrez": 74
+    },
+    "D01/D04/D15/D18/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D11/D12": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D11": {
+      "linked_T3_entrez": 1,
+      "linked_T3_umls": 2
+    },
+    "D01/D06/D18": {
+      "linked_T3_umls": 1
+    },
+    "D01/D10": {
+      "linked_T3_umls": 1
+    },
+    "D01/D05/D15/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D15": {
+      "linked_T3_bioportal": 3,
+      "linked_T3_umls": 5,
+      "linked_T3_entrez": 4
+    },
+    "D01/D02/D03": {
+      "linked_T3_umls": 1
+    },
+    "D01/D16/D18": {
+      "linked_T3_umls": 1
+    },
+    "D04/D18": {
+      "linked_T3_umls": 1,
+      "linked_T3_entrez": 1
+    },
+    "D01/D03/D04/D25": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D05": {
+      "linked_T3_umls": 4
+    },
+    "D01/D15/D16": {
+      "linked_T3_umls": 1
+    },
+    "D01/D02": {
+      "linked_T3_umls": 5
+    },
+    "D01/D18": {
+      "linked_T3_entrez": 6,
+      "linked_T3_umls": 3
+    },
+    "D01/D16/D20": {
+      "linked_T3_umls": 1
+    },
+    "D01/D11/D25": {
+      "linked_T3_umls": 1
+    },
+    "D16": {
+      "linked_T3_umls": 2,
+      "linked_T3_entrez": 4
+    },
+    "D01/D16": {
+      "linked_T3_umls": 1
+    },
+    "D18": {
+      "linked_T3_entrez": 34
+    },
+    "D25": {
+      "linked_T3_entrez": 7,
+      "linked_T3_umls": 2
+    },
+    "D01/D07/D11": {
+      "linked_T3_umls": 1
+    },
+    "D14": {
+      "linked_T3_entrez": 2
+    },
+    "D01/D05/D23": {
+      "linked_T3_umls": 1
+    },
+    "D01/D03/D25": {
+      "linked_T3_umls": 1
+    },
+    "D01/D03/D18": {
+      "linked_T3_umls": 1
+    },
+    "D01/D21": {
+      "linked_T3_entrez": 2,
+      "linked_T3_umls": 2
+    },
+    "D01/D05/D15": {
+      "linked_T3_umls": 1
+    },
+    "D08/D24": {
+      "linked_T3_entrez": 1
+    },
+    "D16/D18": {
+      "linked_T3_entrez": 1
+    },
+    "D02": {
+      "linked_T3_umls": 5,
+      "linked_T3_entrez": 3
+    },
+    "D01/D09": {
+      "linked_T3_entrez": 1
+    },
+    "D15": {
+      "linked_T3_entrez": 18
+    },
+    "D01/D14": {
+      "linked_T3_entrez": 1
+    },
+    "D01/D08": {
+      "linked_T3_umls": 2,
+      "linked_T3_entrez": 1
+    },
+    "D13": {
+      "linked_T3_entrez": 1
+    },
+    "D05": {
+      "linked_T3_entrez": 1
+    },
+    "D08": {
+      "linked_T3_entrez": 20
+    },
+    "D24": {
+      "linked_T3_entrez": 4
+    },
+    "D09": {
+      "linked_T3_entrez": 5
+    },
+    "D11": {
+      "linked_T3_entrez": 2
+    },
+    "D21": {
+      "linked_T3_entrez": 2
+    },
+    "D03": {
+      "linked_T3_entrez": 2
+    },
+    "D20": {
+      "linked_T3_entrez": 1
+    },
+    "D22": {
+      "linked_T3_entrez": 1
+    }
+  },
+  "budget_exhausted_count": 0,
+  "budget_exhausted_entity_ids_first20": [],
+  "api_calls": {
+    "entrez": 6453,
+    "ols": 2500,
+    "umls": 2497,
+    "bioportal": 2307
+  },
+  "api_errors": {
+    "entrez": 0,
+    "ols": 0,
+    "umls": 0,
+    "bioportal": 0
+  },
+  "api_caps": {
+    "ols": 2500,
+    "bioportal": 2500
+  },
+  "api_cache_size_before": 0,
+  "api_cache_size_after": 13757,
+  "thresholds": {
+    "fuzz_auto": 95.0,
+    "fuzz_shortlist": 85.0,
+    "fuzz_topk": 50,
+    "embed_threshold": 0.8,
+    "embed_margin": 0.05,
+    "embed_review": 0.75
+  },
+  "omop_dir": "/home/jkalra_hpc/omop_v5"
+}

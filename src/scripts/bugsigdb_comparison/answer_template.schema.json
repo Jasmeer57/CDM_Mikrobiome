@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BugSigDB comparison item (answer template)",
+  "description": "One record per compared item in items.jsonl. Every record is validated against this schema before the summary is written.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["item_id", "paper_id", "field", "bsdb_signatures", "bsdb_value", "our_values", "method", "score", "threshold", "lexical_match", "verdict", "direction", "adjudication"],
+  "properties": {
+    "item_id": {"type": "string"},
+    "paper_id": {"type": "string", "pattern": "^HMPAPER_\\d{6}$"},
+    "field": {"enum": ["taxon", "our_taxon", "sequencing_type", "region_16s", "platform", "country", "statistical_test", "group_size", "body_site", "condition", "group_name"]},
+    "bsdb_signatures": {"type": "array", "items": {"type": "string"}},
+    "bsdb_value": {"type": ["string", "null"]},
+    "our_values": {"type": "array", "maxItems": 10, "items": {"type": "string", "maxLength": 200}},
+    "method": {"enum": ["exact_id", "lineage_genus", "rule_class", "region_set", "country", "integer", "embedding"]},
+    "score": {"type": ["number", "null"]},
+    "threshold": {"type": ["number", "null"]},
+    "lexical_match": {"type": ["boolean", "null"]},
+    "verdict": {"enum": ["MATCH", "PARTIAL", "MISMATCH", "OURS_MISSING", "NOT_IN_REFERENCE", "UNCLASSIFIED"]},
+    "direction": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["bsdb", "ours", "agreement"],
+      "properties": {
+        "bsdb": {"type": "array", "items": {"enum": ["up", "down"]}},
+        "ours": {"type": "array", "items": {"enum": ["up", "down"]}},
+        "agreement": {"enum": ["SAME", "OPPOSITE", "UNDETERMINED"]}
+      }
+    },
+    "adjudication": {"enum": [null, "OURS_ONLY_IN_TEXT", "BSDB_ONLY_IN_TEXT", "BOTH_IN_TEXT", "NEITHER_IN_TEXT"]}
+  }
+}

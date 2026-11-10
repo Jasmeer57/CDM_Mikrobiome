@@ -1,0 +1,82 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json + MANIFEST.sha256",
+  "check_name": "provenance_hashes_three_way_tie",
+  "expected": "all 8 PROVENANCE.artifacts hashes == MANIFEST.sha256 == recomputed sha256",
+  "observed": "8 three-way ties, mismatch=[]",
+  "query_or_file": "PROVENANCE.json artifacts vs MANIFEST.sha256 vs sha256sum recompute",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json",
+  "check_name": "provenance_counts_match_file_rows",
+  "expected": "mentions 2,505,735 / canonical_terms 165,991 / definitions 1,150 / mappings 334,231",
+  "observed": "mentions 2,505,735 / canonical_terms 165,991 / definitions 1,150 / mappings 334,231",
+  "query_or_file": "PROVENANCE.counts vs wc -l of the four jsonl artifacts",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json",
+  "check_name": "provenance_calibration_and_autoaccept",
+  "expected": "auto_accepted 0; calibration NOT_CALIBRATED",
+  "observed": "auto_accept_eligible 38,334, auto_accepted 0, calibration NOT_CALIBRATED",
+  "query_or_file": "PROVENANCE.json counts/calibration fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json + terminology_extraction_manifest.json (1.0.0 AND 1.0.1) + term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "mention_count_chain_deltas_documented",
+  "expected": "rows_written 2,505,736 -> manifest coverage.mention_records 2,505,736 -> shipped jsonl 2,505,735 (delta 1: frozen G2 off-by-one) -> DB 2,505,684 (delta 51: documented load dedup)",
+  "observed": "written 2505736, manifest 2505736 (identically in 1.0.0 and 1.0.1), jsonl 2505735, DB 2505684; deltas exactly 1 and 51",
+  "query_or_file": "count chain across the four sources in both releases",
+  "status": "PASS",
+  "note": "supersedes original P03 (expected manifest 2,505,735 \u2014 wrong: the manifest writes 2,505,736 in both releases); the +1/-51 deltas are the documented frozen G2 off-by-one (must not be patched) and the D1 load-dedup tie"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/terminology_taxonomy.json + taxonomy_summary.json",
+  "check_name": "taxonomy_shape_keys_reverified",
+  "expected": "upper_categories 16, subcategories 66, reserved_categories [UNCERTAIN], status DRAFT, classified_terms 0",
+  "observed": "upper_categories 16 / subcategories 66 / reserved_categories ['UNCERTAIN'] / status DRAFT / summary classified 0",
+  "query_or_file": "terminology_taxonomy.json actual schema keys + taxonomy_summary.json",
+  "status": "PASS",
+  "note": "supersedes original R01 (keyed a nonexistent 'categories' field, scored DISCREPANCY): re-keyed to the file's actual schema (upper_categories/subcategories)"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl",
+  "check_name": "canonical_cdm_type_census",
+  "expected": "ENTITY 94,458 / ORGANISM 12,248 / CHEMICAL 9,673 / PROTEIN 8,752 / DISEASE 7,351 / DNA_RNA 6,386 / CELL_TYPE 4,853 / CLINICAL 3,932 / DATA_ANALYSIS 3,716 / EXPERIMENTAL_METHOD 3,698 / LAB_METHOD 3,179 / GENOMICS 2,201 / PATHWAY 1,905 / SAMPLE_METHOD 1,829 / STUDY_DESIGN 1,810",
+  "observed": "all 15 values match (sum 165,991)",
+  "query_or_file": "canonical_terms.jsonl GROUP BY cdm_type vs canonical_terms_summary.by_cdm_type",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl",
+  "check_name": "canonical_taxonomy_category_all_null",
+  "expected": "0 rows with non-null taxonomy_category (no classification pass run)",
+  "observed": "0 non-null; is_generic_type census {False: 71,533, True: 94,458}",
+  "query_or_file": "predicate scan of canonical_terms.jsonl",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/ontology_registry.json",
+  "check_name": "ontology_registry_structure",
+  "expected": "registry lists local-only vocabularies with versions (structural check)",
+  "observed": "keys: ['credentials_policy', 'generated_at', 'local_only_note', 'local_only_supported', 'n_local', 'n_network', 'n_vocabularies', 'note', 'vocabularies']",
+  "query_or_file": "ontology_registry.json structure scan",
+  "status": "PASS",
+  "note": ""
+ }
+]

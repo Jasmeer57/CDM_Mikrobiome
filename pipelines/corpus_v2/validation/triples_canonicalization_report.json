@@ -1,0 +1,578 @@
+{
+  "stage": "stage56_triples_canonicalize",
+  "graph_version": "2.1.0",
+  "pipeline_stage": "stage56_triples_canonicalize@2.1.0",
+  "mentions_total": 34416,
+  "canonical_triples_total": 32713,
+  "entities_total": 37907,
+  "cross_paper_evidence_records": 309,
+  "groups": {
+    "groups_size_1": 31473,
+    "groups_within_paper": 931,
+    "groups_cross_paper": 309
+  },
+  "canonical_group_size_histogram": {
+    "1_paper_mentions": 32404,
+    "2_papers": 264,
+    "3_to_5_papers": 43,
+    "6_plus_papers": 2
+  },
+  "conflicts": {
+    "polarity_conflicts": 263,
+    "assertion_status_conflicts": 111,
+    "effect_direction_conflicts": 0,
+    "canonical_triples_with_any_conflict": 326
+  },
+  "evidence_in_canonical_triples": {
+    "all_mentions_verified": 30560,
+    "at_least_one_unresolved": 2153
+  },
+  "id_assignment_convention": {
+    "canonical_triple_id": "HMCV2-CT-<n:05d>, n ascending in sorted (subject_norm, relation, object_norm) key order; build-scoped",
+    "entity_id": "HMCV2-ENT-<n:05d>, n ascending in sorted normalized-label order; build-scoped",
+    "duplicate_group_id": "HMCV2-DUP-<n:04d>, same order as canonical"
+  },
+  "idempotency": "rerun-safe; re-derives all outputs and overwrites the five 56-owned mention fields",
+  "external_linking": "deferred to stage 57 (omop/taxid/bioportal); all external ids pending_stage57 or unresolved",
+  "backfilled_mention_fields": [
+    "canonical_triple_id",
+    "duplicate_group_id",
+    "duplicate_validation_status",
+    "subject_entity_id",
+    "object_entity_id",
+    "subject_entity_resolution_status",
+    "object_entity_resolution_status"
+  ],
+  "top_predicates": [
+    [
+      "OTHER_RELATION",
+      25144
+    ],
+    [
+      "MEASURED_BY",
+      1504
+    ],
+    [
+      "PRESENT_IN",
+      1191
+    ],
+    [
+      "HAS_RELATIVE_ABUNDANCE",
+      870
+    ],
+    [
+      "ASSOCIATED_WITH",
+      819
+    ],
+    [
+      "DECREASED_IN",
+      595
+    ],
+    [
+      "COMPARED_WITH",
+      581
+    ],
+    [
+      "CAUSES",
+      537
+    ],
+    [
+      "INCREASED_IN",
+      421
+    ],
+    [
+      "PRODUCES",
+      380
+    ],
+    [
+      "TREATS",
+      326
+    ],
+    [
+      "HAS_ABSOLUTE_ABUNDANCE",
+      297
+    ],
+    [
+      "HAS_TAXONOMIC_RANK",
+      211
+    ],
+    [
+      "MORE_ABUNDANT_THAN",
+      207
+    ],
+    [
+      "ASSOCIATED_WITH_BODY_SITE",
+      94
+    ]
+  ],
+  "top_entities_by_mention_count": [
+    [
+      "gutmicrobiota",
+      552
+    ],
+    [
+      "notreported",
+      397
+    ],
+    [
+      "gutmicrobiome",
+      188
+    ],
+    [
+      "microbiota",
+      186
+    ],
+    [
+      "bifidobacterium",
+      183
+    ],
+    [
+      "samples",
+      151
+    ],
+    [
+      "alphadiversity",
+      145
+    ],
+    [
+      "patients",
+      140
+    ],
+    [
+      "fecalsamples",
+      136
+    ],
+    [
+      "firmicutes",
+      133
+    ],
+    [
+      "intestinalmicrobiota",
+      125
+    ],
+    [
+      "proteobacteria",
+      123
+    ],
+    [
+      "bacteroides",
+      121
+    ],
+    [
+      "butyrate",
+      121
+    ],
+    [
+      "prevotella",
+      115
+    ]
+  ],
+  "entity_linking": {
+    "stage": "stage56_triples_canonicalize",
+    "model": "sentence-transformers/all-MiniLM-L6-v2",
+    "offline_mode": false,
+    "budget_seconds": 16200.0,
+    "wall_seconds": 8187.1,
+    "omop_index_seconds": 38.8,
+    "entities_total": 37907,
+    "candidate_mapping_records": 5530,
+    "mapping_dispositions": {
+      "AUTO_ACCEPTED": 2287,
+      "UNRESOLVED": 1170,
+      "REVIEW_REQUIRED": 151,
+      "LOOKUP_FAILED": 1922
+    },
+    "mapping_relations": {
+      "EXACT_MATCH": 2170,
+      "AMBIGUOUS": 754,
+      "MAPPED_TO_STANDARD_CONCEPT": 117,
+      "NO_MATCH_FOUND": 416,
+      "UNVERIFIED": 151,
+      "LOOKUP_FAILED": 1922
+    },
+    "run_id": "HMCV2-LINK-20261024T070015Z",
+    "outcomes": {
+      "unresolved_no_standard_concept": 364,
+      "linked_T0_omop_exact": 344,
+      "unresolved_ambiguous_multi_standard": 86,
+      "unresolved_no_omop_match": 3615,
+      "linked_T2_embed_rerank": 89,
+      "unresolved_below_threshold_or_low_margin": 180,
+      "review_required_embed_band": 151,
+      "unresolved_fuzzy_ambiguous_top_score": 64,
+      "linked_T3_entrez": 1637,
+      "linked_T3_bioportal": 24,
+      "left_ineligible_for_api_tier": 30870,
+      "unresolved_entrez_multiple_taxids": 394,
+      "unresolved_api_no_match": 2283,
+      "linked_T3_umls": 190,
+      "linked_T3_ols": 3,
+      "unresolved_lookup_failed_ols": 1922
+    },
+    "per_domain_outcomes": {
+      "D12": {
+        "linked_T0_omop_exact": 64,
+        "linked_T2_embed_rerank": 15,
+        "linked_T3_umls": 1,
+        "linked_T3_entrez": 5
+      },
+      "D07": {
+        "linked_T0_omop_exact": 180,
+        "linked_T2_embed_rerank": 44,
+        "linked_T3_entrez": 4,
+        "linked_T3_umls": 1
+      },
+      "D06": {
+        "linked_T0_omop_exact": 52,
+        "linked_T2_embed_rerank": 16
+      },
+      "D10": {
+        "linked_T0_omop_exact": 17,
+        "linked_T2_embed_rerank": 14,
+        "linked_T3_umls": 1,
+        "linked_T3_entrez": 1
+      },
+      "D07/D10": {
+        "linked_T0_omop_exact": 3
+      },
+      "D01/D02/D03/D04/D08/D15/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D02/D03/D04/D05/D07/D08/D09/D10/D11/D12/D13/D14/D15/D16/D18/D20/D21/D24/D25": {
+        "linked_T3_bioportal": 1
+      },
+      "D01/D03/D04/D06/D08/D15/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D08/D15/D25": {
+        "linked_T3_entrez": 1,
+        "linked_T3_umls": 1
+      },
+      "D01": {
+        "linked_T3_entrez": 1368,
+        "linked_T3_bioportal": 11,
+        "linked_T3_umls": 89,
+        "linked_T3_ols": 2
+      },
+      "D01/D04/D18": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D05/D07/D08/D15/D20/D25": {
+        "linked_T3_bioportal": 1
+      },
+      "D01/D04/D25": {
+        "linked_T3_entrez": 2
+      },
+      "D01/D02/D16/D18/D19/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D05/D11/D21/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D15/D18": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D15/D18/D21/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D03": {
+        "linked_T3_entrez": 2,
+        "linked_T3_umls": 4
+      },
+      "D01/D04/D05/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D09/D15/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D08/D11/D12": {
+        "linked_T3_umls": 1
+      },
+      "D01/D02/D15/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D03/D04/D08": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04": {
+        "linked_T3_umls": 5,
+        "linked_T3_entrez": 29,
+        "linked_T3_bioportal": 1,
+        "linked_T3_ols": 1
+      },
+      "D04/D25": {
+        "linked_T3_bioportal": 1
+      },
+      "D01/D18/D20/D21/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D04/D06/D08/D15/D18": {
+        "linked_T3_umls": 1
+      },
+      "D01/D04/D08/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D12": {
+        "linked_T3_umls": 1
+      },
+      "D01/D15/D16/D18/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D04/D06/D15/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D03/D11/D14": {
+        "linked_T3_umls": 1
+      },
+      "D01/D03/D11": {
+        "linked_T3_umls": 2
+      },
+      "D01/D11/D13": {
+        "linked_T3_umls": 1
+      },
+      "D01/D04/D09": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D07/D09/D15/D16/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D15/D25": {
+        "linked_T3_entrez": 1,
+        "linked_T3_umls": 1
+      },
+      "D01/D25": {
+        "linked_T3_bioportal": 1,
+        "linked_T3_entrez": 4,
+        "linked_T3_umls": 3
+      },
+      "D01/D04/D06/D15": {
+        "linked_T3_umls": 1
+      },
+      "D01/D07": {
+        "linked_T3_umls": 5,
+        "linked_T3_bioportal": 1,
+        "linked_T3_entrez": 2
+      },
+      "D01/D08/D10": {
+        "linked_T3_umls": 1
+      },
+      "D01/D04/D08": {
+        "linked_T3_entrez": 1,
+        "linked_T3_umls": 1
+      },
+      "D01/D04/D06": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D02/D03/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D02/D04": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D04/D05/D12/D15/D20": {
+        "linked_T3_umls": 1
+      },
+      "D01/D12/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D04/D15": {
+        "linked_T3_entrez": 1,
+        "linked_T3_umls": 1
+      },
+      "D01/D11/D12/D15": {
+        "linked_T3_entrez": 1
+      },
+      "D04/D08/D09/D24": {
+        "linked_T3_umls": 1
+      },
+      "D01/D02/D03/D11": {
+        "linked_T3_umls": 2
+      },
+      "D01/D21/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D18/D25": {
+        "linked_T3_bioportal": 1
+      },
+      "D04": {
+        "linked_T3_bioportal": 3,
+        "linked_T3_umls": 7,
+        "linked_T3_entrez": 74
+      },
+      "D01/D04/D15/D18/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D11/D12": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D11": {
+        "linked_T3_entrez": 1,
+        "linked_T3_umls": 2
+      },
+      "D01/D06/D18": {
+        "linked_T3_umls": 1
+      },
+      "D01/D10": {
+        "linked_T3_umls": 1
+      },
+      "D01/D05/D15/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D15": {
+        "linked_T3_bioportal": 3,
+        "linked_T3_umls": 5,
+        "linked_T3_entrez": 4
+      },
+      "D01/D02/D03": {
+        "linked_T3_umls": 1
+      },
+      "D01/D16/D18": {
+        "linked_T3_umls": 1
+      },
+      "D04/D18": {
+        "linked_T3_umls": 1,
+        "linked_T3_entrez": 1
+      },
+      "D01/D03/D04/D25": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D05": {
+        "linked_T3_umls": 4
+      },
+      "D01/D15/D16": {
+        "linked_T3_umls": 1
+      },
+      "D01/D02": {
+        "linked_T3_umls": 5
+      },
+      "D01/D18": {
+        "linked_T3_entrez": 6,
+        "linked_T3_umls": 3
+      },
+      "D01/D16/D20": {
+        "linked_T3_umls": 1
+      },
+      "D01/D11/D25": {
+        "linked_T3_umls": 1
+      },
+      "D16": {
+        "linked_T3_umls": 2,
+        "linked_T3_entrez": 4
+      },
+      "D01/D16": {
+        "linked_T3_umls": 1
+      },
+      "D18": {
+        "linked_T3_entrez": 34
+      },
+      "D25": {
+        "linked_T3_entrez": 7,
+        "linked_T3_umls": 2
+      },
+      "D01/D07/D11": {
+        "linked_T3_umls": 1
+      },
+      "D14": {
+        "linked_T3_entrez": 2
+      },
+      "D01/D05/D23": {
+        "linked_T3_umls": 1
+      },
+      "D01/D03/D25": {
+        "linked_T3_umls": 1
+      },
+      "D01/D03/D18": {
+        "linked_T3_umls": 1
+      },
+      "D01/D21": {
+        "linked_T3_entrez": 2,
+        "linked_T3_umls": 2
+      },
+      "D01/D05/D15": {
+        "linked_T3_umls": 1
+      },
+      "D08/D24": {
+        "linked_T3_entrez": 1
+      },
+      "D16/D18": {
+        "linked_T3_entrez": 1
+      },
+      "D02": {
+        "linked_T3_umls": 5,
+        "linked_T3_entrez": 3
+      },
+      "D01/D09": {
+        "linked_T3_entrez": 1
+      },
+      "D15": {
+        "linked_T3_entrez": 18
+      },
+      "D01/D14": {
+        "linked_T3_entrez": 1
+      },
+      "D01/D08": {
+        "linked_T3_umls": 2,
+        "linked_T3_entrez": 1
+      },
+      "D13": {
+        "linked_T3_entrez": 1
+      },
+      "D05": {
+        "linked_T3_entrez": 1
+      },
+      "D08": {
+        "linked_T3_entrez": 20
+      },
+      "D24": {
+        "linked_T3_entrez": 4
+      },
+      "D09": {
+        "linked_T3_entrez": 5
+      },
+      "D11": {
+        "linked_T3_entrez": 2
+      },
+      "D21": {
+        "linked_T3_entrez": 2
+      },
+      "D03": {
+        "linked_T3_entrez": 2
+      },
+      "D20": {
+        "linked_T3_entrez": 1
+      },
+      "D22": {
+        "linked_T3_entrez": 1
+      }
+    },
+    "budget_exhausted_count": 0,
+    "budget_exhausted_entity_ids_first20": [],
+    "api_calls": {
+      "entrez": 6453,
+      "ols": 2500,
+      "umls": 2497,
+      "bioportal": 2307
+    },
+    "api_errors": {
+      "entrez": 0,
+      "ols": 0,
+      "umls": 0,
+      "bioportal": 0
+    },
+    "api_caps": {
+      "ols": 2500,
+      "bioportal": 2500
+    },
+    "api_cache_size_before": 0,
+    "api_cache_size_after": 13757,
+    "thresholds": {
+      "fuzz_auto": 95.0,
+      "fuzz_shortlist": 85.0,
+      "fuzz_topk": 50,
+      "embed_threshold": 0.8,
+      "embed_margin": 0.05,
+      "embed_review": 0.75
+    },
+    "omop_dir": "/home/jkalra_hpc/omop_v5"
+  }
+}

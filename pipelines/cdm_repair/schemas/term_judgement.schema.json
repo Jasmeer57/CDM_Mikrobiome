@@ -1,0 +1,71 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage B model answer (term_repair_v1)",
+ "type": "object",
+ "required": [
+  "items"
+ ],
+ "properties": {
+  "items": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "n",
+     "valid",
+     "type",
+     "relevant"
+    ],
+    "properties": {
+     "n": {
+      "type": "integer"
+     },
+     "valid": {
+      "type": "boolean"
+     },
+     "invalid_reason": {
+      "enum": [
+       "PERSON_OR_ORG",
+       "CITATION_OR_REFERENCE",
+       "NUMBER_OR_STATISTIC",
+       "FRAGMENT",
+       "GENERIC_WORD",
+       "GARBLED",
+       "OTHER",
+       null
+      ]
+     },
+     "type": {
+      "enum": [
+       "ORGANISM",
+       "CHEMICAL",
+       "DISEASE",
+       "PROTEIN",
+       "DNA_RNA",
+       "CELL_TYPE",
+       "GENOMICS",
+       "PATHWAY",
+       "LAB_METHOD",
+       "DATA_ANALYSIS",
+       "SAMPLE_METHOD",
+       "CLINICAL",
+       "EXPERIMENTAL_METHOD",
+       "STUDY_DESIGN",
+       "ENTITY",
+       "UNRESOLVED"
+      ]
+     },
+     "relevant": {
+      "type": "boolean"
+     },
+     "display_label": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  }
+ }
+}

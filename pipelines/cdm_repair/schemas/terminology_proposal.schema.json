@@ -1,0 +1,96 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage B model proposal for one term (DRAFT; a proposal, never an update)",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "term_id",
+  "proposed_type",
+  "ambiguity",
+  "explanation"
+ ],
+ "properties": {
+  "term_id": {
+   "type": "string"
+  },
+  "display_label": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "proposed_type": {
+   "enum": [
+    "ORGANISM",
+    "CHEMICAL",
+    "DISEASE",
+    "PROTEIN",
+    "DNA_RNA",
+    "CELL_TYPE",
+    "GENOMICS",
+    "PATHWAY",
+    "LAB_METHOD",
+    "DATA_ANALYSIS",
+    "SAMPLE_METHOD",
+    "CLINICAL",
+    "EXPERIMENTAL_METHOD",
+    "STUDY_DESIGN",
+    "ENTITY",
+    "UNRESOLVED",
+    "NOT_A_TERM"
+   ]
+  },
+  "definition": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "definition_evidence_ref": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "candidate_identifiers": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "vocabulary",
+     "identifier"
+    ],
+    "properties": {
+     "vocabulary": {
+      "enum": [
+       "NCBITaxon",
+       "MeSH",
+       "MONDO",
+       "HP"
+      ]
+     },
+     "identifier": {
+      "type": "string"
+     },
+     "label": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "ambiguity": {
+   "enum": [
+    "NONE",
+    "AMBIGUOUS",
+    "INSUFFICIENT_CONTEXT"
+   ]
+  },
+  "explanation": {
+   "type": "string",
+   "maxLength": 400
+  }
+ }
+}

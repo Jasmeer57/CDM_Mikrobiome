@@ -1,0 +1,185 @@
+# Controlled vocabularies for the data catalogue (Phase C of
+# docs/catalogue_cleanup_plan.md), applied by
+# src/scripts/vllm_termpop/normalize_catalogue_vocab.py.
+#
+# Each field is an ORDERED rule list: the first rule whose regex matches the
+# (lower-cased) value wins, so specific rules come before generic ones.
+# `id` is an ontology CURIE where one exists; every UBERON/CL id is checked
+# against EBI OLS by `--verify_ids` (results in ontology_id_check.json).
+# Values no rule matches are left blank and listed in a review queue — never
+# forced into the nearest label.
+
+body_site:
+  # strip these words before matching ("fecal samples" -> "fecal")
+  strip: '\b(human|infant|infants|neonatal|maternal|samples?|specimens?|microbiota|microbiome|microbial|bacterial|communit(y|ies)|content|contents|derived|swabs?)\b'
+  non_human: '\b(in vitro|simulated|ocean|sea ?water|water|soil|mice|mouse|murine|rat|piglet|pig|chicken|fermenter|bioreactor|environment\w*)\b'
+  rules:
+    - {label: feces, id: "UBERON:0001988", re: '\b(fec\w*|faec\w*|stool\w*|meconium)\b'}
+    - {label: rectum, id: "UBERON:0001052", re: '\b(rect\w*|anal|anus|perianal)\b'}
+    - {label: caecum, id: "UBERON:0001153", re: '\b(caec|cec)(al|um)\b'}
+    - {label: vermiform appendix, id: "UBERON:0001154", re: '\bappendi\w*'}
+    - {label: ileum, id: "UBERON:0002116", re: '\b(ile(um|al))\b'}
+    - {label: jejunum, id: "UBERON:0002115", re: '\bjejun\w*'}
+    - {label: duodenum, id: "UBERON:0002114", re: '\bduoden\w*'}
+    - {label: colon, id: "UBERON:0001155", re: '\b(colon\w*|sigmoid|colorectal)\b'}
+    - {label: small intestine, id: "UBERON:0002108", re: '\bsmall (intestin\w*|bowel)\b'}
+    - {label: large intestine, id: "UBERON:0000059", re: '\blarge (intestin\w*|bowel)\b'}
+    - {label: stomach, id: "UBERON:0000945", re: '\b(stomach|gastric|antrum|corpus)\b'}
+    - {label: esophagus, id: "UBERON:0001043", re: '\b(o?esophag\w*)\b'}
+    - {label: saliva, id: "UBERON:0001836", re: '\bsaliva\w*'}
+    - {label: oral cavity, id: "UBERON:0000167", re: '\b(oral|mouth|tongue|buccal|dental|plaque|gingiva\w*|subgingival|supragingival|tooth|teeth|oropharyn\w*|throat)\b'}
+    - {label: nasal cavity, id: "UBERON:0001707", re: '\b(nasal|nose|nasopharyn\w*|nares|nostril)\b'}
+    - {label: lung, id: "UBERON:0002048", re: '\b(lungs?|pulmonary|bronch\w*|sputum|airways?|respiratory|bal|lavage)\b'}
+    - {label: vagina, id: "UBERON:0000996", re: '\b(vagina\w*|cervi\w*|cervicovaginal)\b'}
+    - {label: milk, id: "UBERON:0001913", re: '\b(milk|colostrum)\b'}
+    - {label: urine, id: "UBERON:0001088", re: '\b(urin\w*)\b'}
+    - {label: peripheral blood mononuclear cell, id: "CL:2000001", re: '\b(pbmcs?|peripheral blood mononuclear)\b'}
+    - {label: blood serum, id: "UBERON:0001977", re: '\bserum\b'}
+    - {label: blood plasma, id: "UBERON:0001969", re: '\bplasma\b'}
+    - {label: blood, id: "UBERON:0000178", re: '\b(blood|whole blood|bloodstream)\b'}
+    - {label: brain, id: "UBERON:0000955", re: '\b(brain|hippocamp\w*|cerebr\w*|cortex)\b'}
+    - {label: liver, id: "UBERON:0002107", re: '\b(liver|hepatic)\b'}
+    - {label: spleen, id: "UBERON:0002106", re: '\bspleen\b'}
+    - {label: skin of body, id: "UBERON:0002097", re: '\b(skin|forehead|palms?|hands?|forearm|axilla\w*|scalp|cutaneous|dermal|face|cheek|back)\b'}
+    - {label: intestine, id: "UBERON:0000160", re: '\b(intestin\w*|bowel|enteric|mucosa\w*|digesta|lumin\w*)\b'}
+    - {label: digestive tract, id: "UBERON:0001555", re: '\b(gut|guts|gastrointestinal|gi( tract)?|digestive|alimentary)\b'}
+
+assay_type:
+  # class: WET_LAB | COMPUTATIONAL | PROCESSING | CLINICAL — only WET_LAB rows are assays proper
+  rules:
+    - {label: 16S rRNA amplicon sequencing, class: WET_LAB, re: '\b16\s?s\b|16s rrna|16s rdna|\bv[1-9]\s?-\s?v?[1-9]\b'}
+    - {label: ITS amplicon sequencing, class: WET_LAB, re: '\bits[12]?\b|internal transcribed spacer'}
+    - {label: 18S rRNA amplicon sequencing, class: WET_LAB, re: '\b18\s?s\b'}
+    - {label: metatranscriptomics, class: WET_LAB, re: 'metatranscript'}
+    - {label: metaproteomics, class: WET_LAB, re: 'metaproteom'}
+    - {label: shotgun metagenomic sequencing, class: WET_LAB, re: 'shotgun|metagenom|\bwms\b'}
+    - {label: amplicon sequencing, class: WET_LAB, re: 'amplicon'}
+    - {label: whole genome sequencing, class: WET_LAB, re: 'whole[- ]genome|\bwgs\b|genome sequenc'}
+    - {label: host transcriptomics, class: WET_LAB, re: 'rna[- ]?seq|transcriptom|microarray|gene expression|single[- ]cell'}
+    - {label: proteomics, class: WET_LAB, re: 'proteom'}
+    - {label: metabolomics, class: WET_LAB, re: 'metabolom|metabolite|mass spectrometr|chromatograph|\b(lc|gc|uplc|hplc)[- ]?(ms|q-?tof|ms/ms)?\b|\bnmr\b|\bscfas?\b|short[- ]chain fatty|bile acid|lipidom'}
+    - {label: quantitative PCR, class: WET_LAB, re: 'qpcr|q-pcr|quantitative pcr|real[- ]time|rt-?pcr|ddpcr|droplet digital'}
+    - {label: PCR, class: WET_LAB, re: '\bpcr\b'}
+    - {label: culture, class: WET_LAB, re: 'cultur|ferment|isolat|colony|colonies|maldi|plating|\bcfu\b'}
+    - {label: flow cytometry, class: WET_LAB, re: 'flow cytometr|\bfacs\b|cytof|immunophenotyp|mass cytometr'}
+    - {label: immunoassay, class: WET_LAB, re: 'elisa|immunoassay|luminex|multiplex|cytokine|western blot|immunohisto|immunofluoresc|\bihc\b'}
+    - {label: microscopy or histology, class: WET_LAB, re: 'microscop|histolog|stain|\bfish\b|electron'}
+    - {label: genotyping, class: WET_LAB, re: 'genotyp|\bgwas\b|\bsnps?\b'}
+    - {label: sequencing (unspecified), class: WET_LAB, re: 'sequenc|\bngs\b|high[- ]throughput|illumina|miseq|hiseq|novaseq|nanopore|pacbio'}
+    - {label: sample processing, class: PROCESSING, re: 'extraction|collection|library prep|storage|purification|sampling'}
+    - {label: clinical or physiological measurement, class: CLINICAL, re: 'measure|questionnaire|clinical|anthropometr|biochem|blood test|assessment|examination|endoscop|colonoscop|survey|dietary'}
+    - {label: statistical or computational analysis, class: COMPUTATIONAL, re: 'analys|statistic|correlat|permanova|anova|assembl|quality control|in silico|quantification|anosim|lefse|picrust|tax4fun|diversity|cluster|random forest|regression|network|predict|principal|pcoa|\bpca\b|machine learning|classif|meta-analysis|model|test|bioinformat|annotation|assignment|profiling|comparison'}
+
+repository_name:
+  rules:
+    - {label: NCBI BioProject, re: 'bioproject'}
+    - {label: NCBI SRA, re: '\bsra\b|sequence read archive|short read archive'}
+    - {label: ENA, re: '\bena\b|european nucleotide archive|\bebi\b|european bioinformatics'}
+    - {label: DDBJ, re: '\bddbj\b|\bdra\b'}
+    - {label: GenBank, re: 'genbank'}
+    - {label: GEO, re: '\bgeo\b|gene expression omnibus'}
+    - {label: ArrayExpress, re: 'arrayexpress'}
+    - {label: dbGaP, re: 'dbgap'}
+    - {label: EGA, re: '\bega\b|european genome[- ]phenome'}
+    - {label: Qiita, re: 'qiita'}
+    - {label: MG-RAST, re: 'mg-?rast'}
+    - {label: MassIVE/GNPS, re: 'massive|\bgnps\b'}
+    - {label: MetaboLights, re: 'metabolights'}
+    - {label: PRIDE, re: '\bpride\b|proteomexchange'}
+    - {label: GSA (NGDC/CNCB), re: '\bgsa\b|genome sequence archive|ngdc|cncb|bigd'}
+    - {label: CNGB, re: 'cngb|cngbdb'}
+    - {label: Zenodo, re: 'zenodo'}
+    - {label: Figshare, re: 'figshare'}
+    - {label: Dryad, re: 'dryad'}
+    - {label: Mendeley Data, re: 'mendeley'}
+    - {label: OSF, re: '\bosf\b|open science framework'}
+    - {label: GitHub, re: 'github|gitlab|bitbucket'}
+    - {label: ClinicalTrials.gov (registry), re: 'clinicaltrials|trial regist|isrctn|chictr'}
+    - {label: available on request, re: 'request|corresponding author|authors?$|contact'}
+    - {label: supplementary material, re: 'supplement|additional file|journal|plos|frontiers|nature|elife|msystems|mdpi|oup\.com|springer|wiley|elsevier|bmc|cell press|asm\.org|doi\.org|/s1$'}
+    - {label: NCBI (unspecified database), re: '\bncbi\b|national center for biotechnology'}
+  # When the name matches nothing, infer from the accession type.
+  from_accession_type:
+    BioProject: NCBI BioProject
+    BioSample: NCBI BioSample
+    SRA/ENA/DDBJ: NCBI SRA
+    GEO: GEO
+    ArrayExpress: ArrayExpress
+    MetaboLights: MetaboLights
+    MassIVE: MassIVE/GNPS
+    PRIDE: PRIDE
+    dbGaP: dbGaP
+    EGA: EGA
+    MG-RAST: MG-RAST
+    GSA: GSA (NGDC/CNCB)
+    CNGB: CNGB
+    Zenodo: Zenodo
+    Figshare: Figshare
+    Dryad: Dryad
+    GenBank: GenBank
+    Qiita: Qiita
+
+finding_domain:
+  rules:
+    - {label: alpha diversity, re: 'alpha|α|richness|shannon|simpson|chao|evenness'}
+    - {label: beta diversity, re: 'beta|β|community structure|ordination|dissimilarit|unifrac|bray'}
+    - {label: diversity (unspecified), re: 'diversity'}
+    - {label: virome or mycobiome, re: 'vir(ome|al|us)|phage|fung|mycobiom|yeast|archae|parasit|helminth|protist|eukaryot'}
+    - {label: metabolites, re: 'metabol|scfa|short[- ]chain|bile acid|lipid|amino acid|butyrate'}
+    - {label: microbial function, re: 'function|pathway|kegg|gene content|enzyme|resistom|antibiotic resistance|\barg\b|virulence'}
+    - {label: host gene expression, re: 'gene expression|transcript|host gene|epigen|methylation'}
+    - {label: host immune and inflammatory markers, re: 'immun|cytokine|inflamm|antibod|\bigs?[ag]\b|t cell|b cell'}
+    - {label: intervention effect, re: 'intervention|treatment|therap|diet|probiotic|prebiotic|synbiotic|antibiotic|\bfmt\b|transplant|drug|supplement|vaccin'}
+    - {label: host genetics, re: 'heritab|genetic|genotyp|gwas|\bsnp'}
+    - {label: temporal dynamics, re: 'longitudinal|succession|temporal|stability|trajector|dynamic'}
+    - {label: clinical or host phenotype, re: 'clinical|outcome|disease|symptom|phenotype|anthropometr|bmi|weight|growth|host|patient|mortality|surviv|risk|severity|cognit|behavio'}
+    - {label: taxonomic composition and abundance, re: 'compos|abundan|taxon|taxa|microbio|microbiota|bacteria|phyl|genus|genera|species|otu|asv|colonization|prevalence|presence|dysbiosis|enrich|depletion|relative'}
+    - {label: association (domain unspecified), re: 'associat|correlat|relationship|link'}
+    - {label: predictive modelling, re: 'predict|classif|model|machine learning|random forest|\bauc\b|network'}
+    - {label: not a finding, re: 'introduction|background|method|study.design|demograph|general|findings|comparison|limitation|conclusion|statistic|baseline|mechanism|sequencing|quality|technical|sample|cohort|data'}
+
+taxonomic_rank:
+  rules:
+    - {label: superkingdom, re: '^(super)?kingdom$|^domain$'}
+    - {label: phylum, re: '^phyl(um|a)$'}
+    - {label: class, re: '^class(es)?$'}
+    - {label: order, re: '^orders?$'}
+    - {label: family, re: '^famil(y|ies)$'}
+    - {label: genus, re: '^gen(us|era)$'}
+    - {label: species, re: '^species$'}
+    - {label: strain, re: '^(sub)?strains?$|^subspecies$|^serotype$|^serovar$'}
+    - {label: OTU/ASV, re: '^(otus?|asvs?|esvs?|zotus?|rsvs?|amplicon sequence variant.*|operational taxonomic unit.*)$'}
+    - {label: community, re: '^(community|microbiota|microbiome|taxa|organism|bacteria)$'}
+    - {label: not a taxon, re: '.'}
+
+# Species renamed since many corpus papers were written. NCBI Taxonomy search
+# does not index these old names, so they are mapped to the current name, which
+# is then looked up normally (a wrong entry yields no link, never a wrong one).
+renamed_taxa:
+  Clostridium difficile: Clostridioides difficile
+  Bacteroides vulgatus: Phocaeicola vulgatus
+  Bacteroides dorei: Phocaeicola dorei
+  Bacteroides plebeius: Phocaeicola plebeius
+  Bifidobacterium infantis: Bifidobacterium longum subsp. infantis
+  Lactobacillus reuteri: Limosilactobacillus reuteri
+  Lactobacillus fermentum: Limosilactobacillus fermentum
+  Lactobacillus mucosae: Limosilactobacillus mucosae
+  Lactobacillus plantarum: Lactiplantibacillus plantarum
+  Lactobacillus rhamnosus: Lacticaseibacillus rhamnosus
+  Lactobacillus casei: Lacticaseibacillus casei
+  Lactobacillus paracasei: Lacticaseibacillus paracasei
+  Lactobacillus salivarius: Ligilactobacillus salivarius
+  Lactobacillus ruminis: Ligilactobacillus ruminis
+  Eubacterium rectale: Agathobacter rectalis
+  Eubacterium hallii: Anaerobutyricum hallii
+  Ruminococcus gnavus: Mediterraneibacter gnavus
+  Propionibacterium acnes: Cutibacterium acnes
+  Enterobacter aerogenes: Klebsiella aerogenes
+  Prevotella copri: Segatella copri
+  # common names and plurals used as taxon names
+  Bifidobacteria: Bifidobacterium
+  Bifidobacterial: Bifidobacterium
+  Lactobacilli: Lactobacillus
+  Enterococci: Enterococcus
+  Sfb: Candidatus Arthromitus
+  Segmented filamentous: Candidatus Arthromitus

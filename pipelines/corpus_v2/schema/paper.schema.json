@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://microbiome-cdm.local/corpus_v2/paper.schema.json",
+  "title": "Corpus v2 paper record",
+  "description": "Flat per-paper record produced by stages 10/20/30/40/60. Field groups map to template section 3A-3E: record control, publication metadata, source provenance, eligibility, integrity checks. Availability, parse success and verified completeness are deliberately separate fields and are never inferred from one another.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["paper_id", "corpus_id", "schema_version", "processing_status",
+               "full_text_completeness", "annotation_status", "inclusion_decision"],
+  "properties": {
+    "paper_id": {"type": "string", "pattern": "^HMPAPER_[0-9]{6}$"},
+    "corpus_id": {"type": "string"},
+    "schema_version": {"type": "string"},
+    "source_record_id": {"type": ["string", "null"]},
+
+    "processing_status": {"enum": ["not_started", "source_acquired", "text_extracted",
+                                   "automated_checks_passed", "manual_review_passed",
+                                   "needs_repair", "excluded"]},
+    "full_text_completeness": {"enum": ["not_checked", "complete", "partial", "failed",
+                                        "not_applicable"]},
+    "annotation_status": {"enum": ["not_started", "in_progress", "extracted_unverified",
+                                   "human_verified", "needs_revision"]},
+    "reviewer": {"type": ["string", "null"]},
+    "review_date": {"type": ["string", "null"]},
+    "curation_notes": {"type": ["string", "array", "null"]},
+
+    "title": {"type": ["string", "null"]},
+    "DOI": {"type": ["string", "null"]},
+    "PMID": {"type": ["string", "null"]},
+    "PMCID": {"type": ["string", "null"]},
+    "authors": {"type": "array", "items": {"type": ["string", "null"]}},
+    "journal": {"type": ["string", "null"]},
+    "publication_year": {"type": ["integer", "null"]},
+    "publication_type": {"enum": ["primary_research", "review", "protocol", "other", null]},
+    "language": {"type": ["string", "null"]},
+    "abstract": {"type": ["string", "null"]},
+    "keywords": {"type": "array", "items": {"type": "string"}},
+
+    "source_database": {"type": ["string", "null"]},
+    "source_url": {"type": ["string", "null"]},
+    "retrieval_date": {"type": ["string", "null"]},
+    "license_name": {"type": ["string", "null"]},
+    "license_url": {"type": ["string", "null"]},
+    "reuse_permission_checked": {"enum": ["yes", "no", "unclear", null]},
+    "original_pdf_path": {"type": ["string", "null"]},
+    "original_xml_path": {"type": ["string", "null"]},
+    "extracted_text_path": {"type": ["string", "null"]},
+    "supplementary_file_paths": {"type": "array", "items": {"type": "string"}},
+    "raw_file_path": {"type": ["string", "null"]},
+    "raw_file_hash": {"type": ["string", "null"]},
+    "extraction_tool": {"type": ["string", "null"]},
+    "extraction_date": {"type": ["string", "null"]},
+    "text_version_id": {"type": ["string", "null"]},
+    "bioproject": {"type": ["string", "null"]},
+
+    "human_microbiome_relevance": {"enum": ["yes", "no", "unclear", null]},
+    "inclusion_decision": {"enum": ["include", "exclude", "pending"]},
+    "eligibility_status": {"type": ["string", "null"]},
+    "exclusion_reason": {"type": ["string", "null"]},
+    "protocol_version": {"type": ["string", "null"]},
+    "duplicate_group_id": {"type": ["string", "null"]},
+    "canonical_paper_id": {"type": ["string", "null"]},
+    "is_canonical": {"type": "boolean"},
+
+    "full_text_availability": {"enum": ["available_full_text", "abstract_only",
+                                        "unavailable", null]},
+    "full_text_parse_status": {"enum": ["COMPLETE", "PARTIAL", "FAILED",
+                                        "REVIEW_REQUIRED", "PENDING", null]},
+    "full_text_completeness_evidence": {"type": ["string", "null"]},
+    "completeness_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule_id": {"type": "string"},
+          "passed": {"type": "boolean"},
+          "detail": {"type": "string"}
+        }
+      }
+    },
+
+    "sections_discovered": {"type": ["integer", "null"]},
+    "sections_complete": {"type": ["integer", "null"]},
+    "sections_needing_review": {"type": ["integer", "null"]},
+    "section_hierarchy_status": {"enum": ["explicit_from_source", "derived_from_numbering",
+                                          "flat_in_source", "not_checked", null]},
+    "source_characters": {"type": ["integer", "null"]},
+    "conversion_uncovered_chars": {"type": ["integer", "null"]},
+
+    "integrity_checks": {
+      "type": "object",
+      "description": "Template 3E. Recorded, never inferred.",
+      "properties": {
+        "title_matches_source": {"enum": ["pass", "fail", "not_checked"]},
+        "abstract_matches_source": {"enum": ["pass", "fail", "not_checked", "not_available"]},
+        "body_text_completeness": {"enum": ["complete", "partial", "failed", "not_checked"]},
+        "section_hierarchy_preserved": {"enum": ["yes", "no", "not_checked"]},
+        "tables_checked": {"enum": ["yes", "no", "not_applicable"]},
+        "figure_captions_checked": {"enum": ["yes", "no", "not_applicable"]},
+        "supplementary_materials_checked": {"enum": ["yes", "no", "unavailable",
+                                                     "not_applicable"]},
+        "references_retained": {"enum": ["yes", "no", "not_checked"]},
+        "known_extraction_problems": {"type": ["string", "null"]}
+      }
+    },
+    "source_integrity": {
+      "type": "object",
+      "description": "Encoding-level defects detected in the source (recorded, never repaired).",
+      "properties": {
+        "nul_bytes": {"type": "integer"},
+        "non_utf8_bytes": {"type": "integer"},
+        "encoding_status": {"enum": ["clean", "defects_present", "undecodable"]}
+      }
+    },
+
+    "metadata_completeness": {"type": ["object", "null"]},
+    "metadata_provenance": {"type": ["object", "null"]},
+    "dedup": {"type": ["object", "null"]},
+    "validation_status": {"type": ["string", "null"]},
+    "validation_evidence": {"type": ["string", "null"]}
+  }
+}

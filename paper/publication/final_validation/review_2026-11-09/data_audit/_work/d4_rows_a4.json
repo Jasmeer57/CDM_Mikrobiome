@@ -1,0 +1,32 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl + microbiome_cdm_v3.db:canonical_term+removed_canonical_term",
+  "check_name": "canonical_id_containment",
+  "expected": "all 165,991 jsonl term_ids present in canonical_term or removed_canonical_term; none absent",
+  "observed": "live 162,409 + removed 3,582 + absent 0",
+  "query_or_file": "term_id set containment (jsonl term_ids minus DB live minus DB removed)",
+  "status": "PASS",
+  "note": "forward direction of the canonical split tie (reverse recorded at canonical_reverse_containment)"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + microbiome_cdm_v3.db:term_definition+removed_term_definition",
+  "check_name": "definition_id_containment",
+  "expected": "all 1,150 jsonl definition_ids found in term_definition or removed_term_definition",
+  "observed": "live 588 + removed 562 + absent 0",
+  "query_or_file": "definition_id set containment",
+  "status": "PASS",
+  "note": "DB term_definition (6,773) and removed_term_definition (3,865) are supersets holding the separate gap-G8 remediation lineage; jsonl is the 1.0.1 T3 artifact"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + microbiome_cdm_v3.db:term_concept_map",
+  "check_name": "mapping_rows_delta_2837_close_reverse_tie",
+  "expected": "0 DB mapping_ids absent from jsonl (demoted rows are a jsonl-side superset, DB is a filtered subset)",
+  "observed": "reverse diff 0; jsonl distinct mapping_ids 318,605; DB 315,821; the 2,784 jsonl-only ids correspond exactly to the 2,837 demoted rows documented at D1 and recensed at X01/I04R(T03R)",
+  "query_or_file": "set difference (DB mapping_ids minus jsonl mapping_ids)",
+  "status": "PASS",
+  "note": "records the reverse direction of the T03R delta so both sides of the 2,837-row demotion are independently tied"
+ }
+]

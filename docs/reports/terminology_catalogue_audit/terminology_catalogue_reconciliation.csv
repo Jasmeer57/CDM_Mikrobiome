@@ -1,0 +1,83 @@
+group,check,metric,value,denominator,denominator_scope,status,evidence,notes
+manifest,manifest hash verification,artifacts verified,8,8,external sha256 in terminology_extraction_manifest.json,PASS,8/8 OK,manifest self-hash n/a by design
+manifest,artifact presence,artifacts present,9,9,declared manifest artifacts,PASS,9/9 present,all bytes match declared
+manifest,release hash verification,entries verified,42,42,corpus_v2/releases/2.2.0/MANIFEST.sha256,PASS,42/42 OK,0 bad 0 missing
+manifest,declared vs actual mention count,declared minus actual,-1,2505735,artifact rows,PARTIAL,declared 2505736 artifact 2505735,assemble_mentions increments n before the empty-surface continue
+manifest,declared vs actual cpu_ensemble rows,declared minus actual,-1,1705500,artifact rows,PARTIAL,declared 1705501 artifact 1705500,1 empty-surface row counted but not written
+canonical,canonical term ids re-derived,ids reproduced,165991,165991,canonical terms,PASS,real ids.term_id re-derivation,0 mismatches
+canonical,duplicate canonical ids,duplicate ids,0,165991,canonical terms,PASS,deduplicated_term_ids 0,
+canonical,upstream rows collapsing to same key,rows collapsed,21,166012,data_catalogue/terminology/terminology_dedup.csv,PASS,deduped_after_sanitize 21,control-byte C1 duplicates
+canonical,distinct surface after dedup,distinct term_norm,165905,165991,canonical terms,PASS,,81 norms carry more than one cdm_type
+canonical,non-concept surfaces flagged,flagged rows,1090,165991,canonical terms,PASS,is_non_concept_surface True,URL_OR_LICENSE 643 / CONTROL_CHAR 331 / SIGNIFICANCE_MARKER 60 / FIGURE_TABLE_REF 48 / ROMAN_NUMERAL 6 / CITATION_FRAGMENT 2
+canonical,generic versus typed split,generic ENTITY terms,94458,165991,canonical terms,PARTIAL,,en_core_sci_lg contributes 960719 generic mentions
+definitions,definition rows,rows,1150,1150,term_definitions.jsonl,PASS,,
+definitions,definition term_id resolves,rows with valid term_id,1150,1150,definition rows,PASS,none missing,
+definitions,definition term_norm and cdm_type match canonical,rows matching,1150,1150,definition rows,PASS,0 mismatch,
+definitions,definition span reproduction at section-body-relative offsets,rows reproduced byte-exact,1150,1150,definition rows,PASS,100 percent using cdm_pipeline.ner.runner_sections.load_sections,hand-rolled loader artifact discarded
+definitions,canonical term definition coverage,terms with a source definition,838,164903,T3 canonical_terms_in_scope (non-concept-filtered),PARTIAL,0.5082 percent,838/165991 = 0.5049 percent of all canonical terms
+definitions,canonical term definition coverage full denominator,terms with a source definition,838,165991,all canonical terms,PARTIAL,0.5049 percent,
+definitions,definition formality,formal definitions,147,1150,definition rows,PARTIAL,contextual 1003,87.2 percent are contextual descriptions not formal definitions
+definitions,definition rejections,rejected candidates,867,1150,extraction attempts,PASS,rejection_counts superset of offline 116 by design,adds NON_CONCEPT_SURFACE across all classes
+definitions,T3 non-concept exclusions,rows skipped on norm or term,1109,166012,data_catalogue/terminology/terminology_dedup.csv,PASS,real textnorm plus non_concept_reason on both columns,matches offline measurement
+definitions,T3 load_terms norm-only key latent collisions,surviving collisions,0,166012,dedup rows,PASS,0 norms have 2 plus surviving rows,latent fragility only (see ISS-009)
+mentions,mention rows,rows,2505735,2505735,term_mentions.jsonl,PASS,,
+mentions,distinct occurrences,distinct occurrence_key,1362931,2505735,mention rows,PASS,sha1 over paper section start end norm,
+mentions,row to occurrence inflation,inflation factor,1.8385,1362931,distinct occurrence_key,PARTIAL,2505735/1362931,four extractors over the same text
+mentions,canonical_term_id backlink,rows with non-null canonical_term_id,0,2505735,mention rows,FAIL,null on 100 percent of rows,
+mentions,mention confidence,rows with non-null confidence,0,2505735,mention rows,PARTIAL,field present but null everywhere,
+mentions,mention verification status,rows marked UNVERIFIED,2505735,2505735,mention rows,PASS,no human review evidence anywhere,
+mentions,non-CDM entity type in stream,rows typed GO,1221,2505735,mention rows,PARTIAL,GO is not one of the 14 CDM types,
+mentions,clipped sentence evidence,rows flagged SENTENCE_CLIPPED,358150,2505735,mention rows,PASS,,offsets still resolve within the section
+mentions,unverified offsets,rows with null offsets,85,2505735,mention rows,PARTIAL,excluded from validation checked denominator,
+join,mention to canonical join,rows matched,1174969,2505735,mention rows,PARTIAL,implicit join on normalized_mention plus entity_type,46.89 percent
+join,mention to canonical join,rows unmatched,1330766,2505735,mention rows,FAIL,53.1088 percent,Class A type-divergent 1030912 rows; Class B surface absent 299854 rows
+join,terms receiving a mention rollup,terms with mention_count,155514,165991,canonical terms,PASS,,93.69 percent
+join,canonical terms with no mention,terms with null mention_count,10477,165991,canonical terms,FAIL,6.31 percent,
+join,stored mention_count recompute,mismatches,0,155514,terms with a rollup,PASS,recompute against the same constrained join,internally consistent
+join,stored paper_count recompute,mismatches,0,155514,terms with a rollup,PASS,,
+join,matched-row cross-model inflation,inflation factor,1.6065,731369,distinct occurrence_key among matched rows,PARTIAL,1174969/731369,
+join,terms whose mention_count exceeds distinct occurrences,terms,23921,155514,terms with a rollup,PARTIAL,,cross-model double counting
+mappings,mapping rows,rows,334231,334231,term_ontology_mappings.jsonl,PASS,,
+mappings,orphan mapping rows,term_id absent from canonical,5237,334231,mapping rows,FAIL,NORM_EXISTS_OTHER_TYPE 3268 / NORM_ABSENT 1969 / BROKEN_ID 0,all from source_service mesh
+mappings,mapping_id uniqueness,null mapping_id rows,11477,334231,mapping rows,PARTIAL,all NO_MATCH_FOUND rows,
+mappings,mapping_id uniqueness,duplicate non-null mapping_ids,3556,322754,rows with non-null mapping_id,FAIL,4150 extra rows; max 3 repeats,mapping_id omits candidate_rank
+mappings,term and concept pair uniqueness,duplicate (term_id concept_id) pairs,4785,322754,rows with non-null mapping_id,FAIL,6097 extra rows; max 6 repeats,different tiers can reach the same concept
+mappings,exact duplicate rows,duplicate rows identical in all fields,0,334231,mapping rows,PASS,,no byte-identical row duplicates
+mappings,canonical term mapping coverage,terms with a mapping row,71533,165991,canonical terms,PARTIAL,43.09 percent,
+mappings,canonical term mapping coverage,terms with no mapping row,94458,165991,canonical terms,PARTIAL,56.90 percent,exactly the generic ENTITY count
+mappings,canonical term concept coverage,terms with a concept_id,60056,165991,canonical terms,PARTIAL,36.18 percent,
+mappings,reported terms with any candidate,terms per report,65293,165991,canonical terms,PARTIAL,includes the 5237 orphan term_ids,honest in-canonical figure is 60056
+mappings,relation mix,RELATED_TO plus AMBIGUOUS rows,284351,334231,mapping rows,PARTIAL,85.08 percent,candidates not equivalence claims
+mappings,exact match rows,EXACT_MATCH,38403,334231,mapping rows,PASS,11.49 percent,
+mappings,no match rows,NO_MATCH_FOUND,11477,334231,mapping rows,PASS,3.43 percent,
+mappings,auto-accept eligibility,auto_accept_eligible True,38334,334231,mapping rows,PARTIAL,11.47 percent,
+mappings,human approval,auto_accepted,0,334231,mapping rows,PASS,no human verdicts exist,
+mappings,failed lookup vs no match,terms_lookup_failed,0,334231,mapping rows,NOT_VERIFIABLE,LOOKUP_FAILED modelled but unexercised,
+mappings,concept target existence (OMOP spot check),concept ids found,40,40,sampled omop_local concept ids,PARTIAL,found in results/omop_vocab/omop_index.sqlite,not exhaustive
+mappings,distinct concept ids,distinct concept_id,206805,322754,mapping rows with a concept,PASS,,
+mappings,concept reuse,concept ids owned by more than one term,41759,206805,distinct concept ids,PARTIAL,,expected for general concepts
+validation,validation units,section units,4006,4006,terminology_validation.jsonl,PASS,,
+validation,validated sections,sections VALIDATED,3553,4006,validation units,PASS,,
+validation,zero-char placeholders,sections NOT_APPLICABLE,453,4006,validation units,PASS,front/(preamble) one per paper,
+validation,mentions checked,mentions checked,2505650,2505735,mention rows,PARTIAL,verified 2505616 plus recovered 34,excludes the 85 OFFSET_UNVERIFIED
+validation,unresolved mentions,unresolved,0,2505650,mentions checked,PASS,,
+validation,failed offsets,rows flagged,0,2505650,mentions checked,PASS,,
+validation,papers processed,papers,453,453,intended corpus,PASS,,
+validation,chars processed,characters,26867649,26867649,segmented corpus,PASS,,release 2.2.0 declares 26874831 (different accounting)
+corpus,papers in release,intended papers,453,453,corpus_v2/2.2.0,PASS,,447 canonical 6 dup-excluded
+corpus,mention paper scope,distinct paper_id,453,453,mention rows,PASS,,
+corpus,mention section scope,distinct (paper_id section_id),2364,2364,mention rows,PASS,,validation covers 3553 content sections
+corpus,body-only CPU universe,units,2817,2817,body_only True,PASS,corpus note,not used by this build directly
+frequency,section frequency materialised,section frequency artifacts,0,1,expected dataset E artifact,FAIL,none exists anywhere,
+frequency,mention frequency scope documented in data,documents stating the rule,0,1,expected rule documentation,PARTIAL,rule in code docstrings only,
+frequency,raw rows reconciled against single source of truth,extractors reconciled,0,4,T1 sources,PARTIAL,cpu_ensemble qwen_vllm_body mesh_gazetteer qwen_ollama,mention_count sums rows across all four
+integration,data_catalogue references this build,references,0,1,data_catalogue,FAIL,no reference to results/terminology_v1,verified by grep
+integration,2.2.0 references this build,references,0,1,corpus_v2/releases/2.2.0,FAIL,no reference to terminology_v1 or term_mentions or canonical_terms,verified by grep
+integration,distinct terminology inventories,coexisting inventories,3,3,catalogue and release,FAIL,canonical_terms.jsonl 165991 / terminology_dedup.csv 166012 / terminology_inventory.csv 39694,no cross-reference
+integration,2.2.0 terminology inventory verification status,rows pending,39694,39694,2.2.0 terminology_inventory.csv,PASS,all verification_status pending,consistent with no human review
+integration,release-scoped manifest for this build,release entry,0,1,expected release manifest,FAIL,this build lives only in results/ terminology working dir,
+review,human-reviewed mentions,rows human-reviewed,0,2505735,mention rows,NOT_VERIFIABLE,none,
+review,human-reviewed definitions,rows human-reviewed,0,1150,definition rows,NOT_VERIFIABLE,none,
+review,human-approved mappings,rows human-approved,0,334231,mapping rows,NOT_VERIFIABLE,auto_accepted 0,
+review,human verdicts in calibration sheet,verdicts,0,390,calibration_sample.csv rows,NOT_VERIFIABLE,human columns empty,needs 73 per stratum for a 95 percent Wilson lower bound
+review,taxonomy classified terms,terms classified,0,165991,canonical terms,NOT_VERIFIABLE,classified_terms 0,taxonomy DRAFT

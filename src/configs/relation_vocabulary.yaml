@@ -1,0 +1,165 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Microbiome-CDM relation vocabulary
+#
+# Source-of-truth for the relation predicates that appear in the release DBs.
+# This file MUST be cited by every manifest, manuscript, and release README.
+# If you change anything here, re-run src/tests/test_release_artifacts.py to
+# confirm both release DBs agree.
+#
+# Schema:
+#   predicate    : the literal string in the DB's relationships.relationship_type
+#   category     : one of CDM_CORE, LLM_EXTENDED, GENERIC_PLACEHOLDER
+#   definition   : human-readable meaning
+#   in_v2_0_qwen : count in releases/v2.0-qwen-publication/microbiome_cdm.db
+#   in_v2_1_full : count in releases/v2.1-full-multiner/microbiome_cdm.db
+#   admissible_subject_types : list of allowed subject CDM types (when enforced)
+#   admissible_object_types  : list of allowed object  CDM types (when enforced)
+# ──────────────────────────────────────────────────────────────────────────────
+
+version: "1.0"
+schema_version: "2.0"
+cdm_entity_types: 14   # canonical CDM entity type count
+total_predicates_observed: 26  # actually materialised in the DBs (24 in v2.0-qwen, 26 in v2.1-full)
+
+# ── CDM core relations (the 14 in the original schema) ────────────────────────
+# These are the relations the manuscript + CDM schema explicitly define.
+# They should be present in every release and pass the schema test.
+
+CDM_CORE:
+  - predicate: ENRICHED_IN
+    definition: Subject (typically an organism or taxon) is enriched in object.
+    admissible_subject_types: [ORGANISM, GENOMICS, CHEMICAL]
+    admissible_object_types:  [DISEASE, SAMPLE_METHOD, CLINICAL, ORGANISM]
+
+  - predicate: DEPLETED_IN
+    definition: Subject is depleted in object (complement of ENRICHED_IN).
+    admissible_subject_types: [ORGANISM, GENOMICS, CHEMICAL]
+    admissible_object_types:  [DISEASE, SAMPLE_METHOD, CLINICAL, ORGANISM]
+
+  - predicate: CO_OCCURS_WITH
+    definition: Statistical co-occurrence (not a semantic one). Always emits these.
+    admissible_subject_types: [ORGANISM, CHEMICAL, DISEASE, PROTEIN, DNA_RNA, CELL_TYPE, GENOMICS, PATHWAY, LAB_METHOD, DATA_ANALYSIS, SAMPLE_METHOD, CLINICAL, EXPERIMENTAL_METHOD, STUDY_DESIGN]
+    admissible_object_types:  "*"
+
+  - predicate: PRODUCES
+    definition: Subject produces object (e.g., organism produces metabolite).
+    admissible_subject_types: [ORGANISM, GENOMICS, CHEMICAL, PROTEIN, PATHWAY]
+    admissible_object_types:  [CHEMICAL]
+
+  - predicate: INCREASES
+    definition: Subject causally increases object (positive direction).
+    admissible_subject_types: [ORGANISM, CHEMICAL, GENOMICS, PROTEIN]
+    admissible_object_types:  [DISEASE, CHEMICAL, CLINICAL, ORGANISM, PROTEIN]
+
+  - predicate: DECREASES
+    definition: Subject causally decreases object (negative direction).
+    admissible_subject_types: [ORGANISM, CHEMICAL, GENOMICS, PROTEIN]
+    admissible_object_types:  [DISEASE, CHEMICAL, CLINICAL, ORGANISM, PROTEIN]
+
+  - predicate: PART_OF_PATHWAY
+    definition: Subject is part of object (a biological pathway).
+    admissible_subject_types: [PROTEIN, CHEMICAL, GENOMICS, ORGANISM, DNA_RNA, CELL_TYPE]
+    admissible_object_types:  [PATHWAY]
+
+  - predicate: METABOLIZES
+    definition: Subject metabolises object (typically organism→chemical).
+    admissible_subject_types: [ORGANISM, GENOMICS, CHEMICAL, PROTEIN]
+    admissible_object_types:  [CHEMICAL]
+
+  - predicate: MODULATES
+    definition: Subject modulates object (bidirectional causal influence).
+    admissible_subject_types: [ORGANISM, CHEMICAL, GENOMICS, PROTEIN, CELL_TYPE]
+    admissible_object_types:  [ORGANISM, CHEMICAL, DISEASE, CLINICAL, PATHWAY, PROTEIN]
+
+  - predicate: IMPLICATED_IN
+    definition: Subject is implicated in / associated with object (clinical).
+    admissible_subject_types: [ORGANISM, CHEMICAL, GENOMICS, PROTEIN, PATHWAY, DNA_RNA, CELL_TYPE]
+    admissible_object_types:  [DISEASE, CLINICAL]
+
+  - predicate: CAUSES
+    definition: Subject causes object (causal claim).
+    admissible_subject_types: [ORGANISM, CHEMICAL, GENOMICS, DISEASE, CELL_TYPE, CLINICAL, PROTEIN, DNA_RNA]
+    admissible_object_types:  [DISEASE, CLINICAL]
+
+  - predicate: TREATS
+    definition: Subject treats object (clinical intervention).
+    admissible_subject_types: [CHEMICAL, ORGANISM]
+    admissible_object_types:  [DISEASE, CLINICAL]
+
+  - predicate: INHIBITS
+    definition: Subject inhibits object (negative causal claim).
+    admissible_subject_types: [ORGANISM, CHEMICAL, GENOMICS, PROTEIN, DNA_RNA]
+    admissible_object_types:  [ORGANISM, CHEMICAL, DISEASE, PATHWAY, PROTEIN, CELL_TYPE]
+
+  - predicate: ASSOCIATED_WITH
+    definition: Generic undirected association. The default fallback when no other predicate applies. NOT a directional semantic relation.
+    admissible_subject_types: "*"
+    admissible_object_types:  "*"
+
+# ── LLM-extended predicates (10 extra, observed in the Qwen extractions) ───────
+# These were produced by the Qwen LLM extractions and are NOT in the canonical
+# CDM schema. They should be considered LLM-specific and treated with the
+# provenance_type="LLM_SENTENCE" tag in v2.0-qwen.
+
+LLM_EXTENDED:
+  - predicate: PARTICIPATES_IN
+    definition: Subject participates in object (process/pathway). LLM-extracted only.
+  - predicate: ACTIVATES
+    definition: Subject activates object. LLM-extracted only.
+  - predicate: PREDICTS
+    definition: Subject predicts object. LLM-extracted only.
+  - predicate: IMPROVES
+    definition: Subject improves object (positive direction). LLM-extracted only.
+  - predicate: PRODUCED_BY
+    definition: Inverse of PRODUCES; subject is produced by object. LLM-extracted only.
+  - predicate: BINDS
+    definition: Subject binds object (molecular interaction). LLM-extracted only.
+  - predicate: PREVENTS
+    definition: Subject prevents object (negative intervention). LLM-extracted only.
+  - predicate: EXPRESSES
+    definition: Subject expresses object (gene expression). LLM-extracted only.
+  - predicate: REGULATES
+    definition: Subject regulates object (regulatory influence). LLM-extracted only.
+  - predicate: DISRUPTS
+    definition: Subject disrupts object. LLM-extracted only; very low count.
+  - predicate: ENCODES
+    definition: Subject (gene/DNA) encodes object (protein). LLM-extracted only; present in v2.1-full (4 edges).
+    admissible_subject_types: [DNA_RNA]
+    admissible_object_types: [PROTEIN]
+  - predicate: TREATED_BY
+    definition: Subject (disease) is treated by object (chemical/intervention). LLM-extracted only; present in v2.1-full (1 edge).
+    admissible_subject_types: [DISEASE]
+    admissible_object_types: [CHEMICAL]
+
+# ── Generic placeholder (separate from core/extended) ─────────────────────────
+# ASSOCIATED_WITH is in CDM_CORE above for completeness, but it is functionally
+# a placeholder. It accounts for ~77% of all edges in v2.0-qwen. Any release
+# claiming "X associations" should subtract this bucket before counting.
+
+GENERIC_PLACEHOLDER:
+  - predicate: ASSOCIATED_WITH
+    note: |
+      Default fallback in the LLM triple extraction. Every two entities that
+      co-occur in a sentence can be reported as "associated_with". 6,340 of
+      the 8,210 edges in v2.0-qwen (77.2%) carry this predicate. The
+      manuscript must NOT count these as semantic biological relations
+      without an explicit qualifier.
+
+# ── Provenance-type classification (the new column on relationships) ──────────
+# This is what every edge carries in v2.0-qwen after the fix. The schema
+# for the column is: TEXT, default 'unspecified'.
+
+provenance_types:
+  DIRECT_TEXT:   Extracted from a sentence in a paper with span/char evidence.
+  KB_DERIVED:    Imported from biological_kb.py (the curated KB layer).
+  CO_OCCURRENCE: Statistical co-occurrence (FDR-tested); present in v2.1-full, absent in v2.0-qwen.
+  LLM_SENTENCE:  LLM triple extraction; no span evidence captured (Qwen default).
+  INFERRED:      Inferred or default-classified; not directly text-supported.
+
+# ── Co-occurrence hypothesis count ─────────────────────────────────────────────
+# Only v2.1-full has co-occurrence edges (33,274 of them).
+# v2.0-qwen dropped them during build_qwen_cdm.py.
+
+co_occurrence_hypotheses:
+  v2_0_qwen: 0
+  v2_1_full: 675817   # m_hypotheses in run_metadata (FDR-tested)

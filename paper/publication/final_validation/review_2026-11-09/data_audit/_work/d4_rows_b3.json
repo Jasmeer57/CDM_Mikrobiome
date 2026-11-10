@@ -1,0 +1,82 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_papers_coverage",
+  "expected": "453 processed / 0 not processed / 0 flagged",
+  "observed": "453 / 0 / 0",
+  "query_or_file": "validation_summary.json papers coverage fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_sections_coverage",
+  "expected": "3,553 validated + 453 not_applicable = 4,006 total",
+  "observed": "3553 + 453 = 4006",
+  "query_or_file": "validation_summary.json sections coverage",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_mentions_offset_resolved",
+  "expected": "2,505,650 checked, 100.0% resolved, 0 unresolved",
+  "observed": "2505650 checked, 100.0% resolved, 0 unresolved",
+  "query_or_file": "validation_summary.json mention_offset_verification",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_overall_status",
+  "expected": "COMPLETE",
+  "observed": "COMPLETE",
+  "query_or_file": "validation_summary.json overall status",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/terminology_validation.jsonl",
+  "check_name": "validation_jsonl_status_census",
+  "expected": "VALIDATED 3,553 (= summary sections_validated) + NOT_APPLICABLE 453, over 453 papers",
+  "observed": "{'NOT_APPLICABLE': 453, 'VALIDATED': 3553} over 453 papers",
+  "query_or_file": "terminology_validation.jsonl status census",
+  "status": "PASS",
+  "note": "jsonl row status is VALIDATED (not 'PASS')"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_definitions_summary.json",
+  "check_name": "definitions_rows_total",
+  "expected": "1,150 (= 1,087 EXACT + 63 CORRECTED)",
+  "observed": "1150",
+  "query_or_file": "_definitions_summary.json definitions count",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_definitions_summary.json",
+  "check_name": "definitions_by_definition_source",
+  "expected": "CONTEXTUAL_DESCRIPTION 1003 / ABBREVIATION_EXPANSION 126 / EXPLICIT_AUTHOR_DEFINITION 21",
+  "observed": "{'CONTEXTUAL_DESCRIPTION': 1003, 'ABBREVIATION_EXPANSION': 126, 'EXPLICIT_AUTHOR_DEFINITION': 21}",
+  "query_or_file": "_definitions_summary.json by_definition_source",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl",
+  "check_name": "definitions_review_status_all_review_required",
+  "expected": "every jsonl definition row review_status == REVIEW_REQUIRED",
+  "observed": "{'REVIEW_REQUIRED': 1150}; provenance_class={'SOURCE_DERIVED': 1150}",
+  "query_or_file": "jsonl predicate scan (review_status + provenance_class censuses)",
+  "status": "PASS",
+  "note": ""
+ }
+]

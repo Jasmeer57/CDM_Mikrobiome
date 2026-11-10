@@ -1,0 +1,16 @@
+D4-F01_term_link_status_jsonl_eq_fixreport	{"LINKED": 2168760, "NO_CANONICAL_TERM": 299854, "LINKED_BY_TYPE": 30049, "AMBIGUOUS": 7072}	{"LINKED": 2168760, "NO_CANONICAL_TERM": 299854, "LINKED_BY_TYPE": 30049, "AMBIGUOUS": 7072}	jsonl census vs OFFSET_FIX_REPORT link:*	PASS	
+D4-F02_offset_status_jsonl_eq_fixreport	{"EXACT": 2348766, "CORRECTED": 156884, "UNANCHORED": 85}	{"EXACT": 2348766, "CORRECTED": 156884, "UNANCHORED": 85}	jsonl census vs OFFSET_FIX_REPORT	PASS	
+D4-F03_definitions_offset_status_jsonl_eq_fixreport	{"EXACT": 1087, "CORRECTED": 63}	{"EXACT": 1087, "CORRECTED": 63}	jsonl census vs OFFSET_FIX_REPORT	PASS	
+D4-F04_sections_shifted	75 (67 shift-1 + 8 shift-2)	75 ({'1': 67, '2': 8})	OFFSET_FIX_REPORT sections_shifted	PASS	
+D4-F05_jsonl_vs_db_census_delta_51	jsonl - DB per-status deltas sum to exactly 51 (load dedup), non-negative, spread over statuses of duplicated mentions	delta sums: link 51, offstat 51, corr 51	census diff (jsonl - DB) over term_mention	PASS	deltas: {'LINKED': 43, 'NO_CANONICAL_TERM': 8, 'LINKED_BY_TYPE': 0, 'AMBIGUOUS': 0} / {'EXACT': 8, 'CORRECTED': 14, 'UNANCHORED': 29} / {0: 37, 1: 14, 2: 0}
+D4-F06_corrected_rows_have_nonzero_correction	all CORRECTED rows offset_correction>0; all EXACT rows 0	corrected: >0 156884, ==0 0	jsonl predicate scan	PASS	
+D4-F07_exact_rows_zero_correction	0 EXACT rows with nonzero offset_correction	0	jsonl predicate scan	PASS	
+D4-V01_validation_papers	453 processed / 0 not processed / 0 flagged	453 / 0 / 0	validation_summary.json coverage	PASS	
+D4-V02_validation_sections	3,553 validated + 453 not_applicable = 4,006 total	3553 + 453 = 4006	validation_summary.json coverage	PASS	
+D4-V03_validation_mentions_resolved	2,505,650 checked, 100.0% resolved, 0 unresolved	2505650 checked, 100.0% resolved, 0 unresolved	validation_summary.json mention_offset_verification	PASS	
+D4-V04_validation_status	COMPLETE	COMPLETE	validation_summary.json	PASS	
+D4-V05_validation_jsonl_status_census	VALIDATED 3553 (summary sections_validated), NOT_APPLICABLE 453, over 453 papers	{'NOT_APPLICABLE': 453, 'VALIDATED': 3553} over 453 papers	terminology_validation.jsonl census	PASS	statuses={'NOT_APPLICABLE': 453, 'VALIDATED': 3553}
+D4-D01_definitions_rows	1150 (= 1087 EXACT + 63 CORRECTED)	1150	_definitions_summary.json	PASS	
+D4-D02_definitions_sources	CONTEXTUAL_DESCRIPTION 1003 / ABBREVIATION_EXPANSION 126 / EXPLICIT_AUTHOR_DEFINITION 21	{"CONTEXTUAL_DESCRIPTION": 1003, "ABBREVIATION_EXPANSION": 126, "EXPLICIT_AUTHOR_DEFINITION": 21}	_definitions_summary.json by_definition_source	PASS	
+D4-D03_definitions_review_status_all_REVIEW_REQUIRED	every jsonl definition row review_status == REVIEW_REQUIRED	{'REVIEW_REQUIRED': 1150}; provenance_class={'SOURCE_DERIVED': 1150}	jsonl predicate scan	PASS	
+D4-X01_missing_mapping_ids_characterized	2,784 jsonl mapping_ids absent from DB; involvement = the 2,837 demoted mapping rows' remnant groups; their terms all still resolvable in canonical_term/removed_canonical_term	2784 ids / 2837 rows; terms live 565, removed 0, absent 0	set diff + join census	PASS	missing rows by relation {'AMBIGUOUS': 1475, 'EXACT_MATCH': 881, 'RELATED_TO': 481}, disposition {'REVIEW_REQUIRED': 2837}

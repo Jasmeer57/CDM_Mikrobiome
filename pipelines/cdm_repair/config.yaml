@@ -1,0 +1,160 @@
+# CDM 3.1 DeepSeek-assisted repair pipeline: configuration.
+# No secrets in this file. The API key and endpoint live only in api.secrets_file (chmod 600) and are read
+# only by the inference stages (02, 03), never by the inventory.
+#
+# Paths are relative to the repository root (found at run time via .cdm_root).
+
+pipeline:
+  name: cdm_v3_3.1_deepseek_repair
+  version: 0.1.0
+  candidate_release: "3.1.0-candidate"   # a future candidate; nothing is built yet
+  workspace: outputs/results/cdm_v3_3.1_deepseek_repair
+
+# Stage gate. A stage refuses to run unless it is listed here. Authorised 2026-11-05: Stage A only.
+# Adding a stage here is a decision for the project lead, recorded in CHANGE_RECORD.md.
+authorised_stages: [A, B, H, I]   # B, H, I authorised 2026-11-05 by the project lead ("please fix the definitions and terminologies"); pilot first
+
+# Frozen inputs: read-only. Every run verifies the release manifests before reading anything.
+frozen_inputs:
+  cdm:
+    release: CDM 3.0.3
+    dir: releases/cdm_v3/3.0.3
+    manifest: MANIFEST.sha256
+    database: microbiome_cdm_v3.db
+  catalogue:
+    release: data catalogue 3.1.1
+    dir: releases/data_catalogue_v3/3.1.1
+    manifest: MANIFEST.sha256
+  terminology:
+    release: terminology 1.0.1
+    dir: releases/terminology/1.0.1
+    manifest: MANIFEST.sha256
+  zenodo:
+    release: zenodo_frozen (not an input; integrity checked only)
+    dir: releases/zenodo_frozen
+    manifest: MANIFEST.sha256
+
+# Recorded fingerprints of the release manifests (PUBLICATION_INDEX.md, 2026-11-02). A run stops if a
+# manifest's own SHA-256 does not start with this prefix.
+manifest_fingerprints:
+  cdm: 9e71d509
+  catalogue: 671b672b
+  terminology: 2ddc5706
+
+# Non-frozen inputs: hashed into the input manifest, never modified.
+other_inputs:
+  rights_matrix: paper/publication/rights/PAPER_RIGHTS_MATRIX.csv
+  zenodo_licences: releases/zenodo_frozen/rights/PAPER_LICENCES.csv
+  vocabularies_dir: data/reference_kg/raw
+  vocabularies_checksums: data/reference_kg/raw/SHA256SUMS
+  vocabularies:                     # local resources for identifier validation (Stage D/E)
+    ncbi_taxonomy_names: data/reference_kg/raw/names.dmp
+    ncbi_taxonomy_nodes: data/reference_kg/raw/nodes.dmp
+    ncbi_taxonomy_merged: data/reference_kg/raw/merged.dmp
+    ncbi_taxonomy_deleted: data/reference_kg/raw/delnodes.dmp
+    mesh: data/reference_kg/raw/mesh/desc2026.xml
+    mondo: data/reference_kg/raw/obo/mondo.obo
+    hpo: data/reference_kg/raw/obo/hp.obo
+    ctd_chemicals: data/reference_kg/raw/CTD_chemicals.tsv.gz
+    ctd_diseases: data/reference_kg/raw/CTD_diseases.tsv.gz
+    human_gene_info: data/reference_kg/raw/Homo_sapiens.gene_info.gz
+  # Earlier DeepSeek outputs: referenced and hashed only. Never modified, never treated as ground truth.
+  prior_deepseek_outputs:
+    cleaned_triples: outputs/results/cleaned_layer_deepseek/cleaned_triples.csv.gz
+    triple_verdicts: outputs/results/benchmark/llm_judge_deepseek_v4_flash/triple_verdicts.csv.gz
+    evidence_verdicts: outputs/results/kg_2026-11-04/evidence_check/evidence_verdicts.csv.gz
+
+# Declared CDM types: src/cdm_pipeline/config.py:CDM_TYPES (14). ENTITY is the generic placeholder.
+cdm_types: [ORGANISM, CHEMICAL, DISEASE, PROTEIN, DNA_RNA, CELL_TYPE, GENOMICS, PATHWAY, LAB_METHOD,
+            DATA_ANALYSIS, SAMPLE_METHOD, CLINICAL, EXPERIMENTAL_METHOD, STUDY_DESIGN]
+generic_type: ENTITY
+
+# Documented baseline values. Stage A stops if any recomputed value differs.
+# Sources: paper/publication/final_validation/MANUSCRIPT_CLAIMS_REGISTER.csv (claim id) or the component
+# quality audit (paper/publication/component_quality_audit/, 2026-11-05).
+expected_baseline:
+  papers:                       {value: 453,     source: C01}
+  sections:                     {value: 4006,    source: C07}
+  mentions_cdm:                 {value: 2505684, source: M01}
+  mentions_terminology_1_0_1:   {value: 2505735, source: M02}
+  canonical_terms_terminology:  {value: 165991,  source: T01}
+  canonical_terms_cdm:          {value: 162409,  source: T02}
+  removed_terms:                {value: 3582,    source: T03}
+  terms_typed_entity:           {value: 89799,   source: T05}
+  mapping_rows:                 {value: 331394,  source: "audit 00 §3 D"}
+  mapping_rows_kept_by_guards:  {value: 314772,  source: P02}
+  mapping_rows_rejected_by_guards: {value: 16622, source: P03}
+  mapping_rows_accepted_two_models: {value: 18272, source: P05}
+  terms_with_accepted_mapping:  {value: 16750,   source: P06}
+  mapping_rows_with_matched_via: {value: 21127,  source: "audit 00 §3 D"}
+  triples:                      {value: 25788,   source: Q01}
+  triples_other_relation:       {value: 17717,   source: "audit 00 §2.5"}
+  triples_typed:                {value: 8071,    source: "audit 00 §3 G"}
+  triple_evidence_rows:         {value: 34416,   source: "audit 00 §3 G"}
+  definitions:                  {value: 6773,    source: "audit 00 §3 E"}
+  catalogue_records:            {value: 52400,   source: K01}
+  catalogue_findings:           {value: 24272,   source: K02}
+
+# Rights. The register is built from the rights matrix; nothing here is a legal determination.
+rights:
+  candidate_decision: INCLUDE_TEXT            # 274 CC BY / CC0 papers: candidates for review only
+  blocked_decisions: [WITHHOLD_TEXT, RESTRICTED_NC_LAYER]   # 179 papers: no transmission of text
+  max_label_chars_for_transmission: 49        # a term string of >= 50 chars is treated as a passage
+  # Both checks must be recorded as VERIFIED (by a person) before any sentence is sent to the API.
+  required_checks: [licence_scope_verified, api_processing_conditions_verified]
+
+# Inference settings for the later stages (02, 03). Copied from src/scripts/ner_llm_judge/config.yml.
+api:
+  secrets_file: ~/.fhgenie_secrets.yml
+  model: deepseek-ai/DeepSeek-V4-Flash-0731
+  max_rpm: 45                 # the endpoint limit is 50 requests/min, shared by everything using the key
+  max_concurrency: 8
+  temperature: 0
+  json_mode: true
+  extra_body: {chat_template_kwargs: {thinking: false}}
+  timeout_s: 300
+  max_retries: 6
+  observed_latency_s: 3       # measured on the 2026-11-03 judge run (thinking disabled)
+
+batching:
+  terms_per_request: 50
+  triples_per_request: 20
+  requests_per_array_task: 200   # bounded SLURM array tasks; one task at a time shares the rate limit
+
+slurm:
+  partition_cpu: intelsr_short   # verified with sinfo 2026-11-05 (8 h limit)
+  python_module: Python/3.12.3-GCCcore-13.3.0
+  module_path: /opt/software/easybuild-AMD/modules/all
+  venv: /home/jkalra_hpc/venvs/vllm
+  log_dir: outputs/logs/cdm_repair
+
+# Local model for stages H and I (runs on a cluster GPU through vLLM; no text leaves the cluster).
+local_llm:
+  model: cyankiwi/Qwen3.5-9B-AWQ-4bit   # Qwen3.5-9B, 4-bit AWQ (compressed-tensors), 9.1 GB; download with slurm/download_qwen35_9b.sbatch
+  revision: e4d2d39cede8c5d1716d824cd843e2889c648083   # pinned HF commit
+  host: http://127.0.0.1:8000     # the vLLM server started inside each SLURM task
+  temperature: 0
+  max_tokens: 1200
+  timeout_s: 300
+  max_retries: 4
+  parallel: 32                    # concurrent requests per task (as in the catalogue NER jobs)
+  hf_home: /home/jkalra_hpc/llm/hf-cache
+  max_model_len: 16384
+
+local_vocab:
+  omop_index: outputs/results/omop_vocab/omop_index.sqlite
+
+# Scope of "relevant": everything relevant to human microbiome research (microbes, host, disease, diet, drugs,
+# immune and metabolic markers, samples, and the lab and analysis methods used in such studies).
+
+stage_h:                          # definitions
+  context_chars: 700              # characters of section text on each side of the stored definition
+  min_grounding: 0.5              # share of the definition's content words that must occur in the excerpt
+  term_near_quote_chars: 200      # the term must occur in, or this close to, the evidence quote
+
+stage_i:                          # mappings
+  top_k: 3                        # kept candidates per term by rank (plus every previously accepted row)
+
+stage_b:                          # terminology
+  terms_per_request: 25
+  max_tokens: 4000                # 25 answers per request; 1200 truncated every pilot batch (job 28714641)

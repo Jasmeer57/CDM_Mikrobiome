@@ -1,0 +1,147 @@
+site_name: LLM Terms CDM Pipeline
+site_description: Advanced Microbiome Entity Extraction with LLM and AI-Powered Deduplication
+site_author: Jasmeer Singh Kalra
+site_url: https://scai-bio.github.io/Microbiome-CDM/llm_terms/
+
+# Repository
+repo_name: Microbiome-CDM
+repo_url: https://github.com/SCAI-BIO/Microbiome-CDM
+edit_uri: ""
+
+# Navigation
+nav:
+  - Home: index.md
+  - API Reference: api_reference.md
+  - Complete Pipeline Guide: complete_pipeline_guide.md
+  - Deployment:
+      - Docker: deployment/docker.md
+  - Safety:
+      - Safety Enhancements: ../SAFETY_ENHANCEMENTS.md
+      - Environment Setup: ../SAFETY_INSTRUCTIONS.md
+
+# Theme
+theme:
+  name: material
+  language: en
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: lime
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: lime
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - header.autohide
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+
+# Plugins
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      type: datetime
+      timezone: UTC
+      locale: en
+  - awesome-pages
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/SCAI-BIO/Microbiome-CDM
+    - icon: fontawesome/brands/docker
+      link: https://app.docker.com/accounts/jasmeer57
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/microbiome-cdm/
+
+extra_css:
+  - assets/extra.css
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css
+
+extra_javascript:
+  - assets/extra.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+# Markdown Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      title: Table of contents
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: SCAI-BIO
+      repo: Microbiome-CDM
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/mkdocs.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Page tree
+exclude_docs: |
+  includes/
+
+# Copyright
+copyright: |
+  &copy; 2024 Jasmeer Singh Kalra -
+  <a href="#__consent">Change Cookie Consent</a>

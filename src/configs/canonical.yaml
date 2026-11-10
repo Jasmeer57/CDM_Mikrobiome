@@ -1,0 +1,366 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Microbiome-CDM canonical configuration
+#
+# Single source of truth for NER model selection, pinned versions, and
+# entity/relation vocabularies. Every manifest, manuscript table, and
+# release README MUST cite this file.
+#
+# To reproduce the v2.1.1-clean release:
+#   1. conda activate microbiome-cdm-env  (or pip install -r requirements.lock)
+#   2. python spacy_terms/scripts/install_scispacy_models.py --verify
+#   3. python -m cdm_pipeline.ner.runner --models all --max_files 500
+#   4. Follow cdm_pipeline/README.md for ontology mapping + CDM build
+#
+# Generated for Phase 1 of the Publication Readiness Plan (2026-10-03).
+# ──────────────────────────────────────────────────────────────────────────────
+
+version: "2.1.1"
+schema_version: "2.0"
+generated: "2026-10-03"
+
+# ── CDM entity types (14) ─────────────────────────────────────────────────────
+cdm_entity_types:
+  - ORGANISM
+  - CHEMICAL
+  - DISEASE
+  - PROTEIN
+  - DNA_RNA
+  - CELL_TYPE
+  - GENOMICS
+  - PATHWAY
+  - LAB_METHOD
+  - DATA_ANALYSIS
+  - SAMPLE_METHOD
+  - CLINICAL
+  - EXPERIMENTAL_METHOD
+  - STUDY_DESIGN
+
+# ── Pinned Python environment ──────────────────────────────────────────────────
+# These versions match the conda env microbiome-cdm-env (Python 3.9.23)
+# that produced the v2.1.1-clean release. See requirements.lock for the
+# complete pinned set.
+environment:
+  python: "3.9.23"
+  conda_env: "microbiome-cdm-env"
+  key_packages:
+    spacy: "3.7.5"
+    scispacy: "0.5.4"
+    thinc: "8.2.5"
+    blis: "1.3.0"
+    numpy: "1.26.4"
+    torch: "2.1.1+cpu"
+    transformers: "4.44.2"
+    sentence-transformers: "2.2.2"
+    scikit-learn: "1.6.1"
+    pandas: "2.0.3"
+    scipy: "1.10.1"
+    gliner: "0.2.26"
+    rapidfuzz: "3.4.0"
+    rdflib: "7.6.0"
+    biopython: "1.85"
+    networkx: "3.2.1"
+    faiss-cpu: "1.7.4"
+    huggingface-hub: "0.25.2"
+    tokenizers: "0.19.1"
+    onnxruntime: "1.19.2"
+    protobuf: "6.33.6"
+    sentencepiece: "0.2.2"
+    requests: "2.31.0"
+    httpx: "0.25.2"
+    pydantic: "2.7.0"
+    pyyaml: "6.0"
+    tqdm: "4.66.1"
+    nltk: "3.9.2"
+
+# ── sciSpaCy models (v0.5.4) ──────────────────────────────────────────────────
+# URL-pinned to prevent silent version drift. SHA-256 hashes verified
+# against the installed packages in the release environment.
+scispacy_models:
+  - name: en_core_sci_lg
+    version: "0.5.4"
+    url: "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_lg-0.5.4.tar.gz"
+    sha256: "a2bfde10824958d51cd016b4142563373d553e24767d79b1abf8699596e31a5b"
+    registry_key: scispacy
+    output_file: scispacy_ner_lg.csv
+    note: "General-purpose biomedical NER; NOT in the default production ensemble"
+  - name: en_ner_bc5cdr_md
+    version: "0.5.4"
+    url: "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_bc5cdr_md-0.5.4.tar.gz"
+    sha256: "ffc73130a710edf851206199720cb2c744a043e032f5da6ba4bb36863deca778"
+    registry_key: scispacy_bc5cdr
+    output_file: scispacy_ner_bc5cdr.csv
+    note: "Trained on BC5CDR (chemicals + diseases)"
+  - name: en_ner_craft_md
+    version: "0.5.4"
+    url: "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_craft_md-0.5.4.tar.gz"
+    sha256: "63ddbc8320c968e419148e4c10dad595cc601aadc6f35187a1340d147f706ab7"
+    registry_key: scispacy_craft
+    output_file: scispacy_ner_craft.csv
+    note: "Trained on CRAFT corpus (genes/proteins, chemicals, diseases, species)"
+  - name: en_ner_jnlpba_md
+    version: "0.5.4"
+    url: "https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_ner_jnlpba_md-0.5.4.tar.gz"
+    sha256: "9a6f59629c1aa0d43643d3e0f786016766149b2ef622d4d7a08808c4a6d9cb11"
+    registry_key: scispacy_jnlpba
+    output_file: scispacy_ner_jnlpba.csv
+    note: "Trained on JNLPBA (proteins, DNA/RNA)"
+
+# ── HuggingFace models (GLiNER + PubMedBERT + BioLORD) ──────────────────────
+# Loaded via from_pretrained(); pinned by HF revision hash (git commit SHA
+# on the HF hub repo at the time of the v2.1.1 build).
+huggingface_models:
+  - registry_key: gliner
+    model_id: "urchade/gliner_medium"
+    hf_revision: "b63645e3596b70a7d66e0597b3e739ad17bffe9d"
+    class: GLiNERModel
+    output_file: gliner_ner.csv
+    threshold: 0.5
+    chunk_size: 2000
+    entity_types: "*"    # uses all 14 CDM_TYPES
+    note: "General-purpose GLiNER zero-shot NER"
+  - registry_key: gliner_biomed
+    model_id: "Ihor/gliner-biomed-large-v1.0"
+    hf_revision: "f79771210ab2111a2081ef31620fdb7342f602e9"
+    class: GLiNERModel
+    output_file: gliner_biomed_ner.csv
+    threshold: 0.5
+    chunk_size: 2000
+    entity_types: "*"
+    note: "Biomedical GLiNER variant; NOT in the default production ensemble"
+  - registry_key: pubmedbert
+    model_id: "alvaroalon2/biobert_diseases_ner"
+    hf_revision: "0a4ed7dd4fd3e6db7229e5b801b70eefcb253759"
+    class: PubMedBERTModel
+    output_file: pubmedbert_ner.csv
+    note: "BioBERT fine-tuned for disease NER"
+  - registry_key: biolord
+    model_id: "FremyCompany/BioLORD-2023"
+    hf_revision: "167aab527b238a50ca65224e6319215d2ff4fc9f"
+    class: sentence-transformers
+    role: embedding_normalization
+    note: "Biomedical sentence embeddings for Tier 4 semantic entity matching"
+    used_in_build: true
+    source_file: "cdm_pipeline/triples/biolord_matcher.py"
+
+# ── API models (PubTator3) ────────────────────────────────────────────────────
+api_models:
+  - registry_key: pubtator
+    class: PubTatorModel
+    output_file: pubtator3_ner.csv
+    esearch_url: "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+    pubtator_url: "https://www.ncbi.nlm.nih.gov/research/pubtator3-api/publications/export/biocjson"
+    rate_limit_sleep: 0.12    # seconds between papers
+    esearch_timeout: 15       # seconds
+    pubtator_timeout: 30      # seconds
+    api_key_env: ENTREZ_API_KEY
+    note: "NCBI PubTator3 API; requires PMID resolution via title search"
+
+# ── Ollama (LLM inference server) ─────────────────────────────────────────────
+# Module: ollama-bin/0.32.9 (EasyBuild). Requires rocm/6.3.3 on gpu-amd nodes.
+# Start: ollama serve (background, port 11434 or SLURM_JOB_ID-offset port)
+# Models pulled from ollama registry; pinned by digest (SHA-256 of manifest).
+ollama:
+  version: "ollama-bin/0.32.9"
+  rocm_module: "rocm/6.3.3"
+  # Determinism policy (process fix b):
+  # All Ollama calls use temperature=0 and seed=42 for reproducibility.
+  # Configured in pipelines/llm_terms/config/cdm_config.py MODEL_CONFIGS and passed
+  # via pipelines/llm_terms/core/llm_client.py _call_ollama() options dict.
+  # All hardcoded temperature values in cdm_pipeline/ and pipelines/llm_terms/ have
+  # been updated to 0 with seed=42 in their Ollama options payloads.
+  determinism:
+    temperature: 0
+    seed: 42
+    top_p: 0.9
+  models:
+    - name: "qwen3.5:9b"
+      digest: "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7"
+      role: "NER (LLM) + relation extraction + entity cleanup"
+      architecture: qwen35
+      parameters: 9.7B
+      quantization: Q4_K_M
+      context_length: 262144
+      used_in_build: true
+    - name: "nomic-embed-text:latest"
+      digest: "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      role: "embedding (entity embeddings for dedup)"
+      architecture: nomic-bert
+      parameters: 136.73M
+      quantization: F16
+      context_length: 2048
+      used_in_build: true
+    - name: "bge-m3:latest"
+      digest: "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+      role: "embedding (ECO evidence mapping, semantic dedup, noise detection)"
+      architecture: bert
+      parameters: 566.70M
+      quantization: F16
+      context_length: 8192
+      used_in_build: true
+
+# ── Reconciled model table (12 checkpoints) ───────────────────────────────────
+# Every model checkpoint that contributed to the v2.1.1-clean release.
+# NER models: 9 (8 discriminative + 1 LLM)
+# Embedding/normalization: 3
+# Production ensemble (DEFAULT_MODELS in registry.py): 6 of the 9 NER models
+model_table:
+  - id: 1
+    name: gliner
+    checkpoint: "urchade/gliner_medium"
+    checkpoint_type: huggingface
+    hf_revision: "b63645e3596b70a7d66e0597b3e739ad17bffe9d"
+    role: NER
+    in_default_ensemble: true
+    in_v2_1_1_build: true
+    output_file: gliner_ner.csv
+    ner_column: ner_gliner
+  - id: 2
+    name: gliner_biomed
+    checkpoint: "Ihor/gliner-biomed-large-v1.0"
+    checkpoint_type: huggingface
+    hf_revision: "f79771210ab2111a2081ef31620fdb7342f602e9"
+    role: NER
+    in_default_ensemble: false
+    in_v2_1_1_build: true
+    output_file: gliner_biomed_ner.csv
+    ner_column: ner_gliner
+    note: "Experimental variant; merged into ner_gliner column in DB"
+  - id: 3
+    name: pubmedbert
+    checkpoint: "alvaroalon2/biobert_diseases_ner"
+    checkpoint_type: huggingface
+    hf_revision: "0a4ed7dd4fd3e6db7229e5b801b70eefcb253759"
+    role: NER
+    in_default_ensemble: true
+    in_v2_1_1_build: true
+    output_file: pubmedbert_ner.csv
+    ner_column: ner_pubmedbert
+  - id: 4
+    name: pubtator
+    checkpoint: "PubTator3 API"
+    checkpoint_type: api
+    role: NER
+    in_default_ensemble: true
+    in_v2_1_1_build: true
+    output_file: pubtator3_ner.csv
+    ner_column: ner_pubtator3
+  - id: 5
+    name: qwen
+    checkpoint: "qwen3.5:9b"
+    checkpoint_type: ollama
+    ollama_digest: "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7"
+    role: NER
+    in_default_ensemble: false
+    in_v2_1_1_build: true
+    output_file: qwen3.5_ner.csv
+    ner_column: ner_qwen
+    note: "LLM-based NER via cdm_pipeline/qwen_batch; separate from NER runner"
+  - id: 6
+    name: scispacy
+    checkpoint: "en_core_sci_lg"
+    checkpoint_type: scispacy
+    role: NER
+    in_default_ensemble: false
+    in_v2_1_1_build: true
+    output_file: scispacy_ner_lg.csv
+    ner_column: ner_scispacy
+    note: "General-purpose; merged into ner_scispacy column in DB"
+  - id: 7
+    name: scispacy_bc5cdr
+    checkpoint: "en_ner_bc5cdr_md"
+    checkpoint_type: scispacy
+    role: NER
+    in_default_ensemble: true
+    in_v2_1_1_build: true
+    output_file: scispacy_ner_bc5cdr.csv
+    ner_column: ner_scispacy
+  - id: 8
+    name: scispacy_craft
+    checkpoint: "en_ner_craft_md"
+    checkpoint_type: scispacy
+    role: NER
+    in_default_ensemble: true
+    in_v2_1_1_build: true
+    output_file: scispacy_ner_craft.csv
+    ner_column: ner_scispacy
+  - id: 9
+    name: scispacy_jnlpba
+    checkpoint: "en_ner_jnlpba_md"
+    checkpoint_type: scispacy
+    role: NER
+    in_default_ensemble: true
+    in_v2_1_1_build: true
+    output_file: scispacy_ner_jnlpba.csv
+    ner_column: ner_scispacy
+  - id: 10
+    name: nomic-embed-text
+    checkpoint: "nomic-embed-text:latest"
+    checkpoint_type: ollama
+    ollama_digest: "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+    role: embedding
+    in_v2_1_1_build: true
+    note: "Entity embeddings stored in entity_embeddings table"
+  - id: 11
+    name: bge-m3
+    checkpoint: "bge-m3:latest"
+    checkpoint_type: ollama
+    ollama_digest: "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab"
+    role: embedding
+    in_v2_1_1_build: true
+    note: "ECO evidence mapping, semantic dedup, noise detection"
+  - id: 12
+    name: biolord
+    checkpoint: "FremyCompany/BioLORD-2023"
+    checkpoint_type: huggingface
+    hf_revision: "167aab527b238a50ca65224e6319215d2ff4fc9f"
+    role: embedding_normalization
+    in_v2_1_1_build: true
+    note: "Tier 4 semantic entity matching in rebuild_relations.py"
+
+# ── NER model registry reference ──────────────────────────────────────────────
+# registry.py is the runtime source of truth for NER model configs (class,
+# kwargs, output_file). canonical.yaml is the canonical *pinning* manifest —
+# it tracks SHA-256 hashes, HF revision hashes, and Ollama digests that
+# registry.py does not. A verification script (src/scripts/verify_config.py)
+# checks that the two stay in sync. See PUBLICATION_LOG.md Phase 1 item 6.
+
+# ── Runner CLI defaults ───────────────────────────────────────────────────────
+runner:
+  command: "python -m cdm_pipeline.ner.runner"
+  default_max_files: 500
+  default_threshold: 0.5    # GLiNER only
+  incremental: false
+  entity_types: "*"         # all 14 CDM_TYPES from cdm_pipeline/config.py
+
+# ── Corpus ────────────────────────────────────────────────────────────────────
+corpus:
+  input_dir: "data/papers_txt/"
+  file_pattern: "*.txt"
+  file_naming: "PRJ-accession-named .txt files (BioProject accessions)"
+  paper_count: 444
+  source: "NCBI BioProject metadata (bioproject_data_export.json)"
+  reference: >
+    Abdill, R. J., Graham, S. P., Rubinetti, V., et al. (2025).
+    Integration of 168,000 samples reveals global patterns of the human gut microbiome.
+    Cell 188(4):1100-1118.e17. DOI: 10.1016/j.cell.2024.12.017.
+
+# ── Release DB ────────────────────────────────────────────────────────────────
+release:
+  version: "2.1.1-clean"
+  db_path: "releases/v2.1.1-clean/microbiome_cdm.db"
+  sha256: "5e80c30b1477f6ef453406bedc0d5fa7999647f102845f7c28180fdb6d099e6d"
+  entities: 34300
+  relationships: 54788
+  typed_edges: 21514
+  cooccurrence_edges: 33274
+  controlled_vocabularies: 140745
+  umls_mapped: 20556
+  umls_rate: 0.599
+  artifacts_removed:
+    entities: 818
+    relationships: 11
+    controlled_vocabularies: 2559
+  frozen_source:
+    version: "2.1-full-multiner"
+    db_path: "releases/v2.1-full-multiner/microbiome_cdm.db"
+    sha256: "fbb44fa3d6be58b43702873d7b19206b8810936a4d359280c0826921788b9f0d"

@@ -1,0 +1,170 @@
+# ============================================
+# MICROBIOME CDM - GITIGNORE RECOMMENDATIONS
+# ============================================
+
+# Principles:
+# 1. Version control: source code, config, user-facing docs
+# 2. Git LFS or ignore: large data files (>50 MB)
+# 3. Ignore: intermediate outputs, temp files, duplicates
+# 4. Track: final release files (small ones)
+
+# ============================================
+# LARGE DATA FILES (Use Git LFS or External Storage)
+# ============================================
+
+# Entity files (85 MB total - multiple versions)
+# KEEP ONLY: entities/cdm_entities_final_v3_embeddings.json
+entities/cdm_entities.json
+entities/cdm_entities_final.json
+entities/cdm_entities_final_v2.json
+entities/cdm_entities_final_v4_consolidated.json
+entities/cdm_entities_llm_fixed.json
+entities/cdm_entities_types_fixed.json
+entities/removed_low_conf.json
+
+# Large output files (>50 MB)
+final_release/microbiome_cdm_complete.json  # 81 MB - use Git LFS or external storage
+databases_ontology/microbiome_cdm.db         # 64 MB - use Git LFS or external storage
+databases_ontology/microbiome_cdm.owl        # 7.7 MB - OK to track or use LFS
+
+# ============================================
+# INTERMEDIATE OUTPUT FILES (Generated, not source)
+# ============================================
+
+# Validation reports (auto-generated)
+validation_reports_stats/
+validation_reports_stats/validation_report.json     # 13 KB - can track, but probably ignore
+validation_reports_stats/evaluation_summary.json    # Too large (>65K tokens) - ignore
+
+# Relationship sources (raw data from external APIs)
+relationships_sources/umls_entity_mappings.json    # From UMLS API - can be regenerated
+relationships_sources/umls_relationships.json       # From UMLS API - can be regenerated
+relationships_sources/chebi_relationships.json       # From ChEBI API - can be regenerated
+relationships_sources/taxonomic_hierarchy.json      # From NCBI API - can be regenerated
+relationships_sources/paper_relationships.json       # Generated from papers
+
+# Test files
+samples_testing/
+neo4j/import.cypher                                    # Generated script
+
+# ============================================
+# DUPLICATE VERSIONS (Keep only final)
+# ============================================
+
+# Final release has duplicates of neo4j files
+final_release/nodes.csv                                 # Duplicate of neo4j/neo4j_nodes.csv
+final_release/relationships_merged.csv                 # Duplicate of relationships_extracted/
+
+# ============================================
+# INTERNAL DOCUMENTATION (Not for users)
+# ============================================
+
+# All markdown except user-facing docs
+*.md
+!README.md
+!CHANGELOG.md          # If you create one
+!DATA_DICTIONARY.md     # If you create one
+!QUICKSTART.md          # If you create one
+
+# Internal strategy docs
+PUBLICATION_STRATEGY.md
+TERM_QUALITY_ASSESSMENT.md
+CRITICAL_ASSESSMENT.md
+FIX_CHECKLIST.md
+COMPARISON.md           # If you create one
+
+# ============================================
+# TEMPORARY & WORKING FILES
+# ============================================
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+.eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Logs
+*.log
+logs/
+temp/
+tmp/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+.ipynb_checkpoints/
+
+# Database
+*.db-shm
+*.db-wal
+*.db-journal
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ============================================
+# SPECIFIC TO THIS PROJECT
+# ============================================
+
+# Large CSV files (use git lfs or external storage)
+relationships_extracted/relationships_full.csv   # 12 KB - OK
+relationships_extracted/relationships.csv        # Already tracked
+
+# Generated scripts (can be regenerated from main pipeline)
+scripts/evaluate_kg.py
+scripts/deep_critical_audit.py
+scripts/validate_knowledge_graph.py
+scripts/kg_pipeline.py                             # 300K lines - too big, maybe split up
+
+# ============================================
+# WHAT TO TRACK IN GIT (Recommendations)
+# ============================================
+
+# KEEP THESE:
+# - Source code (modular scripts, not monoliths)
+# - Configuration files
+# - Schema definitions
+# - User documentation (README.md, QUICKSTART.md, CHANGELOG.md)
+# - Small final release files (<10 MB)
+# - Final entity file (only one version)
+# - Sample data for testing (not full dataset)
+# - Relationship sources in CSV format (not JSON - easier to diff)

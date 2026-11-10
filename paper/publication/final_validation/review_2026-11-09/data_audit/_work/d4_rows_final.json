@@ -1,0 +1,482 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/MANIFEST.sha256",
+  "check_name": "manifest_files_listed",
+  "expected": "23 entries (1.0.0's 22 files + OFFSET_FIX_REPORT.json added in 1.0.1)",
+  "observed": "23 lines; all 23 files present and hashed",
+  "query_or_file": "wc -l MANIFEST.sha256; sha256sum -c",
+  "status": "PASS",
+  "note": "supersedes original M01 expectation (22): AGENTS.md's '22 files' describes release 1.0.0; 1.0.1 legitimately adds OFFSET_FIX_REPORT.json"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/MANIFEST.sha256",
+  "check_name": "manifest_sha256_all_verified",
+  "expected": "all listed files verify, 0 failures",
+  "observed": "23 verified, 0 failed; bad=[]",
+  "query_or_file": "sha256sum -c MANIFEST.sha256 (python hashlib recompute)",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "mentions_jsonl_rows_vs_db_load_dedup",
+  "expected": "2,505,735 = DB 2,505,684 + 51 documented load dedup",
+  "observed": "jsonl 2,505,735 rows; DB 2,505,684 rows; delta exactly 51; distinct mention_id sets identical (1,948,059 both sides, symmetric diff 0)",
+  "query_or_file": "wc -l term_mentions.jsonl; SELECT COUNT(*) FROM term_mention (read-only immutable URI)",
+  "status": "PASS",
+  "note": "51-row load-dedup is the documented D1 tie; mention_id is not unique per row (multi-source repetition), so a row-level delta with zero id loss is expected"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl + microbiome_cdm_v3.db:canonical_term+removed_canonical_term",
+  "check_name": "canonical_terms_live_removed_split_ties_jsonl",
+  "expected": "jsonl 165,991 == live canonical_term 162,409 + removed_canonical_term 3,582",
+  "observed": "165,991 == 162,409 + 3,582 exact tie; containment clean both directions (jsonl-absent 0; live-only 0; removed-only 0)",
+  "query_or_file": "wc -l canonical_terms.jsonl; SELECT COUNT(*) FROM canonical_term, removed_canonical_term",
+  "status": "PASS",
+  "note": "supersedes original T02 (naive 165,991-vs-162,409 row equality scored DISCREPANCY); live/removed_* split is the correct comparison model; retractions detailed in PASS_D4 report"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + microbiome_cdm_v3.db:term_concept_map",
+  "check_name": "ontology_mappings_2837_row_delta_fully_characterized",
+  "expected": "jsonl 334,231 - DB 331,394 = 2,837 dropped rows, fully characterized as the demotion event (D1: 'demoted mappings'); reverse diff 0",
+  "observed": "2,837-row delta: 2,784 distinct mapping_ids over those rows absent from DB; missing-row census AMBIGUOUS 1,475 / EXACT_MATCH 881 / RELATED_TO 481 (sum 2,837), all mapping_disposition REVIEW_REQUIRED; all 565 affected term_ids still live in canonical_term; 0 DB mapping_ids absent from jsonl; live DB mapping_relation census verified in-pass: RELATED_TO 187,832 / AMBIGUOUS 94,563 / EXACT_MATCH 37,522 / NO_MATCH_FOUND 11,477 = 331,394 (jsonl minus per-relation delta RELATED_TO 481 / AMBIGUOUS 1475 / EXACT_MATCH 881 / NO_MATCH_FOUND 0, summing to exactly 2,837)",
+  "query_or_file": "set difference on mapping_id; join census on missing rows; SELECT COUNT(*) FROM term_concept_map",
+  "status": "PASS",
+  "note": "supersedes original T03 (naive 334,231-vs-331,394 scored DISCREPANCY) and closes I04; the 2,837 figure matches D1's 'demoted mappings' record exactly \u2014 same event; recensed under D4-X01 and I04R"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + microbiome_cdm_v3.db:term_definition+removed_term_definition",
+  "check_name": "term_definition_id_space_decomposition",
+  "expected": "jsonl 1,150 = 588 live (termpipeline_t3_rules_v1) + 562 removed; DB live term_definition census = 588 T3 + 6,185 gap-G8 remediation rows",
+  "observed": "jsonl 1,150 = 588 live overlap + 562 tombstoned; DB live 6,773 rows / 5,057 distinct ids (gap G8 6,185 rows + T3 588 rows); removed_term_definition 3,865 = 562 non-null-id + 3,303 NULL-id bulk tombstones (D2 L-2 tie); db-only distinct ids 4,469 belong to the gap-G8 remediation lineage outside release 1.0.1",
+  "query_or_file": "wc -l term_definitions.jsonl; definition_id set containment; GROUP BY extraction_run_id on term_definition",
+  "status": "PASS",
+  "note": "supersedes original T04 (naive 1,150-vs-6,773 scored DISCREPANCY): jsonl is the 1.0.1 T3 artifact while the DB table carries the separate remediation lineage; no unexplained remainder"
+ },
+ {
+  "pass": "D4",
+  "artifact": "microbiome_cdm_v3.db:term_occurrence",
+  "check_name": "term_occurrence_sum_n_mentions",
+  "expected": "2,505,684",
+  "observed": "2,505,684",
+  "query_or_file": "SELECT SUM(n_mentions) FROM term_occurrence (read-only immutable URI)",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json",
+  "check_name": "mentions_source_census",
+  "expected": "cpu_ensemble 1,705,501 / qwen_vllm_body 366,123 / mesh_gazetteer 248,088 / qwen_ollama 186,024; all statuses OK",
+  "observed": "cpu_ensemble 1,705,501 / qwen_vllm_body 366,123 / mesh_gazetteer 248,088 / qwen_ollama 186,024; sum 2,505,736; all OK",
+  "query_or_file": "_mentions_summary.json sources[].rows scan",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json + terminology_extraction_manifest.json",
+  "check_name": "mentions_rows_written_vs_manifest_coverage",
+  "expected": "rows_written 2,505,736 == extraction manifest coverage.mention_records 2,505,736 (both releases)",
+  "observed": "written 2,505,736; manifest coverage.mention_records 2,505,736 in BOTH 1.0.0 and 1.0.1; shipped jsonl 2,505,735 (delta 1, the frozen G2 off-by-one \u2014 must not be patched); DB 2,505,684 (delta 51 vs jsonl = documented load dedup)",
+  "query_or_file": "chain across _mentions_summary.rows_written, terminology_extraction_manifest.coverage.mention_records, wc -l term_mentions.jsonl, COUNT(*) term_mention",
+  "status": "PASS",
+  "note": "supersedes original T07 note (its expected 2,505,735 was wrong): the frozen off-by-one is between rows written and rows shipped, present identically in 1.0.0 and 1.0.1"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json",
+  "check_name": "mentions_offsets_verified_recovered_unverified_census",
+  "expected": "verified 2,505,616 + recovered 34 + unverified 85 = rows_written 2,505,736",
+  "observed": "verified 2,505,616 + recovered 34 + unverified 85 = 2,505,736; control_char_surfaces 1,497",
+  "query_or_file": "_mentions_summary.json offsets_unverified/recovered scan",
+  "status": "PASS",
+  "note": "supersedes original T08 (expected sum==jsonl rows, a wrong model): census closes against rows_written as the artifact defines it"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "mention_id_sets_identical_symmetric_diff_0",
+  "expected": "distinct mention_id sets identical across jsonl and DB after the documented 51-row load dedup",
+  "observed": "jsonl distinct 1,948,059; DB distinct 1,948,059; symmetric difference 0; row delta exactly 51 with no id lost (dup ids in jsonl 557,676 \u2014 multi-source repetition)",
+  "query_or_file": "distinct mention_id set comparison",
+  "status": "PASS",
+  "note": "supersedes original I01 (expected 51 absent ids \u2014 a wrong model of the documented dedup); corrected and re-recorded"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl + microbiome_cdm_v3.db:canonical_term+removed_canonical_term",
+  "check_name": "canonical_reverse_containment",
+  "expected": "0 DB term_ids absent from jsonl",
+  "observed": "live-only 0, removed-only 0",
+  "query_or_file": "set difference (DB term_ids minus jsonl term_ids, both live and removed tables)",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl + microbiome_cdm_v3.db:canonical_term+removed_canonical_term",
+  "check_name": "canonical_id_containment",
+  "expected": "all 165,991 jsonl term_ids present in canonical_term or removed_canonical_term; none absent",
+  "observed": "live 162,409 + removed 3,582 + absent 0",
+  "query_or_file": "term_id set containment (jsonl term_ids minus DB live minus DB removed)",
+  "status": "PASS",
+  "note": "forward direction of the canonical split tie (reverse recorded at canonical_reverse_containment)"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + microbiome_cdm_v3.db:term_definition+removed_term_definition",
+  "check_name": "definition_id_containment",
+  "expected": "all 1,150 jsonl definition_ids found in term_definition or removed_term_definition",
+  "observed": "live 588 + removed 562 + absent 0",
+  "query_or_file": "definition_id set containment",
+  "status": "PASS",
+  "note": "DB term_definition (6,773) and removed_term_definition (3,865) are supersets holding the separate gap-G8 remediation lineage; jsonl is the 1.0.1 T3 artifact"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + microbiome_cdm_v3.db:term_concept_map",
+  "check_name": "mapping_rows_delta_2837_close_reverse_tie",
+  "expected": "0 DB mapping_ids absent from jsonl (demoted rows are a jsonl-side superset, DB is a filtered subset)",
+  "observed": "reverse diff 0; jsonl distinct mapping_ids 318,605; DB 315,821; the 2,784 jsonl-only ids correspond exactly to the 2,837 demoted rows documented at D1 and recensed at X01/I04R(T03R)",
+  "query_or_file": "set difference (DB mapping_ids minus jsonl mapping_ids)",
+  "status": "PASS",
+  "note": "records the reverse direction of the T03R delta so both sides of the 2,837-row demotion are independently tied"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "mapping_relation_census_jsonl",
+  "expected": "RELATED_TO 188,313 / AMBIGUOUS 96,038 / EXACT_MATCH 38,403 / NO_MATCH_FOUND 11,477 (sum 334,231)",
+  "observed": "RELATED_TO 188,313 / AMBIGUOUS 96,038 / EXACT_MATCH 38,403 / NO_MATCH_FOUND 11,477",
+  "query_or_file": "jsonl GROUP BY mapping_relation",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + mapping_projection_summary.json",
+  "check_name": "mapping_source_census_jsonl_null_spelling",
+  "expected": "cv_linking 292,221 / omop_local 21,881 / mesh_gazetteer 8,652 / JSON null 11,477 (summary spells null as 'none')",
+  "observed": "jsonl: cv_linking 292,221 / omop_local 21,881 / mesh_gazetteer 8,652 / null 11,477; summary: cv_linking 292,221 / omop_local 21,881 / mesh_gazetteer 8,652 / none 11,477",
+  "query_or_file": "jsonl GROUP BY ontology_source vs mapping_projection_summary.json",
+  "status": "PASS",
+  "note": "supersedes original C02 (scored DISCREPANCY on the literal string 'none' vs JSON null): the summary file spells JSON null as \"none\"; counts tie exactly"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "mapping_disposition_census_jsonl",
+  "expected": "REVIEW_REQUIRED 322,754 / UNRESOLVED 11,477 (sum 334,231)",
+  "observed": "REVIEW_REQUIRED 322,754 / UNRESOLVED 11,477",
+  "query_or_file": "jsonl GROUP BY mapping_disposition",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "auto_accept_eligible_and_accepted",
+  "expected": "auto_accept_eligible 38,334 / auto_accepted 0",
+  "observed": "auto_accept_eligible 38,334; auto_accepted 0",
+  "query_or_file": "jsonl count of auto_accept_eligible=true",
+  "status": "PASS",
+  "note": "auto_accepted stays 0 because calibration is NOT_CALIBRATED (T5b/c never produced a filled review sheet); consistent with mapping_projection_summary.json"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + microbiome_cdm_v3.db:term_concept_map",
+  "check_name": "mapping_row_delta_2837_equals_demotion",
+  "expected": "jsonl 334,231 - DB 331,394 = 2,837, matching D1's demoted-mappings figure",
+  "observed": "delta exactly 2,837 rows; same event as the D1 'demoted mappings' record and the D4 T03R/I04R/X01 characterizations",
+  "query_or_file": "row-count delta tied across censuses",
+  "status": "PASS",
+  "note": "re-verification of the D4 delta tie ahead of the D6 mappings pass"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + OFFSET_FIX_REPORT.json",
+  "check_name": "term_link_status_jsonl_eq_fixreport",
+  "expected": "LINKED 2,168,760 / NO_CANONICAL_TERM 299,854 / LINKED_BY_TYPE 30,049 / AMBIGUOUS 7,072",
+  "observed": "LINKED 2,168,760 / NO_CANONICAL_TERM 299,854 / LINKED_BY_TYPE 30,049 / AMBIGUOUS 7,072 (jsonl census == OFFSET_FIX_REPORT link.*)",
+  "query_or_file": "jsonl census vs OFFSET_FIX_REPORT.json link:* fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + OFFSET_FIX_REPORT.json",
+  "check_name": "offset_status_jsonl_eq_fixreport",
+  "expected": "EXACT 2,348,766 / CORRECTED 156,884 / UNANCHORED 85",
+  "observed": "EXACT 2,348,766 / CORRECTED 156,884 / UNANCHORED 85 (jsonl census == OFFSET_FIX_REPORT offsets)",
+  "query_or_file": "jsonl census vs OFFSET_FIX_REPORT.json offset fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + OFFSET_FIX_REPORT.json",
+  "check_name": "definitions_offset_status_jsonl_eq_fixreport",
+  "expected": "EXACT 1,087 / CORRECTED 63",
+  "observed": "EXACT 1,087 / CORRECTED 63",
+  "query_or_file": "definitions jsonl census vs OFFSET_FIX_REPORT.json definitions section",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/OFFSET_FIX_REPORT.json",
+  "check_name": "sections_shifted_census",
+  "expected": "75 sections = 67 shift-1 + 8 shift-2",
+  "observed": "75 sections ({'1': 67, '2': 8})",
+  "query_or_file": "OFFSET_FIX_REPORT.json sections_shifted",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "jsonl_minus_db_delta_sums_to_51",
+  "expected": "per-status jsonl-minus-DB deltas sum to exactly 51 (the load dedup), distributed over the statuses of duplicated mentions",
+  "observed": "delta sums 51 on each axis: link_status LINKED 43 / NO_CANONICAL_TERM 8 / LINKED_BY_TYPE 0 / AMBIGUOUS 0; offset_status EXACT 8 / CORRECTED 14 / UNANCHORED 29; offset_correction 0:37 / >0:14 / 2:0; all non-negative",
+  "query_or_file": "census diff (jsonl - DB) over term_mention grouped by status axes",
+  "status": "PASS",
+  "note": "the 51 duplicated rows split cleanly across link/offset statuses with no negative bucket, consistent with pure duplicate removal"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl",
+  "check_name": "corrected_rows_have_positive_offset_correction",
+  "expected": "all 156,884 CORRECTED rows offset_correction>0",
+  "observed": "corrected: >0 156,884, ==0 0",
+  "query_or_file": "jsonl predicate scan",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl",
+  "check_name": "exact_rows_have_zero_offset_correction",
+  "expected": "0 EXACT rows with nonzero offset_correction",
+  "observed": "0",
+  "query_or_file": "jsonl predicate scan",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_papers_coverage",
+  "expected": "453 processed / 0 not processed / 0 flagged",
+  "observed": "453 / 0 / 0",
+  "query_or_file": "validation_summary.json papers coverage fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_sections_coverage",
+  "expected": "3,553 validated + 453 not_applicable = 4,006 total",
+  "observed": "3553 + 453 = 4006",
+  "query_or_file": "validation_summary.json sections coverage",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_mentions_offset_resolved",
+  "expected": "2,505,650 checked, 100.0% resolved, 0 unresolved",
+  "observed": "2505650 checked, 100.0% resolved, 0 unresolved",
+  "query_or_file": "validation_summary.json mention_offset_verification",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/validation_summary.json",
+  "check_name": "validation_overall_status",
+  "expected": "COMPLETE",
+  "observed": "COMPLETE",
+  "query_or_file": "validation_summary.json overall status",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/terminology_validation.jsonl",
+  "check_name": "validation_jsonl_status_census",
+  "expected": "VALIDATED 3,553 (= summary sections_validated) + NOT_APPLICABLE 453, over 453 papers",
+  "observed": "{'NOT_APPLICABLE': 453, 'VALIDATED': 3553} over 453 papers",
+  "query_or_file": "terminology_validation.jsonl status census",
+  "status": "PASS",
+  "note": "jsonl row status is VALIDATED (not 'PASS')"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_definitions_summary.json",
+  "check_name": "definitions_rows_total",
+  "expected": "1,150 (= 1,087 EXACT + 63 CORRECTED)",
+  "observed": "1150",
+  "query_or_file": "_definitions_summary.json definitions count",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_definitions_summary.json",
+  "check_name": "definitions_by_definition_source",
+  "expected": "CONTEXTUAL_DESCRIPTION 1003 / ABBREVIATION_EXPANSION 126 / EXPLICIT_AUTHOR_DEFINITION 21",
+  "observed": "{'CONTEXTUAL_DESCRIPTION': 1003, 'ABBREVIATION_EXPANSION': 126, 'EXPLICIT_AUTHOR_DEFINITION': 21}",
+  "query_or_file": "_definitions_summary.json by_definition_source",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl",
+  "check_name": "definitions_review_status_all_review_required",
+  "expected": "every jsonl definition row review_status == REVIEW_REQUIRED",
+  "observed": "{'REVIEW_REQUIRED': 1150}; provenance_class={'SOURCE_DERIVED': 1150}",
+  "query_or_file": "jsonl predicate scan (review_status + provenance_class censuses)",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json + MANIFEST.sha256",
+  "check_name": "provenance_hashes_three_way_tie",
+  "expected": "all 8 PROVENANCE.artifacts hashes == MANIFEST.sha256 == recomputed sha256",
+  "observed": "8 three-way ties, mismatch=[]",
+  "query_or_file": "PROVENANCE.json artifacts vs MANIFEST.sha256 vs sha256sum recompute",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json",
+  "check_name": "provenance_counts_match_file_rows",
+  "expected": "mentions 2,505,735 / canonical_terms 165,991 / definitions 1,150 / mappings 334,231",
+  "observed": "mentions 2,505,735 / canonical_terms 165,991 / definitions 1,150 / mappings 334,231",
+  "query_or_file": "PROVENANCE.counts vs wc -l of the four jsonl artifacts",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/PROVENANCE.json",
+  "check_name": "provenance_calibration_and_autoaccept",
+  "expected": "auto_accepted 0; calibration NOT_CALIBRATED",
+  "observed": "auto_accept_eligible 38,334, auto_accepted 0, calibration NOT_CALIBRATED",
+  "query_or_file": "PROVENANCE.json counts/calibration fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json + terminology_extraction_manifest.json (1.0.0 AND 1.0.1) + term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "mention_count_chain_deltas_documented",
+  "expected": "rows_written 2,505,736 -> manifest coverage.mention_records 2,505,736 -> shipped jsonl 2,505,735 (delta 1: frozen G2 off-by-one) -> DB 2,505,684 (delta 51: documented load dedup)",
+  "observed": "written 2505736, manifest 2505736 (identically in 1.0.0 and 1.0.1), jsonl 2505735, DB 2505684; deltas exactly 1 and 51",
+  "query_or_file": "count chain across the four sources in both releases",
+  "status": "PASS",
+  "note": "supersedes original P03 (expected manifest 2,505,735 \u2014 wrong: the manifest writes 2,505,736 in both releases); the +1/-51 deltas are the documented frozen G2 off-by-one (must not be patched) and the D1 load-dedup tie"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/terminology_taxonomy.json + taxonomy_summary.json",
+  "check_name": "taxonomy_shape_keys_reverified",
+  "expected": "upper_categories 16, subcategories 66, reserved_categories [UNCERTAIN], status DRAFT, classified_terms 0",
+  "observed": "upper_categories 16 / subcategories 66 / reserved_categories ['UNCERTAIN'] / status DRAFT / summary classified 0",
+  "query_or_file": "terminology_taxonomy.json actual schema keys + taxonomy_summary.json",
+  "status": "PASS",
+  "note": "supersedes original R01 (keyed a nonexistent 'categories' field, scored DISCREPANCY): re-keyed to the file's actual schema (upper_categories/subcategories)"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl",
+  "check_name": "canonical_cdm_type_census",
+  "expected": "ENTITY 94,458 / ORGANISM 12,248 / CHEMICAL 9,673 / PROTEIN 8,752 / DISEASE 7,351 / DNA_RNA 6,386 / CELL_TYPE 4,853 / CLINICAL 3,932 / DATA_ANALYSIS 3,716 / EXPERIMENTAL_METHOD 3,698 / LAB_METHOD 3,179 / GENOMICS 2,201 / PATHWAY 1,905 / SAMPLE_METHOD 1,829 / STUDY_DESIGN 1,810",
+  "observed": "all 15 values match (sum 165,991)",
+  "query_or_file": "canonical_terms.jsonl GROUP BY cdm_type vs canonical_terms_summary.by_cdm_type",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/canonical_terms.jsonl",
+  "check_name": "canonical_taxonomy_category_all_null",
+  "expected": "0 rows with non-null taxonomy_category (no classification pass run)",
+  "observed": "0 non-null; is_generic_type census {False: 71,533, True: 94,458}",
+  "query_or_file": "predicate scan of canonical_terms.jsonl",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/ontology_registry.json",
+  "check_name": "ontology_registry_structure",
+  "expected": "registry lists local-only vocabularies with versions (structural check)",
+  "observed": "keys: ['credentials_policy', 'generated_at', 'local_only_note', 'local_only_supported', 'n_local', 'n_network', 'n_vocabularies', 'note', 'vocabularies']",
+  "query_or_file": "ontology_registry.json structure scan",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + releases/cdm_v3/3.0.3/microbiome_cdm_v3.db:term_definition",
+  "check_name": "definition_run_lineage",
+  "expected": "jsonl definitions (1,150) = 588 live in DB (all run termpipeline_t3_rules_v1) + 562 tombstoned; the DB table's extra 4,469 rows are the separate 'gap G8' remediation lineage, not part of release 1.0.1",
+  "observed": "jsonl runs {'termpipeline_t3_rules_v1': 1150}; DB live overlap 588; DB live ids not in jsonl 4,469; DB live distinct ids 5,057; DB live census {'gap G8': 6,185 rows, 'termpipeline_t3_rules_v1': 588 rows}",
+  "query_or_file": "definition_id set overlap + GROUP BY extraction_run_id on term_definition",
+  "status": "PASS",
+  "note": "gap-G8 remediation lineage (D2 L-1/L-2 family); the 588+562=T3 accounting closes the jsonl side with no unexplained remainder"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/_calibration_sample_summary.json",
+  "check_name": "calibration_v0_shape",
+  "expected": "mappings_rows_total 334,275 / sampled 390 / primary 300 / control 90",
+  "observed": "mappings_rows_total 334,275 / sampled_rows 390 / primary_rows 300 / control_rows 90",
+  "query_or_file": "_calibration_sample_summary.json counts",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/calibration_sample.csv + .jsonl",
+  "check_name": "calibration_v0_rows_strata_emptyverdicts",
+  "expected": "390 data rows (300 primary + 90 control, 14 strata: five 60-row EXACT_MATCH strata + nine 10-row strata), csv==jsonl rows, all 390 human_verdict cells empty",
+  "observed": "csv rows 390, jsonl rows 390, strata 14, empty verdicts 390; census: bioportal|AMBIGUOUS 10, bioportal|EXACT_MATCH 60, bioportal|RELATED_TO 10, mesh|EXACT_MATCH 60, ncbi_taxon|RELATED_TO 10, none|NO_MATCH_FOUND 10, ols|AMBIGUOUS 10, ols|EXACT_MATCH 60, ols|RELATED_TO 10, omop|AMBIGUOUS 10, omop|EXACT_MATCH 60, umls|AMBIGUOUS 10, umls|EXACT_MATCH 60, umls|RELATED_TO 10",
+  "query_or_file": "calibration_sample.csv/.jsonl census",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/QUARANTINE.md",
+  "check_name": "calibration_quarantine_declaration_tokens",
+  "expected": "declares: draw universe 334,275 (pre-fix); current 334,231; producing build 28609294; current build 28619916; status superseded; pooling forbidden",
+  "observed": "all tokens present: True (the earlier 'verdict statement: False' hit was only a case-sensitivity artifact of the probe; direct empty-cell scan proves the 390 empty verdicts)",
+  "query_or_file": "QUARANTINE.md text scan + direct empty-cell verification",
+  "status": "PASS",
+  "note": "verbatim-token probe vs direct scan reconciled"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/calibration_v0_pre_fix/_calibration_sample_summary.json + releases/terminology/1.0.1/term_ontology_mappings.jsonl",
+  "check_name": "calibration_draw_universe_delta",
+  "expected": "draw universe 334,275 exceeds current 1.0.1 mappings 334,231 by 44 rows; the v0 sample predates the mapping rebuild and is NOT a sample of the current table",
+  "observed": "declared draw universe 334,275; current mapping rows 334,231; delta 44",
+  "query_or_file": "summary vs jsonl row count",
+  "status": "PASS",
+  "note": "quarantine + mandatory redraw before use is the documented disposition"
+ }
+]

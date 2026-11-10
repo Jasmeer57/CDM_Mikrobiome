@@ -1,0 +1,269 @@
+version: '3.8'
+
+services:
+  # CDM Entity Extraction API
+  cdm-api:
+    build:
+      context: .
+      target: production
+    container_name: cdm-api
+    ports:
+      - "127.0.0.1:8000:8000"  # Bind to localhost only
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=INFO
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - REDIS_URL=redis://redis:6379
+      - UMLS_API_KEY=${UMLS_API_KEY:-}
+      - BIOMISTRAL_MODEL=${BIOMISTRAL_MODEL:-biomistral-7B}
+      - DEFAULT_MODEL=${DEFAULT_MODEL:-phi3:mini}
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      ollama:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Ollama LLM Service
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "127.0.0.1:11434:11434"  # Bind to localhost only - internal service
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_ORIGINS=*
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+        reservations:
+          cpus: '2.0'
+          memory: 4G
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: cdm-redis
+    # No port binding - internal service only
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy allkeys-lru
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: cdm-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - cdm-api
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Documentation server (optional)
+  docs:
+    build:
+      context: .
+      target: docs
+    container_name: cdm-docs
+    ports:
+      - "8080:8000"
+    volumes:
+      - ./docs:/app/docs
+      - ./mkdocs.yml:/app/mkdocs.yml:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    profiles:
+      - docs
+
+  # Monitoring with Prometheus (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: cdm-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    profiles:
+      - monitoring
+
+  # Grafana for visualization (optional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: cdm-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}  # Must be set in .env
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    profiles:
+      - monitoring
+
+  # PostgreSQL for persistent storage (optional)
+  postgres:
+    image: postgres:15-alpine
+    container_name: cdm-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      - POSTGRES_DB=llm_terms
+      - POSTGRES_USER=${POSTGRES_USER:-cdm_user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}  # Must be set in .env
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cdm_user -d llm_terms"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - database
+
+  # Elasticsearch for search (optional)
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: cdm-elasticsearch
+    # No port binding - internal service only (access via nginx)
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    profiles:
+      - search
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 1G
+
+  # Jaeger for tracing (optional)
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: cdm-jaeger
+    ports:
+      - "16686:16686"  # Jaeger UI
+      - "14268:14268"  # HTTP collector
+      - "14250:14250"  # gRPC collector
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    restart: unless-stopped
+    networks:
+      - cdm-network
+    profiles:
+      - tracing
+
+volumes:
+  ollama_data:
+    driver: local
+  redis_data:
+    driver: local
+  postgres_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+networks:
+  cdm-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# Custom labels for better organization
+x-common-variables: &common-variables
+  LOG_LEVEL: INFO
+  PYTHONPATH: /app
+  TZ: UTC
+
+x-deployment-labels: &deployment-labels
+  cdm.pipeline.version: "1.0.0"
+  cdm.pipeline.component: "api"

@@ -1,0 +1,44 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+TASK
+Two pipelines assigned a TYPE to the same term. Judge each assignment
+INDEPENDENTLY against the context, then record whether the two assignments agree.
+
+TERM (inventory side):
+{inventory_term}
+
+INVENTORY TYPE(S) (may be "|"-separated):
+{inventory_types}
+
+CANONICAL TERM (normalized):
+{canonical_term_norm}
+
+CANONICAL TYPE:
+{canonical_cdm_type}
+
+CANONICAL ALTERNATIVE TYPES (may be empty):
+{canonical_alternative_types}
+
+CONTEXT SENTENCE (example usage from the corpus):
+{context_sentence}
+
+VERDICT VOCABULARIES (choose exactly one per field):
+- verdict_inventory_type in {CORRECT, INCORRECT, UNCERTAIN}
+  Judge the INVENTORY type(s) against the context, before considering the
+  canonical side.
+- verdict_canonical_type in {CORRECT, INCORRECT, UNCERTAIN}
+  Judge the CANONICAL type against the context, independently.
+- verdict_agreement in {AGREE, DISAGREE, UNCERTAIN}
+  Do the two type assignments agree? Record this AFTER the two verdicts above.
+
+RULES
+- Judge each pipeline's type independently before recording agreement.
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the context is empty or genuinely insufficient to decide a type, output
+  UNCERTAIN for that field rather than guessing. Prefer UNCERTAIN over guessing.
+- Do not infer what a pipeline "probably meant"; score the assignment as shown.
+
+Respond with a single JSON object and nothing else:
+{{"verdict_inventory_type": "<CORRECT|INCORRECT|UNCERTAIN>", "verdict_canonical_type": "<CORRECT|INCORRECT|UNCERTAIN>", "verdict_agreement": "<AGREE|DISAGREE|UNCERTAIN>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

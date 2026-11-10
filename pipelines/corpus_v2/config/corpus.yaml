@@ -1,0 +1,86 @@
+# Corpus v2 manifest + configuration
+# Every value here feeds scripts/corpus_config.py and is hashed into
+# configuration_hash in the corpus manifest (template §1).
+
+corpus:
+  corpus_id: HMCV2
+  corpus_name: "Human Microbiome Corpus v2 (LLM-enriched)"
+  corpus_version: 2.2.0
+  corpus_purpose: >-
+    Reference corpus for LLM-based terminology extraction: concepts, methods,
+    diseases, taxa, proteins and their relations in human-microbiome research.
+  research_questions:
+    - "Which domain terms appear across body sites, diseases and methods?"
+    - "Can a small local LLM (Qwen3.5-4B) reliably extract a CDM term inventory?"
+  domain: human microbiome / microbial ecology
+  target_terminology_types:
+    - organism_taxa
+    - disease_phenotype
+    - method_technique
+    - gene_protein
+    - metabolite
+    - anatomical_site
+    - statistical_measure
+    - intervention
+  corpus_owner: "jkalra <jkalra@uni-bonn.de>"
+  license_and_usage: "NCBI/PMC open access subsets; S2 data per its API terms; internal research use"
+
+search_strategy:
+  # Template §1: exact query recorded, reproducible
+  source_database: pubmed
+  exact_query: '(human microbiome OR human microbiota) AND (gut OR intestinal OR fecal OR oral OR skin OR vaginal OR respiratory)'
+  date_range:
+    min: "2000/01/01"
+    max: "2026/10/23"
+  max_records: 5000          # planned_record_count ceiling for this first build
+  sort: "pub_date"
+  search_date: "2026-10-23"
+
+  s2_fields: "title,abstract,year,venue,externalIds,openAccessPdf,citationCount,influentialCitationCount,publicationTypes,publicationDate,journal"
+
+eligibility:                  # template §1 inclusion/exclusion criteria
+  inclusion_criteria:
+    - human or human-derived microbiome study
+    - English language
+    - title or abstract mentions at least one microbiome-related term
+  exclusion_criteria:
+    - non-English full text
+    - editorials, errata without data
+    - papers with no online text access (abstract-only retained but flagged)
+  language_criteria: [en]
+  target_population: "human-microbiome primary research and reviews 2000-2026"
+
+llm:
+  runtime: vllm              # vLLM 0.32.0 on A40, verified in this environment
+  model: Qwen/Qwen3.5-4B     # served via vLLM OpenAI API == ollama qwen3.5:4b
+  model_label: "qwen3.5:4b"  # label used in llm_* fields (matches your ollama tag)
+  thinking: false            # enable_thinking: false in chat template
+  max_tokens: 4500
+  temperature: 0.0
+  prompt_version: v2-term-extract-1
+  studies_prompt_version: v2-study-extract-1
+  findings_prompt_version: v2-findings-extract-1
+  triples_prompt_version: v2-triples-extract-1
+  summaries_prompt_version: v2-paper-summary-1
+  workers: 64                 # concurrent requests (A40 measured ~2000 tok/s at 64)
+  workers_a100: 96             # 2x A100 sharded extraction (stage 53/54), per shard
+  summary_max_chars: 40000    # stage 54 per-paper input budget (~10k tok, fits 32k ctx)
+  max_prompt_chars: 12000     # chunked prompts, resume-safe (learned from 3000-token truncation bug)
+
+paths:
+  root: /home/jkalra_hpc/Microbiome-CDM
+  corpus_dir: /home/jkalra_hpc/Microbiome-CDM/corpus_v2
+  hf_cache: /home/jkalra_hpc/llm/hf-cache
+
+resources:
+  cpu_partition: intelsr_short
+  gpu_partition: mlgpu_short
+  gpu_gres: "gpu:a40:1"
+  gpu_cpus: 16
+  gpu_mem: "64G"
+  a100_partition: sgpu_short     # stages 53/54: 2x A100 sharded vLLM job
+  a100_gres: "gpu:a100:2"
+  a100_cpus: 32
+  a100_mem: "96G"
+  retrieval_cpus: 8
+  retrieval_mem: "32G"

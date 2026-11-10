@@ -1,0 +1,43 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Microbiome-CDM — GPU requirements lock (ROCm 6.3 / MI200)
+#
+# Companion to requirements.lock (CPU). This file provides GPU-accelerated
+# torch for the HPC gpu-amd partition (AMD MI200, ROCm 6.3.3).
+#
+# ⚠ The release env (microbiome-cdm-env) uses CPU torch (2.1.1+cpu).
+#   This GPU lock upgrades torch to 2.8.0+rocm6.3 — a MAJOR version jump.
+#   gliner==0.2.26 and transformers==4.35.2 compatibility is NOT verified
+#   with torch 2.8.0. Use this only for GPU inference benchmarks, not
+#   for release reproduction.
+#
+# Install (on a gpu-amd node with rocm/6.3.3 loaded):
+#   module load rocm/6.3.3
+#   conda create -n microbiome-cdm-gpu python=3.9
+#   conda activate microbiome-cdm-gpu
+#   pip install -r requirements.lock --no-deps torch torchvision torchaudio
+#   pip install torch==2.8.0+rocm6.3 --index-url https://download.pytorch.org/whl/rocm6.3
+#   python spacy_terms/scripts/install_scispacy_models.py --verify
+#
+# Module loads required on HPC:
+#   module load Miniforge3/24.11.3-0
+#   module load rocm/6.3.3
+#   module load ollama-bin/0.32.9
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── GPU torch (replaces CPU torch from requirements.lock) ──
+--extra-index-url https://download.pytorch.org/whl/rocm6.3
+torch==2.8.0+rocm6.3
+pytorch-triton-rocm==3.4.0
+
+# ── GPU environment metadata ──
+# HPC partition: gpu-amd (AMD MI200, ROCm)
+# ROCm module: rocm/6.3.3
+# Ollama module: ollama-bin/0.32.9
+# GPU visibility: export HIP_VISIBLE_DEVICES=0
+# Compute node libstdc++ fix:
+#   export LD_LIBRARY_PATH="/home/jkalra/.conda/envs/microbiome-cdm-gpu/lib:${LD_LIBRARY_PATH:-}"
+
+# ── All other packages: same as requirements.lock ──
+# Install requirements.lock first, then upgrade torch with this file.
+# The pip install command above uses --no-deps for torch to avoid
+# overwriting the CPU torch pulled in by requirements.lock.

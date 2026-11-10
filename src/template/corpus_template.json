@@ -1,0 +1,221 @@
+{
+  "_meta": {
+    "template_version": "1.1.0",
+    "description": "Master record template for one paper in the 444-paper human-microbiome corpus.",
+    "paper_id_convention": "NCBI BioProject accession, e.g. PRJNA123456",
+    "conventions": [
+      "null = not yet extracted (unknown)",
+      "\"not_reported\" = checked by an extraction pass and explicitly absent from the paper",
+      "Never infer a value from context; store only what the paper states",
+      "Keep author wording in *_raw fields when a normalized value is stored alongside"
+    ],
+    "layer_mapping": {
+      "document.full_text.files": "corpus.db: papers + sections + figure_table_captions",
+      "study_metadata": "corpus.db: papers + geographic_populations + data_accessions + study_organisms/study_conditions/study_methods",
+      "findings": "corpus.db: findings (recall -> classify -> enrich over results/discussion sections)",
+      "curation": "corpus.db: MISSING TABLE - human review workflow"
+    }
+  },
+
+  "corpus_id": "PRJNA000000",
+  "schema_version": "1.1.0",
+
+  "document": {
+    "paper_id": "PRJNA000000",
+    "title": null,
+    "authors": [],
+    "journal": null,
+    "publication_year": null,
+    "doi": null,
+    "pmid": null,
+    "pmcid": null,
+    "study_type": null,
+    "language": "en",
+    "abstract": null,
+    "keywords": [],
+
+    "access": {
+      "source_database": null,
+      "source_url": null,
+      "full_text_available": true,
+      "license_name": null,
+      "license_url": null,
+      "reuse_permission_verified": false,
+      "retrieved_at": null
+    }
+  },
+
+  "files": {
+    "original_txt_path": "papers_txt/PRJNA000000.txt",
+    "original_xml_path": null,
+    "original_pdf_path": null,
+    "clean_text_path": null,
+    "supplementary_files": [],
+    "sha256": null
+  },
+
+  "full_text": {
+    "extraction_method": null,
+    "extraction_date": null,
+    "sections": [
+      {
+        "section_id": null,
+        "paper_id": "PRJNA000000",
+        "section_type": null,
+        "heading": null,
+        "heading_path": [],
+        "section_order": null,
+        "content": null,
+        "character_count": null
+      }
+    ],
+    "tables": [
+      {
+        "table_id": null,
+        "caption": null,
+        "content_text": null,
+        "context": null
+      }
+    ],
+    "figures": [
+      {
+        "figure_id": null,
+        "caption": null,
+        "context": null,
+        "asset_path": null
+      }
+    ],
+    "references": []
+  },
+
+  "study_metadata": [
+    {
+      "study_id": "study_001",
+      "paper_id": "PRJNA000000",
+      "study_type": null,
+      "study_design": null,
+      "research_question": null,
+
+      "population": {
+        "description": null,
+        "number_of_participants": null,
+        "sample_size_raw": null,
+        "number_of_samples": null,
+        "control_group": null,
+        "age_info": null,
+        "sex_info": null,
+        "countries_or_regions": [],
+        "confounders_reported": [],
+        "limitations_reported": []
+      },
+
+      "microbiome": {
+        "body_site": null,
+        "body_site_raw": null,
+        "sample_types": [],
+        "sample_collection_method": null,
+        "kingdoms_or_domains": [],
+
+        "assay": {
+          "assay_types": [],
+          "sequencing_strategy": null,
+          "sequencing_strategy_raw": null,
+          "sequencing_platform": null,
+          "target_gene_or_region": null
+        },
+
+        "laboratory": {
+          "dna_extraction_method": null,
+          "negative_controls_reported": null,
+          "contamination_handling": null
+        },
+
+        "analysis": {
+          "bioinformatics_pipelines": [],
+          "taxonomic_database": null,
+          "statistical_methods": [],
+          "multiple_testing_correction": null,
+          "normalization_method": null
+        }
+      },
+
+      "health_conditions": [],
+      "data_accessions": [],
+      "kernel_findings": null
+    }
+  ],
+
+  "entities": {
+    "organisms": [
+      {
+        "entity_name": null,
+        "detection_source": null,
+        "detection_sources": [],
+        "confidence": null,
+        "paper_id": "PRJNA000000"
+      }
+    ],
+    "conditions": [
+      {
+        "entity_name": null,
+        "detection_source": null,
+        "detection_sources": [],
+        "confidence": null,
+        "paper_id": "PRJNA000000"
+      }
+    ],
+    "methods": [
+      {
+        "entity_name": null,
+        "category": null,
+        "method_category": null,
+        "detection_source": null,
+        "detection_sources": [],
+        "confidence": null,
+        "paper_id": "PRJNA000000"
+      }
+    ]
+  },
+
+  "findings": [
+    {
+      "finding_id": "PRJNA000000_finding_0001",
+      "paper_id": "PRJNA000000",
+      "study_id": "study_001",
+      "body_site": null,
+      "condition_or_exposure": null,
+      "outcome": null,
+      "taxon": null,
+      "taxonomic_rank": null,
+      "microbial_function": null,
+      "association_direction": null,
+      "effect_measure": null,
+      "effect_estimate": null,
+      "p_value": null,
+      "q_value": null,
+      "confidence_interval": null,
+      "sample_size": null,
+      "adjusted_covariates": [],
+      "evidence_class": null,
+      "evidence_text": null,
+      "paper_fkgr_security": "paper_id+finding_id",
+      "evidence_section_id": null,
+      "evidence_sentence_id": null,
+      "char_start": null,
+      "char_end": null,
+      "extraction_method": null,
+      "confidence": null,
+      "human_verified": false
+    }
+  ],
+
+  "curation": {
+    "human_microbiome_relevance": "pending",
+    "inclusion_decision": "pending",
+    "full_text_completeness": "pending",
+    "tables_checked": false,
+    "supplements_checked": false,
+    "annotation_status": "not_started",
+    "curation_notes": []
+  }
+}

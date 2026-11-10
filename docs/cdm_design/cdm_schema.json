@@ -1,0 +1,1738 @@
+{
+  "schema_version": "0.1.0",
+  "released": "2026-10-24",
+  "type": "object",
+  "description": "Human Microbiome Research CDM — machine-readable schema (DRAFT 0.1.0, design phase). Companion to docs/cdm_design/cdm_schema_proposal.md. This file records the proposed table/column layout with source bindings at table level; see cdm_field_crosswalk.csv-family (cdm_field_crosswalk.md) for per-field bindings. PK patterns: template/cdm/human_microbiome_cdm.schema.json.",
+  "tables": {
+    "paper": {
+      "primary_key": [
+        "paper_id"
+      ],
+      "pk_pattern": "^HMPAPER_[0-9]{6}$",
+      "columns": {
+        "paper_id": {
+          "not_null": true,
+          "source": "corpus_v2/data/papers.jsonl:paper_id"
+        },
+        "bioproject": {
+          "source": "papers.jsonl:bioproject (normalized accession)",
+          "note": "dual-direction BP↔paper index; asymmetries flagged CONFLICTING"
+        },
+        "doi": {
+          "source": "papers.jsonl:DOI"
+        },
+        "pmid": {
+          "source": "papers.jsonl:PMID"
+        },
+        "pmcid": {
+          "source": "papers.jsonl:PMCID"
+        },
+        "corpus_id": {
+          "source": "papers.jsonl:corpus_id"
+        },
+        "external_ids": {
+          "source": "papers.jsonl:external_ids"
+        },
+        "title": {
+          "source": "papers.jsonl:title"
+        },
+        "authors": {
+          "source": "papers.jsonl:authors"
+        },
+        "journal": {
+          "source": "papers.jsonl:journal|journal_name|venue"
+        },
+        "publication_year": {
+          "source": "papers.jsonl:publication_year"
+        },
+        "language": {
+          "source": "papers.jsonl:language"
+        },
+        "keywords": {
+          "source": "papers.jsonl:keywords"
+        },
+        "license": {
+          "source": "papers.jsonl:license_name|license_url"
+        },
+        "citation_count": {
+          "source": "papers.jsonl:citation_count"
+        },
+        "abstract": {
+          "source": "papers.jsonl:abstract|abstract_s2"
+        },
+        "full_text_availability": {
+          "source": "papers.jsonl:full_text_availability",
+          "note": "kept separate from completeness/parse status (paper.schema.json rule)"
+        },
+        "full_text_completeness": {
+          "source": "papers.jsonl:full_text_completeness"
+        },
+        "full_text_parse_status": {
+          "source": "papers.jsonl:full_text_parse_status"
+        },
+        "source_integrity": {
+          "source": "papers.jsonl:source_integrity"
+        },
+        "integrity_checks": {
+          "source": "papers.jsonl:integrity_checks"
+        },
+        "metadata_completeness": {
+          "source": "papers.jsonl:metadata_completeness"
+        },
+        "metadata_conflicts": {
+          "source": "papers.jsonl:metadata_conflicts",
+          "note": "conflicts are values, never deletions"
+        },
+        "dedup": {
+          "source": "papers.jsonl:dedup"
+        },
+        "is_canonical": {
+          "source": "papers.jsonl:is_canonical"
+        },
+        "duplicate_group_id": {
+          "source": "papers.jsonl:duplicate_group_id"
+        },
+        "canonical_paper_id": {
+          "source": "papers.jsonl:canonical_paper_id"
+        },
+        "inclusion_decision": {
+          "source": "papers.jsonl:inclusion_decision"
+        },
+        "eligibility_status": {
+          "source": "papers.jsonl:eligibility_status"
+        },
+        "exclusion_reason": {
+          "source": "papers.jsonl:exclusion_reason"
+        },
+        "human_microbiome_relevance": {
+          "source": "papers.jsonl:human_microbiome_relevance"
+        },
+        "annotation_status": {
+          "source": "papers.jsonl:annotation_status"
+        },
+        "processing_status": {
+          "source": "papers.jsonl:processing_status"
+        },
+        "validation_status": {
+          "source": "papers.jsonl:validation_status"
+        },
+        "reviewer": {
+          "source": "papers.jsonl:reviewer"
+        },
+        "review_date": {
+          "source": "papers.jsonl:review_date"
+        },
+        "text_version_id": {
+          "source": "papers.jsonl:text_version_id",
+          "note": "canonical text geometry reference for all evidence offsets"
+        },
+        "schema_version": {
+          "source": "papers.jsonl:schema_version"
+        },
+        "curation_notes": {
+          "source": "papers.jsonl:curation_notes"
+        },
+        "bioproject_link": {
+          "source": "papers.jsonl:bioproject_link",
+          "note": "URL form of the accession"
+        },
+        "completeness_checks": {
+          "source": "papers.jsonl:completeness_checks"
+        },
+        "conversion_uncovered_chars": {
+          "source": "papers.jsonl:conversion_uncovered_chars"
+        },
+        "full_text_completeness_evidence": {
+          "source": "papers.jsonl:full_text_completeness_evidence",
+          "note": "kept separate from full_text_completeness (schema rule)"
+        },
+        "fulltext_crosscheck": {
+          "source": "papers.jsonl:fulltext_crosscheck"
+        },
+        "metadata_checks": {
+          "source": "papers.jsonl:metadata_checks"
+        },
+        "metadata_provenance": {
+          "source": "papers.jsonl:metadata_provenance"
+        },
+        "metadata_review_status": {
+          "source": "papers.jsonl:metadata_review_status"
+        },
+        "protocol_version": {
+          "source": "papers.jsonl:protocol_version"
+        },
+        "publication_date_s2": {
+          "source": "papers.jsonl:publication_date_s2"
+        },
+        "publication_type": {
+          "source": "papers.jsonl:publication_type"
+        },
+        "reuse_permission_checked": {
+          "source": "papers.jsonl:reuse_permission_checked"
+        },
+        "section_count_evidence": {
+          "source": "papers.jsonl:section_count_evidence"
+        },
+        "section_hierarchy_status": {
+          "source": "papers.jsonl:section_hierarchy_status",
+          "note": "input to section hierarchy checks"
+        },
+        "sections_complete": {
+          "source": "papers.jsonl:sections_complete"
+        },
+        "sections_discovered": {
+          "source": "papers.jsonl:sections_discovered"
+        },
+        "sections_needing_review": {
+          "source": "papers.jsonl:sections_needing_review",
+          "note": "input to HUMAN_REVIEW candidate queue"
+        },
+        "source_characters": {
+          "source": "papers.jsonl:source_characters"
+        },
+        "source_database": {
+          "source": "papers.jsonl:source_database"
+        },
+        "source_title_present": {
+          "source": "papers.jsonl:source_title_present",
+          "note": "source integrity family"
+        },
+        "validation_evidence": {
+          "source": "papers.jsonl:validation_evidence",
+          "note": "evidence backing validation_status"
+        }
+      }
+    },
+    "source_asset": {
+      "primary_key": [
+        "paper_id",
+        "path",
+        "raw_file_hash"
+      ],
+      "columns": {
+        "paper_id": {
+          "not_null": true,
+          "fk": "paper.paper_id",
+          "source": "papers.jsonl:paper_id"
+        },
+        "path": {
+          "source": "papers.jsonl:raw_file_path|original_fulltext_path|original_pdf_path|original_xml_path|extracted_text_path"
+        },
+        "raw_file_hash": {
+          "source": "papers.jsonl:raw_file_hash"
+        },
+        "format": {
+          "source": "papers.jsonl:original_fulltext_format"
+        },
+        "source_url": {
+          "source": "papers.jsonl:source_url"
+        },
+        "full_text_url": {
+          "source": "papers.jsonl:full_text_url"
+        },
+        "retrieval_date": {
+          "source": "papers.jsonl:retrieval_date|extraction_date"
+        },
+        "extraction_tool": {
+          "source": "papers.jsonl:extraction_tool"
+        },
+        "supplementary_file_paths": {
+          "source": "papers.jsonl:supplementary_file_paths"
+        }
+      }
+    },
+    "section": {
+      "primary_key": [
+        "paper_id",
+        "section_id_original"
+      ],
+      "pk_pattern": "(paper HMPAPER id) + section_id_original",
+      "columns": {
+        "paper_id": {
+          "not_null": true,
+          "fk": "paper.paper_id",
+          "source": "sections.jsonl:paper_id"
+        },
+        "section_id_original": {
+          "not_null": true,
+          "source": "sections.jsonl:section_id_original",
+          "note": "section_id does not exist as a single source field"
+        },
+        "section_record_id": {
+          "source": "sections.jsonl:section_record_id"
+        },
+        "section_name_original": {
+          "source": "sections.jsonl:section_name_original"
+        },
+        "section_name_normalized": {
+          "source": "sections.jsonl:section_name_normalized"
+        },
+        "section_type": {
+          "source": "sections.jsonl:section_type"
+        },
+        "heading_path": {
+          "source": "sections.jsonl:heading_path"
+        },
+        "section_order": {
+          "source": "sections.jsonl:section_order"
+        },
+        "parent_section_id": {
+          "source": "sections.jsonl:parent_section_id"
+        },
+        "is_container_section": {
+          "source": "sections.jsonl:is_container_section"
+        },
+        "section_text_original": {
+          "source": "sections.jsonl:section_text_original",
+          "note": "THE canonical evidence geometry; offsets index this text"
+        },
+        "source_char_start": {
+          "source": "sections.jsonl:source_char_start"
+        },
+        "source_char_end": {
+          "source": "sections.jsonl:source_char_end"
+        },
+        "source_file_hash_sha256": {
+          "source": "sections.jsonl:source_file_hash_sha256",
+          "fk": "source_asset (via hash)"
+        },
+        "text_hash_sha256": {
+          "source": "sections.jsonl:text_hash_sha256"
+        },
+        "character_count": {
+          "source": "sections.jsonl:character_count"
+        },
+        "token_count": {
+          "source": "sections.jsonl:token_count"
+        },
+        "token_count_method": {
+          "source": "sections.jsonl:token_count_method"
+        },
+        "word_count": {
+          "source": "sections.jsonl:word_count"
+        },
+        "sentence_count": {
+          "source": "sections.jsonl:sentence_count"
+        },
+        "paragraph_count": {
+          "source": "sections.jsonl:paragraph_count"
+        },
+        "offset_convention": {
+          "source": "sections.jsonl:offset_convention"
+        },
+        "counting_convention": {
+          "source": "sections.jsonl:counting_convention"
+        },
+        "parsing_status": {
+          "source": "sections.jsonl:parsing_status"
+        },
+        "extraction_eligibility": {
+          "source": "sections.jsonl:extraction_eligibility"
+        },
+        "section_quality_status": {
+          "source": "sections.jsonl:section_quality_status"
+        },
+        "quality_checks": {
+          "source": "sections.jsonl:quality_checks"
+        },
+        "hierarchy_status": {
+          "source": "sections.jsonl:hierarchy_status"
+        },
+        "language": {
+          "source": "sections.jsonl:language"
+        },
+        "language_status": {
+          "source": "sections.jsonl:language_status"
+        },
+        "cleaning_operations": {
+          "source": "sections.jsonl:cleaning_operations"
+        },
+        "llm_enrichment": {
+          "source": "sections.jsonl:llm_enrichment"
+        },
+        "validated_at": {
+          "source": "sections.jsonl:validated_at"
+        },
+        "validator_version": {
+          "source": "sections.jsonl:validator_version"
+        },
+        "segment_ids": {
+          "source": "sections.jsonl:segment_ids",
+          "note": "expands to section_segment join rows"
+        }
+      }
+    },
+    "extraction_run": {
+      "primary_key": [
+        "run_id"
+      ],
+      "columns": {
+        "run_id": {
+          "not_null": true,
+          "source": "processing_events.jsonl:run_id + run manifests (SLURM job id / manifest id)",
+          "note": "PROVISIONAL flag for in-flight jobs (cv-link 28607619, llm-ner-body 28607825, termpipe-v1 28608065, stage53/54 28607588)"
+        },
+        "pipeline_stage": {
+          "source": "processing_events.jsonl:pipeline_stage"
+        },
+        "pipeline_version": {
+          "source": "processing_events.jsonl:pipeline_version"
+        },
+        "started_at": {
+          "source": "processing_events.jsonl:started_at"
+        },
+        "completed_at": {
+          "source": "processing_events.jsonl:completed_at"
+        },
+        "run_status": {
+          "source": "processing_events.jsonl:run_status",
+          "note": "fail-closed: yield mismatch ⇒ FAILED + quarantine"
+        },
+        "error_message": {
+          "source": "processing_events.jsonl:error_message"
+        },
+        "retry_count": {
+          "source": "processing_events.jsonl:retry_count"
+        },
+        "manual_intervention": {
+          "source": "processing_events.jsonl:manual_intervention"
+        },
+        "operator_or_reviewer": {
+          "source": "processing_events.jsonl:operator_or_reviewer"
+        },
+        "is_provisional": {
+          "default": false,
+          "source": "derived: job state at ingest time"
+        },
+        "mode": {
+          "source": "derived: section-level vs paper-level vs abstract-level",
+          "note": "same model family in different modes = different runs; lineage edge recorded"
+        },
+        "coverage_stats": {
+          "source": "run summary/manifest JSONs (papers covered, rows parsed, yields)"
+        },
+        "input_artifact_hash": {
+          "source": "processing_events.jsonl:input_artifact_hash"
+        },
+        "output_artifact_hash": {
+          "source": "processing_events.jsonl:output_artifact_hash"
+        }
+      }
+    },
+    "model_run": {
+      "primary_key": [
+        "run_id",
+        "model_name"
+      ],
+      "columns": {
+        "run_id": {
+          "not_null": true,
+          "fk": "extraction_run.run_id",
+          "source": "derived: run registry join (run manifests: SLURM job id)"
+        },
+        "model_name": {
+          "not_null": true,
+          "source": "run manifests; configs/canonical.yaml:models"
+        },
+        "model_version": {
+          "source": "configs/canonical.yaml:environment (pinned)"
+        },
+        "prompt_version": {
+          "source": "run manifests (LLM runs only)"
+        },
+        "papers_covered": {
+          "source": "run summaries"
+        },
+        "rows_parsed": {
+          "source": "run summaries"
+        },
+        "parse_yield_pass": {
+          "source": "parse checks (e.g. 28608068 manifest parse_check)"
+        }
+      }
+    },
+    "term_mention": {
+      "primary_key": [
+        "mention_id"
+      ],
+      "pk_pattern": "^HMTERM_[0-9a-f]{16}$",
+      "columns": {
+        "mention_id": {
+          "not_null": true,
+          "source": "term_mentions.jsonl:mention_id",
+          "note": "content-hash includes extraction_run_id → models never merge"
+        },
+        "occurrence_key": {
+          "not_null": true,
+          "pk_pattern_secondary": "^HMOCC_[0-9a-f]{16}$",
+          "source": "term_mentions.jsonl:occurrence_key",
+          "note": "extractor-independent span; competing models share the occurrence, never the mention"
+        },
+        "paper_id": {
+          "not_null": true,
+          "fk": "paper.paper_id",
+          "source": "term_mentions.jsonl:paper_id"
+        },
+        "paragraph_id": {
+          "source": "term_mentions.jsonl:paragraph_id"
+        },
+        "sentence_id": {
+          "source": "term_mentions.jsonl:sentence_id"
+        },
+        "surface_form": {
+          "source": "term_mentions.jsonl:surface_form"
+        },
+        "normalized_mention": {
+          "source": "term_mentions.jsonl:normalized_mention",
+          "note": "canon_norm identity normalization; never word_norm"
+        },
+        "entity_type": {
+          "source": "term_mentions.jsonl:entity_type"
+        },
+        "domain": {
+          "source": "term_mentions.jsonl:domain"
+        },
+        "subdomain": {
+          "source": "term_mentions.jsonl:subdomain"
+        },
+        "subsection": {
+          "source": "term_mentions.jsonl:subsection"
+        },
+        "cdm_type": {
+          "source": "term_mentions.jsonl:entity_type (via canonical typing)"
+        },
+        "start_offset": {
+          "source": "term_mentions.jsonl:start_offset",
+          "note": "indexes section_text_original"
+        },
+        "end_offset": {
+          "source": "term_mentions.jsonl:end_offset"
+        },
+        "confidence": {
+          "source": "term_mentions.jsonl:confidence"
+        },
+        "extraction_method": {
+          "source": "term_mentions.jsonl:extraction_method"
+        },
+        "extraction_model": {
+          "source": "term_mentions.jsonl:extraction_model"
+        },
+        "extraction_run_id": {
+          "not_null": true,
+          "fk": "extraction_run.run_id",
+          "note": "orphan check fails build",
+          "source": "term_mentions.jsonl:extraction_run_id"
+        },
+        "source_file_id": {
+          "source": "term_mentions.jsonl:source_file_id"
+        },
+        "supporting_passage": {
+          "source": "term_mentions.jsonl:supporting_passage"
+        },
+        "supporting_sentence": {
+          "source": "term_mentions.jsonl:supporting_sentence"
+        },
+        "supporting_sentence_clipped": {
+          "source": "term_mentions.jsonl:supporting_sentence_clipped"
+        },
+        "canonical_term_id": {
+          "fk": "canonical_term.term_id",
+          "source": "term_mentions.jsonl:canonical_term_id"
+        },
+        "review_status": {
+          "source": "term_mentions.jsonl:review_status",
+          "note": "state machine; only HUMAN_REVIEW resolves"
+        },
+        "unresolved_flags": {
+          "source": "term_mentions.jsonl:unresolved_flags"
+        },
+        "geometry_note": {
+          "source": "derived",
+          "note": "pubtator3 rows (original + backfill 28608086): offsets 0,0 paper-level geometry, recorded on the run"
+        },
+        "section_id": {
+          "not_null": true,
+          "fk": "section.section_id_original",
+          "source": "term_mentions.jsonl:section_id",
+          "note": "join = section.section_id_original (sections have no section_id field)"
+        }
+      }
+    },
+    "canonical_term": {
+      "primary_key": [
+        "term_id"
+      ],
+      "pk_pattern": "^HMCTERM_[0-9a-f]{16}$",
+      "columns": {
+        "term_id": {
+          "not_null": true,
+          "source": "canonical_terms.jsonl:term_id",
+          "note": "content-hash of (term_norm, cdm_type)"
+        },
+        "term": {
+          "not_null": true,
+          "source": "canonical_terms.jsonl:term"
+        },
+        "term_norm": {
+          "not_null": true,
+          "source": "canonical_terms.jsonl:term_norm",
+          "note": "canon_norm"
+        },
+        "cdm_type": {
+          "source": "canonical_terms.jsonl:cdm_type"
+        },
+        "alternative_types": {
+          "source": "canonical_terms.jsonl:alternative_types",
+          "note": "type disagreement recorded, not resolved"
+        },
+        "n_candidate_types": {
+          "source": "canonical_terms.jsonl:n_candidate_types"
+        },
+        "n_models": {
+          "source": "canonical_terms.jsonl:n_models",
+          "note": "observed counts, never rankings"
+        },
+        "models": {
+          "source": "canonical_terms.jsonl:models"
+        },
+        "n_observations": {
+          "source": "canonical_terms.jsonl:n_observations"
+        },
+        "mention_count": {
+          "source": "canonical_terms.jsonl:mention_count"
+        },
+        "paper_count": {
+          "source": "canonical_terms.jsonl:paper_count"
+        },
+        "n_papers": {
+          "source": "canonical_terms.jsonl:n_papers",
+          "note": "first-record oddity (2092, HMPAPER_000001-5) predates corpus_v2 IDs — inspect at ingest"
+        },
+        "top_paper_ids": {
+          "source": "canonical_terms.jsonl:top_paper_ids"
+        },
+        "source_names": {
+          "source": "canonical_terms.jsonl:source_names"
+        },
+        "source_table": {
+          "source": "canonical_terms.jsonl:source_table"
+        },
+        "is_generic_type": {
+          "source": "canonical_terms.jsonl:is_generic_type"
+        },
+        "definition_count": {
+          "source": "canonical_terms.jsonl:definition_count"
+        },
+        "definition_sources": {
+          "source": "canonical_terms.jsonl:definition_sources"
+        },
+        "definition_status": {
+          "source": "canonical_terms.jsonl:definition_status"
+        },
+        "taxonomy_category": {
+          "source": "canonical_terms.jsonl:taxonomy_category"
+        },
+        "taxonomy_subcategory": {
+          "source": "canonical_terms.jsonl:taxonomy_subcategory"
+        },
+        "identity_evidence": {
+          "source": "canonical_terms.jsonl:identity_evidence"
+        },
+        "review_status": {
+          "source": "canonical_terms.jsonl:review_status"
+        }
+      }
+    },
+    "term_definition": {
+      "primary_key": [
+        "definition_id"
+      ],
+      "pk_pattern": "^HMDEF_[0-9a-f]{16}$",
+      "columns": {
+        "definition_id": {
+          "not_null": true,
+          "source": "term_definitions.jsonl:definition_id"
+        },
+        "term_id": {
+          "not_null": true,
+          "fk": "canonical_term.term_id",
+          "source": "term_definitions.jsonl:term_id"
+        },
+        "paper_id": {
+          "fk": "paper.paper_id",
+          "source": "term_definitions.jsonl:paper_id"
+        },
+        "sentence_id": {
+          "source": "term_definitions.jsonl:sentence_id"
+        },
+        "defined_surface": {
+          "source": "term_definitions.jsonl:defined_surface"
+        },
+        "definition_text": {
+          "source": "term_definitions.jsonl:definition_text"
+        },
+        "definition_char_start": {
+          "source": "term_definitions.jsonl:definition_char_start"
+        },
+        "definition_char_end": {
+          "source": "term_definitions.jsonl:definition_char_end"
+        },
+        "definition_formality": {
+          "source": "term_definitions.jsonl:definition_formality"
+        },
+        "definition_source": {
+          "source": "term_definitions.jsonl:definition_source"
+        },
+        "provenance_class": {
+          "source": "term_definitions.jsonl:provenance_class",
+          "note": "SOURCE_DERIVED | EXTERNAL — never conflated"
+        },
+        "confidence": {
+          "source": "term_definitions.jsonl:confidence"
+        },
+        "review_status": {
+          "source": "term_definitions.jsonl:review_status"
+        },
+        "extraction_run_id": {
+          "fk": "extraction_run.run_id",
+          "source": "term_definitions.jsonl:extraction_run_id"
+        },
+        "section_id": {
+          "source": "term_definitions.jsonl:section_id",
+          "note": "join = section.section_id_original",
+          "fk": "section (paper_id, section_id_original)"
+        }
+      }
+    },
+    "concept": {
+      "primary_key": [
+        "vocabulary",
+        "concept_code"
+      ],
+      "columns": {
+        "vocabulary": {
+          "not_null": true,
+          "source": "term_ontology_mappings.jsonl:ontology_name"
+        },
+        "concept_code": {
+          "not_null": true,
+          "source": "term_ontology_mappings.jsonl:concept_id",
+          "note": "verified external ids only — never fabricated"
+        },
+        "concept_label": {
+          "source": "term_ontology_mappings.jsonl:concept_label"
+        },
+        "ontology_source": {
+          "source": "term_ontology_mappings.jsonl:ontology_source"
+        },
+        "source_service": {
+          "source": "term_ontology_mappings.jsonl:source_service"
+        },
+        "mesh_kind": {
+          "source": "term_ontology_mappings.jsonl:mesh_kind"
+        },
+        "mesh_tree": {
+          "source": "term_ontology_mappings.jsonl:mesh_tree"
+        },
+        "omop_domain": {
+          "source": "term_ontology_mappings.jsonl:omop_domain"
+        },
+        "omop_concept_class": {
+          "source": "term_ontology_mappings.jsonl:omop_concept_class"
+        },
+        "omop_standard": {
+          "source": "term_ontology_mappings.jsonl:omop_standard"
+        },
+        "standard_concept_id": {
+          "source": "term_ontology_mappings.jsonl:standard_concept_id"
+        },
+        "standard_concept_label": {
+          "source": "term_ontology_mappings.jsonl:standard_concept_label"
+        }
+      }
+    },
+    "term_concept_map": {
+      "primary_key": [
+        "mapping_id"
+      ],
+      "pk_pattern": "^HMMAP_[0-9a-f]{16}$",
+      "columns": {
+        "mapping_id": {
+          "not_null": true,
+          "source": "term_ontology_mappings.jsonl:mapping_id"
+        },
+        "term_id": {
+          "not_null": true,
+          "fk": "canonical_term.term_id",
+          "source": "term_ontology_mappings.jsonl:term_id"
+        },
+        "vocabulary": {
+          "fk": "concept.vocabulary",
+          "source": "term_ontology_mappings.jsonl:ontology_name"
+        },
+        "concept_code": {
+          "fk": "concept.concept_code",
+          "source": "term_ontology_mappings.jsonl:concept_id"
+        },
+        "term": {
+          "source": "term_ontology_mappings.jsonl:term"
+        },
+        "term_norm": {
+          "source": "term_ontology_mappings.jsonl:term_norm"
+        },
+        "cdm_type": {
+          "source": "term_ontology_mappings.jsonl:cdm_type"
+        },
+        "mapping_relation": {
+          "source": "term_ontology_mappings.jsonl:mapping_relation",
+          "check": "EXACT|EQUIVALENT|BROADER|NARROWER|RELATED|UNRESOLVED|REJECTED"
+        },
+        "candidate_rank": {
+          "source": "term_ontology_mappings.jsonl:candidate_rank"
+        },
+        "is_canonical_candidate": {
+          "source": "term_ontology_mappings.jsonl:is_canonical_candidate"
+        },
+        "auto_accept_eligible": {
+          "source": "term_ontology_mappings.jsonl:auto_accept_eligible"
+        },
+        "competing_candidates": {
+          "source": "term_ontology_mappings.jsonl:competing_candidates",
+          "note": "every candidate retained"
+        },
+        "matched_via": {
+          "source": "term_ontology_mappings.jsonl:matched_via"
+        },
+        "staged_match": {
+          "source": "term_ontology_mappings.jsonl:staged_match"
+        },
+        "scores": {
+          "source": "term_ontology_mappings.jsonl:scores"
+        },
+        "mapping_disposition": {
+          "source": "term_ontology_mappings.jsonl:mapping_disposition",
+          "check": "ACCEPTED|CANDIDATE|REJECTED|UNRESOLVED|REVIEW_REQUIRED"
+        },
+        "provenance": {
+          "source": "term_ontology_mappings.jsonl:provenance"
+        },
+        "review_status": {
+          "source": "term_ontology_mappings.jsonl:review_status"
+        }
+      }
+    },
+    "study": {
+      "primary_key": [
+        "study_id"
+      ],
+      "pk_pattern": "^HMPAPER_[0-9]{6}_STUDY_[0-9]{3}$",
+      "columns": {
+        "study_id": {
+          "not_null": true,
+          "source": "studies.jsonl:study_id"
+        },
+        "paper_id": {
+          "not_null": true,
+          "fk": "paper.paper_id",
+          "source": "studies.jsonl:paper_id"
+        },
+        "bioproject": {
+          "source": "studies.jsonl:bioproject"
+        },
+        "study_design": {
+          "source": "studies.jsonl:study_design"
+        },
+        "research_question": {
+          "source": "studies.jsonl:research_question"
+        },
+        "assay_type": {
+          "source": "studies.jsonl:assay_type"
+        },
+        "assay_type_evidence": {
+          "source": "studies.jsonl:assay_type_evidence"
+        },
+        "sequencing_platform": {
+          "source": "studies.jsonl:sequencing_platform"
+        },
+        "target_gene_region": {
+          "source": "studies.jsonl:target_gene_region"
+        },
+        "taxonomic_profiling_method": {
+          "source": "studies.jsonl:taxonomic_profiling_method"
+        },
+        "functional_profiling_method": {
+          "source": "studies.jsonl:functional_profiling_method"
+        },
+        "statistical_methods": {
+          "source": "studies.jsonl:statistical_methods"
+        },
+        "multiple_testing_correction": {
+          "source": "studies.jsonl:multiple_testing_correction"
+        },
+        "software_pipeline_version": {
+          "source": "studies.jsonl:software_pipeline_version"
+        },
+        "taxonomic_database_and_version": {
+          "source": "studies.jsonl:taxonomic_database_and_version"
+        },
+        "dna_rna_extraction_method": {
+          "source": "studies.jsonl:dna_rna_extraction_method"
+        },
+        "collection_method": {
+          "source": "studies.jsonl:collection_method"
+        },
+        "collection_time_points": {
+          "source": "studies.jsonl:collection_time_points"
+        },
+        "storage_transport_conditions": {
+          "source": "studies.jsonl:storage_transport_conditions"
+        },
+        "quality_filtering_normalization": {
+          "source": "studies.jsonl:quality_filtering_normalization"
+        },
+        "contamination_handling": {
+          "source": "studies.jsonl:contamination_handling"
+        },
+        "negative_positive_controls": {
+          "source": "studies.jsonl:negative_positive_controls"
+        },
+        "specimen_types": {
+          "source": "studies.jsonl:specimen_types"
+        },
+        "body_sites": {
+          "source": "studies.jsonl:body_sites"
+        },
+        "health_conditions": {
+          "source": "studies.jsonl:health_conditions"
+        },
+        "eligibility_criteria": {
+          "source": "studies.jsonl:eligibility_criteria"
+        },
+        "confounders_covariates_reported": {
+          "source": "studies.jsonl:confounders_covariates_reported"
+        },
+        "limitations_reported": {
+          "source": "studies.jsonl:limitations_reported"
+        },
+        "recruitment_setting": {
+          "source": "studies.jsonl:recruitment_setting"
+        },
+        "population_description": {
+          "source": "studies.jsonl:population_description"
+        },
+        "country_region": {
+          "source": "studies.jsonl:country_region"
+        },
+        "country_iso_from_compendium": {
+          "source": "studies.jsonl:country_iso_from_compendium"
+        },
+        "sra_submission_window": {
+          "source": "studies.jsonl:sra_submission_window"
+        },
+        "data_accessions": {
+          "source": "studies.jsonl:data_accessions"
+        },
+        "code_data_availability": {
+          "source": "studies.jsonl:code_data_availability"
+        },
+        "age_information": {
+          "source": "studies.jsonl:age_information"
+        },
+        "sex_gender_information": {
+          "source": "studies.jsonl:sex_gender_information"
+        },
+        "comparator_control_group": {
+          "source": "studies.jsonl:comparator_control_group"
+        },
+        "exposures_interventions": {
+          "source": "studies.jsonl:exposures_interventions"
+        },
+        "num_participants_reported": {
+          "source": "studies.jsonl:num_participants_reported"
+        },
+        "num_biological_samples_reported": {
+          "source": "studies.jsonl:num_biological_samples_reported"
+        },
+        "num_technical_replicates_reported": {
+          "source": "studies.jsonl:num_technical_replicates_reported"
+        },
+        "num_time_points_reported": {
+          "source": "studies.jsonl:num_time_points_reported"
+        },
+        "llm_status": {
+          "source": "studies.jsonl:llm_status",
+          "note": "LLM provenance block carried in full, never summarized away"
+        },
+        "llm_model": {
+          "source": "studies.jsonl:llm_model"
+        },
+        "llm_model_version": {
+          "source": "studies.jsonl:llm_model_version"
+        },
+        "llm_prompt_version": {
+          "source": "studies.jsonl:llm_prompt_version"
+        },
+        "llm_source_section_ids": {
+          "source": "studies.jsonl:llm_source_section_ids"
+        },
+        "llm_source_text_hash": {
+          "source": "studies.jsonl:llm_source_text_hash"
+        },
+        "llm_input_chars": {
+          "source": "studies.jsonl:llm_input_chars"
+        },
+        "llm_degrees": {
+          "source": "studies.jsonl:llm_degrees"
+        },
+        "llm_error": {
+          "source": "studies.jsonl:llm_error"
+        },
+        "llm_split_retries": {
+          "source": "studies.jsonl:llm_split_retries"
+        },
+        "study_provenance": {
+          "source": "studies.jsonl:study_provenance"
+        },
+        "extraction_status": {
+          "source": "studies.jsonl:extraction_status"
+        },
+        "_input_fingerprint": {
+          "source": "studies.jsonl:_input_fingerprint"
+        }
+      }
+    },
+    "cohort": {
+      "primary_key": [
+        "cohort_id"
+      ],
+      "pk_pattern": "^HMCOHORT_[0-9]{6}$",
+      "columns": {
+        "cohort_id": {
+          "not_null": true,
+          "source": "data_catalogue/tables/cohorts.csv:cohort_id"
+        },
+        "paper_id": {
+          "not_null": true,
+          "fk": "paper.paper_id",
+          "source": "cohorts.csv:paper_id"
+        },
+        "dataset_id": {
+          "fk": "dataset.dataset_id",
+          "source": "cohorts.csv:dataset_id"
+        },
+        "cohort_label": {
+          "source": "cohorts.csv:cohort_label"
+        },
+        "cohort_role": {
+          "source": "cohorts.csv:cohort_role"
+        },
+        "population_description": {
+          "source": "cohorts.csv:population_description"
+        },
+        "country_or_region": {
+          "source": "cohorts.csv:country_or_region"
+        },
+        "setting": {
+          "source": "cohorts.csv:setting"
+        },
+        "recruitment_method": {
+          "source": "cohorts.csv:recruitment_method"
+        },
+        "participant_count": {
+          "source": "cohorts.csv:participant_count",
+          "note": "as reported; never computed"
+        },
+        "sample_count": {
+          "source": "cohorts.csv:sample_count"
+        },
+        "age_group": {
+          "source": "cohorts.csv:age_group"
+        },
+        "age_summary": {
+          "source": "cohorts.csv:age_summary"
+        },
+        "sex_or_gender_reporting": {
+          "source": "cohorts.csv:sex_or_gender_reporting"
+        },
+        "health_status": {
+          "source": "cohorts.csv:health_status"
+        },
+        "inclusion_criteria": {
+          "source": "cohorts.csv:inclusion_criteria"
+        },
+        "exclusion_criteria": {
+          "source": "cohorts.csv:exclusion_criteria"
+        },
+        "key_covariates": {
+          "source": "cohorts.csv:key_covariates"
+        },
+        "longitudinal": {
+          "source": "cohorts.csv:longitudinal"
+        },
+        "timepoints": {
+          "source": "cohorts.csv:timepoints"
+        },
+        "evidence_location": {
+          "source": "cohorts.csv:evidence_location"
+        },
+        "evidence_text": {
+          "source": "cohorts.csv:evidence_text"
+        },
+        "notes": {
+          "source": "cohorts.csv:notes",
+          "note": "machine-extracted, UNVERIFIED — candidate for human curation"
+        }
+      }
+    },
+    "sample": {
+      "primary_key": [
+        "sample_group_id"
+      ],
+      "pk_pattern": "^HMSAMPLE_[0-9]{6}$",
+      "columns": {
+        "sample_group_id": {
+          "not_null": true,
+          "source": "samples.csv:sample_group_id"
+        },
+        "paper_id": {
+          "not_null": false,
+          "fk": "paper.paper_id",
+          "note": "required for corpus-linked rows",
+          "source": "samples.csv:paper_id"
+        },
+        "dataset_id": {
+          "fk": "dataset.dataset_id",
+          "source": "samples.csv:dataset_id"
+        },
+        "cohort_id": {
+          "fk": "cohort.cohort_id",
+          "source": "samples.csv:cohort_id"
+        },
+        "body_site": {
+          "source": "samples.csv:body_site"
+        },
+        "body_site_original": {
+          "source": "samples.csv:body_site_original"
+        },
+        "sample_type": {
+          "source": "samples.csv:sample_type"
+        },
+        "sample_type_normalized": {
+          "source": "samples.csv:sample_type_normalized",
+          "note": "vocabulary: quality/sample_type_normalization.json"
+        },
+        "sample_type_normalization_status": {
+          "source": "samples.csv:sample_type_normalization_status"
+        },
+        "sample_type_normalization_reason": {
+          "source": "samples.csv:sample_type_normalization_reason"
+        },
+        "collection_method": {
+          "source": "samples.csv:collection_method"
+        },
+        "collection_timepoint": {
+          "source": "samples.csv:collection_timepoint"
+        },
+        "storage_condition": {
+          "source": "samples.csv:storage_condition"
+        },
+        "preservation_method": {
+          "source": "samples.csv:preservation_method"
+        },
+        "sample_count": {
+          "source": "samples.csv:sample_count"
+        },
+        "sample_processing": {
+          "source": "samples.csv:sample_processing"
+        },
+        "evidence_location": {
+          "source": "samples.csv:evidence_location"
+        },
+        "evidence_text": {
+          "source": "samples.csv:evidence_text"
+        },
+        "notes": {
+          "source": "samples.csv:notes"
+        }
+      }
+    },
+    "assay": {
+      "primary_key": [
+        "assay_id"
+      ],
+      "pk_pattern": "^HMASSAY_[0-9]{6}$",
+      "columns": {
+        "assay_id": {
+          "not_null": true,
+          "source": "assays.csv:assay_id"
+        },
+        "paper_id": {
+          "fk": "paper.paper_id",
+          "source": "assays.csv:paper_id"
+        },
+        "dataset_id": {
+          "fk": "dataset.dataset_id",
+          "source": "assays.csv:dataset_id"
+        },
+        "assay_type": {
+          "source": "assays.csv:assay_type"
+        },
+        "target_gene_or_region": {
+          "source": "assays.csv:target_gene_or_region"
+        },
+        "sequencing_platform": {
+          "source": "assays.csv:sequencing_platform"
+        },
+        "library_preparation": {
+          "source": "assays.csv:library_preparation"
+        },
+        "dna_extraction_method": {
+          "source": "assays.cssv:dna_extraction_method"
+        },
+        "primer_or_probe": {
+          "source": "assays.csv:primer_or_probe"
+        },
+        "negative_controls": {
+          "source": "assays.csv:negative_controls"
+        },
+        "positive_controls": {
+          "source": "assays.csv:positive_controls"
+        },
+        "contamination_handling": {
+          "source": "assays.csv:contamination_handling"
+        },
+        "quality_control": {
+          "source": "assays.csv:quality_control"
+        },
+        "bioinformatics_pipeline": {
+          "source": "assays.csv:bioinformatics_pipeline"
+        },
+        "software_tools": {
+          "source": "assays.csv:software_tools"
+        },
+        "taxonomic_database": {
+          "source": "assays.csv:taxonomic_database"
+        },
+        "functional_database": {
+          "source": "assays.csv:functional_database"
+        },
+        "normalization_method": {
+          "source": "assays.csv:normalization_method"
+        },
+        "statistical_methods": {
+          "source": "assays.csv:statistical_methods"
+        },
+        "evidence_location": {
+          "source": "assays.csv:evidence_location"
+        },
+        "notes": {
+          "source": "assays.csv:notes"
+        },
+        "evidence_text": {
+          "source": "assays.csv:evidence_text"
+        }
+      }
+    },
+    "dataset": {
+      "primary_key": [
+        "dataset_id"
+      ],
+      "pk_pattern": "^HMDATA_[0-9]{6}$",
+      "columns": {
+        "dataset_id": {
+          "not_null": true,
+          "source": "datasets.csv:dataset_id"
+        },
+        "paper_id": {
+          "fk": "paper.paper_id",
+          "source": "datasets.csv:paper_id"
+        },
+        "dataset_title": {
+          "source": "datasets.csv:dataset_title"
+        },
+        "dataset_description": {
+          "source": "datasets.csv:dataset_description"
+        },
+        "dataset_role": {
+          "source": "datasets.csv:dataset_role"
+        },
+        "dataset_type": {
+          "source": "datasets.csv:dataset_type"
+        },
+        "repository_name": {
+          "source": "datasets.csv:repository_name"
+        },
+        "repository_accession": {
+          "source": "datasets.csv:repository_accession"
+        },
+        "accession_type": {
+          "source": "datasets.csv:accession_type"
+        },
+        "dataset_url": {
+          "source": "datasets.csv:dataset_url"
+        },
+        "related_publication_dois": {
+          "source": "datasets.csv:related_publication_dois"
+        },
+        "data_availability_status": {
+          "source": "datasets.csv:data_availability_status"
+        },
+        "access_conditions": {
+          "source": "datasets.csv:access_conditions"
+        },
+        "license_or_terms": {
+          "source": "datasets.csv:license_or_terms"
+        },
+        "original_or_reused": {
+          "source": "datasets.csv:original_or_reused"
+        },
+        "data_dictionary_url": {
+          "source": "datasets.csv:data_dictionary_url"
+        },
+        "study_registration": {
+          "source": "datasets.csv:study_registration"
+        },
+        "evidence_text": {
+          "source": "datasets.csv:evidence_text"
+        },
+        "evidence_location": {
+          "source": "datasets.csv:evidence_location"
+        },
+        "verification_status": {
+          "source": "datasets.csv:verification_status"
+        },
+        "last_verified": {
+          "source": "datasets.csv:last_verified"
+        },
+        "catalogue_notes": {
+          "source": "datasets.csv:catalogue_notes"
+        }
+      }
+    },
+    "data_asset": {
+      "primary_key": [
+        "asset_id"
+      ],
+      "pk_pattern": "^HMASSET_[0-9]{6}$",
+      "columns": {
+        "asset_id": {
+          "not_null": true,
+          "source": "data_assets.csv:asset_id"
+        },
+        "dataset_id": {
+          "not_null": true,
+          "fk": "dataset.dataset_id",
+          "source": "data_assets.csv:dataset_id"
+        },
+        "paper_id": {
+          "fk": "paper.paper_id",
+          "source": "data_assets.csv:paper_id"
+        },
+        "asset_name": {
+          "source": "data_assets.csv:asset_name"
+        },
+        "asset_type": {
+          "source": "data_assets.csv:asset_type"
+        },
+        "format": {
+          "source": "data_assets.csv:format"
+        },
+        "description": {
+          "source": "data_assets.csv:description"
+        },
+        "repository_url": {
+          "source": "data_assets.csv:repository_url"
+        },
+        "accession": {
+          "source": "data_assets.csv:accession"
+        },
+        "file_size_bytes": {
+          "source": "data_assets.csv:file_size_bytes"
+        },
+        "checksum_type": {
+          "source": "data_assets.csv:checksum_type"
+        },
+        "checksum": {
+          "source": "data_assets.csv:checksum"
+        },
+        "access_status": {
+          "source": "data_assets.csv:access_status"
+        },
+        "license_or_terms": {
+          "source": "data_assets.csv:license_or_terms"
+        },
+        "data_dictionary_url": {
+          "source": "data_assets.csv:data_dictionary_url"
+        },
+        "evidence_text": {
+          "source": "data_assets.csv:evidence_text"
+        },
+        "evidence_location": {
+          "source": "data_assets.csv:evidence_location"
+        },
+        "notes": {
+          "source": "data_assets.csv:notes"
+        }
+      }
+    },
+    "claim": {
+      "primary_key": [
+        "finding_id"
+      ],
+      "pk_pattern": "^HMPAPER_[0-9]{6}_FIND_[0-9]{4}$",
+      "columns": {
+        "finding_id": {
+          "not_null": true,
+          "source": "findings.jsonl:finding_id"
+        },
+        "paper_id": {
+          "not_null": true,
+          "fk": "paper.paper_id",
+          "source": "findings.jsonl:paper_id"
+        },
+        "study_id": {
+          "fk": "study.study_id",
+          "source": "findings.jsonl:study_id"
+        },
+        "evidence_section_id": {
+          "fk": "section (paper_id, section_id_original)",
+          "source": "findings.jsonl:evidence_section_id"
+        },
+        "chunk": {
+          "source": "findings.jsonl:chunk"
+        },
+        "chunk_char_offset": {
+          "source": "findings.jsonl:chunk_char_offset"
+        },
+        "claim_type": {
+          "source": "findings.jsonl:claim_type"
+        },
+        "direction": {
+          "source": "findings.jsonl:direction",
+          "note": "polarity captured, never corrected"
+        },
+        "direction_refers_to": {
+          "source": "findings.jsonl:direction_refers_to"
+        },
+        "outcome": {
+          "source": "findings.jsonl:outcome"
+        },
+        "exposure_or_comparison": {
+          "source": "findings.jsonl:exposure_or_comparison"
+        },
+        "microbial_function_pathway": {
+          "source": "findings.jsonl:microbial_function_pathway"
+        },
+        "taxon_original": {
+          "source": "findings.jsonl:taxon_original"
+        },
+        "taxonomic_rank": {
+          "source": "findings.jsonl:taxonomic_rank"
+        },
+        "body_site_original": {
+          "source": "findings.jsonl:body_site_original"
+        },
+        "population_subgroup": {
+          "source": "findings.jsonl:population_subgroup"
+        },
+        "adjusted_covariates": {
+          "source": "findings.jsonl:adjusted_covariates"
+        },
+        "sample_size": {
+          "source": "findings.jsonl:sample_size"
+        },
+        "notes": {
+          "source": "findings.jsonl:notes"
+        },
+        "effect_measure": {
+          "source": "findings.jsonl:effect_measure",
+          "note": "~1,088 p-shaped effect_estimate quirk documented, not fixed"
+        },
+        "effect_estimate": {
+          "source": "findings.jsonl:effect_estimate"
+        },
+        "confidence_interval": {
+          "source": "findings.jsonl:confidence_interval"
+        },
+        "p_value": {
+          "source": "findings.jsonl:p_value"
+        },
+        "q_value": {
+          "source": "findings.jsonl:q_value"
+        },
+        "evidence_text": {
+          "source": "findings.jsonl:evidence_text",
+          "not_null": true
+        },
+        "evidence_locator": {
+          "source": "findings.jsonl:evidence_locator"
+        },
+        "evidence_locator_chars": {
+          "source": "findings.jsonl:evidence_locator_chars"
+        },
+        "evidence_locator_type": {
+          "source": "findings.jsonl:evidence_locator_type"
+        },
+        "evidence_locator_convention": {
+          "source": "findings.jsonl:evidence_locator_convention"
+        },
+        "evidence_locator_status": {
+          "source": "findings.jsonl:evidence_locator_status",
+          "note": "automated gate: text[start:end]==quote"
+        },
+        "text_version_id": {
+          "source": "findings.jsonl:text_version_id",
+          "not_null": true
+        },
+        "extraction_method": {
+          "source": "findings.jsonl:extraction_method"
+        },
+        "extractor_model_and_version": {
+          "source": "findings.jsonl:extractor_model_and_version"
+        },
+        "extractor_prompt_version": {
+          "source": "findings.jsonl:extractor_prompt_version"
+        },
+        "extraction_status_section": {
+          "source": "findings.jsonl:extraction_status_section"
+        },
+        "llm_source_section_status": {
+          "source": "findings.jsonl:llm_source_section_status"
+        },
+        "extraction_run_id": {
+          "fk": "extraction_run.run_id",
+          "note": "derived from extractor + source run; orphan check",
+          "source": "derived: from extractor_model_and_version + run registry (orphan check)"
+        },
+        "verification_status": {
+          "source": "findings.jsonl:verification_status",
+          "note": "human gate: pending → human_verified/needs_revision"
+        },
+        "reviewer": {
+          "source": "findings.jsonl:reviewer"
+        },
+        "review_date": {
+          "source": "findings.jsonl:review_date"
+        },
+        "catalogue_linkage": {
+          "source": "findings.csv:dataset_id,cohort_id,assay_id",
+          "note": "catalogue projection adds study-level linkage; both row sets retained"
+        },
+        "corpus_id": {
+          "source": "findings.jsonl:corpus_id"
+        }
+      }
+    },
+    "relation": {
+      "primary_key": [
+        "relation_id"
+      ],
+      "pk_pattern": "TBD (triple patterns pending stage 53/54 + 56; propose termpipeline hash style)",
+      "columns": {
+        "relation_id": {
+          "not_null": true,
+          "source": "PLANNED stage 53/54 triple_mentions.jsonl (job 28607588) → stage 56 canonicalize (28607924)"
+        },
+        "paper_id": {
+          "not_null": true,
+          "fk": "paper.paper_id",
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "subject_term_id": {
+          "fk": "canonical_term.term_id",
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "predicate": {
+          "source": "triple_relation_schema.json vocabulary"
+        },
+        "object_term_id": {
+          "fk": "canonical_term.term_id",
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "original_subject": {
+          "source": "triple original surface forms",
+          "note": "original triple retained verbatim"
+        },
+        "original_predicate": {
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "original_object": {
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "polarity": {
+          "source": "triple extraction"
+        },
+        "uncertainty": {
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "evidence_text": {
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "evidence_locator": {
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "evidence_locator_status": {
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "text_version_id": {
+          "not_null": true,
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "extraction_run_id": {
+          "fk": "extraction_run.run_id",
+          "source": "PLANNED: pending stage 53/54 triple_mentions.jsonl (job 28607588) -> stage 56 (job 28607924); field names to be finalized against the actual output"
+        },
+        "review_status": {
+          "note": "state machine; human gate only",
+          "source": "new (CDM-native); value originates only from the named CDM mechanism (state machine)"
+        },
+        "recovery_limitation": {
+          "default": "leave-K-out estimates ~28% full-triple recovery — recorded as limitation, not success",
+          "source": "derived: leave-K-out evaluation of triple stage (~28% full-triple recovery)"
+        }
+      }
+    },
+    "human_review": {
+      "primary_key": [
+        "review_id"
+      ],
+      "columns": {
+        "review_id": {
+          "not_null": true,
+          "source": "new (CDM-native)"
+        },
+        "target_entity": {
+          "not_null": true,
+          "check": "one of the 33 CDM entities",
+          "source": "new (CDM-native); value originates only from the named CDM mechanism (reviewer input)"
+        },
+        "target_id": {
+          "not_null": true,
+          "source": "new (CDM-native); value originates only from the named CDM mechanism (reviewer input)"
+        },
+        "review_type": {
+          "check": "ADJUDICATION|CURATION|RESOLUTION",
+          "source": "new (CDM-native); value originates only from the named CDM mechanism"
+        },
+        "reviewer": {
+          "not_null": true,
+          "source": "reviewer identity — the only ACCEPTED/REJECTED mechanism"
+        },
+        "review_date": {
+          "not_null": true,
+          "source": "new (CDM-native); value originates only from the named CDM mechanism"
+        },
+        "decision": {
+          "not_null": true,
+          "check": "ACCEPTED|REJECTED|NEEDS_REVISION",
+          "source": "new (CDM-native); value originates only from the named CDM mechanism"
+        },
+        "notes": {
+          "not_null": false,
+          "source": "new (CDM-native); value originates only from the named CDM mechanism"
+        },
+        "references_evidence_record": {
+          "source": "results/28608068_ner_eval_permodel/ner_comparison_errors.jsonl record ids; data_catalogue/quality/sample_type_review_queue.csv rows"
+        },
+        "prior_review_status": {
+          "note": "audit trail — state machine UNVERIFIED→REVIEW_REQUIRED→ACCEPTED/REJECTED",
+          "source": "derived: prior review_status value (audit trail)"
+        }
+      }
+    },
+    "validation_result": {
+      "primary_key": [
+        "check_id",
+        "target_id",
+        "run_id"
+      ],
+      "columns": {
+        "check_id": {
+          "not_null": true,
+          "source": "validation_per_paper.jsonl:checks + terminology_validation.jsonl + integrity checks"
+        },
+        "target_id": {
+          "not_null": true,
+          "note": "paper id, section key, run id, or entity id",
+          "source": "validation_per_paper.jsonl:paper_id (target of check)"
+        },
+        "run_id": {
+          "not_null": true,
+          "fk": "extraction_run.run_id",
+          "source": "derived: validation run registry (validation_per_paper has no run_id)"
+        },
+        "validation_status": {
+          "source": "validation_per_paper.jsonl:validation_status"
+        },
+        "validator_version": {
+          "source": "validation_per_paper.jsonl:validator_version"
+        },
+        "validated_at": {
+          "source": "validation_per_paper.jsonl:validated_at"
+        },
+        "counts": {
+          "source": "validation_per_paper.jsonl:counts"
+        },
+        "known_issues": {
+          "source": "validation_per_paper.jsonl:known_issues",
+          "note": "automated checks raise REVIEW_REQUIRED; never resolve it"
+        }
+      }
+    },
+    "evaluation_run": {
+      "primary_key": [
+        "evaluation_run_id"
+      ],
+      "columns": {
+        "evaluation_run_id": {
+          "not_null": true,
+          "source": "results/28608068_ner_eval_permodel/run_manifest.json (+ prior comparison runs)"
+        },
+        "compared_runs": {
+          "fk": "extraction_run.run_id",
+          "note": "model runs compared",
+          "source": "results/28608068_ner_eval_permodel/per-model runs (run_manifest.json)"
+        },
+        "metrics": {
+          "source": "metrics_full.json, ner_comparison_metrics.csv, statistical_tests.json",
+          "note": "agreement only — no accuracy until adjudication; numbers never flow back to extraction rows"
+        },
+        "evidence_records": {
+          "source": "ner_comparison_errors.jsonl (735)"
+        },
+        "coverage_restrictions": {
+          "note": "pubtator3 comparisons restricted to common papers (300 pre-backfill; 434 after 28608086)",
+          "source": "derived: paper-coverage intersection of compared runs (300 pre-backfill; 434 with 28608086 backfill)"
+        }
+      }
+    },
+    "dataset_release": {
+      "primary_key": [
+        "release_id"
+      ],
+      "columns": {
+        "release_id": {
+          "not_null": true,
+          "source": "data_catalogue/MANIFEST.json, corpus_v2/releases/2.0.0, 2.1.0; planned 2.2.0"
+        },
+        "version": {
+          "source": "derived: release directory/manifest metadata"
+        },
+        "release_status": {
+          "check": "COMPLETE|PARTIAL|FAILED|REVIEW_REQUIRED",
+          "source": "derived: manifest verification outcome"
+        },
+        "manifest_sha256": {
+          "source": "MANIFEST.sha256 pattern"
+        },
+        "artifact_list": {
+          "source": "MANIFEST.json file entries"
+        },
+        "captures_runs": {
+          "fk": "extraction_run.run_id",
+          "source": "derived: run ids captured by the release snapshot"
+        }
+      }
+    }
+  }
+}

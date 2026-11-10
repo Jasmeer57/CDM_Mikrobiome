@@ -1,0 +1,34 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+METRIC: CONTEXT RECALL (RAGAS-style). Context recall asks whether the attached
+EVIDENCE/context contains the information needed to support the CLAIM (i.e.
+nothing essential is missing from the retrieved support).
+
+CLAIM (structured fields extracted from the paper):
+{claim_text}
+
+EVIDENCE (the source sentence the pipeline attached as support):
+{evidence_text}
+
+CONTEXT BEFORE (up to 200 chars, for context only):
+{context_before}
+
+CONTEXT AFTER (up to 200 chars, for context only):
+{context_after}
+
+VERDICT VOCABULARY (choose exactly one):
+- COMPLETE: the context contains everything needed to support the claim.
+- PARTIAL: the context contains some but not all of the information needed.
+- MISSING: the context lacks the information needed to support the claim.
+- UNCERTAIN: the evidence/context is empty or insufficient to decide. Prefer
+  UNCERTAIN over guessing.
+
+RULES
+- Judge coverage of the claim by the context, not truth of the claim.
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the evidence is empty, output UNCERTAIN.
+
+Respond with a single JSON object and nothing else:
+{{"verdict": "<COMPLETE|PARTIAL|MISSING|UNCERTAIN>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

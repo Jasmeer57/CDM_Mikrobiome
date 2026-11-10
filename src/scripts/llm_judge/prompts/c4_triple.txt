@@ -1,0 +1,36 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+TASK
+Decide whether the TRIPLE is a COHERENT CLAIM. Judge coherence and whether the
+evidence states the claim, NOT whether it is biologically true.
+
+TRIPLE:
+  subject: {subject_surface}   (type: {subject_type})
+  relation: {relation}
+  object:  {object_surface}   (type: {object_type})
+
+EVIDENCE (the source sentence from the linked mention):
+{evidence_text}
+
+CONTEXT SENTENCE (a window around the evidence, for context only):
+{context_sentence}
+
+VERDICT VOCABULARY (choose exactly one):
+- SENSIBLE: a coherent, well-formed claim that the evidence states.
+- PLAUSIBLE_BUT_WEAK: coherent but the evidence is thin/vague, or the relation
+  is generic (e.g. OTHER_RELATION).
+- NONSENSE: malformed, mis-typed, or the evidence does not state it.
+- UNCERTAIN: you cannot decide from what is shown. Prefer UNCERTAIN over
+  guessing when information is insufficient.
+
+RULES
+- Judge coherence, not biological truth. A false-but-well-formed claim the
+  evidence states is not NONSENSE.
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the evidence is empty or cannot support a decision, output UNCERTAIN
+  rather than guessing.
+
+Respond with a single JSON object and nothing else:
+{{"verdict": "<SENSIBLE|PLAUSIBLE_BUT_WEAK|NONSENSE|UNCERTAIN>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

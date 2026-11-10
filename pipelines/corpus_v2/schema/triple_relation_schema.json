@@ -1,0 +1,155 @@
+{
+  "relation_schema_id": "HMCV2-REL-v1",
+  "relation_schema_version": "v2-triple-relations-1",
+  "frozen_at": "2026-10-23",
+  "rules": [
+    "Predicates are copied into records only from this list; anything else the model emits is kept as the raw mention but normalized to OTHER_RELATION and flagged.",
+    "ASSOCIATED_WITH does not imply causation; causal predicates require causal wording in the source_sentence.",
+    "INCREASED_IN / DECREASED_IN require a comparator stated in the section context or the source_sentence.",
+    "PROTECTIVE_AGAINST requires protective evidence, not co-occurrence with health.",
+    "PRODUCES / METABOLIZES / DEGRADES require paper support, not assumed biochemical capability.",
+    "RESISTANT_TO must state what is resisted (e.g. an antimicrobial).",
+    "NEGATIVELY_REGULATES (regulation) is not interchangeable with DECREASED_IN (observed comparison).",
+    "IS_A and SUBCLASS_OF are ontology relations; PART_OF is mereology; none substitute for biological interaction.",
+    "Direction is canonical subject -> object; the model must order entities accordingly, never reverse a causal or regulatory claim."
+  ],
+  "families": {
+    "taxonomy_identity": {
+      "predicates": ["IS_A", "INSTANCE_OF", "SAME_AS", "HAS_TAXONOMIC_RANK"]
+    },
+    "location_habitat": {
+      "predicates": ["LOCATED_IN", "FOUND_IN", "COLONIZES", "HABITAT_OF"]
+    },
+    "presence_abundance": {
+      "predicates": ["PRESENT_IN", "INCREASED_IN", "DECREASED_IN", "MORE_ABUNDANT_THAN", "LESS_ABUNDANT_THAN"],
+      "requires_comparator": ["INCREASED_IN", "DECREASED_IN", "MORE_ABUNDANT_THAN", "LESS_ABUNDANT_THAN"]
+    },
+    "host_association": {
+      "predicates": ["ASSOCIATED_WITH_HOST", "ASSOCIATED_WITH_BODY_SITE", "ASSOCIATED_WITH_DISEASE", "ASSOCIATED_WITH_PHENOTYPE"]
+    },
+    "microbe_interaction": {
+      "predicates": ["INTERACTS_WITH", "COMPETES_WITH", "FACILITATES", "INHIBITS", "COOPERATES_WITH", "CROSS_FEEDS"]
+    },
+    "causal_regulatory": {
+      "predicates": ["CAUSES", "CONTRIBUTES_TO", "PROMOTES", "REGULATES", "MEDIATES", "MODULATES"],
+      "requires_causal_wording": true,
+      "note": "INHIBITS is listed under microbe_interaction but may carry causal semantics; the model must set causal_status accordingly."
+    },
+    "biological_function": {
+      "predicates": ["PRODUCES", "METABOLIZES", "DEGRADES", "SYNTHESIZES", "CONSUMES", "EXPRESSES"]
+    },
+    "molecular_mechanism": {
+      "predicates": ["BINDS_TO", "ACTIVATES", "SUPPRESSES", "UPREGULATES", "DOWNREGULATES", "ENCODES"]
+    },
+    "host_response": {
+      "predicates": ["INDUCES_IMMUNE_RESPONSE", "TRIGGERS_INFLAMMATION", "IMPAIRS_BARRIER", "ENHANCES_BARRIER"]
+    },
+    "disease_relationship": {
+      "predicates": ["ASSOCIATED_WITH", "INCREASES_RISK_OF", "PROTECTIVE_AGAINST", "EXACERBATES", "ALLEVIATES"]
+    },
+    "treatment_intervention": {
+      "predicates": ["TREATS", "PREVENTS", "RESPONDS_TO", "RESISTANT_TO", "SENSITIVE_TO", "ALTERS_MICROBIOME"]
+    },
+    "transmission_origin": {
+      "predicates": ["TRANSMITTED_FROM", "TRANSMITTED_TO", "DERIVED_FROM", "SHARES_SOURCE_WITH"]
+    },
+    "study_evidence": {
+      "predicates": ["MEASURED_BY", "DETECTED_BY", "COMPARED_WITH", "VALIDATED_BY", "REPORTED_IN"]
+    },
+    "quantitative": {
+      "predicates": ["HAS_RELATIVE_ABUNDANCE", "HAS_ABSOLUTE_ABUNDANCE", "HAS_EFFECT_SIZE", "HAS_P_VALUE"]
+    },
+    "temporal": {
+      "predicates": ["PRECEDES", "FOLLOWS", "INCREASES_OVER_TIME", "DECREASES_OVER_TIME", "PERSISTS_DURING"]
+    },
+    "ontology_structure": {
+      "predicates": ["SUBCLASS_OF", "PART_OF", "POSITIVELY_REGULATES", "NEGATIVELY_REGULATES"],
+      "note": "Ontology-structure relations, not substitutes for biological interaction."
+    },
+    "escape": {
+      "predicates": ["OTHER_RELATION"],
+      "note": "Escape hatch: keeps scientifically real but unclassifiable relations visible for taxonomy review; never silently dropped."
+    }
+  },
+  "predicate_index": {
+    "IS_A": {"family": "taxonomy_identity", "is_symmetric": false, "is_transitive": true, "is_causal": false, "is_negatable": true, "definition": "Subject is a kind of the object (taxonomic or class membership)."},
+    "INSTANCE_OF": {"family": "taxonomy_identity", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject is an individual instance of the object class."},
+    "SAME_AS": {"family": "taxonomy_identity", "is_symmetric": true, "is_transitive": true, "is_causal": false, "is_negatable": true, "definition": "Subject and object are asserted to be the same entity."},
+    "HAS_TAXONOMIC_RANK": {"family": "taxonomy_identity", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Object states the taxonomic rank of the subject."},
+    "LOCATED_IN": {"family": "location_habitat", "is_symmetric": false, "is_transitive": true, "is_causal": false, "is_negatable": true, "definition": "Subject is located in the object habitat or compartment."},
+    "FOUND_IN": {"family": "location_habitat", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject was detected in the object site or sample."},
+    "COLONIZES": {"family": "location_habitat", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject populations establish in/on the object host site."},
+    "HABITAT_OF": {"family": "location_habitat", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Inverse of LOCATED_IN for site-to-organism phrasing."},
+    "PRESENT_IN": {"family": "presence_abundance", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject is present/detected in the object group or site (no direction of change)."},
+    "INCREASED_IN": {"family": "presence_abundance", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject abundance/measure is higher in the object group; comparator must be stated."},
+    "DECREASED_IN": {"family": "presence_abundance", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject abundance/measure is lower in the object group; comparator must be stated."},
+    "MORE_ABUNDANT_THAN": {"family": "presence_abundance", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Direct abundance comparison between two taxa/groups."},
+    "LESS_ABUNDANT_THAN": {"family": "presence_abundance", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Direct abundance comparison between two taxa/groups."},
+    "ASSOCIATED_WITH_HOST": {"family": "host_association", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject co-occurs with or relates to the host entity; no causal claim."},
+    "ASSOCIATED_WITH_BODY_SITE": {"family": "host_association", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject relates to the object body site; no causal claim."},
+    "ASSOCIATED_WITH_DISEASE": {"family": "host_association", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject relates to the object disease/condition; no causal claim."},
+    "ASSOCIATED_WITH_PHENOTYPE": {"family": "host_association", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject relates to the object phenotype; no causal claim."},
+    "INTERACTS_WITH": {"family": "microbe_interaction", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Generic ecological or molecular interaction between two microbes."},
+    "COMPETES_WITH": {"family": "microbe_interaction", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject competes with object for niche/substrate."},
+    "FACILITATES": {"family": "microbe_interaction", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject promotes the object's growth/activity."},
+    "INHIBITS": {"family": "microbe_interaction", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject suppresses the object's growth/activity/virulence."},
+    "COOPERATES_WITH": {"family": "microbe_interaction", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Mutually beneficial interaction between two microbial entities."},
+    "CROSS_FEEDS": {"family": "microbe_interaction", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject utilizes metabolites produced by the object."},
+    "CAUSES": {"family": "causal_regulatory", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject is stated to cause the object outcome; requires causal wording."},
+    "CONTRIBUTES_TO": {"family": "causal_regulatory", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject is one contributing factor of the object."},
+    "PROMOTES": {"family": "causal_regulatory", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject promotes the object process/outcome."},
+    "REGULATES": {"family": "causal_regulatory", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject controls the object process (direction unspecified at predicate level)."},
+    "MEDIATES": {"family": "causal_regulatory", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject is the intermediate mechanism behind an outcome."},
+    "MODULATES": {"family": "causal_regulatory", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject alters the object's level/activity in either direction."},
+    "PRODUCES": {"family": "biological_function", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject produces the object metabolite/molecule."},
+    "METABOLIZES": {"family": "biological_function", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject metabolizes the object substrate."},
+    "DEGRADES": {"family": "biological_function", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject degrades the object substrate/molecule."},
+    "SYNTHESIZES": {"family": "biological_function", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject synthesizes the object molecule."},
+    "CONSUMES": {"family": "biological_function", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject consumes the object substrate/metabolite."},
+    "EXPRESSES": {"family": "biological_function", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject expresses the object gene/protein."},
+    "BINDS_TO": {"family": "molecular_mechanism", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Molecular binding between subject and object."},
+    "ACTIVATES": {"family": "molecular_mechanism", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject activates the object molecule/pathway/cell."},
+    "SUPPRESSES": {"family": "molecular_mechanism", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject suppresses the object molecule/pathway/cell."},
+    "UPREGULATES": {"family": "molecular_mechanism", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject increases expression/activity of the object."},
+    "DOWNREGULATES": {"family": "molecular_mechanism", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject decreases expression/activity of the object."},
+    "ENCODES": {"family": "molecular_mechanism", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject (gene/genome/MGE) encodes the object product."},
+    "INDUCES_IMMUNE_RESPONSE": {"family": "host_response", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject induces an immune response against/toward the object (or unspecified)."},
+    "TRIGGERS_INFLAMMATION": {"family": "host_response", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject triggers inflammatory processes."},
+    "IMPAIRS_BARRIER": {"family": "host_response", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject impairs epithelial/vascular barrier function."},
+    "ENHANCES_BARRIER": {"family": "host_response", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject enhances epithelial/vascular barrier function."},
+    "ASSOCIATED_WITH": {"family": "disease_relationship", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Generic association with the object disease/condition; never a causal claim."},
+    "INCREASES_RISK_OF": {"family": "disease_relationship", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject raises risk of the object outcome."},
+    "PROTECTIVE_AGAINST": {"family": "disease_relationship", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Evidence of a protective relationship against the object outcome, not mere co-occurrence with health."},
+    "EXACERBATES": {"family": "disease_relationship", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject worsens the object condition."},
+    "ALLEVIATES": {"family": "disease_relationship", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject reduces severity of the object condition."},
+    "TREATS": {"family": "treatment_intervention", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject intervention treats the object condition."},
+    "PREVENTS": {"family": "treatment_intervention", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject prevents the object outcome."},
+    "RESPONDS_TO": {"family": "treatment_intervention", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject (microbe/community/host) changes under the object intervention."},
+    "RESISTANT_TO": {"family": "treatment_intervention", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject resists the object agent (antimicrobial etc.); object must name the agent."},
+    "SENSITIVE_TO": {"family": "treatment_intervention", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject is susceptible to the object agent/condition."},
+    "ALTERS_MICROBIOME": {"family": "treatment_intervention", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Subject intervention alters the object microbial community."},
+    "TRANSMITTED_FROM": {"family": "transmission_origin", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject acquired/transmitted from the object source."},
+    "TRANSMITTED_TO": {"family": "transmission_origin", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject transmitted to the object recipient."},
+    "DERIVED_FROM": {"family": "transmission_origin", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject descends/is derived from the object source."},
+    "SHARES_SOURCE_WITH": {"family": "transmission_origin", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject and object share a transmission source."},
+    "MEASURED_BY": {"family": "study_evidence", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject was measured/assayed by the object method (Methods relations)."},
+    "DETECTED_BY": {"family": "study_evidence", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject was detected using the object method/assay."},
+    "COMPARED_WITH": {"family": "study_evidence", "is_symmetric": true, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject compared against the object group/method in the study."},
+    "VALIDATED_BY": {"family": "study_evidence", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject finding was validated by the object method/cohort."},
+    "REPORTED_IN": {"family": "study_evidence", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject entity/result reported in the object dataset/prior study."},
+    "HAS_RELATIVE_ABUNDANCE": {"family": "quantitative", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Object states the subject's relative abundance (verbatim value in quantitative fields)."},
+    "HAS_ABSOLUTE_ABUNDANCE": {"family": "quantitative", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Object states the subject's absolute abundance."},
+    "HAS_EFFECT_SIZE": {"family": "quantitative", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Object states the effect size between subject and comparator."},
+    "HAS_P_VALUE": {"family": "quantitative", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Object states the p-value for the subject relationship."},
+    "PRECEDES": {"family": "temporal", "is_symmetric": false, "is_transitive": true, "is_causal": false, "is_negatable": true, "definition": "Subject precedes the object in time."},
+    "FOLLOWS": {"family": "temporal", "is_symmetric": false, "is_transitive": true, "is_causal": false, "is_negatable": true, "definition": "Subject follows the object in time."},
+    "INCREASES_OVER_TIME": {"family": "temporal", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject increases along the object time course."},
+    "DECREASES_OVER_TIME": {"family": "temporal", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject decreases along the object time course."},
+    "PERSISTS_DURING": {"family": "temporal", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Subject persists during the object period/condition."},
+    "SUBCLASS_OF": {"family": "ontology_structure", "is_symmetric": false, "is_transitive": true, "is_causal": false, "is_negatable": true, "definition": "Ontology subclass relation between classes."},
+    "PART_OF": {"family": "ontology_structure", "is_symmetric": false, "is_transitive": true, "is_causal": false, "is_negatable": true, "definition": "Mereological part-whole relation."},
+    "POSITIVELY_REGULATES": {"family": "ontology_structure", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Up-regulatory relation (molecular level)."},
+    "NEGATIVELY_REGULATES": {"family": "ontology_structure", "is_symmetric": false, "is_transitive": false, "is_causal": true, "is_negatable": true, "definition": "Down-regulatory relation (molecular level); not interchangeable with DECREASED_IN."},
+    "OTHER_RELATION": {"family": "escape", "is_symmetric": false, "is_transitive": false, "is_causal": false, "is_negatable": true, "definition": "Explicitly unclassified relation kept verbatim for taxonomy review."}
+  }
+}

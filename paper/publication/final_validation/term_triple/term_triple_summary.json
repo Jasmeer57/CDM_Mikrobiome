@@ -1,0 +1,188 @@
+{
+ "terms_by_type": {
+  "ENTITY": {
+   "terms": 89799,
+   "mentions": 374586,
+   "with_linked_mention": 84156
+  },
+  "ORGANISM": {
+   "terms": 12026,
+   "mentions": 505171,
+   "with_linked_mention": 11358,
+   "grounded_same_type": 1466,
+   "mentions_of_grounded_terms": 245185,
+   "grounded_other_type_only": 123
+  },
+  "CHEMICAL": {
+   "terms": 9488,
+   "mentions": 299760,
+   "with_linked_mention": 8841,
+   "grounded_same_type": 1760,
+   "mentions_of_grounded_terms": 150003,
+   "grounded_other_type_only": 329
+  },
+  "PROTEIN": {
+   "terms": 8472,
+   "mentions": 87396,
+   "with_linked_mention": 7609,
+   "grounded_same_type": 940,
+   "mentions_of_grounded_terms": 24120,
+   "grounded_other_type_only": 171
+  },
+  "DISEASE": {
+   "terms": 7055,
+   "mentions": 270367,
+   "with_linked_mention": 6846,
+   "grounded_same_type": 1133,
+   "mentions_of_grounded_terms": 147303,
+   "grounded_other_type_only": 168
+  },
+  "DNA_RNA": {
+   "terms": 5838,
+   "mentions": 58546,
+   "with_linked_mention": 5427,
+   "grounded_same_type": 68,
+   "mentions_of_grounded_terms": 9810,
+   "grounded_other_type_only": 52
+  },
+  "CELL_TYPE": {
+   "terms": 5148,
+   "mentions": 75481,
+   "with_linked_mention": 4783
+  },
+  "DATA_ANALYSIS": {
+   "terms": 5104,
+   "mentions": 102143,
+   "with_linked_mention": 4896
+  },
+  "CLINICAL": {
+   "terms": 4103,
+   "mentions": 125335,
+   "with_linked_mention": 3776
+  },
+  "EXPERIMENTAL_METHOD": {
+   "terms": 3602,
+   "mentions": 53941,
+   "with_linked_mention": 3479
+  },
+  "LAB_METHOD": {
+   "terms": 3485,
+   "mentions": 56260,
+   "with_linked_mention": 3224
+  },
+  "GENOMICS": {
+   "terms": 2338,
+   "mentions": 78984,
+   "with_linked_mention": 2264
+  },
+  "STUDY_DESIGN": {
+   "terms": 2048,
+   "mentions": 27874,
+   "with_linked_mention": 2007
+  },
+  "PATHWAY": {
+   "terms": 1958,
+   "mentions": 23022,
+   "with_linked_mention": 1901
+  },
+  "SAMPLE_METHOD": {
+   "terms": 1945,
+   "mentions": 45973,
+   "with_linked_mention": 1902
+  }
+ },
+ "entity_terms_resolution_proposal": {
+  "NONE": 88266,
+  "DiseaseOrPhenotypicFeature": 278,
+  "ChemicalEntity": 301,
+  "GeneOrGeneProduct": 381,
+  "OrganismTaxon": 459,
+  "MULTIPLE": 114
+ },
+ "mappings_kept_by_disposition_service": {
+  "ACCEPTED|bioportal": 9042,
+  "ACCEPTED|ncbi_taxon": 624,
+  "ACCEPTED|ols": 8082,
+  "ACCEPTED|umls": 524,
+  "NOT_REVIEWED|(none)": 10680,
+  "NOT_REVIEWED|bioportal": 91905,
+  "NOT_REVIEWED|mesh": 8633,
+  "NOT_REVIEWED|ncbi_taxon": 1174,
+  "NOT_REVIEWED|ols": 61253,
+  "NOT_REVIEWED|omop": 20043,
+  "NOT_REVIEWED|umls": 61847,
+  "REMOVED|bioportal": 3093,
+  "REMOVED|ncbi_taxon": 22,
+  "REMOVED|ols": 1131,
+  "REMOVED|umls": 214,
+  "REVIEW_REQUIRED|bioportal": 25606,
+  "REVIEW_REQUIRED|ncbi_taxon": 134,
+  "REVIEW_REQUIRED|ols": 9545,
+  "REVIEW_REQUIRED|umls": 1220
+ },
+ "mappings_label_agreement": {
+  "ACCEPTED|LABEL_DIFFERS": 11600,
+  "ACCEPTED|LABEL_EQUALS_TERM": 6672,
+  "NOT_REVIEWED|LABEL_DIFFERS": 195131,
+  "NOT_REVIEWED|LABEL_EQUALS_TERM": 49724,
+  "NOT_REVIEWED|NO_CONCEPT_LABEL": 10680,
+  "REMOVED|LABEL_DIFFERS": 4439,
+  "REMOVED|LABEL_EQUALS_TERM": 21,
+  "REVIEW_REQUIRED|LABEL_DIFFERS": 35205,
+  "REVIEW_REQUIRED|LABEL_EQUALS_TERM": 1300
+ },
+ "definitions_anchor": {
+  "EXACT": 6460,
+  "RELOCATED": 313
+ },
+ "definitions_source": {
+  "gap G8": 6185,
+  "termpipeline_t3_rules_v1": 588
+ },
+ "triples": {
+  "triples": 25788,
+  "generic_relation_escape": 17717,
+  "polarity_conflicting": 195,
+  "subject_groundable_domain": 9324,
+  "subject_grounded": 3076,
+  "object_groundable_domain": 5826,
+  "object_grounded": 1582
+ },
+ "triple_kg_support": {
+  "OTHER_DOMAINS|UNASSESSED": 24536,
+  "chem_disease|NOT_BOTH_GROUNDED": 245,
+  "chem_disease|SUPPORTED_BY_KG": 3,
+  "chem_disease|UNSUPPORTED_BY_KG": 16,
+  "chem_gene|NOT_BOTH_GROUNDED": 16,
+  "gene_disease|NOT_BOTH_GROUNDED": 21,
+  "gene_disease|UNSUPPORTED_BY_KG": 8,
+  "microbe_disease|NOT_BOTH_GROUNDED": 806,
+  "microbe_disease|SUPPORTED_BY_KG": 50,
+  "microbe_disease|UNSUPPORTED_BY_KG": 87
+ },
+ "triple_sentence_evidence": {
+  "EXACT": 4157,
+  "NORMALISED": 1680,
+  "UNANCHORED": 1728,
+  "WHITESPACE": 19565
+ },
+ "triple_relation_families": {
+  "escape": 17717,
+  "presence_abundance": 2210,
+  "study_evidence": 1872,
+  "quantitative": 962,
+  "disease_relationship": 847,
+  "causal_regulatory": 686,
+  "biological_function": 360,
+  "treatment_intervention": 300,
+  "taxonomy_identity": 210,
+  "microbe_interaction": 153,
+  "location_habitat": 119,
+  "host_association": 116,
+  "temporal": 80,
+  "transmission_origin": 64,
+  "molecular_mechanism": 34,
+  "host_response": 31,
+  "ontology_structure": 27
+ }
+}

@@ -1,0 +1,435 @@
+draft,number,status,context
+00_introduction.md,"168,464",REGISTER,"iome Compendium of Abdill et al. (2025) processed 168,464 publicly available human gut"
+00_introduction.md,"168,464",REGISTER,"cked data catalogue for the publications behind a 168,464-sample human microbiome compe"
+00_introduction.md,453,REGISTER,sample human microbiome compendium: - **Corpus:** 453 papers (447 distinct publicat
+00_introduction.md,447,REGISTER,microbiome compendium: - **Corpus:** 453 papers (447 distinct publications) descri
+00_introduction.md,"156,330",REGISTER,"compendium's BioProjects, whose projects contain 156,330 of the compendium's samples."
+00_introduction.md,"4,006",REGISTER,"he compendium's samples. They were processed into 4,006 text sections with verifiable"
+00_introduction.md,2.5,REPORT,"logy:** four independent extraction sources yield 2.5 million entity mentions, orga"
+00_introduction.md,"162,409",REGISTER,"entity mentions, organised into a terminology of 162,409 canonical terms with candidat"
+00_introduction.md,"52,400",REGISTER,"rawn from the papers themselves. - **Catalogue:** 52,400 records describing cohorts, s"
+00_introduction.md,21,REPORT,eness of the extracted content. We also benchmark 21 NER systems and LLMs under a
+00_introduction.md,453,REGISTER,ource for a large microbiome compendium:**    - a 453-paper corpus with hash-verifi
+00_introduction.md,"52,400",REGISTER,"rified text;    - an evidence-quoted catalogue of 52,400 study-metadata records;    -"
+00_introduction.md,"162,409",REGISTER,"400 study-metadata records;    - a terminology of 162,409 canonical terms, offered as t"
+00_introduction.md,21,REPORT,"ersible. 3. **A protocol-fixed NER benchmark** of 21 trained taggers, zero-shot ta"
+01_methods_and_resource.md,"168,464",REGISTER,"ta model and evidence-backed data catalogue for a 168,464-sample human microbiome compe"
+01_methods_and_resource.md,80,REPORT,"e frozen releases by   ( , claim IDs in brackets; 80 / 80 match).   marks items th"
+01_methods_and_resource.md,80,REPORT,"zen releases by   ( , claim IDs in brackets; 80 / 80 match).   marks items that de"
+01_methods_and_resource.md,"168,464",REGISTER,"ompendium of Abdill et al. (2025), which contains 168,464 samples. - **Papers:** 453, e"
+01_methods_and_resource.md,453,REGISTER,"5), which contains 168,464 samples. - **Papers:** 453, each linked to one BioProjec"
+01_methods_and_resource.md,447,REGISTER,"publications are shared by 11 BioProjects, giving 447 distinct publications. Shared"
+01_methods_and_resource.md,"156,330",REGISTER,"A.papers, A.publications_*] - **Linked samples:** 156,330 of the 168,464 compendium sam"
+01_methods_and_resource.md,"168,464",REGISTER,"lications_*] - **Linked samples:** 156,330 of the 168,464 compendium samples (92.8%) be"
+01_methods_and_resource.md,92.8,REGISTER,"les:** 156,330 of the 168,464 compendium samples (92.8%) belong to 452 of these BioP"
+01_methods_and_resource.md,452,REPORT,"the 168,464 compendium samples (92.8%) belong to 452 of these BioProjects; one Bio"
+01_methods_and_resource.md,"4,006",REGISTER,"s were converted to plain text and segmented into 4,006 sections (Abstract 247, Intro"
+01_methods_and_resource.md,247,REGISTER,"text and segmented into 4,006 sections (Abstract 247, Introduction 216, Methods 38"
+01_methods_and_resource.md,216,REGISTER,"d into 4,006 sections (Abstract 247, Introduction 216, Methods 385, Results 379, Di"
+01_methods_and_resource.md,385,REGISTER,"sections (Abstract 247, Introduction 216, Methods 385, Results 379, Discussion 482,"
+01_methods_and_resource.md,379,REGISTER,"tract 247, Introduction 216, Methods 385, Results 379, Discussion 482, Supplementar"
+01_methods_and_resource.md,482,REGISTER,"duction 216, Methods 385, Results 379, Discussion 482, Supplementary 239, Acknowled"
+01_methods_and_resource.md,239,REGISTER,"s 385, Results 379, Discussion 482, Supplementary 239, Acknowledgements 431, Refere"
+01_methods_and_resource.md,431,REGISTER,"scussion 482, Supplementary 239, Acknowledgements 431, References 385, other 1,242)"
+01_methods_and_resource.md,385,REGISTER,"pplementary 239, Acknowledgements 431, References 385, other 1,242). Each section's"
+01_methods_and_resource.md,"1,242",REGISTER,"239, Acknowledgements 431, References 385, other 1,242). Each section's text is stor"
+01_methods_and_resource.md,"4,006",REGISTER,"ach section's text is stored with its   hash; all 4,006 hashes were re-verified again"
+01_methods_and_resource.md,"1,705,449",REGISTER,"|---|---|---:| |   | ensemble of CPU NER models | 1,705,449 | |   |   via vLLM, section b"
+01_methods_and_resource.md,"366,123",REGISTER,"| 1,705,449 | |   |   via vLLM, section bodies | 366,123 | |   |   via Ollama | 186,02"
+01_methods_and_resource.md,"186,024",REGISTER,", section bodies | 366,123 | |   |   via Ollama | 186,024 | |   | MeSH 2026 dictionary"
+01_methods_and_resource.md,"248,088",REGISTER,"| 186,024 | |   | MeSH 2026 dictionary matching | 248,088 |  [CDM 3.0.3  ; run registry"
+01_methods_and_resource.md,"2,505,684",REGISTER,"88 |  [CDM 3.0.3  ; run registry  ]  - **Total:** 2,505,684 mention records (2,505,735 be"
+01_methods_and_resource.md,"2,505,735",REGISTER,"istry  ]  - **Total:** 2,505,684 mention records (2,505,735 before 51 byte-identical dupl"
+01_methods_and_resource.md,51,REPORT,"al:** 2,505,684 mention records (2,505,735 before 51 byte-identical duplicates wer"
+01_methods_and_resource.md,"2,505,628",REGISTER,"duplicates were removed at load). - **Offsets:** 2,505,628 mentions carry offsets, and e"
+01_methods_and_resource.md,75,REPORT,ts surface form exactly from the section text. In 75 sections a systematic offset
+01_methods_and_resource.md,"156,870",REGISTER,"stematic offset shift was detected and corrected (156,870 mentions in the CDM); 56 ment"
+01_methods_and_resource.md,56,REGISTER,"cted and corrected (156,870 mentions in the CDM); 56 mentions could not be anchore"
+01_methods_and_resource.md,"165,991",REGISTER,"wer-case, alphanumeric collapse) and grouped into 165,991 canonical terms (terminology"
+01_methods_and_resource.md,"3,582",REGISTER,"iew by a second model family (DeepSeek- ) removed 3,582 non-terms, leaving **162,409*"
+01_methods_and_resource.md,"162,409",REGISTER,"y (DeepSeek- ) removed 3,582 non-terms, leaving **162,409** canonical terms in CDM 3.0."
+01_methods_and_resource.md,"89,799",REGISTER,", genomics, clinical) or the generic type ENTITY (89,799 terms, 55%).   - 2,198,766 me"
+01_methods_and_resource.md,55,REPORT,"inical) or the generic type ENTITY (89,799 terms, 55%).   - 2,198,766 mentions (87"
+01_methods_and_resource.md,"2,198,766",REGISTER,"the generic type ENTITY (89,799 terms, 55%).   - 2,198,766 mentions (87.8%) link to a ca"
+01_methods_and_resource.md,87.8,REGISTER,"TITY (89,799 terms, 55%).   - 2,198,766 mentions (87.8%) link to a canonical term; 7"
+01_methods_and_resource.md,"7,072",REGISTER,"98,766 mentions (87.8%) link to a canonical term; 7,072 are ambiguous and 299,846 hav"
+01_methods_and_resource.md,"299,846",REGISTER,"link to a canonical term; 7,072 are ambiguous and 299,846 have none. [audit B.*]  **Def"
+01_methods_and_resource.md,"6,773",REGISTER,"age model that had to quote the defining passage. 6,773 definitions for 3,397 terms r"
+01_methods_and_resource.md,"3,397",REGISTER,"quote the defining passage. 6,773 definitions for 3,397 terms remain after review; ev"
+01_methods_and_resource.md,"6,460",REGISTER,"ew; every one is located verbatim in its section (6,460 at the stated offsets, 313 re"
+01_methods_and_resource.md,313,REPORT,"atim in its section (6,460 at the stated offsets, 313 relocated). [CDM  ]  **Vocabu"
+01_methods_and_resource.md,"334,231",REGISTER,"13 relocated). [CDM  ]  **Vocabulary mapping:** - 334,231 candidate mappings were retri"
+01_methods_and_resource.md,"314,772",REGISTER,"Taxonomy   and filtered by deterministic guards: 314,772 kept, 16,622 rejected (both r"
+01_methods_and_resource.md,"16,622",REGISTER,"d filtered by deterministic guards: 314,772 kept, 16,622 rejected (both retained in th"
+01_methods_and_resource.md,"2,837",REGISTER,"t, 16,622 rejected (both retained in the CDM) and 2,837 demoted (kept in the guard fi"
+01_methods_and_resource.md,"11,477",REGISTER,"rieval evidence (method, scores, query, service); 11,477 rows have no recorded service"
+01_methods_and_resource.md,"18,272",REGISTER,"No threshold-based automatic acceptance was used. 18,272 candidate rows (16,750 terms)"
+01_methods_and_resource.md,"16,750",REGISTER,"matic acceptance was used. 18,272 candidate rows (16,750 terms) are marked ACCEPTED be"
+01_methods_and_resource.md,300,REPORT,"citly in the passage, a verbatim quote of at most 300 characters as evidence, integ"
+01_methods_and_resource.md,"21,403",REGISTER,"nts and vocabulary are valid. - Of the proposals, 21,403 were accepted and 76,253 reje"
+01_methods_and_resource.md,"76,253",REGISTER,"lid. - Of the proposals, 21,403 were accepted and 76,253 rejected by the validators. F"
+01_methods_and_resource.md,"46,182",REGISTER,"o value was found received the code NOT_REPORTED (46,182 in the release); contradictor"
+01_methods_and_resource.md,"4,586",REGISTER,"ease); contradictory values received CONFLICTING (4,586). [  report; catalogue 3.1.1]"
+01_methods_and_resource.md,"2,586",REGISTER,"with   as tie-breaker) classified each record. - 2,586 records were removed: methods"
+01_methods_and_resource.md,"1,264",REGISTER,"ecord. - 2,586 records were removed: methods text 1,264, cited other studies 945, inv"
+01_methods_and_resource.md,945,REGISTER,"removed: methods text 1,264, cited other studies 945, invalid 127, table or figure"
+01_methods_and_resource.md,127,REGISTER,"hods text 1,264, cited other studies 945, invalid 127, table or figure text 103, wr"
+01_methods_and_resource.md,103,REGISTER,"er studies 945, invalid 127, table or figure text 103, wrong entity type 71, empty"
+01_methods_and_resource.md,71,REGISTER,"127, table or figure text 103, wrong entity type 71, empty 49, reagent or file 27"
+01_methods_and_resource.md,49,REGISTER,"e or figure text 103, wrong entity type 71, empty 49, reagent or file 27. - Remove"
+01_methods_and_resource.md,27,REGISTER,", wrong entity type 71, empty 49, reagent or file 27. - Removed records are retain"
+01_methods_and_resource.md,"52,400",REGISTER,"rt;  ]  **Final catalogue:** the release contains 52,400 records from all 453 papers:"
+01_methods_and_resource.md,453,REGISTER,"e:** the release contains 52,400 records from all 453 papers:  | Type | Records | |"
+01_methods_and_resource.md,"24,272",REGISTER,"pers:  | Type | Records | |---|---:| | findings | 24,272 | | assays | 8,545 | | sample"
+01_methods_and_resource.md,"8,545",REGISTER,"rds | |---|---:| | findings | 24,272 | | assays | 8,545 | | sample groups | 7,530 | |"
+01_methods_and_resource.md,"7,530",REGISTER,"s | 24,272 | | assays | 8,545 | | sample groups | 7,530 | | cohorts | 7,085 | | datas"
+01_methods_and_resource.md,"7,085",REGISTER,"s | 8,545 | | sample groups | 7,530 | | cohorts | 7,085 | | datasets | 2,976 | | data"
+01_methods_and_resource.md,"2,976",REGISTER,"groups | 7,530 | | cohorts | 7,085 | | datasets | 2,976 | | data assets | 1,992 |  **"
+01_methods_and_resource.md,"1,992",REGISTER,"ts | 7,085 | | datasets | 2,976 | | data assets | 1,992 |  **Quotation matching** (ca"
+01_methods_and_resource.md,15.1,REGISTER,"records' quotes occur verbatim in their section: 15.1% exact at the stored offsets,"
+01_methods_and_resource.md,58.0,REGISTER,"their section: 15.1% exact at the stored offsets, 58.0% differing only in whitespace"
+01_methods_and_resource.md,5.9,REGISTER,"ored offsets, 58.0% differing only in whitespace, 5.9% relocated, 9.3% after Unicod"
+01_methods_and_resource.md,9.3,REGISTER,".0% differing only in whitespace, 5.9% relocated, 9.3% after Unicode or punctuation"
+01_methods_and_resource.md,3.8,REGISTER,ion normalisation. - 8.0% align approximately and 3.8% could not be located or have
+01_methods_and_resource.md,33,REPORT,"e documents through   catalogue and releases) and 33 entities, specified before im"
+01_methods_and_resource.md,44,REGISTER,"( ). - Release 3.0.3 is a single SQLite database: 44 tables, 866 columns. - 27 ent"
+01_methods_and_resource.md,866,REGISTER,"ase 3.0.3 is a single SQLite database: 44 tables, 866 columns. - 27 entities are im"
+01_methods_and_resource.md,27,REGISTER,"single SQLite database: 44 tables, 866 columns. - 27 entities are implemented as t"
+01_methods_and_resource.md,45,REGISTER,"solves in the run registry (0 unresolved). Of the 45 registered runs, 38 are verif"
+01_methods_and_resource.md,38,REPORT,"gistry (0 unresolved). Of the 45 registered runs, 38 are verified from job logs, c"
+01_methods_and_resource.md,142,REGISTER,ter offsets where these exist. The exceptions are 142 datasets derived from BioProj
+01_methods_and_resource.md,56,REGISTER,"ts derived from BioProject metadata (no section), 56 mentions without offsets, and"
+01_methods_and_resource.md,3.8,REGISTER,talogue records whose quote could not be located (3.8%).   - **Text version:** offs
+01_methods_and_resource.md,79,REGISTER,from 3.0.2 by additive changes only. Each of its 79 changes is logged with its re
+01_methods_and_resource.md,121,REPORT,"missing term links, shifted offsets. All pass; - 121 schema, key, value, relations"
+01_methods_and_resource.md,118,REGISTER,"a, key, value, relationship and provenance tests: 118 pass, 2 fail (an undocumented"
+01_methods_and_resource.md,92.2,REPORT,t as accuracy. A full-census judgement by   rated 92.2% of decided records as suppor
+01_methods_and_resource.md,"52,397",REPORT,"every catalogue record with an assessable value (52,397) was judged separately by two"
+01_methods_and_resource.md,70.5,REGISTER,never earlier verdicts.    - **Literal support:** 70.5% of text values and 75.4% of
+01_methods_and_resource.md,75.4,REGISTER,- **Literal support:** 70.5% of text values and 75.4% of counts occur in their evi
+01_methods_and_resource.md,2.9,REGISTER,":** of validly labelled text values, Llama judged 2.9% and Mistral 6.6% unsupported"
+01_methods_and_resource.md,6.6,REGISTER,"belled text values, Llama judged 2.9% and Mistral 6.6% unsupported  . Mistral follo"
+01_methods_and_resource.md,55.4,REGISTER,upported  . Mistral followed the label rubric for 55.4% of values  .    - **Gap-fill
+01_methods_and_resource.md,19.1,REGISTER,ar more often than original extractions (Mistral: 19.1% vs 5.6%)  .    - **Agreement
+01_methods_and_resource.md,5.6,REGISTER,ften than original extractions (Mistral: 19.1% vs 5.6%)  .    - **Agreement:** the
+01_methods_and_resource.md,85.0,REGISTER,)  .    - **Agreement:** the two models agreed on 85.0% of jointly labelled values (
+01_methods_and_resource.md,0.28,REGISTER,"intly labelled values (Cohen's κ   between models 0.28)  . Both failed 2,023 values,"
+01_methods_and_resource.md,453,REGISTER,ng platforms and 16S regions from the text of all 453 papers. The catalogue contain
+01_methods_and_resource.md,88.7,REGISTER,"he text of all 453 papers. The catalogue contains 88.7%, 89.2% and 72.1% of the fact"
+01_methods_and_resource.md,89.2,REGISTER,"of all 453 papers. The catalogue contains 88.7%, 89.2% and 72.1% of the facts it fo"
+01_methods_and_resource.md,72.1,REGISTER,"3 papers. The catalogue contains 88.7%, 89.2% and 72.1% of the facts it found  . The"
+01_methods_and_resource.md,21,REPORT,text.  ### NER benchmark  **Public test sets:** - 21 systems were compared under o
+01_methods_and_resource.md,500,REPORT,"fore scoring, on the official test splits of     (500 abstracts, 9,809 entities) an"
+01_methods_and_resource.md,"9,809",REPORT,"n the official test splits of     (500 abstracts, 9,809 entities) and BioRED   (100 a"
+01_methods_and_resource.md,100,REGISTER,"(500 abstracts, 9,809 entities) and BioRED   (100 abstracts, 3,535 entities). -"
+01_methods_and_resource.md,"3,535",REPORT,"cts, 9,809 entities) and BioRED   (100 abstracts, 3,535 entities). - Systems:   - **T"
+01_methods_and_resource.md,27,REGISTER,", and 6 open LLMs, each zero-shot and three-shot (27 configurations). - Thresholds"
+01_methods_and_resource.md,95,REPORT,nd models trained on a test corpus are flagged. - 95% confidence intervals were ob
+01_methods_and_resource.md,453,REGISTER,evaluation:** the same systems were run over the 453-paper corpus and assessed wit
+01_methods_and_resource.md,26,REGISTER,"measures are precision proxies, not accuracy. All 26 configurations completed on a"
+01_methods_and_resource.md,453,REGISTER,accuracy. All 26 configurations completed on all 453 papers  . Public   predicted
+01_methods_and_resource.md,0.75,REGISTER,edicted corpus grounding for diseases (Spearman ρ 0.75) but not for organisms (ρ 0.0
+01_methods_and_resource.md,0.02,REGISTER,seases (Spearman ρ 0.75) but not for organisms (ρ 0.02)  .  ---  ## Resource descrip
+01_methods_and_resource.md,453,REGISTER,"ontent | Size | |---|---|---| | Corpus metadata | 453 papers, 447 publications, 4,0"
+01_methods_and_resource.md,447,REGISTER,"e | |---|---|---| | Corpus metadata | 453 papers, 447 publications, 4,006 sections"
+01_methods_and_resource.md,"4,006",REGISTER,"| Corpus metadata | 453 papers, 447 publications, 4,006 sections with hashes |   | |"
+01_methods_and_resource.md,"165,991",REGISTER,"ashes |   | | Terminology 1.0.1 | 2.5 M mentions, 165,991 canonical terms, mappings, de"
+01_methods_and_resource.md,"156,330",REGISTER,".3 | 44 tables integrating all of the above, plus 156,330 linked compendium samples and"
+01_methods_and_resource.md,866,REGISTER,"registry |   | | Documentation | data dictionary (866 columns), vocabulary referenc"
+01_methods_and_resource.md,118,REGISTER,as yet reviewed the CDM design. Structural tests (118 / 121 pass) and interoperabil
+01_methods_and_resource.md,121,REPORT,reviewed the CDM design. Structural tests (118 / 121 pass) and interoperability ch
+01_methods_and_resource.md,55,REPORT,h semantic coherence or readiness for adoption. - 55% of canonical terms carry onl
+01_methods_and_resource.md,23,REPORT,nical terms carry only the generic type ENTITY. - 23% of terms have a taxonomy cat
+01_methods_and_resource.md,"18,272",REGISTER,". - 23% of terms have a taxonomy category. - Only 18,272 mapping candidates (16,750 te"
+01_methods_and_resource.md,"16,750",REGISTER,"onomy category. - Only 18,272 mapping candidates (16,750 terms) were accepted, by agre"
+01_methods_and_resource.md,69,REPORT,by humans. Mapping accuracy is not established. - 69% of relation triples use the
+01_methods_and_resource.md,179,REPORT,"ubject to the outstanding legal/library review of 179 papers, text and quotations w"
+01_methods_and_resource.md,274,REPORT,"s, text and quotations would be redistributed for 274 papers under CC BY or  , with"
+01_methods_and_resource.md,164,REPORT,"icensed papers in a separate layer; for the other 164 papers, only offsets and hash"
+02_results.md,80,REPORT,"* , 2026-11-02. Claim IDs in brackets refer to   (80 / 80 numeric claims recompute"
+02_results.md,80,REPORT,026-11-02. Claim IDs in brackets refer to   (80 / 80 numeric claims recompute from
+02_results.md,453,REGISTER,*  ## 1. The resource (Figure 1–3)  **Corpus:** - 453 papers (447 distinct publicat
+02_results.md,447,REGISTER,resource (Figure 1–3)  **Corpus:** - 453 papers (447 distinct publications) descri
+02_results.md,"156,330",REGISTER,"e flagged, not merged  . - These BioProjects hold 156,330 of the compendium's 168,464 s"
+02_results.md,"168,464",REGISTER,"hese BioProjects hold 156,330 of the compendium's 168,464 samples  . This is a BioProje"
+02_results.md,"4,006",REGISTER,"sample was re-analysed. - The text is split into 4,006 sections, each fixed by a   h"
+02_results.md,"2,505,684",REGISTER,"*Terminology:** - Four extraction sources yielded 2,505,684 mentions, kept separate by so"
+02_results.md,56,REGISTER,"84 mentions, kept separate by source  . - All but 56 mentions carry offsets that r"
+02_results.md,"2,198,766",REGISTER,"ry offsets that reproduce their surface form  . - 2,198,766 mentions link to one of 162,4"
+02_results.md,"162,409",REGISTER,"rface form  . - 2,198,766 mentions link to one of 162,409 canonical terms  . That is te"
+02_results.md,"3,582",REGISTER,". That is terminology 1.0.1's 165,991 terms less 3,582 removed in review  . - 314,77"
+02_results.md,"314,772",REGISTER,"s 165,991 terms less 3,582 removed in review  . - 314,772 vocabulary-mapping candidates"
+02_results.md,"18,272",REGISTER,"72 vocabulary-mapping candidates passed guards  . 18,272 (for 16,750 terms) were accep"
+02_results.md,"16,750",REGISTER,"y-mapping candidates passed guards  . 18,272 (for 16,750 terms) were accepted by agree"
+02_results.md,"52,400",REGISTER,"ne were accepted by a person  .  **Catalogue:** - 52,400 records in six tables (cohort"
+02_results.md,"24,272",REGISTER,"ts, sample groups, assays, datasets, data assets, 24,272 findings)  . - 88.2% of suppo"
+02_results.md,88.2,REGISTER,"ays, datasets, data assets, 24,272 findings)  . - 88.2% of supporting quotes are loc"
+02_results.md,3.8,REGISTER,"ed verbatim in the paper, 8.0% approximately, and 3.8% not at all  .  **CDM 3.0.3:*"
+02_results.md,44,REGISTER,**CDM 3.0.3:** - Integrates all of the above in 44 tables and 866 columns  . - E
+02_results.md,866,REGISTER,** - Integrates all of the above in 44 tables and 866 columns  . - Every row names
+02_results.md,45,REGISTER,ables and 866 columns  . - Every row names one of 45 registered runs; 4 runs are m
+02_results.md,118,REGISTER,"s are marked as not independently verifiable  . - 118 of 121 schema, value and prov"
+02_results.md,121,REPORT,"arked as not independently verifiable  . - 118 of 121 schema, value and provenance"
+02_results.md,6.5,REPORT,"eclared, because multi-valued links prevent it; - 6.5% of triple-evidence mentions"
+02_results.md,"9,940",REPORT,".5% of triple-evidence mentions are unanchored; - 9,940 canonical terms are unreachab"
+02_results.md,215,REPORT,nonical terms are unreachable from any mention; - 215 coded values fall outside the
+02_results.md,"557,625",REGISTER,"re now regression tests: a load step that dropped 557,625 competing mentions, mapping v"
+02_results.md,75,REPORT,"ttached to the wrong term, and offsets shifted in 75 sections. ( )  ## 3. Catalogu"
+02_results.md,70.5,REGISTER,"ream B; Figure 6a–c)  **Deterministic checks:** - 70.5% of 392,587 populated text va"
+02_results.md,"392,587",REPORT,"igure 6a–c)  **Deterministic checks:** - 70.5% of 392,587 populated text values and 75."
+02_results.md,75.4,REGISTER,"s:** - 70.5% of 392,587 populated text values and 75.4% of 12,114 stated counts occu"
+02_results.md,"12,114",REPORT,".5% of 392,587 populated text values and 75.4% of 12,114 stated counts occur literally"
+02_results.md,"42,679",REPORT,"ally in their evidence passage  . - Coded values (42,679) cannot be string-checked. -"
+02_results.md,"52,397",REPORT,"catalogue values judged every assessable record (52,397). - **Independence:**   took"
+02_results.md,2.9,REGISTER,":** of validly labelled text values, Llama judged 2.9% and Mistral 6.6% unsupported"
+02_results.md,6.6,REGISTER,"belled text values, Llama judged 2.9% and Mistral 6.6% unsupported by the passage"
+02_results.md,55.4,REGISTER,liance:** Mistral returned a valid label for only 55.4% of values  . - **Agreement b
+02_results.md,85.0,REGISTER,"values  . - **Agreement between the two models:** 85.0%, with κ = 0.28, low because"
+02_results.md,0.28,REGISTER,"reement between the two models:** 85.0%, with κ = 0.28, low because nearly every val"
+02_results.md,2.6,REPORT,iterally in their evidence are judged unsupported 2.6 (Mistral) to 4.9 (Llama) time
+02_results.md,4.9,REPORT,evidence are judged unsupported 2.6 (Mistral) to 4.9 (Llama) times as often as val
+02_results.md,3.5,REPORT,dded by the gap pipeline are judged unsupported 3–3.5 times as often as original ex
+02_results.md,19.1,REGISTER,"times as often as original extractions (Mistral: 19.1% vs 5.6%)  ; - the 2,023 valu"
+02_results.md,5.6,REGISTER,"often as original extractions (Mistral: 19.1% vs 5.6%)  ; - the 2,023 values both"
+02_results.md,453,REGISTER,del recovered three objective fact types from all 453 papers. The catalogue contain
+02_results.md,88.7,REGISTER,es from all 453 papers. The catalogue contains: - 88.7% of the stated project access
+02_results.md,89.2,REGISTER,ns: - 88.7% of the stated project accessions  ; - 89.2% of the sequencing platforms
+02_results.md,72.1,REGISTER,sions  ; - 89.2% of the sequencing platforms  ; - 72.1% of the 16S regions  .  Of 30
+02_results.md,306,REPORT,ng platforms  ; - 72.1% of the 16S regions  .  Of 306 papers stating their own BioP
+02_results.md,12.2,REPORT,terms | Mentions | |---|---:|---:| | Organisms | 12.2% | 48.5% | | Chemicals | 18.5
+02_results.md,48.5,REPORT,Mentions | |---|---:|---:| | Organisms | 12.2% | 48.5% | | Chemicals | 18.5% | 50.0
+02_results.md,18.5,REPORT,---:| | Organisms | 12.2% | 48.5% | | Chemicals | 18.5% | 50.0% | | Diseases | 16.1%
+02_results.md,50.0,REGISTER,Organisms | 12.2% | 48.5% | | Chemicals | 18.5% | 50.0% | | Diseases | 16.1% | 54.5%
+02_results.md,16.1,REGISTER,8.5% | | Chemicals | 18.5% | 50.0% | | Diseases | 16.1% | 54.5% | | Proteins | 11.1%
+02_results.md,54.5,REPORT,Chemicals | 18.5% | 50.0% | | Diseases | 16.1% | 54.5% | | Proteins | 11.1% | 27.6%
+02_results.md,11.1,REPORT,50.0% | | Diseases | 16.1% | 54.5% | | Proteins | 11.1% | 27.6% |  - Frequent terms
+02_results.md,27.6,REGISTER,| Diseases | 16.1% | 54.5% | | Proteins | 11.1% | 27.6% |  - Frequent terms ground w
+02_results.md,55,REPORT,"uent terms ground well; the long tail does not. - 55% of canonical terms (89,799)"
+02_results.md,"89,799",REGISTER,"the long tail does not. - 55% of canonical terms (89,799) carry only the generic type"
+02_results.md,98.3,REPORT,"(89,799) carry only the generic type ENTITY, and 98.3% of these ground in no refere"
+02_results.md,68.7,REPORT,"ocabulary and were not evaluated.  **Triples.** - 68.7% of 25,788 relation triples u"
+02_results.md,"25,788",REGISTER,"and were not evaluated.  **Triples.** - 68.7% of 25,788 relation triples use the gene"
+02_results.md,4.9,REPORT,lation triples use the generic relation  . - Only 4.9% fall in pair types that a cu
+02_results.md,137,REPORT,types that a curated knowledge graph covers. - Of 137 microbe–disease triples with
+02_results.md,50,REGISTER,"robe–disease triples with both entities grounded, 50 (36.5%) are curated in Disbio"
+02_results.md,36.5,REPORT,"–disease triples with both entities grounded, 50 (36.5%) are curated in Disbiome. -"
+02_results.md,97.1,REPORT,ith a publicly accessioned dataset: the CDM finds 97.1% of those found by keyword ru
+02_results.md,90.1,REGISTER,"ngs traceable to DOI, section and verbatim quote: 90.1%. - **Disease- and interventi"
+02_results.md,26,REGISTER,intervention-defined questions perform poorly:** 26–39% of keyword-found papers a
+02_results.md,39,REPORT,tervention-defined questions perform poorly:** 26–39% of keyword-found papers are
+02_results.md,27,REGISTER,tream F; Figures 4–5)  **Public gold standards.** 27 configurations of 21 systems
+02_results.md,21,REPORT,**Public gold standards.** 27 configurations of 21 systems were compared  . - **
+02_results.md,90.1,REGISTER,"tems were compared  . - **Best overall:**   on   (90.1, in-domain) and   on BioRED ("
+02_results.md,80.6,REGISTER,"rall:**   on   (90.1, in-domain) and   on BioRED (80.6)  . - **Best LLM:**   with th"
+02_results.md,69.5,REGISTER,"(80.6)  . - **Best LLM:**   with three examples, 69.5 and 66.2  . This ties zero-sh"
+02_results.md,66.2,REGISTER,". - **Best LLM:**   with three examples, 69.5 and 66.2  . This ties zero-shot GLiNER"
+02_results.md,69.2,REPORT,69.5 and 66.2  . This ties zero-shot GLiNER on   (69.2) and exceeds it on BioRED (60
+02_results.md,60.4,REPORT,shot GLiNER on   (69.2) and exceeds it on BioRED (60.4). - **Few-shot prompting** he
+02_results.md,26,REGISTER,LLMs and hurt others.  **Microbiome corpus.** All 26 configurations completed on a
+02_results.md,453,REGISTER,corpus.** All 26 configurations completed on all 453 papers  . - **Grounding:** no
+02_results.md,41.3,REGISTER,*Grounding:** no configuration grounded more than 41.3% of its strings of any type.
+02_results.md,44,REGISTER,able LLMs:** several LLMs invented strings (up to 44%) or used types outside the s
+02_results.md,53,REPORT,p to 44%) or used types outside the schema (up to 53%). Llama zero-shot hit the ou
+02_results.md,79,REGISTER,up to 53%). Llama zero-shot hit the output cap on 79% of chunks. - **Curated assoc
+02_results.md,"1,456",REGISTER,"the most Disbiome associations (GLiNER   biomed: 1,456, 86.5% of all found)  . - **P"
+02_results.md,86.5,REGISTER,"st Disbiome associations (GLiNER   biomed: 1,456, 86.5% of all found)  . - **Public"
+02_results.md,0.75,REGISTER,blic   predicted corpus grounding for diseases (ρ 0.75) but not for organisms (ρ 0.0
+02_results.md,0.02,REGISTER,ng for diseases (ρ 0.75) but not for organisms (ρ 0.02)  . ( )  ## 8. Summary of wha
+03_discussion.md,452,REPORT,literature that explains it. - **Coverage:** for 452 of the compendium's BioProjec
+03_discussion.md,"156,330",REGISTER,"2 of the compendium's BioProjects, accounting for 156,330 samples, a researcher can fin"
+03_discussion.md,88.2,REGISTER,dence traceability | offset and quote anchoring | 88.2% of catalogue quotes verbatim
+03_discussion.md,90.1,REGISTER,e anchoring | 88.2% of catalogue quotes verbatim; 90.1% of findings fully traceable
+03_discussion.md,70.5,REGISTER,assessment by two non-extractor model families | 70.5% of text values literally in
+03_discussion.md,2.9,REGISTER,ies | 70.5% of text values literally in evidence; 2.9% / 6.6% judged unsupported by
+03_discussion.md,6.6,REGISTER,0.5% of text values literally in evidence; 2.9% / 6.6% judged unsupported by the tw
+03_discussion.md,0.28,REGISTER,9% / 6.6% judged unsupported by the two models (κ 0.28 between them); gap-filled val
+03_discussion.md,3.5,REPORT,"models (κ 0.28 between them); gap-filled values 3–3.5× weaker. Model judgements, no"
+03_discussion.md,50,REGISTER,"Gene, CTD/MeSH, Mondo, HPO, CTD, Disbiome | about 50% of organism, chemical and di"
+03_discussion.md,36.5,REPORT,"organism, chemical and disease mentions resolve; 36.5% of grounded microbe–disease"
+03_discussion.md,72,REPORT,"endent rule-based extractor, itself unvalidated | 72–89% on accessions, platforms,"
+03_discussion.md,89,REPORT,"ent rule-based extractor, itself unvalidated | 72–89% on accessions, platforms, 16"
+03_discussion.md,72,REPORT,cross-method agreement on three objective fields (72–89%) is not recall | | Semant
+03_discussion.md,89,REPORT,ss-method agreement on three objective fields (72–89%) is not recall | | Semantic
+03_discussion.md,55,REPORT,"e resource  Their limitations are not cosmetic: - 55% of canonical terms (89,799)"
+03_discussion.md,"89,799",REGISTER,"tions are not cosmetic: - 55% of canonical terms (89,799) carry only the generic type"
+03_discussion.md,98,REPORT,"(89,799) carry only the generic type ENTITY, and 98% of those match no term in th"
+03_discussion.md,68.7,REPORT,"ested. - Typed terms include many non-entities. - 68.7% of the 25,788 relation tripl"
+03_discussion.md,"25,788",REGISTER,"d terms include many non-entities. - 68.7% of the 25,788 relation triples use a generi"
+03_discussion.md,95,REPORT,relation triples use a generic relation. - About 95% of triples fall in pair type
+03_discussion.md,118,REGISTER,"he CDM's structural properties are well tested: - 118 of 121 schema, value and prov"
+03_discussion.md,121,REPORT,"s structural properties are well tested: - 118 of 121 schema, value and provenance"
+03_discussion.md,77.3,REPORT,"a multi-corpus trained tagger was best: - ** :** 77.3 exact   on  , 80.6 on BioRED."
+03_discussion.md,80.6,REGISTER,"ined tagger was best: - ** :** 77.3 exact   on  , 80.6 on BioRED. - **Best open LLM"
+03_discussion.md,69.5,REGISTER,". - **Best open LLM tested** ( , three examples): 69.5 and 66.2. - **LLMs vs zero-sh"
+03_discussion.md,66.2,REGISTER,"t open LLM tested** ( , three examples): 69.5 and 66.2. - **LLMs vs zero-shot tagger"
+03_discussion.md,100,REGISTER,ama on   but hurt Gemma. - **Cost:** LLMs were 10–100 times slower per document.  T
+03_discussion.md,0.75,REGISTER,"ng in reference vocabularies only for diseases (ρ 0.75), not for organisms (ρ 0.02),"
+03_discussion.md,0.02,REGISTER,"only for diseases (ρ 0.75), not for organisms (ρ 0.02), the type most central to mi"
+03_discussion.md,41.3,REGISTER,o microbiome papers. No system grounded more than 41.3% of its strings of any type.
+03_discussion.md,"557,625",REGISTER,"step kept one row per span identifier and dropped 557,625 competing model mentions. - M"
+03_discussion.md,75,REPORT,were shared or missing. - Offsets were shifted in 75 sections.  Each is now covere
+03_discussion.md,55,REPORT,language models. 2. **Terminology quality:**    - 55% of canonical terms carry onl
+03_discussion.md,98,REPORT,"cal terms carry only the generic type ENTITY, and 98% of those resolve in no refer"
+03_discussion.md,23,REPORT,"tients"" typed as disease, for example).    - Only 23% of terms have a taxonomy cat"
+03_discussion.md,"18,272",REGISTER,"terms have a taxonomy category. 3. **Mappings:** 18,272 candidate mappings (16,750 te"
+03_discussion.md,"16,750",REGISTER,"gory. 3. **Mappings:** 18,272 candidate mappings (16,750 terms) were accepted by agree"
+03_discussion.md,69,REPORT,"andidates were never adjudicated. 4. **Triples:** 69% use a generic relation, and"
+03_discussion.md,95,REPORT,". 4. **Triples:** 69% use a generic relation, and 95% fall in domain pairs that no"
+03_discussion.md,215,REPORT,out a quarter of the papers that state them.    - 215 coded values fall outside the
+03_discussion.md,453,REGISTER,"eve. 8. **Rights:** the licence matrix covers all 453 papers, but it is a readiness"
+03_discussion.md,274,REPORT,and quotations could be redistributed for at most 274 papers; 179 await legal/libra
+03_discussion.md,179,REPORT,"ns could be redistributed for at most 274 papers; 179 await legal/library review, w"
+04_supplement_llm_judged_precision.md,26,REGISTER,"nique (lower-cased string, type) pair from: - the 26 corpus-benchmark configuratio"
+04_supplement_llm_judged_precision.md,"345,693",REGISTER,"r from: - the 26 corpus-benchmark configurations (345,693 pairs, BioRED type scheme); -"
+04_supplement_llm_judged_precision.md,"358,714",REGISTER,"D type scheme); - all 10 CDM terminology sources (358,714 pairs, CDM type scheme); - al"
+04_supplement_llm_judged_precision.md,"25,788",REGISTER,"y sources (358,714 pairs, CDM type scheme); - all 25,788 CDM relation triples.  Each p"
+04_supplement_llm_judged_precision.md,150,REPORT,", mention and term.  **Batching and completion:** 150 entities or 75 triples per re"
+04_supplement_llm_judged_precision.md,75,REPORT,"rm.  **Batching and completion:** 150 entities or 75 triples per request; 730,195"
+04_supplement_llm_judged_precision.md,"730,195",REGISTER,"letion:** 150 entities or 75 triples per request; 730,195 items in total. Every item re"
+04_supplement_llm_judged_precision.md,272,REGISTER,95 items in total. Every item received a verdict; 272 items omitted in a first pass
+04_supplement_llm_judged_precision.md,95,REPORT,encounters. - **Uncertainty:** all intervals are 95% Wilson intervals.  ## Result
+04_supplement_llm_judged_precision.md,453,REGISTER,"lson intervals.  ## Results  **NER systems on the 453-paper corpus** (BioRED types,"
+04_supplement_llm_judged_precision.md,59.3,REGISTER,---:|---:| | BERT chemical (single-type tagger) | 59.3%   | 87.6% | | GLiNER   mediu
+04_supplement_llm_judged_precision.md,87.6,REPORT,| BERT chemical (single-type tagger) | 59.3%   | 87.6% | | GLiNER   medium (zero-sh
+04_supplement_llm_judged_precision.md,43.6,REGISTER,"%   | 87.6% | | GLiNER   medium (zero-shot NER) | 43.6%   | 74.4% | |   (trained, mu"
+04_supplement_llm_judged_precision.md,74.4,REPORT,"% | | GLiNER   medium (zero-shot NER) | 43.6%   | 74.4% | |   (trained, multi-type)"
+04_supplement_llm_judged_precision.md,37.4,REPORT,") | 43.6%   | 74.4% | |   (trained, multi-type) | 37.4% | 67.9% | | Best LLM:  , zer"
+04_supplement_llm_judged_precision.md,67.9,REPORT,"%   | 74.4% | |   (trained, multi-type) | 37.4% | 67.9% | | Best LLM:  , zero-shot |"
+04_supplement_llm_judged_precision.md,35.5,REGISTER,"ype) | 37.4% | 67.9% | | Best LLM:  , zero-shot | 35.5%   | 60.4% | |  , three-shot"
+04_supplement_llm_judged_precision.md,60.4,REPORT,"4% | 67.9% | | Best LLM:  , zero-shot | 35.5%   | 60.4% | |  , three-shot | 28.9% |"
+04_supplement_llm_judged_precision.md,28.9,REPORT,", zero-shot | 35.5%   | 60.4% | |  , three-shot | 28.9% | 59.7% | | Lowest:  , zero-"
+04_supplement_llm_judged_precision.md,59.7,REPORT,"hot | 35.5%   | 60.4% | |  , three-shot | 28.9% | 59.7% | | Lowest:  , zero-shot | 1"
+04_supplement_llm_judged_precision.md,15.7,REGISTER,"e-shot | 28.9% | 59.7% | | Lowest:  , zero-shot | 15.7%   | 42.8% |  - **Ranking:**"
+04_supplement_llm_judged_precision.md,42.8,REGISTER,"8.9% | 59.7% | | Lowest:  , zero-shot | 15.7%   | 42.8% |  - **Ranking:** trained an"
+04_supplement_llm_judged_precision.md,"137,893",REPORT,"**  , the source of all generic ENTITY terms, has 137,893 distinct strings, of which on"
+04_supplement_llm_judged_precision.md,9.4,REGISTER,"ms, has 137,893 distinct strings, of which only **9.4%** were judged valid  . - **B"
+04_supplement_llm_judged_precision.md,67.3,REGISTER,valid  . - **Best sources:** the MeSH gazetteer (67.3%) and BioBERT-diseases (60.9%
+04_supplement_llm_judged_precision.md,60.9,REGISTER,the MeSH gazetteer (67.3%) and BioBERT-diseases (60.9%)  . - **LLM sources:** the t
+04_supplement_llm_judged_precision.md,34.5,REGISTER,.9%)  . - **LLM sources:** the two   runs reached 34.5% and 36.6%. Weighted by menti
+04_supplement_llm_judged_precision.md,36.6,REGISTER,"**LLM sources:** the two   runs reached 34.5% and 36.6%. Weighted by mentions, the v"
+04_supplement_llm_judged_precision.md,50.7,REGISTER,"36.6%. Weighted by mentions, the vLLM run reached 50.7%  .  **CDM entity types** (di"
+04_supplement_llm_judged_precision.md,44.3,REGISTER,"t strings judged valid): - **Highest:** chemical (44.3%), data analysis (43.1%) and"
+04_supplement_llm_judged_precision.md,43.1,REGISTER,": - **Highest:** chemical (44.3%), data analysis (43.1%) and disease (42.8%). - **Lo"
+04_supplement_llm_judged_precision.md,42.8,REGISTER,"mical (44.3%), data analysis (43.1%) and disease (42.8%). - **Lowest:** experimental"
+04_supplement_llm_judged_precision.md,14.1,REGISTER,sease (42.8%). - **Lowest:** experimental method (14.1%) and study design (16.1%)  .
+04_supplement_llm_judged_precision.md,16.1,REGISTER,":** experimental method (14.1%) and study design (16.1%)  .  **Triples** (all 25,788"
+04_supplement_llm_judged_precision.md,"25,788",REGISTER,"1%) and study design (16.1%)  .  **Triples** (all 25,788):  | Judgement | Share | |---"
+04_supplement_llm_judged_precision.md,38.7,REGISTER,3%   | | Subject and object both valid entities | 38.7%   | | Relation label specifi
+04_supplement_llm_judged_precision.md,12.5,REGISTER,entities | 38.7%   | | Relation label specific | 12.5%   | | Relation label too gen
+04_supplement_llm_judged_precision.md,29.5,REGISTER,ecific | 12.5%   | | Relation label too generic | 29.5%   | | Relevant to human micr
+04_supplement_llm_judged_precision.md,74.6,REPORT,.5%   | | Relevant to human microbiome research | 74.6% |  ## Cleaned layer (DeepSee
+04_supplement_llm_judged_precision.md,"9,682",REGISTER,"next to the cleaned one.  **Triples** - **Kept:** 9,682 of 25,788 triples were judged"
+04_supplement_llm_judged_precision.md,"25,788",REGISTER,"he cleaned one.  **Triples** - **Kept:** 9,682 of 25,788 triples were judged well-form"
+04_supplement_llm_judged_precision.md,"15,661",REPORT,"judged well-formed with valid subject and object. 15,661 were dropped as not well-form"
+04_supplement_llm_judged_precision.md,445,REPORT,"ject. 15,661 were dropped as not well-formed, and 445 for invalid entities. - **Rel"
+04_supplement_llm_judged_precision.md,"6,733",REGISTER,"entities. - **Relabelled:** of the kept triples, 6,733 had a label judged generic or"
+04_supplement_llm_judged_precision.md,"4,012",REGISTER,"n vocabulary, using the evidence sentence for the 4,012 triples from CC BY /   papers"
+04_supplement_llm_judged_precision.md,"6,203",REPORT,"ers and the triple alone otherwise. - **Result:** 6,203 triples were relabelled, and"
+04_supplement_llm_judged_precision.md,408,REGISTER,"- **Result:** 6,203 triples were relabelled, and 408 had their direction reversed."
+04_supplement_llm_judged_precision.md,"6,574",REPORT,"direction reversed. Triples labelled   fell from 6,574 to 437. - **Caveat:** the mos"
+04_supplement_llm_judged_precision.md,437,REPORT,"n reversed. Triples labelled   fell from 6,574 to 437. - **Caveat:** the most frequ"
+04_supplement_llm_judged_precision.md,"1,758",REGISTER,"37. - **Caveat:** the most frequent new label,   (1,758 triples), is still broad.  **"
+04_supplement_llm_judged_precision.md,"30,727",REPORT,"is still broad.  **Canonical terms** - **Kept:** 30,727 of 162,409 terms, those for w"
+04_supplement_llm_judged_precision.md,"162,409",REGISTER,"broad.  **Canonical terms** - **Kept:** 30,727 of 162,409 terms, those for which most o"
+04_supplement_llm_judged_precision.md,"11,614",REPORT,"ntions were judged valid entities. - **Retyped:** 11,614 of the kept terms. - **Generi"
+04_supplement_llm_judged_precision.md,"7,735",REPORT,"ENTITY type:** kept terms typed ENTITY fell from 7,735 to 744.  This layer is model"
+04_supplement_llm_judged_precision.md,744,REPORT,"ype:** kept terms typed ENTITY fell from 7,735 to 744.  This layer is model curatio"
+04_supplement_llm_judged_precision.md,278,REPORT,ttle can score high precision. 6. **Data quirk.** 278 CDM terms carry a type   that
+05_supplement_bugsigdb_comparison.md,47,REGISTER,accuracy.  ## Claim for the manuscript  > For the 47 corpus papers also curated in
+05_supplement_bugsigdb_comparison.md,98,REPORT,"the curated study metadata closely. Agreement was 98% for 16S region, 94% for coun"
+05_supplement_bugsigdb_comparison.md,94,REGISTER,"tadata closely. Agreement was 98% for 16S region, 94% for country and 93% for cond"
+05_supplement_bugsigdb_comparison.md,93,REGISTER,"ement was 98% for 16S region, 94% for country and 93% for condition. The catalogue"
+05_supplement_bugsigdb_comparison.md,28,REPORT,"ntry and 93% for condition. The catalogue covered 28% of the curated taxa, against"
+05_supplement_bugsigdb_comparison.md,77,REGISTER,"ported a taxon, the direction of change agreed in 77% of cases, against 52% expect"
+05_supplement_bugsigdb_comparison.md,52,REGISTER,"rection of change agreed in 77% of cases, against 52% expected from the base rates"
+05_supplement_bugsigdb_comparison.md,71,REGISTER,"valid in the current NCBI Taxonomy. By contrast, 71 of the 8,479 identifiers in B"
+05_supplement_bugsigdb_comparison.md,"8,479",REGISTER,"the current NCBI Taxonomy. By contrast, 71 of the 8,479 identifiers in BugSigDB are n"
+05_supplement_bugsigdb_comparison.md,47,REGISTER,n DOI when the PMID did not match. - **Overlap:** 47 papers and 270 signatures  .
+05_supplement_bugsigdb_comparison.md,270,REGISTER,PMID did not match. - **Overlap:** 47 papers and 270 signatures  .  **Ours:** the
+05_supplement_bugsigdb_comparison.md,"2,989",REGISTER,"d item is one record of a fixed template ( ). All 2,989 records were validated agains"
+05_supplement_bugsigdb_comparison.md,95,REPORT,"erved − chance) / (1 − chance).  **Uncertainty:** 95% Wilson intervals, plus a pap"
+05_supplement_bugsigdb_comparison.md,"2,000",REGISTER,"intervals, plus a paper-level cluster bootstrap (2,000 replicates, fixed seed)  .  *"
+05_supplement_bugsigdb_comparison.md,"1,537",REPORT,"No text left the machine.  ## Results  **Taxa** (1,537 BugSigDB paper–taxon items; 6"
+05_supplement_bugsigdb_comparison.md,667,REPORT,"ults  **Taxa** (1,537 BugSigDB paper–taxon items; 667 of ours):  | Measure | Value"
+05_supplement_bugsigdb_comparison.md,95,REPORT,r–taxon items; 667 of ours):  | Measure | Value | 95% CI (paper bootstrap) | Chanc
+05_supplement_bugsigdb_comparison.md,27.7,REGISTER,| BugSigDB taxa we cover (exact or same genus) | 27.7%   | 21.5–35.8 | 9.0% | | Bug
+05_supplement_bugsigdb_comparison.md,21.5,REPORT,B taxa we cover (exact or same genus) | 27.7%   | 21.5–35.8 | 9.0% | | BugSigDB taxa
+05_supplement_bugsigdb_comparison.md,35.8,REPORT,a we cover (exact or same genus) | 27.7%   | 21.5–35.8 | 9.0% | | BugSigDB taxa we c
+05_supplement_bugsigdb_comparison.md,23.5,REGISTER,"5.8 | 9.0% | | BugSigDB taxa we cover, exact ID | 23.5%   | | | | Our taxa also in B"
+05_supplement_bugsigdb_comparison.md,57.3,REGISTER,%   | | | | Our taxa also in BugSigDB (support) | 57.3%   | 48.0–67.1 | 18.1% | | Sa
+05_supplement_bugsigdb_comparison.md,48.0,REPORT,| Our taxa also in BugSigDB (support) | 57.3%   | 48.0–67.1 | 18.1% | | Same directi
+05_supplement_bugsigdb_comparison.md,67.1,REPORT,"taxa also in BugSigDB (support) | 57.3%   | 48.0–67.1 | 18.1% | | Same direction, w"
+05_supplement_bugsigdb_comparison.md,18.1,REGISTER,"lso in BugSigDB (support) | 57.3%   | 48.0–67.1 | 18.1% | | Same direction, where de"
+05_supplement_bugsigdb_comparison.md,261,REGISTER,"18.1% | | Same direction, where determinable (n = 261) | 77.0%   | 66.4–86.5 | 52.0"
+05_supplement_bugsigdb_comparison.md,77.0,REGISTER,"| Same direction, where determinable (n = 261) | 77.0%   | 66.4–86.5 | 52.0% (base"
+05_supplement_bugsigdb_comparison.md,66.4,REPORT,"rection, where determinable (n = 261) | 77.0%   | 66.4–86.5 | 52.0% (base rates) |"
+05_supplement_bugsigdb_comparison.md,86.5,REGISTER,"on, where determinable (n = 261) | 77.0%   | 66.4–86.5 | 52.0% (base rates) |  **Cov"
+05_supplement_bugsigdb_comparison.md,52.0,REGISTER,re determinable (n = 261) | 77.0%   | 66.4–86.5 | 52.0% (base rates) |  **Coverage b
+05_supplement_bugsigdb_comparison.md,100,REGISTER,ure source | Coverage | |---|---:| | Paper text | 100% (18 items) | | Tables | 51.4
+05_supplement_bugsigdb_comparison.md,51.4,REGISTER,---:| | Paper text | 100% (18 items) | | Tables | 51.4% | | Figures | 27.6% | | Supp
+05_supplement_bugsigdb_comparison.md,22.1,REGISTER,| | Figures | 27.6% | | Supplementary material | 22.1% |  Most curated taxa come fr
+05_supplement_bugsigdb_comparison.md,97.7,REGISTER,ote | |---|---:|---:|---| | 16S variable region | 97.7%   | 34.8% | | | Country | 94
+05_supplement_bugsigdb_comparison.md,34.8,REPORT,|---:|---:|---| | 16S variable region | 97.7%   | 34.8% | | | Country | 94.0%   | 21
+05_supplement_bugsigdb_comparison.md,94.0,REGISTER,variable region | 97.7%   | 34.8% | | | Country | 94.0%   | 21.2% | | | Condition (S
+05_supplement_bugsigdb_comparison.md,21.2,REPORT,egion | 97.7%   | 34.8% | | | Country | 94.0%   | 21.2% | | | Condition (SapBERT) |
+05_supplement_bugsigdb_comparison.md,92.7,REGISTER,try | 94.0%   | 21.2% | | | Condition (SapBERT) | 92.7%   | 5% | | | Statistical tes
+05_supplement_bugsigdb_comparison.md,85.7,REGISTER,(SapBERT) | 92.7%   | 5% | | | Statistical test | 85.7%   | 44.0% | | | Group size |
+05_supplement_bugsigdb_comparison.md,44.0,REGISTER,| 92.7%   | 5% | | | Statistical test | 85.7%   | 44.0% | | | Group size | 56.2%   |
+05_supplement_bugsigdb_comparison.md,56.2,REGISTER,istical test | 85.7%   | 44.0% | | | Group size | 56.2%   | 6.3% | | | Group name (S
+05_supplement_bugsigdb_comparison.md,6.3,REPORT,st | 85.7%   | 44.0% | | | Group size | 56.2%   | 6.3% | | | Group name (SapBERT) |
+05_supplement_bugsigdb_comparison.md,54.2,REGISTER,ize | 56.2%   | 6.3% | | | Group name (SapBERT) | 54.2%   | 5% | | | Body site (lexi
+05_supplement_bugsigdb_comparison.md,84.2,REGISTER,pBERT) | 54.2%   | 5% | | | Body site (lexical) | 84.2%   | | The SapBERT measure is
+05_supplement_bugsigdb_comparison.md,100,REGISTER,"e here (see note) | | Sequencing type, platform | 100% | 93.9–96.2% | Too uniform i"
+05_supplement_bugsigdb_comparison.md,93.9,REPORT,"(see note) | | Sequencing type, platform | 100% | 93.9–96.2% | Too uniform in this c"
+05_supplement_bugsigdb_comparison.md,96.2,REPORT,"note) | | Sequencing type, platform | 100% | 93.9–96.2% | Too uniform in this corpus"
+05_supplement_bugsigdb_comparison.md,50.0,REGISTER,igDB's  . Agreement falls to:   - sequencing type 50.0%;   - platform 89.4%;   - sta
+05_supplement_bugsigdb_comparison.md,89.4,REGISTER,falls to:   - sequencing type 50.0%;   - platform 89.4%;   - statistical test 3.6%.
+05_supplement_bugsigdb_comparison.md,3.6,REGISTER,e 50.0%;   - platform 89.4%;   - statistical test 3.6%.    The catalogue usually li
+05_supplement_bugsigdb_comparison.md,662,REPORT,"NCBI Taxonomy | |---|---:| | Our findings | 0 of 662 | | BugSigDB, taxa on the 47"
+05_supplement_bugsigdb_comparison.md,47,REGISTER,"Our findings | 0 of 662 | | BugSigDB, taxa on the 47 overlap papers | 8 of 668 | |"
+05_supplement_bugsigdb_comparison.md,668,REGISTER,"| BugSigDB, taxa on the 47 overlap papers | 8 of 668 | | BugSigDB, whole database"
+05_supplement_bugsigdb_comparison.md,71,REGISTER,"papers | 8 of 668 | | BugSigDB, whole database | 71 of 8,479 |  - **Retired IDs:*"
+05_supplement_bugsigdb_comparison.md,"8,479",REGISTER,"s | 8 of 668 | | BugSigDB, whole database | 71 of 8,479 |  - **Retired IDs:** the mis"
+05_supplement_bugsigdb_comparison.md,"8,479",REGISTER,"igDB's taxon *names* are as current as ours (1 of 8,479 differs). - **The supported s"
+05_supplement_bugsigdb_comparison.md,47,REGISTER,(must accompany the claim)  1. **Small overlap.** 47 papers (10% of the corpus) we
+06_supplement_triple_reference_check.md,"25,788",REGISTER,"ed as wrong.  ## Method  **Triples checked:** all 25,788 CDM 3.0.3 triples, both as fr"
+06_supplement_triple_reference_check.md,47,REGISTER,"BugSigDB | Triples with a microbial taxon, on the 47 papers curated in both | The"
+06_supplement_triple_reference_check.md,518,REGISTER,"Microbial taxa against BugSigDB** - **Coverage:** 518 (triple, paper) items on 45 p"
+06_supplement_triple_reference_check.md,45,REGISTER,"DB** - **Coverage:** 518 (triple, paper) items on 45 papers  . - **Support:** in 5"
+06_supplement_triple_reference_check.md,50.4,REGISTER,"e, paper) items on 45 papers  . - **Support:** in 50.4% of items, the triple's taxon"
+06_supplement_triple_reference_check.md,16.1,REGISTER,"is listed by BugSigDB for the same paper, against 16.1% by chance  . - **Cleaning:**"
+06_supplement_triple_reference_check.md,54.3,REGISTER,"ning kept had more support than those it dropped: 54.3% vs 44.3%, a difference of +1"
+06_supplement_triple_reference_check.md,44.3,REGISTER,"had more support than those it dropped: 54.3% vs 44.3%, a difference of +10.0 point"
+06_supplement_triple_reference_check.md,95,REPORT,"ed: 54.3% vs 44.3%, a difference of +10.0 points (95% CI 1.1–18.6)  . The cleaning"
+06_supplement_triple_reference_check.md,1.1,REPORT,"3% vs 44.3%, a difference of +10.0 points (95% CI 1.1–18.6)  . The cleaning is ther"
+06_supplement_triple_reference_check.md,18.6,REPORT,"s 44.3%, a difference of +10.0 points (95% CI 1.1–18.6)  . The cleaning is therefore"
+06_supplement_triple_reference_check.md,49,REGISTER,im.  **CTD** - **Chemical–disease triples:** only 49 could be resolved on both sid
+06_supplement_triple_reference_check.md,22.4,REGISTER,9 could be resolved on both sides. Their support (22.4%) is no higher than chance (2
+06_supplement_triple_reference_check.md,24.2,REGISTER,. Their support (22.4%) is no higher than chance (24.2%)  . - **Gene–disease triples
+06_supplement_triple_reference_check.md,401,REPORT,relation itself is correct. 2. **Name matching.** 401 of the 518 taxon items were r
+06_supplement_triple_reference_check.md,518,REGISTER,self is correct. 2. **Name matching.** 401 of the 518 taxon items were resolved by
+07_supplement_kg_and_triple_evidence.md,"25,788",REGISTER,"d-only and unchanged.  ## 1. Knowledge graph  The 25,788 triples were assembled into a"
+07_supplement_kg_and_triple_evidence.md,"22,579",REGISTER,"ed (DeepSeek) | |---|---:|---:| | Nodes / edges | 22,579 / 25,788 | 8,897 / 9,682   |"
+07_supplement_kg_and_triple_evidence.md,"25,788",REGISTER,"eek) | |---|---:|---:| | Nodes / edges | 22,579 / 25,788 | 8,897 / 9,682   | | Largest"
+07_supplement_kg_and_triple_evidence.md,"8,897",REGISTER,"--|---:|---:| | Nodes / edges | 22,579 / 25,788 | 8,897 / 9,682   | | Largest connect"
+07_supplement_kg_and_triple_evidence.md,"9,682",REGISTER,"---:| | Nodes / edges | 22,579 / 25,788 | 8,897 / 9,682   | | Largest connected compo"
+07_supplement_kg_and_triple_evidence.md,68.5,REGISTER,"8,897 / 9,682   | | Largest connected component | 68.5% of nodes | 67.8%   |  - **We"
+07_supplement_kg_and_triple_evidence.md,67.8,REGISTER,| Largest connected component | 68.5% of nodes | 67.8%   |  - **Weakness:** the mos
+07_supplement_kg_and_triple_evidence.md,179,REPORT,sentence from a CC BY /   paper. No text from the 179 withheld papers was sent. - *
+07_supplement_kg_and_triple_evidence.md,"16,132",REGISTER,"the 179 withheld papers was sent. - **Coverage:** 16,132 of 16,142 judged; 10 failed r"
+07_supplement_kg_and_triple_evidence.md,"16,142",REGISTER,"thheld papers was sent. - **Coverage:** 16,132 of 16,142 judged; 10 failed repeatedly"
+07_supplement_kg_and_triple_evidence.md,86.6,REGISTER,tates a relationship between subject and object | 86.6%   | | Original relation labe
+07_supplement_kg_and_triple_evidence.md,22.0,REGISTER,"| Original relation label supported as written | 22.0%   | | Supported, or related"
+07_supplement_kg_and_triple_evidence.md,80.2,REGISTER,"Supported, or related but with a generic label | 80.2%   | | Original label support"
+07_supplement_kg_and_triple_evidence.md,30.6,REGISTER,abel supported: kept vs dropped by the cleaning | 30.6% vs 17.2%   | | Relabelled tr
+07_supplement_kg_and_triple_evidence.md,17.2,REGISTER,orted: kept vs dropped by the cleaning | 30.6% vs 17.2%   | | Relabelled triples: or
+07_supplement_kg_and_triple_evidence.md,17.2,REGISTER,ed triples: original vs cleaned label supported | 17.2% vs 50.4%   |  **Reading:** -
+07_supplement_kg_and_triple_evidence.md,50.4,REGISTER,s: original vs cleaned label supported | 17.2% vs 50.4%   |  **Reading:** - **Pairs:
+07_supplement_kg_and_triple_evidence.md,622,REGISTER,d | |---|---:|---:|---:|---:| | Microbe–disease | 622 | 13.2% | 5.8%   | 15.5% vs 6
+07_supplement_kg_and_triple_evidence.md,13.2,REGISTER,--|---:|---:|---:|---:| | Microbe–disease | 622 | 13.2% | 5.8%   | 15.5% vs 6.4%   |
+07_supplement_kg_and_triple_evidence.md,5.8,REGISTER,---:|---:|---:| | Microbe–disease | 622 | 13.2% | 5.8%   | 15.5% vs 6.4%   | | Chem
+07_supplement_kg_and_triple_evidence.md,15.5,REGISTER,|---:| | Microbe–disease | 622 | 13.2% | 5.8%   | 15.5% vs 6.4%   | | Chemical–disea
+07_supplement_kg_and_triple_evidence.md,6.4,REGISTER,Microbe–disease | 622 | 13.2% | 5.8%   | 15.5% vs 6.4%   | | Chemical–disease | 202
+07_supplement_kg_and_triple_evidence.md,202,REGISTER,| 5.8%   | 15.5% vs 6.4%   | | Chemical–disease | 202 | 11.4% | 9.8%   | — | | Gene
+07_supplement_kg_and_triple_evidence.md,11.4,REGISTER,| 15.5% vs 6.4%   | | Chemical–disease | 202 | 11.4% | 9.8%   | — | | Gene–diseas
+07_supplement_kg_and_triple_evidence.md,9.8,REGISTER,5% vs 6.4%   | | Chemical–disease | 202 | 11.4% | 9.8%   | — | | Gene–disease | 16

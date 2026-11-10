@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://microbiome-cdm.local/corpus_v2/section.schema.json",
+  "title": "Corpus v2 section record",
+  "description": "Section-level record. Template 3F (section inventory) and 3E (integrity). Original text is preserved verbatim; cleaned text is a separate field with a documented operations list.",
+  "type": "object",
+  "required": ["section_record_id", "paper_id", "section_order", "section_text_original",
+               "text_hash_sha256", "source_file_hash_sha256", "parsing_status",
+               "section_quality_status", "extraction_eligibility"],
+  "properties": {
+    "section_record_id": {"type": "string"},
+    "paper_id": {"type": "string", "pattern": "^HMPAPER_[0-9]{6}$"},
+    "section_id_original": {"type": ["string", "null"]},
+    "section_name_original": {"type": ["string", "null"]},
+    "section_type": {"enum": ["Abstract", "Introduction", "Methods", "Results", "Discussion", "References", "Acknowledgements", "Supplementary", "Case", "Other"]},
+    "heading_path": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Ordered heading path from root to this section. Preserved hierarchy; not forced to a fixed shape."
+    },
+    "section_order": {"type": "integer", "description": "0-based position in the source document order."},
+    "parent_section_id": {"type": ["string", "null"]},
+    "hierarchy_status": {"enum": ["explicit_from_source", "derived_from_numbering", "flat_in_source", "not_checked"]},
+    "section_text_original": {"type": "string", "description": "Verbatim source text. Never overwritten."},
+    "section_text_cleaned": {"type": ["string", "null"]},
+    "cleaning_operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "operation": {"type": "string"},
+          "detail": {"type": "string"},
+          "chars_before": {"type": "integer"},
+          "chars_after": {"type": "integer"}
+        }
+      }
+    },
+    "paragraph_count": {"type": "integer"},
+    "sentence_count": {"type": "integer"},
+    "character_count": {"type": "integer"},
+    "word_count": {"type": "integer"},
+    "token_count": {"type": ["integer", "null"]},
+    "token_count_method": {"type": "string"},
+    "counting_convention": {"type": "string"},
+    "language": {"type": ["string", "null"]},
+    "language_status": {"enum": ["assumed_from_source", "detected", "not_checked"]},
+    "text_hash_sha256": {"type": "string"},
+    "source_file_hash_sha256": {"type": "string"},
+    "source_location": {"type": "string"},
+    "source_char_start": {"type": ["integer", "null"]},
+    "source_char_end": {"type": ["integer", "null"]},
+    "offset_convention": {"type": "string"},
+    "segment_ids": {"type": "array", "items": {"type": "string"}},
+    "parsing_status": {"enum": ["COMPLETE", "PARTIAL", "FAILED", "REVIEW_REQUIRED", "PENDING"]},
+    "section_quality_status": {"enum": ["COMPLETE", "PARTIAL", "FAILED", "REVIEW_REQUIRED", "PENDING"]},
+    "quality_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {"rule_id": {"type": "string"}, "passed": {"type": "boolean"}, "detail": {"type": "string"}}
+      }
+    },
+    "extraction_eligibility": {"type": "boolean"},
+    "exclusion_reason": {"type": ["string", "null"]},
+    "is_container_section": {"type": "boolean", "description": "References/acknowledgements etc.: retained but not eligible for terminology extraction."},
+    "llm_enrichment": {"type": ["object", "null"]}
+  }
+}

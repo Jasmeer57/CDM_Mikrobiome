@@ -1,0 +1,762 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "human-microbiome-data-catalogue.schema.json",
+  "title": "Human Microbiome Data Catalogue",
+  "description": "Linked metadata records for human microbiome papers, datasets, assets, cohorts, samples, assays, and findings.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "papers",
+    "datasets",
+    "data_assets",
+    "cohorts",
+    "samples",
+    "assays",
+    "findings"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "papers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/paper"
+      }
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/dataset"
+      }
+    },
+    "data_assets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    },
+    "cohorts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/cohort"
+      }
+    },
+    "samples": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sample"
+      }
+    },
+    "assays": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/assay"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    }
+  },
+  "$defs": {
+    "nullableString": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "paper": {
+      "type": "object",
+      "required": [
+        "paper_id"
+      ],
+      "properties": {
+        "paper_id": {
+          "type": "string",
+          "pattern": "^HMPAPER_[0-9]{6}$",
+          "description": "Stable corpus paper ID (never changes, even if metadata is corrected)."
+        },
+        "doi": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Digital Object Identifier, no leading scheme; null when not resolvable."
+        },
+        "pmid": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "pmcid": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "title": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "authors": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "journal": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "publication_year": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "article_type": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "abstract": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "keywords": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "language": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "full_text_source": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Source database or corpus file the full text came from."
+        },
+        "full_text_url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "full_text_format": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "license_name": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "license_url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "retrieved_at": {
+          "$ref": "#/$defs/nullableString",
+          "description": "ISO-8601 date the full text was retrieved."
+        },
+        "primary_research_domain": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "human_microbiome_relevance": {
+          "enum": [
+            "DIRECT",
+            "INDIRECT",
+            "CONTEXT_ONLY",
+            "EXCLUDE",
+            "REVIEW",
+            null
+          ]
+        },
+        "human_study_design": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "inclusion_decision": {
+          "enum": [
+            "INCLUDE",
+            "EXCLUDE",
+            "PENDING",
+            null
+          ]
+        },
+        "exclusion_reason": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "full_text_completeness": {
+          "enum": [
+            "FULL",
+            "PARTIAL",
+            "ABSTRACT_ONLY",
+            "UNKNOWN",
+            null
+          ]
+        },
+        "curation_status": {
+          "enum": [
+            "NOT_STARTED",
+            "AUTO_SEEDED",
+            "LLM_SEEDED",
+            "IN_PROGRESS",
+            "CURATED",
+            "VERIFIED",
+            null
+          ]
+        },
+        "curator_notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": true
+    },
+    "dataset": {
+      "type": "object",
+      "required": [
+        "dataset_id",
+        "paper_id"
+      ],
+      "properties": {
+        "dataset_id": {
+          "type": "string",
+          "pattern": "^HMDATA_[0-9]{6}$"
+        },
+        "paper_id": {
+          "type": "string",
+          "pattern": "^HMPAPER_[0-9]{6}$"
+        },
+        "dataset_title": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "dataset_description": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "dataset_role": {
+          "enum": [
+            "primary_study_data",
+            "linked_data",
+            null
+          ]
+        },
+        "dataset_type": {
+          "$ref": "#/$defs/stringArray",
+          "description": "e.g. 16S_amplicon, shotgun_metagenomics, metatranscriptomics."
+        },
+        "repository_name": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. NCBI BioProject, EBI, DDBJ, or 'Unknown repository'."
+        },
+        "repository_accession": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "accession_type": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "dataset_url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "related_publication_dois": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "data_availability_status": {
+          "enum": [
+            "PUBLIC",
+            "CONTROLLED",
+            "EMBARGOED",
+            "UPON_REQUEST",
+            "NOT_DEPOSITED",
+            "LINK_ONLY",
+            "UNKNOWN",
+            null
+          ]
+        },
+        "access_conditions": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "license_or_terms": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "original_or_reused": {
+          "enum": [
+            "ORIGINAL",
+            "REUSED",
+            "UNKNOWN",
+            null
+          ]
+        },
+        "data_dictionary_url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "study_registration": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "evidence_text": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "evidence_location": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "verification_status": {
+          "enum": [
+            "VERIFIED_IMPORT",
+            "VERIFIED",
+            "UNVERIFIED",
+            null
+          ]
+        },
+        "last_verified": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "catalogue_notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": true
+    },
+    "asset": {
+      "type": "object",
+      "required": [
+        "asset_id",
+        "dataset_id"
+      ],
+      "properties": {
+        "asset_id": {
+          "type": "string",
+          "pattern": "^HMASSET_[0-9]{6}$"
+        },
+        "dataset_id": {
+          "type": "string",
+          "pattern": "^HMDATA_[0-9]{6}$"
+        },
+        "asset_name": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "asset_type": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. repository_landing_page, sequence_data, metadata_table."
+        },
+        "format": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "description": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "repository_url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "accession": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "file_size_bytes": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "checksum_type": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "checksum": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "access_status": {
+          "enum": [
+            "PUBLIC",
+            "CONTROLLED",
+            "EMBARGOED",
+            "UPON_REQUEST",
+            "NOT_DEPOSITED",
+            "LINK_ONLY",
+            "UNKNOWN",
+            null
+          ]
+        },
+        "license_or_terms": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "data_dictionary_url": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": true
+    },
+    "cohort": {
+      "type": "object",
+      "required": [
+        "cohort_id",
+        "paper_id"
+      ],
+      "properties": {
+        "cohort_id": {
+          "type": "string",
+          "pattern": "^HMCOHORT_[0-9]{6}$"
+        },
+        "paper_id": {
+          "type": "string",
+          "pattern": "^HMPAPER_[0-9]{6}$"
+        },
+        "dataset_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^HMDATA_[0-9]{6}$"
+        },
+        "cohort_label": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "cohort_role": {
+          "enum": [
+            "cases_and_controls",
+            "single_group",
+            null
+          ]
+        },
+        "population_description": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "country_or_region": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "setting": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "recruitment_method": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "participant_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sample_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Biological samples; must be distinct from participant_count."
+        },
+        "age_group": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "age_summary": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "sex_or_gender_reporting": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "health_status": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "inclusion_criteria": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "exclusion_criteria": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "key_covariates": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "longitudinal": {
+          "enum": [
+            "YES",
+            "NO",
+            "UNCLEAR",
+            "NOT_APPLICABLE",
+            null
+          ]
+        },
+        "timepoints": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "evidence_location": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": true
+    },
+    "sample": {
+      "type": "object",
+      "required": [
+        "sample_group_id",
+        "paper_id"
+      ],
+      "properties": {
+        "sample_group_id": {
+          "type": "string",
+          "pattern": "^HMSAMPLE_[0-9]{6}$"
+        },
+        "paper_id": {
+          "type": "string",
+          "pattern": "^HMPAPER_[0-9]{6}$"
+        },
+        "dataset_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^HMDATA_[0-9]{6}$"
+        },
+        "cohort_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^HMCOHORT_[0-9]{6}$"
+        },
+        "body_site": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Normalized upper-case body site (gut, oral, skin, vaginal, ...)."
+        },
+        "body_site_original": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Verbatim wording from the paper."
+        },
+        "sample_type": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. stool, saliva, biopsy, swab."
+        },
+        "collection_method": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "collection_timepoint": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "storage_condition": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "preservation_method": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "sample_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sample_processing": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": true
+    },
+    "assay": {
+      "type": "object",
+      "required": [
+        "assay_id",
+        "paper_id"
+      ],
+      "properties": {
+        "assay_id": {
+          "type": "string",
+          "pattern": "^HMASSAY_[0-9]{6}$"
+        },
+        "paper_id": {
+          "type": "string",
+          "pattern": "^HMPAPER_[0-9]{6}$"
+        },
+        "dataset_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^HMDATA_[0-9]{6}$"
+        },
+        "assay_type": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. 16S_amplicon_sequencing, shotgun_metagenomics, qPCR."
+        },
+        "target_gene_or_region": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. 16S V4, V3-V4, ITS."
+        },
+        "sequencing_platform": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "library_preparation": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "dna_extraction_method": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "primer_or_probe": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "negative_controls": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "positive_controls": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "contamination_handling": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "quality_control": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "bioinformatics_pipeline": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. QIIME2, mothur, MetaPhlAn."
+        },
+        "software_tools": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "taxonomic_database": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. SILVA, Greengenes, GTDB, NCBI RefSeq 16S."
+        },
+        "functional_database": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. KEGG, MetaCyc, eggNOG."
+        },
+        "normalization_method": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "statistical_methods": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "evidence_location": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": true
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "finding_id",
+        "paper_id"
+      ],
+      "properties": {
+        "finding_id": {
+          "type": "string",
+          "pattern": "^HMFINDING_[0-9]{6}$"
+        },
+        "paper_id": {
+          "type": "string",
+          "pattern": "^HMPAPER_[0-9]{6}$"
+        },
+        "dataset_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^HMDATA_[0-9]{6}$"
+        },
+        "cohort_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^HMCOHORT_[0-9]{6}$"
+        },
+        "assay_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^HMASSAY_[0-9]{6}$"
+        },
+        "finding_domain": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. microbiome_association, taxonomic, functional, methodological."
+        },
+        "finding_text": {
+          "$ref": "#/$defs/nullableString",
+          "description": "One-sentence summary of the discrete reported result."
+        },
+        "taxon_or_feature": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Original verbatim taxon or microbial gene/pathway wording."
+        },
+        "taxonomic_rank": {
+          "$ref": "#/$defs/nullableString",
+          "description": "phylum, class, order, family, genus, species, strain; 'UNKNOWN' when absent."
+        },
+        "comparison_or_exposure": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "outcome": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "body_site": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Normalized body site when the finding is site-specific; may be set from body_site_normalized in corpus annotations."
+        },
+        "direction": {
+          "enum": [
+            "INCREASE",
+            "DECREASE",
+            "NO_ASSOCIATION",
+            "MIXED",
+            "NOT_STATED",
+            null
+          ]
+        },
+        "effect_measure": {
+          "$ref": "#/$defs/nullableString",
+          "description": "e.g. odds ratio, hazard ratio, log2 fold change, coef."
+        },
+        "effect_estimate": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Verbatim numeric estimate as reported (schema-agnostic string)."
+        },
+        "confidence_interval": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "p_value": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "q_value": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "adjusted_covariates": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "population_subgroup": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "author_interpretation": {
+          "$ref": "#/$defs/nullableString"
+        },
+        "evidence_text": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Verbatim quote from the versioned full text supporting the finding."
+        },
+        "evidence_location": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Human-readable locator, e.g. Results, Table 2, Suppl. S1."
+        },
+        "extraction_method": {
+          "$ref": "#/$defs/nullableString",
+          "description": "Rule-based or model-and-version used (e.g. ollama qwen3.5:4b)."
+        },
+        "verification_status": {
+          "enum": [
+            "VERIFIED_INLINE",
+            "VERIFIED",
+            "UNVERIFIED",
+            "PENDING",
+            null
+          ]
+        },
+        "notes": {
+          "$ref": "#/$defs/stringArray"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

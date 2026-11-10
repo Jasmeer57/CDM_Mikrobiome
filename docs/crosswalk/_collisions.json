@@ -1,0 +1,260 @@
+{
+  "definition": "Rows in L1 whose (sanitize(term_norm), cdm_type) collide while their raw term_norm strings differ. sanitize() removes only C0/C1 control bytes and collapses whitespace, so a collision means the surfaces differ solely by an invisible byte.",
+  "group_count": 19,
+  "rows_involved": 40,
+  "rows_removed_if_collapsed": 21,
+  "groups": [
+    {
+      "sanitized_term_norm": "-diversity",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        29839,
+        71758
+      ],
+      "raw_term_norms": [
+        "\u0002-diversity",
+        "\u0005-diversity"
+      ],
+      "survivor_term_norm": "-diversity"
+    },
+    {
+      "sanitized_term_norm": "106 cells",
+      "cdm_type": "CELL_TYPE",
+      "row_ids": [
+        51575,
+        71733
+      ],
+      "raw_term_norms": [
+        "\u0003 106 cells",
+        "106 cells"
+      ],
+      "survivor_term_norm": "106 cells"
+    },
+    {
+      "sanitized_term_norm": "80 c",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        29843,
+        71706,
+        71708
+      ],
+      "raw_term_norms": [
+        "\u000180\u0003c",
+        "\u000180\u0004c",
+        "\u000380\u0004c"
+      ],
+      "survivor_term_norm": "80 c"
+    },
+    {
+      "sanitized_term_norm": "cd4 t cells",
+      "cdm_type": "CELL_TYPE",
+      "row_ids": [
+        8607,
+        54746,
+        54747
+      ],
+      "raw_term_norms": [
+        "cd4\u0002 t cells",
+        "cd4\u0006 t cells",
+        "cd4 t cells"
+      ],
+      "survivor_term_norm": "cd4 t cells"
+    },
+    {
+      "sanitized_term_norm": "cd8 t cells",
+      "cdm_type": "CELL_TYPE",
+      "row_ids": [
+        5631,
+        54771
+      ],
+      "raw_term_norms": [
+        "cd8\u0002 t cells",
+        "cd8 t cells"
+      ],
+      "survivor_term_norm": "cd8 t cells"
+    },
+    {
+      "sanitized_term_norm": "dx5",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        32475,
+        98526
+      ],
+      "raw_term_norms": [
+        "dx5",
+        "dx5\u0002"
+      ],
+      "survivor_term_norm": "dx5"
+    },
+    {
+      "sanitized_term_norm": "f4/80",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        102069,
+        102070
+      ],
+      "raw_term_norms": [
+        "f4/80",
+        "f4/80\u0002"
+      ],
+      "survivor_term_norm": "f4-80"
+    },
+    {
+      "sanitized_term_norm": "haz",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        13078,
+        109889
+      ],
+      "raw_term_norms": [
+        "haz",
+        "haz \u0001"
+      ],
+      "survivor_term_norm": "haz"
+    },
+    {
+      "sanitized_term_norm": "klebsiella",
+      "cdm_type": "ORGANISM",
+      "row_ids": [
+        776,
+        51538
+      ],
+      "raw_term_norms": [
+        "\u0007klebsiella",
+        "klebsiella"
+      ],
+      "survivor_term_norm": "klebsiella"
+    },
+    {
+      "sanitized_term_norm": "mean difference",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        11182,
+        124667
+      ],
+      "raw_term_norms": [
+        "mean difference",
+        "mean difference \u0001"
+      ],
+      "survivor_term_norm": "mean difference"
+    },
+    {
+      "sanitized_term_norm": "o group",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        35699,
+        132954
+      ],
+      "raw_term_norms": [
+        "o\u0003 group",
+        "o group"
+      ],
+      "survivor_term_norm": "o group"
+    },
+    {
+      "sanitized_term_norm": "sem",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        71700,
+        71715
+      ],
+      "raw_term_norms": [
+        "\u0001 sem",
+        "\u0001sem"
+      ],
+      "survivor_term_norm": "sem"
+    },
+    {
+      "sanitized_term_norm": "spearman r",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        152196,
+        152197
+      ],
+      "raw_term_norms": [
+        "spearman r \u0003",
+        "spearman r \u0005"
+      ],
+      "survivor_term_norm": "spearman r"
+    },
+    {
+      "sanitized_term_norm": "spearman rho",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        11330,
+        152203
+      ],
+      "raw_term_norms": [
+        "spearman rho",
+        "spearman rho \u0003"
+      ],
+      "survivor_term_norm": "spearman rho"
+    },
+    {
+      "sanitized_term_norm": "spearman's",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        2199,
+        152210
+      ],
+      "raw_term_norms": [
+        "spearman's",
+        "spearman's \u0003"
+      ],
+      "survivor_term_norm": "spearman's"
+    },
+    {
+      "sanitized_term_norm": "standard deviation",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        312,
+        71701
+      ],
+      "raw_term_norms": [
+        "\u0001 standard deviation",
+        "standard deviation"
+      ],
+      "survivor_term_norm": "standard deviation"
+    },
+    {
+      "sanitized_term_norm": "stool swab",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        153667,
+        153771
+      ],
+      "raw_term_norms": [
+        "stool \u0006 swab",
+        "stool swab"
+      ],
+      "survivor_term_norm": "stool swab"
+    },
+    {
+      "sanitized_term_norm": "systolic",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        9501,
+        71807
+      ],
+      "raw_term_norms": [
+        "\u0007systolic",
+        "systolic"
+      ],
+      "survivor_term_norm": "systolic"
+    },
+    {
+      "sanitized_term_norm": "wilcoxon p",
+      "cdm_type": "ENTITY",
+      "row_ids": [
+        38575,
+        163814
+      ],
+      "raw_term_norms": [
+        "wilcoxon p",
+        "wilcoxon p \u0003"
+      ],
+      "survivor_term_norm": "wilcoxon p"
+    }
+  ],
+  "note": "Superseded ids are preserved here; no L1 row was merged or deleted."
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage C model proposal for one triple (DRAFT)",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "canonical_triple_id",
+  "classification",
+  "explanation"
+ ],
+ "properties": {
+  "canonical_triple_id": {
+   "type": "string"
+  },
+  "classification": {
+   "enum": [
+    "TYPED_RELATION",
+    "GENERIC_COOCCURRENCE",
+    "UNSUPPORTED",
+    "AMBIGUOUS"
+   ]
+  },
+  "subject_term_id": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "predicate": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "object_term_id": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "direction": {
+   "enum": [
+    "AS_ORIGINAL",
+    "REVERSED",
+    "UNDIRECTED",
+    null
+   ]
+  },
+  "supporting_sentence": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "evidence_ref": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "explanation": {
+   "type": "string",
+   "maxLength": 400
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "classification": {
+      "const": "TYPED_RELATION"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "subject_term_id",
+     "predicate",
+     "object_term_id",
+     "direction",
+     "supporting_sentence",
+     "evidence_ref"
+    ]
+   }
+  }
+ ]
+}

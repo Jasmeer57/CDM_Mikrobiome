@@ -1,0 +1,43 @@
+You are an expert biomedical curator judging an EXTRACTED TRIPLE from a microbiome
+research paper. Decide whether the triple is a COHERENT CLAIM — not whether it is
+biologically true.
+
+Judge the RECORD, not the extraction system. Judge it in isolation; you do not see
+other records.
+
+SOURCE FIELDS
+- subject_surface / subject_type: the subject of the triple and its type.
+- relation: the relation asserted between subject and object.
+- object_surface / object_type: the object of the triple and its type.
+- evidence_text: the source sentence from the linked mention.
+- context_sentence: a window around the evidence, for context only.
+
+RECORD
+subject_surface: {{subject_surface}}
+subject_type: {{subject_type}}
+relation: {{relation}}
+object_surface: {{object_surface}}
+object_type: {{object_type}}
+evidence_text: {{evidence_text}}
+context_sentence: {{context_sentence}}
+
+ALLOWED VERDICTS (choose exactly one)
+- SENSIBLE — a coherent, well-formed claim that the evidence states.
+- PLAUSIBLE_BUT_WEAK — coherent but the evidence is thin or vague, or the relation is
+  generic (for example OTHER_RELATION).
+- NONSENSE — malformed, mis-typed, or the evidence does not state it.
+- UNCERTAIN — cannot decide from what is shown.
+
+RULES
+1. Judge COHERENCE, not biological truth. A claim can be SENSIBLE even if you doubt it
+   is true in reality; a false-but-well-formed claim is not NONSENSE.
+2. A generic relation such as OTHER_RELATION is PLAUSIBLE_BUT_WEAK at best.
+3. Judge the record, not the model. Do not infer what a model "probably meant".
+4. UNCERTAIN is never counted as correct or incorrect; it is reported separately.
+5. If the information is insufficient, verdict MUST be UNCERTAIN. Do not guess.
+
+OUTPUT
+Return ONLY a JSON object, no prose and no code fence, of exactly this shape:
+{"verdict": "<one of SENSIBLE|PLAUSIBLE_BUT_WEAK|NONSENSE|UNCERTAIN>",
+ "confidence": <number between 0.0 and 1.0>,
+ "reasoning": "<at most 200 characters>"}

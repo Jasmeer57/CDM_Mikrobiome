@@ -1,0 +1,478 @@
+{
+ "judges": {
+  "llama": {
+   "records": 52397,
+   "errors": 120,
+   "truncated": 13
+  },
+  "mistral": {
+   "records": 52397,
+   "errors": 6,
+   "truncated": 5
+  }
+ },
+ "llama": {
+  "record_level": {
+   "claim": {
+    "PASS": 24174,
+    "INVALID": 41,
+    "UNCERTAIN": 34,
+    "FAIL": 17
+   },
+   "assay": {
+    "PASS": 8210,
+    "UNCERTAIN": 243,
+    "INVALID": 58,
+    "FAIL": 13
+   },
+   "sample": {
+    "PASS": 7227,
+    "INVALID": 34,
+    "UNCERTAIN": 156,
+    "FAIL": 18
+   },
+   "cohort": {
+    "PASS": 6962,
+    "FAIL": 17,
+    "INVALID": 30,
+    "UNCERTAIN": 75
+   },
+   "dataset": {
+    "PASS": 2938,
+    "FAIL": 16,
+    "UNCERTAIN": 13,
+    "INVALID": 9
+   },
+   "data_asset": {
+    "PASS": 1985,
+    "INVALID": 1,
+    "UNCERTAIN": 5,
+    "FAIL": 1
+   }
+  },
+  "fields": {
+   "assay|link": {
+    "PASS": 7346,
+    "FAIL": 151,
+    "INVALID": 119,
+    "UNCERTAIN": 179
+   },
+   "assay|text_value": {
+    "PASS": 21539,
+    "UNCERTAIN": 4216,
+    "FAIL": 1183,
+    "INVALID": 81
+   },
+   "claim|flag_or_classification": {
+    "PASS": 75477,
+    "FAIL": 15650,
+    "INVALID": 1643,
+    "UNCERTAIN": 2374
+   },
+   "claim|link": {
+    "PASS": 58277,
+    "UNCERTAIN": 2986,
+    "FAIL": 5725,
+    "INVALID": 16
+   },
+   "claim|text_value": {
+    "PASS": 182561,
+    "FAIL": 3873,
+    "INVALID": 1366,
+    "UNCERTAIN": 21070
+   },
+   "cohort|link": {
+    "PASS": 6217,
+    "UNCERTAIN": 60,
+    "FAIL": 111,
+    "INVALID": 17
+   },
+   "cohort|text_value": {
+    "PASS": 50005,
+    "FAIL": 2408,
+    "UNCERTAIN": 2222,
+    "INVALID": 1365
+   },
+   "data_asset|link": {
+    "PASS": 1866,
+    "INVALID": 4,
+    "FAIL": 29,
+    "UNCERTAIN": 12
+   },
+   "data_asset|text_value": {
+    "PASS": 8211,
+    "UNCERTAIN": 639,
+    "INVALID": 30,
+    "FAIL": 184
+   },
+   "dataset|text_value": {
+    "PASS": 19304,
+    "UNCERTAIN": 497,
+    "FAIL": 391,
+    "INVALID": 26
+   },
+   "sample|link": {
+    "PASS": 12707,
+    "FAIL": 990,
+    "UNCERTAIN": 610,
+    "INVALID": 13
+   },
+   "sample|text_value": {
+    "PASS": 27363,
+    "FAIL": 1934,
+    "UNCERTAIN": 1347,
+    "INVALID": 9
+   }
+  },
+  "text_value_fail_kinds": {
+   "FAIL_NOT_SUPPORTED": 6127,
+   "FAIL_WRONG_FIELD": 3561,
+   "FAIL_CONTRADICTED": 285
+  },
+  "text_value_by_anchor": {
+   "NORMALISED": {
+    "PASS": 30490,
+    "UNCERTAIN": 2668,
+    "FAIL": 930,
+    "INVALID": 342
+   },
+   "WHITESPACE": {
+    "PASS": 181205,
+    "FAIL": 5352,
+    "INVALID": 1568,
+    "UNCERTAIN": 17646
+   },
+   "FUZZY": {
+    "PASS": 26215,
+    "FAIL": 845,
+    "UNCERTAIN": 2487,
+    "INVALID": 223
+   },
+   "EXACT": {
+    "PASS": 41955,
+    "UNCERTAIN": 4619,
+    "FAIL": 1687,
+    "INVALID": 404
+   },
+   "UNANCHORED": {
+    "PASS": 12005,
+    "UNCERTAIN": 957,
+    "FAIL": 498,
+    "INVALID": 152
+   },
+   "RELOCATED": {
+    "PASS": 15980,
+    "FAIL": 659,
+    "UNCERTAIN": 1417,
+    "INVALID": 187
+   },
+   "NO_EVIDENCE": {
+    "PASS": 1133,
+    "UNCERTAIN": 197,
+    "FAIL": 2,
+    "INVALID": 1
+   }
+  },
+  "text_value_by_source": {
+   "original_extraction": {
+    "PASS": 295979,
+    "FAIL": 8636,
+    "INVALID": 2865,
+    "UNCERTAIN": 29553
+   },
+   "gap_filled": {
+    "FAIL": 1337,
+    "PASS": 13004,
+    "UNCERTAIN": 438,
+    "INVALID": 12
+   }
+  },
+  "text_value_by_deterministic_check": {
+   "FOUND": {
+    "PASS": 237841,
+    "UNCERTAIN": 5608,
+    "FAIL": 3495,
+    "INVALID": 271
+   },
+   "UNASSESSED": {
+    "PASS": 27585,
+    "FAIL": 2289,
+    "INVALID": 2359,
+    "UNCERTAIN": 10438
+   },
+   "NOT_FOUND": {
+    "UNCERTAIN": 13945,
+    "PASS": 43557,
+    "FAIL": 4189,
+    "INVALID": 247
+   }
+  }
+ },
+ "mistral": {
+  "record_level": {
+   "claim": {
+    "PASS": 23985,
+    "UNCERTAIN": 168,
+    "INVALID": 118
+   },
+   "assay": {
+    "PASS": 7028,
+    "UNCERTAIN": 1320,
+    "INVALID": 193
+   },
+   "sample": {
+    "PASS": 7367,
+    "UNCERTAIN": 131,
+    "INVALID": 29
+   },
+   "cohort": {
+    "PASS": 6603,
+    "UNCERTAIN": 408,
+    "INVALID": 73
+   },
+   "dataset": {
+    "PASS": 2757,
+    "UNCERTAIN": 164,
+    "INVALID": 55
+   },
+   "data_asset": {
+    "PASS": 1931,
+    "UNCERTAIN": 53,
+    "INVALID": 8
+   }
+  },
+  "fields": {
+   "assay|link": {
+    "PASS": 4399,
+    "UNCERTAIN": 1974,
+    "INVALID": 940,
+    "FAIL": 499
+   },
+   "assay|text_value": {
+    "PASS": 20048,
+    "INVALID": 1448,
+    "FAIL": 2551,
+    "UNCERTAIN": 3011
+   },
+   "claim|flag_or_classification": {
+    "PASS": 11450,
+    "UNCERTAIN": 973,
+    "INVALID": 81507,
+    "FAIL": 1232
+   },
+   "claim|link": {
+    "PASS": 16675,
+    "INVALID": 41770,
+    "UNCERTAIN": 7679,
+    "FAIL": 893
+   },
+   "claim|text_value": {
+    "PASS": 73640,
+    "INVALID": 129174,
+    "FAIL": 3553,
+    "UNCERTAIN": 2529
+   },
+   "cohort|link": {
+    "PASS": 2192,
+    "UNCERTAIN": 1137,
+    "INVALID": 2535,
+    "FAIL": 542
+   },
+   "cohort|text_value": {
+    "PASS": 29584,
+    "INVALID": 19795,
+    "FAIL": 3315,
+    "UNCERTAIN": 3305
+   },
+   "data_asset|link": {
+    "UNCERTAIN": 981,
+    "PASS": 676,
+    "INVALID": 174,
+    "FAIL": 80
+   },
+   "data_asset|text_value": {
+    "PASS": 7558,
+    "FAIL": 267,
+    "UNCERTAIN": 419,
+    "INVALID": 820
+   },
+   "dataset|text_value": {
+    "PASS": 14509,
+    "FAIL": 773,
+    "INVALID": 3846,
+    "UNCERTAIN": 1090
+   },
+   "sample|link": {
+    "PASS": 7251,
+    "FAIL": 1387,
+    "UNCERTAIN": 5530,
+    "INVALID": 334
+   },
+   "sample|text_value": {
+    "PASS": 23809,
+    "FAIL": 2380,
+    "UNCERTAIN": 2776,
+    "INVALID": 1982
+   }
+  },
+  "text_value_fail_kinds": {
+   "FAIL_NOT_SUPPORTED": 6550,
+   "FAIL_WRONG_FIELD": 6006,
+   "FAIL_CONTRADICTED": 283
+  },
+  "text_value_by_anchor": {
+   "NORMALISED": {
+    "PASS": 16684,
+    "INVALID": 15345,
+    "FAIL": 1256,
+    "UNCERTAIN": 1182
+   },
+   "WHITESPACE": {
+    "PASS": 96424,
+    "INVALID": 95456,
+    "FAIL": 7021,
+    "UNCERTAIN": 7118
+   },
+   "FUZZY": {
+    "PASS": 15487,
+    "INVALID": 11635,
+    "FAIL": 1248,
+    "UNCERTAIN": 1416
+   },
+   "EXACT": {
+    "FAIL": 1925,
+    "INVALID": 22215,
+    "PASS": 22697,
+    "UNCERTAIN": 1856
+   },
+   "UNANCHORED": {
+    "PASS": 8479,
+    "INVALID": 3876,
+    "FAIL": 602,
+    "UNCERTAIN": 658
+   },
+   "RELOCATED": {
+    "PASS": 8297,
+    "INVALID": 8499,
+    "UNCERTAIN": 700,
+    "FAIL": 773
+   },
+   "NO_EVIDENCE": {
+    "PASS": 1080,
+    "FAIL": 14,
+    "UNCERTAIN": 200,
+    "INVALID": 39
+   }
+  },
+  "text_value_by_source": {
+   "original_extraction": {
+    "PASS": 159416,
+    "INVALID": 156018,
+    "FAIL": 10201,
+    "UNCERTAIN": 11707
+   },
+   "gap_filled": {
+    "FAIL": 2638,
+    "PASS": 9732,
+    "UNCERTAIN": 1423,
+    "INVALID": 1047
+   }
+  },
+  "text_value_by_deterministic_check": {
+   "FOUND": {
+    "PASS": 138045,
+    "INVALID": 98454,
+    "FAIL": 7099,
+    "UNCERTAIN": 3880
+   },
+   "UNASSESSED": {
+    "INVALID": 34906,
+    "PASS": 5998,
+    "FAIL": 957,
+    "UNCERTAIN": 815
+   },
+   "NOT_FOUND": {
+    "PASS": 25105,
+    "INVALID": 23705,
+    "UNCERTAIN": 8435,
+    "FAIL": 4783
+   }
+  }
+ },
+ "rubric_compliance_text_values": {
+  "llama": 0.992,
+  "mistral": 0.554
+ },
+ "judge_agreement_text_values": {
+  "pairs": 351792,
+  "observed_agreement": 0.477,
+  "cohen_kappa_between_models": 0.084,
+  "both_pass": 159680,
+  "both_fail": 2023,
+  "table": {
+   "FAIL|FAIL": 2023,
+   "FAIL|INVALID": 4061,
+   "FAIL|PASS": 2122,
+   "FAIL|UNCERTAIN": 1767,
+   "INVALID|FAIL": 92,
+   "INVALID|INVALID": 2575,
+   "INVALID|PASS": 174,
+   "INVALID|UNCERTAIN": 36,
+   "PASS|FAIL": 8751,
+   "PASS|INVALID": 132890,
+   "PASS|PASS": 159680,
+   "PASS|UNCERTAIN": 7633,
+   "UNCERTAIN|FAIL": 1961,
+   "UNCERTAIN|INVALID": 17485,
+   "UNCERTAIN|PASS": 6882,
+   "UNCERTAIN|UNCERTAIN": 3660
+  }
+ },
+ "judge_agreement_text_values_both_valid": {
+  "pairs": 194479,
+  "observed_agreement": 0.85,
+  "cohen_kappa_between_models": 0.282,
+  "both_pass": 159680,
+  "both_fail": 2023,
+  "table": {
+   "FAIL|FAIL": 2023,
+   "FAIL|PASS": 2122,
+   "FAIL|UNCERTAIN": 1767,
+   "PASS|FAIL": 8751,
+   "PASS|PASS": 159680,
+   "PASS|UNCERTAIN": 7633,
+   "UNCERTAIN|FAIL": 1961,
+   "UNCERTAIN|PASS": 6882,
+   "UNCERTAIN|UNCERTAIN": 3660
+  }
+ },
+ "judge_agreement_records": {
+  "PASS|PASS": 49097,
+  "PASS|UNCERTAIN": 1989,
+  "PASS|FAIL: cited prior work": 376,
+  "UNCERTAIN|PASS": 328,
+  "UNCERTAIN|UNCERTAIN": 169,
+  "FAIL: cited prior work|PASS": 71,
+  "FAIL: cited prior work|UNCERTAIN": 51,
+  "FAIL|PASS": 41,
+  "FAIL: cited prior work|FAIL: cited prior work": 30,
+  "FAIL|UNCERTAIN": 30,
+  "UNCERTAIN|FAIL: cited prior work": 26,
+  "PASS|REVIEW": 17,
+  "None|PASS": 11,
+  "FAIL|FAIL: cited prior work": 10,
+  "PASS|None": 5,
+  "PASS|YES": 4,
+  "FAIL: cited prior work, methods boilerplate|PASS": 4,
+  "PASS|FAIL_WRONG_TYPE": 2,
+  "None|UNCERTAIN": 2,
+  "UNCERTAIN|YES": 1,
+  "FAIL: cited prior work|REVIEW": 1,
+  "FAIL_NOT_SUPPORTED|UNCERTAIN": 1,
+  "FAIL|REVIEW": 1,
+  "FAIL: cited prior work, methods boilerplate|UNCERTAIN": 1,
+  "FAIL: cited prior work, methods boilerplate|FAIL: cited prior work": 1,
+  "UNCERTAIN|FAIL: cited prior work (DESeq2)": 1,
+  "PASS|FAIL: cited prior work (NHANES data)": 1
+ }
+}

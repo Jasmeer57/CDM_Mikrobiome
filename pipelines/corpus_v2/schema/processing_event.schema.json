@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://microbiome-cdm.local/corpus_v2/processing_event.schema.json",
+  "title": "Corpus v2 processing event",
+  "description": "One append-only provenance event. Mirrors the curation-log stages in template section 5 and records the hashes that make each transformation auditable.",
+  "type": "object",
+  "required": ["run_id", "corpus_id", "pipeline_stage", "pipeline_version",
+               "started_at", "completed_at", "run_status"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "corpus_id": {"type": "string"},
+    "pipeline_stage": {"type": "string"},
+    "pipeline_version": {"type": "string"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "run_status": {"enum": ["success", "partial", "failed", "not_found", "skipped"]},
+    "retry_count": {"type": "integer", "minimum": 0},
+    "manual_intervention": {"type": "boolean"},
+    "operator_or_reviewer": {"type": "string"},
+    "paper_id": {"type": ["string", "null"]},
+    "section_record_id": {"type": ["string", "null"]},
+    "error_message": {"type": ["string", "null"]},
+    "input_artifact_hash": {"type": ["string", "null"]},
+    "output_artifact_hash": {"type": ["string", "null"]},
+    "model_name_version": {"type": ["string", "null"]},
+    "prompt_version": {"type": ["string", "null"]},
+    "note": {"type": ["string", "null"]}
+  }
+}

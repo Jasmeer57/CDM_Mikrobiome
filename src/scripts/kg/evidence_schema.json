@@ -1,0 +1,32 @@
+{
+  "schema": "triple-evidence-check",
+  "version": "1.0",
+  "registered": "2026-11-04",
+  "purpose": "Evidence-grounded check of the CDM 3.0.3 triples: does the triple's own source sentence state it? Complements the string-only judgement (supplement 04). Rules fixed before the run; this file's sha256 is written to PREREGISTRATION.sha256 first.",
+  "items": "every triple with a source sentence from a paper whose rights decision is INCLUDE_TEXT (CC BY / CC0); one sentence per triple (first evidence row by triple_mention_id). No text of the 179 withheld papers is sent.",
+  "judge": {"model": "deepseek-ai/DeepSeek-V4-Flash-0731", "settings": "src/scripts/ner_llm_judge/config.yml (thinking disabled, temperature 0)", "batch": 20},
+  "question_per_item": {
+    "R": "Y if the sentence states any relationship between subject and object, else N",
+    "A": "original relation: Y supported as written; P right entities and relation present but the label is too generic or only partly right; R supported only with subject and object reversed; N not supported",
+    "B": "cleaned relation and orientation (only when the cleaning changed the label or orientation; otherwise '-'): same codes as A",
+    "D": "how the sentence states it: F asserted, H hedged or speculative, G negated (the sentence reports no association)"
+  },
+  "endpoints": {
+    "primary": [
+      "share of triples whose sentence states a relationship between subject and object (R = Y)",
+      "share of triples whose original label is supported as written (A = Y)"
+    ],
+    "secondary": [
+      "A = Y or P (relationship present, label acceptable or generic)",
+      "on relabelled triples, paired comparison of A = Y vs B = Y (does the cleaning improve the label?)",
+      "A = Y among triples kept vs dropped by the cleaning (Newcombe interval of the difference)",
+      "share of triples stated with negation (D = G) while the relation asserts an association"
+    ]
+  },
+  "uncertainty": {"wilson": "95% Wilson interval", "bootstrap": {"unit": "paper", "replicates": 2000, "seed": 20261104}},
+  "limitations_stated_in_advance": [
+    "The cleaning (relabelling) was done by the same model family, so the paired comparison A vs B is not independent.",
+    "One sentence per triple: a triple stated across sentences can be judged unsupported.",
+    "Model judgement, not human validation."
+  ]
+}

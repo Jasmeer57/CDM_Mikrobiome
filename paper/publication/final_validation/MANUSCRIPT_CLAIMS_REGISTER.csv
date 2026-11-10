@@ -1,0 +1,168 @@
+claim_id,section,claim,stated,recomputed,status,source
+C01,Corpus,papers,453,453,MATCH,CDM 3.0.3 paper
+C02,Corpus,distinct publications,447,447,MATCH,CDM 3.0.3 publication
+C03,Corpus,publications shared by several BioProjects,5,5,MATCH,CDM 3.0.3 publication
+C04,Corpus,BioProjects sharing those publications,11,11,MATCH,CDM 3.0.3 publication
+C05,Corpus,compendium samples in corpus BioProjects (BioProject-level link),156330,156330,MATCH,recomputed from data/168000-samples-paper/sample_metadata.tsv (audit)
+C06,Corpus,compendium samples total,168464,168464,MATCH,audit
+C07,Corpus,sections,4006,4006,MATCH,CDM 3.0.3 section
+C08,Corpus,section hashes mismatching text,0/4006,0/4006,MATCH,audit
+C09,Corpus,share of compendium samples in corpus BioProjects (%),92.8,92.8,MATCH,audit
+C10,Corpus,sections by type Abstract/Introduction/Methods/Results/Discussion/Supplementary/Acknowledgements/References/Other,247/216/385/379/482/239/431/385/1242,247/216/385/379/482/239/431/385/1242,MATCH,CDM 3.0.3 section
+M01,Mentions,mention records in CDM,2505684,2505684,MATCH,CDM 3.0.3
+M13,Mentions,mentions linked to a canonical term (%),87.8,87.8,MATCH,CDM
+M14,Mentions,mentions sharing a span id with another (dropped by the old one-row-per-id load),557625,557625,MATCH,CDM; VERIFICATION_303.json S3D
+K12,Catalogue,records findings/assays/sample groups/cohorts/datasets/data assets,24272/8545/7530/7085/2976/1992,24272/8545/7530/7085/2976/1992,MATCH,CDM
+K13,Catalogue,G3 removals methods/cited/invalid/table-figure/wrong type/empty/reagent,1264/945/127/103/71/49/27,1264/945/127/103/71/49/27,MATCH,_G3_report.json
+K14,Catalogue,quote anchoring EXACT/WHITESPACE/RELOCATED/NORMALISED (%),15.1/58.0/5.9/9.3,15.1/58.0/5.9/9.3,MATCH,CDM
+L01,LLM-judge suppl.,"BERT chemical: valid and correctly typed, distinct (%)",59.3,59.3,MATCH,llm_judge summary.json
+L02,LLM-judge suppl.,GLiNER v2.5 medium: valid and correctly typed (%),43.6,43.6,MATCH,llm_judge summary.json
+L03,LLM-judge suppl.,best LLM (Gemma zero-shot): valid and correctly typed (%),35.5,35.5,MATCH,llm_judge summary.json
+L04,LLM-judge suppl.,lowest (Llama zero-shot): valid and correctly typed (%),15.7,15.7,MATCH,llm_judge summary.json
+L05,LLM-judge suppl.,en_core_sci_lg (generic ENTITY source): valid distinct strings (%),9.4,9.4,MATCH,llm_judge summary.json
+L06,LLM-judge suppl.,MeSH gazetteer / BioBERT-diseases: valid (%),67.3/60.9,67.3/60.9,MATCH,llm_judge summary.json
+L07,LLM-judge suppl.,Qwen3.5-4B vLLM / Ollama valid distinct; vLLM mention-weighted (%),34.5/36.6/50.7,34.5/36.6/50.7,MATCH,llm_judge summary.json
+L08,LLM-judge suppl.,CDM types valid: chemical/data analysis/disease/experimental method/study design (%),44.3/43.1/42.8/14.1/16.1,44.3/43.1/42.8/14.1/16.1,MATCH,llm_judge entity_verdicts
+L09,LLM-judge suppl.,triples judged well-formed claims (%),39.3,39.3,MATCH,llm_judge summary.json
+L10,LLM-judge suppl.,triples with valid subject and object (%),38.7,38.7,MATCH,llm_judge summary.json
+L11,LLM-judge suppl.,triples with specific relation label (%),12.5,12.5,MATCH,llm_judge summary.json
+L12,LLM-judge suppl.,triples with too-generic relation label (%),29.5,29.5,MATCH,llm_judge summary.json
+L13,LLM-judge suppl.,items judged: benchmark pairs / CDM pairs / total,345693/358714/730195,345693/358714/730195,MATCH,llm_judge items.jsonl
+L14,LLM-judge suppl.,items omitted in first pass and re-requested,272,272,MATCH,llm_judge judge_run.log
+L15,LLM-judge suppl.,cleaned layer: triples to relabel / with CC BY sentence / direction swapped / relabelled to ASSOCIATED_WITH,6733/4012/408/1758,6733/4012/408/1758,MATCH,cleaned_layer_deepseek
+N01,BugSigDB suppl.,papers / signatures in both CDM 3.0.3 and BugSigDB,47/270,47/270,MATCH,bugsigdb_comparison summary.json
+N02,BugSigDB suppl.,"BugSigDB taxa covered by catalogue findings, exact or same genus / cross-paper chance (%)",27.7/9.0,27.7/9.0,MATCH,bugsigdb_comparison summary.json
+N03,BugSigDB suppl.,"BugSigDB taxa covered, exact NCBI ID (%)",23.5,23.5,MATCH,bugsigdb_comparison summary.json
+N04,BugSigDB suppl.,our taxa also in BugSigDB / cross-paper chance (%),57.3/18.1,57.3/18.1,MATCH,bugsigdb_comparison summary.json
+N05,BugSigDB suppl.,same direction (%) / determinable pairs / base-rate chance (%),77.0/261/52.0,77.0/261/52.0,MATCH,bugsigdb_comparison summary.json
+N06,BugSigDB suppl.,coverage by BugSigDB signature source: text / table / figure / supplement (%),100.0/51.4/27.6/22.1,100.0/51.4/27.6/22.1,MATCH,bugsigdb_comparison summary.json
+N07,BugSigDB suppl.,metadata concordance: 16S region / country / statistical test / group size (%),97.7/94.0/85.7/56.2,97.7/94.0/85.7/56.2,MATCH,bugsigdb_comparison summary.json
+N08,BugSigDB suppl.,condition (SapBERT) / group name (SapBERT) / body site (lexical) concordance (%),92.7/54.2/84.2,92.7/54.2/84.2,MATCH,bugsigdb_comparison summary.json
+N09,BugSigDB suppl.,post-hoc strict set equality: sequencing type / platform / statistical test (%),50.0/89.4/3.6,50.0/89.4/3.6,MATCH,bugsigdb_comparison summary.json
+N10,BugSigDB suppl.,taxon IDs not in current NCBI Taxonomy: BugSigDB overlap / of / BugSigDB all / of / our findings,8/668/71/8479/0,8/668/71/8479/0,MATCH,bugsigdb_comparison summary.json
+N11,BugSigDB suppl.,answer-template records / bootstrap replicates / adjudicated disagreements / our value in text,2989/2000/11/10,2989/2000/11/10,MATCH,bugsigdb_comparison items.jsonl + scoring_schema.json
+XR01,Triple ref. suppl.,"taxon triples checked against BugSigDB: (triple, paper) items / papers",518/45,518/45,MATCH,triple_reference_check summary.json
+XR02,Triple ref. suppl.,taxon of the triple in BugSigDB signatures of the same paper / chance (%),50.4/16.1,50.4/16.1,MATCH,triple_reference_check summary.json
+XR03,Triple ref. suppl.,BugSigDB support: kept / dropped by DeepSeek cleaning / difference (points),54.3/44.3/10.0,54.3/44.3/10.0,MATCH,triple_reference_check summary.json
+XR04,Triple ref. suppl.,direction agreement with BugSigDB: same / determinable,11/12,11/12,MATCH,triple_reference_check summary.json
+XR05,Triple ref. suppl.,chemical-disease triples resolved / any CTD support (%) / chance (%),49/22.4/24.2,49/22.4/24.2,MATCH,triple_reference_check summary.json
+XR06,Triple ref. suppl.,gene-disease triples resolved / curated in CTD,7/0,7/0,MATCH,triple_reference_check summary.json
+F01,Figures,CDM entities: populated / partially populated / planned,17/15/1,17/15/1,MATCH,manuscript_bib/figures/extra_figures_facts.json
+F02,Figures,CDM entities without a table of their own (embedded),5,5,MATCH,manuscript_bib/figures/extra_figures_facts.json
+F03,Figures,genus x condition cells comparable with independent BugSigDB consensus: same / total (exploratory),25/44,25/44,MATCH,manuscript_bib/figures/extra_figures_facts.json
+Q01,KG suppl.,KG nodes / edges: full; cleaned,22579/25788;8897/9682,22579/25788;8897/9682,MATCH,kg_2026-11-04 kg_stats.json
+Q02,KG suppl.,largest connected component share: full / cleaned (%),68.5/67.8,68.5/67.8,MATCH,kg_2026-11-04 kg_stats.json
+Q03,KG suppl.,triples judged against their CC BY/CC0 sentence / eligible,16132/16142,16132/16142,MATCH,kg evidence_check summary.json
+Q04,KG suppl.,sentence states a relationship / original label supported / supported or generic (%),86.6/22.0/80.2,86.6/22.0/80.2,MATCH,kg evidence_check summary.json
+Q05,KG suppl.,original label supported: kept / dropped by cleaning (%),30.6/17.2,30.6/17.2,MATCH,kg evidence_check summary.json
+Q06,KG suppl.,relabelled triples supported: original / cleaned label (%),17.2/50.4,17.2/50.4,MATCH,kg evidence_check summary.json
+Q07,KG suppl.,microbe-disease edges resolved / in Disbiome or BugSigDB (%) / chance (%),622/13.2/5.8,622/13.2/5.8,MATCH,kg gold_kg_check summary.json
+Q08,KG suppl.,microbe-disease edges in a reference: kept / dropped by cleaning (%),15.5/6.4,15.5/6.4,MATCH,kg gold_kg_check summary.json
+Q09,KG suppl.,chemical-disease edges resolved / in CTD (%) / chance (%),202/11.4/9.8,202/11.4/9.8,MATCH,kg gold_kg_check summary.json
+H07,Benchmark,highest corpus grounding of any configuration and type (%),41.3,41.3,MATCH,corpus_metrics.json
+M02,Mentions,mention rows in terminology 1.0.1,2505735,2505735,MATCH,terminology 1.0.1
+M03,Mentions,cpu_ensemble_v1 mentions,1705449,1705449,MATCH,CDM
+M04,Mentions,qwen35_vllm_body_v1 mentions,366123,366123,MATCH,CDM
+M05,Mentions,qwen_ollama_cell7c_v1 mentions,186024,186024,MATCH,CDM
+M06,Mentions,mesh_gazetteer_2026 mentions,248088,248088,MATCH,CDM
+M07,Mentions,mentions with offsets,2505628,2505628,MATCH,CDM
+M08,Mentions,offsets corrected (CDM),156870,156870,MATCH,CDM
+M09,Mentions,unanchored mentions (CDM),56,56,MATCH,CDM
+M10,Mentions,mentions linked to a canonical term,2198766,2198766,MATCH,CDM
+M11,Mentions,ambiguous mentions,7072,7072,MATCH,CDM
+M12,Mentions,mentions without canonical term,299846,299846,MATCH,CDM
+T01,Terms,canonical terms in terminology 1.0.1,165991,165991,MATCH,terminology 1.0.1
+T02,Terms,canonical terms in CDM 3.0.3 (after review),162409,162409,MATCH,CDM
+T03,Terms,terms removed by review,3582,3582,MATCH,CDM
+T04,Terms,T02 + T03 = T01,165991,165991,MATCH,CDM
+T05,Terms,terms typed ENTITY,89799,89799,MATCH,CDM
+T06,Terms,terms with taxonomy category (AGREED+PARENT_AGREED),37740,37740,MATCH,CDM
+D01,Definitions,definitions in CDM,6773,6773,MATCH,CDM
+D02,Definitions,terms with a definition,3397,3397,MATCH,CDM
+D03,Definitions,definitions exact at offsets,6460,6460,MATCH,CDM
+P01,Mappings,candidates retrieved (before guards),334231,334231,MATCH,guard_summary.json
+P02,Mappings,candidates kept by guards,314772,314772,MATCH,CDM
+P03,Mappings,candidates rejected by guards,16622,16622,MATCH,CDM
+P04,Mappings,candidates demoted by guards (not loaded into the CDM),2837,2837,MATCH,guard files
+P05,Mappings,mapping rows ACCEPTED by two-model agreement,18272,18272,MATCH,CDM
+P06,Mappings,terms with an ACCEPTED mapping,16750,16750,MATCH,CDM
+P07,Mappings,mapping rows with no recorded service,11477,11477,MATCH,CDM
+K01,Catalogue,catalogue records,52400,52400,MATCH,CDM
+K02,Catalogue,findings,24272,24272,MATCH,CDM
+K03,Catalogue,G1 values accepted,21403,21403,MATCH,G1 report
+K04,Catalogue,G1 proposals rejected by validators,76253,76253,MATCH,G1 report
+K05,Catalogue,NOT_REPORTED values in release,46182,46182,MATCH,audit (catalogue 3.1.1)
+K06,Catalogue,CONFLICTING values in release,4586,4586,MATCH,audit
+K07,Catalogue,records removed by G3,2586,2586,MATCH,_removed.jsonl
+K08,Catalogue,quotes verbatim (%),88.2,88.2,MATCH,CDM
+K09,Catalogue,quotes approximate FUZZY (%),8.0,8.0,MATCH,CDM
+K10,Catalogue,quotes unlocated or absent (%),3.8,3.8,MATCH,CDM
+K11,Catalogue,datasets without section (BioProject-derived),142,142,MATCH,CDM
+X01,CDM,tables,44,44,MATCH,CDM
+X02,CDM,columns,866,866,MATCH,CDM
+X03,CDM,registered runs,45,45,MATCH,CDM
+X04,CDM,runs not independently verified (AS_IN_3.0.2_UNVERIFIED),4,4,MATCH,CDM
+X05,CDM,change-log entries 3.0.2 -> 3.0.3,79,79,MATCH,CDM
+X06,CDM,rows whose run id does not resolve (all run-bearing tables),0,0,MATCH,CDM
+X07,CDM,validation tests pass / fail / conditional,118/2/1,118/2/1,MATCH,VERIFICATION_303.json
+X08,CDM,3.0.3 verification overall,True,True,MATCH,VERIFICATION_303.json
+R01,Triples,relation triples,25788,25788,MATCH,CDM
+R02,Triples,generic (escape) relations,17717,17717,MATCH,CDM
+R03,Triples,triples with conflicting polarity across mentions,195,195,MATCH,CDM
+B01,Benchmark,BC5CDR best (PubTator3) exact F1,90.1,90.1,MATCH,fair_ner_metrics.json
+B02,Benchmark,BioRED best (HunFlair2) exact F1,80.6,80.6,MATCH,fair_ner_metrics.json
+B03,Benchmark,BC5CDR best LLM (Qwen 3-shot) exact F1,69.5,69.5,MATCH,fair_ner_metrics.json
+B04,Benchmark,BioRED best LLM (Qwen 3-shot) exact F1,66.2,66.2,MATCH,fair_ner_metrics.json
+B05,Benchmark,public benchmark configurations,27,27,MATCH,fair_ner_metrics.json
+V01,Validation,source-first: accessions in text also in catalogue (%),88.7,88.7,MATCH,coverage_summary.json
+V02,Validation,source-first: platforms (%),89.2,89.2,MATCH,coverage_summary.json
+V03,Validation,source-first: 16S regions (%),72.1,72.1,MATCH,coverage_summary.json
+H01,Validation,human-annotated items,NONE (no human annotation performed),,STATEMENT,—
+E01,Validation,deterministic: text values found in evidence (%),70.5,70.5,MATCH,deterministic_summary.json
+E02,Validation,deterministic: counts found in evidence (%),75.4,75.4,MATCH,deterministic_summary.json
+J01,Validation,Llama: text values judged FAIL (% of valid labels),2.9,2.9,MATCH,judge_summary.json
+J02,Validation,Mistral: text values judged FAIL (% of valid labels),6.6,6.6,MATCH,judge_summary.json
+J03,Validation,Mistral rubric compliance on text values,0.554,0.554,MATCH,judge_summary.json
+J04,Validation,"judge observed agreement, both-valid pairs",0.85,0.85,MATCH,judge_summary.json
+J05,Validation,Cohen's kappa between the two model judges,0.282,0.282,MATCH,judge_summary.json
+J06,Validation,values failed by both judges,2023,2023,MATCH,judge_summary.json
+J07,Validation,gap-filled values judged FAIL by Mistral (%),19.1,19.1,MATCH,judge_summary.json
+J08,Validation,original values judged FAIL by Mistral (%),5.6,5.6,MATCH,judge_summary.json
+H03,Benchmark,corpus benchmark configurations,26,26,MATCH,corpus_metrics.json
+H04,Benchmark,"Spearman BioRED F1 vs corpus grounding, disease",0.749,0.749,MATCH,benchmark_analysis.json
+H05,Benchmark,"Spearman BioRED F1 vs corpus grounding, organism",0.023,0.023,MATCH,benchmark_analysis.json
+G01,Decision guide,"BioRED disease best (HunFlair2, not trained on BioRED): exact F1 / CI low / CI high (%)",86.6/83.0/89.8,86.6/83.0/89.8,MATCH,fair_ner_metrics.json
+G02,Decision guide,"BioRED chemical best (PubTator3, trained in-domain): exact F1 / CI low / CI high (%)",88.8/83.7/93.0,88.8/83.7/93.0,MATCH,fair_ner_metrics.json
+G03,Decision guide,"BioRED gene/protein best (HunFlair2, not trained on BioRED): exact F1 / CI low / CI high (%)",83.3/79.6/86.5,83.3/79.6/86.5,MATCH,fair_ner_metrics.json
+G04,Decision guide,"BioRED organism best (HunFlair2, not trained on BioRED): exact F1 / CI low / CI high (%)",94.4/90.8/97.3,94.4/90.8/97.3,MATCH,fair_ner_metrics.json
+G05,Decision guide,"BioRED variant best (PubTator3, trained in-domain): exact F1 / CI low / CI high (%)",82.3/72.2/89.2,82.3/72.2/89.2,MATCH,fair_ner_metrics.json
+G06,Decision guide,"BioRED cell line best (PubTator3, trained in-domain): exact F1 / CI low / CI high (%)",80.8/50.9/96.5,80.8/50.9/96.5,MATCH,fair_ner_metrics.json
+G07,Decision guide,"Spearman BioRED F1 vs corpus grounding, gene/protein",0.2,0.2,MATCH,benchmark_analysis.json
+G08,Decision guide,"Spearman BioRED F1 vs corpus grounding, chemical",0.252,0.252,MATCH,benchmark_analysis.json
+G09,Decision guide,"Spearman BioRED F1 vs corpus grounding, variant",0.112,0.112,MATCH,benchmark_analysis.json
+W01,Triple screen,sentences sent to the Genie gateway: total / CC BY or CC0 / other licences,25714/16085/9629,25714/16085/9629,MATCH,triple_evidence_ccby summary.json
+W02,Triple screen,triples judged against a CC BY/CC0 sentence (2026-11-07 rubric),16032,16032,MATCH,triple_evidence_ccby summary.json
+W03,Triple screen,sentence supports / partially / does not / conflicts (%),56.0/22.6/18.2/3.3,56.0/22.6/18.2/3.3,MATCH,triple_evidence_ccby summary.json
+W04,Triple screen,SUPPORTED: specific predicate / generic OTHER_RELATION (%),54.8/56.5,54.8/56.5,MATCH,triple_evidence_ccby summary.json
+W05,Triple screen,triples judged by both runs / Q04-partial (P) triples now SUPPORTED,16022/5360,16022/5360,MATCH,triple_evidence_ccby summary.json
+RT01,Rights,"papers licence-checked / text included (CC BY, CC0) / NC layer / text withheld",453/274/15/164,453/274/15/164,MATCH,PAPER_RIGHTS_MATRIX.csv
+RT02,Rights,papers whose text is not redistributed: total / no licence found / CC BY-NC-ND / CC BY-NC / CC BY-NC-SA,179/135/29/12/3,179/135/29/12/3,MATCH,PAPER_RIGHTS_MATRIX.csv
+RT03,Rights,public build: text values emptied / table-columns redacted / unexplained rights-scan hits,2103395/263/0,2103395/263/0,MATCH,zenodo_frozen RELEASE_REDACTION_LOG.csv + VERIFICATION_RIGHTS_SCAN.json
+CL01,CDM 3.1.0,canonical terms: 3.0.3 / after dedup / kept after relevance filter,162409/157815/116755,162409/157815/116755,MATCH,CDM 3.1.0 term_curation
+CL02,CDM 3.1.0,accepted concepts: IRIs / after ID normalisation / after dedup / kept,13330/12657/12182/11912,13330/12657/12182/11912,MATCH,"CDM 3.1.0 concept_curie_map, concept_curation"
+CL03,CDM 3.1.0,accepted mappings: 3.0.3 rows / clean rows,18272/15769,18272/15769,MATCH,CDM 3.1.0 term_concept_map_clean
+CL04,CDM 3.1.0,accepted mappings by agreed relation: EXACT / BROADER / NARROWER / RELATED,13540/598/1313/2821,13540/598/1313/2821,MATCH,CDM 3.1.0 term_concept_map
+CL05,CDM 3.1.0,triples with a specific relation and verified cue / generic triples now specific / old specific labels confirmed,8307/3966/4117,8307/3966/4117,MATCH,CDM 3.1.0 triple_tier
+CL06,CDM 3.1.0,triple tiers 1 / 2 / 3,1794/6263/17731,1794/6263/17731,MATCH,CDM 3.1.0 triple_tier
+CL07,CDM 3.1.0,triples: no specific relation stated / not supported / null finding,14867/1207/93,14867/1207/93,MATCH,CDM 3.1.0 triple_tier
+CL08,CDM 3.1.0,"model definitions: contextual / general / non-concept description (of 162,409 terms)",120091/530/41779,120091/530/41779,MATCH,CDM 3.1.0 term_enrichment
+CL09,CDM 3.1.0,accepted mappings with ontology definition / model description / none,13325/4912/35,13325/4912/35,MATCH,CDM 3.1.0 mapping_enrichment
+CL10,CDM 3.1.0,terms found only by en_core_sci_lg / of these typed ENTITY / accepted-mapping terms among them,74729/74700/0,74729/74700/0,MATCH,CDM 3.0.3 canonical_term.models
+CL11,CDM 3.1.0,"catalogue judges, schema-enforced: Mistral invalid (%) / all-pairs observed / kappa / PASS-FAIL PABAK",0.1/0.802/0.293/0.847,0.1/0.802/0.293/0.847,MATCH,judge_format_analysis_constrained summary.json
+CL12,CDM 3.1.0,triples with a specific relation after repair / of these with a verified cue,9621/8307,9621/8307,MATCH,triple_repair TIERS_SUMMARY.json
+CL13,Triples (post-3.1.0),"triple dedup: triples in / distinct / clean (junk endpoints, self-loops dropped) / clean with a specific relation",25788/25470/23339/8967,25788/25470/23339/8967,MATCH,triple_dedup_2026-11-10 summary.json (not in 3.1.0)
+CL14,Triples (post-3.1.0),clean triples without a specific relation (%),61.6,61.6,MATCH,triple_dedup_2026-11-10 summary.json (not in 3.1.0)
+CL15,CDM 3.1.0,"catalogue judges, schema-enforced: Gwet AC1 3-label / AC1 PASS-FAIL / specific agreement PASS / FAIL / 3-label PABAK",0.771/0.913/0.959/0.39/0.704,0.771/0.913/0.959/0.39/0.704,MATCH,agreement_extended.json
+X09,CDM,test S4 (dataset_id pattern): non-matching ids / of these BioProject-link rows HMDATA_BP_,142/142,142/142,MATCH,X07_TEST_EXCEPTIONS json
+X10,CDM,test S9 (one storage type): text values in the 4 integer columns / of these not empty or a missing-data code,11578/0,11578/0,MATCH,X07_TEST_EXCEPTIONS json
+H06,Benchmark,Disbiome associations recovered by GLiNER v2.5 biomed,1456,1456,MATCH,corpus_metrics.json

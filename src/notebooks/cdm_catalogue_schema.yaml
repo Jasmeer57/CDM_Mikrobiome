@@ -1,0 +1,495 @@
+# Microbiome-CDM data catalogue schema
+# schema_version: 0.1.0 (DRAFT, for approval)
+#
+# The catalogue describes every study (BioProject) in the corpus, the publications
+# that report it, and what the pipeline extracted from them. It is built from the
+# pipeline outputs; it never edits them.
+#
+# Three layers of tables, plus support tables and views:
+#   Study layer        study, study_field_value, archive_run
+#   Publication layer  study_publication, publication, source_file, section
+#   Content layer      ner_entities_paper, ner_entities_corpus (from the NER template),
+#                      finding, controlled_term
+#   Support            quality_flag, review_log, pipeline_run, release
+#   Views              catalogue_entry, facet_index
+#
+# Field keys:
+#   type      string | integer | number | boolean | date | datetime | enum | list[...] | map[...] | object
+#   required  true = present and non-null on every row
+#   key       PK (primary key) or FK -> table.field
+#   curated   true = stored as a curated value object (see rules.curated_values)
+#   source    where the value comes from
+
+schema_version: "0.1.0"
+status: DRAFT
+name: Microbiome-CDM Data Catalogue
+depends_on:
+  ner_template: "ner_entity_template.yaml 0.1.0"
+
+# ---------------------------------------------------------------------------
+# Rules
+# ---------------------------------------------------------------------------
+rules:
+  identifiers: >
+    study_id is the BioProject accession (PRJEB..., PRJNA..., PRJDB...). corpus_id is the
+    paper ID (HMPAPER_...). Every other ID is stable across releases: it is derived
+    from its natural key (for example finding_id from corpus_id, section_id and offsets),
+    never from row order.
+  one_study_many_publications: >
+    A study is a BioProject; a publication is a paper. They are linked through
+    study_publication. Rows that projects.csv marks as DUPLICATE_RECORD are separate
+    studies that share one publication (for example PRJEB17613, PRJEB17610 and
+    PRJEB17608 share sdata.2018.68). The shared publication's text is processed once;
+    each study keeps its own field values, because they can differ (V4 vs V3-V4).
+  curated_values: >
+    Fields marked curated are stored as an object:
+    {value, term_id, status, source, value_id}. value is the selected value, term_id
+    its controlled_term when one exists, status one of SELECTED, CONFLICT, NOT_FOUND,
+    NOT_ATTEMPTED, NOT_APPLICABLE, source the source of the selected value, and value_id
+    the study_field_value row it came from. Every candidate value, selected or not,
+    stays in study_field_value.
+  value_selection: >
+    1) A curator decision in review_log always wins.
+    2) Otherwise, if every available source agrees after normalization, select it.
+    3) If sources disagree (for example projects.csv says v1-v2 and the Methods text says
+       V1-V3), status is CONFLICT, nothing is selected, and a METADATA_CONFLICT flag is
+       raised for review. The catalogue never picks a side automatically.
+    4) A value with no source is NOT_FOUND, never a guess.
+  evidence: >
+    A value taken from paper text keeps corpus_id, section_id, char_start, char_end and a
+    quote of at most 300 characters. text[char_start:char_end] must equal the quote.
+  missing_values: >
+    Same statuses as the NER template: FOUND or SELECTED, NOT_FOUND, LOOKUP_FAILED,
+    NOT_ATTEMPTED, NOT_APPLICABLE. Never an unexplained blank.
+  controlled_vocabularies: >
+    Facet fields point to controlled_term. Use public ontologies where they fit
+    (MONDO or DOID for conditions, UBERON for body sites, NCBITaxon for hosts and taxa,
+    OBI or EFO for instruments, ChEBI for chemicals). Use LOCAL terms with stable IDs
+    (LOCAL:KIT_0001) for things no ontology covers well, such as extraction kits and
+    amplicon regions. Every LOCAL term needs a label and a definition written by the
+    team, with definition_source = LOCAL.
+  flags_not_deletes: >
+    Problems become quality_flag rows. No study, publication or value is deleted;
+    excluded items carry a catalogue_status and stay queryable.
+  releases: >
+    A release is an immutable snapshot of every table with counts and checksums.
+    Exports are always cut from a release, never from working tables.
+  text_licensing: >
+    The catalogue stores metadata, offsets and short evidence quotes, not full text.
+    Full text stays in local storage. Check each publication's licence before
+    publishing any text beyond the short quotes.
+  provenance: >
+    Every row carries run_id (the pipeline_run that produced it) and release_id.
+  status: >
+    Machine-produced values stay PROVISIONAL_UNVALIDATED until reviewed, as in the
+    pipeline.
+
+# ---------------------------------------------------------------------------
+# Fields present on every table
+# ---------------------------------------------------------------------------
+common_fields:
+  release_id:     {type: string, required: true, key: "FK -> release.release_id", source: computed, description: "Release this row belongs to."}
+  run_id:         {type: string, required: true, key: "FK -> pipeline_run.run_id", source: computed, description: "Pipeline run that produced this row."}
+  schema_version: {type: string, required: true, source: computed, description: "Catalogue schema version, e.g. 0.1.0."}
+  created_at:     {type: datetime, required: true, source: computed, description: "UTC build timestamp."}
+
+# ---------------------------------------------------------------------------
+# Tables
+# ---------------------------------------------------------------------------
+tables:
+
+  # ======================= Study layer =======================
+  study:
+    layer: study
+    description: "One row per BioProject. The unit of the catalogue."
+    primary_key: study_id
+    fields:
+      study_id:          {type: string, required: true, key: PK, source: projects.csv, description: "BioProject accession, e.g. PRJEB17613."}
+      archive:           {type: enum, required: true, source: computed, values: [ENA, NCBI_SRA, DDBJ], description: "Archive from the accession prefix: PRJEB = ENA, PRJNA = NCBI, PRJDB = DDBJ."}
+      archive_url:       {type: string, required: true, source: computed, description: "Link to the project page in that archive."}
+      title:             {type: string, required: false, source: archive metadata, description: "Project title from the archive. Null until fetched (see title_status)."}
+      title_status:      {type: enum, required: true, source: computed, values: [FOUND, NOT_FOUND, LOOKUP_FAILED, NOT_ATTEMPTED], description: "Result of the archive title lookup."}
+      catalogue_status:
+        type: enum
+        required: true
+        source: "computed / curator"
+        values: [INCLUDED, HELD_FOR_REVIEW, EXCLUDED_WRONG_PAPER, NO_FULL_TEXT]
+        description: "Whether the study appears in catalogue entries. Excluded studies stay in the table."
+      csv_row_status:    {type: string, required: false, source: "audit/final/FINAL_DOWNLOAD_AUDIT.csv", description: "The download-audit status of this row, e.g. DUPLICATE_RECORD, WRONG_PAPER."}
+      # sequencing and lab method
+      target_gene:       {type: object, required: true, curated: true, source: "paper / projects.csv", description: "Marker gene, normally 16S rRNA."}
+      amplicon_region:   {type: object, required: true, curated: true, source: "paper / projects.csv", description: "Variable region, normalized to LOCAL terms like V4, V3-V4, V1-V3."}
+      primers:           {type: object, required: true, curated: true, source: paper, description: "Primer names or sequences, e.g. 515F/806R."}
+      sequencing_platform: {type: object, required: true, curated: true, source: "paper / archive", description: "Instrument, e.g. Illumina MiSeq."}
+      read_layout:       {type: object, required: true, curated: true, source: "archive / paper", description: "PAIRED or SINGLE."}
+      avg_read_length:   {type: object, required: true, curated: true, source: "projects.csv / archive", description: "Average read length in bases (projects.csv avg_length)."}
+      extraction_kit:    {type: object, required: true, curated: true, source: "paper / projects.csv", description: "DNA extraction kit, normalized to a LOCAL kit term; 'in-house' and 'custom' are LOCAL terms too."}
+      bead_beating:      {type: object, required: true, curated: true, source: "paper / projects.csv", description: "Whether mechanical lysis by bead beating was used (true / false)."}
+      # samples and population
+      sample_type:       {type: object, required: true, curated: true, source: "paper / projects.csv", description: "Specimen, e.g. stool, saliva, rectal swab, mucosal biopsy."}
+      body_site:         {type: object, required: true, curated: true, source: paper, description: "UBERON body site, e.g. feces, jejunal mucosa."}
+      host_species:      {type: object, required: true, curated: true, source: "paper / archive", description: "Host taxon, normally NCBITaxon:9606 (Homo sapiens)."}
+      conditions:        {type: "list[object]", required: true, curated: true, source: "paper / projects.csv", description: "Conditions studied, each a curated value linked to MONDO or DOID, e.g. type 1 diabetes."}
+      has_healthy_controls: {type: object, required: true, curated: true, source: "paper / projects.csv", description: "Whether healthy controls were included."}
+      subjects_group:    {type: object, required: true, curated: true, source: "paper / projects.csv", values: [INFANTS, CHILDREN, ADOLESCENTS, ADULTS, OLDER_ADULTS, MIXED], description: "Age group of participants."}
+      age_range_text:    {type: object, required: true, curated: true, source: paper, description: "Age range as written, e.g. 3-19 years."}
+      n_subjects:        {type: object, required: true, curated: true, source: paper, description: "Number of participants as reported."}
+      n_samples:         {type: object, required: true, curated: true, source: "paper / archive", description: "Number of samples, from the paper or counted from archive_run."}
+      country:           {type: "list[object]", required: true, curated: true, source: paper, description: "Countries where samples were collected."}
+      study_design:      {type: object, required: true, curated: true, source: paper, values: [CROSS_SECTIONAL, CASE_CONTROL, COHORT, RCT, NON_RANDOMIZED_INTERVENTION, METHODS_COMPARISON, OTHER], description: "Design, linked to a LOCAL term."}
+      intervention:      {type: object, required: true, curated: true, source: paper, description: "Intervention, if any (diet, drug, FMT, probiotic); NOT_APPLICABLE otherwise."}
+      notes:             {type: string, required: false, source: projects.csv, description: "Free-text notes from projects.csv, kept as written."}
+      # summaries (computed from linked tables)
+      n_runs:            {type: integer, required: false, source: archive_run, description: "Runs in the archive; null until fetched."}
+      n_publications:    {type: integer, required: true, source: study_publication, description: "Linked publications with link_status CONFIRMED."}
+      audit_summary:     {type: "map[status, integer]", required: true, source: study_field_value, description: "Count of curated fields by status, e.g. {SELECTED: 14, CONFLICT: 2, NOT_FOUND: 3}."}
+      open_flags:        {type: "map[severity, integer]", required: true, source: quality_flag, description: "Open quality flags by severity."}
+
+  study_field_value:
+    layer: study
+    description: "Every candidate value for every curated study field, from every source, with evidence."
+    primary_key: value_id
+    fields:
+      value_id:          {type: string, required: true, key: PK, source: computed, rule: "sha1(study_id|field|source|value_raw|char_start)", description: "Stable value ID."}
+      study_id:          {type: string, required: true, key: "FK -> study.study_id", source: computed, description: "Study this value describes."}
+      field:             {type: string, required: true, source: computed, description: "Curated study field name, e.g. amplicon_region."}
+      value_raw:         {type: string, required: true, source: "source", description: "Value exactly as the source gave it, e.g. v1-v2."}
+      value_normalized:  {type: string, required: false, source: computed, description: "Normalized value, e.g. V1-V2."}
+      term_id:           {type: string, required: false, key: "FK -> controlled_term.term_id", source: computed, description: "Controlled term for the normalized value."}
+      source:            {type: enum, required: true, source: computed, values: [PROJECTS_CSV, PAPER_TEXT, SUPPLEMENT, ARCHIVE_METADATA, CURATOR], description: "Where this candidate came from."}
+      corpus_id:         {type: string, required: false, key: "FK -> publication.corpus_id", source: computed, description: "Paper the evidence is in (PAPER_TEXT and SUPPLEMENT)."}
+      section_id:        {type: string, required: false, key: "FK -> section.section_id", source: computed, description: "Section of the evidence."}
+      char_start:        {type: integer, required: false, source: extractor, description: "Evidence start offset in the section text."}
+      char_end:          {type: integer, required: false, source: extractor, description: "Evidence end offset."}
+      quote:             {type: string, required: false, source: extractor, description: "Evidence text, at most 300 characters, equal to the slice."}
+      extractor:         {type: string, required: true, source: computed, description: "Rule, dictionary or tool that produced it, with version, e.g. methods_kits_dict@0.1."}
+      audit_result:      {type: enum, required: true, source: "metadata audit", values: [MATCH, MISMATCH, NOT_FOUND, NOT_APPLICABLE, NOT_CHECKED], description: "For PROJECTS_CSV values: result of comparing with the paper text."}
+      selection_status:  {type: enum, required: true, source: computed, values: [SELECTED, CANDIDATE, CONFLICT, REJECTED], description: "Outcome of rules.value_selection for this candidate."}
+      review_status:     {type: enum, required: true, source: "computed / curator", values: [PROVISIONAL_UNVALIDATED, ACCEPTED, REJECTED, CORRECTED], description: "Human review state."}
+
+  archive_run:
+    layer: study
+    description: "Sequencing runs listed in the archive for each study. Optional layer, filled from the ENA or NCBI run reports."
+    primary_key: run_accession
+    fields:
+      run_accession:     {type: string, required: true, key: PK, source: archive, description: "Run accession, e.g. ERR..., SRR..., DRR..."}
+      study_id:          {type: string, required: true, key: "FK -> study.study_id", source: archive, description: "Owning study."}
+      sample_accession:  {type: string, required: false, source: archive, description: "BioSample or archive sample accession."}
+      experiment_accession: {type: string, required: false, source: archive, description: "Experiment accession."}
+      instrument_platform: {type: string, required: false, source: archive, description: "e.g. ILLUMINA."}
+      instrument_model:  {type: string, required: false, source: archive, description: "e.g. Illumina MiSeq."}
+      library_strategy:  {type: string, required: false, source: archive, description: "e.g. AMPLICON."}
+      library_layout:    {type: enum, required: false, source: archive, values: [PAIRED, SINGLE], description: "Read layout."}
+      read_count:        {type: integer, required: false, source: archive, description: "Reads in the run."}
+      base_count:        {type: integer, required: false, source: archive, description: "Bases in the run."}
+      fetched_at:        {type: datetime, required: true, source: computed, description: "When the run report was fetched."}
+
+  # ======================= Publication layer =======================
+  study_publication:
+    layer: publication
+    description: "Links studies to the publications that report them (many to many)."
+    primary_key: [study_id, corpus_id]
+    fields:
+      study_id:          {type: string, required: true, key: "FK -> study.study_id", source: computed, description: "Study."}
+      corpus_id:         {type: string, required: true, key: "FK -> publication.corpus_id", source: computed, description: "Publication."}
+      role:              {type: enum, required: true, source: "computed / curator", values: [PRIMARY, DATA_DESCRIPTOR, SECONDARY], description: "How the paper relates to the study."}
+      link_source:       {type: enum, required: true, source: computed, values: [PROJECTS_CSV, ACCESSION_IN_TEXT, ARCHIVE_XREF, CURATOR], description: "What established the link."}
+      accession_in_text: {type: boolean, required: true, source: "S8 exact string match", description: "True if the study accession appears verbatim in the paper text."}
+      evidence_value_id: {type: string, required: false, key: "FK -> study_field_value.value_id", source: computed, description: "Evidence row for the accession mention, if any."}
+      link_status:       {type: enum, required: true, source: "computed / curator", values: [CONFIRMED, UNCONFIRMED, REJECTED], description: "CONFIRMED needs the accession in text, an archive cross-reference, or a curator."}
+      shared_with:       {type: "list[string]", required: true, source: computed, description: "Other study_ids linked to the same publication (the DUPLICATE_RECORD groups)."}
+
+  publication:
+    layer: publication
+    description: "One row per unique paper. Text-based processing happens once per publication."
+    primary_key: corpus_id
+    fields:
+      corpus_id:         {type: string, required: true, key: PK, source: pipeline, description: "Paper ID, e.g. HMPAPER_000002."}
+      doi:               {type: string, required: false, source: "projects.csv / paper", description: "DOI without the https://doi.org/ prefix."}
+      pmid:              {type: string, required: false, source: "Europe PMC", description: "PubMed ID."}
+      pmcid:             {type: string, required: false, source: "Europe PMC", description: "PubMed Central ID."}
+      title:             {type: string, required: true, source: "paper / metadata", description: "Article title."}
+      journal:           {type: string, required: false, source: metadata, description: "Journal name."}
+      year:              {type: integer, required: false, source: metadata, description: "Publication year."}
+      first_author:      {type: string, required: false, source: metadata, description: "First author as published (used for identity checks)."}
+      publication_type:  {type: enum, required: true, source: "metadata / curator", values: [RESEARCH_ARTICLE, DATA_DESCRIPTOR, REVIEW, OTHER], description: "Article type."}
+      oa_status:         {type: enum, required: true, source: "Unpaywall / Europe PMC", values: [OPEN, CLOSED, UNKNOWN], description: "Open-access status."}
+      licence:           {type: string, required: false, source: "Unpaywall / Europe PMC / publisher", description: "Licence, e.g. CC BY 4.0. Null means unknown; see rules.text_licensing."}
+      identity_status:   {type: enum, required: true, source: S2, values: [VERIFIED_DOI, VERIFIED_TITLE_AUTHOR, DOI_NOT_IN_TEXT, WRONG_PAPER, NOT_CHECKED], description: "Result of the S2 identity check."}
+      full_text_status:  {type: enum, required: true, source: S1, values: [CONVERTED, BLOCKED, FAILED, NO_SOURCE, LANDING_PAGE_ONLY], description: "Result of conversion."}
+      body_status:       {type: enum, required: true, source: S2, values: [PASS, PASS_WITH_WARNINGS, FAIL, NOT_CHECKED], description: "Whether the file contains the article body."}
+      segmentation_status: {type: enum, required: true, source: "S3 / S4", values: [OK, NEEDS_REVIEW, FAILED, NOT_RUN], description: "Segmentation and reconstruction result."}
+      chosen_file_id:    {type: string, required: false, key: "FK -> source_file.file_id", source: S1, description: "Source file the Markdown was converted from."}
+      text_sha256:       {type: string, required: false, source: S1, description: "Checksum of the canonical Markdown."}
+      n_sections:        {type: integer, required: true, source: section, description: "Sections after segmentation."}
+      n_sections_selected: {type: integer, required: true, source: section, description: "Sections with RELEVANT or RELEVANT_CONTEXT."}
+      n_findings:        {type: "map[status, integer]", required: true, source: finding, description: "Findings by status."}
+      n_entities:        {type: "map[cdm_type, integer]", required: true, source: ner_entities_paper, description: "Distinct entities by CDM type."}
+
+  source_file:
+    layer: publication
+    description: "Every file held for a publication, whether or not it was chosen for conversion."
+    primary_key: file_id
+    fields:
+      file_id:           {type: string, required: true, key: PK, source: computed, rule: "sha256 of the file bytes", description: "File ID."}
+      corpus_id:         {type: string, required: true, key: "FK -> publication.corpus_id", source: inventory, description: "Publication."}
+      format:            {type: enum, required: true, source: inventory, values: [JATS_XML, PDF, DOCX, TXT, HTML, SUPPLEMENT_XLSX, SUPPLEMENT_PDF, SUPPLEMENT_DOCX, OTHER], description: "File format."}
+      local_path:        {type: string, required: true, source: inventory, description: "Path on the storage machine. Never published."}
+      size_bytes:        {type: integer, required: true, source: inventory, description: "File size."}
+      origin:            {type: enum, required: true, source: inventory, values: [PMC, PUBLISHER, PREPRINT, AUTHOR, UNKNOWN], description: "Where the file came from."}
+      retrieved_at:      {type: datetime, required: false, source: inventory, description: "When it was downloaded."}
+      chosen:            {type: boolean, required: true, source: S1, description: "True for the file used to make the Markdown."}
+      choice_reason:     {type: string, required: false, source: S1, description: "Priority rule or override that chose it, e.g. source_overrides.json."}
+      converter:         {type: string, required: false, source: S1, description: "Converter and version, e.g. docling==2.140.0."}
+      conversion_status: {type: enum, required: true, source: S1, values: [CONVERTED, FAILED, BLOCKED, NOT_ATTEMPTED], description: "Conversion result for this file."}
+
+  section:
+    layer: publication
+    description: "Sections of each publication with the final selection decision. Text stays in the segmentation outputs."
+    primary_key: section_id
+    fields:
+      section_id:        {type: string, required: true, key: PK, source: S3, description: "Section ID, e.g. PRJDB11845_SEC_0001."}
+      corpus_id:         {type: string, required: true, key: "FK -> publication.corpus_id", source: S3, description: "Publication."}
+      section_path:      {type: string, required: true, source: S3, description: "Full heading chain."}
+      ordinal:           {type: integer, required: true, source: S3, description: "Position in document order."}
+      section_class:     {type: enum, required: true, source: "S5 crosswalk (pending approval)", values: [TITLE_ABSTRACT, INTRODUCTION, METHODS, RESULTS, DISCUSSION, CONCLUSION, PREAMBLE, BACKMATTER, OTHER_BODY], description: "Coarse type, shared with the NER template."}
+      template_fields:   {type: "list[string]", required: true, source: S5, description: "Template field rules (R01-R17) mapped to this section."}
+      selection_status:  {type: enum, required: true, source: S7, values: [RELEVANT, RELEVANT_CONTEXT, CONTAINER_ONLY, IRRELEVANT, UNCERTAIN, REVIEW_REQUIRED], description: "Final reconciled decision."}
+      jev_relevance:     {type: number, required: false, source: S6, description: "JEV probability of relevance (provisional)."}
+      n_tokens:          {type: integer, required: true, source: S3, description: "Token count."}
+      text_sha256:       {type: string, required: true, source: S4, description: "Checksum of the section text."}
+
+  # ======================= Content layer =======================
+  ner_entities_paper:
+    layer: content
+    external: "ner_entity_template.yaml 0.1.0 -> ner_entities_paper"
+    description: "Entities per publication, exactly as defined in the NER template. Listed here for the links only."
+    primary_key: [corpus_id, entity_id]
+    fields:
+      corpus_id:         {type: string, required: true, key: "FK -> publication.corpus_id", source: NER, description: "Publication."}
+      entity_id:         {type: string, required: true, key: "FK -> ner_entities_corpus.entity_id", source: NER, description: "Entity."}
+      frequency:         {type: integer, required: true, source: NER, description: "Distinct mentions in this paper."}
+      "...":             {type: string, required: false, source: NER, description: "All other fields as in the NER template."}
+
+  ner_entities_corpus:
+    layer: content
+    external: "ner_entity_template.yaml 0.1.0 -> ner_entities_corpus"
+    description: "The normalized entity dictionary, exactly as defined in the NER template."
+    primary_key: entity_id
+    fields:
+      entity_id:         {type: string, required: true, key: PK, source: NER, description: "Stable entity ID."}
+      normalized_term:   {type: string, required: true, source: NER, description: "Canonical name."}
+      cdm_type:          {type: string, required: true, source: NER, description: "One of the 14 CDM types."}
+      definition:        {type: string, required: false, source: NER, description: "Verbatim ontology definition."}
+      "...":             {type: string, required: false, source: NER, description: "All other fields as in the NER template."}
+
+  finding:
+    layer: content
+    description: "Findings extracted from results sections (S9), with evidence checked mechanically (S10)."
+    primary_key: finding_id
+    fields:
+      finding_id:        {type: string, required: true, key: PK, source: S9, rule: "sha1(corpus_id|section_id|char_start|char_end|finding_type)", description: "Stable finding ID."}
+      corpus_id:         {type: string, required: true, key: "FK -> publication.corpus_id", source: S9, description: "Publication."}
+      section_id:        {type: string, required: true, key: "FK -> section.section_id", source: S9, description: "Section the quote is in."}
+      finding_type:      {type: enum, required: true, source: S9, values: [DIFFERENCE, ASSOCIATION, CORRELATION, NO_DIFFERENCE, PREDICTION, DESCRIPTIVE], description: "Kind of result."}
+      subject_text:      {type: string, required: true, source: S9, description: "What changed or was measured, as written, e.g. Faecalibacterium."}
+      subject_entity_id: {type: string, required: false, key: "FK -> ner_entities_corpus.entity_id", source: computed, description: "Matching NER entity, if any."}
+      object_text:       {type: string, required: false, source: S9, description: "What it was associated with, e.g. bipolar disorder."}
+      object_entity_id:  {type: string, required: false, key: "FK -> ner_entities_corpus.entity_id", source: computed, description: "Matching NER entity, if any."}
+      direction:         {type: enum, required: true, source: S9, values: [INCREASED, DECREASED, ASSOCIATED, NO_CHANGE, MIXED, NOT_STATED], description: "Direction in the group of interest."}
+      comparison:        {type: string, required: false, source: S9, description: "Groups compared, as written, e.g. bipolar (n=115) vs controls (n=64)."}
+      statistic_text:    {type: string, required: false, source: S9, description: "Statistic as written, e.g. p<0.001 after FDR."}
+      p_value:           {type: number, required: false, source: computed, description: "Numeric p-value when stated exactly; null for inequalities."}
+      quote:             {type: string, required: true, source: S9, description: "Exact supporting text."}
+      char_start:        {type: integer, required: true, source: S9, description: "Quote start offset in the section text."}
+      char_end:          {type: integer, required: true, source: S9, description: "Quote end offset."}
+      extractor:         {type: string, required: true, source: S9, description: "Model and prompt hash, e.g. Qwen3-8B|prompt:ab12cd."}
+      evidence_check:    {type: enum, required: true, source: S10, values: [PASSED, FAILED, NOT_RUN], description: "Mechanical check of quote and offsets."}
+      misattribution_flag: {type: enum, required: false, source: S10, values: [CITES_OTHER_WORK, FIGURE_LEGEND, TABLE_LABEL], description: "Known risk pattern, if detected."}
+      status:            {type: enum, required: true, source: "S9 / curator", values: [CANDIDATE, ACCEPTED, REJECTED], description: "Every finding starts as CANDIDATE."}
+
+  controlled_term:
+    layer: content
+    description: "Terms used by facet fields: ontology terms and LOCAL terms."
+    primary_key: term_id
+    fields:
+      term_id:           {type: string, required: true, key: PK, source: "ontology / LOCAL", description: "<VOCAB>:<ID>, e.g. MONDO:0005147, UBERON:0001988, LOCAL:KIT_0003."}
+      vocabulary:        {type: enum, required: true, source: computed, values: [MONDO, DOID, UBERON, NCBITaxon, OBI, EFO, CHEBI, LOCAL], description: "Vocabulary."}
+      facet:             {type: enum, required: true, source: computed, values: [condition, body_site, sample_type, host_species, platform, extraction_kit, amplicon_region, target_gene, study_design, subjects_group, country, intervention], description: "Which study field uses it."}
+      label:             {type: string, required: true, source: "ontology / LOCAL", description: "Display label."}
+      definition:        {type: string, required: false, source: "ontology / LOCAL", description: "Verbatim ontology definition, or the team's definition for LOCAL terms."}
+      definition_source: {type: string, required: false, source: computed, description: "Vocabulary the definition came from, or LOCAL."}
+      synonyms:          {type: "list[string]", required: false, source: "ontology / LOCAL", description: "Synonyms used for normalization."}
+      parent_ids:        {type: "list[string]", required: false, source: ontology, description: "Parent terms, for hierarchical facets (e.g. type 1 diabetes under diabetes mellitus)."}
+      term_status:       {type: enum, required: true, source: "computed / curator", values: [ACTIVE, DEPRECATED, PROPOSED], description: "PROPOSED for LOCAL terms awaiting approval."}
+
+  # ======================= Support =======================
+  quality_flag:
+    layer: support
+    description: "Every known problem, attached to the row it concerns."
+    primary_key: flag_id
+    fields:
+      flag_id:           {type: string, required: true, key: PK, source: computed, rule: "sha1(target_table|target_id|code|field)", description: "Stable flag ID."}
+      target_table:      {type: string, required: true, source: computed, description: "Table of the affected row, e.g. study, publication, study_field_value."}
+      target_id:         {type: string, required: true, source: computed, description: "Primary key of the affected row."}
+      field:             {type: string, required: false, source: computed, description: "Affected field, if the flag is field-level."}
+      code:
+        type: enum
+        required: true
+        source: computed
+        values: [DUPLICATE_RECORD, WRONG_PAPER, NO_FULL_TEXT, LANDING_PAGE_ONLY, NO_DOI, DOI_NOT_IN_TEXT, ACCESSION_NOT_IN_TEXT, METADATA_MISMATCH, METADATA_CONFLICT, FIELD_MISSING, VALUE_IN_SUPPLEMENT_ONLY, SEGMENTATION_NEEDS_REVIEW, CONVERSION_BLOCKED, LICENCE_UNKNOWN, ARCHIVE_LOOKUP_FAILED]
+        description: "Problem code."
+      severity:          {type: enum, required: true, source: computed, values: [BLOCKER, WARNING, INFO], description: "BLOCKER keeps the study out of catalogue entries until resolved."}
+      detail:            {type: string, required: true, source: computed, description: "Plain-language explanation with the values involved."}
+      raised_by:         {type: string, required: true, source: computed, description: "Stage that raised it, e.g. S2, MA, CAT."}
+      flag_status:       {type: enum, required: true, source: "computed / curator", values: [OPEN, RESOLVED, WONT_FIX], description: "Resolution state."}
+      resolution_review_id: {type: string, required: false, key: "FK -> review_log.review_id", source: curator, description: "Review that resolved it."}
+
+  review_log:
+    layer: support
+    description: "Every human decision, append-only."
+    primary_key: review_id
+    fields:
+      review_id:         {type: string, required: true, key: PK, source: computed, description: "Review ID."}
+      target_table:      {type: string, required: true, source: curator, description: "Table of the reviewed row."}
+      target_id:         {type: string, required: true, source: curator, description: "Primary key of the reviewed row."}
+      field:             {type: string, required: false, source: curator, description: "Field, for field-level decisions."}
+      decision:          {type: enum, required: true, source: curator, values: [ACCEPT, REJECT, CORRECT, MERGE, EXCLUDE, INCLUDE], description: "What was decided."}
+      old_value:         {type: string, required: false, source: computed, description: "Value before the decision."}
+      new_value:         {type: string, required: false, source: curator, description: "Value after the decision, for CORRECT and MERGE."}
+      reviewer:          {type: string, required: true, source: curator, description: "Who decided."}
+      reviewed_at:       {type: datetime, required: true, source: curator, description: "When."}
+      notes:             {type: string, required: false, source: curator, description: "Reasoning, with any evidence reference."}
+
+  pipeline_run:
+    layer: support
+    description: "One row per stage execution, so every value traces to a run."
+    primary_key: run_id
+    fields:
+      run_id:            {type: string, required: true, key: PK, source: computed, description: "Run ID, e.g. S1-2026-10-18T09:12Z."}
+      stage:             {type: string, required: true, source: computed, description: "Stage ID: S0-S16, MA, N1-N8, or CAT for catalogue builds."}
+      run_tag:           {type: string, required: false, source: computed, description: "Pipeline run tag, e.g. v3."}
+      started_at:        {type: datetime, required: true, source: computed, description: "Start time."}
+      ended_at:          {type: datetime, required: false, source: computed, description: "End time."}
+      run_status:        {type: enum, required: true, source: computed, values: [DONE, PARTIAL, FAILED], description: "Outcome."}
+      tool_versions:     {type: "map[tool, string]", required: true, source: computed, description: "Every tool and model version or checksum used."}
+      input_manifest_sha256:  {type: string, required: true, source: computed, description: "Checksum of the input manifest."}
+      output_manifest_sha256: {type: string, required: false, source: computed, description: "Checksum of the output manifest."}
+      n_items:           {type: integer, required: true, source: computed, description: "Items processed."}
+      n_failed:          {type: integer, required: true, source: computed, description: "Items failed."}
+
+  release:
+    layer: support
+    description: "An immutable snapshot of the whole catalogue."
+    primary_key: release_id
+    fields:
+      release_id:        {type: string, required: true, key: PK, source: curator, description: "e.g. 2026.11-r1."}
+      created_at:        {type: datetime, required: true, source: computed, description: "When it was cut."}
+      schema_version:    {type: string, required: true, source: computed, description: "Catalogue schema version."}
+      ner_template_version: {type: string, required: true, source: computed, description: "NER template version used."}
+      counts:            {type: "map[table, integer]", required: true, source: computed, description: "Row count per table."}
+      checksums:         {type: "map[table, string]", required: true, source: computed, description: "sha256 per exported table."}
+      approved_by:       {type: string, required: true, source: curator, description: "Who approved the release."}
+      notes:             {type: string, required: false, source: curator, description: "What changed since the previous release."}
+
+# ---------------------------------------------------------------------------
+# Views (rebuilt from the tables on every release)
+# ---------------------------------------------------------------------------
+views:
+  catalogue_entry:
+    description: "One browsable entry per INCLUDED study, denormalized for search and display."
+    primary_key: study_id
+    built_from: [study, study_publication, publication, study_field_value, archive_run, ner_entities_paper, ner_entities_corpus, finding, controlled_term, quality_flag]
+    fields:
+      study_id:          {type: string, required: true, description: "BioProject accession."}
+      title:             {type: string, required: true, description: "Archive title, else the primary publication title."}
+      links:             {type: object, required: true, description: "{archive_url, doi_url, pmc_url}."}
+      publications:      {type: "list[object]", required: true, description: "{corpus_id, doi, title, journal, year, role, identity_status} per linked paper."}
+      methods:           {type: object, required: true, description: "Selected values of target_gene, amplicon_region, primers, sequencing_platform, read_layout, avg_read_length, extraction_kit, bead_beating, each with status."}
+      population:        {type: object, required: true, description: "sample_type, body_site, host_species, conditions, has_healthy_controls, subjects_group, age_range_text, n_subjects, country."}
+      design:            {type: object, required: true, description: "study_design, intervention, n_samples, n_runs."}
+      top_entities:      {type: "map[cdm_type, list[object]]", required: true, description: "Up to 10 entities per type by frequency: {entity_id, normalized_term, frequency}."}
+      findings:          {type: object, required: true, description: "{n_accepted, n_candidate, examples: up to 3 accepted findings with quotes}."}
+      quality:           {type: object, required: true, description: "{audit_summary, open_flags by severity, flag codes}."}
+      facets:            {type: "map[facet, list[string]]", required: true, description: "term_ids per facet, for filtering."}
+      search_text:       {type: string, required: true, description: "Title, abstract (if licence allows) and facet labels, for keyword search."}
+      provenance:        {type: object, required: true, description: "{release_id, schema_version, run_ids}."}
+  facet_index:
+    description: "Counts for every facet value, for the filter panel."
+    primary_key: [facet, term_id]
+    built_from: [catalogue_entry, controlled_term]
+    fields:
+      facet:             {type: string, required: true, description: "Facet name."}
+      term_id:           {type: string, required: true, description: "Controlled term."}
+      label:             {type: string, required: true, description: "Display label."}
+      n_studies:         {type: integer, required: true, description: "Entries with this value."}
+      n_publications:    {type: integer, required: true, description: "Distinct publications behind those entries."}
+      parent_term_id:    {type: string, required: false, description: "For hierarchical facets."}
+
+# ---------------------------------------------------------------------------
+# Exports (cut from a release)
+# ---------------------------------------------------------------------------
+exports:
+  tables:      "One CSV and one Parquet file per table, plus a data dictionary generated from this schema."
+  entries:     "One JSON file per catalogue_entry, plus entries.jsonl."
+  jsonld:      "One schema.org Dataset record per entry (name, identifier, url, citation, measurementTechnique, keywords). Validate with a JSON-LD checker before publishing."
+  standards_mapping: "A crosswalk from study fields to MIxS (MIMARKS-survey) terms, e.g. target_gene, target_subfragment, pcr_primers, seq_meth, nucl_acid_ext. Proposed; verify every term against the current MIxS release before use."
+
+# ---------------------------------------------------------------------------
+# Build steps (catalogue stage CAT; each step is a pipeline_run)
+# ---------------------------------------------------------------------------
+build_steps:
+  - {id: C1, name: "Register studies", from: "projects.csv, FINAL_DOWNLOAD_AUDIT.csv", writes: [study], detail: "One study per row; archive from the prefix; catalogue_status and csv_row_status from the audit."}
+  - {id: C2, name: "Register publications and files", from: "S0 inventory, S1, S2, S3-S4", writes: [publication, source_file, study_publication], detail: "One publication per unique paper; DUPLICATE_RECORD rows link to the shared one; identity, conversion and segmentation statuses copied from the stages."}
+  - {id: C3, name: "Attach sections", from: "S3, S5, S6, S7", writes: [section], detail: "Section paths, classes, template fields and final selection status."}
+  - {id: C4, name: "Collect field values", from: "projects.csv, metadata audit, methods extractors, archive reports", writes: [study_field_value, archive_run, controlled_term], detail: "Every candidate value with source and evidence; normalize to controlled terms; PROPOSED LOCAL terms for anything new."}
+  - {id: C5, name: "Select values and raise flags", from: "study_field_value, review_log", writes: [study, quality_flag], detail: "Apply rules.value_selection; CONFLICT and missing values raise flags; curator decisions override."}
+  - {id: C6, name: "Attach content", from: "NER template tables, S9-S10", writes: [finding], detail: "Link findings to entities and sections; NER tables are referenced, not copied."}
+  - {id: C7, name: "Validate", from: "all tables", writes: [], detail: "Run every check in the validation list; any failure stops the build."}
+  - {id: C8, name: "Build views and cut a release", from: "all tables", writes: [catalogue_entry, facet_index, release], detail: "Views for INCLUDED studies without BLOCKER flags; snapshot, counts, checksums; exports."}
+
+# ---------------------------------------------------------------------------
+# Validation (the build fails on any violation)
+# ---------------------------------------------------------------------------
+validation:
+  - "Every primary key is unique and non-null; every FK resolves."
+  - "Every required field is present; every enum holds an allowed value."
+  - "Every study in projects.csv has exactly one study row (482 rows -> 482 studies)."
+  - "Every DUPLICATE_RECORD study links to the same publication as its canonical study, and that publication's text is processed once."
+  - "Every curated field is an object with a status; SELECTED values point to an existing study_field_value."
+  - "No field is SELECTED while two sources disagree, unless a review_log decision exists."
+  - "Every evidence span reproduces its quote from the section text."
+  - "Every facet value points to a controlled_term; LOCAL terms have a label and definition."
+  - "No catalogue_entry exists for a study that is excluded or has an open BLOCKER flag."
+  - "study.n_publications, publication.n_sections and the summary maps equal the counts in their source tables."
+  - "Every row's run_id exists in pipeline_run and its release_id in release."
+  - "Exports contain no local_path values and no text beyond evidence quotes, unless the licence allows."
+
+# ---------------------------------------------------------------------------
+# Illustrative example (catalogue_entry). Values come from the pilot discussion;
+# counts and IDs not stated there are placeholders in angle brackets.
+# ---------------------------------------------------------------------------
+example_catalogue_entry:
+  study_id: PRJNA485797
+  title: "<archive title at run time>"
+  links: {archive_url: "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA485797", doi_url: "https://doi.org/10.1016/j.jpsychires.2016.12.007", pmc_url: null}
+  publications:
+    - {corpus_id: "<HMPAPER id>", doi: "10.1016/j.jpsychires.2016.12.007", title: "The gut microbiome composition associates with bipolar disorder and illness severity", journal: "Journal of Psychiatric Research", year: 2017, role: PRIMARY, identity_status: VERIFIED_DOI}
+  methods:
+    target_gene:      {value: "16S rRNA", term_id: "LOCAL:GENE_16S", status: SELECTED, source: PAPER_TEXT}
+    amplicon_region:  {value: "V4", term_id: "LOCAL:REGION_V4", status: SELECTED, source: PAPER_TEXT}
+    sequencing_platform: {value: "Illumina MiSeq", term_id: "<OBI or EFO term>", status: SELECTED, source: PAPER_TEXT}
+    extraction_kit:   {value: null, term_id: null, status: CONFLICT, source: null}
+  population:
+    sample_type:      {value: stool, term_id: "<UBERON:feces>", status: SELECTED, source: PAPER_TEXT}
+    conditions:
+      - {value: null, term_id: null, status: CONFLICT, source: null}
+    n_subjects:       {value: 179, term_id: null, status: SELECTED, source: PAPER_TEXT}
+  quality:
+    audit_summary: {SELECTED: "<n>", CONFLICT: 2, NOT_FOUND: "<n>"}
+    open_flags: {BLOCKER: 0, WARNING: 2, INFO: 0}
+    flag_codes: [METADATA_CONFLICT]
+  provenance: {release_id: "<release>", schema_version: "0.1.0", run_ids: ["<CAT run>"]}
+  # Why CONFLICT: projects.csv says condition "small intestine microbial overgrowth" and
+  # kit "DNeasy tissue kit"; the paper is about bipolar disorder (115 cases, 64 controls)
+  # and used the PowerMag Microbiome RNA/DNA Isolation Kit. A curator resolves both.

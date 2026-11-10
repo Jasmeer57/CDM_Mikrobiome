@@ -1,0 +1,72 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + OFFSET_FIX_REPORT.json",
+  "check_name": "term_link_status_jsonl_eq_fixreport",
+  "expected": "LINKED 2,168,760 / NO_CANONICAL_TERM 299,854 / LINKED_BY_TYPE 30,049 / AMBIGUOUS 7,072",
+  "observed": "LINKED 2,168,760 / NO_CANONICAL_TERM 299,854 / LINKED_BY_TYPE 30,049 / AMBIGUOUS 7,072 (jsonl census == OFFSET_FIX_REPORT link.*)",
+  "query_or_file": "jsonl census vs OFFSET_FIX_REPORT.json link:* fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + OFFSET_FIX_REPORT.json",
+  "check_name": "offset_status_jsonl_eq_fixreport",
+  "expected": "EXACT 2,348,766 / CORRECTED 156,884 / UNANCHORED 85",
+  "observed": "EXACT 2,348,766 / CORRECTED 156,884 / UNANCHORED 85 (jsonl census == OFFSET_FIX_REPORT offsets)",
+  "query_or_file": "jsonl census vs OFFSET_FIX_REPORT.json offset fields",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + OFFSET_FIX_REPORT.json",
+  "check_name": "definitions_offset_status_jsonl_eq_fixreport",
+  "expected": "EXACT 1,087 / CORRECTED 63",
+  "observed": "EXACT 1,087 / CORRECTED 63",
+  "query_or_file": "definitions jsonl census vs OFFSET_FIX_REPORT.json definitions section",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/OFFSET_FIX_REPORT.json",
+  "check_name": "sections_shifted_census",
+  "expected": "75 sections = 67 shift-1 + 8 shift-2",
+  "observed": "75 sections ({'1': 67, '2': 8})",
+  "query_or_file": "OFFSET_FIX_REPORT.json sections_shifted",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl + microbiome_cdm_v3.db:term_mention",
+  "check_name": "jsonl_minus_db_delta_sums_to_51",
+  "expected": "per-status jsonl-minus-DB deltas sum to exactly 51 (the load dedup), distributed over the statuses of duplicated mentions",
+  "observed": "delta sums 51 on each axis: link_status LINKED 43 / NO_CANONICAL_TERM 8 / LINKED_BY_TYPE 0 / AMBIGUOUS 0; offset_status EXACT 8 / CORRECTED 14 / UNANCHORED 29; offset_correction 0:37 / >0:14 / 2:0; all non-negative",
+  "query_or_file": "census diff (jsonl - DB) over term_mention grouped by status axes",
+  "status": "PASS",
+  "note": "the 51 duplicated rows split cleanly across link/offset statuses with no negative bucket, consistent with pure duplicate removal"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl",
+  "check_name": "corrected_rows_have_positive_offset_correction",
+  "expected": "all 156,884 CORRECTED rows offset_correction>0",
+  "observed": "corrected: >0 156,884, ==0 0",
+  "query_or_file": "jsonl predicate scan",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_mentions.jsonl",
+  "check_name": "exact_rows_have_zero_offset_correction",
+  "expected": "0 EXACT rows with nonzero offset_correction",
+  "observed": "0",
+  "query_or_file": "jsonl predicate scan",
+  "status": "PASS",
+  "note": ""
+ }
+]

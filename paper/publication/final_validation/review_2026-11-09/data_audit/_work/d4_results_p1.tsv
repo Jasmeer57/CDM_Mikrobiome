@@ -1,0 +1,10 @@
+D4-M01_manifest_files_listed	22	23	MANIFEST.sha256 line count	DISCREPANCY	
+D4-M02_manifest_sha256_verified	22 verified, 0 failed	23 verified, 0 failed; bad=[]	sha256sum -c MANIFEST.sha256	PASS	
+D4-T01_mentions_jsonl_rows_vs_db	2505735 (DB term_mention 2505684 + 51 load dedup)	2505735	wc -l term_mentions.jsonl vs COUNT(term_mention)	PASS	51-row load-dedup is the documented D1 tie
+D4-T02_canonical_jsonl_rows_vs_db	162409	165991	wc -l canonical_terms.jsonl vs COUNT(canonical_term)	DISCREPANCY	
+D4-T03_mappings_jsonl_rows_vs_db	331394	334231	wc -l term_ontology_mappings.jsonl vs COUNT(term_concept_map)	DISCREPANCY	
+D4-T04_definitions_jsonl_rows_vs_db	6773	1150	wc -l term_definitions.jsonl vs COUNT(term_definition)	DISCREPANCY	
+D4-T05_occurrence_sum_n_mentions	2505684	2505684	SELECT SUM(n_mentions) FROM term_occurrence	PASS	
+D4-T06_mentions_source_rows	{"cpu_ensemble": 1705501, "qwen_ollama": 186024, "qwen_vllm_body": 366123, "mesh_gazetteer": 248088}	{"cpu_ensemble": 1705501, "qwen_ollama": 186024, "qwen_vllm_body": 366123, "mesh_gazetteer": 248088}	_mentions_summary.json sources[].rows	PASS	
+D4-T07_mentions_rows_written	2505736	2505736	_mentions_summary.json rows_written	PASS	manifest coverage.mention_records = 2505735 vs real 2505736 is the known G2 off-by-one
+D4-T08_mentions_offset_verification	verified 2505616 / recovered 34 / unverified 85; sum == rows_written	verified 2505616 / recovered 34 / unverified 85	_mentions_summary.json	DISCREPANCY	

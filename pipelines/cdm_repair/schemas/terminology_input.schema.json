@@ -1,0 +1,131 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage A terminology input record (one per CDM 3.0.3 canonical term)",
+ "type": "object",
+ "required": [
+  "term_id",
+  "term",
+  "cdm_type",
+  "mentions_total",
+  "mentions_in_candidate_papers",
+  "mentions_in_blocked_papers",
+  "mapping_candidates",
+  "context_refs",
+  "stage_b_label_route",
+  "stage_b_context_route",
+  "processing_status",
+  "term_sha256",
+  "label_withheld"
+ ],
+ "properties": {
+  "term_id": {
+   "type": "string"
+  },
+  "term": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "cdm_type": {
+   "type": "string"
+  },
+  "label_chars": {
+   "type": "integer"
+  },
+  "mentions_total": {
+   "type": "integer"
+  },
+  "mentions_in_candidate_papers": {
+   "type": "integer"
+  },
+  "mentions_in_blocked_papers": {
+   "type": "integer"
+  },
+  "mapping_candidates": {
+   "type": "integer"
+  },
+  "context_refs": {
+   "type": "array",
+   "maxItems": 3,
+   "items": {
+    "type": "object",
+    "required": [
+     "mention_row_id",
+     "paper_id",
+     "start_offset",
+     "end_offset"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "mention_row_id": {},
+     "paper_id": {
+      "type": "string"
+     },
+     "section_id": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "sentence_id": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "start_offset": {
+      "type": "integer"
+     },
+     "end_offset": {
+      "type": "integer"
+     }
+    }
+   }
+  },
+  "stage_b_label_route": {
+   "enum": [
+    "LABEL_ONLY_ELIGIBLE",
+    "LABEL_LONG_STRING_CANDIDATE_PENDING_RIGHTS_VERIFICATION",
+    "LABEL_BLOCKED_LONG_STRING_FROM_WITHHELD_PAPER"
+   ]
+  },
+  "stage_b_context_route": {
+   "enum": [
+    "CONTEXT_CANDIDATE_PENDING_RIGHTS_VERIFICATION",
+    "NO_ELIGIBLE_CONTEXT"
+   ]
+  },
+  "processing_status": {
+   "const": "INVENTORIED"
+  },
+  "term_sha256": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "label_withheld": {
+   "type": "boolean"
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "label_withheld": {
+      "const": true
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "term": {
+      "type": "null"
+     },
+     "term_norm": {
+      "type": "null"
+     }
+    }
+   }
+  }
+ ]
+}

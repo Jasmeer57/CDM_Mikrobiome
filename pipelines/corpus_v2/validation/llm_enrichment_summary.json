@@ -1,0 +1,29 @@
+{
+  "stage": "stage50_llm_enrich",
+  "pipeline_version": "2.0.0",
+  "generated_at": "2026-10-23T14:54:20Z",
+  "sections_total": 4006,
+  "sections_eligible": 1699,
+  "sections_enriched": 1699,
+  "llm_complete": 1639,
+  "llm_partial": 49,
+  "llm_failed": 11,
+  "sections_never_enriched": 0,
+  "total_terms": 104054,
+  "chunks_total": 2336,
+  "chunks_truncated": 41,
+  "chunks_failed": 24,
+  "input_chars": 16217631,
+  "model": "Qwen/Qwen3.5-4B",
+  "model_label": "qwen3.5:4b",
+  "prompt_version": "v2-term-extract-1",
+  "thinking": false,
+  "temperature": 0.0,
+  "max_tokens": 4500,
+  "workers": 64,
+  "max_prompt_chars": 12000,
+  "reconciliation": {
+    "eligible_equals_enriched_plus_missing": true,
+    "status_sum_equals_enriched": true
+  }
+}

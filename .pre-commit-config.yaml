@@ -1,0 +1,40 @@
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+        name: Detect leaked secrets (API keys, tokens, credentials)
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        exclude: |
+          (?x)^(
+            pipelines/llm_terms/llama\.cpp/.*|
+            pipelines/llm_terms/scripts/standalone_pipeline\.py|
+            spacy_terms/standalone_scispacy_pipeline\.py
+          )
+
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        exclude: |
+          (?x)^(
+            pipelines/llm_terms/llama\.cpp/.*|
+            pipelines/llm_terms/scripts/standalone_pipeline\.py|
+            spacy_terms/standalone_scispacy_pipeline\.py
+          )
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        exclude: |
+          (?x)^(
+            pipelines/llm_terms/llama\.cpp/.*|
+            pipelines/llm_terms/scripts/standalone_pipeline\.py|
+            spacy_terms/standalone_scispacy_pipeline\.py
+          )

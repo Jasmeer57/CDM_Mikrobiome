@@ -1,0 +1,66 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage D mapping candidate (DRAFT)",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "term_id",
+  "vocabulary",
+  "vocabulary_version",
+  "identifier",
+  "match_method",
+  "original_label",
+  "candidate_label",
+  "decision_status"
+ ],
+ "properties": {
+  "term_id": {
+   "type": "string"
+  },
+  "vocabulary": {
+   "type": "string"
+  },
+  "vocabulary_version": {
+   "type": "string"
+  },
+  "identifier": {
+   "type": "string"
+  },
+  "match_method": {
+   "enum": [
+    "EXACT_ID",
+    "EXACT_LABEL",
+    "EXACT_SYNONYM",
+    "NORMALISED_LABEL",
+    "NORMALISED_SYNONYM",
+    "MODEL_SUGGESTED"
+   ]
+  },
+  "original_label": {
+   "type": "string"
+  },
+  "candidate_label": {
+   "type": "string"
+  },
+  "matching_evidence": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "confidence": {
+   "type": [
+    "number",
+    "null"
+   ]
+  },
+  "decision_status": {
+   "enum": [
+    "ACCEPTED_COMPUTATIONALLY",
+    "REJECTED",
+    "UNRESOLVED",
+    "NOT_VERIFIABLE"
+   ]
+  }
+ }
+}

@@ -1,0 +1,425 @@
+{
+  "audit_id": "terminology_catalogue_audit",
+  "audit_version": 1,
+  "audit_date": "2026-10-25",
+  "repo": "/home/jkalra_hpc/Microbiome-CDM",
+  "task": "Verify that the Microbiome-CDM pipeline produces, or can produce from existing outputs, a complete, deduplicated, evidence-backed terminology catalogue over the full-text corpus.",
+  "mode": "read_only",
+  "mode_declarations": {
+    "pipeline_outputs_overwritten_deleted_or_regenerated": false,
+    "extraction_or_normalization_logic_modified": false,
+    "extraction_rerun_launched": false,
+    "secrets_or_credentials_included": false,
+    "existing_reports_overwritten": false,
+    "method_note": "Every count was produced by an executable read-only probe over artifacts on disk using the real scripts.termpipeline.textnorm/ids helpers and the canonical section loader cdm_pipeline.ner.runner_sections.load_sections. Probe scripts are in .audit_tmp/ (scratch, not committed)."
+  },
+  "authoritative_source": {
+    "build_dir": "results/terminology_v1",
+    "build_job_id": "28619916",
+    "build_desc": "termpipe_v1 post-fix rebuild (COMPLETED, exit 0, walltime 3:33, partition intelsr_short)",
+    "supersedes": {
+      "build_job_id": "28609294",
+      "snapshot": "scratch/pre_fix_snapshot/",
+      "reason": "pre-fix build; evidence for the 3 approved T2/T3 quality fixes"
+    },
+    "release_scoped_manifest_exists": false,
+    "release_scoped_manifest_note": "The build lives only in a mutable results/ working directory; no corpus_v2 release references or checksums it (ISS-010)."
+  },
+  "overall_verdict": {
+    "verdict": "READY WITH LIMITATIONS",
+    "ready_as_cdm_terminology_layer": false,
+    "one_line": "Technically consistent and mechanically reproducible, but incomplete on coverage, not deduplicated in its frequency semantics, not integrated with the data catalogue, and 0% human-reviewed."
+  },
+  "three_axes": {
+    "technically_consistent": {
+      "status": "YES_WITH_DEFECTS",
+      "basis": [
+        "manifest: 9/9 artifacts present, 8/8 external sha256 verified (self-hash n/a by design)",
+        "term_id re-derivation: 165991/165991 match",
+        "definition span reproduction: 1150/1150 byte-exact at section-body-relative offsets",
+        "terminology_validation: 3553 VALIDATED + 453 NOT_APPLICABLE, 0 flagged, 0 unresolved",
+        "stored mention_count/paper_count recompute: 0 mismatches"
+      ],
+      "defects": [
+        "declared mention count off by one (2505736 declared vs 2505735 written)",
+        "5237 orphan mapping rows (term_id absent from canonical)",
+        "3556 duplicated mapping_id values across 4150 extra rows"
+      ]
+    },
+    "semantically_reliable": {
+      "status": "NOT_ESTABLISHED",
+      "basis": [
+        "no gold standard and no human verdicts exist, so no accuracy/precision/recall/F1 is computable",
+        "RELATED_TO + AMBIGUOUS = 284351/334231 = 85.08% of mapping rows are candidates, not equivalence",
+        "94458/165991 = 56.90% of canonical terms have no mapping row",
+        "taxonomy classified_terms = 0 of 165991"
+      ]
+    },
+    "human_reviewed": {
+      "status": "NO",
+      "basis": [
+        "mentions: UNVERIFIED on 2505735/2505735",
+        "definitions: REVIEW_REQUIRED on 1150/1150",
+        "mappings: auto_accepted 0 of 334231",
+        "calibration_sample.csv: 0 human verdicts in 390 rows over 14 strata",
+        "corpus_v2/releases/2.2.0 terminology_inventory.csv: 39694/39694 verification_status=pending"
+      ]
+    }
+  },
+  "key_counts": {
+    "corpus": {
+      "papers": 453,
+      "section_units_total": 4006,
+      "zero_char_front_preamble_placeholders": 453,
+      "content_sections": 3553,
+      "chars_total": 26867649,
+      "body_only_units": 2817,
+      "body_only_chars": 20904249
+    },
+    "dataset_A_canonical": {
+      "artifact": "results/terminology_v1/canonical_terms.jsonl",
+      "rows": 165991,
+      "fields": 25,
+      "upstream_dedup_rows": 166012,
+      "collapsed_by_sanitize": 21,
+      "distinct_term_norm": 165905,
+      "norms_with_multiple_types": 81,
+      "non_concept_surfaces_flagged": 1090,
+      "term_id_rederived_match": 165991,
+      "term_id_rederived_mismatch": 0,
+      "generic_entity_terms": 94458,
+      "typed_terms": 71533,
+      "distinct_cdm_type_values": 15,
+      "cdm_type_known_values": 14
+    },
+    "dataset_B_mentions": {
+      "artifact": "results/terminology_v1/term_mentions.jsonl",
+      "rows": 2505735,
+      "declared_rows_in_report_and_summary": 2505736,
+      "fields": 26,
+      "distinct_occurrence_key": 1362931,
+      "row_to_occurrence_inflation": 1.8385,
+      "rows_with_null_canonical_term_id": 2505735,
+      "pct_rows_with_null_canonical_term_id": 100.0,
+      "rows_with_null_confidence": 2505735,
+      "rows_with_null_offsets": 85,
+      "non_cdm_entity_type_rows_GO": 1221,
+      "distinct_papers": 453,
+      "distinct_paper_section_units": 2364,
+      "flags": {
+        "SENTENCE_CLIPPED": 358150,
+        "CONTROL_CHAR_SURFACE": 1497,
+        "OFFSET_UNVERIFIED": 85,
+        "OFFSET_RECOVERED": 34
+      },
+      "by_run": {
+        "cpu_ensemble_v1": 1705500,
+        "qwen35_vllm_body_v1": 366123,
+        "mesh_gazetteer_2026": 248088,
+        "qwen_ollama_cell7c_v1": 186024
+      }
+    },
+    "dataset_C_definitions": {
+      "artifact": "results/terminology_v1/term_definitions.jsonl",
+      "rows": 1150,
+      "fields": 19,
+      "terms_with_source_definition": 838,
+      "pct_of_all_canonical_terms": 0.5049,
+      "pct_of_T3_scope_164903": 0.5082,
+      "span_reproduce_byte_exact": 1150,
+      "span_reproduce_failures": 0,
+      "by_source": {
+        "CONTEXTUAL_DESCRIPTION": 1003,
+        "ABBREVIATION_EXPANSION": 126,
+        "EXPLICIT_AUTHOR_DEFINITION": 21
+      },
+      "by_formality": {
+        "contextual": 1003,
+        "formal": 147
+      },
+      "rejected_candidates": 867,
+      "human_reviewed": 0
+    },
+    "dataset_D_mappings": {
+      "artifact": "results/terminology_v1/term_ontology_mappings.jsonl",
+      "rows": 334231,
+      "fields_always_present": 22,
+      "fields_optional_present": 7,
+      "by_relation": {
+        "RELATED_TO": 188313,
+        "AMBIGUOUS": 96038,
+        "EXACT_MATCH": 38403,
+        "NO_MATCH_FOUND": 11477
+      },
+      "by_disposition": {
+        "REVIEW_REQUIRED": 322754,
+        "UNRESOLVED": 11477
+      },
+      "by_service": {
+        "bioportal": 136417,
+        "ols": 84859,
+        "umls": 68989,
+        "omop": 21881,
+        "mesh": 8652,
+        "none": 11477
+      },
+      "orphan_rows": 5237,
+      "orphans_by_cause": {
+        "NORM_EXISTS_OTHER_TYPE": 3268,
+        "NORM_ABSENT": 1969,
+        "BROKEN_ID": 0
+      },
+      "orphans_source_service": "mesh (all 5237)",
+      "rows_with_nonnull_mapping_id": 322754,
+      "distinct_nonnull_mapping_id": 318604,
+      "duplicated_mapping_id_values": 3556,
+      "extra_rows_from_dup_mapping_id": 4150,
+      "max_mapping_id_repeats": 3,
+      "distinct_term_id_concept_id_pairs": 316657,
+      "duplicate_pair_groups": 4785,
+      "extra_rows_from_dup_pairs": 6097,
+      "max_pair_repeats": 6,
+      "exact_duplicate_rows": 0,
+      "terms_with_mapping_row": 71533,
+      "terms_without_mapping_row": 94458,
+      "terms_with_concept_id": 60056,
+      "distinct_concept_ids": 206805,
+      "concept_ids_owned_by_multiple_terms": 41759,
+      "auto_accept_eligible": 38334,
+      "auto_accepted": 0,
+      "terms_lookup_failed": 0,
+      "omop_concept_id_spotcheck_found": 40,
+      "omop_concept_id_spotcheck_sampled": 40
+    },
+    "dataset_E_frequency": {
+      "mention_frequency_field": "canonical_terms.mention_count",
+      "mention_frequency_scope": "raw cross-model mention rows under the type-constrained join, NOT distinct occurrences",
+      "paper_frequency_field": "canonical_terms.paper_count",
+      "section_frequency_materialised": false,
+      "terms_with_mention_rollup": 155514,
+      "terms_without_mention": 10477,
+      "mention_count_recompute_mismatches": 0,
+      "paper_count_recompute_mismatches": 0,
+      "terms_mention_count_exceeds_distinct_occurrences": 23921,
+      "valid_occurrence_unit": "occurrence_key = HMOCC_<sha1(paper|section|start|end|norm)>"
+    },
+    "join_mention_to_canonical": {
+      "join_key": "(normalized_mention, entity_type) = (term_norm, cdm_type), implicit",
+      "matched_rows": 1174969,
+      "matched_pct": 46.89,
+      "unmatched_rows": 1330766,
+      "unmatched_pct": 53.1088,
+      "unmatched_class_A_type_divergent_rows": 1030912,
+      "unmatched_class_A_pct_of_unmatched": 77.468,
+      "unmatched_class_B_surface_absent_rows": 299854,
+      "unmatched_class_B_pct_of_unmatched": 22.532,
+      "matched_distinct_occurrences": 731369,
+      "matched_row_to_occurrence_inflation": 1.6065
+    },
+    "validation": {
+      "artifact": "results/terminology_v1/terminology_validation.jsonl",
+      "units": 4006,
+      "VALIDATED": 3553,
+      "NOT_APPLICABLE": 453,
+      "flagged": 0,
+      "mentions_checked": 2505650,
+      "mentions_verified": 2505616,
+      "mentions_recovered": 34,
+      "unresolved": 0,
+      "papers_processed": 453
+    },
+    "taxonomy": {
+      "upper_categories": 16,
+      "subcategories": 66,
+      "reserved": "UNCERTAIN",
+      "status": "DRAFT",
+      "classified_terms": 0,
+      "pct_classified": 0.0
+    },
+    "corpus_release_2_2_0": {
+      "papers": 453,
+      "canonical_papers": 447,
+      "dup_excluded": 6,
+      "sections": 4006,
+      "chars": 26874831,
+      "tokens": 7909432,
+      "manifest_sha256_verified": 42,
+      "manifest_sha256_total": 42,
+      "validation_outcome": {"REVIEW_REQUIRED": 392, "COMPLETE": 46, "PARTIAL": 15},
+      "ships_terminology_inventory_rows": 39694,
+      "terminology_inventory_all_pending": true,
+      "references_audited_build": false
+    },
+    "data_catalogue": {
+      "papers": 453,
+      "records": 56985,
+      "files": 1003,
+      "char_coverage_pct": 90.857,
+      "status": "REVIEW_REQUIRED",
+      "documents_inner_terminology_dedup": true,
+      "documents_results_terminology_v1": false
+    }
+  },
+  "distinct_terminology_inventories": [
+    {"source": "results/terminology_v1/canonical_terms.jsonl", "rows": 165991, "referenced_by": "nothing", "status": "UNVERIFIED"},
+    {"source": "data_catalogue/terminology/terminology_dedup.csv", "rows": 166012, "referenced_by": "data_catalogue/README.md", "status": "upstream input"},
+    {"source": "corpus_v2/releases/2.2.0/terminology_inventory.csv", "rows": 39694, "referenced_by": "corpus_v2/2.2.0 release only", "status": "pending"}
+  ],
+  "dedup_normalization_findings": {
+    "recount_method": "real scripts.termpipeline.textnorm.sanitize + ids.term_id (supersedes an earlier hand-rolled sanitizer missing the C1 block \\x7f-\\x9f)",
+    "correctly_merged": ["case", "Unicode NFKD", "fullwidth forms", "en/em-dash", "slash/underscore", "trailing dash", "whitespace collapse"],
+    "not_merged_intentional": ["singular/plural", "hyphen vs space", "acronym vs expansion", "taxon abbreviation", "strain designations"],
+    "false_merges_found": 0,
+    "norm_both_generic_and_typed": 0,
+    "latent_defect": {
+      "location": "scripts/termpipeline/extract_definitions.py load_terms",
+      "issue": "dict keyed on term_norm alone, not (term_norm, cdm_type)",
+      "live_collisions_in_this_build": 0,
+      "status": "latent only; would silently drop alternate-type definitions for a future clean multi-type norm (ISS-009)"
+    }
+  },
+  "cross_run_double_counting": {
+    "extractors": 4,
+    "rows": 2505735,
+    "distinct_occurrences": 1362931,
+    "inflation_overall": 1.8385,
+    "inflation_matched": 1.6065,
+    "terms_affected": 23921,
+    "policy_required": "never sum model outputs as independent occurrences; dedup on occurrence_key"
+  },
+  "requirement_classification": [
+    {"id": "R-1", "requirement": "Inspect project; artifact inventory with counts, versions, verification", "status": "PASS", "severity": null, "blockers": [], "smallest_corrective_action": "none"},
+    {"id": "R-2A", "requirement": "Deduplicated terminology catalogue has all required fields", "status": "PARTIAL", "severity": "medium", "blockers": ["alternative_labels absent (0/165991)", "section_frequency absent (0/165991)", "normalization_method/status not explicit", "canonical rows carry no extraction_run_id"], "smallest_corrective_action": "add alternative_labels, section_frequency, normalization_method/status and extraction_run_id to canonical rows, or record them as explicitly unavailable"},
+    {"id": "R-2B", "requirement": "Terminology mention evidence preserves a link to the canonical term", "status": "FAIL", "severity": "high", "blockers": ["canonical_term_id is null on 2505735/2505735 rows", "implicit type-constrained join loses 1330766/2505735 rows (53.1088%)"], "smallest_corrective_action": "materialise canonical_term_id via the type-constrained join and add link_status plus a documented fallback for the 1330766 type-divergent rows"},
+    {"id": "R-2C", "requirement": "Definitions are supported by identifiable evidence", "status": "PARTIAL", "severity": "medium", "blockers": ["coverage 838/165991 = 0.5049%", "1003/1150 = 87.2% are CONTEXTUAL_DESCRIPTION not formal definitions", "0 human-reviewed", "section_path not in the definition schema"], "smallest_corrective_action": "separate contextual from formal definitions in any definition rollup, add section_path, commission human review"},
+    {"id": "R-2D", "requirement": "CV mappings are valid, versioned where possible, appropriately qualified", "status": "PARTIAL", "severity": "high", "blockers": ["5237 orphan mapping rows (all mesh)", "mapping_id not unique (3556 duplicated ids / 4150 extra rows)", "RELATED_TO+AMBIGUOUS 85.08% of rows are candidates", "only 38403/334231 = 11.49% EXACT_MATCH", "0 auto-accepted"], "smallest_corrective_action": "de-duplicate or re-key the 5237 orphan rows, make mapping_id unique per row, and do not report RELATED_TO/AMBIGUOUS as mappings"},
+    {"id": "R-2E", "requirement": "Frequency rules defined and reproducible", "status": "PARTIAL", "severity": "high", "blockers": ["section_frequency not materialised anywhere", "mention_count counts raw rows (1.6065x cross-model inflation) not distinct occurrences", "no counting rule documented as data"], "smallest_corrective_action": "materialise section_frequency and define mention_count over distinct occurrence_key (keep raw rows as mention_rows); state the scope in the schema"},
+    {"id": "R-3", "requirement": "Deduplication/normalization verified without unsafe merges", "status": "PARTIAL", "severity": "low", "blockers": ["intentional non-merges (plural/hyphen/acronym/taxon) are undocumented in the data", "T3 load_terms norm-only key is latent-fragile"], "smallest_corrective_action": "document the intentional non-merge policy; add the T3 norm-key regression test"},
+    {"id": "R-4", "requirement": "Counts and provenance reconciled with no silent loss", "status": "PARTIAL", "severity": "high", "blockers": ["mention-to-term join loses 53.1088% of rows", "declared mention count off by one (2505736 vs 2505735)", "5237 orphan mapping rows + 3556 duplicated mapping_ids", "validation denominator silently excludes 85 OFFSET_UNVERIFIED rows", "n_observations/n_papers scope differs from mention_count/paper_count"], "smallest_corrective_action": "fix join gap, off-by-one, orphan/duplicate rows; reconcile and label the frequency scopes"},
+    {"id": "R-5", "requirement": "Broader data catalogue describes the terminology resource", "status": "FAIL", "severity": "high", "blockers": ["data_catalogue/ never references results/terminology_v1", "corpus_v2/2.2.0 has 0 references to this build", "three inconsistent terminology inventories (165991 / 166012 / 39694)", "no release-scoped manifest for this build"], "smallest_corrective_action": "add a checksummed dataset/release entry for results/terminology_v1 with schema, counts+scope, run ids, vocabulary versions, hashes, limitations; reconcile the inventories"},
+    {"id": "R-6", "requirement": "Verification report with the required sections", "status": "PASS", "severity": null, "blockers": [], "smallest_corrective_action": "none (this audit)"},
+    {"id": "R-7", "requirement": "Six required deliverables produced", "status": "PASS", "severity": null, "blockers": [], "smallest_corrective_action": "none (these files)"},
+    {"id": "R-8", "requirement": "Read-only; no logic changes; no secrets exposed", "status": "PASS", "severity": null, "blockers": [], "smallest_corrective_action": "none"},
+    {"id": "R-9", "requirement": "Human scientific verification", "status": "NOT_VERIFIABLE", "severity": "high", "blockers": ["0 human verdicts in calibration_sample.csv (390 rows / 14 strata)", "0 records marked human-reviewed anywhere"], "smallest_corrective_action": "fill calibration_sample.csv (n>=73 per stratum for a 95% Wilson lower bound) and commission term/definition/mapping adjudication"},
+    {"id": "R-10", "requirement": "first_seen / last_seen availability", "status": "NOT_APPLICABLE", "severity": null, "blockers": ["the corpus is a static 453-paper set with no timestamps"], "smallest_corrective_action": "none; not derivable and not meaningful"}
+  ],
+  "findings_summary": {
+    "PASS": 4,
+    "PARTIAL": 6,
+    "FAIL": 2,
+    "NOT_VERIFIABLE": 1,
+    "NOT_APPLICABLE": 1
+  },
+  "prioritized_fixes": {
+    "P1_resource_correctness": [
+      {"id": "F-1", "action": "Materialise the mention-to-term link (emit canonical_term_id in term_mentions.jsonl via the type-constrained join) and add a documented resolution for the 1330766 (53.1088%) type-divergent rows", "issue": "ISS-001"},
+      {"id": "F-2", "action": "Fix the off-by-one in assemble_mentions.py (n += 1 before the empty-surface continue) and correct the report/validation denominators to state the 85 OFFSET_UNVERIFIED exclusions", "issue": "ISS-007"},
+      {"id": "F-3", "action": "Fix mapping-file key integrity: remove or re-key the 5237 orphan MeSH rows and make mapping_id unique per row (include candidate_rank)", "issue": "ISS-004"}
+    ],
+    "P2_spec_fields": [
+      {"id": "F-4", "action": "Materialise section_frequency and define mention_count over distinct occurrence_key (retain raw row count as mention_rows); document the counting scope", "issue": "ISS-002"},
+      {"id": "F-5", "action": "Add missing catalogue fields (alternative_labels, normalization_method/status) or record them as explicitly unavailable", "issue": "ISS-009"}
+    ],
+    "P3_discoverability_and_review": [
+      {"id": "F-6", "action": "Add a discoverable, checksummed catalogue/release entry for this build and reconcile the three terminology inventories", "issue": "ISS-006"},
+      {"id": "F-7", "action": "Enable human review: fill calibration_sample.csv and commission term, definition, and mapping adjudication", "issue": "ISS-013"}
+    ],
+    "P4_hardening": [
+      {"id": "F-8", "action": "Add the T3 norm-only-key regression test and document the intentional non-merges (plural/hyphen/acronym/taxon)", "issue": "ISS-009"}
+    ]
+  },
+  "final_decision_questions": [
+    {
+      "n": 1,
+      "question": "Do we already have a complete deduplicated terminology catalogue?",
+      "answer": "No",
+      "detail": "A consistently deduplicated catalogue of 165991 terms exists (from 166012 rows, 21 control-byte collisions collapsed; ids re-derive exactly), but it is not complete: 94458/165991 = 56.90% of terms have no mapping row, only 838/165991 = 0.5049% have any definition, 10477/165991 = 6.31% have no mention at all, and 0/165991 are human-reviewed."
+    },
+    {
+      "n": 2,
+      "question": "Can every canonical term be traced to its original mentions and source papers?",
+      "answer": "Not from the artifacts as shipped",
+      "detail": "canonical_term_id is null on 2505735/2505735 mention rows; the link exists only as an implicit type-constrained string join resolving 1174969/2505735 = 46.89% and losing 53.1088%. Traceability is possible in principle (occurrence_key is stable) but not materialised, and 10477 terms (6.31%) have no mention to trace to."
+    },
+    {
+      "n": 3,
+      "question": "Are definitions available and traceable where they exist?",
+      "answer": "Yes where they exist, but they barely exist",
+      "detail": "1150/1150 definition rows have a valid term_id, correct (term_norm, cdm_type), and a byte-exact reproducing span. Coverage is 838/165991 = 0.5049%, with 1003/1150 = 87.2% being CONTEXTUAL_DESCRIPTION rather than formal definitions, and 0 human-reviewed. No definition was fabricated for a term lacking one."
+    },
+    {
+      "n": 4,
+      "question": "Are CV mappings valid, versioned where possible, and appropriately qualified?",
+      "answer": "Versioned and qualified: yes; valid: unproven, with defects",
+      "detail": "Vocabularies are versioned (ontology_registry.json: MeSH 2026; OMOP vocabulary_download_v5 2018-06-02; live UMLS/BioPortal/OLS4/NCBI Taxonomy) and OMOP concept ids spot-check 40/40 in the local index. RELATED_TO+AMBIGUOUS (85.08% of rows) are correctly flagged as candidates. But 5237 rows are orphans, mapping_id is not unique (3556 repeats), only 38403/334231 = 11.49% are EXACT_MATCH, and 0 are auto-accepted."
+    },
+    {
+      "n": 5,
+      "question": "Are frequencies reproducible and free from cross-run double-counting?",
+      "answer": "Reproducible: yes; free from cross-run double-counting: no",
+      "detail": "Stored mention_count/paper_count recompute with 0 mismatches, but mention_count counts raw mention rows across four extractors, so the same span is counted up to 4x (1.8385 overall; 1.6065 on matched rows) and 23921 terms exceed their distinct-occurrence count. Section frequency is not materialised at all. Only distinct occurrence_key (1362931) is a valid occurrence unit."
+    },
+    {
+      "n": 6,
+      "question": "Is the terminology resource correctly described by the broader data catalogue?",
+      "answer": "No",
+      "detail": "data_catalogue/ documents a different artifact and never mentions results/terminology_v1/; corpus_v2/releases/2.2.0/ ships an unrelated 39694-row terminology_inventory.csv and has zero references to this build. Three inconsistent terminology inventories coexist (165991 / 166012 / 39694) with no cross-reference, and this build has no release-scoped manifest."
+    },
+    {
+      "n": 7,
+      "question": "What, if anything, must be fixed before this resource can serve as the terminology layer of the Human Microbiome CDM?",
+      "answer": "See prioritized fix list (P1-P4)",
+      "detail": "P1: materialise the mention-to-term link and resolve the 53.1088% type-divergent rows; fix the off-by-one declared count; de-duplicate/orphan-fix the mapping file and make mapping_id unique. P2: materialise and document section_frequency, define mention_count on distinct occurrences, add the missing catalogue fields. P3: add a discoverable checksummed catalogue/release entry and reconcile the three inventories. P4: commission human review via calibration_sample.csv. Without P3/P4 the resource remains a candidate, unvalidated terminology layer."
+    }
+  ],
+  "artifacts": {
+    "report_markdown": "docs/reports/terminology_catalogue_audit/terminology_catalogue_audit.md",
+    "audit_json": "docs/reports/terminology_catalogue_audit/terminology_catalogue_audit.json",
+    "artifact_inventory_csv": "docs/reports/terminology_catalogue_audit/terminology_catalogue_artifact_inventory.csv",
+    "field_coverage_csv": "docs/reports/terminology_catalogue_audit/terminology_catalogue_field_coverage.csv",
+    "reconciliation_csv": "docs/reports/terminology_catalogue_audit/terminology_catalogue_reconciliation.csv",
+    "issues_jsonl": "docs/reports/terminology_catalogue_audit/terminology_catalogue_issues.jsonl"
+  },
+  "issues_index": [
+    {"issue_id": "ISS-001", "severity": "high", "category": "mention-term-linkage", "title": "canonical_term_id null on 100% of mention rows"},
+    {"issue_id": "ISS-002", "severity": "high", "category": "frequency", "title": "mention_count sums raw rows across four extractors (no occurrence dedup)"},
+    {"issue_id": "ISS-003", "severity": "high", "category": "frequency", "title": "section_frequency not materialised anywhere"},
+    {"issue_id": "ISS-004", "severity": "high", "category": "mapping-integrity", "title": "5237 orphan mapping rows (term_id absent from canonical)"},
+    {"issue_id": "ISS-005", "severity": "medium", "category": "mapping-integrity", "title": "mapping_id is not a unique row key"},
+    {"issue_id": "ISS-006", "severity": "medium", "category": "data-catalogue-integration", "title": "broader data catalogue does not document this terminology resource"},
+    {"issue_id": "ISS-007", "severity": "low", "category": "report-arithmetic", "title": "declared mention count off by one"},
+    {"issue_id": "ISS-008", "severity": "low", "category": "report-clarity", "title": "validation denominator excludes 85 unverified offsets without stating it"},
+    {"issue_id": "ISS-009", "severity": "low", "category": "dedup-latent-defect", "title": "extract_definitions.load_terms keys on term_norm alone"},
+    {"issue_id": "ISS-010", "severity": "medium", "category": "provenance", "title": "the audited build has no release-scoped manifest"},
+    {"issue_id": "ISS-011", "severity": "medium", "category": "semantic-quality", "title": "definition coverage 0.5049% and dominated by contextual descriptions"},
+    {"issue_id": "ISS-012", "severity": "medium", "category": "semantic-quality", "title": "85.08% of mapping rows are candidate relations, not equivalence"},
+    {"issue_id": "ISS-013", "severity": "high", "category": "human-review", "title": "no human review exists anywhere in the terminology build"},
+    {"issue_id": "ISS-014", "severity": "low", "category": "type-hygiene", "title": "a non-CDM entity type (GO) appears in the mention stream"},
+    {"issue_id": "ISS-015", "severity": "medium", "category": "semantic-quality", "title": "56.90% of canonical terms are generic ENTITY with no mapping and no type"},
+    {"issue_id": "ISS-016", "severity": "low", "category": "normalization", "title": "intentional normalization gaps fragment frequency"},
+    {"issue_id": "ISS-017", "severity": "low", "category": "taxonomy", "title": "taxonomy classification was never run"}
+  ],
+  "vocabulary_versions": {
+    "mesh": {"version": "2026", "locality": "local"},
+    "omop": {"version": "vocabulary_download_v5 (2018-06-02)", "locality": "local", "index": "results/omop_vocab/omop_index.sqlite", "concepts": 10167185, "terms": 15647137, "maps_to": 7423177},
+    "umls": {"version": "live", "locality": "remote"},
+    "bioportal": {"version": "live", "locality": "remote"},
+    "ols4": {"version": "live", "locality": "remote"},
+    "ncbi_taxonomy": {"version": "live", "locality": "remote"},
+    "note": "Per-row vocabulary version is not carried; it is resolved only via anthology ontology_registry.json."
+  },
+  "provenance_chain": [
+    "data_catalogue/README.md",
+    "data_catalogue/MANIFEST.json",
+    "results/terminology_v1/terminology_extraction_report.md",
+    "results/terminology_v1/terminology_extraction_manifest.json"
+  ],
+  "known_limitations": [
+    "No human review exists anywhere; no accuracy metric is computable.",
+    "The mention-to-term link is not materialised and loses 53.1088% of rows under the only implicit join.",
+    "mention_count is not occurrence-deduplicated; section frequency is absent.",
+    "5237 mapping rows are orphaned and mapping_id is not unique.",
+    "The build has no release-scoped manifest and is not referenced by any data catalogue, while three inconsistent terminology inventories coexist.",
+    "Mappings are largely lexical candidate relations rather than equivalence assertions."
+  ]
+}

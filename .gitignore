@@ -1,0 +1,347 @@
+# --- Python & Cache ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+*.egg
+build/
+dist/
+develop-eggs/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+.installed.cfg
+MANIFEST
+
+# --- Virtual Environments ---
+venv/
+env/
+.env
+.env.*
+**/venv/
+**/.venv/
+**/.venv39/
+**/env/
+**/.env/
+spacy_terms/venv_scispacy/
+**/venv_scispacy/
+
+# --- IDE & OS Files ---
+.idea/
+.vscode/
+.claude/
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+*.swp
+*.swo
+
+# --- Project Data & Large Files (Critical) ---
+models/
+bioproject_data_export.json
+microbiome_cdm.db
+bioproject_database.db
+llm_terms/omop_vocab/
+papers_txt/
+pdfs/
+168000*
+**/data/
+**/vocab/
+**/Data/
+**/Vocab/
+
+# --- Output & Generated Files ---
+outputs/
+output/
+enhanced_output/
+results/
+results_partial/
+results_partial2/
+**/output_full*/
+llm_terms/Output_final/
+**/output_final*/
+**/enhanced_output/
+**/database/
+*.out
+*.err
+*.log
+logs/
+log/
+**/logs/
+**/log/
+pipeline_log*
+*_log.txt
+*_logs/
+test_logs/
+logs_*/
+*.pid
+
+# --- Database & Model Binaries ---
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+*.model
+*.pkl
+*.pickle
+*.h5
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.npz
+*.npy
+
+# --- SLURM & Shell Scripts (Generated/Runtime) ---
+# job-local staging dirs (e.g. clean corpus input for run_human_microbiome.slurm)
+.staging/
+*.slurm
+slurm/
+llm_terms/*.slurm
+llm_terms/setup_api_keys.sh
+llm_terms/run_*_slurm.sh
+spacy_terms/*_complete_*.sh
+spacy_terms/*_pipeline_*.sh
+spacy_terms/test_*.sh
+
+# --- Specific Processed Files & Test Data ---
+**/PRJ*
+PRJ*
+cdm_entities.json
+biomistral_duplicate_analysis.json
+comprehensive_results.json
+audit.json
+**/test_data/
+**/model_cache/
+**/.cache/
+
+# --- Document Artifacts ---
+thesis.tex
+Comprehensive Comparison of each step.xlsx
+
+# --- llm_terms specific exclusions (Large Data in Output_final) ---
+llm_terms/Output_final/neo4j/
+llm_terms/Output_final/relationships_extracted/
+llm_terms/Output_final/relationships_sources/
+llm_terms/Output_final/samples_testing/
+llm_terms/Output_final/final_release/
+llm_terms/Output_final/databases_ontology/microbiome_cdm.db
+llm_terms/Output_final/databases_ontology/microbiome_cdm.owl
+llm_terms/Output_final/databases_ontology/
+llm_terms/Output_final/validation_reports_stats/
+
+# --- Generated Build Output ---
+spacy_terms/site/
+site/
+
+# --- Broken/Dangling Submodule Refs ---
+llm_terms/llama.cpp/
+
+# --- Claude Code local config ---
+CLAUDE.md
+
+# --- paper_claims generated data (keep scripts, docs, small summaries) ---
+paper_claims/_spacy_runs/
+paper_claims/_llm_runs/
+paper_claims/_llm_smoke/
+paper_claims/_multi_ner_runs/cdm_output/
+paper_claims/_multi_ner_runs/gliner_ner.csv
+paper_claims/_multi_ner_runs/pubmedbert_ner.csv
+paper_claims/_multi_ner_runs/all_ner_combined.csv
+paper_claims/_multi_ner_runs/mapped_entities.json
+paper_claims/_multi_ner_runs/deduplicated_entities.json
+paper_claims/_multi_ner_runs/mapping_checkpoint.json
+paper_claims/_multi_ner_runs/mapping_run2*.log
+
+# --- Explicit Allow Rules ---
+!.gitignore
+!README.md
+!requirements.txt
+
+# --- Publication Release: un-ignore paper corpus, PDFs, and CDM outputs ---
+# Papers corpus (444 .txt files)
+!papers_txt/
+!papers_txt/**
+papers_txt/**/*.npy
+papers_txt/**/*.npz
+# PDFs and XMLs (436 files)
+!pdfs/
+!pdfs/**
+# CDM output: ontology, database, catalogue, provenance (LFS-tracked for >100MB)
+!paper_claims/_multi_ner_runs/cdm_output/
+!paper_claims/_multi_ner_runs/cdm_output/**
+paper_claims/_multi_ner_runs/cdm_output/*.bak
+paper_claims/_multi_ner_runs/cdm_output/*.bak_*
+paper_claims/_multi_ner_runs/cdm_output/*.db.bak*
+paper_claims/_multi_ner_runs/cdm_output/backups/
+paper_claims/_multi_ner_runs/cdm_output/*_qwen_only.db
+paper_claims/_multi_ner_runs/cdm_output/checkpoints/
+paper_claims/_multi_ner_runs/cdm_output/ontology_review/
+paper_claims/_multi_ner_runs/cdm_output/triples_old_*/
+paper_claims/_multi_ner_runs/cdm_output/validation/
+paper_claims/_multi_ner_runs/cdm_output/zenodo_v1/
+paper_claims/_multi_ner_runs/cdm_output/*.log
+paper_claims/_multi_ner_runs/cdm_output/triples/checkpoint.json
+paper_claims/_multi_ner_runs/cdm_output/triples/batch_summary.json
+paper_claims/_multi_ner_runs/cdm_output/triples/all_triples.csv
+paper_claims/_multi_ner_runs/cdm_output/triples/validated/
+paper_claims/_multi_ner_runs/cdm_output/embeddings/
+paper_claims/_multi_ner_runs/ner_output/
+paper_claims/_multi_ner_runs/mapping/
+paper_claims/claim_C_hybrid_fusion/results_notebook/
+paper_claims/claim_C_hybrid_fusion/results_test/
+paper_claims/claim_C_hybrid_fusion/results_v3/
+paper_claims/claim_C_hybrid_fusion/results_v4_all/
+!paper_claims/_multi_ner_runs/cdm_output/enhanced/
+!paper_claims/_multi_ner_runs/cdm_output/enhanced/**
+
+# --- Reference documents (not source code) ---
+Evidence Ontology OWL Version 1.docx
+docs/Evidence_Ontology_OWL_v1.docx
+docs/thesis.tex
+__pycache__/
+
+# --- CWD reorg artifacts (2026-10) ---
+/.ollama/
+/archive/
+# extraction/ is tracked at the dir level for the source files, but not its
+# generated outputs (which are huge and reproducible from extraction.py).
+/extraction/entities_raw.jsonl
+/extraction/entities_raw.copy*
+/extraction/checkpoint_entities.json
+/extraction/audit.json
+# deduplication_stategy/ is untracked but its outputs are large and reproducible.
+deduplication_stategy/*.jsonl
+deduplication_stategy/*.json
+deduplication_stategy/*.log
+
+# --- Qwen-primary experimental build (2026-10; NOT a release) ---
+# The Qwen DB/OWL/TTL are an experimental filtered projection of the
+# canonical tracked microbiome_cdm.db (see paper_claims/build_qwen_cdm.py).
+# They were archived on 2026-10-03 after the release-audit found that the
+# Qwen-derived manifest didn't match the tracked-DB-derived catalogue.
+# See docs/RELEASE_AUDIT_2026-10-03.md §M for the rationale.
+/archive/qwen_experiment_2026_10_02/microbiome_cdm_qwen.db
+/archive/qwen_experiment_2026_10_02/microbiome_cdm_qwen.owl
+/archive/qwen_experiment_2026_10_02/microbiome_cdm_qwen.ttl
+/archive/qwen_experiment_2026_10_02/microbiome_cdm_qwen_only.db
+# Future Qwen-style experiments land here too.
+/archive/qwen_experiment_*/
+
+# --- Explicit allow rules for new files ---
+# .env.example ships with the repo (no secrets); .env itself stays ignored.
+!.env.example
+
+# Segmented-sections markdown corpus (generated from data/corpus records)
+segmented_sections_markdown/
+
+# --- Secrets (P0.2 audit, 2026-10-26) ---
+# corpus_v2/config/secrets.env was not matched by .env or .env.* ;
+# these patterns close that gap. No .git/ exists yet, so this has no
+# immediate effect; it prevents a future 'git add' from staging secrets.
+secrets.env
+**/secrets.env
+*.key
+*.pem
+
+# --- Publication phase (2026-11-03) ---
+# Secrets: the LLM-judge key lives in ~/.fhgenie_secrets.yml (outside the repo); never let a copy in.
+*secrets*.yml
+*secrets*.yaml
+.fhgenie*
+# Scratch files of other agents / audit runs at the repo root.
+/.sbx_*
+/.audit_tmp/
+# Release payloads are published through Zenodo, not git: several files exceed 100 MB, and
+# frozen bundles contain section text and term contexts of the 179 papers whose licence does
+# not allow redistribution (paper/publication/rights/). Keep only docs, ledgers and checksums.
+/releases/**/*
+!/releases/**/
+!/releases/RELEASES.md
+!/releases/ZENODO_UPLOAD_METADATA.json
+!/releases/**/README.md
+!/releases/**/*.sha256
+!/releases/CURRENT_FROZEN_SET_2026-11-02/*
+# Authors' copy of all paper outputs (collect_frozen_outputs.py): same rights rule, keep only the index files.
+/paper/publication/all_frozen_outputs/**/*
+!/paper/publication/all_frozen_outputs/**/
+!/paper/publication/all_frozen_outputs/README.md
+!/paper/publication/all_frozen_outputs/INVENTORY.tsv
+!/paper/publication/all_frozen_outputs/MANIFEST.sha256
+# Faulty first deposit build, kept only until the user deletes it.
+/releases/zenodo_frozen_build1_SUPERSEDED/
+# paper_claims/ was renamed paper/: same generated-data exclusions under the new path.
+/paper/_multi_ner_runs/*
+!/paper/_multi_ner_runs/*.py
+!/paper/_multi_ner_runs/*summary*
+# Downloaded journal pages (bot-check HTML, not the guidelines themselves).
+paper/publication/submission_readiness/journal_requirements_source/**/*.html
+# Guard: full texts and PDFs must not be re-included by the release allow-rules above.
+**/papers_txt/
+**/pdfs/
+# Pipeline working data under the post-2026-10-30 paths (the llm_terms/ rules above predate the move to
+# pipelines/). Checkpoints, chunks and indexes hold section text of all papers; raw/metadata holds
+# Entrez / Semantic Scholar records with abstracts. Code, configs, schemas and docs stay tracked.
+/pipelines/corpus_v2/checkpoints/
+/pipelines/corpus_v2/raw/
+/pipelines/corpus_v2/releases/**/*
+!/pipelines/corpus_v2/releases/**/
+!/pipelines/corpus_v2/releases/**/README.md
+!/pipelines/corpus_v2/releases/**/*.sha256
+/pipelines/corpus_pipeline/chunks/
+/pipelines/corpus_pipeline/index/
+/pipelines/corpus_pipeline/manifests/
+/pipelines/llm_terms/Output_final/*
+!/pipelines/llm_terms/Output_final/scripts/
+/pipelines/llm_terms/kg_builder/*checkpoint*.json
+/src/notebooks/demo_output/
+# Frozen validation: per-value check log (89 MB, pinned by FINAL_VALIDATION_MANIFEST.sha256; regenerate locally).
+/paper/publication/final_validation/evidence_judge/deterministic_value_checks.jsonl
+
+# --- External reference sources: provenance in, payload out ---
+# `**/data/` above excludes the whole tree, so git never descends into it and a bare
+# `!data/reference_kg/SOURCES.md` does NOT work (verified: exclusion of a directory
+# disables all negations beneath it). Re-open each level explicitly, then drop the payload.
+# Tracked: SOURCES.md + every SHA256SUMS / DOWNLOADED_AT (21 files, ~32 KB) — that is the
+# download provenance the report cites. NOT tracked: the 769 MB of raw downloads, which are
+# re-fetchable from the URLs in SOURCES.md and verified against these checksums.
+# NOTE the leading slash: an unanchored `!data/` also matches pipelines/corpus_v2/data/,
+# releases/*/data/ and src/scripts/data/, which re-exposed 600 MB of generated JSONL (verified).
+!/data/
+/data/*
+!/data/reference_kg/
+/data/reference_kg/*
+!/data/reference_kg/SOURCES.md
+!/data/reference_kg/raw/
+/data/reference_kg/raw/*
+!/data/reference_kg/raw/SHA256SUMS
+!/data/reference_kg/raw/DOWNLOADED_AT
+!/data/reference_kg/raw/*/
+/data/reference_kg/raw/*/*
+!/data/reference_kg/raw/*/SHA256SUMS
+!/data/reference_kg/raw/*/DOWNLOADED_AT
+
+# Terminology crosswalk tables (30.7 MB) are byte-identical to the checksummed copies
+# inside releases/frozen_output/03_common_data_model/crosswalk/ (sha256 80267538…, 865c2c6c…)
+# and regenerable by `python src/scripts/build_terminology_crosswalk.py` (OUT = docs/crosswalk).
+# Keep the docs that explain them; drop the duplicated CSVs.
+/docs/crosswalk/*.csv
+
+# corpus_pipeline stage 08 report (2.3 MB, one row per chunk) — regenerated by stage08_chunk.py.
+# The human-readable *.md summaries beside it stay tracked.
+/pipelines/corpus_pipeline/reports/chunk_manifest.csv

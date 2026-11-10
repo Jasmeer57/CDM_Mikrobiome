@@ -1,0 +1,1 @@
+# Tests package — allows `python -m unittest tests.test_*` invocation.

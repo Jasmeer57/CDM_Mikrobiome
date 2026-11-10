@@ -1,0 +1,90 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage E/F decision register row (DRAFT): one per input record and proposal",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "record_type",
+  "record_id",
+  "original_value",
+  "proposed_value",
+  "decision",
+  "checks_passed",
+  "checks_failed",
+  "reason",
+  "model",
+  "prompt_version",
+  "validator_version"
+ ],
+ "properties": {
+  "record_type": {
+   "enum": [
+    "TERM",
+    "TRIPLE",
+    "MAPPING"
+   ]
+  },
+  "record_id": {
+   "type": "string"
+  },
+  "field": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "original_value": {},
+  "proposed_value": {},
+  "decision": {
+   "enum": [
+    "ACCEPTED_COMPUTATIONALLY",
+    "REJECTED",
+    "UNRESOLVED",
+    "NOT_VERIFIABLE",
+    "NOT_PROCESSED"
+   ]
+  },
+  "checks_passed": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "checks_failed": {
+   "type": "array",
+   "items": {
+    "type": "string"
+   }
+  },
+  "reason": {
+   "type": "string"
+  },
+  "evidence_ref": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "model": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "prompt_version": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "validator_version": {
+   "type": "string"
+  },
+  "revert": {
+   "type": [
+    "string",
+    "null"
+   ]
+  }
+ }
+}

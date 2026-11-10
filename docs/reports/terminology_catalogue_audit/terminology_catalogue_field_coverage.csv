@@ -1,0 +1,55 @@
+dataset,expected_field,actual_field,present_rows,total_rows,coverage_basis,status,evidence,notes
+A,canonical_term_id,term_id,165991,165991,field populated on all canonical rows,PASS,term_id re-derived 165991/165991,stable HMCTERM_<sha1(term_norm|cdm_type)[:16]>
+A,normalized_term,term_norm,165991,165991,field populated on all canonical rows,PASS,real textnorm.sanitize output,165905 distinct term_norm
+A,preferred_label,term,165991,165991,display form populated,PARTIAL,no explicit preferred-label selection logic,term is the upstream display variant chosen at dedup
+A,alternative_labels,(none),0,165991,no such field,FAIL,alternative_types holds CDM TYPES not labels; upstream term_original_variants not surfaced,synonym/variant labels are absent from the audit schema
+A,term_type,cdm_type,165991,165991,field populated on all canonical rows,PASS,plus alternative_types and n_candidate_types,15 distinct values (14 CDM types + generic ENTITY)
+A,definition,(linked via definition_status),838,165991,terms with SOURCE_DEFINITION_FOUND,PARTIAL,text lives in term_definitions.jsonl (1150 rows),0.5049 percent of canonical terms; linked not inline
+A,definition_source,term_definitions.definition_source,1150,1150,definition rows with source class,PASS,CONTEXTUAL_DESCRIPTION 1003 / ABBREVIATION_EXPANSION 126 / EXPLICIT_AUTHOR_DEFINITION 21,also rolled up on canonical as definition_sources
+A,definition_evidence_id,term_definitions.definition_id + paper_id/section_id/char offsets,1150,1150,definition rows with evidence id,PASS,none missing,1150/1150 spans reproduce byte-exact at section-body-relative offsets
+A,mention_frequency,mention_count,155514,165991,terms with a mention rollup,PARTIAL,recompute mismatch 0,but scope is raw cross-model rows not distinct occurrences; 10477 terms have no mention
+A,paper_frequency,paper_count,155514,165991,terms with a mention rollup,PASS,recompute mismatch 0,distinct paper_id under the same constrained join
+A,section_frequency,(none),0,165991,no such field and none materialised anywhere,FAIL,no section-level frequency artifact exists,derivable as distinct (paper_id section_id) per term
+A,first_seen,(none),0,0,no timestamps exist in the corpus,NOT_APPLICABLE,static 453-paper corpus,not meaningful or derivable
+A,last_seen,(none),0,0,no timestamps exist in the corpus,NOT_APPLICABLE,static 453-paper corpus,not meaningful or derivable
+A,normalization_method,(implicit in term_norm),165991,165991,no explicit field,PARTIAL,method is scripts/termpipeline/textnorm.sanitize (NFKD + C1 strip + punctuation/dash folding),not recorded per row
+A,normalization_status,(none),0,165991,no explicit field,PARTIAL,no decision enum; unresolved_flags exists only on mentions,no NORMALIZED/UNRESOLVED status column
+A,mapping_status,(linked via term_ontology_mappings),71533,165991,terms with a mapping row,PARTIAL,mapping_relation and mapping_disposition carry the status,not reflected on the canonical row; 94458 terms have no mapping row
+A,verification_status,review_status,165991,165991,field populated on all canonical rows,PASS,value is UNVERIFIED on all 165991,honest machine status; no human review
+A,source_release,source_table,165991,165991,field populated,PARTIAL,value is data_catalogue/terminology/terminology_dedup.csv,no release dir and no run id on canonical rows
+A,processing_run_ids,(none on canonical),0,165991,no run id on canonical rows,PARTIAL,run ids exist only on mentions (extraction_run_id),build job 28619916 identified from logs not the data
+B,original extracted surface form,surface_form (and original_surface_form),2505735,2505735,field populated,PASS,,verbatim extracted text
+B,canonical terminology ID where resolved,canonical_term_id,0,2505735,non-null count is 0,FAIL,canonical_term_id is null on 100 percent of rows,link exists only as implicit (normalized_mention entity_type) join resolving 46.89 percent
+B,original paper and section identifiers,paper_id / section_id,2505735,2505735,fields populated,PASS,,2364 distinct (paper section) units; 453 distinct papers
+B,source sentence or text evidence,supporting_sentence / supporting_passage,2505735,2505735,fields populated,PASS,,offsets align with the supporting text
+B,character offsets or equivalent location,start_offset / end_offset,2505650,2505735,rows with non-null offsets,PASS,SENTENCE_CLIPPED 358150 flagged; OFFSET_UNVERIFIED 85 (nulls); OFFSET_RECOVERED 34,85 rows carry null offsets and are excluded from validation's checked denominator
+B,extraction method,extraction_method,2505735,2505735,field populated,PASS,ner_model_ensemble 1705500 / llm_section_ner 552147 / gazetteer_dictionary_match 248088,
+B,extraction model,extraction_model,2505735,2505735,field populated,PASS,,7 models plus qwen3.5 plus mesh gazetteer
+B,run ID,extraction_run_id,2505735,2505735,field populated,PASS,cpu_ensemble_v1 1705500 / qwen35_vllm_body_v1 366123 / mesh_gazetteer_2026 248088 / qwen_ollama_cell7c_v1 186024,
+B,confidence where available,confidence,0,2505735,non-null count is 0,PARTIAL,field present but null on every row,generator did not emit a score
+B,normalization decision and status,normalized_mention + unresolved_flags,2505735,2505735,fields populated; no decision enum,PARTIAL,,no explicit NORMALIZED/UNRESOLVED status column
+C,where the definition came from,definition_source,1150,1150,field populated,PASS,,contextual description 1003 / abbreviation expansion 126 / explicit author definition 21
+C,quoted or paraphrased,definition_formality,1150,1150,field populated,PARTIAL,contextual 1003 / formal 147,no explicit quoted-vs-paraphrased flag; verbatim span implies quoting
+C,source resource and version where applicable,paper_id + section_id + sentence_id,1150,1150,paper-level provenance present,PARTIAL,there are no external-resource definitions,no external vocabulary version applies; provenance_class SOURCE_DERIVED on all
+C,human-reviewed,review_status,1150,1150,field populated,PASS,value is REVIEW_REQUIRED on all 1150,honest not-reviewed status
+C,distinguish paper from external definitions,provenance_class + definition_source,1150,1150,fields populated,PASS,provenance_class SOURCE_DERIVED 1150/1150,no external definitions exist in this build
+C,preserve multiple legitimate definitions,definition_count + multiple rows,1150,1150,multiple rows per term retained,PASS,example Bacteroides has definition_count 3,rows are not collapsed
+C,do not fabricate a definition,definition_status NO_DEFINITION_FOUND,165153,165991,terms explicitly marked without a definition,PASS,165153 marked NO_DEFINITION_FOUND,absence is recorded rather than invented
+D,canonical terminology ID,term_id,334231,334231,field populated,PASS,,5237 rows reference term_ids absent from canonical
+D,vocabulary name and version,ontology_source + ontology_name (+ ontology_registry.json),334231,334231,name always present; version by registry,PARTIAL,MeSH 2026; OMOP 2018-06-02; live UMLS/BioPortal/OLS4/NCBI Taxonomy,version is not carried per row
+D,vocabulary concept/code identifier,concept_id,322754,334231,rows with a concept id,PASS,11477 NO_MATCH_FOUND rows carry none,distinct concept ids 206805
+D,preferred concept label,concept_label,322754,334231,rows with a concept id,PASS,,absent on the 11477 no-match rows
+D,mapping method and provenance,provenance + staged_match + source_service,334231,334231,fields populated,PASS,cv rows note projected from an existing linking run not re-queried,bioportal 136417 / ols 84859 / umls 68989 / omop 21881 / mesh 8652
+D,match or confidence score if generated,scores.confidence,334231,334231,field present; often null,PARTIAL,,lexical matches carry no calibrated score
+D,evidence supporting the match,staged_match + matched_via + mesh_tree,334231,334231,fields populated where applicable,PASS,7522 mesh rows carry mesh_tree,weak evidence for lexical matches
+D,mapping status and ambiguity,mapping_relation + mapping_disposition,334231,334231,fields populated,PASS,RELATED_TO 188313 / AMBIGUOUS 96038 / EXACT_MATCH 38403 / NO_MATCH_FOUND 11477,dispositions REVIEW_REQUIRED 322754 / UNRESOLVED 11477
+D,whether the target concept exists in the referenced version,(spot check only),40,40,sampled omop_local concept ids,PARTIAL,40/40 found in omop_index.sqlite,not exhaustively verified for all 206805 concept ids
+D,keep source terms separate from concept ids,term / term_norm vs concept_id,334231,334231,separate columns,PASS,,no id/term conflation found
+D,do not force a mapping when none exists,NO_MATCH_FOUND,11477,334231,rows explicitly no-match,PASS,,equivalence not asserted
+D,distinguish no-match from failed lookup,mapping_relation values,0,334231,LOOKUP_FAILED rows,NOT_VERIFIABLE,terms_lookup_failed is 0,distinction is modelled but unexercised in this build
+D,preserve multiple candidates,candidate_rank + competing_candidates,334231,334231,fields populated,PASS,,concept ids owned by more than one term 41759
+E,mention frequency rule defined and reproducible,canonical_terms.mention_count,155514,165991,recompute mismatch 0,PASS,reproduces exactly under the type-constrained join,definition is raw rows and is not stated in the data
+E,paper frequency rule defined and reproducible,canonical_terms.paper_count,155514,165991,recompute mismatch 0,PASS,,distinct paper_id
+E,section frequency rule defined and reproducible,(none),0,165991,no rule and no artifact,FAIL,,must be materialised
+E,reconciled against a single source of truth,occurrence_key,1362931,2505735,distinct extractor-independent span keys,PARTIAL,overall inflation 1.8385; matched 1.6065,four extractors over the same text are not reconciled in mention_count
+E,documented deduplication policy,(partial),0,0,policy stated only in code docstrings,PARTIAL,,no manifest or catalogue document states the counting rule

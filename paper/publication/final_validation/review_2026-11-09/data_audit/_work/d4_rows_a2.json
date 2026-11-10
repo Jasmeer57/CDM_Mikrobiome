@@ -1,0 +1,42 @@
+[
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_ontology_mappings.jsonl + microbiome_cdm_v3.db:term_concept_map",
+  "check_name": "ontology_mappings_2837_row_delta_fully_characterized",
+  "expected": "jsonl 334,231 - DB 331,394 = 2,837 dropped rows, fully characterized as the demotion event (D1: 'demoted mappings'); reverse diff 0",
+  "observed": "2,837-row delta: 2,784 distinct mapping_ids over those rows absent from DB; missing-row census AMBIGUOUS 1,475 / EXACT_MATCH 881 / RELATED_TO 481 (sum 2,837), all mapping_disposition REVIEW_REQUIRED; all 565 affected term_ids still live in canonical_term; 0 DB mapping_ids absent from jsonl",
+  "query_or_file": "set difference on mapping_id; join census on missing rows; SELECT COUNT(*) FROM term_concept_map",
+  "status": "PASS",
+  "note": "supersedes original T03 (naive 334,231-vs-331,394 scored DISCREPANCY) and closes I04; the 2,837 figure matches D1's 'demoted mappings' record exactly \u2014 same event; recensed under D4-X01 and I04R"
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/term_definitions.jsonl + microbiome_cdm_v3.db:term_definition+removed_term_definition",
+  "check_name": "term_definition_id_space_decomposition",
+  "expected": "jsonl 1,150 = 588 live (termpipeline_t3_rules_v1) + 562 removed; DB live term_definition census = 588 T3 + 6,185 gap-G8 remediation rows",
+  "observed": "jsonl 1,150 = 588 live overlap + 562 tombstoned; DB live 6,773 rows / 5,057 distinct ids (gap G8 6,185 rows + T3 588 rows); removed_term_definition 3,865 = 562 non-null-id + 3,303 NULL-id bulk tombstones (D2 L-2 tie); db-only distinct ids 4,469 belong to the gap-G8 remediation lineage outside release 1.0.1",
+  "query_or_file": "wc -l term_definitions.jsonl; definition_id set containment; GROUP BY extraction_run_id on term_definition",
+  "status": "PASS",
+  "note": "supersedes original T04 (naive 1,150-vs-6,773 scored DISCREPANCY): jsonl is the 1.0.1 T3 artifact while the DB table carries the separate remediation lineage; no unexplained remainder"
+ },
+ {
+  "pass": "D4",
+  "artifact": "microbiome_cdm_v3.db:term_occurrence",
+  "check_name": "term_occurrence_sum_n_mentions",
+  "expected": "2,505,684",
+  "observed": "2,505,684",
+  "query_or_file": "SELECT SUM(n_mentions) FROM term_occurrence (read-only immutable URI)",
+  "status": "PASS",
+  "note": ""
+ },
+ {
+  "pass": "D4",
+  "artifact": "releases/terminology/1.0.1/_mentions_summary.json",
+  "check_name": "mentions_source_census",
+  "expected": "cpu_ensemble 1,705,501 / qwen_vllm_body 366,123 / mesh_gazetteer 248,088 / qwen_ollama 186,024; all statuses OK",
+  "observed": "cpu_ensemble 1,705,501 / qwen_vllm_body 366,123 / mesh_gazetteer 248,088 / qwen_ollama 186,024; sum 2,505,736; all OK",
+  "query_or_file": "_mentions_summary.json sources[].rows scan",
+  "status": "PASS",
+  "note": ""
+ }
+]

@@ -1,0 +1,153 @@
+# Ignore all txt files in data directory
+data/*.txt
+*plan/
+# Ignore output directories
+output/
+enhanced_output/
+13733483/
+# Ignore log files
+logs/
+*.out
+*.err
+omop_vocab
+benchmarking/
+# Ignore python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+
+# Ignore virtual environments
+venv/
+env/
+.venv/
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.bak
+
+# Ignore Jupyter notebooks
+*.ipynb
+
+# Ignore model files and large binaries
+*.pkl
+*.pickle
+*.model
+*.bin
+
+# Ignore datasets (too large for git)
+*.csv
+*.tsv
+*.jsonl
+*.parquet
+
+# Ignore microbiome project data files
+**/data/PRJ*.txt
+**/data/PRJ*.csv
+**/data/PRJ*.tsv
+**/data/PRJ*.TXT
+**/data/PRJ*.CSV
+**/data/PRJ*.TSV
+
+# Ignore ALL PRJ project data files (these are generated/massive datasets)
+PRJ*
+**/PRJ*
+
+# Ignore all python scripts that seem generated
+enhanced_*.py
+*_enhanced_*.py
+
+# Ignore all slurm and shell scripts that seem generated
+*_complete_*.sh
+*_pipeline_*.sh
+
+# Ignore generated pipeline files
+setup_api_keys.sh
+run_*_slurm.sh
+example_usage_commands.txt
+ENHANCED_PIPELINE_GUIDE.md
+
+# Ignore test directories and files
+test_data/
+test_*.sh
+
+# Ignore version files and weird generated files
+=*
+
+# Ignore virtual environment binaries
+**/bin/activate*
+**/bin/pip*
+**/bin/python*
+**/bin/uvicorn
+**/bin/watch*
+**/transformers-cli
+**/huggingface-cli
+**/accelerate*
+**/torchrun
+**/ghp-import
+**/httpx
+**/htmlmin
+**/jsonschema
+**/mkdocs
+**/pytest
+**/pybabel
+**/pygmentize
+**/tiny-agents
+**/websockets
+**/dotenv
+**/f2py*
+**/isympy
+**/nltk
+**/normalizer
+
+# Keep specific important files
+!.gitignore
+!README.md
+!requirements.txt
+!pipeline_summary.txt
+
+old.py
+
+*.md
+
+
+# Database files (exceeds 100MB limit)
+*.db
+*.db-shm
+*.db-wal
+microbiome_cdm.db
+
+# Pipeline summaries
+pipeline_summary.txt
+outputs/*/pipeline_summary.txt
+
+
+*.slurm
+# Gemini CLI and Pipeline Temp Files
+temp/
+logs/
+*.log
+__pycache__/
+*.pyc
+evaluate_kg.py
+deep_critical_audit.py
+evaluation_summary.json
+cdm_entities_final_v4_consolidated.json
+validate_knowledge_graph.py
+PUBLICATION_STRATEGY.md
+!Output_final/scripts/

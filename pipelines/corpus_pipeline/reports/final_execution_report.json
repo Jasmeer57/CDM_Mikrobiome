@@ -1,0 +1,18 @@
+{
+  "config_version": "1.0.0",
+  "target_papers": 453,
+  "ready": 435,
+  "blocked": 18,
+  "sections": 3105,
+  "chunks": 11980,
+  "bm25_terms": 134960,
+  "validation_failures": 2,
+  "jev_complete": false,
+  "embeddings_complete": false,
+  "dense_index_complete": false,
+  "retrieval_evaluation": "BLOCKED_NO_HUMAN_REVIEWED_LABELS",
+  "pending_gpu_stages": [
+    "06_jev.sbatch",
+    "11_embeddings.sbatch"
+  ]
+}

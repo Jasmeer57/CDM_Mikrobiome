@@ -1,0 +1,29 @@
+{
+ "tcm_rows": 331394,
+ "db_mapping_relation_census": {
+  "AMBIGUOUS": 94563,
+  "EXACT_MATCH": 37522,
+  "NO_MATCH_FOUND": 11477,
+  "RELATED_TO": 187832
+ },
+ "jsonl_relation_census": {
+  "RELATED_TO": 188313,
+  "NO_MATCH_FOUND": 11477,
+  "AMBIGUOUS": 96038,
+  "EXACT_MATCH": 38403
+ },
+ "delta_jsonl_minus_db": {
+  "RELATED_TO": 481,
+  "NO_MATCH_FOUND": 0,
+  "AMBIGUOUS": 1475,
+  "EXACT_MATCH": 881
+ },
+ "delta_sum": 2837,
+ "asserts_expected_live_census": true,
+ "live_census_expected": [
+  "RELATED_TO 187,832 (jsonl 188,313 - 481)",
+  "AMBIGUOUS 94,563 (jsonl 96,038 - 1,475)",
+  "EXACT_MATCH 37,522 (jsonl 38,403 - 881)",
+  "NO_MATCH_FOUND 11,477 (jsonl 11,477 - 0)"
+ ]
+}

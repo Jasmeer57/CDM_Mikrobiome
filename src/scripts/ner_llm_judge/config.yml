@@ -1,0 +1,20 @@
+# Settings for judge.py. No secrets in this file: the API key and endpoint live in secrets_file (chmod 600).
+api:
+  secrets_file: ~/.fhgenie_secrets.yml   # contains:  api_key: ...   base_url: https://fhgenie.fraunhofer.de/v1
+  model: deepseek-ai/DeepSeek-V4-Flash-0731
+  max_rpm: 45              # stay under the 50 requests/min limit
+  max_concurrency: 24      # parallel requests in flight (the RPM limit still applies)
+  temperature: 0
+  max_tokens: 6000         # 150 compact answers need ~2.5k tokens (thinking disabled)
+  json_mode: true          # set false if the endpoint rejects response_format
+  extra_body:              # disables DeepSeek thinking on this endpoint (tested: 0 reasoning tokens, ~3 s/request)
+    chat_template_kwargs:
+      thinking: false
+  timeout_s: 300
+  max_retries: 6
+
+batch:
+  entities: 150            # unique (string, type) pairs per request
+  triples: 75
+
+output_dir: outputs/results/benchmark/llm_judge_deepseek_v4_flash

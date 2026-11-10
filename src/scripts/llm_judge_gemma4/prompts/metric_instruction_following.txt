@@ -1,0 +1,37 @@
+You are an independent evaluator auditing an automated biomedical
+information-extraction pipeline. You did NOT build this pipeline and you must
+judge only what is shown. This is a per-item judgment: ignore every other item.
+
+METRIC: INSTRUCTION FOLLOWING. Instruction following asks whether the extracted
+output obeys the extraction schema it was asked to produce: the claim must be a
+well-formed instance of the intended structured fields, with the right shape and
+no schema violations (missing required values, wrong-typed values, or invented
+fields).
+
+CLAIM (structured fields extracted from the paper):
+{claim_text}
+
+EVIDENCE (the source sentence the pipeline attached as support):
+{evidence_text}
+
+CONTEXT BEFORE (up to 200 chars, for context only):
+{context_before}
+
+CONTEXT AFTER (up to 200 chars, for context only):
+{context_after}
+
+VERDICT VOCABULARY (choose exactly one):
+- YES: the output fully obeys the extraction schema (well-formed, correctly
+  typed, no missing required values, no invented fields).
+- PARTIAL: the output mostly obeys the schema but has a minor violation (e.g. a
+  weak or ambiguous value, a partially filled field).
+- NO: the output violates the schema (malformed, mis-typed, missing required
+  values, or contains fields that do not belong).
+
+RULES
+- Judge schema compliance of the shown output, not truth of the content.
+- Use ONLY the fields above. Do not assume any hidden metadata.
+- If the claim is empty or unparseable, output NO.
+
+Respond with a single JSON object and nothing else:
+{{"verdict": "<YES|NO|PARTIAL>", "confidence": <0.0-1.0>, "reasoning": "<one sentence, <=200 characters>"}}

@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://microbiome-cdm.local/corpus_v2/study.schema.json",
+  "title": "Corpus v2 study record",
+  "description": "One study block per paper (template §3G). Every §3G field is always present; the literal 'not_reported' means no source states a value — never blank. Deterministic compendium facts outrank the LLM reading; conflicts are recorded in study_provenance.conflicts, never silently discarded.",
+  "type": "object",
+  "required": [
+    "study_id", "corpus_id", "paper_id", "extraction_status", "llm_status",
+    "study_design", "research_question", "country_region",
+    "recruitment_setting", "population_description",
+    "num_participants_reported", "num_biological_samples_reported",
+    "num_technical_replicates_reported", "num_time_points_reported",
+    "age_information", "sex_gender_information", "health_conditions",
+    "exposures_interventions", "comparator_control_group",
+    "eligibility_criteria", "confounders_covariates_reported",
+    "limitations_reported", "body_sites", "specimen_types",
+    "collection_method", "collection_time_points",
+    "storage_transport_conditions", "dna_rna_extraction_method",
+    "assay_type", "assay_type_evidence", "sequencing_platform",
+    "target_gene_region", "negative_positive_controls",
+    "contamination_handling", "taxonomic_profiling_method",
+    "taxonomic_database_and_version", "functional_profiling_method",
+    "quality_filtering_normalization", "statistical_methods",
+    "multiple_testing_correction", "software_pipeline_version",
+    "data_accessions", "code_data_availability", "study_provenance"
+  ],
+  "properties": {
+    "study_id": {"type": "string", "pattern": "^HMPAPER_[0-9]{6}_STUDY_[0-9]{3}$"},
+    "corpus_id": {"type": "string", "pattern": "^HMPAPER_[0-9]{6}$"},
+    "paper_id": {"type": "string", "pattern": "^HMPAPER_[0-9]{6}$"},
+    "bioproject": {"type": ["string", "null"]},
+    "extraction_status": {"enum": ["COMPLETE", "PARTIAL", "FAILED"]},
+    "llm_status": {"enum": ["COMPLETE", "PARTIAL", "FAILED"]},
+    "llm_error": {"type": ["string", "null"]},
+    "llm_model": {"type": "string"},
+    "llm_model_version": {"type": "string"},
+    "llm_prompt_version": {"type": "string"},
+    "llm_input_chars": {"type": "integer", "minimum": 0},
+    "llm_source_section_ids": {"type": "array", "items": {"type": "string"}},
+    "llm_source_text_hash": {"type": ["string", "null"]},
+    "llm_degrees": {"type": "array", "items": {"type": "object"}},
+    "llm_split_retries": {"type": "integer"},
+    "deterministic_sources": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "compendium files consulted for this record (join key: BioProject accession via the stage-21 link)"
+    },
+    "study_design": {"type": "string"},
+    "research_question": {"type": "string"},
+    "country_region": {"type": "string"},
+    "recruitment_setting": {"type": "string"},
+    "population_description": {"type": "string"},
+    "num_participants_reported": {"type": "string"},
+    "num_biological_samples_reported": {"type": "string"},
+    "num_technical_replicates_reported": {"type": "string"},
+    "num_time_points_reported": {"type": "string"},
+    "age_information": {"type": "string"},
+    "sex_gender_information": {"type": "string"},
+    "health_conditions": {"type": "string"},
+    "exposures_interventions": {"type": "string"},
+    "comparator_control_group": {"type": "string"},
+    "eligibility_criteria": {"type": "string"},
+    "confounders_covariates_reported": {"type": "string"},
+    "limitations_reported": {"type": "string"},
+    "body_sites": {"type": "string"},
+    "specimen_types": {"type": "string"},
+    "collection_method": {"type": "string"},
+    "collection_time_points": {"type": "string"},
+    "storage_transport_conditions": {"type": "string"},
+    "dna_rna_extraction_method": {"type": "string"},
+    "assay_type": {"type": "string"},
+    "assay_type_evidence": {"type": "string"},
+    "sequencing_platform": {"type": "string"},
+    "target_gene_region": {"type": "string"},
+    "negative_positive_controls": {"type": "string"},
+    "contamination_handling": {"type": "string"},
+    "taxonomic_profiling_method": {"type": "string"},
+    "taxonomic_database_and_version": {"type": "string"},
+    "functional_profiling_method": {"type": "string"},
+    "quality_filtering_normalization": {"type": "string"},
+    "statistical_methods": {"type": "string"},
+    "multiple_testing_correction": {"type": "string"},
+    "software_pipeline_version": {"type": "string"},
+    "data_accessions": {"type": "string"},
+    "code_data_availability": {"type": "string"},
+    "study_provenance": {
+      "type": "object",
+      "required": ["conflicts"],
+      "properties": {
+        "conflicts": {
+          "type": "array",
+          "description": "Deterministic-vs-LLM disagreements: the deterministic value is kept, the rejected LLM value is recorded.",
+          "items": {
+            "type": "object",
+            "required": ["field", "deterministic", "llm", "kept", "llm_source"],
+            "properties": {
+              "field": {"type": "string"},
+              "deterministic": {"type": "string", "description": "Value kept (truncated, audit only)."},
+              "llm": {"type": "string", "description": "Value the LLM proposed (truncated, audit only)."},
+              "kept": {"const": "deterministic"},
+              "llm_source": {"type": "string"}
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["source", "method"],
+        "properties": {
+          "source": {"type": "string"},
+          "method": {"type": "string"},
+          "llm_value_rejected": {"type": "string"}
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

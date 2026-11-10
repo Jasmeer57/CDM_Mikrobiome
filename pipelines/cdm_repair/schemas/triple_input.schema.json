@@ -1,0 +1,243 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "Stage A triple input record (one per CDM 3.0.3 relation). Evidence carries ids, offsets and hashes, never text.",
+ "type": "object",
+ "required": [
+  "canonical_triple_id",
+  "subject",
+  "predicate_original",
+  "object",
+  "baseline_population",
+  "evidence",
+  "stage_c_route",
+  "processing_status"
+ ],
+ "properties": {
+  "canonical_triple_id": {
+   "type": "string"
+  },
+  "subject": {
+   "type": "object",
+   "required": [
+    "term_id",
+    "label",
+    "type",
+    "label_sha256",
+    "label_withheld"
+   ],
+   "properties": {
+    "term_id": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "label": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "type": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "ontology_id": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "label_sha256": {
+     "type": [
+      "string",
+      "null"
+     ],
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "label_withheld": {
+     "type": "boolean"
+    }
+   },
+   "if": {
+    "properties": {
+     "label_withheld": {
+      "const": true
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "label": {
+      "type": "null"
+     }
+    }
+   }
+  },
+  "object": {
+   "type": "object",
+   "required": [
+    "term_id",
+    "label",
+    "type",
+    "label_sha256",
+    "label_withheld"
+   ],
+   "properties": {
+    "term_id": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "label": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "type": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "ontology_id": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "label_sha256": {
+     "type": [
+      "string",
+      "null"
+     ],
+     "pattern": "^[0-9a-f]{64}$"
+    },
+    "label_withheld": {
+     "type": "boolean"
+    }
+   },
+   "if": {
+    "properties": {
+     "label_withheld": {
+      "const": true
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "label": {
+      "type": "null"
+     }
+    }
+   }
+  },
+  "predicate_original": {
+   "type": "string"
+  },
+  "baseline_population": {
+   "enum": [
+    "TYPED_RELATION_BASELINE",
+    "GENERIC_COOCCURRENCE_BASELINE"
+   ]
+  },
+  "evidence": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "triple_mention_id",
+     "paper_id",
+     "section_record_id",
+     "anchor_status",
+     "sentence_sha256",
+     "sentence_matches_offsets",
+     "sentence_found_in_section",
+     "paper_rights_route",
+     "eligible_for_sentence_review",
+     "local_anchor_check"
+    ],
+    "properties": {
+     "triple_mention_id": {},
+     "paper_id": {
+      "type": "string"
+     },
+     "section_record_id": {},
+     "char_start": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "char_end": {
+      "type": [
+       "integer",
+       "null"
+      ]
+     },
+     "anchor_status": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "sentence_sha256": {
+      "type": [
+       "string",
+       "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+     },
+     "sentence_matches_offsets": {
+      "type": "boolean"
+     },
+     "sentence_found_in_section": {
+      "type": "boolean"
+     },
+     "section_text_sha256": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "extraction_run_id": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "paper_rights_route": {
+      "type": "string"
+     },
+     "eligible_for_sentence_review": {
+      "type": "boolean"
+     },
+     "local_anchor_check": {
+      "enum": [
+       "EXACT",
+       "WHITESPACE",
+       "NORMALISED",
+       "ALNUM_NORMALISED",
+       "ELSEWHERE_IN_SECTION",
+       "NOT_FOUND"
+      ]
+     }
+    }
+   }
+  },
+  "stage_c_route": {
+   "enum": [
+    "SENTENCE_CANDIDATE_PENDING_RIGHTS_VERIFICATION",
+    "NO_ELIGIBLE_SENTENCE_REMAINS_GENERIC_OR_UNRESOLVED"
+   ]
+  },
+  "processing_status": {
+   "const": "INVENTORIED"
+  }
+ }
+}

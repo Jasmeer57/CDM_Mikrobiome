@@ -1,0 +1,60 @@
+{
+  "schema": "triple-reference-check-scoring",
+  "version": "1.0",
+  "registered": "2026-11-03",
+  "purpose": "Reference check of the CDM 3.0.3 relation-triple layer, as frozen and as cleaned by DeepSeek (outputs/results/cleaned_layer_deepseek), against BugSigDB (human-curated microbial signatures) and CTD (curated chemical-disease and gene-disease associations). Rules fixed before the run; this file's sha256 is written to PREREGISTRATION.sha256 before any result is computed.",
+  "inputs": {
+    "cdm": {"path": "releases/cdm_v3/3.0.3/microbiome_cdm_v3.db", "sha256": "5d23ba87d29ac7a6de831e66b35c0f42bc10312132cf20dd0191526b8b041e3e"},
+    "cleaned_triples": {"path": "outputs/results/cleaned_layer_deepseek/cleaned_triples.csv.gz", "sha256": "710a6de827b2ce864d740dc8a475b8eaf60639de199645f52dab4e26d29a29be"},
+    "bugsigdb": {"path": "data/reference_kg/raw/bugsigdb/full_dump.csv", "sha256": "b106dafaec8b5be5a52d685da9bf88f8439ab93f87a4f68f423d6b3d679ce81c"},
+    "ncbi_taxonomy_nodes": {"path": "data/reference_kg/raw/nodes.dmp", "sha256": "1bee29d1a84466cc17c9096222881acfcb353c9683c66acbea68ac7e25d26779"},
+    "ncbi_taxonomy_names": {"path": "data/reference_kg/raw/names.dmp", "sha256": "f485240f5669e0d24da411fd2b330308bbdc4c9f254428580c9b988761986672"},
+    "ctd_chemicals_diseases": {"path": "data/reference_kg/raw/CTD_chemicals_diseases.tsv.gz", "sha256": "371c248a36a70fccd80104fcfa984be393bf63f28ffce77d34eb076dab21481b"},
+    "ctd_genes_diseases": {"path": "data/reference_kg/raw/CTD_curated_genes_diseases.tsv.gz", "sha256": "0422d3bd8f89a034df94a031d6eb3cc9ac9af77cc5f53ef034ca4f661e30b896"},
+    "ctd_chemicals": {"path": "data/reference_kg/raw/CTD_chemicals.tsv.gz", "sha256": "3939d41b3fb9e39408b5f06f1060d60eb535c924de7fef259288626fc6298b4c"},
+    "ctd_diseases": {"path": "data/reference_kg/raw/CTD_diseases.tsv.gz", "sha256": "c39400f4e112b67d654e2add8dedbf6a65f52d92294a0b8f748fc89400ab0832"},
+    "human_gene_info": {"path": "data/reference_kg/raw/Homo_sapiens.gene_info.gz", "sha256": "d4c215ec6ae6c5922611ce3cfea9b5f899b547ee96d820b0a71b769d1c345b95"}
+  },
+  "triples": "all 25,788 rows of the CDM relation table; entity types from canonical_term.cdm_type of subject_term_id / object_term_id",
+  "identifier_resolution": {
+    "rule": "an entity is resolved by (1) its CDM mapping, else (2) an exact, case-insensitive name match in the reference vocabulary; a name matching more than one identifier is unresolved. The method used is recorded per item.",
+    "cdm_mapping_rows": "term_concept_map rows with mapping_disposition_reviewed = 'ACCEPTED', or is_canonical_candidate = 1 with mapping_disposition != 'REJECTED' and mapping_disposition_reviewed not in ('REJECTED', 'REMOVED')",
+    "taxon": "NCBITaxon IDs from mapping rows; names.dmp names of any class",
+    "chemical": "MeSH IDs from mapping rows (bioportal MESH URIs, mesh service IDs); CTD_chemicals name and synonyms",
+    "disease": "MeSH IDs from mapping rows; CTD_diseases name and synonyms (CTD IDs MESH:* or OMIM:*)",
+    "gene": "entity types PROTEIN, DNA_RNA, GENOMICS only: human gene_info symbol or synonym, upper-cased, at least 3 characters"
+  },
+  "checks": {
+    "bugsigdb_taxon": {
+      "unit": "(triple, paper) pairs for papers in both CDM and BugSigDB (matched by PMID, else DOI), triple with at least one ORGANISM side resolved to a taxon (the subject if both are organisms)",
+      "verdicts": "MATCH = taxon ID in a BugSigDB signature of that paper; PARTIAL = same genus (nodes.dmp lift); NOT_IN_REFERENCE otherwise",
+      "chance": "the same taxon scored against the BugSigDB taxa of every other overlap paper"
+    },
+    "bugsigdb_direction": {
+      "unit": "MATCH/PARTIAL pairs where the taxon is the subject and the relation is directional",
+      "up": ["INCREASED_IN", "MORE_ABUNDANT_THAN"],
+      "down": ["DECREASED_IN", "LESS_ABUNDANT_THAN"],
+      "rule": "SAME / OPPOSITE when BugSigDB gives one direction for the matched taxa in that paper; else UNDETERMINED. Scored for the original relation and, for kept triples, for the cleaned relation (a swapped triple whose taxon moved to the object is UNDETERMINED).",
+      "chance": "agreement expected from the up/down base rates of the determinable pairs"
+    },
+    "ctd_chemical_disease": {
+      "unit": "triples with one CHEMICAL side and one DISEASE side, both resolved",
+      "verdicts": "CURATED = pair with DirectEvidence in CTD; INFERRED_ONLY = pair present only as inferred; NOT_IN_REFERENCE",
+      "chance": "share of all cross pairs (distinct resolved chemicals x distinct resolved diseases of these triples) that are in CTD, curated and any"
+    },
+    "ctd_gene_disease": {
+      "unit": "triples with one gene-type side (resolved to a human GeneID) and one DISEASE side (resolved)",
+      "verdicts": "CURATED = pair in CTD_curated_genes_diseases; NOT_IN_REFERENCE",
+      "chance": "share of all cross pairs (distinct genes x distinct diseases) in CTD"
+    }
+  },
+  "strata": ["all triples", "kept by the DeepSeek cleaning", "dropped by the DeepSeek cleaning"],
+  "cleaning_effect": "difference in support (MATCH+PARTIAL for BugSigDB; any CTD support) between kept and dropped triples, with a Newcombe hybrid-score 95% interval; and direction agreement of the original vs the cleaned relation on the same kept pairs",
+  "uncertainty": {"wilson": "95% Wilson interval", "bootstrap": {"unit": "paper", "replicates": 2000, "seed": 20261103, "applies_to": "BugSigDB checks"}},
+  "answer_template": "one record per checked item in items.jsonl, validated against answer_template.schema.json",
+  "reporting_rules": [
+    "Report support by a reference, not accuracy: absence from BugSigDB or CTD is NOT_IN_REFERENCE, never 'wrong'.",
+    "CTD support does not show that the paper made the claim; it shows that the association is known elsewhere.",
+    "Name-matched identifiers are reported separately from CDM-mapped ones."
+  ]
+}

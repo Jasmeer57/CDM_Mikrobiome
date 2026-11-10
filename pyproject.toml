@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "microbiome-cdm"
+version = "2.1.0"  # matches cdm_pipeline.__version__
+requires-python = ">=3.9"  # matches ruff target-version = "py39"
+# Dependencies deliberately UNDECLARED. requirements.lock pins a conda env
+# (torch==2.1.1+cpu, --extra-index-url .../whl/cpu); setuptools cannot express
+# index URLs or CPU-local version pins as PEP 508 metadata, and dropping them
+# would yield an install that silently fails to resolve torch. Keep installing
+# via `pip install -r requirements.lock`. See docs note in Stage 1 report.
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cdm_pipeline*", "common*"]
+# cdm_pipeline.entrez has no __init__.py but is imported as
+# cdm_pipeline.entrez.* (PEP 420 namespace package).
+namespaces = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = [
+    "pipelines/llm_terms/llama.cpp",
+    "pipelines/llm_terms/Output_final/scripts/standalone_pipeline.py",
+    "spacy_terms/standalone_scispacy_pipeline.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4"]
+ignore = [
+    "E501",   # line too long (black handles)
+    "E402",   # module level import not at top (common in this repo)
+    "B905",   # zip() without strict= (py39 compat)
+    "UP007",  # X | Y not available in py39
+    "UP038",  # isinstance X | Y not available in py39
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"src/tests/*" = ["B011"]
+"paper_claims/*/benchmark.py" = ["E402", "F401"]
+
+[tool.black]
+line-length = 100
+extend-exclude = '''
+/(
+    pipelines/llm_terms/llama.cpp
+  | pipelines/llm_terms/Output_final/scripts/standalone_pipeline.py
+  | spacy_terms/standalone_scispacy_pipeline.py
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+skip_glob = [
+    "pipelines/llm_terms/llama.cpp/*",
+    "pipelines/llm_terms/Output_final/scripts/standalone_pipeline.py",
+    "spacy_terms/standalone_scispacy_pipeline.py",
+]
