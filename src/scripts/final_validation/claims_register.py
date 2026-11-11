@@ -19,6 +19,11 @@ OUT = ROOT / "paper/publication/final_validation"
 c = sqlite3.connect(f"file:{CDM}?mode=ro", uri=True)
 
 
+JV2 = "outputs/results/benchmark/judge_v2_2026-11-10/test/ANALYSIS.json"
+TRV = "outputs/results/triple_retype_v2_2026-11-10/all_v25/SUMMARY.json"
+RMS = "outputs/results/retype_merged_2026-11-10/SUMMARY.json"
+LSC = "outputs/results/benchmark/judge_v2_2026-11-10/link_structural_check.json"
+
 def q(sql):
     return c.execute(sql).fetchone()[0]
 
@@ -403,6 +408,46 @@ CLAIMS = [
      "11578/0",
      lambda: "/".join(str(sum(v[k] for v in js("paper/publication/final_validation/X07_TEST_EXCEPTIONS_2026-11-10.json", "S9", "columns").values())) for k in ("text_values", "text_values_not_missing_codes")),
      "X07_TEST_EXCEPTIONS json"),
+    # rubric-v2 catalogue judges, test split (2026-11-10; new model run, lead approval pending)
+    ("JV01", "Judges v2", "test split, Llama x Mistral: observed agreement / Cohen kappa / FAIL specific agreement; same records under the 2026-11-09 rubric: kappa / FAIL agreement",
+     "0.829/0.566/0.598/0.361/0.33",
+     lambda: "/".join(str(x) for x in (js(JV2, "verified", "all", "pairwise", "llama|mistral", "observed"), js(JV2, "verified", "all", "pairwise", "llama|mistral", "kappa"),
+                                        js(JV2, "verified", "all", "pairwise", "llama|mistral", "specific_agreement", "FAIL"),
+                                        js(JV2, "v1_constrained_same_records", "kappa"), js(JV2, "v1_constrained_same_records", "specific_agreement", "FAIL"))), "judge_v2 test ANALYSIS.json"),
+    ("JV02", "Judges v2", "test split, three judges: Fleiss kappa all fields / stated / classification / label fields / blind classification answers",
+     "0.471/0.535/0.409/0.068/0.616",
+     lambda: "/".join(str(x) for x in (js(JV2, "verified", "all", "fleiss_kappa"), js(JV2, "verified", "stated", "fleiss_kappa"), js(JV2, "verified", "classify", "fleiss_kappa"),
+                                        js(JV2, "verified", "label", "fleiss_kappa"), js(JV2, "classify_blind_answers", "fleiss_kappa"))), "judge_v2 test ANALYSIS.json"),
+    ("JV03", "Re-typing", "ENTITY terms re-typed: total / to one of the 14 CDM types / to proposed extension types / NOT_A_CONCEPT",
+     "53780/40113/8856/4811",
+     lambda: "/".join(str(js("outputs/results/entity_retype_2026-11-10/all/SUMMARY.json", k)) for k in ("terms", "core_14_types", "proposed_extension_types", "not_a_concept")),
+     "entity retype SUMMARY.json"),
+    ("JV04", "Re-typing", "unspecific triples re-typed (v2.5): total / verified specific / NOT_SUPPORTED / REVERSED direction",
+     "14867/5257/6832/195",
+     lambda: "/".join(str(x) for x in (js(TRV, "triples"), js(TRV, "specific_verified"), js(TRV, "relations", "NOT_SUPPORTED"), js(TRV, "direction_reversed"))),
+     "triple retype v2.5 SUMMARY.json"),
+    ("JV05", "Re-typing", "triples after re-typing over 3.1.0: specific and cue-verified / % / not supported / association without direction / null finding",
+     "13564/52.6/8039/1708/915",
+     lambda: "/".join(str(js(RMS, "triples", k)) for k in ("specific_cue_verified_after_retype", "specific_cue_verified_after_retype_pct",
+                                                             "not_supported", "association_unsigned", "null_finding")), "retype_merged SUMMARY.json"),
+    ("JV06", "Re-typing", "kept terms after re-typing: total / generic ENTITY before / after / in the 14 CDM types / %",
+     "116755/53780/0/103088/88.3",
+     lambda: "/".join(str(js(RMS, "terms", k)) for k in ("kept", "generic_entity_before", "generic_entity_after", "in_14_cdm_types_after",
+                                                           "in_14_cdm_types_after_pct")), "retype_merged SUMMARY.json"),
+    ("JV07", "Judges v2", "test split: judgeable records / judges / Gwet AC1 Llama x Mistral / record links checked / broken",
+     "51837/3/0.788/167197/0",
+     lambda: "/".join(str(x) for x in (js(JV2, "records_judged", "llama"), len(js(JV2, "judges")), js(JV2, "verified", "all", "pairwise", "llama|mistral", "gwet_ac1"),
+                                        sum(js(LSC, "total").values()), sum(v for k, v in js(LSC, "total").items() if not k.startswith("VALID")))),
+     "judge_v2 test ANALYSIS.json; link_structural_check.json"),
+    ("JV08", "Judges v2", "test split, stated values: failed by a majority of judges / values judged / %",
+     "33253/254022/13.1",
+     lambda: "/".join(str(x) for x in (js(JV2, "verified", "stated", "majority", "FAIL"), js(JV2, "verified", "stated", "fields"),
+                                        round(100 * js(JV2, "verified", "stated", "majority", "FAIL") / js(JV2, "verified", "stated", "fields"), 1))),
+     "judge_v2 test ANALYSIS.json"),
+    ("JV09", "Re-typing", "constructed test sets: terms typed correctly / terms / sentences given the expected relation / sentences",
+     "19/20/17/17",
+     lambda: "/".join(str(js("outputs/results/entity_retype_2026-11-10/GOLD_CHECK.json", "summary", k))
+                      for k in ("entities_correct", "entities", "triples_correct", "triples")), "GOLD_CHECK.json"),
     ("H06", "Benchmark", "Disbiome associations recovered by GLiNER v2.5 biomed", 1456,
      lambda: js("outputs/results/ner_corpus_bench/corpus_metrics.json", "models", "gliner_v25_biomed", "kg", "microbe_disease", "distinct_known_associations"), "corpus_metrics.json"),
 ]

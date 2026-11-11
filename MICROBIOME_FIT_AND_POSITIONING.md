@@ -4,10 +4,10 @@
 *"Microbiome-CDM: An LLM-driven common data model and knowledge extraction pipeline for human microbiome literature"*
 
 **Date:** 2026-11-10
-**Manuscript status:** converted to Springer Nature `sn-jnl` v3.1 (`sn-vancouver-num`); clean `latexmk -pdf` build, **18 pages / 406,353 bytes**, 36 `\bibitem` entries, 0 undefined citations/references, 0 LaTeX errors (1 overfull hbox at 4.86 pt, 28 underfull). Re-typed results and the two factual fixes in A6.8 are committed on branch `submission-prep-2026-11-10`; nothing has been pushed.
+**Manuscript status:** transcribed onto Springer Nature `sn-jnl` v3.1 and **restructured, then built clean** in the submission configuration `\documentclass[referee,lineno,pdflatex,sn-vancouver-num]` — **27 pages / 413,483 bytes**, 36 `\bibitem` entries, 0 undefined citations, 0 undefined references, 0 `LaTeX Warning` lines, 0 errors, **1 overfull hbox (4.85936 pt)** and **47 underfull boxes (44 `\vbox` + 3 `\hbox`)**. The same source built **without** `referee,lineno` is **19 pages / 405,042 bytes**; quote the 27-page figure as the submission build and the 19-page figure only as the internal reading copy — they are never the same number. Both byte counts are reproducible only with a fixed epoch (`SOURCE_DATE_EPOCH`), so cite the page counts, not the byte counts, if exactness matters. Restructure, rewording and the A6.8 fixes are committed as `d7a6194` on branch `submission-prep-2026-11-10`; nothing has been pushed.
 **Scope of this document:** (A) whether the manuscript fits *Microbiome* and every way it currently falls short; (A2) whether the ASM journals — above all *mSystems* — fit it better; and (B) how it compares to the published competition and what to change so it competes. All three belong together: most of the compliance gaps are also positioning gaps, and the choice of venue changes which gaps are blocking.
 
-**Verdict in one line:** the manuscript is *mechanically submittable* apart from 4 author-input blocks and 2 unfilled DOIs, but it is **not yet competitive at *Microbiome***, because it is framed as NLP engineering performed over a microbiome corpus rather than as a microbiome resource — and, separately, because **eight near-identical systems published in the last 18 months are uncited**, so the paper is not visibly in conversation with its own field. **It is, however, close to competitive at *mSystems* today**, because that journal has an article type — **Resource Report** — that describes this paper as written, and has published near-identical papers ([ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper)–[ASM3](#asm3-do-comparable-papers-actually-get-published-here)).
+**Verdict in one line:** the manuscript is *mechanically submittable* apart from 4 author-input blocks and 2 unfilled DOIs, but it is **not yet competitive at *Microbiome***, because it is framed as NLP engineering performed over a microbiome corpus rather than as a microbiome resource — and, separately, because **eight near-identical systems published in the last 18 months are uncited**, so the paper is not visibly in conversation with its own field. **The venue is now decided: *Microbiome* (BMC, ISSN 2049-2618), article type *Methodology*.** It is submitted there, not to *mSystems* — the ASM analysis in Part A2 is retained only as the documented fallback ([ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper)–[ASM3](#asm3-do-comparable-papers-actually-get-published-here)), so that the fallback is a decision with a paper trail rather than a re-argument.
 
 **Two independent rejection risks, not one:**
 
@@ -16,7 +16,7 @@
 
 Fixing only the first will not get the paper through review. Both are addressable with existing artefacts.
 
-**A third axis, and the reason Part A2 exists:** *where* the paper is sent changes which of these are blocking. Gap 5 ("protocol") is a framing desk-reject at *Microbiome* and a perfectly valid article type at *mSystems*. Gap 4 ("no microbiome result") is disqualifying at *Microbiome* and optional for a Resource Report at *mSystems*. Gap 2 (nothing deposited) is equally fatal at every venue. Read [Part A2](#part-a2--alternative-venues-the-asm-journals) before deciding how much of Tier 0 to do.
+**A third axis, and the reason Part A2 exists:** *where* the paper is sent changes which of these are blocking — and the venue is now chosen (*Microbiome*, Methodology), which closes Gap 5 outright. **Gap 5 is DONE:** the word "protocol" now survives in exactly **two visible places, lines 105 and 236, both of them the compound "assay protocol"** (13 further occurrences are inside comments and never reach the PDF). At *mSystems* that gap would have been forgiven rather than fixed; at *Microbiome* it had to be fixed, and it was. **Gap 4** ("no microbiome result") is the one the venue choice does *not* relieve — it is the load-bearing gap at *Microbiome* and would have been optional for a Resource Report. **Gap 2** (nothing deposited) is fatal at every venue. [Part A2](#part-a2--alternative-venues-the-asm-journals) is retained as the record of what the fallback would have changed.
 
 ## The ten gaps that decide the outcome
 
@@ -24,33 +24,33 @@ Ranked by how much each one alone can sink the submission.
 
 | # | Gap | Where |
 |---|---|---|
-| 1 | No `Methods`, `Discussion` or `Conclusions` section — five unlabelled "Stage" sections sit at top level where `Methods` is indexed for | A3.1, A3.2 |
+| 1 | ~~No `Methods`, `Discussion` or `Conclusions` section~~ — **DONE**: `\section{Methods}` at **332** with `\subsection{Overview}` at **334** and five `Stage n` subsections at **409 / 463 / 541 / 682 / 777**; `\section{Discussion}` at **1,172** with `Recommendations` **1,186** and `Limitations` **1,271**; `\section{Conclusions}` at **1,370** | A3.1 — DONE |
 | 2 | Data and code availability is future tense with two empty DOI slots — fails the "available at submission" policy outright **at every venue** | A4.1, A4.2 |
 | 3 | Eight direct competitor systems uncited; the gap over them is asserted, not demonstrated | B2.1, B3.2 |
 | 4 | No microbiome result and no microbiome figure — the paper never shows what the CDM buys a microbiome scientist | A5.2, B2.4 |
-| 5 | Calls itself a "protocol" **12 times in visible prose** (lines 104, 106, 132, 235, 288, 297, 331, 352, 495, 703, 832, 1,447) plus 9 times in comments — 21 total; no Protocol article type exists at *Microbiome* (but **Resource Report** and **Methods and Protocols** both exist at *mSystems*) | A5.1, B3.1, ASM2 |
+| 5 | ~~Calls itself a "protocol" 12 times in visible prose~~ — **DONE**: **2 visible occurrences remain**, at lines **105** and **236**, both the compound "assay protocol"; 13 further occurrences are comment-only and never reach the PDF. No Protocol article type exists at *Microbiome* (**Resource Report** remains available at the *mSystems* fallback) | A5.1, B3.1 — DONE |
 | 6 | Zero engagement with FAIR, MIxS/MIMARKS, STORMS/STREAMS — the standards the paper implicitly implements | A4.4, B2.2 |
-| 7 | Validation is one reviewer, n=500, no confidence intervals, second reviewer unfinished | A6.1, B2.6 |
+| 7 | Validation is one reviewer, n=500 (Wilson 95% CIs now present), second reviewer unfinished | A6.1, B2.6 |
 | 8 | Relation typing is now 52.6% specific (13,564 of 25,788) — better than the previous draft, but the other 47.4% still carry no specific relation, and triples lead the abstract | A6.4, B3.4 |
 | 9 | Abstract's headline F1 (90.1 / 80.6) belongs to PubTator3 and HunFlair2, not to this pipeline | A6.5, B3.3 |
 | 10 | SSSOM, KGX/Biolink and RDF exports already exist in `src/cdm_pipeline/export/` and are never mentioned | B1.3 |
 
 Items 1–2 are pure logistics. Items 3–4 and 6 need writing. Items 5 and 9–10 cost almost nothing. Items 7–8 need either new analysis or an honest reframing.
 
-**One defect that is not a gap but was worth fixing first, because it took two minutes and it undermined everything else:** the entity-accounting sentence at **1,016–1,023** summed to 38 against a 33-entity registry ([A6.8](#a68-one-sentence-in-results-did-not-add-up-fixed-in-the-working-tree)). It was the first paragraph of Results, and the numbers are the contribution. **Now fixed** — see A6.8.
+**One defect that is not a gap but was worth fixing first, because it took two minutes and it undermined everything else:** the entity-accounting sentence at **1,023–1,025** summed to 38 against a 33-entity registry ([A6.8](#a68-one-sentence-in-results-did-not-add-up-fixed-in-the-working-tree)). It sat in the first prose paragraph of Results, which opens at **1,019** ("The five stages produced CDM build 3.0.3"), and the numbers are the contribution. **Now fixed** — see A6.8.
 
 ---
 
-# Part 0 — Unresolved question that blocks further reformatting
+# Part 0 — The venue question, and how it was resolved
 
-The venue is **contested inside the repository**:
+The venue **was** contested inside the repository, and the restructure could not start until it was settled. It is now **decided**: ***Microbiome*** (BMC, ISSN 2049-2618), article type ***Methodology***, with ***Software*** as the in-house fallback and *mSystems* held only as an external fallback. The evidence that made it contested:
 
-- `manuscript.tex` comments (line 88) say: *"BMC Microbiology requires a structured abstract with exactly these three headings…"*
-- `manuscript.tex` comments (line 1393, plus the front-matter block at 20–21) reference BMC/Springer Nature declaration ordering.
+- `manuscript.tex` comments (line 89) say: *"BMC Microbiology requires a structured abstract with exactly these three headings…"*
+- `manuscript.tex` comments (line 1,426, plus the front-matter block at 20–21) reference BMC/Springer Nature declaration ordering.
 - The current request asks about **Microbiome (2049-2618)**.
 - A third option was raised while this assessment was being written: ***mSystems*** (ASM, 2379-5077).
 
-These are **different journals with different article types, different declarations, different section order, and different framing expectations**. Nothing further should be reformatted until one is chosen — and the choice now genuinely changes the edits, because *Microbiome* requires Methods before Results while ASM requires Methods **after** Discussion.
+These are **different journals with different article types, different declarations, different section order, and different framing expectations**. The restructure has now been done in *Microbiome*'s order — Background → Methods → Results → Discussion → Conclusions — so the ASM order (Introduction / Results / Discussion / **Methods**) would have to be undone if the fallback were ever taken. That is the concrete cost of the choice, and it is why the choice is recorded here rather than left implicit.
 
 | | *Microbiome* (2049-2618) | BMC Microbiology (1471-2180) | ***mSystems*** (2379-5077) |
 |---|---|---|---|
@@ -65,14 +65,14 @@ These are **different journals with different article types, different declarati
 | 2026 sample: pipeline | 4 | — | — |
 | 2026 sample: tool / platform | — | 17 / 12 | — |
 | 2026 sample: text-mining/LLM methodology | 3 | **≈ 0** | (4 LLM in abstract) |
-| Body word cap | none stated | none stated | **5,000** (current: 3,911 excluding back matter, 4,584 including it) |
-| Abstract cap | **350** structured (current: **334 incl. the three bold labels / 331 excl.** — compliant, 16–19 to spare) | 350 structured | **250** + **150-word Importance** (current: **334/331** — **81–84 over**) |
+| Body word cap | none stated | none stated | **5,000** (current per-section body: **4,151** excluding back matter, **4,824** with it; contiguous whole-body recount **4,865** — conventions in A3.2) |
+| Abstract cap | **350** structured with Background/Results/Conclusions (current: **330 incl. the three bold labels / 327 excl.** — compliant, **20 / 23 words to spare**) | 350 structured | **250** + **150-word Importance** (current: **330 / 327** — **80 / 77 over**) |
 | APC | **$5,190 / €4,290 / £3,590** | **£2,390 / $3,090 / €2,690** | **$4,500** non-member / $3,375 member |
 | Initial submission format | editable TeX | editable TeX | **format-neutral — any format** |
 
-**Read of the evidence.** *Microbiome* publishes curation/database/pipeline work at volume and has an explicit **Methodology** article type, but its bar is "a demonstrable advance" and its reviewers are the competitors. BMC Microbiology publishes the most ontology/KG work but essentially **no** text-mining or LLM methodology. ***mSystems* is the only one of the three whose article-type catalogue contains a name for what this manuscript already is** (Resource Report), and it has published near-identical papers.
+**Read of the evidence.** *Microbiome* publishes curation/database/pipeline work at volume and has an explicit **Methodology** article type, but its bar is "a demonstrable advance" and its reviewers are the competitors. BMC Microbiology publishes the most ontology/KG work but essentially **no** text-mining or LLM methodology. ***mSystems* is the only one of the three whose article-type catalogue contains a name for what this manuscript already is** (Resource Report), and it has published near-identical papers — which is exactly why it is the fallback and not the target.
 
-**Nothing in the comparison settles it**, because fit and odds point the same way but ceiling and audience do not. That is a decision for the authors, and it is the first item in Part C. Full ASM analysis: [Part A2](#part-a2--alternative-venues-the-asm-journals). Full verdict ranking across all five venues considered: [ASM7](#asm7-five-venue-verdict-ranking).
+**What settled it.** Fit and odds point at the ASM fallback; ceiling, audience and the corpus's own subject matter point at *Microbiome*. The authors chose ***Microbiome*, article type *Methodology***, accepting Gap 4 (no microbiome result and no microbiome figure) as the cost — it is the one gap Part A still treats as load-bearing. Everything below is written against that decision. Full ASM analysis, retained only as fallback: [Part A2](#part-a2--alternative-venues-the-asm-journals). Full verdict ranking across all five venues considered: [ASM7](#asm7-five-venue-verdict-ranking).
 
 ---
 
@@ -89,7 +89,7 @@ These are **different journals with different article types, different declarati
 | Other charges | None |
 | Abstract | Structured, **≤350 words**, **Background / Results / Conclusions**, **no citations**, minimise abbreviations |
 | Keywords | **3–10** |
-| Mandatory Declarations | Ethics approval and consent to participate; Consent for publication; Availability of data and materials; Competing interests; Funding; Acknowledgements; Authors' information; Endnotes; References |
+| Mandatory Declarations | BMC's "Declarations" heading requires **eight** subheadings: Ethics approval and consent to participate; Consent for publication; Availability of data and material; Competing interests; Funding; Authors' contributions; Acknowledgements; Authors' information **(optional)**. "Endnotes" and "References" are **not** Declarations subheadings — Endnotes is only a formatting instruction for notes marked with superscript lowercase letters |
 | Main text formatting | **double line spacing**, **line and page numbering**, SI units, **no page breaks** |
 | Editable source | **required at submission**; DOC/DOCX/RTF/**TeX** accepted |
 | Reference style | Vancouver (numeric) — `sn-vancouver-num` provides this |
@@ -117,15 +117,15 @@ The editorial is *directly* relevant: the manuscript is associative by construct
 
 > "A common example is the use of the term **16S**, 16S rDNA, 16S rDNA gene, 16S gene which are not appropriate. These should be replaced with **16S rRNA gene**. Please make sure that you comply with all these criteria."
 
-Bare "16S" appears **three times** in the body:
+Bare "16S" now appears **zero times** in the body: all three former instances read "16S rRNA gene".
 
-| Line | Text | Fix |
+| Line | Current text | Status |
 |---|---|---|
-| 843 | "…72.1% of **16S identifiers** natively present in the text" | 16S rRNA gene identifiers |
-| 1,061 | "…its accession numbers, sequencing platforms and **16S regions** present" | 16S rRNA gene regions |
-| 1,125 | "Study metadata agrees closely for **16S** region (97.7%)" | 16S rRNA gene region |
+| 846 | "…72.1% of **16S rRNA gene identifiers** natively present in the text" | ✓ fixed |
+| 1,067 | "…its accession numbers, sequencing platforms and **16S rRNA gene regions** present" | ✓ fixed |
+| 1,131 | "Study metadata agrees closely for **16S rRNA gene region** (97.7%)" | ✓ fixed |
 
-Cheap to fix, but it is an **explicitly stated criterion**, and editors do check it.
+It was cheap to fix and it is now done. The criterion is still worth knowing about, because it is **stated explicitly** as an example in the journal's own guidelines and editors are known to check it.
 
 ## A3. Mechanical and structural non-compliance (blocking)
 
@@ -135,27 +135,35 @@ Required: **Background → Methods → Results → Discussion → Conclusions**.
 
 Actual structure:
 
-| Actual heading | Line | Should be |
-|---|---|---|
-| Background | 162 | Background ✓ |
-| Protocol overview | 331 | §Methods (lead-in) |
-| Stage 1: Corpus and sectioning | 406 | §Methods subsection |
-| Stage 2: Entity extraction with multiple programs | 460 | §Methods subsection |
-| Stage 3: Normalisation and vocabulary mapping | 538 | §Methods subsection |
-| Stage 4: Data catalogue and common data model | 679 | §Methods subsection |
-| Stage 5: Computational evaluation and human spot check | 774 | §Methods subsection |
-| Results | 920 | Results ✓ |
-| Recommendations | 1166 | Discussion subsection (or drop) |
-| Limitations | 1251 | **Discussion subsection** |
-| Abbreviations | 1364 | ✓ (unnumbered) |
-| Declarations | 1390 | ✓ (unnumbered) |
+This section **was** the blocking defect and is now **fixed**. The structure as built:
 
-Concretely missing:
+| Current heading | Line | Level | Journal requirement |
+|---|---|---|---|
+| `\section{Background}` | 163 | 1 | ✓ required |
+| `\section{Methods}` | 332 | 1 | ✓ required |
+| `\subsection{Overview}` | 334 | 2 | ✓ Methods lead-in |
+| `\subsection{Stage 1: Corpus and sectioning}` | 409 | 2 | ✓ Methods subsection |
+| `\subsection{Stage 2: Entity extraction with multiple programs}` | 463 | 2 | ✓ Methods subsection |
+| `\subsection{Stage 3: Normalisation and vocabulary mapping}` | 541 | 2 | ✓ Methods subsection |
+| `\subsection{Stage 4: Data catalogue and common data model}` | 682 | 2 | ✓ Methods subsection |
+| `\subsection{Stage 5: Computational evaluation and human spot check}` | 777 | 2 | ✓ Methods subsection |
+| `\section{Results}` | 923 | 1 | ✓ required |
+| `\section{Discussion}` | 1,172 | 1 | ✓ required |
+| `\subsection{Recommendations}` | 1,186 | 2 | ✓ Discussion subsection |
+| `\subsection{Limitations}` | 1,271 | 2 | ✓ **Discussion subsection** |
+| `\section{Conclusions}` | 1,370 | 1 | ✓ required |
+| `\section*{Abbreviations}` | 1,397 | 1* | ✓ unnumbered, after Conclusions |
+| `\section*{Declarations}` | 1,423 | 1* | ✓ unnumbered, last |
 
-- **No `\section{Methods}`.** The five "Stage" sections *are* the methods, but they are unlabelled, sit at top level, and use internal engineering vocabulary. Reviewers, abstracting services and indexers all look for "Methods".
-- **No `\section{Discussion}`.** Zero occurrences of a Discussion heading.
-- **No `\section{Conclusions}`.** The only "Conclusions" is the abstract's third labelled paragraph (line 132).
-- The journal states the Discussion "should discuss the implications… and **highlight limitations**". Limitations is therefore a **subsection of Discussion**, not a standalone section — and certainly not the longest section of the paper (A3.2).
+What changed, and against which old anchors:
+
+- **`\section{Methods}` added at 332.** The five "Stage" blocks were top-level `\section{Stage n: …}` at 406, 460, 538, 679, 774; they are now `\subsection`s at **409, 463, 541, 682, 777** under it. The old `\section{Protocol overview}` at 331 is now `\subsection{Overview}` at **334** — the heading text no longer carries the word "protocol" at all.
+- **`\section{Discussion}` added at 1,172.** It did not exist in the previous build: `\section{Results}` (920) fell straight through to `\section{Recommendations}` (1,166). `Recommendations` and `Limitations` are now `\subsection`s at **1,186** and **1,271**.
+- **`\section{Conclusions}` added at 1,370.** Previously the only "Conclusions" in the file was the abstract's third labelled paragraph (now line 138) — see A8.2.
+- The journal states the Discussion "should discuss the implications… and **highlight limitations**". Limitations is therefore a **subsection of Discussion**, not a standalone section — and it is no longer the longest section of the paper (A3.2).
+- `Abbreviations` (1,397) and `Declarations` (1,423) remain unnumbered and sit after Conclusions, which is the order BMC expects; `\backmatter` is at 1,391.
+
+**Residual defect in this area:** the subsection titles still use internal engineering vocabulary ("Stage 1…Stage 5", "Normalisation"). That is a readability issue, not a compliance one — tracked as **X6** and still open.
 
 ### A3.2 Limitations is the paper's only interpretive section — and it carries the wrong load
 
@@ -164,40 +172,43 @@ Concretely missing:
 | Section | Words |
 |---|---|
 | Background | 505 |
-| Protocol overview | 184 |
+| Overview *(was "Protocol overview")* | 184 |
 | Stage 1: Corpus and sectioning | 129 |
 | Stage 2: Entity extraction with multiple programs | 178 |
 | Stage 3: Normalisation and vocabulary mapping | 598 |
 | Stage 4: Data catalogue and common data model | 168 |
-| Stage 5: Computational evaluation and human spot check | 412 |
-| **Results** | **1,097** |
+| Stage 5: Computational evaluation and human spot check | 414 |
+| **Methods** *(overview + five stages)* | **1,671** |
+| **Results** | **1,135** |
+| Discussion lead-in | 102 |
 | Recommendations | 238 |
 | **Limitations** | **402** |
+| **Discussion** *(lead-in + Recommendations + Limitations)* | **742** |
+| Conclusions | 98 |
 | *(Abbreviations)* | *58* |
 | *(Declarations)* | *615* |
-| **TOTAL** | **4,584** |
+| **TOTAL** | **4,824** |
 
-- **Body excluding back matter (Background → Limitations) = 3,911 words; including Abbreviations + Declarations = 4,584.** A whole-body recount between `\section{Background}` and `\bibliography`, measuring the same span contiguously instead of section-by-section, gives **4,604 plain tokens / 4,797 under hyphen-splitting tokenisation** (body only: 3,934 / 4,092). The 20-word difference from 4,584 is heading text. Quote the per-section table (4,584) as the section figure and the whole-body count only as a cross-check. Either way it sits under any cap you would face (mSystems 5,000; no stated cap at *Microbiome*).
-- **Methods (five stages + overview) = 1,669 words.** For a five-stage pipeline with four mention sources, 2.5 M mentions, a catalogue and a CDM, 1,669 words of method is still **thin** — the pipeline is now described in more detail than in the previous draft (Stage 3 alone grew to 598), but a reader still cannot reproduce it from the text alone.
-- **Results (1,097) is correctly the longest prose section.** An earlier draft of this document claimed "Limitations is longer than Results"; that was wrong and has been retracted. Do not repeat it — the corrected figures invert it.
-- **The real defect is structural, not arithmetical.** There is no `\section{Discussion}`, so **Limitations (402) is the only section doing interpretive work**. A Discussion section normally absorbs limitations as *one subsection among several*; here self-criticism occupies the whole of the paper's one interpretive slot. To an editor that reads as a manuscript spending its scarce interpretive space arguing against itself — but the evidence for that is the missing Discussion heading and the standalone Limitations section, not a length comparison.
+- **Total body = 4,824 words**; **excluding back matter (Background → Conclusions) = 4,151**; **including Abbreviations + Declarations = 4,824**. A whole-body recount between `\section{Background}` and `\bibliography`, measuring the same span contiguously instead of section-by-section, gives **4,865 plain tokens / 5,072 under hyphen-splitting tokenisation** (body only: 4,192 / 4,364). The difference from 4,824 is heading text. Quote the per-section table (4,824) as the section figure and the whole-body count only as a cross-check. Either way it sits under any cap you would face (*Microbiome* states none; the *mSystems* fallback caps at 5,000 and the plain whole-body 4,865 is still under it, though the hyphen-split 5,072 is not).
+- **Methods (five stages + overview) = 1,671 words.** For a five-stage pipeline with four mention sources, 2.5 M mentions, a catalogue and a CDM, 1,671 words of method is still **thin** — the pipeline is now described in more detail than in the previous draft (Stage 3 alone is 598), but a reader still cannot reproduce it from the text alone.
+- **Results (1,135) is correctly the longest prose section.** An earlier draft of this document claimed "Limitations is longer than Results"; that was wrong and has been retracted. Do not repeat it — the corrected figures invert it, and by a wider margin than before.
+- **The structural defect is now fixed, and the arithmetic defect it exposed is the one that remains.** `\section{Discussion}` exists (1,172), so Limitations (402) is no longer the paper's only interpretive section: it is now one of three subsections behind a 102-word lead-in, and the whole Discussion block is 742 words against Results' 1,135. What survives is the ratio — **402 of 742 Discussion words (54%) are self-criticism** — and that is a proportionality judgement, not a missing heading.
 
-### A3.3 Formatting requirements not met
+### A3.3 Formatting requirements — both now met
 
-- **No line numbers.** `\documentclass[pdflatex,sn-vancouver-num]{sn-jnl}` (line 23); the `referee,lineno` variant exists only as a comment (line 25).
-- **No double spacing.** Both are explicit requirements for the main text.
-- Both are one-line preambles changes, not rewrites — but they change line/page flow, so rebuild and re-check the float placement afterwards.
-- Page breaks: **0** `\newpage`/`\clearpage` — compliant ✓.
-
-**Fix:** for the submission copy use `\documentclass[referee,lineno,pdflatex,sn-vancouver-num]{sn-jnl}`. Keep the clean build for internal reading.
+- **Line numbers: met.** The active class option at **line 24** is `\documentclass[referee,lineno,pdflatex,sn-vancouver-num]{sn-jnl}` — `referee` and `lineno` are on, not commented out. (Lines 23 and 26 still carry comments that describe the option as optional or future; they are stale and should be reworded, but they do not affect the build.)
+- **Double spacing: met.** `referee` sets the manuscript in the wider, double-spaced layout, which is why the page count moves from 19 to 27.
+- **Consequence to record, because it changes every page-based statement in this document:** the `referee,lineno` build is **27 pages / 413,483 bytes**; the same source without those two options is **19 pages / 405,042 bytes**. Quote the 27-page figure whenever the *submission* build is meant. Byte counts are stable only under a fixed epoch, and both counts are byte-reproducible only under `SOURCE_DATE_EPOCH=1762819200 FORCE_SOURCE_DATE=1`; without a fixed epoch the same source produced 413,496 B and 415,863 B on repeat builds, so the figures previously quoted here (413,432 / 404,992) were build-timestamp artefacts and cannot be cited as exact.
+- Line numbering and double spacing are not rewrites — but they do change line/page flow, so float placement must be re-checked after any later content edit. It was: 0 float errors.
+- Page breaks: **0** `\newpage`/`\clearpage`/`\pagebreak`/`\linebreak` — compliant ✓.
 
 ### A3.4 Missing back-matter sections
 
-The manuscript has **8 `\bmhead` blocks** (1,392 Ethics, 1,398 Consent, 1,401 Availability, 1,476 Competing interests, 1,493 Funding, 1,507 Authors' contributions, 1,526 Acknowledgements, 1,539 AI declaration) — that is the full BMC required set, so this section is **mostly compliant**. Three items are genuinely absent:
+The manuscript has **8 `\bmhead` blocks** — **1,425** Ethics approval, **1,431** Consent for publication, **1,434** Availability of data and materials, **1,509** Competing interests, **1,526** Funding, **1,540** Authors' contributions, **1,559** Acknowledgements, **1,572** AI-use declaration — under `\section*{Declarations}` at **1,423**. That is the full BMC required set plus the AI declaration, so this section is **compliant on structure**. **One** member of the eight-item Declarations list is absent — Authors' information, which BMC marks optional. The Endnotes and Additional-files bullets below look like two further gaps and are not; each says why.
 
-- **No "Authors' information" heading** — **0 occurrences in the file**. Caveat, stated honestly: this heading is part of the Springer Nature `sn-jnl` template and is required by some SN journals, but it is **not** in BMC's own published list of mandatory declarations (which is the seven above plus the AI declaration). Treat it as *low-risk optional*, not a blocker — but if the venue turns out to want it, the fix is one short `\bmhead{Authors' information}` block, and the authors must write its content (do not invent biographies).
-- **No "Endnotes"** — fine if unused, but it is in the `sn-jnl` required list.
-- **No "Additional files" list** (`0 occurrences`). For a data-deliverable paper everything is either in-text or external. Reviewers will expect at least: per-stage counts table, licence matrix, evaluation artefacts, and the full term/mapping tables as additional files.
+- **No "Authors' information" heading** — **0 occurrences in the file**. This is the **one** member of BMC's eight-item Declarations list that the manuscript lacks, and BMC marks it **explicitly optional** ("Authors' information (optional)"). It is also a `sn-jnl` template heading, which is why the absence is visible. Treat it as *low-risk optional*, not a blocker — if the venue asks, the fix is one short `\bmhead{Authors' information}` block, and the authors must write its content (do not invent biographies).
+- **No "Endnotes"** — **not a gap.** Endnotes is *not* one of BMC's Declarations subheadings; the guidelines give it only as a formatting instruction for substantive notes marked with superscript lowercase letters. The manuscript contains **0** `\footnote`, **0** `\endnote` and **0** `\thanks` calls, so there are no notes to collect. Nothing to add.
+- **No "Additional files" list** (`0 occurrences`) — **conditional, not a formatting violation.** BMC requires the list only "if additional material is provided" (file name, format, title, description). The force of the point is different: the guidelines also say results that would otherwise be "data not shown" belong in additional files. For a data-deliverable paper everything is currently either in-text or external, so reviewers will want at least: per-stage counts table, licence matrix, evaluation artefacts, and the full term/mapping tables.
 
 ### A3.5 Four visible author-input markers in the PDF
 
@@ -205,29 +216,33 @@ These are **deliberately visible** (correct practice — never invented, never h
 
 | Line | Section | Marker |
 |---|---|---|
-| 1,487 | Competing interests | `[AUTHOR INPUT REQUIRED — per-author competing-interests statement missing…]` |
-| 1,502 | Funding | `[AUTHOR INPUT REQUIRED — funding statement missing…]` |
-| 1,517 | Authors' contributions | `[AUTHOR INPUT REQUIRED — CRediT statement missing…]` |
-| 1,535 | Acknowledgements | `[AUTHOR INPUT REQUIRED — acknowledgements missing…]` |
+| 1,520 | Competing interests | `[AUTHOR INPUT REQUIRED — per-author competing-interests statement missing…]` |
+| 1,535 | Funding | `[AUTHOR INPUT REQUIRED — funding statement missing…]` |
+| 1,550 | Authors' contributions | `[AUTHOR INPUT REQUIRED — CRediT statement missing…]` |
+| 1,568 | Acknowledgements | `[AUTHOR INPUT REQUIRED — acknowledgements missing…]` |
+
+Confirmed comment-safe this session: exactly **4 visible `AUTHOR INPUT` occurrences** (1,520, 1,535, 1,550, 1,568). The explanatory `%%` blocks that say *why* each block is not pre-filled sit at 1,510, 1,531, 1,541 and 1,563 and never reach the PDF.
 
 ### A3.6 Two unfilled DOI/repository slots
 
 | Line | Slot |
 |---|---|
-| 1,452 | "…and the benchmark and evaluation artefacts, **DOI [to be added when the deposit is published]**." (Availability section opens at 1,447) |
-| 1,454 | "The pipeline code will be released in a public repository with an archived version, **[repository and DOI to be added by the authors]**." (code-repo comment slot at 1,443) |
+| 1,485 | "…and the benchmark and evaluation artefacts, **DOI [to be added when the deposit is published]**." (Availability section opens at 1,480) |
+| 1,487 | "The pipeline code will be released in a public repository with an archived version, **[repository and DOI to be added by the authors]**." (code-repo comment slot at 1,476) |
+
+Both sentences are still **future tense** — "will be deposited" (1,480), "will be released" (1,487). That is the single largest surviving risk and it is tracked as **X4** and **R11**.
 
 ### A3.7 Source-file hygiene (this file would ship to the publisher)
 
 The journal requires **editable source files**. The current `.tex`:
 
-- **1,683 lines total; 937 comment-only (55.7%), 669 non-empty visible lines.**
-- **29 mentions of "Claude"**, 28 of them inside comments (only line 1598 is visible, in the AI-use declaration), including:
+- **1,716 lines total (`wc -l` 1,715 on the final newline-less count); 941 comment-only (54.8%), 695 non-empty visible lines.** 109,998 bytes.
+- **29 mentions of "Claude"**, 28 of them inside comments (only line **1,631** is visible, in the AI-use declaration), including:
   - `%% REVIEW 2026-11-09 (Claude Code fact check; prose not changed)`
   - `%% FRAMING 2026-11-09 (Claude Code; prose not changed)`
   - `%% DRAFT CAPTION, NOT SUBMISSION TEXT (plan §0)`
-  - Live `%% >> AUTHOR REWRITE REQUIRED` markers: **12** — lines 101, 218, 349, 375, 756, 954, 997, 1,190, 1,195, 1,279, 1,311, 1,551. (Two further occurrences at 463 and 1,164 are prose *about* the markers, not markers.)
-- Internal review notes that **admit unsettled issues**: e.g. line 783 — *"statement must change (H01). The 100-triple check is prepared, not done."* The same unfinished state is visible in the paper itself at 1330 ("the second reviewer's 100-mapping overlap is pending").
+  - Live `%% >> AUTHOR REWRITE REQUIRED` markers: **14** — lines **102, 219, 352, 378, 466, 759, 957, 999, 1,170, 1,210, 1,215, 1,299, 1,331, 1,584**. (Two further occurrences are prose *about* the markers, not markers — `AUTHOR REWRITE` appears 0 times in visible text.)
+- Internal review notes that **admit unsettled issues**: e.g. line **786** — *"statement must change (H01). The 100-triple check is prepared, not done."* The same unfinished state is still visible in the paper itself at **1,039** ("the second reviewer's 100-mapping overlap is pending").
 
 Shipping this is a professionalism problem and leaks unresolved concerns to reviewers. **Produce a comment-stripped submission build** and keep the annotated working copy separately.
 
@@ -235,24 +250,24 @@ Shipping this is a professionalism problem and leaks unresolved concerns to revi
 
 *(Same defect as **B3.7**.)*
 
-Table 1's caption (lines 969–975) names an internal audit artefact:
+Table 1's caption (lines 972–977) used to name an internal audit artefact. **Now fixed** — the filename is gone from both the caption and the tablenotes:
 
-> "…the last column names the row in the claims register (`MANUSCRIPT_CLAIMS_REGISTER.csv`)…"
+> *(superseded wording, no longer in the file)* "…the last column names the row in the claims register (`MANUSCRIPT_CLAIMS_REGISTER.csv`)…"
 
-Reviewers cannot access that file. Either drop the column, drop the filename, or ship the register as an additional file.
+Reviewers cannot access that file, so the reference had to go. What is in the file now is the caption at **972** (ending with `\label{tab:summary}` at 977) plus a tablenote at **979–981** that reads *"LLM-screen and BugSigDB values are concordance or model judgement, not accuracy."* Comment-safe census: **0 visible occurrences of `CLAIMS_REGISTER`** (6 remain in comments). Done as **X1 / X2**.
 
 ### A3.9 Figure counts and float pressure
 
-- **3 figures** (blocks at 336–368, 741–772, 983–1014; `\includegraphics` at 338, 759, 999) and **1 table** (`table*` at **968–980**, with `\input` of the generated body at 976 and `tablenotes` at 977–979). Counts are within limits.
-- **18 pages** for a 4,584-word body including back matter ⇒ whitespace/float pressure (Underfull vbox warnings in `manuscript.log`). Consider merging Fig. 1 (`fig_overview.pdf`) and Fig. 2 (`fig3_cdm_architecture.pdf`), which are conceptually adjacent and both small (405×313 pt, 405×258 pt).
+- **3 figures** (blocks at **339–371**, **744–775**, **985–1016**; `\includegraphics` at **341**, **762**, **1,001** — `fig_overview.pdf`, `fig3_cdm_architecture.pdf`, `fig4_results.pdf`) and **1 table** (`table*` at **971–982**, with `\caption` 972, `\label{tab:summary}` 977, `\input` of the generated body at **978**, `tablenotes` at **979–981**). Counts are within limits, and all three figure targets resolve in `Fig/` (0 "file not found").
+- **27 pages** (submission build) for a 4,824-word body including back matter ⇒ whitespace/float pressure is real: 44 Underfull `\vbox` warnings in `manuscript.log` and only 3 `\hbox`. Most of the page count is the double-spaced `referee` layout, so fixing floats will not recover pages — it will only stop the underfull boxes. Consider merging Fig. 1 (`fig_overview.pdf`) and Fig. 2 (`fig3_cdm_architecture.pdf`), which are conceptually adjacent and both small (405×313 pt, 405×258 pt).
 - `Fig/fig_overview_illustrated.pdf` exists but is **unused** — decide or delete before packaging.
 - All figures are **vector PDFs with 0 embedded raster images** — good, no DPI problem.
 
 ### A3.10 Minor build facts (for completeness)
 
-- 18 pages; **36 `\bibitem` entries in the compiled `.bbl`** (57 `et~al`), **36 distinct keys cited** in the comment-stripped `.tex`. `reference.bib` holds **68 entries**; the **32** that never reach the `.bbl` are precisely the uncited ones — BibTeX emits only cited keys, and the cited-vs-`.bbl` diff is empty in both directions (A7.1).
+- **27 pages** (referee) / **19 pages** (non-referee); **36 `\bibitem` entries in the compiled `.bbl`**, **36 distinct keys cited** in the comment-stripped `.tex`. `reference.bib` holds **68 entries**; the **32** that never reach the `.bbl` are precisely the uncited ones — BibTeX emits only cited keys, and the cited-vs-`.bbl` diff is empty in both directions (A7.1). Big-endian check: 68 − 36 = 32.
 - 0 undefined citations, 0 undefined references, 0 LaTeX errors, **0 `LaTeX Warning` lines of any kind**.
-- The only diagnostics are **1 overfull hbox at 4.85936 pt** and **28 underfull boxes** (3 hbox, 25 vbox) — all cosmetic, none above the 5 pt threshold.
+- The only diagnostics are **1 overfull hbox at 4.85936 pt** ("in paragraph at lines 6--980") and **47 underfull boxes** (**44 `\vbox` + 3 `\hbox`**) — all cosmetic, none above the 5 pt threshold. Counts are from the `referee,lineno` build; the non-referee build has fewer, which is why the two page/diagnostic figures must never be quoted interchangeably.
 
 ## A4. Data and code availability — the biggest single risk
 
@@ -260,7 +275,7 @@ Reviewers cannot access that file. Either drop the column, drop the filename, or
 
 > "We **require that all datasets on which the conclusions of the paper rely are available to the reviewers at the time of submission** and publicly available at the time of publication."
 
-Current text (Availability section, lines 1447–1460):
+Current text (Availability section, lines 1,480–1,493):
 
 > "The outputs of this protocol **will be** deposited on Zenodo **before publication**… DOI [to be added]… The pipeline code **will be** released… [repository and DOI to be added by the authors]."
 
@@ -292,7 +307,7 @@ Even if uploaded, there is no identifier for a reviewer to follow. **Blocking.**
 
 *(Competitive framing consequences are in **B2.2**.)*
 
-A grep of visible (non-comment) prose returns **zero** hits for **FAIR**, **MIxS**, **MIMARKS**, **STORMS** and **STREAMS**. Two "fair" hits exist (lines 882, 1,302) but both mean *fair/unfair rating* in the judge rubric, not the FAIR principles — do not let a naive case-insensitive grep fool you into thinking the topic is covered.
+A grep of visible (non-comment) prose returns **zero** hits for **FAIR**, **MIxS**, **MIMARKS**, **STORMS** and **STREAMS**. Two "fair" hits exist (lines 885, 1,322) but both mean *fair/unfair rating* in the judge rubric, not the FAIR principles — do not let a naive case-insensitive grep fool you into thinking the topic is covered.
 
 This is a serious framing gap: the journal **endorses STORMS**, **expects FAIR**, and the paper is *about* metadata standardisation for microbiome data — yet never names the standards it is implicitly trying to satisfy. An editor reads that as a blind spot. Note also that `wilkinson2016fair` and `yilmaz2011mixs` are **in the bibliography and never cited** (A7).
 
@@ -306,11 +321,11 @@ Good. But it should also state: (a) the **licence of your own deposit** (CC BY 4
 
 ### A5.1 Article type: neither fish nor fowl
 
-The title promises "an LLM-driven common data model **and knowledge extraction pipeline**" — a **Software** or **Methodology** paper. But the manuscript **calls itself a protocol** in **12 occurrences on visible text lines** (21 including the 9 on comment-only lines), including the abstract ("We present a **protocol**…", line 106) and line 288 ("We built Microbiome-CDM as a **protocol** rather than a single model"). The 12 visible occurrences are at lines 104, 106, 132, 235, 288, 297, 331 (the heading `\section{Protocol overview}`), 352 (a figure caption), 495, 703, 832 and 1,447 (the Availability section, "The outputs of this protocol will be deposited").
+The title promises "an LLM-driven common data model **and knowledge extraction pipeline**" — a **Software** or **Methodology** paper. The text previously **called itself a protocol** in 12 visible occurrences; **that conflict is now resolved**. A comment-safe census of the current file finds "protocol" **13 times in 11 lines, of which only 2 are visible**: line 105 and line 236, each *"assay protocol"* in the list of attributes that must be captured; the other **11 occurrences sit on 9 comment-only lines** (158, 191, 206, 210, 287, 337, 374, 1,195, 1,256) and never reach the PDF. The abstract (104–140) now reads *"a method that constructs a provenance-traceable common data model"*; the former `\section{Protocol overview}` is `\subsection{Overview}` at **334**; the figure caption at **352** and the Availability sentence at **1,480** no longer carry the word. What remains is a **nomenclature decision, not a text defect**: pick Methodology (recommended) or Software, and the abstract, title and section structure already support either.
 
 - **There is no Protocol article type at *Microbiome*.** (There *is* a **Methods and Protocols** type at ***mSystems***, and a **Resource Report** type that fits better still — see [ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper). This section's verdict is venue-specific, not absolute.)
 - As **Software**: criteria require "broad utility" and "direct comparison with available related software". You compare *individual NER models* on BC5CDR/BioRED, but **never compare the pipeline as a whole** to any competing literature-mining system (PubTator3-as-pipeline, SemRep, an existing microbiome KG).
-- As **Methodology**: criteria require a "**demonstrable advance**". The Background (lines 228–300) dismisses related work in one paragraph and *asserts* "None of these delivers a provenance-traceable common data model over the cited literature of a compendium" — asserted, not demonstrated.
+- As **Methodology**: criteria require a "**demonstrable advance**". The Background (visible prose spans **232–317**) dismisses related work in one paragraph and *asserts* "None of these delivers a provenance-traceable common data model over the cited literature of a compendium" (**254**) — asserted, not demonstrated.
 
 **This is the single most likely rejection reason.** The predictable editor response: *"What can I do with this that I cannot do with BugSigDB plus PubTator3?"* The manuscript does not answer that with evidence.
 
@@ -319,36 +334,36 @@ The title promises "an LLM-driven common data model **and knowledge extraction p
 The journal's readers are microbiome scientists. Evidence from the manuscript:
 
 - **No figure shows microbiome data.** No taxonomic composition, no alpha/beta diversity, no differential abundance, no biological result of any kind. The three figures are: pipeline overview, CDM schema architecture, evaluation metrics.
-- **No taxon is discussed.** The only organism names in the entire visible body are two incidental italics — *Lactobacillus* (line 626) and *Lactococcus* (line 627) — and they appear **only as a deduplication example** ("they denote the same taxon, so that, for example, *Lactobacillus* and *Lactococcus* remain distinct"), not as biology. Verified zero visible occurrences of Bacteroidetes, Firmicutes, *Faecalibacterium*, *Akkermansia*, *Prevotella*, *Bifidobacterium*, *Escherichia*.
+- **No taxon is discussed.** The only organism names in the entire visible body are two incidental italics — *Lactobacillus* (line 629) and *Lactococcus* (line 630) — and they appear **only as a deduplication example** ("they denote the same taxon, so that, for example, *Lactobacillus* and *Lactococcus* remain distinct"), not as biology. Verified zero visible occurrences of Bacteroidetes, Firmicutes, *Faecalibacterium*, *Akkermansia*, *Prevotella*, *Bifidobacterium*, *Escherichia*.
 - **The biological payoff is never shown.** You built a CDM over 453 papers and a 168,464-sample compendium and never demonstrate one insight it enables.
 
 For this journal, "technical advance" means *it enables something*. An infrastructure report that never delivers a microbiome result is the archetype of what the editorial calls work that does not provide "substantial conceptual or technical advances".
 
-**This gap is venue-dependent, and that is the single most important finding in this document.** A *mSystems* **Resource Report** explicitly asks for "proof-of-principle so that the new methodology can be replicated and/or utilized by others" — a *reuse path*, not a biological insight. Under that standard, the IBD 25/44 agreement result (Results **1,127–1,129**, currently one sentence and re-cited as a caveat at **1,327–1,330**) plus the released deposit is **sufficient**, and no microbiome figure is required. What remains mandatory at both venues is that the paper shows *someone can use it*. See [ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper) and [ASM4](#asm4-quantitative-topic-profile--and-the-honest-counter-signal).
+**This gap is venue-dependent, and that is the single most important finding in this document.** A *mSystems* **Resource Report** explicitly asks for "proof-of-principle so that the new methodology can be replicated and/or utilized by others" — a *reuse path*, not a biological insight. Under that standard, the IBD 25/44 agreement result (Results **1,134–1,136**, currently one sentence and re-cited as a caveat at **1,348–1,351**) plus the released deposit is **sufficient**, and no microbiome figure is required. What remains mandatory at both venues is that the paper shows *someone can use it*. See [ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper) and [ASM4](#asm4-quantitative-topic-profile--and-the-honest-counter-signal).
 
 ### A5.3 The "cited by a compendium" framing is correct but needs an inclusion rule
 
-You correctly separate your corpus from Abdill et al.'s compendium (lines 226–232; "the literature **cited by** a 168,464-sample gut microbiome compendium"). That distinction is essential and well handled. But:
+You correctly separate your corpus from Abdill et al.'s compendium (lines **233–237**; "the literature **cited by** a 168,464-sample gut microbiome compendium", restated at **437** as "a recent synthesis of 168,464 samples"). That distinction is essential and well handled. But:
 
 - Your corpus is a **secondary selection** (papers cited by one synthesis). Its completeness relative to the microbiome literature is **undefined**.
 - State the **inclusion logic** explicitly: how many cited works existed, how many were retrievable, how many were excluded and why.
 
 ### A5.4 No novelty statement
 
-"novel"/"novelty" appears **zero times in visible prose**. The only two occurrences are comments — line 188 ("\"Novel LLMs\": the models are existing open-weight ones…") and line 190 ("The novelty is the protocol that…") — so the word is *deliberately* absent from the paper. That is honest and defensible (you are not claiming novel models), but it leaves a real hole: there is **no paragraph anywhere** stating what is new relative to each named prior system.
+"novel"/"novelty" appears **zero times in visible prose**. The only two occurrences are comments — line 189 ("\"Novel LLMs\": the models are existing open-weight ones…") and line 191 ("The novelty is the protocol that…") — so the word is *deliberately* absent from the paper. That is honest and defensible (you are not claiming novel models), but it leaves a real hole: there is **no paragraph anywhere** stating what is new relative to each named prior system.
 
 This is the one place where the manuscript's caution works against it. Withholding "novel" is correct; failing to state the *delta* is not. Methodology reviewers at this journal expect an explicit "relative to X we add Y" statement (B4.5).
 
 ## A6. Evaluation — what reviewers will attack
 
-### A6.1 Human validation: one reviewer, no CI, second reviewer not done
+### A6.1 Human validation: one reviewer, intervals now reported, second reviewer not done
 
-- **One blinded reviewer**, 500 sampled accepted mappings → 61.8% exact, 6.2% wrong.
-- **Second-reviewer 100-row overlap "prepared, not done"** (run-source comments at lines 754, 756, 1230) — tracked internally as open item **H01**.
+- **One blinded reviewer**, 500 sampled accepted mappings → **61.8% exact (95% Wilson 57.4–65.9)**, **6.2% wrong (4.4–8.7)**. The intervals are now in the Results text at **1,035–1,039**, together with 32.0% (28.0–36.2) broader/narrower/related, 97.8% (96.1–98.8) genuine concepts and 86.4% (83.1–89.2) correct entity types.
+- **Second-reviewer 100-row overlap still pending.** That is now disclosed in visible text — *“the second reviewer's 100-mapping overlap is pending”* at **1,039–1,040** — which is the right thing to have done; the internal tracking note sits at comment line **784**. Tracked as open item **H01**. A reviewer who reads “pending” will ask when; have the date ready.
 - Limitations states outright: *"no part of this CDM was evaluated against a human-curated ground truth."*
-- **No confidence intervals anywhere in the body.** No Wilson intervals, no bootstrap. For 61.8% / 6.2% on n=500, for the 82.9% judge agreement, and for the κ values (0.566, 0.471), this is a methodological hole. Telling: `wilson1927` and `efron1993bootstrap` are **in the bibliography and never cited**.
+- **Confidence intervals are now present — but only on three results, and still uncited.** Wilson 95% intervals sit on the five human-review figures at **1,035–1,039**, on judge agreement 82.9% (82.8–83.0) at **1,053–1,054**, and on majority-fail 13.1% (12.96–13.22) at **1,063–1,064**; the abstract carries them too (**120–121**). That is **3 of the 100** `X.Y%` figures printed in body lines 110–1400 — the rest, including 77.0% vs a 52.0% baseline (**1,127**), the judge screen shares at **1,142** and 52.6% at **1,095**/**1,311**, remain point estimates. What is *still* missing is the citation: **`wilson1927` is in the `.bib` and never cited** (its only mention is the uncited-note comment at **1,687**), so a statistics sentence now uses a method it does not reference. Fix: add `\cite{wilson1927}` at first use, and **delete `efron1993bootstrap`** — no bootstrap is performed anywhere, so leaving it in the bibliography is a false friend.
 
-A reviewer will treat "one reviewer, n=500, no CI" as insufficient to support a claimed quality standard.
+A reviewer will treat "one reviewer, n=500" as thin support for a claimed quality standard — the intervals narrow the gap but do not close it, because the uncertainty that matters here is reviewer judgement, not sampling error.
 
 ### A6.2 "Structural checks pass 118 of 121" is a test suite, not validation
 
@@ -359,9 +374,9 @@ Reporting 118/121 next to benchmark F1 numbers invites conflation of **engineeri
 - DeepSeek-V4-Flash string screen: **730,195 judged items**.
 - DeepSeek-V4.1-Flash triple evidence screen: **16,032 triples** against 25,714 licence-screened sentences.
 - Two-model adjudication for vocabulary mapping (Gemma, DeepSeek-R1).
-- Llama-3.1-8B + Mistral-7B as catalogue judges: **82.9% agreement on 442,772 field verdicts, Cohen's κ = 0.566, Gwet's AC1 = 0.788**; Fleiss' κ over all three judges **0.471** (line 1,049–1,053).
+- Llama-3.1-8B + Mistral-7B as catalogue judges: **82.9% agreement on 442,772 field verdicts, Cohen's κ = 0.566, Gwet's AC1 = 0.788**; Fleiss' κ over all three judges **0.471** (lines **1,053–1,058**). The manuscript also reports a Wilson interval on the raw agreement and then says, correctly, that with sampling error this small *the informative quantity is the variation across fields, not the interval* (**1,056–1,057**) — quote that sentence if a reviewer presses on why the interval is so tight.
 
-**Correction to earlier drafts of this report:** an older frozen run gave κ = 0.282 (0.293 after re-run, AC1 0.771). Those numbers still sit in the source at comment lines 1,297–1,299 but **do not appear in the visible paper** — the schema-enforced re-run supersedes them. Do not quote 0.282 at a reviewer; quote 0.566/0.471 and be ready to explain that the low-kappa run was the pre-fix one.
+**Correction to earlier drafts of this report:** an older frozen run gave κ = 0.282 (0.293 after re-run, AC1 0.771). Those numbers still sit in the source at comment lines **788, 792, 932–933 and 1,317–1,319** but **do not appear in the visible paper** — the schema-enforced re-run supersedes them. Do not quote 0.282 at a reviewer; quote 0.566/0.471 and be ready to explain that the low-kappa run was the pre-fix one.
 
 The manuscript is **honest** about this — it consistently says "concordance, never accuracy" and names the judge alongside each number. **That is a genuine strength; do not dilute it.** But the honest summary is: most quality numbers come from LLM judges whose inter-judge agreement is poor.
 
@@ -369,16 +384,16 @@ The manuscript is **honest** about this — it consistently says "concordance, n
 
 *(Framing fix: **B3.4**.)*
 
-The re-typing pass is a real improvement and should be reported as such. Limitations (1290–1296) and Results (1088–1092) now both say the same thing:
+The re-typing pass is a real improvement and should be reported as such. Limitations (**1,310–1,316**) and Results (**1,094–1,098**) now both say the same thing:
 
 - **13,564 of 25,788 triples (52.6%) carry a specific relation whose cue phrase is present in the source sentence** — this supersedes the older `OTHER_RELATION 17,717` figure, which no longer appears anywhere in the file.
 - Of the remainder, **8,039 are flagged as not supported by their sentence** (i.e. treated as extraction errors), **1,708 state an association without direction**, and **915 report a null finding**.
-- Separately, 16 collection-independent string screens judge only **39.3% of build-3.0.3 triples** to be well-formed claims (38.7% with valid subject and object, line 1087).
+- Separately, 16 collection-independent string screens judge only **39.3% of build-3.0.3 triples** to be well-formed claims (38.7% with valid subject and object, line 1,093).
 
 So the honest position is no longer "most relations are not relations" — it is **"just over half of the relation triples carry a specific, source-verified relation, and half do not."** That is a legitimate abstention-forward result, but three things follow:
 
 1. **The 47.4% must be accounted for in the paper, not just counted.** The four named buckets — 13,564 specific + 8,039 unsupported + 1,708 undirected + 915 null = **24,226**, which leaves **1,562 triples (6.1%)** in no stated bucket. A reviewer who adds the four numbers will ask what those 1,562 are. Close the set in the text or say explicitly that the buckets overlap/are non-exhaustive.
-2. **The abstract still leads with the triple count** (line 114: "an evidence-anchored catalogue and 25,788 relation triples") without carrying the 52.6%. A reader who only reads the abstract infers a relation-extraction result of unstated quality. Add the qualifier, or demote triples.
+2. **The abstract still leads with the triple count** (line 115: "an evidence-anchored catalogue and 25,788 relation triples") without carrying the 52.6%. A reader who only reads the abstract infers a relation-extraction result of unstated quality. Add the qualifier, or demote triples.
 3. **The re-typing is model output, not validated.** Line 1294–1296 says so explicitly ("Re-typed relations, directions and term types are model output, checked on small constructed test sets but not against human annotation"). Keep that sentence; it is the sentence a reviewer will test you on.
 
 Recommended framing: the contribution is *provenance-preserving extraction with principled abstention*, and the abstention rate is a finding, not a defect. That aligns with the journal's anti-overstatement editorial position and is defensible under review. It still requires the abstract's triple sentence to be rewritten.
@@ -389,7 +404,7 @@ Recommended framing: the contribution is *provenance-preserving extraction with 
 
 The abstract's headline numbers — "best exact F1 **90.1** on BC5CDR, **80.6** on BioRED" — are **PubTator3** and **HunFlair2**. Your best own system scores **69.5 / 66.2** (Qwen3.5-4B, 3-shot).
 
-So the abstract's strongest quantitative claims describe *existing tools you re-measured*. A reviewer reads this as borrowed credibility. The real finding is the one you under-sell: **transfer-domain recognisers beat in-domain prestige** (lines **1,106–1,121**, and the Recommendations at **1,166+**). Lead with that.
+So the abstract's strongest quantitative claims describe *existing tools you re-measured*. A reviewer reads this as borrowed credibility. The real finding is the one you under-sell: **transfer-domain recognisers beat in-domain prestige** (lines **1,112–1,118**, and the Recommendations at **1,172+**). Lead with that.
 
 ### A6.6 Domain-transfer measurement is an under-exploited strength
 
@@ -403,7 +418,7 @@ The journal's Methods requirements ask for "the type of statistical analysis use
 
 **Status: applied 2026-11-10 and verified in the rebuilt PDF.** The defect below is recorded because the same class of error — a count that does not partition — recurs elsewhere in the paper and should be re-checked whenever the numbers change.
 
-Lines **1,016–1,023** originally read:
+The sentence, at **1,023–1,025** in the Results paragraph that opens at **1,019**, originally read:
 
 > *"Seventeen entity types are fully populated, fifteen partially, one is planned and five are embedded in other tables' rows"*
 
@@ -422,8 +437,8 @@ The registry the figure is drawn from — `releases/cdm_v3/3.0.3/remediation/UPD
 
 Two adjacent risks, in opposite directions:
 
-- **Do not "correct" Fig. 2 while fixing this.** The caption's *"33 entity types across 10 modules"* (line **760**) is **right** — it is `len()` of the same 33-row registry. It is *not* the DRAFT 0.1.0 proposal in `docs/cdm_design/cdm_schema.json` (that artefact has 22 tables and the figure never reads it).
-- **Do not quote 44 tables / 866 columns at 1,017–1,018 as the 3.1.0 build.** Verified by direct count: 3.0.3 = **44 tables / 866 columns / 8,490,496 rows**; 3.1.0 = **54 tables / 985 columns / 9,084,279 rows**. The text is careful to say 3.0.3 and to add that 3.1.0 "leaves these tables unchanged" — keep that qualifier, because a reviewer who opens the shipped 3.1.0 database and counts tables will otherwise find a 10-table, 119-column, 594k-row discrepancy. **One caveat on that qualifier itself:** comparing the two frozen builds table by table, all 44 tables survive and **42 have identical row counts**, but `cdm_change_log` grows 79 → 88 and `run_metadata` 11 → 14. So the honest wording is "leaves the *entity* tables unchanged and adds ten curated tables", not "leaves these tables unchanged" — the difference is two bookkeeping tables, but it is the kind of thing a referee who downloads the database can check in thirty seconds.
+- **Do not "correct" Fig. 2 while fixing this.** The caption's *"33 entity types across 10 modules"* (line **763**) is **right** — it is `len()` of the same 33-row registry. It is *not* the DRAFT 0.1.0 proposal in `docs/cdm_design/cdm_schema.json` (that artefact has 22 tables and the figure never reads it).
+- **Do not quote 44 tables / 866 columns at 1,019–1,020 as the 3.1.0 build.** Verified by direct count: 3.0.3 = **44 tables / 866 columns / 8,490,496 rows**; 3.1.0 = **54 tables / 985 columns / 9,084,279 rows**. The text is careful to say 3.0.3 and to add that 3.1.0 "leaves these tables unchanged" — keep that qualifier, because a reviewer who opens the shipped 3.1.0 database and counts tables will otherwise find a 10-table, 119-column, 594k-row discrepancy. **One caveat on that qualifier itself:** comparing the two frozen builds table by table, all 44 tables survive and **42 have identical row counts**, but `cdm_change_log` grows 79 → 88 and `run_metadata` 11 → 14. So the honest wording is "leaves the *entity* tables unchanged and adds ten curated tables", not "leaves these tables unchanged" — the difference is two bookkeeping tables, but it is the kind of thing a referee who downloads the database can check in thirty seconds.
 
 It was a trivial fix with disproportionate cost: a self-inconsistent count in the first Results paragraph invites a reviewer to distrust every other number in the paper, and the numbers *are* the contribution.
 
@@ -440,14 +455,15 @@ Uncited entries:
 
 | Uncited key | Why it must be cited |
 |---|---|
-| `liu2021sapbert` | **SapBERT is named 4 times in visible prose** — lines 621, 1,006, 1,127, 1,594 — and **never once cited**. It drives the merge-adjudication rule, so it is load-bearing |
-| `liu2019sbert` | **MiniLM is named twice** — lines 622, 1,594 — also never cited |
+| `liu2021sapbert` | **SapBERT is named 4 times in visible prose** — lines 624, 1,008, 1,133, 1,627 — and **never once cited**. It drives the merge-adjudication rule, so it is load-bearing |
+| `liu2019sbert` | **MiniLM is named twice** — lines 625, 1,627 — also never cited |
 | `zaratiana2024gliner` | GLiNER is cited at 1,080, but only via `zaratiana2025gliner2` (the v2 checkpoint paper). The original GLiNER method is uncited |
-| `lee2019biobert` | **BioBERT appears by name** at line 1,078 with no citation |
+| `lee2019biobert` | **BioBERT appears by name** at line 1,084 with no citation |
 | `neumann2019scispacy`, `beltagy2019scibert`, `akbik2019flair` | The three model families behind the ensemble. Note honestly: **"sciSpaCy", "SciBERT" and "Flair" never appear in visible prose** — only the concrete checkpoints (HunFlair2, BioBERT-diseases) do. So these are *optional* citations that would strengthen Methods, not compliance failures |
-| `wilkinson2016fair` | FAIR — the journal explicitly expects FAIR compliance, and the acronym appears **0 times** in the manuscript (the two "fair" hits at 882 and 1,302 mean "fair/unfair rating", not the principles). This is a *positioning* gap as much as a citation gap (A4.4) |
+| `wilkinson2016fair` | FAIR — the journal explicitly expects FAIR compliance, and the acronym appears **0 times** in the manuscript (the two "fair" hits at **885** and **1,322** mean "fair/unfair rating", not the principles). This is a *positioning* gap as much as a citation gap (A4.4) |
 | `yilmaz2011mixs` | MIxS — **0 occurrences** in the manuscript. The standard metadata schema the paper is about is never named (A4.4) |
-| `wilson1927`, `efron1993bootstrap` | No CIs are reported anywhere; these are the methods you should be using |
+| `wilson1927` | **CIs are now reported** (Wilson, five intervals at 1,035–1,039 plus two at 1,053 and 1,063) and the key that defines them is **still uncited**. This is now a straightforward omission: cite it at first use or drop the method name from the statistics sentences |
+| `efron1993bootstrap` | **No bootstrap is performed anywhere.** Remove this entry from the `.bib` rather than cite it decoratively |
 
 **General rule being broken:** every named tool/model/standard must be cited **at first use in the body**. This one *is* broken — SapBERT (4 mentions), MiniLM (2) and BioBERT (1) are named and uncited, and SapBERT in particular carries the merge logic.
 
@@ -468,14 +484,14 @@ Uncited entries:
 > "Microbiome-CDM: An LLM-driven common data model and knowledge extraction pipeline for human microbiome literature"
 
 - 15 words, acceptable length.
-- Promises a **pipeline** (Software framing) while the body claims to be a **protocol** (non-existent article type). **Title, abstract, article type and declared framing must agree.**
+- Promises a **pipeline** (Software framing); the body's former **protocol** self-description has been removed down to the two legitimate *"assay protocol"* uses at 105 and 236. **Title, abstract, article type and declared framing must now be made to agree by choosing Methodology or Software — the text no longer forces either.**
 - Does not signal "resource" or "reusable metadata", which is what the target audience searches for. Candidate alternative framings in **B4.4** (authors own the title).
 
 ### A8.2 Abstract — genuinely in good shape
 
 | Check | Result |
 |---|---|
-| Word count | **334 incl. the three bold labels / 331 excl.** (≤350 ✓, 16–19 to spare) |
+| Word count | **330 incl. the three bold labels / 327 excl.** (≤350 ✓, **20 / 23 to spare**); **350** under hyphen-splitting — compliant on all three conventions |
 | Structure | Background / Results / Conclusions ✓ |
 | Citations | **0** ✓ (verified: no `\cite` in the abstract block) |
 | Abbreviations | Reasonably minimised ✓ |
@@ -499,7 +515,7 @@ Six supplied — within 3–10 ✓:
 - 3 authors, 3 affiliations, 1 corresponding (starred) ✓
 - **Only one email address** (the corresponding author's). The guidelines ask for "email addresses for **all** authors". Likely tolerated but technically non-compliant.
 - ORCIDs present for all three ✓
-- **Affiliation 3 has no street/postcode** (line 87) while 1 and 2 do. Internal note (lines 78–85) says street/postcode values "confirm against the official imprint pages before submission" — **still open**.
+- **Affiliation 3 has no `\street`** (line **88**) while 1 and 2 do — it carries `\city{Bonn}`, `\postcode{53115}` and `\state{North Rhine-Westphalia}`, so the postcode is present and only the street line is missing. The internal note at **78–85** says street/postcode values should be confirmed "against the official imprint pages before submission" — **still open**, and it affects affiliation 3 only.
 - Internal note also flags remaining `VERIFY` items in `TITLE_PAGE.md`.
 
 ### A8.5 Declarations — content check
@@ -529,7 +545,7 @@ Do not lose these while fixing everything else:
 4. **The claims register.** Every table value traceable to a register row is a reproducibility practice most submissions lack — just don't cite the internal filename in the caption (A3.8).
 5. **Domain-transfer finding.** 27 configurations / 21 systems; organism, disease and gene recognisers *not* trained on BioRED outperforming trained ones. The best available novel contribution — promote it from "Recommendations" to Results.
 6. **Licence discipline.** All 453 papers rights-checked with an explicit matrix. Most corpora papers do not do this.
-7. **Build integrity.** Clean from-scratch `latexmk` build: 18 pages, 0 undefined citations, 0 undefined references, 0 errors, 0 warnings, one 4.86 pt overfull hbox and 28 underfull boxes. Nothing exceeds 5 pt.
+7. **Build integrity.** Clean from-scratch `latexmk` build: **27 pages / 413,483 bytes** in the submission configuration (`referee,lineno`), **19 pages / 405,042 bytes** without them; 0 undefined citations, 0 undefined references, 0 errors, 0 `LaTeX Warning`s; **1 overfull hbox at 4.86 pt** and **47 underfull boxes** (44 `\vbox` + 3 `\hbox`, all `Underfull \hbox`/`\vbox` spacing notices from ragged section breaks). Nothing exceeds 5 pt. Quote 27 pages, not 18 — the earlier figure predates the line-number and structured-abstract changes. Note that both counts are byte-reproducible only under `SOURCE_DATE_EPOCH=1762819200 FORCE_SOURCE_DATE=1`; without a fixed epoch the same source produced 413,496 B and 415,863 B on repeat builds, so the figures previously quoted here (413,432 / 404,992) were build-timestamp artefacts and cannot be cited as exact.
 
 ## A10. Venue verdict, in evidence
 
@@ -603,9 +619,9 @@ Two matter here.
 
 **Resource Reports** — the journal's own description: *"Resource Reports describe major technical advances and/or major informational databases that would be of interest in microbiology or allied fields. The manuscripts should include detailed methods and illustration of proof-of-principle so that the new methodology can be replicated and/or utilized by others."*
 
-Read that against what the manuscript actually is: a database-shaped artefact (2,505,735 mentions, 165,991 canonical terms, 334,231 mappings, a released CDM bundle) with a documented method and a released deposit. **"Proof-of-principle so that others can replicate or utilise it" is a materially lower bar than *Microbiome*'s "demonstrable advance"**, and it is the exact standard the paper can already meet. The missing element at *Microbiome* — a microbiome *insight* — is not required here; a demonstrated *reuse path* is.
+Read that against what the manuscript actually is: a database-shaped artefact (**2,505,684** character-offset mentions at the CDM 3.0.3 layer — the terminology 1.0.1 manifest carries 2,505,735 for the same mentions, see B3.6 — **162,409** canonical terms after the relevance filter, 165,991 before it, 334,231 candidate mappings, a released CDM bundle) with a documented method and a released deposit. **"Proof-of-principle so that others can replicate or utilise it" is a materially lower bar than *Microbiome*'s "demonstrable advance"**, and it is the exact standard the paper can already meet. The missing element at *Microbiome* — a microbiome *insight* — is not required here; a demonstrated *reuse path* is.
 
-**Methods and Protocols** — the paper's own preferred self-description ("we present a protocol that constructs…") turns out to name a real article type at this journal. That is worth pausing on: the single most-repeated framing defect at *Microbiome* (A5.1, B3.1 — "protocol" used 12 times in visible text with no article type behind it) **disappears entirely at mSystems**. The word does not have to be scrubbed from the manuscript; it has to be aimed at the right article type.
+**Methods and Protocols** — the paper's own *former* self-description ("we present a protocol that constructs…", now reading "a method that constructs" at line 107) turns out to name a real article type at this journal. That is worth pausing on: the framing defect that dominated the *Microbiome* analysis (A5.1, B3.1 — "protocol" used **12 times** in visible text with no article type behind it) would have been **forgiven here rather than fixed**. It has since been scrubbed for the *Microbiome* submission, so the manuscript now uses "method" in **all but two** visible places, both the compound "assay protocol" (lines 105, 236). At *mSystems* the word would not have needed to go at all; at *Microbiome* its removal was mandatory.
 
 **Recommendation: Resource Report**, not Methods and Protocols. The contribution is an information resource with a method attached, not a bench/wet-lab protocol. Methods and Protocols would invite "this is not a protocol" from a reviewer who expects step-by-step laboratory procedures.
 
@@ -652,8 +668,8 @@ Two readings, both true:
 
 | Requirement | Current manuscript | Delta |
 |---|---|---|
-| 5,000-word body | **3,911 words** excluding back matter, tables and figure legends (4,584 including back matter) | **Already compliant**, with ~1,100 words of headroom — enough for the capability matrix, related-work rewrite and IBD promotion, and *still* under the cap |
-| Abstract ≤ 250 words | **334 incl. the three labels / 331 excl.** by a comments-stripped, LaTeX-command-stripped count | **Trim 81–84 words**, plus a new ≤150-word Importance paragraph. The trim is cheap; the Importance paragraph is the real work |
+| 5,000-word body | **4,151 words** excluding back matter, tables and figure legends (4,824 with back matter; **4,865** on the contiguous whole-body recount) | **Already compliant**. Margin is **849** words against the 4,151 body figure that the cap is conventionally applied to; the conservative contiguous count leaves **135**. Tight for the capability matrix *plus* related-work rewrite *plus* IBD promotion, but under the cap either way (the body grew by 240 words in the restructure) |
+| Abstract ≤ 250 words | **330 incl. the three labels / 327 excl.** by a comments-stripped, LaTeX-command-stripped count (**350** hyphen-split) | **Trim 77–80 words**, plus a new ≤150-word Importance paragraph. The trim is cheap; the Importance paragraph is the real work |
 | Separate **Importance** paragraph ≤ 150 words | Does not exist | **Write ~110–140 words of plain-language significance.** New work, but it is exactly the paragraph B4.3 already asks for |
 | Abstract word count on the title page | Absent | Add one number |
 | Running title ≤ 54 characters | No running title | Add |
@@ -663,11 +679,11 @@ Two readings, both true:
 | CC BY 4.0 | CC BY proposed in Declarations | Already aligned |
 | Author Contributions / Acknowledgments as unnumbered end sections | Currently BMC/Springer Declarations machinery | Rework the back matter — one pass |
 | No formal "Declarations / Ethics / Consent / Abbreviations" block | Present | **Delete or fold.** ASM does not use the BMC declarations apparatus |
-| "16S" → "16S rRNA gene" | 3 bare occurrences | Do it anyway. *Microbiome*'s rule is explicit; ASM's is not verified, and correct usage is harmless at either venue |
+| "16S" → "16S rRNA gene" | **Already compliant** — 3 occurrences (**846**, **1,067**, **1,131**) all read "16S rRNA gene"; 0 bare | No action needed. *Microbiome*'s rule is explicit and is met; ASM publishes no equivalent rule, so the current wording is safe at either venue |
 
 **The one real structural conflict.** ASM puts Materials and Methods *after* Discussion; the Tier 0 restructure planned for *Microbiome* (C2:6–8) puts Methods before Results and adds a separate Conclusions. These are not the same edit. Deciding the venue **before** writing the restructure — which is what Part 0 already says — saves doing it twice.
 
-**The cost that is easy to underrate.** The `sn-jnl` v3.1 conversion (preamble, structured abstract, declaration ordering, `sn-vancouver-num`, the whole `latexmk` path validated at 18 pages / 0 errors) is Springer-specific. Moving to ASM means switching to the ASM Overleaf template and re-doing front matter, back matter and declaration handling. That is a day, not a week — but it is wasted if the venue is chosen after the restructure rather than before.
+**The cost that is easy to underrate.** The `sn-jnl` v3.1 conversion (preamble, structured abstract, declaration ordering, `sn-vancouver-num`, the whole `latexmk` path validated at 27 pages / 413,483 bytes, 0 errors) is Springer-specific. Moving to ASM means switching to the ASM Overleaf template and re-doing front matter, back matter and declaration handling. That is a day, not a week — but it is wasted if the venue is chosen after the restructure rather than before.
 
 ### ASM6. The other ASM journals — where this paper would and would not go
 
@@ -685,23 +701,23 @@ Two readings, both true:
 
 Scores are comparative within this paper only, not journal quality.
 
-| Rank | Venue | Article type | Formal fit | Precedent | Audience | Cost | Honest odds |
+| Rank (decision) | Venue | Article type | Formal fit | Precedent | Audience | Cost | Honest odds |
 |---|---|---|---|---|---|---|---|
-| **1** | ***mSystems*** | Resource Report | **Best** — article type describes the paper as written; 5,000-word cap already met; format-neutral first submission | **Strong** (PaperBLAST, swab schema, NMDC standards) | Systems microbiologists | APC **$4,500** non-member | **Best available.** Still needs availability + reuse promotion + Importance paragraph. Not a desk-reject risk on shape |
-| **2** | ***Microbiome*** | Methodology | Good — type exists, criteria are "demonstrable advance", which the paper does not yet show | Thin (2 text-mining titles in 2,491) | Microbiome scientists, competitors as reviewers | APC **$5,190 / €4,290** | Credible **only** after the biological demonstration. Highest ceiling, highest bar |
+| **1** — **chosen** | ***Microbiome*** | Methodology | Good — type exists, criteria are "demonstrable advance", which the paper does not yet show | Thin (2 text-mining titles in 2,491) | Microbiome scientists, competitors as reviewers | APC **$5,190 / €4,290** | **Chosen despite the lower odds.** Highest ceiling, and the corpus is the journal's own subject matter. Cost accepted: Gap 4 (no microbiome result, no microbiome figure) |
+| **2** — external fallback | ***mSystems*** | Resource Report | **Best of the five on the paper as written** — article type describes it; 5,000-word cap already met; format-neutral first submission | **Strong** (PaperBLAST, swab schema, NMDC standards) | Systems microbiologists | APC **$4,500** non-member | **Best formal fit, not chosen.** Would still need availability + reuse promotion + an Importance paragraph, plus a full template move. Not a desk-reject risk on shape |
 | **3** | **BMC Microbiology** | Research / Database / Software (**no Methodology type**) | Good — widest ontology/KG precedent (**60** titles vs 13) | Strongest on topic | Mixed microbiology | APC **£2,390 / $3,090 / €2,690** | **Most likely acceptance** of the five, lowest signalling. The honest fallback |
 | 4 | mSphere | Resource Report | Good | Weaker for this paper | Host–microbe focus | $4,500 | No advantage over mSystems |
 | 5 | Microbiology Spectrum | Research Article | Moderate | Broad | Very broad | Lower | Volume without selectivity; no upside |
 
-**The decision in one line:** *mSystems* is where the paper as it exists today is closest to publishable; *Microbiome* is where it would matter most if the biological demonstration is added; BMC Microbiology is where it is most likely to be accepted as-is.
+**The decision in one line:** *Microbiome* was chosen — highest ceiling, right audience, corpus on-topic — accepting that the paper as it stands today is *closest to publishable* at *mSystems*, and that BMC Microbiology is where it is *most likely to be accepted as-is*. **Read the rank column as the decision, not as a fit score: on pure formal fit, mSystems scores higher than the venue actually chosen.** That gap is the honest price of the choice.
 
 ### ASM8. What this changes in the rest of this document
 
 - **C2:1 (decide the venue)** now has three real options, not two, and the choice is no longer "prestige vs fit" — it is "which bar do you intend to clear".
-- **C2:2 (article type)** — "protocol" is not a defect at mSystems if the article type is **Methods and Protocols**, and not a defect at all under Resource Report. The scrub is still worth doing, because the word appears **12 times in visible text** (lines 104, 106, 132, 235, 288, 297, 331, 352, 495, 703, 832, 1,447) where "pipeline" or "resource" is meant, but it is no longer a desk-reject.
+- **C2:2 (article type)** — "protocol" is not a defect at mSystems if the article type is **Methods and Protocols**, and not a defect at all under Resource Report. The scrub that *Microbiome* required (12 visible occurrences before the pass) **is now complete**: of the **13 current occurrences**, only **2 are visible, both the compound "assay protocol" (lines 105, 236)**; the remaining 11 sit on 9 comment-only lines. Nothing further is owed to either venue on this point.
 - **C2:6–9 (restructure)** — the target architecture is **venue-dependent**. Write it once, after the decision.
 - **A4 / C2:4–5 (availability, deposit, DOI)** — unchanged and equally blocking at every venue considered. This is the one Tier 0 item that buys value regardless of where the paper goes.
-- **A8.2 / C2:13 (abstract)** — at mSystems the abstract must come down from **331 words (excl. labels) to ≤250** *and* gain a ≤150-word Importance paragraph; at *Microbiome* the current 331-word structured abstract is already compliant (19 words to spare under the 350 cap).
+- **A8.2 / C2:13 (abstract)** — at mSystems the abstract must come down from **327 words (excl. labels) to ≤250** *and* gain a ≤150-word Importance paragraph; at *Microbiome* the current 327-word structured abstract is already compliant (23 words to spare under the 350 cap).
 - **B2.1 / B2.2 (uncited competitors, unclaimed standards)** — unchanged. mSystems reviewers will be *less* likely to know MINERVA and MicrobiomeKG, which lowers the risk of being caught but does not make the missing citations defensible. Cite them regardless.
 
 ---
@@ -777,7 +793,7 @@ This is the second fatal gap. Confirmed by direct inspection:
 
 - **Figures:** 3 total — pipeline overview, CDM architecture, evaluation metrics. **None shows microbiome data.**
 - **Taxon names in the entire body:** `Lactobacillus` ×1, `Lactococcus` ×1. Nothing else. No *Faecalibacterium*, *Akkermansia*, *Prevotella*, *Bacteroidetes*, *Firmicutes*.
-- **The IBD use case is reported in one sentence and then retracted.** Results line **1,127–1,129** reads: *"An exploratory genus-by-condition consensus check agrees in 25 of 44 comparable cells."* Limitations line **1,327–1,330** then reads: *"the IBD use case (one exploratory case study; the register records only that 25 of 44 genus-by-condition cells agree with independent BugSigDB consensus) does not establish clinical validity."* So the analysis is not missing — it is present, unnamed, unillustrated and immediately disowned.
+- **The IBD use case is reported in one sentence and then retracted.** Results lines **1,134–1,136** read: *"An exploratory genus-by-condition consensus check agrees in 25 of 44 comparable cells."* Limitations, lines **1,348–1,351**, then reads: *"the IBD use case (one exploratory case study; the register records only that 25 of 44 genus-by-condition cells agree with independent BugSigDB consensus) does not establish clinical validity."* So the analysis is not missing — it is present, unnamed, unillustrated and immediately disowned.
 
 So you *ran* a genus-by-condition consensus analysis, got **25/44 cells agreeing with independent BugSigDB curation**, and reported it **only in Limitations as a thing that does not establish clinical validity.**
 
@@ -798,7 +814,7 @@ DiMB-RE reported IAA against a gold corpus. Ikeda reported against a gold standa
 
 ### B2.7 Missing a novelty paragraph
 
-`novel`/`novelty` appears **zero times in visible prose** across 1,683 lines; the only two occurrences (lines 188, 190) are inside a comment block that says so. There is no paragraph saying what is new relative to each named prior system. At a journal whose editorial demands a "substantial conceptual or technical advance", the absence is conspicuous.
+`novel`/`novelty` appears **zero times in visible prose** across 1,716 lines; the only two occurrences (lines 189, 191) are inside a comment block that says so. There is no paragraph saying what is new relative to each named prior system. At a journal whose editorial demands a "substantial conceptual or technical advance", the absence is conspicuous.
 
 ### B2.8 Missing the community/sustainability story
 
@@ -810,13 +826,13 @@ MINERVA has a viewer. MicrobiomeKG is in Translator. MicrobiomeKG explicitly say
 
 *(Article-type criteria: **A5.1**. Venue alternative: **[ASM2](#asm2-article-types-at-msystems--and-why-two-of-them-fit-this-paper)**.)*
 
-The manuscript calls itself a **protocol** in **12 occurrences on visible text lines** (lines 104, 106, 132, 235, 288, 297, 331, 352, 495, 703, 832, 1,447 — 21 occurrences if the 9 comment-only lines are counted), including the abstract ("We present a protocol that constructs a…", line 106) and line 288 ("We built Microbiome-CDM as a protocol rather than a single model").
+**This defect is now fixed, and the record is worth keeping because it was the paper's single most-repeated self-description.** The manuscript used to call itself a **protocol** in **12 visible occurrences** (105, 107, 134, 236, 289, 298, 332, 355, 498, 706, 835, 1,480), including the abstract ("We present a protocol that constructs a…") and the old line 289 ("We built Microbiome-CDM as a protocol rather than a single model"). The abstract now reads **"a method that constructs"** (107), the former `\section{Protocol overview}` is `\subsection{Overview}` at **334**, and a comment-safe census finds **2 surviving visible instances — 105 and 236, both "assay protocol"**; the other **11 occurrences are on 9 comment-only lines and never reach the PDF**.
 
 *Microbiome* has **no Protocol article type**. Its types are Research, Methodology, Software, Review, Brief report, Comment, Correspondence, Meeting Report. ***mSystems* does have a "Methods and Protocols" type — so this defect is specific to the *Microbiome* path, not intrinsic to the paper.**
 
 You are describing a **Methodology** paper using a word that maps to no category at this journal. Every time a reviewer reads "protocol" they hear "we have not implemented this / this is a plan", which is the opposite of what a Methods paper must convey.
 
-**If *Microbiome* or BMC: decide Methodology or Software, then replace "protocol" throughout** with "pipeline" (Software) or "method" (Methodology). Do not mix. **If *mSystems*:** submit as a **Resource Report** and still replace "protocol" — the article type is not a protocol, and the word invites the same misreading from an ASM reviewer. The fix is cheap at any venue; only its *severity* changes.
+**The choice is made and executed:** Methodology, with "method" as the consistent noun; "pipeline" survives only where the *software* is meant. Do not reintroduce "protocol" outside the two "assay protocol" mentions, which are a data field, not a self-description. **Had *mSystems* been chosen** the article type would have been Resource Report and the same substitution would still have been correct — the word invites the same "this is not implemented" misreading from an ASM reviewer. Only its *severity* was venue-dependent.
 
 ### B3.2 "Provenance-traceable common data model" is asserted, not shown
 
@@ -839,7 +855,7 @@ Abstract headline numbers: **F1 90.1 on BC5CDR, 80.6 on BioRED**. These are **Pu
 
 So the abstract's two strongest numbers describe **other people's tools, which you re-measured.** A reviewer reads: *"the best results in this paper are not the authors'."*
 
-The genuinely interesting finding is the one currently buried on line 1048 and in Recommendations:
+The genuinely interesting finding is the one currently buried on line 1,051 and in Recommendations:
 
 > **Organism, disease and gene recognisers not trained on BioRED outperform those trained on it. Spearman correlation between BioRED F1 and corpus grounding is 0.749 — high, but not sufficient to select models by leaderboard.**
 
@@ -849,7 +865,7 @@ That is a reusable, quotable, transferable methodological result that matters to
 
 *(The evaluation-side view is **A6.4**.)*
 
-- 25,788 triples; **13,564 (52.6%) carry a specific relation with a source-verified cue phrase** (line 1,089, repeated at 1,291).
+- 25,788 triples; **13,564 (52.6%) carry a specific relation with a source-verified cue phrase** (line 1,095, repeated at 1,291).
 - **8,039 are flagged as unsupported by their sentence**, **1,708 are undirected** and **915 report a null finding** (1090–1092).
 - A collection-independent string screen judges **39.3%** of the older build-3.0.3 triples to be well-formed claims (1087); that screen predates the re-typing.
 
@@ -865,13 +881,13 @@ Manuscript says **453** papers / 4,006 sections. The analysis universe is **452*
 
 ### B3.6 Layer ambiguity in the headline counts
 
-`2,505,684` (CDM 3.0.3) vs `2,505,735` (terminology 1.0.1) vs `2,505,736` (manifest). You do label them, which is better than most. But the three numbers are not explained *relationally* — a reader cannot tell which one to quote. One sentence in Methods: "these differ by N because [X]; quote the build-specific number."
+`2,505,684` (CDM 3.0.3) vs `2,505,735` (terminology 1.0.1) vs `2,505,736` (manifest). You do label them, which is better than most. But the three numbers are not explained *relationally*, so a reader cannot tell which one to quote. **The relation, exactly:** the terminology 1.0.1 extractor offers **2,505,735** `term_mention` rows; the CDM loader keeps **2,505,684**, dropping **51** — the QA report records this literally as `load_dropped[0] = {table: term_mention, offered: 2505735, kept: 2505684, dropped: 51}`, and gives no row-level reason for the 51; the manifest's **2,505,736** is a known **off-by-one** in `coverage.mention_records`, identical in terminology 1.0.0 and 1.0.1, and it has never been a load count. So quote **2,505,684** as the build's mention count, and put one sentence in Methods: *"the terminology extractor offers 2,505,735 mention rows; the loader keeps 2,505,684 after dropping 51, and the manifest's 2,505,736 is an uncorrected off-by-one."* The same layering trap exists for terms, where the numbers are **three different tables, not three estimates of one**: **162,409** is the build-level canonical-term count (the value every Results sentence uses, at 128, 306, 361, 631, 721), **165,991** is the terminology release's refined L2 count (601), and **166,012** is the L1 dedup row count in `terminology_dedup.csv` (600). Name the layer inside the sentence, not only in a parenthetical.
 
 ### B3.7 Internal artefacts named in published text
 
 *(Same defect as **A3.8**.)*
 
-Table 1's caption says the last column "names the row in the claims register (`MANUSCRIPT_CLAIMS_REGISTER.csv`)." Reviewers cannot open that. Either ship it as an additional file or drop the filename.
+*(Same defect as **A3.8**.)* The manuscript has since been fixed: Table 1's caption (**972**) no longer names the register, and the table note (**980**) no longer carries `Register: final_validation/MANUSCRIPT_CLAIMS_REGISTER.csv`. What survives is softer but still internal — the column header **`Register`** (`tables/table_pipeline_summary.tex`, line 9), and three visible prose mentions: **1,041** ("the claims-register row behind every value"), **1,484** (the availability sentence, which promises "the frozen claims register used for number verification" as a deposited item), and **1,633** (the AI-use declaration). Two options: (a) **ship it** — deposit the register with the build and reference it from 1,484; or (b) **drop the internal vocabulary** — rename the header to `Source`, and rewrite 1,041/1,484/1,633 to say "a frozen number-verification table". The filename itself now appears only in generator comments (`tables/table_pipeline_summary.tex:1–2`), which never reach the PDF, so option (b) is a four-line edit.
 
 ### B3.8 The corpus looks arbitrary because the inclusion rule is unstated
 
@@ -971,12 +987,12 @@ One paragraph, explicitly structured: *"Relative to MINERVA we add X. Relative t
 
 # PART C — PER-VENUE ACTION LISTS
 
-This is the operative section. Everything above establishes *what is wrong and why*; this is *what to do, at which journal*, in the shape of **missing / rephrase / remove**. Each item carries a line number or a count from `manuscript.tex` (1,683 lines) so it can be checked and ticked off.
+This is the operative section. Everything above establishes *what is wrong and why*; this is *what to do, at which journal*, in the shape of **missing / rephrase / remove**. Each item carries a line number or a count from `manuscript.tex` (1,716 lines) so it can be checked and ticked off.
 
 **Conventions used throughout this part**
 
-- Line numbers are `manuscript.tex` line numbers for the **1,683-line / 107,887-byte** working copy on branch `submission-prep-2026-11-10` (last commit `1d2315b`, with the re-typed results and the SN-conversion still uncommitted). Re-grep before editing: the file is 57 lines longer than the `b804f97` snapshot these anchors were first taken from.
-- "Visible" means a line that is not comment-only. The file has **937 comment-only lines** (55.7% of 1,683; 669 non-empty visible lines remain); those never reach the PDF and are treated separately.
+- Line numbers are `manuscript.tex` line numbers for the **1,716-line / 109,998-byte** working copy on branch `submission-prep-2026-11-10` (last commit **`d7a6194`**, with the post-commit `Microbiome` front-matter pass still uncommitted; the file has **no trailing newline**, so `wc -l` reports 1,715 while a newline split gives 1,716 entries — this report uses the 1,716 convention throughout). Re-grep before editing: the file is **90 lines and 6,156 bytes longer** than the `b804f97` snapshot these anchors were first taken from, and the offset is *not* uniform down the file, so never shift a line number arithmetically.
+- "Visible" means a line that is not comment-only. The file has **941 comment-only lines** (**54.8%** of 1,716) and **80 truly blank lines**, leaving **695 non-empty visible lines**; the remaining **1,021** are non-visible in total (941 comment-only + 80 blank). Comment and blank lines never reach the PDF and are treated separately. Because more than half the file is comment, every occurrence claim in this report is a *comment-stripped* count — a raw `grep` will over-count by 2–7× (“protocol” 2 visible vs 13 raw; “Claude” 1 vs 29; “AUTHOR REWRITE” 0 vs 14).
 - Word counts use the convention declared in A3.2 (comments stripped, floats removed as whole blocks, commands and cite/ref/label arguments stripped, whitespace tokens containing an alphanumeric character).
 - Where an item appears at more than one venue, it is listed under each venue with its venue-specific wording, rather than cross-referenced — so each list can be worked top-to-bottom alone.
 
@@ -990,53 +1006,53 @@ This is the operative section. Everything above establishes *what is wrong and w
 
 | # | Missing item | Evidence / where |
 |---|---|---|
-| M1 | `\section{Methods}` — the five stage sections are unlabelled and top-level | Stage headings at **406, 460, 538, 679, 774** are all `\section{Stage n: …}`; there is no `\section{Methods}` anywhere in the file |
-| M2 | `\section{Discussion}` | Zero occurrences of a Discussion heading in the file; `\section{Results}` (**920**) is followed directly by `\section{Recommendations}` (**1166**), then `\section{Limitations}` (**1251**) |
-| M3 | `\section{Conclusions}` | The only "Conclusions" is the abstract heading at line 132 |
-| M4 | A **reuse demonstration that is framed and evidenced as one** | It is *present* in Results at **1,127–1,129** ("An exploratory genus-by-condition consensus check agrees in 25 of 44 comparable cells") but as a single closing sentence with no denominator beyond the 44, no figure, no table, no confidence interval, and no "IBD" label — the word IBD appears in that paragraph only as the comparison standard. It is then re-cited in Limitations at **1,327–1,330** as a reason the paper has no clinical validity. Promote it: name it as the IBD case study, show the 44 cells, and stop apologising for it |
-| M5 | **Confidence intervals** on the headline proportions | 61.8% and 6.2% (both line 120), the 82.9% judge agreement and κ = 0.566/0.471 (lines **1,050–1,053**) are all point estimates with no CI |
-| M6 | **Second reviewer** on the 100-mapping overlap (H01) | Abstract line 121 says "a blinded human review of 500 randomly sampled accepted vocabulary mappings" — single reviewer |
+| M1 | `\section{Methods}` with the five stages beneath it | **Satisfied.** `\section{Methods}` is at **332**, opening with `\subsection{Overview}` at **334**; the five stage headings are now `\subsection{Stage n: ...}` at **409, 463, 541, 682, 777**, so they are visibly subordinate to Methods rather than top-level |
+| M2 | `\section{Discussion}` | **Satisfied.** `\section{Discussion}` is at **1172**, containing `\subsection{Recommendations}` at **1,186** and `\subsection{Limitations}` at **1,271**; `\section{Results}` is at **923** and `\section{Conclusions}` follows the Discussion at **1,370** |
+| M3 | `\section{Conclusions}` | **Satisfied.** `\section{Conclusions}` is at **1,370**, after the Discussion; the `\textbf{Conclusions:}` label at **134** is the separate abstract element |
+| M4 | A **reuse demonstration that is framed and evidenced as one** | It is *present* in Results at **1,134–1,136** ("An exploratory genus-by-condition consensus check agrees in 25 of 44 comparable cells") but as a single closing sentence with no denominator beyond the 44, no figure, no table and no confidence interval. The word **"IBD" does not appear in that paragraph at all** — the paragraph runs **1,121–1,136** and never names the disease; "IBD" first enters the manuscript in the Limitations at **1,348**. It is then re-cited at **1,348–1,351** as a reason the paper has no clinical validity. Promote it: name it as the IBD case study, show the 44 cells, and stop apologising for it |
+| M5 | **Confidence intervals** on the headline proportions | **Satisfied for the abstract headline.** 61.8% and 6.2% carry intervals at **120–121**; the 82.9% judge agreement gets a 95% Wilson interval at **1,053–1,054** and the 13.1% majority-fail at **1,063–1,064**; the five human-review proportions at **1,035–1,039** all carry intervals. The κ values (0.566, 0.471) are point estimates only. The remaining gap is not arithmetic — it is that the method behind every interval is **still uncited** (see R13/`wilson1927`) |
+| M6 | **Second reviewer** on the 100-mapping overlap (H01) | Single reviewer throughout. The abstract says only "a blinded human review of 500 sampled accepted mappings" (**116–117**); the Methods say "a blinded human review of a random sample of accepted vocabulary mappings" (**393–394**) with no reviewer count; the Results report one reviewer's verdicts, "A blinded reviewer classified 307 of 497 randomly sampled accepted mappings" (**1,034–1,036**); and the Limitations state the gap plainly, "Apart from one blinded reviewer's check of 500 randomly sampled accepted mappings (second-reviewer overlap pending)" (**1,303–1,305**). |
 | M7 | A **capability comparison table** against competing systems | No table compares Microbiome-CDM to MINERVA, MicrobiomeKG, KG-Microbe, SemRep, PubTator3-as-pipeline |
 | M8 | **SSSOM / KGX-Biolink / RDF export** statements | Body grep for `SSSOM`, `Biolink`, `KGX`, `RDF` = **0 occurrences**, though the exporters exist in `src/cdm_pipeline/export/` |
 | M9 | **FAIR + MIxS/MIMARKS + STORMS/STREAMS** engagement | Body grep for all five = **0 occurrences** |
-| M10 | **Novelty paragraph** naming each competitor and the added delta | No such paragraph in Background (lines 160–328) |
-| M11 | The **corpus inclusion rule** (cited → retrievable → included/excluded why) | Lines 228–300 describe the 453-paper set but never state how many works the compendium cited in total or why any were excluded |
-| M12 | **"Authors' information"** back-matter section (in the `sn-jnl` template; *not* in BMC's own mandatory list) | Back matter at 1,358–1,545 (`\bmhead` blocks at 1,392, 1,398, 1,401, 1,476, 1,493, 1,507, 1,526, 1,539) has Ethics, Consent, Availability, Competing interests, Funding, CRediT, Acknowledgements, AI declaration — **no Authors' information** section (0 occurrences). Low-risk omission; add only if the venue asks, and only with author-supplied content |
-| M13 | **Endnotes** section (listed among mandatory Declarations) | Not present in the back matter |
-| M14 | **Line numbers + double spacing** in the submission build | `\documentclass[pdflatex,sn-vancouver-num]` at line 23; the `referee,lineno` variant is described in a comment at line 25 but not enabled |
-| M15 | **Emails for all authors**, not only the corresponding author | Author block at lines 66–100; affiliation street/postcode incomplete |
-| M16 | An **"Additional files"** list | Not present; needed for the paper list, licence matrix and hashes |
-| M17 | **A biological figure** | 3 figures total (336–368, 741–772, 983–1014); all pipeline/architecture/evaluation, none microbiome content |
+| M10 | **Novelty paragraph** naming each competitor and the added delta | No such paragraph in Background: the section's visible prose runs **232–317** (51 non-empty lines) and none of it states what the pipeline adds over a named competitor, although the competitors themselves are named at **247–252** (MiDRED, DiMB-RE, MINERVA) |
+| M11 | The **corpus inclusion rule** (cited → retrievable → included/excluded why) | Not in Background — the word "453" occurs nowhere in that section. The rule is in **Methods, Stage 1** at **433–441** (BioProject accessions + DOIs seeded from a 168,464-sample synthesis, yielding 453 papers) and **443–448** (447 canonical, 6 duplicates excluded). Neither passage states how many works the compendium cited in total, nor why any were excluded |
+| M12 | **"Authors' information"** back-matter section (in the `sn-jnl` template; *not* in BMC's own mandatory list) | Back matter runs **1,391–1,572** (`\backmatter` at **1,391**), with `\section*{Declarations}` at **1,423** and `\bmhead` blocks at **1,425** Ethics approval, **1,431** Consent, **1,434** Availability of data and materials, **1,509** Competing interests, **1,526** Funding, **1,540** Authors' contributions, **1,559** Acknowledgements, **1,572** AI-use declaration — **no Authors' information** section (0 visible occurrences). Low-risk omission; add only if the venue asks, and only with author-supplied content |
+| M13 | **Endnotes** section | **Not a gap, and not required.** Endnotes is *not* one of BMC's eight Declarations subheadings — the guidelines give it only as a formatting instruction for substantive notes marked with superscript lowercase letters. The file has **0** `\footnote`, `\endnote` and `\thanks` calls, so there is nothing to collect. The earlier claim that it is "listed among mandatory Declarations" was wrong |
+| M14 | **Line numbers + double spacing** in the submission build | **Satisfied.** `\documentclass[referee,lineno,pdflatex,sn-vancouver-num]` at line **24** enables both; the comment at **23** records that BMC requires them; the build is **27 pages / 413,483 bytes** with 0 errors. The same source without the class options is **19 pages / 405,042 bytes** and is *not* the submission artefact. The comments at **25–26** still describe the options as optional and should be deleted. Byte counts are timestamp-dependent; page counts are not |
+| M15 | **Emails for all authors**, not only the corresponding author | Only the corresponding author carries `\email` — one entry, `\email{jkalra@uni-bonn.de}` at **74**; the co-authors at **75–76** have ORCIDs but no email. The title-page block runs **67–88** (**89–103** are blank or comment-only). Also incomplete: affiliation 3 (**88**) gives city, postcode, state and country but **no street**, whereas affiliations 1 and 2 (**86–87**) do |
+| M16 | An **"Additional files"** list | **Conditional, and currently absent** (0 occurrences). BMC requires the list only "if additional material is provided", so this is not a formatting defect. It is still the natural home for the paper list, licence matrix and hashes, which the guidelines say must not live at "data not shown" or a broken URL. Recommend supplying one |
+| M17 | **A biological figure** | 3 figures total (**339–371**, **744–775**, **985–1,016**); all pipeline/architecture/evaluation, none microbiome content |
 
 ### C-1.2 Rephrase at *Microbiome*
 
 | # | Rephrase | From → to | Evidence |
 |---|---|---|---|
-| R1 | Self-description | "protocol" → "pipeline" (Software) or "method" (Methodology) — **pick one and use it consistently** | 12 visible occurrences: lines 104, 106, 132, 235, 288, 297, 331 (heading), 352 (caption), 495, 703, 832, 1,447 |
+| R1 | Self-description | "protocol" → "pipeline" (Software) or "method" (Methodology) — **pick one and use it consistently** | **Done.** Comment-stripped, `protocol` survives in **2 visible places only**, both the compound "assay protocol" (**105**, **236**); a raw `grep` finds 13 because 11 are comments. The abstract reads "a method that constructs..." (**107**) and "A multi-program extraction method..." (**134**) |
 | R2 | Abstract opening | "We present a protocol that constructs a provenance-traceable common data model" → state the resource and the demonstrable advance | Line 106 |
 | R3 | Abstract Conclusions | "A multi-program extraction protocol can turn a literature corpus…" → "A multi-program extraction **method**…" | Line 130 |
 | R4 | Abstract payoff | The 90.1 / 80.6 F1 figures are PubTator3's and HunFlair2's, not this pipeline's — attribute them in-line or drop them from the headline | Lines 119–124 |
-| R5 | Triple framing | 13,564 of 25,788 triples (52.6%) are specifically typed; the other 47.4% carry no specific relation. Present as **principled abstention**, not as relations delivered | Line 114 ("25,788 relation triples"); caveat at 1290–1296 |
-| R6 | "16S" | **"16S" → "16S rRNA gene"** (explicit journal rule) | Lines 843, 1,061, 1,125 — three bare occurrences, all visible |
-| R7 | Section heading | `\section{Protocol overview}` → `\section{Methods overview}` or fold into Methods | Line **331** |
-| R8 | Figure 1 caption | "Protocol overview. Five stages build the common data model" → "Pipeline overview…" | Line 352 (the `\caption{` line; the `Protocol overview` text runs 352–357) |
+| R5 | Triple framing | 13,564 of 25,788 triples (52.6%) are specifically typed; the other 47.4% carry no specific relation. Present as **principled abstention**, not as relations delivered | Line 114 ("25,788 relation triples"); caveat at **1,310–1,316** |
+| R6 | "16S" | **"16S" → "16S rRNA gene"** (explicit journal rule) | **Done.** All three visible occurrences already read "16S rRNA gene" (**846**, **1,067**, **1,131**); no bare `16S` remains, verified comment-stripped |
+| R7 | Section heading | `\section{Protocol overview}` → folded into Methods | **Done.** No `Protocol overview` heading exists; the opening Methods subsection is `\subsection{Overview}` at **334**, under `\section{Methods}` at **332** |
+| R8 | Figure 1 caption | "Protocol overview. Five stages build the common data model" → "Pipeline overview…" | **Done.** `\caption{Pipeline overview. Five stages build the common data model` opens at **355** and runs to **369**, closing with `\label{fig:overview}` at **370**. `Protocol overview` now has **0 occurrences** in the file; **352** is the `AUTHOR REWRITE REQUIRED` marker immediately above the caption, not the caption itself (the old build had the caption at 352) |
 | R9 | Title | Current 113-character title promises a pipeline; retarget toward the indexed concept (common data model / metadata harmonisation) | Line 66 |
 | R10 | Benchmark framing | Reframe the BC5CDR/BioRED result as *transfer measurement*, which is the actual novel contribution (Spearman 0.749 diseases vs 0.023 organisms), rather than as benchmark performance | Lines 119–123 |
-| R11 | Data availability | Future tense → present tense with live DOI | Lines **1,447–1,454**: "will be deposited" (1,447), "DOI [to be added when the deposit is published]" (1,452–1,453), "[repository and DOI to be added by the authors]" (1,454) |
-| R12 | 453 vs 452 | State the analysis universe once and use one number | Lines 109, 352, 436, 1403 all say 453; a 452-paper body universe exists (HMPAPER_000372 excluded) and `HMPAPER_000372` never appears in the text |
+| R11 | Data availability | Future tense → present tense with live DOI | Lines **1,480–1,493**: "will be deposited on Zenodo before publication" (**1,480**), "DOI [to be added when the deposit is published]" (**1,485–1,486**), "[repository and DOI to be added by the authors]" (**1,487–1,488**). Still future tense with two empty slots — unchanged, and still the single largest surviving risk |
+| R12 | 453 vs 452 | State the analysis universe once and use one number | "453" appears in visible prose at **110, 357, 441, 834, 1,344, 1,490** and those six are consistent; a 452-paper body universe exists (HMPAPER_000372 excluded) and `HMPAPER_000372` never appears in the text |
 
 ### C-1.3 Remove at *Microbiome*
 
 | # | Remove | Evidence |
 |---|---|---|
-| X1 | The internal claims-register filename from the published Table 1 caption | Lines **969–975**: "\dots the row in the claims register (`MANUSCRIPT\_CLAIMS\_REGISTER.csv`) that each value was verified against" |
-| X2 | The same filename from the table note | Line 978: "Register: final\_validation/MANUSCRIPT\_CLAIMS\_REGISTER.csv" |
-| X3 | The **4 visible** `[AUTHOR INPUT REQUIRED]` blocks once authors supply the text | Lines 1,487, 1,502, 1,517, 1,535 |
-| X4 | The **2 unfilled DOI/repository slots** once deposits exist | Lines 1,452 ("DOI [to be added…]") and 1,454 ("[repository and DOI to be added by the authors]"); code repository also unset at 1,443 |
-| X5 | The **937 comment-only lines** (55.7% of the file) from the submitted `.tex` | Comment-only lines pass the 937-line census; publisher receives source at submission |
-| X6 | The internal engineering vocabulary in headings and prose | "Stage 1…Stage 5" (**406, 460, 538, 679, 774**) and "guarded normalisation", "evidence-anchored" read as build notes |
+| X1 | The internal claims-register filename from the published Table 1 caption | **Done.** The caption at **972–977** no longer names it and now ends "Percentages and judge-derived values are concordance or model-judgement measures, not accuracy" immediately before `\label{tab:summary}` at **977**. The last filename mentions are generator comments in `tables/table_pipeline_summary.tex:1–2` |
+| X2 | The same filename from the table note | **Done.** The note at **980** now reads "LLM-screen and BugSigDB values are concordance or model judgement, not accuracy." The surviving internal token is the column header **`Register`** (`tables/table_pipeline_summary.tex`, line 9) |
+| X3 | The **4 visible** `[AUTHOR INPUT REQUIRED]` blocks once authors supply the text | Lines **1,520**, **1,535**, **1,550**, **1,568** (competing interests, funding, CRediT, acknowledgements). Six more sit inside comments and never reach the PDF |
+| X4 | The **2 unfilled DOI/repository slots** once deposits exist | Lines **1,485** ("DOI [to be added when the deposit is published]") and **1,487** ("[repository and DOI to be added by the authors]"); the code-repository slot comment is at **1,476** |
+| X5 | The **941 comment-only lines** (**54.8%** of the 1,716 split entries) from the submitted `.tex` | Measured comment-stripped this session; **695** non-empty visible lines and **80** truly blank lines remain (1,021 non-visible in total). The publisher receives source at submission |
+| X6 | The internal engineering vocabulary in headings and prose | "Stage 1...Stage 5" is now `\subsection` at **409, 463, 541, 682, 777** — improved, since the stages are visibly subordinate to Methods — but the labels still read as build notes, as do "guarded normalisation" and "evidence-anchored" |
 | X7 | The unused figure asset decision | `Fig/fig_overview_illustrated.pdf` exists and is unreferenced |
-| X8 | **28 of 29 "Claude" mentions** — keep only the AI-use declaration | 29 raw occurrences in the file, **1 visible** (line **1,598**, the generative-AI declaration — keep that one); the other 28 are comment-only lines |
+| X8 | **28 of 29 "Claude" mentions** — keep only the AI-use declaration | 29 raw occurrences; **1 visible**, at line **1,631** (the generative-AI declaration — keep that one); the other 28 are comment-only lines |
 
 ### C-1.4 Net position at *Microbiome*
 
@@ -1053,14 +1069,14 @@ Mechanically submittable after C-1.3 and R1/R6 alone; **competitive only after C
 | # | Missing item | Evidence / where |
 |---|---|---|
 | A1 | A separate **Importance** paragraph, **≤150 words** (not 120 — 120 is the *J. Bacteriology* limit) | No Importance section exists anywhere in the file |
-| A2 | **Abstract trimmed to ≤250 words** | Currently **334** words including the three `\textbf{Background:/Results:/Conclusions:}` labels, **331** excluding them. **Trim 81–84 words** |
+| A2 | **Abstract trimmed to ≤250 words** | Currently **330** words including the three `\textbf{Background:/Results:/Conclusions:}` labels, **327** excluding them (**351** if hyphenated compounds are split, 348 excluding the labels). **Trim 77–80 words** |
 | A3 | **Abstract word count** stated on the title page | Absent |
-| A4 | **Running title** convention confirmed for the ASM template | A 47-character short title *does* exist (`\title[…]` at line 66: "Microbiome-CDM: an LLM-driven common data model") — within the ≤54-character limit, so **compliant but currently invisible to the reader** |
-| A5 | **Author Contributions** and **Acknowledgments** as unnumbered ASM end sections | Currently BMC `\bmhead` declarations: Authors' contributions at **1,507**, Acknowledgements at **1,526**; ASM does not use the BMC declarations apparatus |
-| A6 | **Methods placed after Discussion** | Stage sections (**406–919**) currently precede Results (**920**). ASM order is Introduction / Results / Discussion / Methods |
-| A7 | **Table and figure legends collected after the References** | Table float at 968–980, figure floats at 336–368 / 741–772 / 983–1014 are all inline; `\bibliography{reference}` is at 1,671 |
-| A8 | The **reuse demonstration** (IBD 25/44) *presented as* the Resource Report's required "proof-of-principle that others can utilise it" | The sentence exists in Results at **1,127–1,129** but is framed as "an exploratory consensus check", not as a reuse demonstration; it is then re-cited as a caveat in Limitations at **1,327–1,330**. ASM reviewers will not recognise a one-sentence exploratory check as proof-of-principle |
-| A9 | **Open-data deposition at review time** (present tense, live DOI) | Lines **1,447–1,454** are future tense with two empty slots |
+| A4 | **Running title** convention confirmed for the ASM template | A 47-character short title *does* exist — `\title[Microbiome-CDM: an LLM-driven common data model]{...}` at line **67** — within the ≤54-character limit, so **compliant but currently invisible to the reader** |
+| A5 | **Author Contributions** and **Acknowledgments** as unnumbered ASM end sections | Currently BMC `\bmhead` declarations: Authors' contributions at **1,540**, Acknowledgements at **1,559**; ASM does not use the BMC declarations apparatus |
+| A6 | **Methods placed after Discussion** | Methods now runs **332–922** (stage subsections **409–922**) and precedes Results at **923**. ASM order is Introduction / Results / Discussion / Methods, so this is a *reordering* cost of the BMC submission build, not an absence |
+| A7 | **Table and figure legends collected after the References** | Table float at **971–982**, figure floats at **339–371** / **744–775** / **985–1,016** are all inline; `\bibliography{reference}` is at **1,704** |
+| A8 | The **reuse demonstration** (IBD 25/44) *presented as* the Resource Report's required "proof-of-principle that others can utilise it" | The sentence exists in Results at **1,134–1,136** but is framed as "an exploratory consensus check", not as a reuse demonstration — and it never uses the word IBD; it is then re-cited as a caveat in Limitations at **1,348–1,351**. ASM reviewers will not recognise a one-sentence exploratory check as proof-of-principle |
+| A9 | **Open-data deposition at review time** (present tense, live DOI) | Lines **1,480–1,493** are future tense with two empty slots |
 | A10 | The **ASM Overleaf template** adopted | Build is `sn-jnl` v3.1 (line 23) — Springer-specific |
 | A11 | A sentence showing **who uses the resource and for what** | No user-facing use case in the body; the reviewer question at a systems-biology journal is exactly this |
 
@@ -1068,33 +1084,33 @@ Mechanically submittable after C-1.3 and R1/R6 alone; **competitive only after C
 
 | # | Rephrase | From → to | Evidence |
 |---|---|---|---|
-| B1 | Article-type framing | "protocol" → "resource" / "pipeline"; the word may stay only if pointed at Methods and Protocols, which is the wrong type here | 12 visible occurrences (104, 106, 132, 235, 288, 297, 331, 352, 495, 703, 832, 1,447) |
-| B2 | Abstract structure | ASM Research format: unstructured or Background/Methods/Results/Conclusions at ≤250 words, **plus** Importance | Abstract block lines 103–136 |
+| B1 | Article-type framing | "protocol" → "resource" / "pipeline"; the word may stay only if pointed at Methods and Protocols, which is the wrong type here | **2 visible occurrences remain**, both "assay protocol" (**105**, **236**); the abstract and Conclusions now say "method" and Figure 1's caption says "Pipeline overview" (**355**). The article-type question survives, but the word no longer mis-frames the paper |
+| B2 | Abstract structure | ASM Research format: unstructured or Background/Methods/Results/Conclusions at ≤250 words, **plus** Importance | Abstract block lines 104–138 |
 | B3 | Abstract payoff | Lead with what the resource *enables* (reuse of metadata across 453 papers), not with F1 scores belonging to other systems | Lines 119–124 |
-| B4 | Triple framing | Present the untyped 47.4% of triples (12,224 of 25,788) as **deliberate abstention** — a design decision a resource user needs to know | Line 114; caveat at 1290–1296 |
-| B5 | "16S" | "16S" → "16S rRNA gene". Not documented as an ASM rule, but correct usage and harmless | Lines 843, 1,061, 1,125 |
+| B4 | Triple framing | Present the untyped 47.4% of triples (12,224 of 25,788) as **deliberate abstention** — a design decision a resource user needs to know | Line 114; caveat at **1,310–1,316** |
+| B5 | "16S" | "16S" → "16S rRNA gene". Not documented as an ASM rule, but correct usage and harmless | **Already done** — **846**, **1,067**, **1,131** all read "16S rRNA gene" |
 | B6 | Benchmark framing | Reframe as transfer measurement (the novel part), not as competitive benchmark performance | Lines 119–123 |
-| B7 | Data availability | Future → present tense with live DOI | Lines 1,447–1,460 |
-| B8 | 453 vs 452 | State one analysis universe | Lines 109, 352, 436, 1403 |
-| B9 | Section heading | `\section{Protocol overview}` → pipeline/resource overview | Line **331** |
+| B7 | Data availability | Future → present tense with live DOI | Lines **1,480–1,493** (unchanged) |
+| B8 | 453 vs 452 | State one analysis universe | Visible `453` occurrences: **110**, **357**, **441**, **834**, **1,344**, **1,490**. The 452-paper analysis universe and `HMPAPER_000372` appear nowhere in the text |
+| B9 | Section heading | `\section{Protocol overview}` → pipeline/resource overview | **Done** — `\subsection{Overview}` at **334** |
 | B10 | Title | Retarget toward "resource" language so the article type is obvious from the title | Line 66 |
 
 ### C-2.3 Remove at *mSystems*
 
 | # | Remove | Evidence |
 |---|---|---|
-| Y1 | The BMC/Springer **Declarations apparatus**: Ethics approval, Consent for publication, Availability of data and materials, Competing interests, Funding, Authors' contributions, Acknowledgements as `\bmhead` blocks | `\bmhead` at **1,392 / 1,398 / 1,401 / 1,476 / 1,493 / 1,507 / 1,526 / 1,539** (Ethics, Consent, Availability, Competing interests, Funding, Authors' contributions, Acknowledgements, AI declaration) under `\section*{Declarations}` at **1,390** — **fold into ASM's Author Contributions / Acknowledgments / Data availability**, do not delete the content |
-| Y2 | The **Abbreviations** section (not an ASM back-matter requirement) | `\section*{Abbreviations}` at line 1,364, **13 entries** (API, BC5CDR, CDM, CTD, DOI, F1, IBD, LLM, MeSH, NCBI, NER, OMOP, UMLS). Note the mirror-image problem: **SSSOM, BioLink/KGX, RDF and OWL occur zero times in visible prose** — the export formats exist in `src/cdm_pipeline/export/` but never reach the paper, so they need no abbreviation entry yet |
-| Y3 | The claims-register filename from Table 1 caption and note | Caption 969–975, tablenote 978 |
-| Y4 | The 4 `[AUTHOR INPUT REQUIRED]` blocks once supplied | Lines 1,487, 1,502, 1,517, 1,535 |
-| Y5 | The 2 unfilled DOI slots once deposits exist | Lines 1,452, 1,454 |
-| Y6 | The 937 comment-only lines | 55.7% of the file |
-| Y7 | The `sn-jnl`-specific machinery (structured-abstract macros, declaration ordering) | Line **23** (`\documentclass[...]{sn-jnl}`) and the back-matter block **1,390–1,545** (`\backmatter` at 1,358) |
-| Y8 | 28 of 29 "Claude" mentions | Keep line **1,598** |
+| Y1 | The BMC/Springer **Declarations apparatus**: Ethics approval, Consent for publication, Availability of data and materials, Competing interests, Funding, Authors' contributions, Acknowledgements as `\bmhead` blocks | `\bmhead` at **1,425 / 1,431 / 1,434 / 1,509 / 1,526 / 1,540 / 1,559 / 1,572** (Ethics, Consent, Availability, Competing interests, Funding, Authors' contributions, Acknowledgements, AI declaration) under `\section*{Declarations}` at **1,423**, inside `\backmatter` at **1,391** — **fold into ASM's Author Contributions / Acknowledgments / Data availability**, do not delete the content |
+| Y2 | The **Abbreviations** section (not an ASM back-matter requirement) | `\section*{Abbreviations}` at line **1,397**, **13 entries** (`\item[...]` at **1,408–1,420**: API, BC5CDR, CDM, CTD, DOI, F1, IBD, LLM, MeSH, NCBI, NER, OMOP, UMLS). Note the mirror-image problem: **SSSOM, BioLink/KGX, RDF and OWL occur zero times in visible prose** — the export formats exist in `src/cdm_pipeline/export/` but never reach the paper, so they need no abbreviation entry yet |
+| Y3 | The claims-register filename from Table 1 caption and note | **Gone from both** — caption **972**, note **980**. Only the `Register` column header survives (`tables/table_pipeline_summary.tex`, line 9) |
+| Y4 | The 4 `[AUTHOR INPUT REQUIRED]` blocks once supplied | Lines **1,520**, **1,535**, **1,550**, **1,568**; the 2 DOI slots are at **1,485** and **1,487** |
+| Y5 | The 2 unfilled DOI slots once deposits exist | Lines **1,485**, **1,487** |
+| Y6 | The 941 comment-only lines | **54.8%** of the 1,716 split entries |
+| Y7 | The `sn-jnl`-specific machinery (structured-abstract macros, declaration ordering) | Line **24** (`\documentclass[referee,lineno,pdflatex,sn-vancouver-num]{sn-jnl}`) and the back-matter block **1,391–1,572** |
+| Y8 | 28 of 29 "Claude" mentions | Keep line **1,631** |
 
 ### C-2.4 Net position at *mSystems*
 
-**Best available fit.** The only venue of the three whose article-type catalogue contains a name for what this manuscript already is (Resource Report), a 5,000-word cap the body already meets with ~1,100 words to spare (**3,911** excluding back matter, **4,584** including it), and published precedents of exactly this shape — including a metadata-schema paper with no primary data. Still requires the availability fix, the reuse promotion, the Importance paragraph and the abstract trim. The honest counter-signal stands: **1** text-mining-titled paper in nine years, **0** knowledge-graph-titled, and reviewers are systems microbiologists who will ask what this tells them about microbes.
+**The best-fitting external fallback, and no longer the recommended route.** *Microbiome* was selected (Part 0, ASM7); *mSystems* is retained as the documented alternative because its article-type catalogue is the only one of the three that contains a name for what this manuscript already is (Resource Report), its 5,000-word cap is met by the current body (**4,151** words per-section excluding back matter — **849** to spare — and **4,865** on the stricter contiguous whole-body recount, which leaves only **135**), and it publishes precedents of exactly this shape, including a metadata-schema paper with no primary data. It still requires the availability fix, the reuse promotion, the Importance paragraph and the abstract trim. The honest counter-signal stands: **1** text-mining-titled paper in nine years, **0** knowledge-graph-titled, and reviewers are systems microbiologists who will ask what this tells them about microbes.
 
 ---
 
@@ -1106,47 +1122,47 @@ Mechanically submittable after C-1.3 and R1/R6 alone; **competitive only after C
 
 | # | Missing item | Evidence / where |
 |---|---|---|
-| D1 | A **"Utility and discussion"** section — required for the Database article type | Does not exist. `\section{Results}` (**920**) and `\section{Recommendations}` (**1166**) carry the content but are not framed as utility |
+| D1 | A **"Utility and discussion"** section — required for the Database article type | Does not exist in its own right. `\section{Results}` (**923**) and `\subsection{Recommendations}` (**1,186**, inside `\section{Discussion}` at **1,172**) carry the content but are not framed as utility |
 | D2 | A **direct comparison against similar existing databases** — the Database type requires it; the Software type requires comparably direct comparison with related software | No comparison table or paragraph against MINERVA, MicrobiomeKG, KG-Microbe, BugSigDB as resources |
-| D3 | An **optional case study** demonstrating utility (the Database type offers this; the IBD 25/44 result is exactly it) | The result is in Results at **1,127–1,129** but not written as a case study — no study design, no cell table, no IBD framing. It is re-cited in Limitations at **1,327–1,330** |
-| D4 | **Reviewer-anonymous access** to the resource at review time (Software-type requirement, good practice for Database) | Availability block **1,401–1,460** gives a future-tense Zenodo deposit with no private link; the two placeholder slots are at **1,452** and **1,454** |
-| D5 | **Archive copy** in a permanent repository (explicit Software-type requirement) | Zenodo deposit planned but not created; DOI slots empty at 1,452 and 1,454 |
-| D6 | `\section{Methods}` as a named section | Five unlabelled `\section{Stage n}` blocks at **406, 460, 538, 679, 774** |
-| D7 | `\section{Conclusions}` | BMC Research structure is Background / Methods / Results / Discussion / Conclusions / List of abbreviations / Declarations — Conclusions is a required heading and is absent (only the abstract's third labelled paragraph, line 132) |
-| D8 | `\section{Discussion}` as a named heading | Absent; `\section{Recommendations}` (**1166**) and `\section{Limitations}` (**1251**) are top-level but neither is Discussion |
-| D9 | A **reuse demonstration** written as one | IBD check at **1,127–1,129** (one sentence, "exploratory"), re-cited as a caveat at **1,327–1,330** |
-| D10 | **Confidence intervals** on 61.8%, 6.2%, 82.9% agreement and κ = 0.566/0.471 | Lines **119–121** and **1,050–1,053** |
-| D11 | **Competitor citations** | Visible-text grep: `MicrobiomeKG`, `KG-Microbe`, `SemRep`, `AIONER`, `BioREx` all **0**; `BugSigDB` **18 occurrences across 17 visible lines**, `MINERVA` **1 visible** (line 250; the other 2 of 3 raw hits are comment-only) |
+| D3 | An **optional case study** demonstrating utility (the Database type offers this; the IBD 25/44 result is exactly it) | The result is in Results at **1,134–1,136** but not written as a case study — no study design, no cell table, and **no IBD framing: the paragraph (1,121–1,136) never names IBD**. It is re-cited in Limitations at **1,348–1,351**, which is the first place the disease is named |
+| D4 | **Reviewer-anonymous access** to the resource at review time (Software-type requirement, good practice for Database) | The Availability block runs **1,434–1,493** (`\bmhead` at **1,434**, prose 1,480–1,493) and gives a future-tense Zenodo deposit with no private link; the two placeholder slots are at **1,485** (DOI) and **1,487** (code repository) |
+| D5 | **Archive copy** in a permanent repository (explicit Software-type requirement) | Zenodo deposit planned but not created; DOI slots empty at **1,485** and **1,487** |
+| D6 | `\section{Methods}` as a named section | **Satisfied.** `\section{Methods}` at **332**, with `\subsection{Overview}` at **334** and the five stage subsections at **409, 463, 541, 682, 777**; the unlabelled top-level `\section{Stage n}` blocks of the earlier build (**406, 460, 538, 679, 774**) are gone |
+| D7 | `\section{Conclusions}` | BMC Research structure is Background / Methods / Results / Discussion / Conclusions / List of abbreviations / Declarations — Conclusions is a required heading and is absent (only the abstract's third labelled paragraph, line 134) |
+| D8 | `\section{Discussion}` as a named heading | **Satisfied.** `\section{Discussion}` at **1,172**, holding `\subsection{Recommendations}` at **1,186** and `\subsection{Limitations}` at **1,271** (the earlier top-level blocks were 1,166 and 1,251) |
+| D9 | A **reuse demonstration** written as one | IBD check at **1,134–1,136** (one sentence, "exploratory", disease never named in that paragraph), re-cited as a caveat at **1,348–1,351** |
+| D10 | **Confidence intervals** on 61.8%, 6.2%, 82.9% agreement and κ = 0.566/0.471 | Lines **120–121** (abstract) and **1,053–1,054** (82.9%, κ 0.566/0.788), **1,057–1,058** (Fleiss 0.471), **1,063–1,064** (13.1%); the human-review intervals are at **1,035–1,039** |
+| D11 | **Competitor citations** | Visible-text grep: `MicrobiomeKG`, `KG-Microbe`, `SemRep`, `AIONER`, `BioREx` all **0**; `BugSigDB` **18 occurrences across 17 visible lines**, `MINERVA` **1 visible** (line 251; the other 2 of 3 raw hits are comment-only) |
 
 ### C-3.2 Rephrase at BMC Microbiology
 
 | # | Rephrase | From → to | Evidence |
 |---|---|---|---|
-| E1 | Self-description | "protocol" → "resource" / "database" / "pipeline" — consistent with the Database type | 12 visible occurrences (104, 106, 132, 235, 288, 297, 331, 352, 495, 703, 832, 1,447) |
-| E2 | Section heading | `\section{Protocol overview}` → `\section{Methods overview}` | Line **331** |
-| E3 | Figure 1 caption | "Protocol overview" → "Pipeline overview" | Line 352 |
-| E4 | **Research-type risk wording** — BMC Research criteria explicitly exclude non-commissioned pooled analyses and bibliometric analyses; if submitting as Research rather than Database, the 453-paper census must be framed as a *corpus construction method*, not as a bibliometric study | Background, lines 228–300 |
-| E5 | "16S" | "16S" → "16S rRNA gene" | Lines 843, 1,061, 1,125 |
+| E1 | Self-description | "protocol" → "resource" / "database" / "pipeline" — consistent with the Database type | **2 visible occurrences remain** (**105**, **236**), both "assay protocol"; 11 more are comments |
+| E2 | Section heading | `\section{Protocol overview}` → `\section{Methods overview}` | **Done** — `\subsection{Overview}` at **334** |
+| E3 | Figure 1 caption | "Protocol overview" → "Pipeline overview" | **Done** — `\caption{Pipeline overview. Five stages build the common data model...}` opens at line **355** |
+| E4 | **Research-type risk wording** — BMC Research criteria explicitly exclude non-commissioned pooled analyses and bibliometric analyses; if submitting as Research rather than Database, the 453-paper census must be framed as a *corpus construction method*, not as a bibliometric study | Background, lines 229–301 |
+| E5 | "16S" | "16S" → "16S rRNA gene" | **Already done** — **846**, **1,067**, **1,131** |
 | E6 | Triple framing | `OTHER_RELATION` dominance → principled abstention | Line 108 |
 | E7 | Benchmark framing | Transfer measurement, not borrowed benchmark performance | Lines 119–123 |
-| E8 | Data availability | Future → present tense with live DOI | Lines 1,447–1,460 |
-| E9 | 453 vs 452 | One analysis universe | Lines 109, 352, 436, 1403 |
+| E8 | Data availability | Future → present tense with live DOI | Lines **1,480–1,493** |
+| E9 | 453 vs 452 | One analysis universe | Lines **110, 357, 441, 834, 1,344, 1,490** |
 | E10 | Title | Retarget toward database/resource language to match the article type | Line 66 |
 
 ### C-3.3 Remove at BMC Microbiology
 
 | # | Remove | Evidence |
 |---|---|---|
-| Z1 | The claims-register filename from Table 1 caption and note | Caption 969–975, tablenote 978 |
-| Z2 | The 4 `[AUTHOR INPUT REQUIRED]` blocks once supplied | Lines **1,487** (competing interests), **1,502** (funding), **1,517** (CRediT), **1,535** (acknowledgements) |
-| Z3 | The 2 unfilled DOI slots once deposits exist | Lines 1,452, 1,454 |
-| Z4 | The 937 comment-only lines | 55.7% of the file |
-| Z5 | 28 of 29 "Claude" mentions | Keep line **1,598** |
-| Z6 | **Nothing else** — this is the one venue where the existing back matter (Abbreviations at 1364, Declarations at 1390) is *already correct* and should be kept | Back matter built for BMC ordering |
+| Z1 | The claims-register filename from Table 1 caption and note | **Gone** — caption **972**, note **980** |
+| Z2 | The 4 `[AUTHOR INPUT REQUIRED]` blocks once supplied | Lines **1,520** (competing interests), **1,535** (funding), **1,550** (CRediT), **1,568** (acknowledgements) |
+| Z3 | The 2 unfilled DOI slots once deposits exist | Lines **1,485, 1,487** |
+| Z4 | The 941 comment-only lines | **54.8%** of the file |
+| Z5 | 28 of 29 "Claude" mentions | Keep line **1,631** |
+| Z6 | **Nothing else** — this is the one venue where the existing back matter (Abbreviations at **1,397**, Declarations at **1,423**, both inside `\backmatter` at **1,391**) is *already correct* and should be kept | Back matter built for BMC ordering |
 
 ### C-3.4 Net position at BMC Microbiology
 
-**Most likely acceptance of the three, lowest signalling, cheapest APC (£2,390 / $3,090 / €2,690).** The back matter already conforms; the structural gap is the missing Utility-and-discussion comparison, which is also the fix that most improves the paper anywhere. If submitted here, go as **Database**, add the comparison, and promote the IBD case study.
+**The third option, held in reserve.** Lowest signalling of the three, cheapest APC (GBP 2,390 / USD 3,090 / EUR 2,690), highest acceptance probability; the back matter already conforms, and the structural gap is the missing Utility-and-discussion comparison, which is also the fix that most improves the paper anywhere. It is **not** the recommendation: *Microbiome* was selected (Part 0, ASM7) and *mSystems* is the documented external fallback. Go here only if both fail and the authors will not invest in the biological demonstration — and if so, submit as **Database**, add the comparison, and promote the IBD case study.
 
 ---
 
@@ -1158,16 +1174,16 @@ Mechanically submittable after C-1.3 and R1/R6 alone; **competitive only after C
 | `\section{Methods}` | Required, before Results | Required, **after** Discussion | Required, before Results |
 | `\section{Discussion}` | Required | ASM "Discussion" | Required |
 | `\section{Conclusions}` | Required | Not used | **Required** |
-| Abstract cap | ≤350 (current 331 excl. labels ✓) | **≤250** (current 331/334 ✗) | ≤350 (current 331 excl. labels ✓) |
+| Abstract cap | ≤350 (current **327** excl. labels ✓) | **≤250** (current 327/330 ✗) | ≤350 (current **327** excl. labels ✓) |
 | Importance paragraph | Not used | **≤150 words, required** | Not used |
 | Running title | Not required | ≤54 chars (current 47 ✓) | Not required |
 | Line numbers / double spacing | **Required** | Optional (format-neutral) | Not required |
-| Back matter | Rebuild (add Authors' information, Endnotes) | Rebuild to ASM sections | **Already correct — keep** |
+| Back matter | Add the optional Authors' information block; nothing else is missing (all seven required Declarations subheadings are present) | Rebuild to ASM sections | **Already correct — keep** |
 | APC | €4,290 / $5,190 / £3,590 | $4,500 non-member / $3,375 member | **£2,390 / $3,090 / €2,690** |
-| Blocking gap | No biological demonstration | No Importance + abstract 61 over + no live deposit | No Utility-and-discussion comparison |
-| Verdict | Highest ceiling, lowest probability | **Best fit as written** | Most likely acceptance, lowest signalling |
+| Blocking gap | No biological demonstration | No Importance paragraph + abstract **77** over + no live deposit | No Utility-and-discussion comparison |
+| Verdict | **Chosen** — highest ceiling, lower odds, Gap 4 accepted | Best formal fit; documented external fallback | Preferred only if both fail AND the authors will not invest in the biological demonstration |
 
-**What is venue-independent and should be done first, whichever journal is chosen:** upload the deposit and fill the DOIs (X4/Y5/Z3), replace the 4 author-input blocks (X3/Y4/Z2), strip the 937 comment lines and 28 of the 29 "Claude" mentions (X5/Y6/Z4, X8/Y8/Z5), fix `16S` → `16S rRNA gene` at 843/1061/1125, remove the claims-register filename at 969–976 and its tablenote at 1451, and replace "protocol" in all 12 visible places (104, 106, 132, 235, 288, 297, 331, 352, 495, 703, 832, 1447). That is roughly **one day of work** and it is required at all three venues.
+**What is venue-independent and should be done first, whichever journal is chosen:** upload the deposit and fill the DOIs (X4/Y5/Z3), replace the 4 author-input blocks (X3/Y4/Z2), strip the **941** comment-only lines and 28 of the 29 "Claude" mentions (X5/Y6/Z4, X8/Y8/Z5), remove the claims-register vocabulary at **1,041**, **1,484**, **1,633** (X1/X2 are already done: caption **972**, note **980**), and delete the remaining "assay protocol" compounds at **105** and **236**. That is roughly **half a day of work** and it is required at all three venues. The `16S` → `16S rRNA gene` fix is **already in place** at all three sites (**846**, **1,067**, **1,131**) and is no longer pending work.
 
 ---
 
@@ -1177,10 +1193,10 @@ Items are deduplicated across both parts and grouped by how blocking they are. N
 
 ## Tier 0 — cannot submit without these
 
-> **Item 41 (Tier 2) has already been applied to `manuscript.tex`** — the entity-accounting sentence at 1,016–1,023 summed to 38 against a 33-entity registry, and now reads *"…fifteen partially (five of them embedded in other tables' rows), and one is planned"*, plus "leaves the **entity** tables unchanged" for 3.1.0. Rebuilt clean at 18 pages with 0 errors. See [A6.8](#a68-one-sentence-in-results-did-not-add-up-fixed-in-the-working-tree).
+> **Item 41 (Tier 2) has already been applied to `manuscript.tex`** — the entity-accounting sentence sat at **1,023–1,025** (inside the Results paragraph opening at **1,019**) and summed to 38 against a 33-entity registry. It now reads *"...fifteen partially (five of them embedded in other tables' rows), and one is planned"* (**1,023–1,025**) — 17 full + 15 partial + 1 planned = 33 — plus "leaves the **entity** tables unchanged" for 3.1.0. Rebuilt clean at **27 pages / 413,483 bytes** (the referee+lineno submission build) with 0 errors. See [A6.8](#a68-one-sentence-in-results-did-not-add-up-fixed-in-the-working-tree).
 
 1. **Decide the venue** (Part 0, [ASM7](#asm7-five-venue-verdict-ranking)) — *Microbiome*, BMC Microbiology, or *mSystems*. Everything downstream depends on it, including the section order.
-2. **Decide the article type** — *Microbiome*: Methodology or Software. *mSystems*: **Resource Report**. BMC Microbiology: Database or Software (**no Methodology type exists there**). Then replace "protocol" with "pipeline"/"resource" where that is what is meant (**12 visible occurrences**, including the abstract at line 106, the section heading at 331 and the caption at 352). At *mSystems* this is a clarity fix, not a desk-reject.
+2. **Decide the article type** — settled: ***Microbiome*, Methodology** (fallback Software). *mSystems* would mean **Resource Report**; BMC Microbiology **Database** or Software (**no Methodology type exists there**). The "protocol" scrub that *Microbiome* required is **complete** — **2 visible occurrences remain**, both the compound "assay protocol" (**105**, **236**); the abstract says "a method that constructs" (**107**) and Conclusions say "A multi-program extraction method" (**134**).
 3. Replace the **4** `[AUTHOR INPUT REQUIRED]` blocks (competing interests, funding, CRediT, acknowledgements).
 4. Fill the **Zenodo DOI** and the **code repository + DOI**.
 5. **Upload the deposit before submission**; convert "will be deposited" to present tense with a live DOI. **Identical requirement at all three venues** — do this regardless of the decision.
@@ -1188,10 +1204,10 @@ Items are deduplicated across both parts and grouped by how blocking they are. N
 7. Add `\section{Discussion}` with **Limitations and Recommendations as subsections**.
 8. Add `\section{Conclusions}` (*Microbiome*/BMC only — ASM ends with Discussion).
 9. Enable `referee,lineno` (double spacing + line numbers) for the submission build (*Microbiome* requires it; ASM is format-neutral, so optional).
-10. Fix bare **"16S" → "16S rRNA gene"** (lines 843, 1,061, 1,125) — explicit *Microbiome* rule; correct at any venue.
-11. Remove the internal `MANUSCRIPT_CLAIMS_REGISTER.csv` reference from Table 1's caption (969–975) and its tablenote (978).
-12. Produce a **comment-stripped `.tex`** for submission (937 comment lines, 29 "Claude" mentions, 28 of them in comments).
-13. ***If mSystems:*** cut the abstract from **331 → ≤250 words**, write a **≤150-word Importance** paragraph, add the **abstract word count** and a **≤54-character running title** to the title page, and swap `sn-jnl` for the ASM Overleaf template.
+10. ~~Fix bare **"16S" → "16S rRNA gene"**~~ — *(**Already done.** All three visible occurrences read "16S rRNA gene" at **846**, **1,067** and **1,131**, and a comment-stripped scan finds **no bare `16S`** anywhere in the body. Listed here only so the item is not re-opened.)*
+11. Remove the internal `MANUSCRIPT_CLAIMS_REGISTER.csv` reference from Table 1's caption (**972–977**) and its tablenote (**979–981**).
+12. Produce a **comment-stripped `.tex`** for submission (**941** comment-only lines, 29 "Claude" mentions, 28 of them in comments).
+13. ***If mSystems:*** cut the abstract from **327 → ≤250 words**, write a **≤150-word Importance** paragraph, add the **abstract word count** and a **≤54-character running title** to the title page, and swap `sn-jnl` for the ASM Overleaf template.
 
 ## Tier 1 — reviewer-facing, decisive
 
@@ -1200,32 +1216,32 @@ Items are deduplicated across both parts and grouped by how blocking they are. N
 16. **Rewrite the related-work paragraph** into the three-paragraph structure (B4.2) and **cite every competitor** in B1.1–B1.2.
 17. **Promote the IBD 25/44 result** from Limitations into Results as "a first reuse demonstration". You already have the analysis; it is currently published as an apology.
 18. Add a **FAIR + MIxS/MIMARKS + STORMS/STREAMS** paragraph to Background and Availability; cite `wilkinson2016fair`, `yilmaz2011mixs`.
-19. Add **confidence intervals** (Wilson / bootstrap) to 61.8%, 6.2%, the 82.9% judge agreement and the κ values; cite `wilson1927`, `efron1993bootstrap`.
-20. **Finish or remove** the second-reviewer 100-mapping overlap (H01).
+19. Add **confidence intervals** (Wilson / bootstrap) to 61.8%, 6.2%, the 82.9% judge agreement and the kappa values; cite `wilson1927`. *(**Done for the intervals**: Wilson 95% CIs for 61.8%, 32.0%, 6.2%, 97.8% and 86.4% are visible at **1,035–1,039** (86.4% sits on **1,039**), 82.9% at **1,053–1,054**, and 13.1% at **1,063–1,064**; the abstract carries 61.8% and 6.2% at **120–121**. These are **3 of the 100** `X.Y%` figures printed in body lines 110–1400 — 77.0% vs the 52.0% baseline (**1,127**), the judge screen shares (**1,142**) and 52.6% (**1,095**, **1,311**) remain point estimates. The Methods also state that **38.7%** of triples have a valid subject and object, in place of a bootstrap interval (**1,094**). The **citation is still missing**: `wilson1927` exists in `reference.bib` (line 421) but is cited only from the comment at `manuscript.tex:1687`, so it appears in neither the text nor `manuscript.bbl`. Add the actual `\cite`. **Drop `efron1993bootstrap`** from this item — no bootstrap CI is reported anywhere, so a citation for it would be a citation to an unused method.)*
+20. **Finish or remove** the second-reviewer 100-mapping overlap (H01) — still unresolved in the text: **1,039–1,040** reads "the second reviewer's 100-mapping overlap is pending", and **1,303–1,305** repeats it in the Limitations ("Apart from one blinded reviewer's check of 500 randomly sampled accepted mappings (second-reviewer overlap pending)"). Either run it or delete both clauses; as written it advertises an unfinished validation. Note the two counts differ — the Results review samples **497** mappings and **493** terms (**1,034–1,039**), the Limitations say **500** (**1,304**) — so a resolution must also reconcile which denominator stands.
 21. **Reframe triples as principled abstention** in abstract + Results, or demote them.
 22. **Fix the abstract's borrowed-benchmark framing** (90.1 / 80.6 are PubTator3 / HunFlair2).
 23. **Promote the transfer-domain finding** (27 configs / 21 systems; Spearman 0.749; non-BioRED-trained organisms/diseases/genes win) from Recommendations to Results.
-24. **Cite SapBERT (lines 621, 1,006, 1,127, 1,594), MiniLM (622, 1,594), BioBERT (1,078) and original GLiNER**; then decide whether to name the unnamed components (see A7.2).
+24. **Cite SapBERT, MiniLM, BioBERT and original GLiNER**, then decide whether to name the unnamed components (see A7.2). Live anchors: SapBERT **624**, **1,008**, **1,133**, **1,627**; MiniLM **625**, **1,627**; BioBERT **1,084**; original GLiNER **1,086**.
 25. **Prune or cite** the 32 uncited references; raise the cited count toward 60+.
 26. **State the inclusion rule** for the 453-paper corpus (cited-works count → retrievable → included/excluded why).
 27. **Resolve 453 vs 452**; name `HMPAPER_000372` or state the 452-paper analysis universe.
 28. Add a **novelty paragraph** (B4.5).
 29. Add an **"Additional files"** list; ship paper list + licence matrix + hashes so the corpus is verifiable-by-reconstruction.
 30. Add **"Authors' information"** heading; add emails for **all** authors (currently corresponding only).
-31. Complete affiliation 3 **street/postcode** and clear the `VERIFY` items in `TITLE_PAGE.md`.
+31. Complete **affiliation 3** — it carries `\postcode{53115}` but **no `\street`** (affiliations 1 and 2 have both, **86–87**) — and clear the 2 `VERIFY` notes in `paper/publication/manuscript_bib/TITLE_PAGE.md`.
 
 ## Tier 2 — quality, consistency, and defence
 
 32. Add one **small biological figure** — e.g. a genus × condition consensus heat map with BugSigDB overlap annotated. The single change that turns this from NLP engineering into a microbiome resource.
 33. **Compare the pipeline as a system** vs PubTator3-as-pipeline at equal corpus (PubTator3 coverage is already 438/453). Directly satisfies the Software criterion "direct comparison with available related software".
 34. Add a short **statistics/reporting-conventions** paragraph (denominators, how ratios are defined, multiple comparisons).
-35. Explain the **2,505,684 vs 2,505,735 vs 2,505,736** layer distinction and the known manifest off-by-one, in Methods.
+35. ~~Explain the **2,505,684 vs 2,505,735 vs 2,505,736** layer distinction and the known manifest off-by-one, in Methods.~~ *(Applied 2026-11-10 — the reconciled figures are in [B3.6](#b36-layer-ambiguity-in-the-headline-counts); the load accounting is `term_mention` offered 2,505,735 / kept 2,505,684 / dropped 51, and the manifest's 2,505,736 is an uncorrected off-by-one.)*
 36. Clarify that **derived annotations** over withheld text (not only raw text) are restricted/redacted.
 37. Add a **PROV/PROV-O** paragraph: map per-row provenance to PROV-O, or justify why not.
 38. Add a **sustainability/community** sentence: how the resource is updated, versioned and integrated.
-39. Rewrite the three figure legends flagged `AUTHOR REWRITE REQUIRED` (markers at **349**, **756**, **997**).
+39. Rewrite the three figure legends flagged `AUTHOR REWRITE REQUIRED` (markers at **352**, **759**, **999**; the `\caption` lines they precede are **355**, **763**, **1,002**).
 40. Add a sentence in Declarations stating the **deposit licence** (CC BY 4.0 proposed).
-41. **Fix the entity-accounting sentence at 1,016–1,023 — it does not add up.** *(Applied 2026-11-10; verified in the rebuilt PDF.)* It reads *"Seventeen entity types are fully populated, fifteen partially, one is planned and five are embedded in other tables' rows"*. That is **17 + 15 + 1 + 5 = 38** against a registry of **33** entities, because the five embedded ones (`PARAGRAPH`, `SENTENCE`, `MODEL_RUN`, `MENTION_EVIDENCE`, `DEFINITION_EVIDENCE`) are all `PARTIAL_POPULATED` and therefore already inside the fifteen. The registry (`releases/cdm_v3/3.0.3/remediation/UPDATED_ENTITY_REGISTRY_PROPOSAL.csv`) has exactly three statuses: `POPULATED_EXISTING` **17**, `PARTIAL_POPULATED` **15**, `PLANNED` **1**. Suggested rewrite: *"Seventeen entity types are fully populated, fifteen partially (five of them embedded in other tables' rows), and one is planned."* **Note on the figure:** the "33 entities in 10 modules" in Fig. 2's caption is **correct** — it is `len()` of that same 33-row registry, which `make_bib_extra_figures.py` reads at line 47. Do not "fix" it, and do not confuse it with `docs/cdm_design/cdm_schema.json` (DRAFT 0.1.0, 22 tables), which the figure does not plot.
+41. **Fix the entity-accounting sentence — it did not add up.** *(**Applied 2026-11-10; verified in the rebuilt PDF.**)* It read *"Seventeen entity types are fully populated, fifteen partially, one is planned and five are embedded in other tables' rows"*. That is **17 + 15 + 1 + 5 = 38** against a registry of **33** entities, because the five embedded ones (`PARAGRAPH`, `SENTENCE`, `MODEL_RUN`, `MENTION_EVIDENCE`, `DEFINITION_EVIDENCE`) are all `PARTIAL_POPULATED` and therefore already inside the fifteen. It now reads *"Seventeen entity types are fully populated, fifteen partially (five of them embedded in other tables' rows), and one is planned"* (**1,023–1,025**), inside the Results paragraph that begins at **1,019**. The pre-fix wording no longer exists in `manuscript.tex`; it survives only in a scratch backup (`~/jk_fig/manuscript_pre_sn.tex.bak`, **1,017–1,019**). The registry (`releases/cdm_v3/3.0.3/remediation/UPDATED_ENTITY_REGISTRY_PROPOSAL.csv`) has exactly 33 rows and three statuses: `POPULATED_EXISTING` **17**, `PARTIAL_POPULATED` **15**, `PLANNED` **1**. **Note on the figure:** the "33 entities in 10 modules" in Fig. 2's caption (**763**) is **correct** — it is `len()` of that same 33-row registry, which `make_bib_extra_figures.py` reads at line **47**. Do not "fix" it, and do not confuse it with `docs/cdm_design/cdm_schema.json` (DRAFT 0.1.0, 22 tables), which the figure does not plot.
 42. **Merge Fig. 1 and Fig. 2** if page pressure allows; decide on the unused `fig_overview_illustrated.pdf`.
 43. Add biology-facing **keywords**: "metadata standards", "FAIR", "data harmonisation".
 44. Close the **bibliography gap that actually exists**: `reference.bib` holds **68 entries**, only **36** are cited (A7). There is no `.bbl`/cite-key discrepancy — `manuscript.bbl` has **36 `\bibitem`**, the comment-stripped `.tex` cites **36** distinct keys, and the pairwise diff is empty in both directions. An earlier draft's "33 vs 34" is superseded; do not quote it.
@@ -1242,7 +1258,7 @@ Items are deduplicated across both parts and grouped by how blocking they are. N
 
 | Effort | Items |
 |---|---|
-| **Under an hour** | 2 (replace "protocol"), 10 (16S), 11 (claims register), 24 (SapBERT/MiniLM), 43 (keywords), 12 (strip comments), **13 (abstract trim + Importance, if mSystems)** |
+| **Under an hour** | 2 (replace "protocol"), 11 (claims register), 24 (SapBERT/MiniLM), 43 (keywords), 12 (strip comments), **13 (abstract trim + Importance, if mSystems)** |
 | **Under a day** | 14 (exports), 15 (capability matrix), 16 (related work), 17 (IBD), 18 (standards), 19 (CIs), 23 (transfer finding), 25 (uncited refs), 27 (452), 29 (additional files), **venue template switch (if mSystems)** |
 | **Days, but decisive** | 20 (second reviewer), 32 (biological figure), 33 (system comparison), 37 (PROV-O) |
 | **Blocking, outside writing** | 3 (author facts), 4–5 (deposit + DOI), 30–31 (authors' information, emails, affiliation) |
@@ -1272,11 +1288,11 @@ That gets the manuscript **into review with a fair hearing**. Whether it is acce
 
 **BMC Microbiology remains the honest fallback** if the authors will not invest in the biological demonstration — it publishes the KG/ontology framing at volume (60 vs 13 ontology-titled papers) and does not carry the mechanistic-insight editorial pressure.
 
-***mSystems* changes the calculation materially, and should be read as a serious first choice rather than a fallback.** Two of the three items this part calls "decisive" — the biological demonstration and the system-level comparison — are *optional* for a **Resource Report**. The item that is not optional, the deposited resource, is the same at every venue. In practical terms: the current manuscript plus a deposit, a trimmed abstract, a 150-word Importance paragraph, a reuse demonstration promoted out of Limitations, and the competitor citations would be a **credible mSystems Resource Report** — and that is a materially shorter list than the *Microbiome* path.
+***mSystems* is the documented external fallback, not the recommendation.** *Microbiome* was chosen (Part 0, [ASM7](#asm7-five-venue-verdict-ranking)) and the rest of this part is written against that decision. It is kept here because the arithmetic still matters: two of the three items the *Microbiome* path treats as decisive — the biological demonstration and the system-level comparison — are *optional* for an ASM **Resource Report**, and the one item that is not optional, the deposited resource, is identical at every venue. So the current manuscript plus a deposit, a trimmed abstract, a 150-word Importance paragraph, a reuse demonstration promoted out of Limitations, and the competitor citations would be a **credible mSystems Resource Report** — a materially shorter list than the *Microbiome* path. That is the fallback's value: it is what the paper can reach without the biological work, and it is why the decision, not the fit score, is the thing to defend.
 
 The honest risk at *mSystems* is different, not smaller: a reviewer drawn from systems microbiology will ask *"who will use this, and for what?"* and will not be impressed by named-entity F1 scores. The answer has to be a use case, not a metric. The IBD 25/44 result is that use case, and it is currently buried in Limitations as a caveat.
 
-**Three doors, honestly stated:**
+**The three routes, honestly stated — first column is the decision:**
 
 | Venue | What it takes from here | What it buys | Principal way it fails |
 |---|---|---|---|
@@ -1305,34 +1321,34 @@ The honest risk at *mSystems* is different, not smaller: a reviewer drawn from s
 
 | Metric | Value |
 |---|---|
-| `manuscript.tex` lines | **1,683** |
-| File size | 107,887 bytes |
-| Comment-only lines | **937 (55.7%)** |
-| Visible non-empty lines | **669** |
-| "Claude" mentions | **29** raw — 28 inside comments, **1 visible** (line 1,598, in the AI-use declaration) |
-| Body words (per-section table, incl. Abbreviations + Declarations) | **4,584** (**3,911** excluding back matter) |
-| Whole-body recount, same span measured contiguously | 4,604 plain / 4,797 hyphen-split (body only: 3,934 / 4,092) |
-| Abstract words | **334 incl. the three bold labels / 331 excl.**; paragraphs 133 / 133 / 68 incl. labels (132 / 132 / 67 excl.); **353** under hyphen-splitting |
-| Figures | 3 (vector, 0 raster) — blocks at 336–368, 741–772, 983–1014 |
-| Tables | 1 (`table*`, 968–980; `\input` of the body at 976, `tablenotes` 977–979) |
-| Top-level sections | 10 numbered + 2 `\section*` (1,364, 1,390) |
+| `manuscript.tex` lines | **1,716** split entries (`wc -l` 1,715 — no trailing newline) |
+| File size | 109,998 bytes |
+| Comment-only lines | **941 (54.8%)** |
+| Visible non-empty lines | **695** (80 blank; 1,021 non-visible in total) |
+| "Claude" mentions | **29** raw — 28 inside comments, **1 visible** (line 1,631, in the AI-use declaration) |
+| Body words (per-section table, headings excluded, incl. Abbreviations + Declarations) | **4,824** (**4,151** excluding back matter; back matter is 58 + 615 = 673) |
+| Whole-body recount, contiguous span, headings *included* (`wc_manuscript.py`) | **4,865 plain / 5,072 hyphen-split** (body only: **4,192 / 4,364**). The consistent **41-word** excess over the per-section row is heading text, which the per-section table excludes — the two rows agree once that is accounted for, so **quote 4,151 for the body and 4,824 for the whole** and name the convention |
+| Abstract words | **330 incl. the three bold labels / 327 excl.**; paragraphs **130 / 134 / 66** incl. labels (129 / 133 / 65 excl.); **351** under hyphen-splitting (**348** excl. labels) |
+| Figures | 3 (vector, 0 raster) — blocks at 339–371, 744–775, 985–1,016 |
+| Tables | 1 (`table*`, 971–982; `\input` of the body at 978, `tablenotes` 979–981) |
+| Top-level sections | 5 numbered + 2 `\section*` (1,397, 1,423) |
 | Bibliography entries in `reference.bib` | 68 |
 | Compiled `.bbl` entries | **36** |
 | Distinct cite keys | **36** |
 | Cited in text | **36 / 36 — 0 uncited** |
 | Bib keys never reaching the `.bbl` | **32** — uncited (A7.1) |
 | `et al.` occurrences in `.bbl` | 57 |
-| `[AUTHOR INPUT REQUIRED]` markers | **4 visible** (1,487, 1,502, 1,517, 1,535) + 6 in comments = 10 total |
-| Unfilled DOI/repository slots | **2** (1,452, 1,454); plus the code-repo comment slot at 1,443 |
-| PDF pages | **18** (406,353 bytes) |
+| `[AUTHOR INPUT REQUIRED]` markers | **4 visible** (1,520, 1,535, 1,550, 1,568) + 6 in comments = 10 total |
+| Unfilled DOI/repository slots | **2** (1,485, 1,487); plus the code-repo comment slot at 1,476 |
+| PDF pages | **27** (413,483 bytes) in the referee+lineno submission build; **19** (405,042 bytes) without those class options. Byte counts reproduce only under a fixed `SOURCE_DATE_EPOCH`; the page counts are unconditional |
 | LaTeX errors | 0 |
 | LaTeX warnings | 0 |
 | Undefined citations/references | 0 |
 | Overfull hbox | **1, at 4.86 pt** (under the 5 pt threshold) |
-| Underfull boxes | 28 (3 hbox / 25 vbox) |
+| Underfull boxes | 47 (3 hbox / 44 vbox); 1 Overfull hbox; 0 `LaTeX Warning`; 0 errors |
 | Unused figure file | `Fig/fig_overview_illustrated.pdf` |
-| Body words vs *mSystems* 5,000-word cap | **3,911** vs 5,000 — **≈1,089 headroom** (4,584 including back matter still under) |
-| Abstract vs *mSystems* 250-word cap | **331 excl. labels** vs 250 — **81 over** (**84 over** if the three labels count) |
+| Body words vs *mSystems* 5,000-word cap *(fallback venue only)* | **4,151** vs 5,000 — **≈849 words of headroom** on the per-section body count; the conservative contiguous whole-body count (**4,865**) leaves **135** |
+| Abstract vs *mSystems* 250-word cap *(fallback venue only)* | **327 excl. labels** vs 250 — **77 over** (**80 over** if the three labels count) |
 
 # Appendix 2 — evidence log
 
@@ -1375,8 +1391,8 @@ The honest risk at *mSystems* is different, not smaller: a reviewer drawn from s
 
 **Manuscript word counts for the mSystems comparison** (comments stripped, LaTeX commands removed):
 
-- Body between `\section{Background}` (line 162) and `\bibliography{reference}` (line 1,671), comment lines and trailing comments stripped, float environments removed as whole blocks, `\cite*`/`\ref`/`\label`/`\eqref` arguments and remaining commands stripped: **4,584 words** including Abbreviations and Declarations, **3,911** excluding back matter (3,911 = 4,584 − 58 − 615). A whole-body recount of the same span (Background heading to `\bibliography`), measuring the text contiguously rather than section-by-section, gives **4,604 plain tokens / 4,797 under hyphen-splitting tokenisation**; the body-only span, same method, is **3,934 / 4,092**. The 20-word difference from 4,584 is the heading text, which the per-section table excludes. The earlier figures of 3,953 / 4,026 / 4,507 / 3,445 / 4,101 / 4,551 in this log came from different filters and are superseded.
-- Abstract: **334 words incl. the three bold labels / 331 excl.** by the same tokeniser, paragraph split 133 / 133 / 68 including labels (132 / 132 / 67 excluding them), and **353** if hyphenated compounds are split (the manuscript's own header comment cited 282, but that figure is the count of COMPLETE papers in the catalogue manifest, not an abstract word count — corrected 2026-11-10; an intermediate 311/314 pair came from a filter that dropped the labels and one label remainder, and is superseded)
+- Body between `\section{Background}` (line 163) and `\bibliography{reference}` (line 1,704), comment lines and trailing comments stripped, float environments removed as whole blocks, `\cite*`/`\ref`/`\label`/`\eqref` arguments and remaining commands stripped: **4,824 words** including Abbreviations and Declarations, **4,151** excluding back matter (4,151 = 4,824 - 58 - 615). A whole-body recount of the same span (Background heading to `\bibliography`), measuring the text contiguously rather than section-by-section and therefore *including* heading text, gives **4,865 plain tokens / 5,072 under hyphen-splitting tokenisation**; the body-only span, same method, is **4,192 / 4,364**. The **41-word** gap from 4,824 is heading text, which the per-section table excludes — it is the same 41 words in both spans, so the two conventions are consistent and should not be mixed. Quoted figures use the per-section convention (4,151 body / 4,824 whole) unless a row says otherwise. The earlier figures of 3,953 / 4,026 / 4,507 / 3,445 / 4,101 / 4,551 / 3,911 / 4,584 / 4,604 / 4,797 / 3,934 / 4,092 in this log came from different filters and are superseded.
+- Abstract: **330 words incl. the three bold labels / 327 excl.** by the same tokeniser, paragraph split **130 / 134 / 66** including labels (129 / 133 / 65 excluding them), and **351** if hyphenated compounds are split (**348** excluding labels). The three labelled paragraphs begin at **104** (`\textbf{Background:}`), **119** (`\textbf{Results:}`) and **134** (`\textbf{Conclusions:}`). The manuscript's own header comment cited 282, but that figure is the count of COMPLETE papers in the catalogue manifest, not an abstract word count — corrected 2026-11-10. The intermediate 311/314 and 331/334/353/133/133/68 pairs are superseded.
 - `reference.bib`: 68 entries, **0** with more than 6 authors (so no truncation rule bites)
 
 **Competitor systems located (2026-11-10):**

@@ -27,7 +27,11 @@ def stats(t, labels):
     q = len(labels)
     pi = {a: (row[a] + col[a]) / 2 for a in labels}
     pe_ac1 = sum(p * (1 - p) for p in pi.values()) / (q - 1)
-    spec = {a: round(2 * t[a][a] / (sum(t[a][b] for b in labels) + sum(t[b][a] for b in labels)), 3) for a in labels}
+    den = {a: sum(t[a][b] for b in labels) + sum(t[b][a] for b in labels) for a in labels}
+    spec = {a: (round(2 * t[a][a] / den[a], 3) if den[a] else None) for a in labels}   # None: label never used
+    if pe == 1 or pe_ac1 == 1:                                                           # one label only: undefined
+        return {"n": n, "observed": round(po, 3), "kappa": None, "pabak": round((q * po - 1) / (q - 1), 3), "gwet_ac1": None,
+                "specific_agreement": spec, "label_share_mean_of_judges": {a: round(v, 3) for a, v in pi.items()}}
     return {"n": n, "observed": round(po, 3), "kappa": round((po - pe) / (1 - pe), 3),
             "pabak": round((q * po - 1) / (q - 1), 3), "gwet_ac1": round((po - pe_ac1) / (1 - pe_ac1), 3),
             "specific_agreement": spec, "label_share_mean_of_judges": {a: round(v, 3) for a, v in pi.items()}}

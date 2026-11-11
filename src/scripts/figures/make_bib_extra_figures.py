@@ -346,10 +346,10 @@ def figF(c):
     cb.ax.set_yticklabels(["all decreased", "mixed", "all increased"], fontsize=5.6)
     cb.outline.set_visible(False)
     tot = sum(agree.values())
-    title(ax, "Reported direction per genus and condition (catalogue findings)")
+    title(ax, "Directions reported by individual papers — not a consensus or meta-analysis")
     fig.text(0.02, 0.01, f"Cell number = papers reporting the genus up or down for that condition. ✓/✗ = same/opposite to the independent "
              f"BugSigDB consensus\n(signatures from papers outside our corpus; ≥3 signatures, ≥2/3 one direction): {agree['same']} of {tot} "
-             f"comparable cells agree. Reported findings, not a meta-analysis.", fontsize=5.4, color=M.INK2)
+             f"comparable cells agree. Disagreement marks a divided literature, not an error; the map is not validated biology.", fontsize=5.4, color=M.INK2)
     M.save(fig, "figF_taxon_condition")
     return {"cells_compared": tot, "same": agree["same"], "opposite": agree["opposite"], "genera": len(gens), "conditions": conds}
 

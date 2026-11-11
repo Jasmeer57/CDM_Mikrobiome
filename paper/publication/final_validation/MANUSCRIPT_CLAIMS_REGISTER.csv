@@ -168,4 +168,13 @@ CL14,Triples (post-3.1.0),clean triples without a specific relation (%),61.6,61.
 CL15,CDM 3.1.0,"catalogue judges, schema-enforced: Gwet AC1 3-label / AC1 PASS-FAIL / specific agreement PASS / FAIL / 3-label PABAK",0.771/0.913/0.959/0.39/0.704,0.771/0.913/0.959/0.39/0.704,MATCH,agreement_extended.json
 X09,CDM,test S4 (dataset_id pattern): non-matching ids / of these BioProject-link rows HMDATA_BP_,142/142,142/142,MATCH,X07_TEST_EXCEPTIONS json
 X10,CDM,test S9 (one storage type): text values in the 4 integer columns / of these not empty or a missing-data code,11578/0,11578/0,MATCH,X07_TEST_EXCEPTIONS json
+JV01,Judges v2,"test split, Llama x Mistral: observed agreement / Cohen kappa / FAIL specific agreement; same records under the 2026-11-09 rubric: kappa / FAIL agreement",0.829/0.566/0.598/0.361/0.33,0.829/0.566/0.598/0.361/0.33,MATCH,judge_v2 test ANALYSIS.json
+JV02,Judges v2,"test split, three judges: Fleiss kappa all fields / stated / classification / label fields / blind classification answers",0.471/0.535/0.409/0.068/0.616,0.471/0.535/0.409/0.068/0.616,MATCH,judge_v2 test ANALYSIS.json
+JV03,Re-typing,ENTITY terms re-typed: total / to one of the 14 CDM types / to proposed extension types / NOT_A_CONCEPT,53780/40113/8856/4811,53780/40113/8856/4811,MATCH,entity retype SUMMARY.json
+JV04,Re-typing,unspecific triples re-typed (v2.5): total / verified specific / NOT_SUPPORTED / REVERSED direction,14867/5257/6832/195,14867/5257/6832/195,MATCH,triple retype v2.5 SUMMARY.json
+JV05,Re-typing,triples after re-typing over 3.1.0: specific and cue-verified / % / not supported / association without direction / null finding,13564/52.6/8039/1708/915,13564/52.6/8039/1708/915,MATCH,retype_merged SUMMARY.json
+JV06,Re-typing,kept terms after re-typing: total / generic ENTITY before / after / in the 14 CDM types / %,116755/53780/0/103088/88.3,116755/53780/0/103088/88.3,MATCH,retype_merged SUMMARY.json
+JV07,Judges v2,test split: judgeable records / judges / Gwet AC1 Llama x Mistral / record links checked / broken,51837/3/0.788/167197/0,51837/3/0.788/167197/0,MATCH,judge_v2 test ANALYSIS.json; link_structural_check.json
+JV08,Judges v2,"test split, stated values: failed by a majority of judges / values judged / %",33253/254022/13.1,33253/254022/13.1,MATCH,judge_v2 test ANALYSIS.json
+JV09,Re-typing,constructed test sets: terms typed correctly / terms / sentences given the expected relation / sentences,19/20/17/17,19/20/17/17,MATCH,GOLD_CHECK.json
 H06,Benchmark,Disbiome associations recovered by GLiNER v2.5 biomed,1456,1456,MATCH,corpus_metrics.json

@@ -1,0 +1,1084 @@
+
+\documentclass[referee,lineno,pdflatex,sn-vancouver-num]{sn-jnl}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\input{glyphtounicode}\pdfgentounicode=1%
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{array}
+
+\makeatletter
+\let\orcidlogo\@undefined
+\makeatother
+\usepackage{orcidlink}
+
+\graphicspath{{Fig/}}
+
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%
+\newtheorem{proposition}[theorem]{Proposition}%
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}
+
+\begin{document}
+
+\title[Microbiome-CDM: a provenance-traceable data model]{Microbiome-CDM: a provenance-traceable common data model and multi-program extraction method for the human microbiome literature}
+
+\author*[1]{\fnm{Jasmeer Singh} \sur{Kalra}\orcidlink{0000-0001-7836-6860}}\email{jkalra@uni-bonn.de}
+\author[2,1]{\fnm{Martin} \sur{Hofmann-Apitius}\orcidlink{0000-0001-9012-6720}}
+\author[3,2]{\fnm{Marie-Christine} \sur{Simon}\orcidlink{0000-0001-6625-1265}}
+
+\affil*[1]{\orgdiv{Bonn-Aachen International Center for Information Technology (b-it)}, \orgname{University of Bonn}, \orgaddress{\street{Friedrich-Hirzebruch-Allee 6}, \city{Bonn}, \postcode{53115}, \state{North Rhine-Westphalia}, \country{Germany}}}
+\affil[2]{\orgdiv{Bioinformatics Department}, \orgname{Fraunhofer Institute for Algorithms and Scientific Computing (SCAI)}, \orgaddress{\street{Schloss Birlinghoven}, \city{Sankt Augustin}, \postcode{53757}, \state{North Rhine-Westphalia}, \country{Germany}}}
+\affil[3]{\orgdiv{Faculty of Agriculture, Institute of Nutrition and Food Sciences, Nutrition and Microbiome}, \orgname{University of Bonn}, \orgaddress{\city{Bonn}, \postcode{53115}, \state{North Rhine-Westphalia}, \country{Germany}}}
+
+\abstract{\textbf{Background:} The attributes that make microbiome sequencing
+data reusable (body site, disease status, intervention, assay protocol) are
+recorded inconsistently in structured submissions and survive mostly in
+publication text. We present Microbiome-CDM, a method
+that builds a provenance-traceable common data model (CDM) from the full text
+of the 453 papers cited by a 168,464-sample gut microbiome compendium.
+Separate extraction programs are kept as distinct mention sources;
+mentions are normalised with two-model adjudication; findings are
+catalogued with verbatim evidence; and relation triples receive a specific
+label only when their sentence states the relation.
+
+\textbf{Results:} Benchmark F1 of published recognisers predicts corpus grounding for
+diseases (Spearman 0.749) but not organisms (0.023). Each of 2,505,684 mentions
+and 25,788 triples is traced to its program, offsets and sentence. A blinded review found 61.8\%
+(95\% CI 57.4--65.9) of sampled accepted mappings exact and 6.2\% (4.4--8.7)
+wrong. After re-typing, 13,969 triples (54.2\%) carry a specific,
+cue-verified relation; instead of forcing labels, the method flags 8,068
+triples it cannot verify and keeps 1,210 associations
+without a stated sign as unsigned. A further 4,966 specific triples derive
+from catalogue findings. Against expert-curated BugSigDB, reported
+directions agree in 77.0\% of determinable pairs versus a 52.0\% chance
+baseline. Applied zero-shot to MiDRED's annotated microbe--disease relations,
+typing reached a micro-F1 of 0.57, below fine-tuned models, but
+signed answers agreed with the annotators in 88.5\%; extracted countries
+agreed with GutBiomeDB's curation for the same studies in 95.8\%. Queried by genus and condition, it maps
+reported directions for 22 genera in 10 conditions, which agree with
+independent BugSigDB consensus in 25 of 44 comparable cells, close to chance.
+On 100 sampled triples, two blinded annotators judged 70 and 79 supported or
+partially supported by their sentence and agreed with each other on 87. 
+
+\textbf{Conclusions:} A multi-program extraction method can turn the
+literature behind a large microbiome compendium into a provenance-traceable
+CDM. Recogniser choice has to be checked on the target corpus, because
+benchmark performance transfers for diseases and not for organisms, and
+abstaining where a relation cannot be verified keeps every assertion
+auditable. Findings recorded only in figures and supplements are not
+captured.}
+
+\keywords{microbiome, common data model, metadata standards, FAIR, data
+harmonisation, named entity recognition, large language models, text mining,
+data provenance}
+
+\maketitle
+
+\section{Background}\label{sec:intro}
+
+The scale of human microbiome research is now set by data aggregation rather than
+data generation. The most recent large-scale synthesis integrates 168,464 samples
+across 482 BioProjects~\cite{abdill2025}. The sequencing reads behind all of these
+studies are downloadable, but much of what makes them analysable (host species,
+body site, disease status, intervention, assay protocol) is recorded
+inconsistently or not at all in structured submission metadata~\cite{goncalves2019},
+and survives in usable form only in the text of the underlying publications.
+Cross-study comparison at this scale is therefore bounded not by data availability
+but by how much prose a project can afford to read.
+
+Manual harmonisation of that prose is the rate-limiting step. Standardising hundreds
+of papers into a shared schema takes sustained expert reading, and curated
+resources such as BugSigDB show what expert curation achieves, but their scope is
+fixed by curation capacity rather than by
+publication rate~\cite{geistlinger2023}.
+
+Computational resources now approach the same problem from several
+directions, and each contributes something the others do not. Annotated
+corpora provide ground truth: MiDRED supports knowledge-base construction for
+the microbiome~\cite{hogan2024midred}, and DiMB-RE annotates 14,450 entities
+and 4,206 diet--microbiome relations in 165 publications~\cite{hong2025dimbre}.
+Knowledge graphs provide integration and query: MINERVA maps microbe--disease
+associations across the literature with a fine-tuned language model and a
+visual atlas~\cite{langarica2025minerva}; MicrobiomeKG turns the supplementary
+tables of microbiome papers into scored assertions available through the
+Biomedical Data Translator~\cite{goetz2025microbiomekg}; KG-Microbe harmonises
+microbial traits, environments and ontologies into FAIR, AI-ready
+graphs~\cite{santangelo2026kgmicrobe}; and literature mining combined with
+pathway data has linked gut microbiota to drug and neurotransmitter
+pathways~\cite{liu2024mikg}. Sample-level resources provide reanalysis:
+GutBiomeDB curates metadata for the same 168,464 samples and adds tools for
+differential and meta-analysis~\cite{zhai2026gutbiomedb}. Language models have
+been used to extract and harmonise sample metadata from structured
+records~\cite{ikeda2025biosample,higashi2024harmonization}, although their
+reliability in biomedical text processing remains under
+evaluation~\cite{chen2025llmbench}.
+
+What these resources leave open is complementary to them: the study context
+(host, body site, condition, intervention, assay, sequencing platform) and the
+findings stated in the prose of the papers behind a compendium, each held with
+the program that extracted it, its character offsets and its verbatim sentence.
+This is the information that community reporting standards ask authors to
+provide, namely the STORMS checklist for human microbiome
+studies~\cite{mirzayi2021storms}, the STREAMS guidelines~\cite{kelliher2025streams}
+and the MIxS/MIMARKS minimum-information checklists~\cite{yilmaz2011mixs}, and
+that the FAIR principles ask to be reusable~\cite{wilkinson2016fair}. For the
+large body of already published studies, it can be recovered only from text.
+
+We built Microbiome-CDM as a pipeline rather than a single model. The pipeline
+ingests the full text of each publication, converts it to section-aware structured
+text, and applies an ensemble of recogniser programs (trained taggers, zero-shot
+span detectors, small language models and a MeSH gazetteer) whose outputs are kept
+separate instead of merged, so that every downstream row carries the identity of the
+program that produced it. A guarded normalisation stage resolves mentions to
+canonical terms with two-model adjudication for contested mappings, and a
+schema-constrained LLM extracts entity--relation triples, each carrying a verbatim
+sentence from its source paper as evidence. Because exhaustive manual annotation
+of a corpus of this size is infeasible, the pipeline embeds its own evaluation:
+structural checks, character-offset checks, LLM-as-judge
+review~\cite{zheng2023mtbench}, a pre-specified comparison against the
+expert-curated BugSigDB~\cite{geistlinger2023}, a blinded human review of a
+random sample of accepted vocabulary mappings, and a blinded two-annotator check
+of a random sample of relation triples.
+
+Relative to the resources above, the contribution is the combination of four
+properties in one released model. First, every mention, mapping and triple
+carries the identity of the program that produced it, its character offsets and
+its evidence sentence. Second, study context and findings sit in one relational
+schema, so that a finding can be filtered by body site, assay or condition.
+Third, the extraction abstains: a triple whose sentence does not state a
+specific relation is flagged rather than given a generic one. Fourth, all 453
+papers are rights-checked, so each released layer states what may be
+redistributed. Table~\ref{tab:compare} sets these properties beside the
+resources above.
+
+\begin{table*}[!t]
+\caption{Microbiome-CDM beside related microbiome resources. Each resource is
+described by its own publication; the last column states how it and Microbiome-CDM complement each other and, where measured, how far they agree (Results).\label{tab:compare}}%
+\footnotesize
+\renewcommand{\arraystretch}{1.05}%
+\tabcolsep=3pt%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.42\textwidth}@{}}
+\toprule
+Resource & What it provides & Complementarity with Microbiome-CDM \\
+\midrule
+BugSigDB~\cite{geistlinger2023} & Expert-curated differential-abundance signatures with study metadata & Reference standard for our findings (77.0\% direction agreement); we add mention-level provenance and text-only attributes \\
+DiMB-RE~\cite{hong2025dimbre}, MiDRED~\cite{hogan2024midred} & Manually annotated corpora with entity and relation types; trained extraction models & Scored zero-shot: typed F1 0.25 (DiMB-RE) and 0.57 (MiDRED), below fine-tuned models; signed answers agree in 88.5\% (MiDRED). We supply corpus-scale candidates with evidence sentences \\
+MINERVA~\cite{langarica2025minerva} & Literature-scale microbe--disease knowledge graph from a fine-tuned language model, with a visual atlas & Genus--condition directions agree in 72\% of comparable cells; our signed answers match 97\% of its labelled sentences. We add study-context attributes, per-row program identity and offsets \\
+MicrobiomeKG~\cite{goetz2025microbiomekg} & Scored assertions from supplementary tables; available through the Biomedical Data Translator & Mines the supplements our text extraction covers least (22.1\% of supplement-sourced signatures); we cover the prose; 1 of its 42 source papers is in our corpus \\
+KG-Microbe~\cite{santangelo2026kgmicrobe} & FAIR, ontology-grounded graphs of microbial traits and environments & Trait data for 86\% of our genera; its Disbiome directions agree with ours in 72\% of cells; we supply study-level context and findings \\
+GutBiomeDB~\cite{zhai2026gutbiomedb} & Curated metadata and analysis tools for the 168,464 compendium samples & Same compendium, different layer: samples there, the papers here; our extracted country agrees with its curation in 95.8\% of studies, and we cover 77.1\% of its disease labels \\
+PubTator3~\cite{wei2024pubtator3} & Entity and relation annotation across PubMed and PMC & One of our mention sources; we keep its output beside other programs rather than merged \\
+LLM metadata extraction~\cite{ikeda2025biosample} & Language-model extraction of terms from structured sample records & We apply the same idea to full-text papers, with evidence offsets and a judge-based audit \\
+\midrule
+Microbiome-CDM (this work) & 453 rights-checked full-text papers; 2.5 million mentions from separate programs; mappings; catalogue; 25,788 triples, each traced to program, offsets and sentence & Strengths: provenance at row level, explicit abstention, licence discipline. Gap: small human checks (500 mappings; 100 triples, two annotators), no annotated gold standard \\
+\botrule
+\end{tabular}
+\end{table*}
+
+Here we describe the pipeline and the resulting resource. Build~3.0.3 of the
+resource holds
+162,409 canonical terms, 334,231 candidate mappings of which 314,772 pass
+vocabulary guards and 18,272 are accepted by two-model agreement, and 25,788
+canonical entity--relation triples, each carrying a sentence from its
+source paper as evidence (for 24,157 of them located in the section text
+verbatim or after normalisation). As a check on the extraction, an automated judge
+screen by a single large language model (DeepSeek-V4.1-Flash, accessed through
+the Fraunhofer Genie gateway) of the 16,032 triples whose cited sentence is CC BY
+or CC0 licensed
+classifies 56.0\% as supported, 22.6\% as partially supported, 18.2\% as not
+supported and 3.3\% as conflicting; these are model judgements, reported as
+concordance measures rather than accuracy claims. In the following sections, we
+detail the multi-phase processing lineage, from corpus acquisition to the
+common data model, and present the computational evaluation of the pipeline.
+
+\section{Methods}\label{sec:methods}
+
+\subsection{Overview}\label{sec:overview}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{fig_overview.pdf}
+  \caption{Pipeline overview. Five stages build the common data model
+  from the literature underlying a human gut microbiome compendium: (1)
+  assembly and licence-checking of the cited corpus (453 BioProjects,
+  447 publications, 4,006 sections); (2) multi-program entity extraction
+  from kept-separate sources (trained and zero-shot recognisers, two
+  small-LLM runs, a MeSH dictionary), yielding 2,505,684 mentions with
+  character positions; (3) normalisation to 162,409 canonical terms and
+  guarded ontology mapping (334,231 candidates, 314,772 kept, 18,272
+  accepted by two-model agreement); (4) the CDM 3.0.3 relational build
+  (catalogue records, evidence quotes, 25,788 relation triples); and (5)
+  frozen, versioned releases with checksummed manifests. The evaluation
+  band underneath is mostly computational (structural checks, evidence
+  checks, model judges, curated-reference comparisons, NER benchmarks
+  and research-question use cases), complemented by blinded human reviews
+  of 500 sampled vocabulary mappings and 100 sampled relation triples.}
+  \label{fig:overview}
+\end{figure}
+
+Four design choices run through all five stages
+(Figure~\ref{fig:overview}).
+\textbf{Provenance first:} every row produced downstream carries the
+identity of the extraction program, the source paper, section and
+character offsets, so any value can be traced back to its source
+text. We record this provenance directly as columns rather than mapping it
+to the W3C PROV-O ontology: the question an auditor asks here is which
+program produced which row from which sentence, and these columns answer it
+without a separate provenance graph. \textbf{Sources kept separate:} the four mention sources are
+never merged; per-program identity is preserved into the CDM, which
+allows later re-weighting without re-extraction.
+\textbf{Mostly computational evaluation:} exhaustive manual annotation
+of a corpus of this size is infeasible, so evaluation relies on
+structural checks, model judges and concordance against curated
+references, reported as concordance rather than accuracy, and is
+anchored by blinded human reviews of random samples of accepted
+vocabulary mappings and of relation triples.
+\textbf{Licence-aware reporting:} every paper is licence-checked, and
+results that depend on source sentences are reported only for papers
+licensed CC~BY or CC0. One screen run outside our computing cluster (DeepSeek-V4.1-Flash on Genie,
+a model service hosted by Fraunhofer, one of the authors' institutions)
+received its sentences
+before this filter was applied, including 9,629 sentences from papers
+under other licences; its results are reported for the CC~BY/CC0 subset
+only. Later external screens received either term and concept labels only
+or, to resolve unsigned associations, text from CC~BY or CC0 papers only.
+
+\subsection{Stage 1: Corpus and sectioning}\label{sec:stage1}
+
+The foundational corpus was constructed to represent the literature
+underlying large-scale human microbiome data aggregation. We seeded the
+corpus acquisition using BioProject accessions~\cite{barrett2012bioproject}
+(PRJDB, PRJNA, PRJEB) and digital object identifiers (DOIs) of the
+literature cited in a recent synthesis of 168,464 samples~\cite{abdill2025}.
+Automated ingestion of PDF and TXT formats was managed via a custom
+processing script (\texttt{human\_microbiome\_corpus\_builder.py}), which
+applied metadata heuristics and topic classification to yield an initial
+corpus of 453 reference papers.
+
+To ensure data integrity, a deduplication stage (stage 30) isolated 447
+canonical papers and excluded 6 duplicates. Rather than treating full texts
+as monolithic blocks, a section-aware parsing algorithm (stage 40) segmented
+the canonical papers into 4,006 distinct sections, comprising 26.9 million
+characters. Subsequent full-text validation independently cross-checked 296
+of these papers against external bibliographic metadata. One paper
+(HMPAPER\_000372) was retrieved only as a publisher redirect page (909
+characters, no article text) and yields no catalogue records; it is kept in
+the 453 for completeness, and analyses that need article text use the other
+452.
+
+\subsection{Stage 2: Entity extraction with multiple programs}\label{sec:stage2}
+
+To maximise entity recall without sacrificing provenance, we designed an
+extraction pipeline that treats different named entity recognition (NER)
+programs as independent annotators~\cite{patel2026microbialner}. The pipeline
+deployed an ensemble of recogniser programs, whose outputs were intentionally
+kept separate rather than merged, ensuring every downstream row retains the
+exact identity of the program that produced it.
+
+The extraction ensemble consisted of four distinct programmatic branches:
+\begin{enumerate}
+\item \textbf{CPU Section Ensemble:} a baseline configuration
+(\texttt{zenodo\_v1}) comprising 7 discrete models, which identified
+1,705,449 entity rows in the CDM across 2,817 body sections (the terminology
+release lists 1,705,501 before loading).
+\item \textbf{Small Open LLM (Section-level):} Qwen3.5-4B~\cite{qwen35card} on section-level inputs, generating 186,024 entity rows.
+\item \textbf{Small Open LLM (Full-body):} Qwen3.5-4B deployed via
+vLLM~\cite{qwen35card,kwon2023vllm} on full-text inputs, yielding 366,123
+rows.
+\item \textbf{MeSH Gazetteer:} a rule-based 2026 dictionary
+search~\cite{lipscomb2000mesh} contributing 248,088 rows.
+\end{enumerate}
+
+All mentions were carried forward with precise character offsets linking
+them to their verbatim source sentences. Of the 2,505,684 mentions recorded
+in the final model, 2,505,628 are anchored at their offsets; a systematic
+offset shift in 75 sections was detected and corrected, and all but 56
+mentions reproduce their source surface form at the recorded offsets.
+
+\subsection{Stage 3: Normalisation and vocabulary mapping}\label{sec:stage3}
+
+Because raw NER outputs contain high orthographic variation, the pipeline
+executed a multi-step terminology normalisation chain (T1--T5). Following
+the assembly of the 2.5 million mentions (T1) and the extraction of their
+contextual definitions (T3), a two-level canonicalisation process (T2)
+collapsed textual variants, yielding an initial space of 166,012 canonical
+terms, which was subsequently refined to 165,991 terms.
+
+To bridge these terms to standardised ontologies (e.g.\
+UMLS~\cite{bodenreider2004umls}, OMOP~\cite{hripcsak2015ohdsi}, NCBI
+Taxonomy~\cite{schoch2020taxonomy}, BioPortal~\cite{whetzel2011bioportal}),
+we implemented a guarded mapping strategy (T5). The pipeline generated
+334,231 candidate mappings. Hard programmatic guards filtered this set
+down to 314,772 biologically plausible mappings. To resolve the most
+contested conceptual mappings, the pipeline used a two-model adjudication
+framework (DeepSeek-R1~\cite{guo2025deepseekr1} and
+Gemma~\cite{gemma2026gemma4}). Requiring both models to agree accepted
+18,272 mappings, with the agreed relation (exact, broader, narrower or related)
+recorded for each. Finally, a draft taxonomy
+(T4) was exported, organising the terms into 16 upper categories and 66
+subcategories, forming Terminology release 1.0.1.
+
+For build 3.1.0 the vocabulary was curated further without altering the
+3.0.3 tables. Concept identifiers that spell the same code differently
+(for example the two MeSH IRI forms) were first collapsed
+deterministically, reducing 13,330 accepted identifiers to 12,657 concepts.
+Terms and concepts were then deduplicated in passes of increasing
+tolerance: exact matching after normalisation, fuzzy matching restricted
+to harmless single-word differences, expansion of abbreviated genus names
+when exactly one genus in the corpus fits, and an embedding pass that
+merges two items only if both their names (SapBERT~\cite{liu2021sapbert}) and their contextual
+definitions (MiniLM sentence embeddings~\cite{liu2019sbert,minilmcard}) agree and the wording difference is explained by word
+order, plural forms or an acronym. Guards block any merge across entity
+types or between different numbers, single letters, signs, opposite
+prefixes or accepted concepts, and two organism names are merged only when
+they denote the same taxon, so that, for example, \textit{Lactobacillus}
+and \textit{Lactococcus} remain distinct. Deduplication reduced the
+162,409 canonical terms to 157,815 and the concepts to 12,182. A relevance
+filter (DeepSeek-V4.1-Flash, given only each label and its entity type)
+then removed strings that are not concepts, such as author names, figure
+references and sentence fragments, or that lie outside biomedical
+research, keeping 116,755 terms, 11,912 concepts and 15,769 accepted
+mappings between them.
+
+Two further layers type what extraction left generic. First, each of the
+53,780 kept terms that carried only the generic ENTITY type was re-typed by
+a locally run language model (Qwen3.5-9B~\cite{qwen35card}, 4-bit AWQ
+weights~\cite{lin2023awq}, served with vLLM on a single GPU), given the
+term, its merged variants, its model definition and up to three corpus
+sentences from distinct papers. A JSON schema restricts the answer to the
+14 CDM types, to four proposed extension types for things the 14 cannot
+hold (anatomy or body site, population or host group, measure or unit, and
+geography), or to NOT\_A\_CONCEPT for words that name no scientific thing.
+Second, each of the 14,867 triples that the repair pass marked as stating
+no specific relation was re-typed (of the 17,481 triples without a specific,
+cue-verified relation after repair, the remaining 2,614 were already flagged
+as unsupported or carried a specific label without a verified cue) from up to three of its source sentences. The
+model first quotes the words that relate subject and object and only then
+chooses a relation, from the existing closed list extended by signed
+association labels (positively or negatively associated, differentially
+abundant, biomarker of, predicts, increases or decreases over time) or one
+of three exits: association without direction, null finding, or not
+supported. A relation counts as specific only when its quoted cue is found
+verbatim in a source sentence; a null finding also requires negation
+wording in the cue, and a reversed direction is overruled when the
+sentence reads subject, cue, object in active voice. Both prompts were
+frozen after constructed test sets on which 19 of 20 terms and 17 of 17
+sentences were typed as expected; the prompt for catalogue-derived triples
+(below) typed 18 of 20 constructed cases as expected.
+
+Two further passes completed the relation layer. The 1,708 triples that
+still stated only an unsigned association were read again with more
+context: first the evidence sentence and its neighbours and, if no sign or
+direction was found, the full section that holds the sentence. Text from
+CC~BY or CC0 papers was sent to DeepSeek-V4.1-Flash on Fraunhofer's Genie
+service (959 triples); all other triples were processed by the local
+Qwen3.5-9B (749 triples), so that their text did not leave our computing
+cluster. A signed label was kept only if its verbatim cue contained sign
+wording other than ``risk'' and, for the section step, named at least one
+of the two entities, and each answer was checked by a separate yes/no
+verification. Finally, 13,046 catalogue findings whose evidence quote is
+anchored in the paper and that name a taxon or feature, a comparison and a
+direction were converted into candidate triples when the quote contains
+the subject, the object and wording for the direction (7,424 candidates,
+6,856 of them not already in the model). The local model typed each
+candidate from its quote in section context, under the same checks and
+verification.
+
+\subsection{Stage 4: Data catalogue and common data model}\label{sec:stage4}
+
+To synthesize isolated entities into contextual biological knowledge, we
+executed a schema-constrained relation extraction, following comparable
+LLM-based extraction pipelines in microbiology and protein
+research~\cite{lu2025microllm,chen2026buffers}. A secondary LLM pass
+(CATNER v2 utilising Qwen3.5-4B via vLLM) scanned the processed text to
+extract complex findings, assays, cohorts, samples, and datasets. This was
+followed by a deterministic cleanup (Phase A) and an LLM-assisted linking
+phase (Phase B). To address missing vocabulary and unmatched relations, the
+pipeline triggered gap-repair chains (G1--G10), which recorded 40,141
+per-term type adjudications reconciling the entity types assigned by the
+different recognisers with the canonical terminology, and linked catalogue
+relations directly to the canonical terms.
+
+The finalised architecture (Microbiome-CDM 3.0.3) was compiled into a highly
+structured SQLite relational database (Figure~\ref{fig:cdm}). The migration to the final build
+(3.0.3-rc1 to frozen) was strictly additive, generating a reproducible schema
+of 44 tables containing 8,490,496 rows. The final model successfully
+encapsulated 2,505,684 mentions, 162,409 canonical terms with their guarded
+vocabulary mappings, and 25,788 canonical entity--relation triples, forming
+a graph of 22,579 unique nodes.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_cdm_architecture.pdf}
+  \caption{Architecture of CDM 3.0.3. The model resolves 33 entity
+  types across 10 modules covering source documents, document
+  structure, terminology, semantic mappings, processing provenance,
+  quality review, evidence, findings, research context and catalogue
+  releases. Per-entity row counts and population status are shown
+  (fully populated, partially populated, or embedded in another
+  table). Evidence records anchor to their document-structure spans,
+  and finding and triple records link to canonical terms; every
+  record additionally carries its source paper and extraction run,
+  which together with the checksummed releases allow any derived
+  value to be traced back to source text.}
+  \label{fig:cdm}
+\end{figure}
+
+\subsection{Stage 5: Computational evaluation and human spot check}\label{sec:stage5}
+
+Because the 453-paper corpus size precludes comprehensive human
+ground-truth annotation, the pipeline embeds a mostly computational
+evaluation framework, complemented by two small blinded human checks. We
+evaluated the pipeline along the following dimensions:
+
+\begin{enumerate}
+\item \textbf{Structural Integrity:} automated scripts verified
+cryptographic hashes, text offsets and identifier linkage across the 44
+SQLite tables, with 118 of 121 tests passing (2 failures, 1 conditional).
+
+\item \textbf{Metadata Concordance:} we conducted a source-first crosscheck
+using deterministic matching, successfully recovering 88.7\% of accession
+numbers, 89.2\% of sequencing platforms and 72.1\% of 16S rRNA gene identifiers
+natively present in the text.
+
+\item \textbf{External Curation Comparison:} we benchmarked our automated
+triple extraction against expert-curated databases, specifically testing
+against BugSigDB~\cite{geistlinger2023} (using 47 overlapping papers),
+Disbiome~\cite{janssens2018disbiome}, and CTD~\cite{davis2026ctd}.
+
+\item \textbf{NER Benchmarking:} the underlying NER programs were evaluated
+against public gold-standard datasets (BC5CDR and BioRED) using 27 distinct
+configurations. PubTator3 achieved an exact F1 of 90.1 on BC5CDR and
+HunFlair2 achieved 80.6 on BioRED, with the best small LLM (Qwen3.5-4B,
+3-shot) reaching 69.5 and 66.2 respectively~\cite{wei2024pubtator3,
+sanger2024hunflair2,qwen35card}.
+
+\item \textbf{Evidence-Anchored Screen:} to assess the logical validity of
+the 25,788 extracted triples, we utilised an
+LLM-as-judge~\cite{zheng2023mtbench} (DeepSeek-V4.1-Flash, accessed via the
+Fraunhofer Genie gateway). The model evaluated each triple against its own
+verbatim anchor sentence, assessing whether the predicate is justified by
+the sentence, whether the polarity is correct, and whether the quoted
+evidence matches the text, yielding an overall support verdict. To adhere
+strictly to licensing constraints for external API processing, we report
+results only for the 16,032 triples sourced from CC BY or CC0 licensed
+papers. The screen classified 56.0\% of these relations as fully supported
+by the text, 22.6\% as partially supported, 18.2\% as unsupported, and
+3.3\% as conflicting. We report these strictly as model concordance
+judgements, not as absolute accuracy
+claims~\cite{chen2025llmbench,deepseekv41card}.
+
+\item \textbf{Catalogue Judges:} three locally run model judges
+(Qwen3.5-9B, Llama-3.1-8B and Mistral-7B~\cite{qwen35card,grattafiori2024llama3,jiang2023mistral})
+checked catalogue values under a decomposed rubric. Links between records
+were checked structurally rather than by a model. For classification
+fields each judge answered the question blind, and its answer was compared
+with the stored value; for stated values a judge had to quote an evidence
+span, which was accepted only if found in the source passage and covering
+the value; record-level summary labels were rated as fair or unfair.
+Verdicts were constrained by a JSON schema. The rubric was developed on a
+1\% development split (536 records, assigned by hash of the record
+identifier) and frozen before the 51,837 held-out records were judged.
+Agreement is reported as Cohen's and Fleiss' $\kappa$~\cite{cohen1960kappa},
+Gwet's AC1 and per-verdict specific agreement, as agreement between models
+rather than accuracy.
+
+\item \textbf{Two-annotator triple check:} two annotators with microbiome
+expertise independently judged a simple random sample of 100 of the 16,032
+screened triples (CC BY or CC0 sentences only), using the same SUPPORTED,
+PARTIAL, NOT\_SUPPORTED and CONFLICTS definitions as the model judge and
+seeing only the triple and its sentence. The sample, protocol, blank sheets
+and model verdicts were fixed and checksummed before annotation, and model
+verdicts were opened only after both sheets were complete. Agreement is
+reported as observed agreement and Cohen's $\kappa$ for the four labels and
+for supported or partially supported versus not.
+
+\item \textbf{Gold standards and curated resources:} the relation-typing and
+entity prompts were applied zero-shot, unchanged and locally (Qwen3.5-9B), to
+the human-annotated DiMB-RE~\cite{hong2025dimbre} and MiDRED~\cite{hogan2024midred}
+corpora and to 1,100 manually labelled microbe--disease
+sentences~\cite{karkera2023microbiomere} distributed with
+MINERVA~\cite{langarica2025minerva}, with gold entity pairs given and our labels
+mapped to each corpus's label set. Study metadata were compared per BioProject
+with GutBiomeDB's curated metadata~\cite{zhai2026gutbiomedb}, and
+genus-by-condition directions with MINERVA's graph and with the Disbiome
+associations~\cite{janssens2018disbiome} contained in
+KG-Microbe~\cite{santangelo2026kgmicrobe}; paper and genus overlap were measured
+for MicrobiomeKG~\cite{goetz2025microbiomekg} and KG-Microbe. Competitor data
+were used under their own terms and processed only locally.
+\end{enumerate}
+
+\paragraph{Statistical reporting.} Every percentage is stated with its
+denominator or the count it is a share of, and shares are computed over
+distinct items unless stated otherwise (mention-weighted validity is labelled
+as such). Proportions from sampled reviews and judge agreement carry 95\%
+Wilson score intervals~\cite{wilson1927}. Agreement with curated references is
+tested against a chance level, either the same comparison made across
+different papers or the base rate of the compared values, by an exact
+one-sided binomial test. Kept and dropped triples are compared by Fisher's
+exact test with an odds ratio and a Newcombe interval for the difference, and,
+because triples are nested in papers, also by a paper-cluster bootstrap;
+differences in benchmark F1 are tested by a paired document bootstrap with
+5,000 resamples~\cite{efron1993bootstrap}. $p$-values are Holm-adjusted within
+each family of related comparisons, and results that do not survive
+adjustment are described as trends. The analyses are descriptive; no
+sample-size calculation applies, because the corpus is fixed by the
+compendium.
+
+\section{Results}\label{sec:results}
+\begin{table*}[!tbp]
+\caption{Summary of the extraction pipeline and of the two frozen builds.
+Quantities are given per stage and are reproducible from the deposited
+release; \texttt{CL} rows are the CDM 3.1.0 layers and \texttt{JV} rows the
+re-typing layers and the catalogue judges.
+Percentages and judge-derived values are concordance or model-judgement
+measures, not accuracy against human annotation.\label{tab:summary}}%
+\input{tables/table_pipeline_summary.tex}
+\begin{tablenotes}%
+\item LLM-screen and BugSigDB values are concordance or model judgement, not accuracy.
+\end{tablenotes}
+\end{table*}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\linewidth]{fig4_results.pdf}
+  \caption{Computational evaluation.
+  (a)~Share of distinct entity strings judged valid and correctly
+  typed, per extraction configuration (string screen, distinct
+  strings). (b)~Agreement between catalogue metadata and the
+  expert-curated BugSigDB over the 47 shared papers, against
+  cross-paper chance baselines; daggered fields are matched by
+  SapBERT semantic similarity rather than exactly.
+  (c)~Catalogue coverage of BugSigDB signatures by where BugSigDB
+  recorded the signature. (d)~BugSigDB support for taxon triples
+  kept versus dropped by model-based cleaning. All panels report
+  concordance or judged validity, not accuracy against a human gold
+  standard.}
+  \label{fig:results}
+\end{figure}
+
+The five stages produced CDM build 3.0.3, a relational model of 44
+tables and 866 columns in which every extracted value carries paper,
+section and character-offset provenance. Of 121 schema, value and
+provenance tests, 118 pass, two fail and one is conditional, and no row
+names an unregistered extraction run. Seventeen entity types are
+fully populated, fifteen partially (five of them embedded in other
+tables' rows), and one is planned. The build, terminology and
+catalogue releases were frozen with SHA-256 manifests
+(Section~\ref{sec:stage4}). Build 3.1.0 leaves the entity tables unchanged and
+adds the curated layers described in Section~\ref{sec:stage3}: 116,755 kept
+terms, 11,912 kept concepts and 15,769 accepted mappings between them, of
+which 13,540 of the original accepted rows are exact agreements and the
+remainder broader, narrower or related concepts. After re-typing, no kept
+term has the generic type: 103,088 (88.3\%) carry one of the 14 CDM types,
+8,856 a proposed extension type and 4,811 are flagged as not a concept.
+A blinded reviewer
+classified 307 of 497 randomly sampled accepted mappings (61.8\%, 95\%
+Wilson interval~\cite{wilson1927} 57.4--65.9\%) as exact, 159 as broader, narrower or related
+(32.0\%, 28.0--36.2\%) and 31 (6.2\%, 4.4--8.7\%) as wrong, judged 485 of
+496 terms (97.8\%, 96.1--98.8\%) to be genuine concepts and 426 of 493
+entity types (86.4\%, 83.1--89.2\%) to be correct; the second reviewer's
+100-mapping overlap is pending. Overall, 466 of 497 mappings (93.8\%,
+91.3--95.6) were not wrong. Exactness depended strongly on how much support a
+term had: it rose from 39.7\% (96 of 242) for terms mentioned once or twice to
+89.6\% (60 of 67) for terms mentioned more than 20 times, and from 31.9\% (45 of
+141) for terms found by one extraction program to 88.4\% (38 of 43) for terms
+found by six; by vocabulary it ranged from 41.7\% (NCIt) to 91.2\% (ChEBI).
+Because mention counts and program counts are released with every term, users
+can restrict the mappings to well-supported terms. Table~\ref{tab:summary} sets
+out the five stages and the two frozen builds, with the source of every value.
+
+Deterministic matching locates 70.5\% of catalogue text values and
+75.4\% of numeric counts inside their own quote-anchored evidence
+passage; the remainder are dominated by coded
+values that cannot be string-checked.
+Three local model judges then checked 51,837 held-out catalogue records,
+and all 167,197 links between records point to existing records of the
+same paper. The two most consistent judges (Llama-3.1-8B and Mistral-7B)
+agree on 82.9\% of 442,772 field verdicts (95\% Wilson interval
+82.8--83.0; Cohen's $\kappa$ 0.566, Gwet's AC1 0.788), and when one fails a
+value the other fails it too in most cases (specific agreement 0.598). With
+sampling error this small the informative quantity is the variation across
+fields, not the interval. Fleiss' $\kappa$ over all three judges is
+0.471, 0.535 for stated values and 0.616 for the judges' blind answers to
+classification questions. The remaining disagreement sits in a few fields
+where the models default to different answers, for example whether a
+control-group record describes one group or a case--control design. We
+therefore use the judges as screening tools rather than raters: a majority
+fails 13.1\% of stated values (33,253 of 254,022; 95\% Wilson interval
+12.96--13.22\%), concentrated in DNA
+extraction method (68.9\%), sequencing platform (56.3\%), body site
+(40.4\%) and intervention agent (40.2\%). A pattern-based extractor containing no model component finds
+its accession numbers, sequencing platforms and 16S rRNA gene regions present
+in our catalogue in 88.7\%, 89.2\% and 72.1\% of cases, an agreement
+measure between two methods, not a recall bound.
+
+In the large string screen (730{,}195 judged items), distinct-string
+validity separates the program families clearly
+(Figure~\ref{fig:results}a). The MeSH gazetteer reaches 67.3\% of distinct strings
+judged valid and correctly typed, BioBERT-diseases~\cite{lee2019biobert} 60.9\% and the
+trained BERT chemical tagger 59.3\%; the best zero-shot recogniser,
+GLiNER v2.5 medium, reaches 43.6\%~\cite{zaratiana2024gliner,zaratiana2025gliner2}; the
+small language models span 15.7\% (Llama zero-shot) to 35.5\% (Gemma
+zero-shot), with Qwen3.5-4B at 34.5\% (full-body run) and 36.6\% (section-level
+run), or 50.7\% when mentions are weighted instead of distinct
+strings. Validity also depends on CDM type: chemicals (44.3\%), data
+analysis (43.1\%) and diseases (42.8\%) screen far better than
+experimental methods (14.1\%) or study design (16.1\%). For the
+build-3.0.3 triples, the same screen judges 39.3\% to be well-formed
+claims, with valid subject and object in 38.7\%. After relation repair and
+re-typing, 13,969 of the 25,788 triples (54.2\%) carry a specific
+relation whose cue phrase is found in the source sentence; 8,068 are
+flagged because the pipeline could not verify them against their sentence,
+1,604 carry a specific label
+whose cue was not found verbatim, 1,210 state an association without
+direction even when the whole section is read, 924 report a null finding
+and 13 have a vague endpoint. Reading more of the paper resolved 405 of
+the 1,708 unsigned associations, 85 of them only from the wider section; 1,210
+stayed unsigned, and the other 93 moved to another exit or received a specific
+label whose cue was not found.
+The catalogue's findings add 4,966 specific, cue-verified triples from 430
+papers and 848 null findings, so that 18,935 of 32,644 triples (58.0\%)
+carry a specific, verified relation. We treat the remainder as abstention,
+not as relations delivered: where the sentence does not state a specific
+relation, the triple is flagged or kept unsigned rather than given a generic
+label, so that every typed relation can be checked against its cue phrase.
+
+In the blinded two-annotator check of 100 triples, judged as originally
+extracted, the annotators agreed on
+whether a triple was supported or partially supported by its sentence for 87
+(87.0\%, 95\% Wilson interval 79.0--92.2; Cohen's $\kappa$ 0.66) and on all four
+labels for 64 ($\kappa$ 0.46); most disagreements separated SUPPORTED from
+PARTIAL for hedged sentences. Annotator A judged 35 triples supported, 35
+partially supported and 30 not supported; annotator B 65, 14 and 20 (one
+conflicting). The DeepSeek-V4.1-Flash screen agreed with the annotators about
+as well as they agreed with each other ($\kappa$ 0.34 and 0.42 on four
+labels). In an exploratory comparison with the final relation layer, 33 of 42
+triples that the pipeline types as specific and cue-verified were judged
+supported or partially supported by annotator A (78.6\%, 64.1--88.3) and 38
+by annotator B (90.5\%, 77.9--96.2). Of the 41 triples the pipeline flagged
+as unverified, annotator A judged 25 and annotator B 30 to be supported or
+partially supported: the flag is conservative, and many flagged triples state
+a real relation that the relation vocabulary does not cover. Verified and
+flagged triples therefore differ in support less than their labels suggest
+(78.6--90.5\% versus 61.0--73.2\% supported or partially supported); the cue
+check confirms that a specific label is worded in the sentence, not that the
+remaining triples are wrong. Expanding the closed relation vocabulary is the
+most direct way to recover flagged relations in a future build. Agreed labels
+from the annotators' adjudication are pending.
+
+On public gold standards~\cite{li2016bc5cdr,luo2022biored}, spanning
+27 configurations of 21 systems, the best systems are PubTator3 with
+exact F1 90.1 on BC5CDR~\cite{wei2024pubtator3} and HunFlair2 with
+80.6 on BioRED~\cite{sanger2024hunflair2}; the best small language
+model (Qwen3.5-4B, three-shot prompting) reaches 69.5 and
+66.2~\cite{qwen35card}. Per BioRED type, the best disease, gene/protein
+and organism systems are {\em not} trained on BioRED (HunFlair2:
+86.6, 83.3 and 94.4), while the best chemical, variant and cell line
+systems are trained in-domain (PubTator3: 88.8, 82.3 and 80.8).
+These rankings transfer to the microbiome corpus only partially:
+Spearman correlation between BioRED F1 and corpus grounding is 0.749
+for diseases but 0.023 for organisms (0.2 for genes and proteins, 0.252
+for chemicals, 0.112 for variants), and no configuration of the 26
+corpus benchmark configurations grounds more than 41.3\% of its own
+extracted strings. Public benchmark F1 therefore cannot be read as
+corpus-level accuracy, and program choice has to be re-checked against
+the target corpus rather than inherited from benchmark leaderboards.
+
+Against the expert-curated BugSigDB~\cite{geistlinger2023}, over 47
+shared papers and 270 signatures, 27.7\% of BugSigDB taxa are covered
+by our findings (exact or same genus) against a 9.0\% cross-paper
+chance level, and 23.5\% by exact NCBI taxon ID; conversely, 57.3\% of
+our taxa also appear in BugSigDB signatures against 18.1\% chance.
+Where a direction comparison is determinable, reported directions
+agree in 77.0\% of 261 taxon pairs, against a 52.0\% base rate.
+Coverage tracks where BugSigDB recorded the signature: every
+text-sourced signature is covered, versus 51.4\% of table-sourced,
+27.6\% of figure-sourced and 22.1\% of supplement-sourced ones
+(Figure~\ref{fig:results}c). Study metadata agrees closely for 16S rRNA gene
+region (97.7\%), country (94.0\%), condition (92.7\%, compared by
+SapBERT), body site (84.2\%) and statistical test (85.7\%), and less
+well for group size (56.2\%) and group name (54.2\%).
+
+\paragraph{Reuse example: reported directions by genus and condition.}
+As a first reuse of the model, we asked a question a microbiome researcher
+would ask of it: which genera do the papers report as increased or decreased
+in each condition? Querying the catalogue findings by NCBI genus and by
+condition returns, for the 22 most frequently reported genera and the 10 most
+frequent conditions, the number of papers reporting each direction, each
+traceable to its sentence (Figure~\ref{fig:taxon}). The map recovers
+well-known patterns, for example \textit{Faecalibacterium} reported as
+decreased in inflammatory bowel disease (IBD) and colorectal cancer, and
+\textit{Fusobacterium} as increased in colorectal cancer. To compare it with
+an independent source, we took BugSigDB signatures from papers outside our
+corpus and kept the 44 cells with a clear consensus (at least three
+signatures, at least two thirds in one direction). Our corpus reports the
+same direction in 25 of them (56.8\%; 95\% Wilson interval
+42.2--70.3). This is close to chance and is not a
+validation; the 19 disagreements mark genus--condition pairs on which the
+literature itself is divided, and the map is a reported-findings summary,
+not a meta-analysis.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.82\linewidth]{figF_taxon_condition.pdf}
+  \caption{Reported direction per genus and condition, queried from the
+  catalogue findings. Colour gives the balance of papers reporting the
+  genus as increased (red) or decreased (blue) for the condition; the number
+  is the count of papers. A check mark or cross shows agreement or
+  disagreement with the independent BugSigDB consensus (signatures from
+  papers outside our corpus; at least three signatures, at least two thirds
+  in one direction); 25 of 44 comparable cells agree. Reported findings,
+  not a meta-analysis.}
+  \label{fig:taxon}
+\end{figure}
+
+\paragraph{Gold standards and curated resources.} Applied zero-shot to the
+human-annotated DiMB-RE corpus with gold entity pairs given, our relation
+typing assigned the exact label and direction to 37.7\% of 2,410 gold
+relations (95\% Wilson interval 35.8--39.7), and its typed extraction F1 was
+0.25 (document bootstrap 0.23--0.27), below the published fine-tuned
+end-to-end model (0.445); most errors were relations asserted for entity pairs
+the annotators left unrelated (32\% of 10,203). Entity recognition reached an
+F1 of 0.69 (0.67--0.71, overlapping spans) on DiMB-RE types with a CDM
+equivalent, with 90.9\% recall for microorganisms. On MiDRED's 3,116 doubly
+annotated microbe--disease relations, four-class micro-F1 was 0.57
+(0.55--0.59; test split 0.55, against 0.72 for GPT-4 in context and 0.91 for a
+fine-tuned model); when both the gold label and our answer were signed, they
+agreed in 1,920 of 2,169 cases (88.5\%, 87.1--89.8), and our answer was ``no
+relation'' for 23.2\% of true relations. On 1,100 manually labelled
+microbe--disease sentences, our signed answers agreed with 449 of 463 signed
+labels (97.0\%, 95.0--98.2), with abstention on 47.1\% of signed sentences.
+The zero-shot steps are therefore precise when they commit to a sign but
+cautious, and below fine-tuned extractors in recall and overall F1.
+
+Against curated metadata, our text-extracted fields agreed with GutBiomeDB for
+the same BioProjects on country in 205 of 214 studies (95.8\%, 92.2--97.8) and
+covered 229 of 297 curated disease labels (77.1\%, 72.0--81.5); disease
+matching was done by the same local model, so this is a concordance measure.
+Genus-by-condition directions agreed with MINERVA's graph in 95 of 132
+comparable cells (72.0\%, 63.8--78.9; chance about 50\%), with most
+disagreements on probiotic genera that intervention studies report as
+protective, and with the curated Disbiome associations in KG-Microbe in 53 of
+74 (71.6\%, 60.5--80.6); both sources may share papers with our corpus, so
+these comparisons are not independent. MicrobiomeKG shares one of its 42
+source publications with our corpus and contains 26.8\% of our 321 catalogue
+genera, whereas KG-Microbe holds trait data for 86.0\% of them, so these graphs
+complement rather than duplicate the CDM.
+
+For relation triples, a licence-filtered evidence screen had
+DeepSeek-V4.1-Flash judge 16{,}032 triples against their CC BY or CC0
+source sentence: 56.0\% are supported, 22.6\% partially, 18.2\% not
+supported and 3.3\% conflict with the sentence. An earlier evidence
+check over the eligible CC BY/CC0 triples (16{,}132 judged) found the
+source sentence to state a relationship in 86.6\% of cases but to
+support the original label in only 22.0\%; after cleaning-based
+relabelling, support rises from 17.2\% to 50.4\%, and kept triples are
+more often supported than dropped ones (30.6\% versus 17.2\%).
+Against curated references, 13.2\% of 622 resolved microbe--disease
+edges appear in Disbiome~\cite{janssens2018disbiome} or BugSigDB
+against 5.8\% chance, and kept edges are enriched over dropped ones
+(15.5\% versus 6.4\%). BugSigDB support for taxon triples is likewise
+higher for kept than dropped triples (54.3\% versus 44.3\%,
+Figure~\ref{fig:results}d), a trend that does not survive Holm
+correction. Chemical--disease edges resolve less convincingly (11.4\%
+in CTD~\cite{davis2026ctd} versus 9.8\% chance). The resulting graph
+has 22{,}579 nodes and 25{,}788 edges (cleaned: 8{,}897 and 9{,}682),
+with the largest connected component covering 68.5\% (full) and 67.8\%
+(cleaned) of nodes.
+
+\section{Discussion}\label{sec:discussion}
+The results show that a literature corpus can be turned into a
+provenance-traceable common data model whose layers can be improved
+without rewriting the frozen builds: re-typing removed the generic entity
+type from every kept term and raised the share of triples with a
+specific, cue-verified relation to 54.2\% (58.0\% with the triples derived
+from catalogue findings), while flagging the triples
+it cannot verify instead of forcing a label. The
+evaluation also shows where the approach stops: reliability differs by
+entity type, model judges agree only moderately, and findings reported
+only in figures and supplements are not captured. The recommendations
+and limitations below follow from these results.
+
+\subsection{Relation to existing resources}\label{sec:compare}
+Microbiome-CDM is designed to sit alongside existing microbiome resources
+rather than to replace them (Table~\ref{tab:compare}). Curated databases and
+annotated corpora offer expert-level precision and ground truth;
+knowledge graphs offer integration, scoring and query; sample-level databases
+offer reanalysis of the sequencing data. Microbiome-CDM contributes the
+study context and stated findings of the full-text literature, at the level
+of the individual sentence and the individual extraction program. The pairings
+are concrete. Our coverage of BugSigDB signatures is lowest for those recorded
+in supplements (22.1\%), which is exactly the source MicrobiomeKG mines, so
+the two are complementary. GutBiomeDB curates the 168,464 samples of the same
+compendium, and our model covers the 453 papers behind them, so a sample-level
+query can be joined to the sentence that reports the study design. Annotated corpora such as DiMB-RE and MiDRED served as benchmarks for our
+relation typing, and our layer in turn offers them a much larger pool of
+candidate sentences to annotate. Measured against these resources (Results),
+the CDM's study metadata agree closely with curated values, its genus-level
+directions agree with two other sources in about 72\% of comparable
+cells, and its zero-shot relation typing is precise when it commits to a sign
+but below fine-tuned extractors in overall F1.
+Because every row names its program, any of these resources can take only the
+layers it trusts, for example mappings accepted by two-model agreement or
+triples with a verified cue phrase. Its weakest point, compared with curated
+resources, is human-annotated ground truth: our human checks (500 mappings,
+100 triples) are small samples, not an annotated corpus; we report that gap in
+the Limitations.
+
+\subsection{Recommendations}\label{sec:recommendations}
+For a new corpus of the same kind, we recommend:
+
+\begin{itemize}
+\item Run trained taggers AND zero-shot recognisers side by side, and
+choose per entity type, not per system. On BioRED the best organism,
+disease and gene recognisers were not trained on BioRED at all, so
+performance on the target corpus, not on the training-domain benchmark, should decide.
+\item Do not read public benchmark F1 as corpus accuracy: its
+correlation with corpus grounding is 0.749 for diseases but 0.023
+for organisms. Re-check chosen systems against a sample of the
+target corpus before committing to a configuration.
+\item Keep each program's mentions separate in the CDM instead of
+merging them: when the LLM sources are removed, the majority of
+accepted mappings and of terms survive, so provenance per program
+supports later re-weighting without re-extraction.
+\item Prefer explicit non-values over silent imputation. NOT\_REPORTED
+and CONFLICTING labels preserve ambiguity (46{,}182 and 4{,}586 values
+in our catalogue) and make downstream filtering a user decision.
+\item Screen candidate relation triples against their own source
+sentence with an LLM judge before building a graph; cleaning raised
+judge-perceived support from 17.2\% to 50.4\% and enriched curated
+reference coverage.
+\item Attach a character-offset quote to every extracted value from
+the start; deterministic re-matching against the anchored quote is
+the cheapest check available, and 88.2\% of our quotes are verbatim.
+\item Licence-check every text before sending it to an external
+model API and record the check; this discipline is what later allows
+a licence-filtered evaluation at all.
+\end{itemize}
+
+\paragraph{Directions for the next build.} Four measured limitations point
+to concrete extensions. First, findings reported only in tables, figures and
+supplements are covered far less often than findings in the text (51.4\%,
+27.6\% and 22.1\% of table-, figure- and supplement-sourced BugSigDB signatures,
+against all text-sourced ones), which is why supplement-based resources such as
+MicrobiomeKG complement this one; a table and figure-caption pass is the first
+candidate. Second, the closed relation vocabulary misses relations worded
+outside it: in the two-annotator check most flagged triples stated a real
+relation, so a vocabulary expanded from the corpus's flagged triples, not
+from the benchmark corpora, is the second. Third, the catalogue fields for DNA
+extraction method and sequencing platform are often rejected by the judge
+majority (68.9\% and 56.3\%); both draw on finite vocabularies of kits and
+instruments, so a gazetteer pass combined with a field-targeted extractor is the
+third. Fourth, on DiMB-RE the relation step typed many entity pairs that the
+annotators left unrelated; requiring a syntactic connection between the two
+entities before typing would address this, but because the problem was
+observed on that benchmark, the rule would need to be fixed in advance and
+evaluated on new data. None of these changes the central claim that the
+resource is auditable and abstains where it cannot verify a relation.
+
+\subsection{Limitations}\label{sec:limitations}
+\begin{itemize}
+\item \textbf{Limited human review.} Human review covers one blinded
+reviewer's check of 500 randomly sampled accepted mappings (497 rated; second-reviewer
+overlap pending) and a blinded two-annotator check of 100 randomly sampled
+triples (adjudication pending). These are small samples with wide intervals,
+not a human-annotated corpus; all other evaluation is computational (concordance
+against chance baselines, judged validity screens and curated-reference
+comparisons) and is reported as concordance, never as
+accuracy~\cite{chen2025llmbench}.
+\item \textbf{Relation quality.} After repair and re-typing,
+13{,}969 of the 25{,}788 triples (54.2\%) carry a specific relation with
+a verified cue phrase; 8{,}068 are flagged as unverified, and the
+two-annotator check shows that many of these state a real relation the
+relation vocabulary does not cover, so the flag marks unverified triples, not
+extraction errors; 1{,}210
+state an association whose direction the paper does not give; a further
+1{,}604 carry a specific label whose cue phrase was not found and are not
+counted as verified. Re-typed relations, directions and term types are model
+output, checked on small constructed test sets (17 of 17 sentences for the
+CDM triples and 18 of 20 cases for the catalogue-derived triples) but the 100-triple human check judged each triple as originally extracted,
+not its re-typed label, and the 195 triples
+whose direction was flagged as reversed have not been reviewed. The 4{,}966
+catalogue-derived triples are built by string rules from anchored catalogue
+findings and then re-typed with their sentence context; they have no
+separate human check. Unsigned associations were resolved by
+DeepSeek-V4.1-Flash for CC BY and CC0 papers (243 of 959 resolved) and by a
+local Qwen3.5-9B model for all others (162 of 749), so resolution quality may differ between licence groups. Applied zero-shot,
+our relation typing is below fine-tuned extractors on DiMB-RE (typed F1 0.25
+versus 0.445) and MiDRED (micro-F1 0.57 versus 0.91).
+\item \textbf{Judges, not experts.} The three catalogue judges reach
+moderate agreement (Cohen's $\kappa$ 0.566 for the best pair, Fleiss'
+$\kappa$ 0.471), the record-level summary labels they rate are almost
+always judged fair and so carry little information, and the triple screens (two judge models, two rubrics) are not
+sanity-checked to the same depth for every judge; concordance with
+model judges is not concordance with experts. The judges' majority rejects
+68.9\% of stated DNA extraction methods, 56.3\% of sequencing platforms,
+40.4\% of body sites and 40.2\% of intervention agents, so these catalogue
+fields should be treated as low confidence. Each model step was run once
+at temperature 0, and run-to-run variance was not measured.
+\item \textbf{Model-version drift.} All model judgements reported here
+are tied to the exact model checkpoints used (as of 2026-11): judge
+behaviour can change across model updates, and any reproduction must
+record the exact model versions, as the Methods do for each screen.
+\item \textbf{Documented schema gaps.} In build 3.0.3, definitions found in
+the papers cover 2.09\% of terms (3{,}397 of 162{,}409, in 6{,}773 definition
+records); the definitions added in build 3.1.0 are model-written; the 53{,}780 kept terms re-typed from the
+generic ENTITY type carry model-assigned types and mostly ground to no
+vocabulary, and four of their types are proposed extensions; 9 of
+14 CDM types have no reference vocabulary; the build declares no
+foreign keys (multi-valued links are modelled with explicit link
+tables, so referential integrity was checked by audit, not by
+declared constraints); 79 change-log entries 3.0.2 $\to$ 3.0.3 were
+restored, not recomputed.
+\item \textbf{Transfer and scope.} Public-benchmark to corpus
+transfer was established for diseases only; for organisms, an
+advantage for trained taggers on abstracts was not established
+outside their training data. Evaluation is restricted to the 453
+gut-microbiome papers linked to one compendium, over 4{,}006
+sections; generalisation to other bodies of literature is not
+established. The BugSigDB comparison shares only 47 papers with
+BugSigDB, and the genus-by-condition map (25 of 44 comparable cells
+agree with independent BugSigDB consensus) summarises reported findings;
+it is not a meta-analysis and does not establish clinical validity. The
+text of the 179 papers whose licences do not permit redistribution cannot
+be deposited, so the text-processing steps can be rerun on those papers
+only from licensed copies.
+\end{itemize}
+
+\section{Conclusions}\label{sec:conclusions}
+A multi-program extraction pipeline can turn the literature underlying a
+large microbiome compendium into a provenance-traceable common data model
+in which every value carries its paper, section, character offsets and
+the program that produced it. Curated layers added on top of the frozen
+build give every kept term a specific type and 18,935 triples a specific,
+cue-verified relation, and three local model judges screen catalogue
+values with moderate agreement. Reliability remains uneven across entity
+types, and all judge-based results are concordance measures rather than
+accuracy against human annotation. The builds are frozen with checksummed
+manifests for public deposit.
+
+\backmatter
+
+\section*{Abbreviations}
+\begin{list}{}{%
+  \setlength{\labelwidth}{6.5em}%
+  \setlength{\labelsep}{0.5em}%
+  \setlength{\leftmargin}{7em}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\topsep}{2pt}%
+  \renewcommand{\makelabel}[1]{\textbf{#1}\hfill}}
+\item[API] application programming interface
+\item[BC5CDR] BioCreative V chemical--disease relation corpus
+\item[CDM] common data model
+\item[CTD] Comparative Toxicogenomics Database
+\item[DOI] digital object identifier
+\item[F1] harmonic mean of precision and recall
+\item[IBD] inflammatory bowel disease
+\item[LLM] large language model
+\item[MeSH] Medical Subject Headings
+\item[NCBI] National Center for Biotechnology Information
+\item[NER] named entity recognition
+\item[OMOP] Observational Medical Outcomes Partnership
+\item[UMLS] Unified Medical Language System
+\end{list}
+
+\section*{Declarations}
+
+\bmhead{Ethics approval and consent to participate}
+Not applicable. This study analysed only previously published literature and
+public data; no human participants, human tissue or animal subjects were
+involved.
+
+\bmhead{Consent for publication}
+Not applicable.
+
+\bmhead{Availability of data and materials}
+The outputs of this pipeline will be deposited on Zenodo before
+publication and made available to reviewers at submission: CDM build
+3.1.0 (the unchanged 3.0.3 relational database, the curated 3.1.0 layers
+and checksummed manifests), the data catalogue release 3.1.1, the
+terminology release 1.0.1, the frozen claims register used for number
+verification, and the benchmark and evaluation artefacts, DOI [to be
+added when the deposit is published]. The pipeline code will be released
+in a public repository with an archived version, [repository and DOI to
+be added by the authors]. The underlying source texts are third-party
+publications and are redistributed only under their own licences: all
+453 papers were licence-checked, and the text of the 179 papers whose
+licence does not permit redistribution (135 without a licence and 44
+under non-commercial or no-derivatives terms) is withheld from the
+deposit and is available from the original publishers. Derived annotations
+over those papers (terms, mappings, triples, character offsets and text
+hashes) contain no running text, but verbatim evidence quotations do; quotations
+are included only for the 274 CC BY or CC0 papers, and the release of derived
+annotations for the 135 papers without a licence is under legal review.
+
+\bmhead{Competing interests}
+\textbf{[AUTHOR INPUT REQUIRED --- per-author competing-interests statement
+missing.} Replace this paragraph with ``The authors declare that they have
+no competing interests.'' if that is true for all three authors, or with the
+individual disclosures.\textbf{]}
+
+\bmhead{Funding}
+\textbf{[AUTHOR INPUT REQUIRED --- funding statement missing.} Replace this
+paragraph with the funder and grant numbers, or with ``This research received
+no specific grant from any funding agency in the public, commercial or
+not-for-profit sectors.''\textbf{]}
+
+\bmhead{Authors' contributions}
+\textbf{[AUTHOR INPUT REQUIRED --- CRediT statement missing.} Replace this
+paragraph with one CRediT role list per author, drawn from the taxonomy at
+\nolinkurl{https://credit.niso.org/}.\textbf{]}
+
+\bmhead{Acknowledgements}
+
+\textbf{[AUTHOR INPUT REQUIRED --- acknowledgements missing.} Replace this
+paragraph with the individuals, facilities and compute or storage allocations
+to be acknowledged, or with ``Not applicable.'' if there are none.\textbf{]}
+
+\bmhead{Declaration of generative AI and AI-assisted technologies in the
+writing and research process}
+During the preparation of this work the
+authors used generative AI in two distinct roles.
+\textbf{(1) As pipeline components and evaluation instruments} (Methods,
+Stages 2--5): the small language models Qwen3.5-4B (two extraction runs),
+Gemma, Llama and Qwen with few-shot prompting served as entity- and
+relation-extraction systems under evaluation; model judges were used as
+computational screens, namely DeepSeek-V4-Flash for the string-validity
+screen (730{,}195 judged items), DeepSeek-V4.1-Flash, accessed through the
+Fraunhofer Genie gateway, for the licence-filtered triple evidence screen
+(16{,}032 triples judged against their Creative Commons CC BY or CC0 source
+sentences, drawn from 25{,}714 licence-screened sentences), Gemma and
+DeepSeek-R1 as the two adjudicating models for vocabulary mapping, and
+Qwen3.5-9B, Llama-3.1-8B and Mistral-7B, run locally, as judges of
+catalogue values. Where the
+manuscript reports a percentage from these screens, the responsible judge
+model is named alongside it. All judge-derived results are reported as
+concordance or judged validity, not as accuracy against human annotation;
+human evaluation consists of the blinded review of 500 sampled accepted
+mappings and the blinded two-annotator check of 100 sampled triples. Qwen3.5-9B, run locally, re-typed generic terms and unspecific
+triples and typed triples derived from catalogue findings (Methods); to
+resolve unsigned associations, DeepSeek-V4.1-Flash on the Genie service
+read text from CC~BY or CC0 papers only and the local Qwen3.5-9B read all
+other text. For build 3.1.0, Qwen3.5-4B also generated contextual
+definitions and repaired triple relations, SapBERT and MiniLM embeddings
+supported deduplication, and DeepSeek-V4.1-Flash screened term and concept
+labels for relevance.
+\textbf{(2) In manuscript and code preparation:} an AI coding assistant
+(Claude Code, and opencode with the GLM-5.3 model) was used to develop
+pipeline and analysis code, to verify every number in this manuscript
+against a frozen claims register, to convert the authors' Methods draft to
+this \LaTeX\ template mechanically, and to produce internal drafting
+scaffolds that the authors re-wrote in their own words before inclusion;
+figures were produced with the same assistance. The authors reviewed and
+edited all AI-assisted outputs and take full responsibility for the content
+of this published article.
+
+\bibliography{reference}
+
+\end{document}
