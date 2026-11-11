@@ -1,7 +1,14 @@
 """Confidence scoring and canonical mapping resolution."""
-from rapidfuzz import fuzz
-
 from ..config import PREFERRED, NOISY, VOCAB_PRIORITY
+
+try:
+    from rapidfuzz import fuzz
+
+    RAPIDFUZZ_AVAILABLE = True
+except ImportError:  # optional dependency: fuzzy-confidence falls back to difflib
+    import difflib
+
+    RAPIDFUZZ_AVAILABLE = False
 
 # Vocab alias normalization: map common alternate names to a single canonical form
 # so that NOISY and PREFERRED checks fire regardless of which alias a mapper returns.
@@ -40,7 +47,18 @@ def _confidence(entity, label, cdm_type, ontology):
     b = " ".join(label.lower().split())
     if a == b:
         return 1.0
-    sim = fuzz.token_set_ratio(a, b) / 100.0
+    if RAPIDFUZZ_AVAILABLE:
+        sim = fuzz.token_set_ratio(a, b) / 100.0
+    else:
+        # difflib fallback: token-set-like similarity via set-ratio on word sets
+        wa, wb = set(a.split()), set(b.split())
+        if not wa or not wb:
+            sim = 0.0
+        else:
+            joined = " ".join(sorted(wa)), " ".join(sorted(wb))
+            sim = difflib.SequenceMatcher(None, *joined).ratio()
+            if wa & wb:  # token_set_ratio scores full-set overlap above substring ratio
+                sim = max(sim, len(wa & wb) / len(wa | wb))
     score = 0.3 + 0.65 * sim
     if ontology:
         onto = _normalize_vocab(ontology)

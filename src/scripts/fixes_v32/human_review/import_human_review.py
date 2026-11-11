@@ -93,7 +93,8 @@ def main():
     ap.add_argument("--force-copy", action="store_true", help="re-copy 3.1.0 even if the candidate exists")
     ap.add_argument("--map-sheet", default="ANNOTATION_SHEET_*_onto.xlsx")
     ap.add_argument("--tri-sheet-a", default="ANNOTATION_SHEET_*_triples.xlsx")
-    ap.add_argument("--tri-sheet-b", default="annotator_sheet_b_triples.xlsx")
+    ap.add_argument("--tri-sheet-b",
+                    default="outputs/human_validation/gate4_2026-11-02/annotator_b_sheets/annotator_sheet_b_triples.xlsx")
     a = ap.parse_args()
     out = OUT / "human_review"
     out.mkdir(parents=True, exist_ok=True)
