@@ -31,6 +31,7 @@ jobs:
 
       - name: Import smoke test (no heavy deps)
         run: |
+          export PYTHONPATH="$PWD/src:$PYTHONPATH"
           python -c "import common; print('common OK:', common.CDM_TYPES)"
           python -c "from cdm_pipeline.config import CDM_TYPES, VOCAB_PRIORITY; print('config OK:', len(CDM_TYPES), 'types,', len(VOCAB_PRIORITY), 'vocab priority lists')"
           python -c "from cdm_pipeline.mapping.confidence import _confidence, resolve_canonical; print('confidence module OK')"
@@ -41,3 +42,4 @@ jobs:
           python -c "from cdm_pipeline.export.biocypher import export_biocypher; print('BioCypher module OK')"
           python -c "from cdm_pipeline.export.conformal import calibrate_mappings; print('Conformal module OK')"
           python -c "from cdm_pipeline.export.doc_stats import generate_stats; print('Doc stats module OK')"
+        working-directory: .
